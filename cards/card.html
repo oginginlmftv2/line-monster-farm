@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アシストカード詳細 | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="../style.css">
+  <style>
+    .card-detail-wrap {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #f0a500;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .back-btn:hover { text-decoration: underline; }
+
+    .detail-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      overflow: hidden;
+    }
+
+    .detail-img-wrap {
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+    }
+
+    .detail-img {
+      max-width: 260px;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+    }
+
+    .detail-body {
+      padding: 24px;
+    }
+
+    .detail-name {
+      font-size: 26px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .detail-rarity {
+      display: inline-block;
+      padding: 4px 16px;
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .detail-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    .detail-table th {
+      background: #f5f5f5;
+      color: #555;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 10px 14px;
+      text-align: left;
+      width: 30%;
+    }
+
+    .detail-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .detail-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .oura-badge {
+      display: inline-block;
+      padding: 2px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      color: #fff;
+    }
+    .oura-赤  { background: #e74c3c; }
+    .oura-青  { background: #2980b9; }
+    .oura-黄  { background: #f39c12; }
+    .oura-緑  { background: #27ae60; }
+    .oura-白  { background: #95a5a6; }
+    .oura-黒  { background: #2c3e50; }
+
+    .not-found {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-size: 16px;
+    }
+
+    /* おすすめ編成セクション */
+    .formation-section {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      padding: 24px;
+      margin-top: 20px;
+    }
+    .formation-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .formation-title-label {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a1a2e;
+      border-left: 5px solid #f0a500;
+      padding-left: 12px;
+    }
+    .formation-empty {
+      color: #bbb;
+      font-style: italic;
+      font-size: 14px;
+    }
+    .formation-item {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .formation-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .formation-item-name {
+      font-size: 14px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 10px;
+    }
+    .formation-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .formation-deck-cards {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .f-card { text-align: center; width: 74px; }
+    .f-card a { text-decoration: none; color: inherit; display: block; }
+    .f-card img {
+      width: 74px;
+      height: 74px;
+      object-fit: cover;
+      border-radius: 8px;
+      display: block;
+      transition: transform 0.2s;
+    }
+    .f-card img:hover { transform: scale(1.05); }
+    .f-card-placeholder {
+      width: 74px;
+      height: 74px;
+      background: #f0f0f0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ccc;
+      font-size: 22px;
+    }
+    .f-card-name {
+      font-size: 10px;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+    .rental-sep {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      align-self: center;
+      gap: 3px;
+    }
+    .rental-sep-line {
+      width: 2px;
+      height: 36px;
+      background: linear-gradient(to bottom, #f0a500, #ff6b35);
+      border-radius: 2px;
+    }
+    .rental-sep-label {
+      font-size: 9px;
+      font-weight: bold;
+      color: #f0a500;
+      writing-mode: vertical-rl;
+      letter-spacing: 1px;
+    }
+    /* 編集モード */
+    .form-formation-item {
+      background: #fafafa;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+    .form-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .form-title-input {
+      flex: 1;
+      padding: 6px 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: inherit;
+    }
+    .form-title-input:focus { outline: none; border-color: #f0a500; }
+    .form-remove-btn {
+      padding: 4px 10px;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      color: #999;
+      cursor: pointer;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .form-remove-btn:hover { border-color: #e74c3c; color: #e74c3c; }
+    .form-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .form-card-slot {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .rental-slot {
+      grid-column: 1 / -1;
+      background: #fff9ed;
+      border: 1px dashed #f0a500;
+      border-radius: 8px;
+      padding: 8px;
+    }
+    .form-card-label {
+      font-size: 11px;
+      font-weight: bold;
+      color: #888;
+    }
+    .form-card-input {
+      padding: 5px 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: inherit;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .form-card-input:focus { outline: none; border-color: #f0a500; }
+    .form-card-preview img {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      border-radius: 6px;
+      margin-top: 2px;
+    }
+    .form-add-btn {
+      display: block;
+      width: 100%;
+      padding: 9px;
+      background: none;
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+      color: #aaa;
+      font-size: 14px;
+      cursor: pointer;
+      margin-top: 4px;
+      transition: all 0.2s;
+    }
+    .form-add-btn:hover { border-color: #f0a500; color: #f0a500; }
+
+    /* 評価セクション */
+    .ratings-section {
+      margin-top: 24px;
+      border-top: 2px solid #f0a500;
+      padding-top: 16px;
+    }
+
+    .ratings-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .ratings-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+
+    .edit-btn {
+      background: none;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      color: #888;
+      transition: all 0.2s;
+    }
+    .edit-btn:hover { border-color: #f0a500; color: #f0a500; }
+    .edit-btn.active { background: #f0a500; border-color: #f0a500; color: #fff; }
+    .edit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .ratings-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    .ratings-table th {
+      background: #f5f5f5;
+      color: #555;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 10px 14px;
+      text-align: left;
+      width: 36%;
+    }
+
+    .ratings-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid #eee;
+      vertical-align: middle;
+    }
+
+    .ratings-table tr:last-child td { border-bottom: none; }
+
+    /* 総合評価行の強調 */
+    .ratings-table tr.sogo-row th,
+    .ratings-table tr.sogo-row td {
+      background: #fffbf0;
+      font-weight: bold;
+    }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .score-num {
+      font-size: 18px;
+      font-weight: bold;
+      color: #e07b00;
+      min-width: 36px;
+    }
+    .score-num.empty { color: #ccc; font-size: 14px; }
+
+    .score-bar-wrap {
+      flex: 1;
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .score-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f0a500, #ff6b35);
+      border-radius: 4px;
+      transition: width 0.4s ease;
+    }
+
+    .score-max { font-size: 12px; color: #aaa; }
+
+    /* 編集モード */
+    .score-input {
+      width: 70px;
+      padding: 4px 8px;
+      border: 2px solid #f0a500;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: bold;
+      color: #e07b00;
+      text-align: center;
+    }
+
+    .save-btn {
+      display: block;
+      width: 100%;
+      margin-top: 16px;
+      padding: 10px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .save-btn:hover { background: #d4920a; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="../index.html">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="../index.html">トップ</a>
+      <a href="../assist.html" class="active">アシスト</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card-detail-wrap">
+    <a class="back-btn" href="../assist.html">← アシストカード一覧に戻る</a>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<footer>
+  <p>LINEモンスターファーム徹底攻略 - ファンサイト（非公式）</p>
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script src="cards-data.js"></script>
+<script>
+  // ★ パスワードはここを変更してください ★
+  const EDIT_PASSWORD = 'mf2024';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+    authDomain: "line-monster-farm.firebaseapp.com",
+    projectId: "line-monster-farm",
+    storageBucket: "line-monster-farm.firebasestorage.app",
+    messagingSenderId: "952838892758",
+    appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  const SCORE_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
+  const LABELS = { ikusei: '総合力育成', karyo: '火力', battle: 'バトル性能', ta: '他オーラモン類' };
+
+  const id = location.hash.replace('#', '') || new URLSearchParams(location.search).get('id');
+  const container = document.getElementById('detail-content');
+
+  // Firestoreから読み込んだデータのキャッシュ
+  let cardData = { ratings: null, formations: [], explanation: '' };
+
+  if (!id || !cardsData[id]) {
+    container.innerHTML = '<div class="not-found">カードが見つかりませんでした。</div>';
+  } else {
+    const c = cardsData[id];
+    const imgSrc = `../assist-cards/${id}.${c.ext}`;
+    const monText = c.mon ? c.mon : 'なし';
+
+    document.title = `${c.name} | LINEモンスターファーム徹底攻略`;
+
+    container.innerHTML = `
+      <div class="detail-card">
+        <div class="detail-img-wrap">
+          <img class="detail-img" src="${imgSrc}" alt="${c.name}">
+        </div>
+        <div class="detail-body">
+          <div class="detail-name">${c.name}</div>
+          <span class="detail-rarity rarity-${c.rarity}">${c.rarity}</span>
+          <table class="detail-table">
+            <tr>
+              <th>オーラ</th>
+              <td><span class="oura-badge oura-${c.oura}">${c.oura}</span></td>
+            </tr>
+            <tr>
+              <th>カードタイプ</th>
+              <td>${c.type}</td>
+            </tr>
+            <tr>
+              <th>モン類</th>
+              <td>${monText}</td>
+            </tr>
+          </table>
+
+          <!-- 評価セクション -->
+          <div class="ratings-section">
+            <div class="ratings-header">
+              <span class="ratings-title">評価</span>
+              <button class="edit-btn" id="editBtn" onclick="startEdit()">✏️ 編集</button>
+            </div>
+            <table class="ratings-table" id="ratingsTable">
+              <tr class="sogo-row">
+                <th>総合評価</th>
+                <td><div class="score-display" id="disp-sogo"><span class="score-num empty">読込中</span></div></td>
+              </tr>
+              <tr>
+                <th>総合力育成</th>
+                <td><div class="score-display" id="disp-ikusei"></div></td>
+              </tr>
+              <tr>
+                <th>火力</th>
+                <td><div class="score-display" id="disp-karyo"></div></td>
+              </tr>
+              <tr>
+                <th>バトル性能</th>
+                <td><div class="score-display" id="disp-battle"></div></td>
+              </tr>
+              <tr>
+                <th>他オーラモン類</th>
+                <td><div class="score-display" id="disp-ta"></div></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- おすすめ編成 -->
+      <div class="formation-section">
+        <div class="formation-header">
+          <span class="formation-title-label">おすすめ編成</span>
+          <button class="edit-btn" id="formEditBtn" onclick="startFormEdit()">✏️ 編集</button>
+        </div>
+        <div id="formation-content"><div class="formation-empty">読込中...</div></div>
+      </div>
+
+      <!-- 評価解説 -->
+      <div class="explanation-section">
+        <div class="explanation-header">
+          <span class="explanation-title">評価解説</span>
+          <button class="edit-btn" id="explEditBtn" onclick="startExplEdit()">✏️ 編集</button>
+        </div>
+        <div id="explanation-body" class="explanation-body empty">読込中...</div>
+      </div>
+    `;
+
+    // Firestoreからデータを読み込んで表示
+    loadCardData();
+  }
+
+  // ---- Firestoreデータ読み込み ----
+
+  async function loadCardData() {
+    try {
+      const doc = await db.collection('cards').doc(id).get();
+      if (doc.exists) {
+        const data = doc.data();
+        cardData.ratings   = data.ratings   || null;
+        cardData.formations = data.formations || [];
+        cardData.explanation = data.explanation || '';
+      }
+    } catch (e) {
+      console.error('データ読み込みエラー:', e);
+    }
+    loadAndDisplayRatings();
+    loadFormations();
+    loadExplanation();
+  }
+
+  // ---- 評価ロジック ----
+
+  function getRatings() {
+    return cardData.ratings || { ikusei: null, karyo: null, battle: null, ta: null };
+  }
+
+  function calcSogo(r) {
+    const vals = SCORE_KEYS.map(k => r[k]).filter(v => v !== null && v !== '');
+    if (vals.length === 0) return null;
+    const avg = vals.reduce((a, b) => a + parseFloat(b), 0) / vals.length;
+    return Math.floor(avg * 10) / 10;
+  }
+
+  function scoreHTML(val) {
+    if (val === null || val === '') {
+      return `<span class="score-num empty">-</span><span class="score-max"> / 5.0</span>`;
+    }
+    const pct = (parseFloat(val) / 5) * 100;
+    return `
+      <span class="score-num">${parseFloat(val).toFixed(1)}</span>
+      <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${pct}%"></div></div>
+      <span class="score-max">/ 5.0</span>
+    `;
+  }
+
+  function loadAndDisplayRatings() {
+    const r = getRatings();
+    const sogo = calcSogo(r);
+    document.getElementById('disp-sogo').innerHTML = scoreHTML(sogo);
+    SCORE_KEYS.forEach(k => {
+      document.getElementById('disp-' + k).innerHTML = scoreHTML(r[k]);
+    });
+  }
+
+  let editMode = false;
+
+  function startEdit() {
+    if (editMode) return;
+    const pw = prompt('編集パスワードを入力してください');
+    if (pw !== EDIT_PASSWORD) {
+      if (pw !== null) alert('パスワードが違います');
+      return;
+    }
+    editMode = true;
+
+    const r = getRatings();
+    const btn = document.getElementById('editBtn');
+    btn.textContent = '💾 保存';
+    btn.classList.add('active');
+    btn.onclick = saveEdit;
+
+    document.getElementById('disp-sogo').innerHTML = scoreHTML(calcSogo(r));
+
+    SCORE_KEYS.forEach(k => {
+      const val = r[k] !== null ? r[k] : '';
+      document.getElementById('disp-' + k).innerHTML = `
+        <input class="score-input" id="input-${k}" type="number"
+          min="0" max="5" step="0.1" value="${val}" placeholder="-"
+          oninput="updateSogoPreview()">
+        <span class="score-max">/ 5.0</span>
+      `;
+    });
+  }
+
+  function updateSogoPreview() {
+    const temp = {};
+    SCORE_KEYS.forEach(k => {
+      const el = document.getElementById('input-' + k);
+      const v = el ? el.value.trim() : '';
+      temp[k] = v !== '' ? parseFloat(v) : null;
+    });
+    document.getElementById('disp-sogo').innerHTML = scoreHTML(calcSogo(temp));
+  }
+
+  async function saveEdit() {
+    const r = {};
+    let hasError = false;
+    SCORE_KEYS.forEach(k => {
+      const el = document.getElementById('input-' + k);
+      const v = el ? el.value.trim() : '';
+      if (v === '') {
+        r[k] = null;
+      } else {
+        const num = parseFloat(v);
+        if (isNaN(num) || num < 0 || num > 5) {
+          alert(`「${LABELS[k]}」は 0〜5 の数値で入力してください`);
+          hasError = true;
+          return;
+        }
+        r[k] = Math.round(num * 10) / 10;
+      }
+    });
+    if (hasError) return;
+
+    const btn = document.getElementById('editBtn');
+    btn.textContent = '保存中...';
+    btn.disabled = true;
+
+    try {
+      await db.collection('cards').doc(id).set({ ratings: r }, { merge: true });
+      cardData.ratings = r;
+    } catch (e) {
+      alert('保存に失敗しました: ' + e.message);
+      btn.textContent = '💾 保存';
+      btn.disabled = false;
+      return;
+    }
+
+    editMode = false;
+    btn.textContent = '✏️ 編集';
+    btn.classList.remove('active');
+    btn.disabled = false;
+    btn.onclick = startEdit;
+    loadAndDisplayRatings();
+  }
+
+  // ---- ユーティリティ ----
+
+  function escapeHtml(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  // ---- おすすめ編成ロジック ----
+
+  const cardLookup = {};
+  const cardLabelOf = {};
+  Object.entries(cardsData).forEach(([cid, c]) => {
+    const label = `${c.name} (${c.rarity})`;
+    cardLookup[label] = cid;
+    cardLabelOf[cid] = label;
+  });
+
+  let formEditMode = false;
+
+  function getFormations() {
+    return cardData.formations || [];
+  }
+
+  function fCardHTML(cid, link = true) {
+    if (!cid) return `<div class="f-card"><div class="f-card-placeholder">？</div><div class="f-card-name">未設定</div></div>`;
+    const c = cardsData[cid];
+    if (!c) return `<div class="f-card"><div class="f-card-placeholder">？</div><div class="f-card-name">${escapeHtml(cid)}</div></div>`;
+    const img = `<img src="../assist-cards/${cid}.${c.ext}" alt="${escapeHtml(c.name)}">`;
+    const inner = link ? `<a href="../cards/card.html#${cid}">${img}</a>` : img;
+    return `<div class="f-card">${inner}<div class="f-card-name">${escapeHtml(c.name)}</div></div>`;
+  }
+
+  function loadFormations() {
+    const formations = getFormations();
+    const el = document.getElementById('formation-content');
+    if (!el) return;
+    if (formations.length === 0) {
+      el.innerHTML = '<div class="formation-empty">（未設定）</div>';
+      return;
+    }
+    el.innerHTML = formations.map(f => `
+      <div class="formation-item">
+        <div class="formation-item-name">${escapeHtml(f.title || '編成')}</div>
+        <div class="formation-row">
+          <div class="formation-deck-cards">
+            ${(f.cards || []).map(cid => fCardHTML(cid)).join('')}
+          </div>
+          <div class="rental-sep">
+            <div class="rental-sep-line"></div>
+            <div class="rental-sep-label">レンタル</div>
+          </div>
+          ${fCardHTML(f.rental)}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function startFormEdit() {
+    if (formEditMode) return;
+    const pw = prompt('編集パスワードを入力してください');
+    if (pw !== EDIT_PASSWORD) {
+      if (pw !== null) alert('パスワードが違います');
+      return;
+    }
+    formEditMode = true;
+    const btn = document.getElementById('formEditBtn');
+    btn.textContent = '💾 保存';
+    btn.classList.add('active');
+    btn.onclick = saveFormations;
+    renderFormEdit(getFormations());
+  }
+
+  function renderFormEdit(formations) {
+    if (formations.length === 0) formations = [{ title: 'おすすめ編成①', cards: ['','','','',''], rental: '' }];
+    const el = document.getElementById('formation-content');
+
+    const datalistOpts = Object.keys(cardLookup)
+      .map(label => `<option value="${escapeHtml(label)}">`)
+      .join('');
+
+    const itemsHTML = formations.map((f, fi) => {
+      const cardsInputs = [0,1,2,3,4].map(ci => {
+        const val = (f.cards && f.cards[ci]) ? cardLabelOf[f.cards[ci]] || f.cards[ci] : '';
+        const prevImg = (f.cards && f.cards[ci] && cardsData[f.cards[ci]])
+          ? `<img src="../assist-cards/${f.cards[ci]}.${cardsData[f.cards[ci]].ext}">` : '';
+        return `<div class="form-card-slot">
+          <div class="form-card-label">カード${ci+1}</div>
+          <input class="form-card-input" id="fc-${fi}-${ci}" list="card-datalist"
+            placeholder="カード名を入力" value="${escapeHtml(val)}"
+            oninput="previewFormCard('fc-${fi}-${ci}','fp-${fi}-${ci}')">
+          <div class="form-card-preview" id="fp-${fi}-${ci}">${prevImg}</div>
+        </div>`;
+      }).join('');
+
+      const rentalVal = f.rental ? (cardLabelOf[f.rental] || f.rental) : '';
+      const rentalPrev = (f.rental && cardsData[f.rental])
+        ? `<img src="../assist-cards/${f.rental}.${cardsData[f.rental].ext}">` : '';
+
+      return `<div class="form-formation-item" id="form-item-${fi}">
+        <div class="form-row">
+          <input class="form-title-input" id="form-title-${fi}" placeholder="編成名" value="${escapeHtml(f.title || '')}">
+          <button class="form-remove-btn" onclick="removeFormItem(${fi})">× 削除</button>
+        </div>
+        <div class="form-cards-grid">
+          ${cardsInputs}
+          <div class="form-card-slot rental-slot">
+            <div class="form-card-label">🔶 レンタル</div>
+            <input class="form-card-input" id="fr-${fi}" list="card-datalist"
+              placeholder="カード名を入力" value="${escapeHtml(rentalVal)}"
+              oninput="previewFormCard('fr-${fi}','frp-${fi}')">
+            <div class="form-card-preview" id="frp-${fi}">${rentalPrev}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+
+    el.innerHTML = `
+      <datalist id="card-datalist">${datalistOpts}</datalist>
+      ${itemsHTML}
+      <button class="form-add-btn" onclick="addFormItem()">＋ 編成を追加</button>
+    `;
+  }
+
+  function previewFormCard(inputId, previewId) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+    if (!input || !preview) return;
+    const cid = cardLookup[input.value.trim()];
+    if (cid && cardsData[cid]) {
+      const c = cardsData[cid];
+      preview.innerHTML = `<img src="../assist-cards/${cid}.${c.ext}">`;
+    } else {
+      preview.innerHTML = '';
+    }
+  }
+
+  function collectFormData() {
+    const result = [];
+    let fi = 0;
+    while (document.getElementById('form-item-' + fi)) {
+      const title = document.getElementById('form-title-' + fi)?.value.trim() || '';
+      const cards = [0,1,2,3,4].map(ci => {
+        const val = document.getElementById(`fc-${fi}-${ci}`)?.value.trim() || '';
+        return cardLookup[val] || '';
+      });
+      const rentalVal = document.getElementById('fr-' + fi)?.value.trim() || '';
+      const rental = cardLookup[rentalVal] || '';
+      result.push({ title, cards, rental });
+      fi++;
+    }
+    return result;
+  }
+
+  function addFormItem() {
+    const current = collectFormData();
+    current.push({ title: `おすすめ編成${current.length + 1}`, cards: ['','','','',''], rental: '' });
+    renderFormEdit(current);
+  }
+
+  function removeFormItem(fi) {
+    const current = collectFormData();
+    current.splice(fi, 1);
+    renderFormEdit(current);
+  }
+
+  async function saveFormations() {
+    const data = collectFormData();
+    const btn = document.getElementById('formEditBtn');
+    btn.textContent = '保存中...';
+    btn.disabled = true;
+
+    try {
+      await db.collection('cards').doc(id).set({ formations: data }, { merge: true });
+      cardData.formations = data;
+    } catch (e) {
+      alert('保存に失敗しました: ' + e.message);
+      btn.textContent = '💾 保存';
+      btn.disabled = false;
+      return;
+    }
+
+    formEditMode = false;
+    btn.textContent = '✏️ 編集';
+    btn.classList.remove('active');
+    btn.disabled = false;
+    btn.onclick = startFormEdit;
+    loadFormations();
+  }
+
+  // ---- 評価解説ロジック ----
+
+  let explEditMode = false;
+
+  function getExplanation() {
+    return cardData.explanation || '';
+  }
+
+  function loadExplanation() {
+    const text = getExplanation();
+    const el = document.getElementById('explanation-body');
+    if (!el) return;
+    if (text) {
+      el.textContent = text;
+      el.classList.remove('empty');
+    } else {
+      el.textContent = '（未設定）';
+      el.classList.add('empty');
+    }
+  }
+
+  function startExplEdit() {
+    if (explEditMode) return;
+    const pw = prompt('編集パスワードを入力してください');
+    if (pw !== EDIT_PASSWORD) {
+      if (pw !== null) alert('パスワードが違います');
+      return;
+    }
+    explEditMode = true;
+    const btn = document.getElementById('explEditBtn');
+    btn.textContent = '💾 保存';
+    btn.classList.add('active');
+    btn.onclick = saveExpl;
+
+    const current = getExplanation();
+    const el = document.getElementById('explanation-body');
+    el.classList.remove('empty');
+    el.innerHTML = `<textarea id="expl-textarea" class="expl-textarea" placeholder="評価解説を入力...">${current}</textarea>`;
+  }
+
+  async function saveExpl() {
+    const textarea = document.getElementById('expl-textarea');
+    const text = textarea ? textarea.value.trim() : '';
+    const btn = document.getElementById('explEditBtn');
+    btn.textContent = '保存中...';
+    btn.disabled = true;
+
+    try {
+      await db.collection('cards').doc(id).set({ explanation: text }, { merge: true });
+      cardData.explanation = text;
+    } catch (e) {
+      alert('保存に失敗しました: ' + e.message);
+      btn.textContent = '💾 保存';
+      btn.disabled = false;
+      return;
+    }
+
+    explEditMode = false;
+    btn.textContent = '✏️ 編集';
+    btn.classList.remove('active');
+    btn.disabled = false;
+    btn.onclick = startExplEdit;
+    loadExplanation();
+  }
+</script>
+
+</body>
+</html>

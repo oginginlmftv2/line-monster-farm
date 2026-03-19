@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アシストカード一覧 | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html" class="active">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <h1 class="page-title">アシストカード一覧</h1>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" onclick="filterCards('all', event)">すべて</button>
+    <button class="filter-btn mr" onclick="filterCards('MR', event)">MR</button>
+    <button class="filter-btn ssr" onclick="filterCards('SSR', event)">SSR</button>
+  </div>
+
+  <div class="card-grid" id="cardGrid">
+
+    <a class="card" data-rarity="SSR" href="cards/a10j-SSR-fureria.html">
+      <img class="card-img" src="assist-cards/a10j-SSR-fureria.jpg" alt="フレリア">
+      <div class="card-info"><div class="card-name">フレリア</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a4g-SSR-karukinosu.html">
+      <img class="card-img" src="assist-cards/a4g-SSR-karukinosu.jpg" alt="カルキノス">
+      <div class="card-info"><div class="card-name">カルキノス</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a24j-MR-vitoniru.html">
+      <img class="card-img" src="assist-cards/a24j-MR-vitoniru.jpg" alt="ヴィトニル">
+      <div class="card-info"><div class="card-name">ヴィトニル</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a10j-MR-fureria.html">
+      <img class="card-img" src="assist-cards/a10j-MR-fureria.jpg" alt="フレリア">
+      <div class="card-info"><div class="card-name">フレリア</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f14g-MR-darasu.html">
+      <img class="card-img" src="assist-cards/f14g-MR-darasu.jpg" alt="ダラス">
+      <div class="card-info"><div class="card-name">ダラス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f2k-SSR-shionresort.html">
+      <img class="card-img" src="assist-cards/f2k-SSR-shionresort.jpg" alt="シオン・リゾート">
+      <div class="card-info"><div class="card-name">シオン・リゾート</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a6i-SSR-mirimuresort.html">
+      <img class="card-img" src="assist-cards/a6i-SSR-mirimuresort.jpg" alt="ミリム・リゾート">
+      <div class="card-info"><div class="card-name">ミリム・リゾート</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b5i-SSR-rimurugurasan.html">
+      <img class="card-img" src="assist-cards/b5i-SSR-rimurugurasan.jpg" alt="リムル・グラサン">
+      <div class="card-info"><div class="card-name">リムル・グラサン</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a7-MR-syuna.html">
+      <img class="card-img" src="assist-cards/a7-MR-syuna.jpg" alt="シュナ">
+      <div class="card-info"><div class="card-name">シュナ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/b21i-MR-rimuru.html">
+      <img class="card-img" src="assist-cards/b21i-MR-rimuru.jpg" alt="リムル">
+      <div class="card-info"><div class="card-name">リムル</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f24i-MR-megaranika.html">
+      <img class="card-img" src="assist-cards/f24i-MR-megaranika.jpg" alt="メガラニカ">
+      <div class="card-info"><div class="card-name">メガラニカ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/e7-MR-sutera.html">
+      <img class="card-img" src="assist-cards/e7-MR-sutera.jpg" alt="ステラ">
+      <div class="card-info"><div class="card-name">ステラ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/e20i-MR-nadeshiko.html">
+      <img class="card-img" src="assist-cards/e20i-MR-nadeshiko.jpg" alt="ナデシコ">
+      <div class="card-info"><div class="card-name">ナデシコ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c12l-MR-gifton.html">
+      <img class="card-img" src="assist-cards/c12l-MR-gifton.jpg" alt="ギフトン">
+      <div class="card-info"><div class="card-name">ギフトン</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c19h-MR-aufieru.html">
+      <img class="card-img" src="assist-cards/c19h-MR-aufieru.jpg" alt="アウフィエル">
+      <div class="card-info"><div class="card-name">アウフィエル</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/c9-SSR-safin.html">
+      <img class="card-img" src="assist-cards/c9-SSR-safin.jpg" alt="サフィン">
+      <div class="card-info"><div class="card-name">サフィン</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f5l-SSR-sharutia.html">
+      <img class="card-img" src="assist-cards/f5l-SSR-sharutia.jpg" alt="シャルティア">
+      <div class="card-info"><div class="card-name">シャルティア</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f7-MR-demiurugosu.html">
+      <img class="card-img" src="assist-cards/f7-MR-demiurugosu.jpg" alt="デミウルゴス">
+      <div class="card-info"><div class="card-name">デミウルゴス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f18k-MR-ainzu.html">
+      <img class="card-img" src="assist-cards/f18k-MR-ainzu.jpg" alt="アインズ">
+      <div class="card-info"><div class="card-name">アインズ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d14k-MR-sukeakurou.html">
+      <img class="card-img" src="assist-cards/d14k-MR-sukeakurou.jpg" alt="スケアクロウ">
+      <div class="card-info"><div class="card-name">スケアクロウ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/d9-SSR-airisu.html">
+      <img class="card-img" src="assist-cards/d9-SSR-airisu.jpg" alt="アイリス(ライバル)">
+      <div class="card-info"><div class="card-name">アイリス(ライバル)</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/b7-MR-kurisu.html">
+      <img class="card-img" src="assist-cards/b7-MR-kurisu.jpg" alt="クリス">
+      <div class="card-info"><div class="card-name">クリス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d18k-MR-furan.html">
+      <img class="card-img" src="assist-cards/d18k-MR-furan.jpg" alt="フラン">
+      <div class="card-info"><div class="card-name">フラン</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b2h-SSR-sappirutti.html">
+      <img class="card-img" src="assist-cards/b2h-SSR-sappirutti.jpg" alt="サフィルス">
+      <div class="card-info"><div class="card-name">サフィルス</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/b22h-MR-noa.html">
+      <img class="card-img" src="assist-cards/b22h-MR-noa.jpg" alt="ノア">
+      <div class="card-info"><div class="card-name">ノア</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f3k-SSR-baromu.html">
+      <img class="card-img" src="assist-cards/f3k-SSR-baromu.jpg" alt="バロム">
+      <div class="card-info"><div class="card-name">バロム</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/e9-SSR-hakuou.html">
+      <img class="card-img" src="assist-cards/e9-SSR-hakuou.jpg" alt="白凰">
+      <div class="card-info"><div class="card-name">白凰</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/e6l-SSR-arukadiasu.html">
+      <img class="card-img" src="assist-cards/e6l-SSR-arukadiasu.jpg" alt="アルカディアス">
+      <div class="card-info"><div class="card-name">アルカディアス</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a25i-MR-borusyakku.html">
+      <img class="card-img" src="assist-cards/a25i-MR-borusyakku.jpg" alt="ボルシャック">
+      <div class="card-info"><div class="card-name">ボルシャック</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c23i-MR-naiara.html">
+      <img class="card-img" src="assist-cards/c23i-MR-naiara.jpg" alt="ナイアーラ">
+      <div class="card-info"><div class="card-name">ナイアーラ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/c7-SSR-piisii.html">
+      <img class="card-img" src="assist-cards/c7-SSR-piisii.jpg" alt="ピーシィ(黄)">
+      <div class="card-info"><div class="card-name">ピーシィ(黄)</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c11j-MR-mirukii.html">
+      <img class="card-img" src="assist-cards/c11j-MR-mirukii.jpg" alt="ミルキィ">
+      <div class="card-info"><div class="card-name">ミルキィ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d22g-MR-emuroudo.html">
+      <img class="card-img" src="assist-cards/d22g-MR-emuroudo.jpg" alt="エムロード">
+      <div class="card-info"><div class="card-name">エムロード</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/e3h-SSR-marijji.html">
+      <img class="card-img" src="assist-cards/e3h-SSR-marijji.jpg" alt="マリッジ">
+      <div class="card-info"><div class="card-name">マリッジ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d12g-MR-doruche.html">
+      <img class="card-img" src="assist-cards/d12g-MR-doruche.jpg" alt="ドルチェ">
+      <div class="card-info"><div class="card-name">ドルチェ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a3g-SSR-hao.html">
+      <img class="card-img" src="assist-cards/a3g-SSR-hao.jpg" alt="ハオ">
+      <div class="card-info"><div class="card-name">ハオ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a7-SSR-anna.html">
+      <img class="card-img" src="assist-cards/a7-SSR-anna.jpg" alt="恐山アンナ">
+      <div class="card-info"><div class="card-name">恐山アンナ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d13i-MR-asakurayou.html">
+      <img class="card-img" src="assist-cards/d13i-MR-asakurayou.jpg" alt="麻倉葉">
+      <div class="card-info"><div class="card-name">麻倉葉</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/e2j-SSR-rekusu.html">
+      <img class="card-img" src="assist-cards/e2j-SSR-rekusu.jpg" alt="レクス">
+      <div class="card-info"><div class="card-name">レクス</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/e18l-MR-rippii.html">
+      <img class="card-img" src="assist-cards/e18l-MR-rippii.jpg" alt="リッピー">
+      <div class="card-info"><div class="card-name">リッピー</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f9-SSR-hori.html">
+      <img class="card-img" src="assist-cards/f9-SSR-hori.jpg" alt="ホリィ">
+      <div class="card-info"><div class="card-name">ホリィ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f16h-MR-iburiisu.html">
+      <img class="card-img" src="assist-cards/f16h-MR-iburiisu.jpg" alt="イブリース">
+      <div class="card-info"><div class="card-name">イブリース</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f6l-SSR-araibu.html">
+      <img class="card-img" src="assist-cards/f6l-SSR-araibu.jpg" alt="アライブ">
+      <div class="card-info"><div class="card-name">アライブ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/f1g-SSR-tyakooru.html">
+      <img class="card-img" src="assist-cards/f1g-SSR-tyakooru.jpg" alt="チャコール">
+      <div class="card-info"><div class="card-name">チャコール</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c19k-MR-ofurii.html">
+      <img class="card-img" src="assist-cards/c19k-MR-ofurii.jpg" alt="オフリィ">
+      <div class="card-info"><div class="card-name">オフリィ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f21l-MR-serene.html">
+      <img class="card-img" src="assist-cards/f21l-MR-serene.jpg" alt="セレネ">
+      <div class="card-info"><div class="card-name">セレネ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/d6g-SSR-king.html">
+      <img class="card-img" src="assist-cards/d6g-SSR-king.jpg" alt="キング">
+      <div class="card-info"><div class="card-name">キング</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a9-SSR-ban.html">
+      <img class="card-img" src="assist-cards/a9-SSR-ban.jpg" alt="バン">
+      <div class="card-info"><div class="card-name">バン</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/c2h-SSR-meriodasu.html">
+      <img class="card-img" src="assist-cards/c2h-SSR-meriodasu.jpg" alt="メリオダス">
+      <div class="card-info"><div class="card-name">メリオダス</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b2l-SSR-rikanto.html">
+      <img class="card-img" src="assist-cards/b2l-SSR-rikanto.jpg" alt="リカント">
+      <div class="card-info"><div class="card-name">リカント</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b9-SSR-siena.html">
+      <img class="card-img" src="assist-cards/b9-SSR-siena.jpg" alt="シエナ">
+      <div class="card-info"><div class="card-name">シエナ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/b17h-MR-ryuujin.html">
+      <img class="card-img" src="assist-cards/b17h-MR-ryuujin.jpg" alt="リュージン">
+      <div class="card-info"><div class="card-name">リュージン</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a5g-SSR-roozuheddo.html">
+      <img class="card-img" src="assist-cards/a5g-SSR-roozuheddo.jpg" alt="ローズヘッド">
+      <div class="card-info"><div class="card-name">ローズヘッド</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a1j-SSR-kurousu.html">
+      <img class="card-img" src="assist-cards/a1j-SSR-kurousu.jpg" alt="クロース">
+      <div class="card-info"><div class="card-name">クロース</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d19h-MR-parumaa.html">
+      <img class="card-img" src="assist-cards/d19h-MR-parumaa.jpg" alt="パルマー">
+      <div class="card-info"><div class="card-name">パルマー</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/d2l-SSR-mikasa.html">
+      <img class="card-img" src="assist-cards/d2l-SSR-mikasa.jpg" alt="ミカサ">
+      <div class="card-info"><div class="card-name">ミカサ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/d7-SSR-rivai.html">
+      <img class="card-img" src="assist-cards/d7-SSR-rivai.jpg" alt="リヴァイ">
+      <div class="card-info"><div class="card-name">リヴァイ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/c6k-SSR-jonson.html">
+      <img class="card-img" src="assist-cards/c6k-SSR-jonson.jpg" alt="ジョンソン">
+      <div class="card-info"><div class="card-name">ジョンソン</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c18k-MR-risuton.html">
+      <img class="card-img" src="assist-cards/c18k-MR-risuton.png" alt="リストン">
+      <div class="card-info"><div class="card-name">リストン</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/c9-SSR-porutsu.html">
+      <img class="card-img" src="assist-cards/c9-SSR-porutsu.png" alt="ポルツ(ライバル)">
+      <div class="card-info"><div class="card-name">ポルツ(ライバル)</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/e1g-SSR-yunibaasu.html">
+      <img class="card-img" src="assist-cards/e1g-SSR-yunibaasu.png" alt="ユニバース">
+      <div class="card-info"><div class="card-name">ユニバース</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/e17g-MR-kyatoru.html">
+      <img class="card-img" src="assist-cards/e17g-MR-kyatoru.png" alt="キャトル">
+      <div class="card-info"><div class="card-name">キャトル</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a3i-SSR-mirimu.html">
+      <img class="card-img" src="assist-cards/a3i-SSR-mirimu.png" alt="ミリム">
+      <div class="card-info"><div class="card-name">ミリム</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b7-SSR-verudora.html">
+      <img class="card-img" src="assist-cards/b7-SSR-verudora.png" alt="ヴェルドラ">
+      <div class="card-info"><div class="card-name">ヴェルドラ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/b1i-SSR-rimuru.html">
+      <img class="card-img" src="assist-cards/b1i-SSR-rimuru.png" alt="リムル">
+      <div class="card-info"><div class="card-name">リムル</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/a6j-SSR-akazonaenusi.html">
+      <img class="card-img" src="assist-cards/a6j-SSR-akazonaenusi.png" alt="アカゾナエヌシ">
+      <div class="card-info"><div class="card-name">アカゾナエヌシ</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/b17h-MR-ruri.html">
+      <img class="card-img" src="assist-cards/b17h-MR-ruri.png" alt="ルリ">
+      <div class="card-info"><div class="card-name">ルリ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/f15k-MR-tanatosu.html">
+      <img class="card-img" src="assist-cards/f15k-MR-tanatosu.png" alt="タナトス">
+      <div class="card-info"><div class="card-name">タナトス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a16h-MR-ramusuiito.html">
+      <img class="card-img" src="assist-cards/a16h-MR-ramusuiito.png" alt="ラムスイート">
+      <div class="card-info"><div class="card-name">ラムスイート</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/c14k-MR-suzuka.html">
+      <img class="card-img" src="assist-cards/c14k-MR-suzuka.png" alt="スズカ">
+      <div class="card-info"><div class="card-name">スズカ</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/a13i-MR-miriamu.html">
+      <img class="card-img" src="assist-cards/a13i-MR-miriamu.png" alt="ミリアム">
+      <div class="card-info"><div class="card-name">ミリアム</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/e12i-MR-raburesu.html">
+      <img class="card-img" src="assist-cards/e12i-MR-raburesu.png" alt="ラブレス">
+      <div class="card-info"><div class="card-name">ラブレス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="MR" href="cards/d11g-MR-ratatosuku.html">
+      <img class="card-img" src="assist-cards/d11g-MR-ratatosuku.png" alt="ラタトスク">
+      <div class="card-info"><div class="card-name">ラタトスク</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+</footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+function filterCards(rarity, event) {
+  const cards = document.querySelectorAll('.card');
+  const btns = document.querySelectorAll('.filter-btn');
+  btns.forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  cards.forEach(card => {
+    card.style.display = (rarity === 'all' || card.dataset.rarity === rarity) ? 'block' : 'none';
+  });
+}
+
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    const id = href.replace('cards/', '').replace('.html', '');
+    window.location.href = 'cards/card.html#' + id;
+  });
+});
+
+// カード情報をレアリティ+名前1行 & 総合評価表示に再構成（まず「-」で初期化）
+document.querySelectorAll('.card').forEach(card => {
+  const info = card.querySelector('.card-info');
+  if (!info) return;
+  const nameEl = info.querySelector('.card-name');
+  const rarityEl = info.querySelector('.rarity');
+  if (!nameEl || !rarityEl) return;
+
+  // data-* 属性に名前・レアリティのクラスを保存しておく
+  info.dataset.name = nameEl.textContent;
+  info.dataset.rarityClass = rarityEl.className;
+  info.dataset.rarityText = rarityEl.textContent;
+
+  info.innerHTML = `
+    <div class="card-name-row">
+      <span class="${rarityEl.className}">${rarityEl.textContent}</span>
+      <span class="card-name">${nameEl.textContent}</span>
+    </div>
+    <div class="card-score">総合評価 <span class="score-val">-</span></div>
+  `;
+});
+
+// Firestoreから全カードのスコアを一括取得して更新
+(async () => {
+  try {
+    const snapshot = await db.collection('cards').get();
+    const allScores = {};
+    snapshot.forEach(doc => {
+      allScores[doc.id] = doc.data();
+    });
+
+    document.querySelectorAll('.card').forEach(card => {
+      const href = card.getAttribute('href');
+      const cardId = href.replace('cards/', '').replace('.html', '');
+      const data = allScores[cardId];
+      if (!data || !data.ratings) return;
+
+      const vals = ['ikusei', 'karyo', 'battle', 'ta']
+        .map(k => data.ratings[k])
+        .filter(v => v !== null && v !== undefined);
+      if (vals.length === 0) return;
+
+      const avg = vals.reduce((a, b) => a + parseFloat(b), 0) / vals.length;
+      const sogoText = (Math.floor(avg * 10) / 10).toFixed(1);
+
+      const scoreEl = card.querySelector('.score-val');
+      if (scoreEl) scoreEl.textContent = sogoText;
+    });
+  } catch (e) {
+    console.error('スコア読み込みエラー:', e);
+  }
+})();
+</script>
+
+</body>
+</html>

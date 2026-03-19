@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "LINEモンスターファーム徹底攻略",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "3002", "--directory", "C:/Users/KCE/Desktop/LINEモンスターファーム徹底攻略"],
+      "port": 3002
+    }
+  ]
+}

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>管理者ページ | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .admin-wrap {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .admin-card {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      padding: 30px;
+      margin-bottom: 20px;
+    }
+    .admin-title {
+      font-size: 22px;
+      font-weight: bold;
+      color: #1a1a2e;
+      border-left: 5px solid #f0a500;
+      padding-left: 14px;
+      margin-bottom: 20px;
+    }
+    .admin-subtitle {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    .admin-desc {
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+    .admin-desc ol {
+      margin: 8px 0 0 20px;
+      padding: 0;
+    }
+    .admin-desc li { margin-bottom: 4px; }
+    .admin-desc code {
+      background: #f5f5f5;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 12px;
+      color: #c0392b;
+    }
+    .status-box {
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .status-row:last-child { margin-bottom: 0; }
+    .status-label { color: #555; }
+    .status-val { font-weight: bold; color: #1a1a2e; }
+    .status-val.highlight { color: #e07b00; font-size: 18px; }
+
+    .export-btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s;
+      margin-bottom: 12px;
+    }
+    .export-btn:hover { background: #d4920a; }
+    .export-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+    .clear-btn {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background: none;
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .clear-btn:hover { background: #ffeaea; }
+    .clear-btn:disabled { color: #ccc; border-color: #ccc; cursor: not-allowed; }
+
+    .card-data-list {
+      margin-top: 16px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .card-data-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 13px;
+    }
+    .card-data-item:last-child { border-bottom: none; }
+    .card-data-img {
+      width: 40px;
+      height: 40px;
+      object-fit: cover;
+      border-radius: 6px;
+      background: #f0f0f0;
+      flex-shrink: 0;
+    }
+    .card-data-info { flex: 1; }
+    .card-data-name { font-weight: bold; color: #1a1a2e; }
+    .card-data-meta { color: #888; font-size: 12px; margin-top: 2px; }
+    .data-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-right: 3px;
+    }
+    .badge-local { background: #fff3e0; color: #e07b00; }
+    .badge-published { background: #e8f5e9; color: #388e3c; }
+    .badge-none { background: #f5f5f5; color: #aaa; }
+
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+    .auth-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px;
+      text-align: center;
+      max-width: 320px;
+      width: 90%;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    }
+    .auth-box h2 { font-size: 20px; margin-bottom: 8px; color: #1a1a2e; }
+    .auth-box p { font-size: 14px; color: #777; margin-bottom: 20px; }
+    .auth-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      text-align: center;
+      margin-bottom: 12px;
+      box-sizing: border-box;
+    }
+    .auth-input:focus { outline: none; border-color: #f0a500; }
+    .auth-submit {
+      width: 100%;
+      padding: 10px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .auth-submit:hover { background: #d4920a; }
+    .auth-error { color: #e74c3c; font-size: 13px; margin-top: 8px; }
+
+    .success-msg {
+      display: none;
+      background: #e8f5e9;
+      border: 1px solid #81c784;
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #2e7d32;
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .success-msg.show { display: block; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #f0a500;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .back-btn:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<!-- 認証オーバーレイ -->
+<div id="auth-overlay" class="auth-overlay">
+  <div class="auth-box">
+    <h2>🔐 管理者ページ</h2>
+    <p>編集パスワードを入力してください</p>
+    <input id="auth-input" class="auth-input" type="password" placeholder="パスワード"
+      onkeydown="if(event.key==='Enter') doAuth()">
+    <button class="auth-submit" onclick="doAuth()">ログイン</button>
+    <div id="auth-error" class="auth-error"></div>
+  </div>
+</div>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="assist.html" class="active">アシスト</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <div class="admin-wrap" id="admin-content" style="display:none">
+    <a class="back-btn" href="assist.html">← アシストカード一覧に戻る</a>
+
+    <!-- エクスポートセクション -->
+    <div class="admin-card">
+      <div class="admin-title">📤 データエクスポート</div>
+
+      <div class="admin-desc">
+        このサイトの評価・編成・解説データを全訪問者に見せるには、以下の手順が必要です。
+        <ol>
+          <li>各カードの詳細ページで「✏️ 編集」してデータを入力・保存する</li>
+          <li>このページの「エクスポート」ボタンを押して <code>editorial-data.js</code> をダウンロード</li>
+          <li>ダウンロードしたファイルを <code>cards/</code> フォルダに配置してGitHubにコミット</li>
+          <li>GitHub Pagesにデプロイされると、全訪問者にデータが反映される ✅</li>
+        </ol>
+      </div>
+
+      <div class="status-box" id="status-box">
+        <div class="status-row">
+          <span class="status-label">ローカルに未公開の変更があるカード</span>
+          <span class="status-val highlight" id="local-count">-</span>
+        </div>
+        <div class="status-row">
+          <span class="status-label">公開済みデータのあるカード（editorial-data.js）</span>
+          <span class="status-val" id="published-count">-</span>
+        </div>
+        <div class="status-row">
+          <span class="status-label">エクスポート後の合計カード数</span>
+          <span class="status-val" id="total-count">-</span>
+        </div>
+      </div>
+
+      <div id="success-msg" class="success-msg">
+        ✅ ダウンロードしました！<br>
+        ファイルを <code>cards/</code> フォルダに配置してGitHubにコミットしてください。<br>
+        コミット後にGitHub Pagesが更新されると、全訪問者にデータが反映されます。
+      </div>
+
+      <button class="export-btn" id="export-btn" onclick="doExport()">
+        ⬇️ editorial-data.js をダウンロード
+      </button>
+
+      <button class="clear-btn" id="clear-btn" onclick="doClear()">
+        🗑️ ローカルの未公開データをすべてクリア（コミット後に実行）
+      </button>
+    </div>
+
+    <!-- カード別データ一覧 -->
+    <div class="admin-card">
+      <div class="admin-title">📋 カード別データ状況</div>
+      <div id="card-data-list" class="card-data-list">
+        <p style="color:#aaa; font-size:14px;">読み込み中...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>LINEモンスターファーム徹底攻略 - ファンサイト（非公式）</p>
+</footer>
+
+<script src="cards/cards-data.js"></script>
+<script src="cards/editorial-data.js"></script>
+<script>
+  // ★ カード詳細ページと同じパスワード ★
+  const EDIT_PASSWORD = 'mf2024';
+
+  let authed = false;
+
+  function doAuth() {
+    const pw = document.getElementById('auth-input').value;
+    if (pw === EDIT_PASSWORD) {
+      authed = true;
+      document.getElementById('auth-overlay').style.display = 'none';
+      document.getElementById('admin-content').style.display = 'block';
+      init();
+    } else {
+      document.getElementById('auth-error').textContent = 'パスワードが違います';
+    }
+  }
+
+  // Enterキーで認証
+  document.getElementById('auth-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doAuth();
+  });
+
+  // --- データ収集 ---
+
+  function getAllCardIds() {
+    return Object.keys(cardsData);
+  }
+
+  function getLocalData(cid) {
+    const ratings = localStorage.getItem('ratings_' + cid);
+    const formations = localStorage.getItem('formations_' + cid);
+    const explanation = localStorage.getItem('explanation_' + cid);
+    return {
+      ratings: ratings ? JSON.parse(ratings) : null,
+      formations: formations ? JSON.parse(formations) : null,
+      explanation: explanation
+    };
+  }
+
+  function getPublishedData(cid) {
+    return (typeof editorialData !== 'undefined' && editorialData[cid]) ? editorialData[cid] : null;
+  }
+
+  function hasLocalChanges(cid) {
+    return (
+      localStorage.getItem('ratings_' + cid) !== null ||
+      localStorage.getItem('formations_' + cid) !== null ||
+      localStorage.getItem('explanation_' + cid) !== null
+    );
+  }
+
+  function hasPublishedData(cid) {
+    const ed = getPublishedData(cid);
+    if (!ed) return false;
+    const hasRatings = ed.ratings && Object.values(ed.ratings).some(v => v !== null);
+    const hasFormations = ed.formations && ed.formations.length > 0;
+    const hasExplanation = ed.explanation && ed.explanation.trim();
+    return hasRatings || hasFormations || hasExplanation;
+  }
+
+  function buildMergedData() {
+    // 公開済みをベースにローカルでオーバーライド
+    const merged = typeof editorialData !== 'undefined'
+      ? JSON.parse(JSON.stringify(editorialData))
+      : {};
+
+    getAllCardIds().forEach(cid => {
+      const local = getLocalData(cid);
+      if (local.ratings !== null || local.formations !== null || local.explanation !== null) {
+        if (!merged[cid]) merged[cid] = {};
+        if (local.ratings !== null) merged[cid].ratings = local.ratings;
+        if (local.formations !== null) merged[cid].formations = local.formations;
+        if (local.explanation !== null) merged[cid].explanation = local.explanation;
+      }
+    });
+
+    // 空エントリを削除
+    Object.keys(merged).forEach(cid => {
+      const e = merged[cid];
+      const hasRatings = e.ratings && Object.values(e.ratings).some(v => v !== null);
+      const hasFormations = e.formations && e.formations.length > 0;
+      const hasExplanation = e.explanation && e.explanation.trim();
+      if (!hasRatings && !hasFormations && !hasExplanation) delete merged[cid];
+    });
+
+    return merged;
+  }
+
+  // --- 初期化 ---
+
+  function init() {
+    const allIds = getAllCardIds();
+    let localCount = 0;
+    let publishedCount = 0;
+
+    allIds.forEach(cid => {
+      if (hasLocalChanges(cid)) localCount++;
+      if (hasPublishedData(cid)) publishedCount++;
+    });
+
+    const merged = buildMergedData();
+    const totalCount = Object.keys(merged).length;
+
+    document.getElementById('local-count').textContent = localCount + ' 枚';
+    document.getElementById('published-count').textContent = publishedCount + ' 枚';
+    document.getElementById('total-count').textContent = totalCount + ' 枚';
+
+    document.getElementById('export-btn').disabled = totalCount === 0;
+    document.getElementById('clear-btn').disabled = localCount === 0;
+
+    renderCardList(allIds);
+  }
+
+  function renderCardList(allIds) {
+    const list = document.getElementById('card-data-list');
+
+    const items = allIds.map(cid => {
+      const c = cardsData[cid];
+      const hasLocal = hasLocalChanges(cid);
+      const hasPublished = hasPublishedData(cid);
+
+      if (!hasLocal && !hasPublished) return null; // データなしは非表示
+
+      const imgSrc = `cards/assist-cards/${cid}.${c.ext}`;
+
+      let badge = '';
+      if (hasLocal) badge += `<span class="data-badge badge-local">ローカル（未公開）</span>`;
+      if (hasPublished) badge += `<span class="data-badge badge-published">公開済み</span>`;
+
+      // データの中身サマリ
+      const localData = getLocalData(cid);
+      const ed = getPublishedData(cid);
+      const ratings = localData.ratings || (ed && ed.ratings) || null;
+      const formations = localData.formations || (ed && ed.formations) || [];
+      const explanation = localData.explanation !== null ? localData.explanation : (ed && ed.explanation) || '';
+
+      let metaParts = [];
+      if (ratings && Object.values(ratings).some(v => v !== null)) {
+        const vals = Object.values(ratings).filter(v => v !== null).map(Number);
+        const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
+        metaParts.push(`評価 ${(Math.floor(avg * 10) / 10).toFixed(1)}`);
+      }
+      if (formations && formations.length > 0) metaParts.push(`編成 ${formations.length}件`);
+      if (explanation && explanation.trim()) metaParts.push('解説あり');
+
+      return `<div class="card-data-item">
+        <img class="card-data-img" src="${imgSrc}" alt="${c.name}" onerror="this.style.background='#ddd'">
+        <div class="card-data-info">
+          <div class="card-data-name">${c.name} <span style="font-size:11px;color:#aaa;">(${c.rarity})</span></div>
+          <div class="card-data-meta">${badge}</div>
+          ${metaParts.length ? `<div class="card-data-meta" style="color:#666;">${metaParts.join(' / ')}</div>` : ''}
+        </div>
+        <a href="cards/card.html#${cid}" style="font-size:12px;color:#f0a500;">詳細 →</a>
+      </div>`;
+    }).filter(Boolean);
+
+    if (items.length === 0) {
+      list.innerHTML = '<p style="color:#aaa;font-size:14px;">データのあるカードがありません。<br>各カード詳細ページで「✏️ 編集」から入力してください。</p>';
+    } else {
+      list.innerHTML = items.join('');
+    }
+  }
+
+  // --- エクスポート ---
+
+  function doExport() {
+    const merged = buildMergedData();
+    const now = new Date();
+    const dateStr = now.toLocaleDateString('ja-JP') + ' ' + now.toLocaleTimeString('ja-JP');
+
+    const json = JSON.stringify(merged, null, 2);
+
+    const content = `// LINEモンスターファーム徹底攻略 - 編集データ
+// このファイルは admin.html の「エクスポート」ボタンで自動生成されます。
+// 手動で編集しないでください。
+// エクスポート日時: ${dateStr}
+
+const editorialData = ${json};
+`;
+
+    const blob = new Blob([content], { type: 'text/javascript;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'editorial-data.js';
+    a.click();
+    URL.revokeObjectURL(url);
+
+    document.getElementById('success-msg').classList.add('show');
+  }
+
+  // --- ローカルクリア ---
+
+  function doClear() {
+    const count = getAllCardIds().filter(cid => hasLocalChanges(cid)).length;
+    if (count === 0) {
+      alert('クリアするローカルデータがありません。');
+      return;
+    }
+
+    const ok = confirm(
+      `${count}枚のカードのローカルデータをクリアします。\n` +
+      'GitHubにコミット済みであることを確認してから実行してください。\n\n' +
+      'よろしいですか？'
+    );
+    if (!ok) return;
+
+    getAllCardIds().forEach(cid => {
+      localStorage.removeItem('ratings_' + cid);
+      localStorage.removeItem('formations_' + cid);
+      localStorage.removeItem('explanation_' + cid);
+    });
+
+    alert('ローカルデータをクリアしました。');
+    init();
+  }
+</script>
+</body>
+</html>
