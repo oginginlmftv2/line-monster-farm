@@ -433,8 +433,7 @@ document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', function(e) {
     e.preventDefault();
     const href = this.getAttribute('href');
-    const id = href.replace('cards/', '').replace('.html', '');
-    window.location.href = 'cards/card.html#' + id;
+    window.location.href = href;
   });
 });
 
