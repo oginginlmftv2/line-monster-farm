@@ -148,6 +148,16 @@
     <button class="filter-btn limited"  data-filter="limited">限定のみ</button>
   </div>
 
+  <div class="filter-bar" id="monFilterBar" style="margin-top:8px;">
+    <button class="filter-btn active" data-mon="all">すべて</button>
+    <button class="filter-btn" data-mon="獣">獣</button>
+    <button class="filter-btn" data-mon="創造">創造</button>
+    <button class="filter-btn" data-mon="魔族">魔族</button>
+    <button class="filter-btn" data-mon="幻霊">幻霊</button>
+    <button class="filter-btn" data-mon="怪物">怪物</button>
+    <button class="filter-btn" data-mon="無機">無機</button>
+  </div>
+
   <div class="monster-grid" id="monsterGrid">
     <!-- JS で生成 -->
   </div>
@@ -192,6 +202,7 @@ function buildGrid(assignments) {
     card.className = 'monster-card';
     card.dataset.aura = m.aura;
     card.dataset.limited = m.limited ? '1' : '0';
+    card.dataset.mon = m.mon || '';
 
     card.innerHTML = `
       <div class="monster-img-wrap">
@@ -212,27 +223,41 @@ function buildGrid(assignments) {
 
 /* ---- フィルター ---- */
 let currentFilter = 'all';
+let currentMon = 'all';
 
 document.getElementById('filterBar').addEventListener('click', function(e) {
   const btn = e.target.closest('.filter-btn');
   if (!btn) return;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  this.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   currentFilter = btn.dataset.filter;
   applyFilter();
 });
 
+document.getElementById('monFilterBar').addEventListener('click', function(e) {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  this.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentMon = btn.dataset.mon;
+  applyFilter();
+});
+
 function applyFilter() {
   document.querySelectorAll('.monster-card').forEach(card => {
-    let show = false;
+    // オーラ・限定フィルター
+    let auraOk = false;
     if (currentFilter === 'all') {
-      show = true;
+      auraOk = true;
     } else if (currentFilter === 'limited') {
-      show = card.dataset.limited === '1';
+      auraOk = card.dataset.limited === '1';
     } else {
-      show = card.dataset.aura === currentFilter;
+      auraOk = card.dataset.aura === currentFilter;
     }
-    card.style.display = show ? '' : 'none';
+    // モン類フィルター
+    const monOk = currentMon === 'all' || card.dataset.mon === currentMon;
+
+    card.style.display = (auraOk && monOk) ? '' : 'none';
   });
 }
 
