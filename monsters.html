@@ -5,6 +5,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>モンスター一覧 | LINEモンスターファーム徹底攻略</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* モンスターグリッド */
+    .monster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+    }
+    @media (max-width: 600px) {
+      .monster-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 8px;
+      }
+    }
+
+    /* モンスターカード */
+    .monster-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-align: center;
+      cursor: default;
+    }
+    .monster-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+    }
+
+    .monster-img-wrap {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      background: #eee;
+      overflow: hidden;
+    }
+    .monster-img-wrap img {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* 限定バッジ (画像右上) */
+    .badge-limited {
+      position: absolute;
+      top: 4px; right: 4px;
+      background: linear-gradient(135deg, #e11d48, #f59e0b);
+      color: #fff;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 5px;
+      border-radius: 4px;
+      line-height: 1.3;
+      white-space: nowrap;
+      z-index: 1;
+    }
+
+    .monster-info {
+      padding: 7px 6px 8px;
+    }
+
+    /* オーラバッジ (カラードット + テキスト) */
+    .aura-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+    .aura-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .aura-赤  .aura-dot { background: #e53e3e; }
+    .aura-青  .aura-dot { background: #3182ce; }
+    .aura-黄  .aura-dot { background: #d69e2e; }
+    .aura-黒  .aura-dot { background: #4a4a4a; }
+    .aura-白  .aura-dot { background: #a0aec0; border: 1px solid #ccc; }
+    .aura-緑  .aura-dot { background: #38a169; }
+    .aura-赤  { color: #c53030; }
+    .aura-青  { color: #2b6cb0; }
+    .aura-黄  { color: #b7791f; }
+    .aura-黒  { color: #2d2d2d; }
+    .aura-白  { color: #718096; }
+    .aura-緑  { color: #276749; }
+
+    .monster-name {
+      font-size: 12px;
+      font-weight: bold;
+      line-height: 1.3;
+      word-break: break-all;
+    }
+
+    /* フィルターボタン: オーラ色 */
+    .filter-btn.aura-赤  { border-color: #e53e3e; color: #e53e3e; }
+    .filter-btn.aura-赤:hover, .filter-btn.aura-赤.active  { background: #e53e3e; color: #fff; border-color: #e53e3e; }
+    .filter-btn.aura-青  { border-color: #3182ce; color: #3182ce; }
+    .filter-btn.aura-青:hover, .filter-btn.aura-青.active  { background: #3182ce; color: #fff; border-color: #3182ce; }
+    .filter-btn.aura-黄  { border-color: #d69e2e; color: #b7791f; }
+    .filter-btn.aura-黄:hover, .filter-btn.aura-黄.active  { background: #d69e2e; color: #fff; border-color: #d69e2e; }
+    .filter-btn.aura-黒  { border-color: #4a4a4a; color: #4a4a4a; }
+    .filter-btn.aura-黒:hover, .filter-btn.aura-黒.active  { background: #4a4a4a; color: #fff; border-color: #4a4a4a; }
+    .filter-btn.aura-白  { border-color: #718096; color: #718096; }
+    .filter-btn.aura-白:hover, .filter-btn.aura-白.active  { background: #718096; color: #fff; border-color: #718096; }
+    .filter-btn.aura-緑  { border-color: #38a169; color: #276749; }
+    .filter-btn.aura-緑:hover, .filter-btn.aura-緑.active  { background: #38a169; color: #fff; border-color: #38a169; }
+    .filter-btn.limited { border-color: #e11d48; color: #e11d48; }
+    .filter-btn.limited:hover, .filter-btn.limited.active { background: #e11d48; color: #fff; border-color: #e11d48; }
+  </style>
 </head>
 <body>
 
@@ -19,39 +134,123 @@
   </div>
 </header>
 
-<main>
-  <div class="section">
-    <div class="section-title">モンスター一覧</div>
-    <table>
-      <thead>
-        <tr>
-          <th>画像</th>
-          <th>名前</th>
-          <th>レアリティ</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- ここにモンスターのデータを追加していく -->
-        <!-- 例：
-        <tr>
-          <td><img src="images/monster_001.png" alt="モンスター名"></td>
-          <td>モンスター名</td>
-          <td><span class="rarity rarity-SSR">SSR</span></td>
-        </tr>
-        -->
-        <tr>
-          <td><img src="" alt="準備中" style="background:#ddd;"></td>
-          <td>（データ準備中）</td>
-          <td><span class="rarity rarity-SSR">SSR</span></td>
-        </tr>
-      </tbody>
-    </table>
+<div class="container">
+  <h1 class="page-title">モンスター一覧</h1>
+
+  <div class="filter-bar" id="filterBar">
+    <button class="filter-btn active" data-filter="all">すべて</button>
+    <button class="filter-btn aura-赤"  data-filter="赤">赤</button>
+    <button class="filter-btn aura-青"  data-filter="青">青</button>
+    <button class="filter-btn aura-黄"  data-filter="黄">黄</button>
+    <button class="filter-btn aura-黒"  data-filter="黒">黒</button>
+    <button class="filter-btn aura-白"  data-filter="白">白</button>
+    <button class="filter-btn aura-緑"  data-filter="緑">緑</button>
+    <button class="filter-btn limited"  data-filter="limited">限定のみ</button>
   </div>
-</main>
+
+  <div class="monster-grid" id="monsterGrid">
+    <!-- JS で生成 -->
+  </div>
+</div>
 
 <footer>
-  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
 </footer>
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="monsters-data.js"></script>
+
+<script>
+/* ---- Firebase 初期化 ---- */
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+/* ---- GameWith 画像 URL ---- */
+function gwUrl(gwImg) {
+  return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${gwImg}.png`;
+}
+
+/* ---- グリッド描画 ---- */
+function buildGrid(assignments) {
+  const grid = document.getElementById('monsterGrid');
+  grid.innerHTML = '';
+
+  monstersData.forEach((m, idx) => {
+    const localFile = assignments[String(idx)] || null;
+    const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
+
+    const card = document.createElement('div');
+    card.className = 'monster-card';
+    card.dataset.aura = m.aura;
+    card.dataset.limited = m.limited ? '1' : '0';
+
+    card.innerHTML = `
+      <div class="monster-img-wrap">
+        <img src="${imgSrc}" alt="${m.name}"
+             onerror="this.src='${gwUrl(m.gwImg)}'">
+        ${m.limited ? `<span class="badge-limited">限定</span>` : ''}
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-${m.aura}">
+          <span class="aura-dot"></span>${m.aura}
+        </div>
+        <div class="monster-name">${m.name}</div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+/* ---- フィルター ---- */
+let currentFilter = 'all';
+
+document.getElementById('filterBar').addEventListener('click', function(e) {
+  const btn = e.target.closest('.filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentFilter = btn.dataset.filter;
+  applyFilter();
+});
+
+function applyFilter() {
+  document.querySelectorAll('.monster-card').forEach(card => {
+    let show = false;
+    if (currentFilter === 'all') {
+      show = true;
+    } else if (currentFilter === 'limited') {
+      show = card.dataset.limited === '1';
+    } else {
+      show = card.dataset.aura === currentFilter;
+    }
+    card.style.display = show ? '' : 'none';
+  });
+}
+
+/* ---- 起動: Firestore から画像割り当てを取得してグリッド生成 ---- */
+(async () => {
+  let assignments = {};
+  try {
+    const doc = await db.collection('monsterImages').doc('assignments').get();
+    if (doc.exists) {
+      assignments = doc.data() || {};
+    }
+  } catch (e) {
+    console.warn('Firestore 読み込みエラー (フォールバック使用):', e);
+  }
+  buildGrid(assignments);
+})();
+</script>
 
 </body>
 </html>
