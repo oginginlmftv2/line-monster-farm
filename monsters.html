@@ -163,7 +163,6 @@
 <script src="monsters-data.js"></script>
 
 <script>
-/* ---- Firebase 初期化 ---- */
 const firebaseConfig = {
   apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
   authDomain: "line-monster-farm.firebaseapp.com",
@@ -186,7 +185,7 @@ function buildGrid(assignments) {
   grid.innerHTML = '';
 
   monstersData.forEach((m, idx) => {
-    const localFile = assignments[String(idx)] || null;
+    const localFile = m.localImg || (assignments && assignments[String(idx)]) || null;
     const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
 
     const card = document.createElement('div');
@@ -237,19 +236,10 @@ function applyFilter() {
   });
 }
 
-/* ---- 起動: Firestore から画像割り当てを取得してグリッド生成 ---- */
-(async () => {
-  let assignments = {};
-  try {
-    const doc = await db.collection('monsterImages').doc('assignments').get();
-    if (doc.exists) {
-      assignments = doc.data() || {};
-    }
-  } catch (e) {
-    console.warn('Firestore 読み込みエラー (フォールバック使用):', e);
-  }
-  buildGrid(assignments);
-})();
+/* ---- 起動 ---- */
+db.collection('monsterImages').doc('assignments').get()
+  .then(doc => buildGrid(doc.exists ? doc.data() : {}))
+  .catch(() => buildGrid({}));
 </script>
 
 </body>

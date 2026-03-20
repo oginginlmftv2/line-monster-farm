@@ -522,6 +522,10 @@
                 <th>総合評価</th>
                 <td><div class="score-display" id="disp-sogo"><span class="score-num empty">読込中</span></div></td>
               </tr>
+              <tr class="sogo-row">
+                <th>一致評価</th>
+                <td><div class="score-display" id="disp-itti"><span class="score-num empty">読込中</span></div></td>
+              </tr>
               <tr>
                 <th>総合力育成</th>
                 <td><div class="score-display" id="disp-ikusei"></div></td>
@@ -543,15 +547,6 @@
         </div>
       </div>
 
-      <!-- おすすめ編成 -->
-      <div class="formation-section">
-        <div class="formation-header">
-          <span class="formation-title-label">おすすめ編成</span>
-          <button class="edit-btn" id="formEditBtn" onclick="startFormEdit()">✏️ 編集</button>
-        </div>
-        <div id="formation-content"><div class="formation-empty">読込中...</div></div>
-      </div>
-
       <!-- 評価解説 -->
       <div class="explanation-section">
         <div class="explanation-header">
@@ -559,6 +554,15 @@
           <button class="edit-btn" id="explEditBtn" onclick="startExplEdit()">✏️ 編集</button>
         </div>
         <div id="explanation-body" class="explanation-body empty">読込中...</div>
+      </div>
+
+      <!-- おすすめ編成 -->
+      <div class="formation-section">
+        <div class="formation-header">
+          <span class="formation-title-label">おすすめ編成</span>
+          <button class="edit-btn" id="formEditBtn" onclick="startFormEdit()">✏️ 編集</button>
+        </div>
+        <div id="formation-content"><div class="formation-empty">読込中...</div></div>
       </div>
     `;
 
@@ -598,6 +602,13 @@
     return Math.floor(avg * 10) / 10;
   }
 
+  function calcItti(r) {
+    const vals = ['ikusei', 'karyo', 'battle'].map(k => r[k]).filter(v => v !== null && v !== '');
+    if (vals.length === 0) return null;
+    const avg = vals.reduce((a, b) => a + parseFloat(b), 0) / vals.length;
+    return Math.floor(avg * 10) / 10;
+  }
+
   function scoreHTML(val) {
     if (val === null || val === '') {
       return `<span class="score-num empty">-</span><span class="score-max"> / 5.0</span>`;
@@ -613,7 +624,9 @@
   function loadAndDisplayRatings() {
     const r = getRatings();
     const sogo = calcSogo(r);
+    const itti = calcItti(r);
     document.getElementById('disp-sogo').innerHTML = scoreHTML(sogo);
+    document.getElementById('disp-itti').innerHTML = scoreHTML(itti);
     SCORE_KEYS.forEach(k => {
       document.getElementById('disp-' + k).innerHTML = scoreHTML(r[k]);
     });
@@ -657,6 +670,7 @@
       temp[k] = v !== '' ? parseFloat(v) : null;
     });
     document.getElementById('disp-sogo').innerHTML = scoreHTML(calcSogo(temp));
+    document.getElementById('disp-itti').innerHTML = scoreHTML(calcItti(temp));
   }
 
   async function saveEdit() {
