@@ -419,6 +419,24 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// カード名行のスタイルを動的に追加
+const style = document.createElement('style');
+style.textContent = `
+  .card-name-row {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .card-name-row .card-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
+document.head.appendChild(style);
+
 function filterCards(rarity, event) {
   const cards = document.querySelectorAll('.card');
   const btns = document.querySelectorAll('.filter-btn');
@@ -456,6 +474,7 @@ document.querySelectorAll('.card').forEach(card => {
       <span class="card-name">${nameEl.textContent}</span>
     </div>
     <div class="card-score">総合評価 <span class="score-val">-</span></div>
+    <div class="card-score">一致評価 <span class="itti-val">-</span></div>
   `;
 });
 
@@ -484,6 +503,15 @@ document.querySelectorAll('.card').forEach(card => {
 
       const scoreEl = card.querySelector('.score-val');
       if (scoreEl) scoreEl.textContent = sogoText;
+
+      const ittiVals = ['ikusei', 'karyo', 'battle']
+        .map(k => data.ratings[k])
+        .filter(v => v !== null && v !== undefined);
+      if (ittiVals.length > 0) {
+        const ittiAvg = ittiVals.reduce((a, b) => a + parseFloat(b), 0) / ittiVals.length;
+        const ittiEl = card.querySelector('.itti-val');
+        if (ittiEl) ittiEl.textContent = (Math.floor(ittiAvg * 10) / 10).toFixed(1);
+      }
     });
   } catch (e) {
     console.error('スコア読み込みエラー:', e);

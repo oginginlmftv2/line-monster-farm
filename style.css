@@ -274,12 +274,16 @@ td img {
   color: #999;
   margin-top: 2px;
 }
-.card-score .score-val {
+.card-score .score-val,
+.card-score .itti-val {
   font-weight: bold;
   color: #e07b00;
   font-size: 22px;
   line-height: 1;
   vertical-align: middle;
+}
+.card-score .itti-val {
+  font-size: 17px;
 }
 
 /* 評価解説セクション */
