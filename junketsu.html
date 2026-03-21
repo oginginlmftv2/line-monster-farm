@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>純血相性検索 | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-hero {
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #fff;
+      text-align: center;
+      padding: 28px 20px 22px;
+      border-bottom: 3px solid #f0a500;
+    }
+    .page-hero h1 { font-size: 22px; margin-bottom: 6px; }
+    .page-hero p  { font-size: 13px; color: #aaa; }
+
+    /* タブ */
+    .tab-bar {
+      display: flex;
+      background: #fff;
+      border-bottom: 2px solid #e0e0e0;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px 8px;
+      border: none;
+      background: transparent;
+      font-size: 14px;
+      cursor: pointer;
+      color: #666;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all .2s;
+    }
+    .tab-btn.active {
+      color: #f0a500;
+      border-bottom-color: #f0a500;
+      font-weight: bold;
+    }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* 共通セクション */
+    .inner { max-width: 900px; margin: 0 auto; padding: 20px 14px; }
+
+    /* 血統バッジ */
+    .badge {
+      display: inline-block;
+      padding: 3px 9px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      color: #fff;
+      white-space: nowrap;
+    }
+
+    /* 検索フォーム */
+    .search-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      margin-bottom: 18px;
+    }
+    .search-box h2 { font-size: 16px; margin-bottom: 14px; color: #333; }
+    .selector-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+    .selector-row label { font-size: 13px; color: #666; min-width: 50px; }
+    .type-select {
+      flex: 1;
+      min-width: 140px;
+      padding: 8px 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #fff;
+    }
+    .result-display {
+      margin-top: 16px;
+      text-align: center;
+    }
+    .compat-value {
+      font-size: 52px;
+      font-weight: bold;
+      line-height: 1;
+    }
+    .compat-label { font-size: 13px; color: #888; margin-top: 4px; }
+    .value-bar-wrap {
+      margin: 10px auto 0;
+      max-width: 300px;
+      height: 12px;
+      background: #eee;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .value-bar {
+      height: 100%;
+      border-radius: 6px;
+      transition: width .4s;
+    }
+
+    /* ランキング */
+    .rank-section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 18px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      margin-bottom: 14px;
+    }
+    .rank-section h3 {
+      font-size: 15px;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #f0a500;
+      color: #333;
+    }
+    .rank-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .rank-table th {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 7px 10px;
+      text-align: left;
+    }
+    .rank-table td {
+      padding: 6px 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .rank-table tr:last-child td { border-bottom: none; }
+    .rank-table tr:nth-child(even) td { background: #fafafa; }
+    .rank-num {
+      width: 32px;
+      text-align: center;
+      font-weight: bold;
+      color: #aaa;
+      font-size: 12px;
+    }
+    .rank-num.gold   { color: #f0a500; }
+    .rank-num.silver { color: #aaa; }
+    .rank-num.bronze { color: #cd7f32; }
+    .rank-val {
+      text-align: right;
+      font-weight: bold;
+      font-size: 15px;
+      width: 50px;
+    }
+    .rank-val.high  { color: #e53935; }
+    .rank-val.mid   { color: #f0a500; }
+    .rank-val.low   { color: #555; }
+
+    /* 相性表 */
+    .matrix-wrap {
+      overflow-x: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+      padding: 10px;
+    }
+    .matrix-table {
+      border-collapse: collapse;
+      font-size: 11px;
+      white-space: nowrap;
+    }
+    .matrix-table th, .matrix-table td {
+      border: 1px solid #ddd;
+      padding: 4px 5px;
+      text-align: center;
+    }
+    .matrix-table th.row-label {
+      background: #1a1a2e;
+      color: #fff;
+      min-width: 72px;
+      text-align: left;
+      padding-left: 6px;
+    }
+    .matrix-table th.col-label {
+      background: #1a1a2e;
+      color: #fff;
+      min-width: 44px;
+      font-size: 10px;
+    }
+    .matrix-table td.same { background: #e0e0e0; color: #888; }
+    .cell-h  { background: #ffe0e0; color: #c00; font-weight: bold; }
+    .cell-m  { background: #fff3cc; color: #a60; }
+    .cell-l  { background: #e8f5e9; color: #2e7d32; }
+    .cell-ll { background: #e3f2fd; color: #1565c0; }
+
+    .notice {
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* ハイライト検索セル */
+    .cell-highlight {
+      outline: 3px solid #f0a500;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* 血統色定義 */
+    .t-pixie    { background:#e91e8c; }
+    .t-dragon   { background:#d32f2f; }
+    .t-kentaur  { background:#e64a19; }
+    .t-hengar   { background:#795548; }
+    .t-golem    { background:#4e342e; }
+    .t-dino     { background:#558b2f; }
+    .t-arrow    { background:#9e9d24; }
+    .t-liger    { background:#f9a825; }
+    .t-ham      { background:#fb8c00; }
+    .t-gari     { background:#aab300; }
+    .t-gujira   { background:#00897b; }
+    .t-nyaa     { background:#f06292; }
+    .t-hinotori { background:#bf360c; }
+    .t-suezo    { background:#90a4ae; }
+    .t-mocchi   { background:#ab47bc; }
+    .t-joker    { background:#546e7a; }
+    .t-nendoro  { background:#78909c; }
+    .t-gel      { background:#607d8b; }
+    .t-undine   { background:#1976d2; }
+    .t-plant    { background:#388e3c; }
+    .t-monolith { background:#212121; }
+    .t-worm     { background:#6d4c41; }
+    .t-naaga    { background:#7b1fa2; }
+    .t-kawazu   { background:#00838f; }
+    .t-kooby    { background:#283593; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+      <a href="junketsu.html" class="active">純血相性</a>
+    </nav>
+  </div>
+</header>
+
+<div class="page-hero">
+  <h1>純血相性検索ツール</h1>
+  <p>血統ごとの純血相性値を検索・一覧表示します</p>
+</div>
+
+<!-- タブバー -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('search', this)">🔍 相性検索</button>
+  <button class="tab-btn" onclick="switchTab('ranking', this)">📊 ランキング</button>
+  <button class="tab-btn" onclick="switchTab('matrix', this)">📋 相性表</button>
+</div>
+
+<!-- ===================== 相性検索タブ ===================== -->
+<div id="tab-search" class="tab-content active">
+  <div class="inner">
+    <div class="search-box">
+      <h2>親×子の相性値を調べる</h2>
+      <div class="selector-row">
+        <label>親の血統</label>
+        <select id="sel-parent" class="type-select" onchange="updateSearch()">
+          <option value="">選択してください</option>
+        </select>
+      </div>
+      <div class="selector-row">
+        <label>子の血統</label>
+        <select id="sel-child" class="type-select" onchange="updateSearch()">
+          <option value="">選択してください</option>
+        </select>
+      </div>
+      <div id="search-result" class="result-display" style="display:none">
+        <div class="compat-value" id="result-val">-</div>
+        <div class="compat-label" id="result-label"></div>
+        <div class="value-bar-wrap">
+          <div class="value-bar" id="result-bar" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 逆引き：この組み合わせで両方向 -->
+    <div id="reverse-result" style="display:none">
+      <div class="search-box">
+        <h2>逆方向（子親を入れ替え）</h2>
+        <div style="text-align:center">
+          <div style="font-size:13px;color:#888;margin-bottom:6px" id="rev-label"></div>
+          <div class="compat-value" id="rev-val" style="font-size:38px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== ランキングタブ ===================== -->
+<div id="tab-ranking" class="tab-content">
+  <div class="inner">
+    <div class="search-box">
+      <h2>血統を選んでランキング表示</h2>
+      <div class="selector-row">
+        <label>血統</label>
+        <select id="sel-rank" class="type-select" onchange="updateRanking()">
+          <option value="">選択してください</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="ranking-result" style="display:none">
+      <div class="rank-section">
+        <h3 id="rank-parent-title">〇〇が親の時 ランキング</h3>
+        <table class="rank-table">
+          <thead>
+            <tr><th>順位</th><th>子の血統</th><th style="text-align:right">相性値</th></tr>
+          </thead>
+          <tbody id="rank-parent-body"></tbody>
+        </table>
+      </div>
+      <div class="rank-section">
+        <h3 id="rank-child-title">〇〇が子の時 ランキング</h3>
+        <table class="rank-table">
+          <thead>
+            <tr><th>順位</th><th>親の血統</th><th style="text-align:right">相性値</th></tr>
+          </thead>
+          <tbody id="rank-child-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 相性表タブ ===================== -->
+<div id="tab-matrix" class="tab-content">
+  <div class="inner">
+    <p style="font-size:13px;color:#666;margin-bottom:10px">横軸＝親の血統、縦軸＝子の血統。セルをクリックすると値を強調表示します。</p>
+    <p class="notice">
+      <span style="background:#ffe0e0;padding:2px 6px;border-radius:3px;font-size:11px">■ 38以上</span>
+      <span style="background:#fff3cc;padding:2px 6px;border-radius:3px;font-size:11px">■ 32〜37.5</span>
+      <span style="background:#e8f5e9;padding:2px 6px;border-radius:3px;font-size:11px">■ 25〜31.5</span>
+      <span style="background:#e3f2fd;padding:2px 6px;border-radius:3px;font-size:11px">■ 25未満</span>
+    </p>
+    <div class="matrix-wrap" style="margin-top:10px">
+      <table class="matrix-table" id="matrix-tbl"></table>
+    </div>
+  </div>
+</div>
+
+<script>
+// =====================================================
+// データ定義
+// =====================================================
+const TYPES = [
+  'ピクシー','ドラゴン','ケンタウロス','ヘンガー','ゴーレム',
+  'ディノ','アローヘッド','ライガー','ハム','ガリ',
+  'グジラ','ニャー','ヒノトリ','スエゾー','モッチー',
+  'ジョーカー','ネンドロ','ゲル','ウンディーネ','プラント',
+  'モノリス','ワーム','ナーガ','カワズモー','キュービ'
+];
+
+// 各血統のCSSクラス（色）
+const TYPE_COLOR = [
+  't-pixie','t-dragon','t-kentaur','t-hengar','t-golem',
+  't-dino','t-arrow','t-liger','t-ham','t-gari',
+  't-gujira','t-nyaa','t-hinotori','t-suezo','t-mocchi',
+  't-joker','t-nendoro','t-gel','t-undine','t-plant',
+  't-monolith','t-worm','t-naaga','t-kawazu','t-kooby'
+];
+
+// MATRIX[子インデックス][親インデックス] = 相性値
+const MATRIX = [
+  [19.5,16,22,30,38,29,27,24,30.5,33,20,44,19,31,23.5,37,40,26,32,23,26,39.5,34,19,35],   // ピクシー(子)
+  [16.5,16,27,34,40,33,28,17,34.5,37,30,28,25,18,28.5,39,24,30,32,22,36,23.5,38,20,35],   // ドラゴン(子)
+  [24.5,27,16,21,40,17,27,24,32.5,22,34,41,26,31,30.5,34,37,20,39,20,36,36.5,23,18,39],   // ケンタウロス(子)
+  [32.5,34,21,16,37,20,24,39,21.5,18,29,37,31,30,28.5,27,28,17,36,22,33,23.5,23,34,38],   // ヘンガー(子)
+  [40.5,40,40,37,16,32,36,29,21.5,27,27,29,32,28,23.5,24,22,34,21,40,18,32.5,36,39,17],   // ゴーレム(子)
+  [31.5,33,17,20,32,16,24,28,29.5,21,31,38,20,38,27.5,31,34,18,36,23,37,33.5,26,22,39],   // ディノ(子)
+  [29.5,28,27,24,36,24,16,35,25.5,37,30,43,28,22,20.5,40,17,21,20,36,39,32.5,26,28,35],   // アローヘッド(子)
+  [26.5,17,24,39,29,28,35,16,40.5,34,19,44,26,27,42.5,31,35,23,29,21,23,33.5,28,18,38],   // ライガー(子)
+  [30.5,32,30,19,19,27,23,38,19.5,27,24,45,16,39,23.5,22,36,23,31,32,27,31.5,33,28,37],   // ハム(子)
+  [35.5,37,22,18,27,21,37,34,29.5,16,32,26,33,38,28.5,18,34,20,36,27,22,33.5,17,37,26],   // ガリ(子)
+  [22.5,30,34,29,27,31,30,19,26.5,32,16,35,36,31,26.5,30,23,19,21,35,17,21.5,37,40,27],   // グジラ(子)
+  [41.5,23,36,32,24,33,38,39,42.5,21,30,23,33,34,37.5,19,30,27,38,21,16,29.5,28,33,23],   // ニャー(子)
+  [21.5,25,26,31,32,20,28,26,16.5,33,36,38,16,36,19.5,27,32,18,34,40,31,27.5,38,37,35],   // ヒノトリ(子)
+  [33.5,18,31,30,28,38,22,27,41.5,38,31,39,36,16,32.5,38,20,34,37,19,31,28.5,35,18,37],   // スエゾー(子)
+  [23.5,26,28,26,21,25,18,40,23.5,26,24,40,17,30,19.5,24,39,18,28,37,30,36.5,35,33,33],   // モッチー(子)
+  [39.5,39,34,27,24,31,40,31,24.5,18,30,24,27,38,26.5,16,29,22,30,37,18,29.5,25,40,24],   // ジョーカー(子)
+  [42.5,24,37,28,22,34,17,35,38.5,34,23,35,32,20,41.5,29,16,31,34,26,28,25.5,40,21,34],   // ネンドロ(子)
+  [28.5,30,20,17,34,18,21,23,25.5,20,19,32,18,34,20.5,22,31,16,30,25,32,24.5,23,36,39],   // ゲル(子)
+  [34.5,32,39,36,21,36,20,29,33.5,36,21,43,34,37,30.5,30,34,30,16,35,19,32.5,40,28,21],   // ウンディーネ(子)
+  [25.5,22,20,22,40,23,36,21,34.5,27,35,26,40,19,39.5,37,26,25,35,16,37,26.5,28,17,36],   // プラント(子)
+  [28.5,36,36,33,18,37,39,23,29.5,22,17,17,31,31,32.5,18,28,32,19,37,16,24.5,25,40,21],   // モノリス(子)
+  [39.5,21,34,21,30,31,30,31,31.5,31,19,32,25,26,36.5,27,23,22,30,24,22,19.5,35,31,38],   // ワーム(子)
+  [36.5,38,23,23,36,26,26,28,35.5,17,37,33,38,35,37.5,25,40,23,40,28,25,37.5,16,29,26],   // ナーガ(子)
+  [21.5,20,18,34,39,22,28,18,30.5,37,40,38,37,18,35.5,40,21,36,28,17,40,33.5,29,16,37],   // カワズモー(子)
+  [37.5,35,39,38,17,39,35,38,39.5,26,27,28,35,37,35.5,24,34,39,21,36,21,40.5,26,37,16],   // キュービ(子)
+];
+
+// =====================================================
+// UI初期化
+// =====================================================
+function buildSelects() {
+  ['sel-parent','sel-child','sel-rank'].forEach(id => {
+    const sel = document.getElementById(id);
+    TYPES.forEach((t, i) => {
+      const opt = document.createElement('option');
+      opt.value = i;
+      opt.textContent = t;
+      sel.appendChild(opt);
+    });
+  });
+}
+
+// =====================================================
+// 相性検索
+// =====================================================
+function getColor(v) {
+  if (v >= 38)   return '#e53935';
+  if (v >= 32)   return '#f0a500';
+  if (v >= 25)   return '#2e7d32';
+  return '#1565c0';
+}
+function getBarColor(v) {
+  if (v >= 38)   return '#e53935';
+  if (v >= 32)   return '#f0a500';
+  return '#2e7d32';
+}
+function getLabel(v) {
+  if (v >= 40) return '🔥 非常に相性が良い';
+  if (v >= 35) return '✨ 相性が良い';
+  if (v >= 30) return '👍 まあまあ良い';
+  if (v >= 25) return '😐 普通';
+  if (v >= 20) return '👎 あまり良くない';
+  return '💔 相性が悪い';
+}
+
+function updateSearch() {
+  const pi = document.getElementById('sel-parent').value;
+  const ci = document.getElementById('sel-child').value;
+  if (pi === '' || ci === '') { document.getElementById('search-result').style.display='none'; document.getElementById('reverse-result').style.display='none'; return; }
+  const v = MATRIX[+ci][+pi];
+  const rv = MATRIX[+pi][+ci];
+  const el = document.getElementById('search-result');
+  el.style.display = 'block';
+  const valEl = document.getElementById('result-val');
+  valEl.textContent = v;
+  valEl.style.color = getColor(v);
+  document.getElementById('result-label').textContent = getLabel(v);
+  const pct = Math.min(100, ((v - 16) / (45 - 16)) * 100);
+  const bar = document.getElementById('result-bar');
+  bar.style.width = pct + '%';
+  bar.style.background = getBarColor(v);
+
+  // 逆方向
+  const rvEl = document.getElementById('reverse-result');
+  if (+pi !== +ci) {
+    rvEl.style.display = 'block';
+    document.getElementById('rev-label').textContent = `${TYPES[+ci]}(親) × ${TYPES[+pi]}(子)`;
+    const rvVal = document.getElementById('rev-val');
+    rvVal.textContent = rv;
+    rvVal.style.color = getColor(rv);
+  } else {
+    rvEl.style.display = 'none';
+  }
+}
+
+// =====================================================
+// ランキング
+// =====================================================
+function rankNumClass(i) {
+  if (i === 0) return 'rank-num gold';
+  if (i === 1) return 'rank-num silver';
+  if (i === 2) return 'rank-num bronze';
+  return 'rank-num';
+}
+function rankValClass(v) {
+  if (v >= 38) return 'rank-val high';
+  if (v >= 32) return 'rank-val mid';
+  return 'rank-val low';
+}
+function rankNumText(i) {
+  if (i === 0) return '🥇';
+  if (i === 1) return '🥈';
+  if (i === 2) return '🥉';
+  return (i + 1) + '位';
+}
+
+function updateRanking() {
+  const idx = document.getElementById('sel-rank').value;
+  if (idx === '') { document.getElementById('ranking-result').style.display='none'; return; }
+  const i = +idx;
+  document.getElementById('ranking-result').style.display = 'block';
+  document.getElementById('rank-parent-title').textContent = `${TYPES[i]} が親の時 ランキング`;
+  document.getElementById('rank-child-title').textContent  = `${TYPES[i]} が子の時 ランキング`;
+
+  // 親の時: col=i, sort rows
+  const parentRanks = TYPES.map((t, ci) => ({ type: t, idx: ci, val: MATRIX[ci][i] }))
+    .filter(x => x.idx !== i)
+    .sort((a, b) => b.val - a.val);
+
+  const pb = document.getElementById('rank-parent-body');
+  pb.innerHTML = '';
+  parentRanks.forEach((r, ri) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="${rankNumClass(ri)}">${rankNumText(ri)}</td>
+      <td><span class="badge ${TYPE_COLOR[r.idx]}">${r.type}</span></td>
+      <td class="${rankValClass(r.val)}">${r.val}</td>`;
+    pb.appendChild(tr);
+  });
+
+  // 子の時: row=i, sort cols
+  const childRanks = TYPES.map((t, pi) => ({ type: t, idx: pi, val: MATRIX[i][pi] }))
+    .filter(x => x.idx !== i)
+    .sort((a, b) => b.val - a.val);
+
+  const cb = document.getElementById('rank-child-body');
+  cb.innerHTML = '';
+  childRanks.forEach((r, ri) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td class="${rankNumClass(ri)}">${rankNumText(ri)}</td>
+      <td><span class="badge ${TYPE_COLOR[r.idx]}">${r.type}</span></td>
+      <td class="${rankValClass(r.val)}">${r.val}</td>`;
+    cb.appendChild(tr);
+  });
+}
+
+// =====================================================
+// 相性表
+// =====================================================
+function cellClass(v, isSame) {
+  if (isSame) return 'same';
+  if (v >= 38)   return 'cell-h';
+  if (v >= 32)   return 'cell-m';
+  if (v >= 25)   return 'cell-l';
+  return 'cell-ll';
+}
+
+function buildMatrix() {
+  const tbl = document.getElementById('matrix-tbl');
+  // ヘッダー行
+  let html = '<thead><tr><th class="row-label" style="font-size:10px">子 ↓ 親 →</th>';
+  TYPES.forEach((t, i) => {
+    html += `<th class="col-label ${TYPE_COLOR[i]}">${t.slice(0,4)}</th>`;
+  });
+  html += '</tr></thead><tbody>';
+  // データ行
+  TYPES.forEach((rowType, ri) => {
+    html += `<tr><th class="row-label"><span class="badge ${TYPE_COLOR[ri]}" style="font-size:10px">${rowType}</span></th>`;
+    TYPES.forEach((colType, ci) => {
+      const v = MATRIX[ri][ci];
+      const cls = cellClass(v, ri === ci);
+      html += `<td class="${cls}" onclick="cellClick(${ri},${ci})" title="${colType}(親) × ${rowType}(子) = ${v}">${v}</td>`;
+    });
+    html += '</tr>';
+  });
+  html += '</tbody>';
+  tbl.innerHTML = html;
+}
+
+let lastHighlight = null;
+function cellClick(ri, ci) {
+  if (lastHighlight) {
+    lastHighlight.forEach(el => el.classList.remove('cell-highlight'));
+  }
+  const tbl = document.getElementById('matrix-tbl');
+  // +1 because of header row/col
+  const rows = tbl.querySelectorAll('tbody tr');
+  const cell = rows[ri].querySelectorAll('td')[ci];
+  cell.classList.add('cell-highlight');
+  lastHighlight = [cell];
+
+  // 「相性検索」タブに値をコピーして表示
+  document.getElementById('sel-parent').value = ci;
+  document.getElementById('sel-child').value  = ri;
+  updateSearch();
+}
+
+// =====================================================
+// タブ切り替え
+// =====================================================
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// =====================================================
+// 初期化
+// =====================================================
+buildSelects();
+buildMatrix();
+</script>
+
+</body>
+</html>
