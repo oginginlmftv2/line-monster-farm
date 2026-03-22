@@ -223,10 +223,13 @@ nav a:hover, nav a.active {
   font-weight: bold;
   margin-bottom: 10px;
   line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 .hero p {
   font-size: 14px;
   color: #ccc;
+  line-height: 1.7;
 }
 
 /* トップページのmain */
@@ -257,7 +260,7 @@ main {
     padding: 5px 8px;
   }
   .hero h1 {
-    font-size: 22px;
+    font-size: 18px;
   }
   .page-title {
     font-size: 20px;
