@@ -211,6 +211,76 @@ nav a:hover, nav a.active {
 .menu-link:hover { background: #fff3cd; }
 .menu-link .icon { font-size: 24px; }
 
+/* ヒーローセクション */
+.hero {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d5e 100%);
+  color: #fff;
+  padding: 40px 20px;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  line-height: 1.4;
+}
+.hero p {
+  font-size: 14px;
+  color: #ccc;
+}
+
+/* トップページのmain */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+/* モバイル対応 */
+@media (max-width: 640px) {
+  .header-inner {
+    gap: 8px;
+  }
+  .logo {
+    font-size: 13px;
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  nav {
+    flex-shrink: 0;
+    gap: 2px;
+  }
+  nav a {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+  .hero h1 {
+    font-size: 22px;
+  }
+  .page-title {
+    font-size: 20px;
+  }
+  .section {
+    padding: 16px;
+  }
+  .section-title {
+    font-size: 16px;
+  }
+  .menu-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .menu-link {
+    font-size: 13px;
+    padding: 12px 10px;
+    gap: 8px;
+  }
+  .menu-link .icon {
+    font-size: 20px;
+  }
+}
+
 /* フッター */
 footer {
   background: #1a1a2e;

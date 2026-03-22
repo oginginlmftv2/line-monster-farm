@@ -6,141 +6,241 @@
   <title>最強アシストカードランキング | LINEモンスターファーム徹底攻略</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .ranking-note {
-      font-size: 13px;
-      color: #888;
-      margin-bottom: 20px;
-    }
-
-    /* ランキングテーブル */
-    .rank-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .rank-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
+    /* ===== ランキングブロック共通 ===== */
+    .ranking-block {
       background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      padding: 12px 16px;
-      text-decoration: none;
-      color: inherit;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .rank-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-bottom: 24px;
     }
 
-    /* 順位バッジ */
-    .rank-num {
-      flex-shrink: 0;
-      width: 42px;
-      text-align: center;
-      font-weight: 900;
-      font-size: 22px;
-      line-height: 1;
-    }
-    .rank-num.gold   { color: #f0a500; }
-    .rank-num.silver { color: #999; }
-    .rank-num.bronze { color: #c97030; }
-    .rank-num.normal { color: #bbb; font-size: 18px; }
-
-    /* カード画像 */
-    .rank-img {
-      flex-shrink: 0;
-      width: 64px;
-      height: 64px;
-      border-radius: 10px;
-      object-fit: cover;
-      background: #eee;
-    }
-    .rank-img-placeholder {
-      flex-shrink: 0;
-      width: 64px;
-      height: 64px;
-      border-radius: 10px;
-      background: #eee;
+    .block-header {
+      background: #1a1a2e;
+      padding: 14px 20px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: #aaa;
+      align-items: baseline;
+      gap: 12px;
+    }
+    .block-header-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #fff;
+    }
+    .block-header-title span { color: #f0a500; }
+    .block-header-sub {
+      font-size: 12px;
+      color: #666;
     }
 
-    /* カード情報 */
-    .rank-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .rank-name {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1.3;
-    }
-    .rank-rarity {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
+    /* ===== レアリティバッジ ===== */
+    .r-badge {
+      position: absolute;
+      bottom: 3px; right: 3px;
+      font-size: 8px; font-weight: 900;
+      padding: 2px 5px; border-radius: 4px; line-height: 1.4;
     }
     .r-SSR { background: #e11d48; color: #fff; }
     .r-MR  { background: #7c3aed; color: #fff; }
 
-    /* 投票数バー */
-    .rank-votes-area {
-      flex-shrink: 0;
-      width: 120px;
-      text-align: right;
+    /* ===== TOP3 ===== */
+    .top3-area {
+      display: flex;
     }
-    .rank-bar-bg {
-      width: 100%;
-      height: 6px;
-      background: #eee;
-      border-radius: 3px;
-      overflow: hidden;
-      margin-bottom: 6px;
+    .top-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 10px 20px;
+      border-right: 1px solid #f0f0f0;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
     }
-    .rank-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #f0a500, #ff6b35);
-      border-radius: 3px;
-    }
-    .rank-votes-num {
-      font-size: 26px;
+    .top-col:hover { opacity: 0.85; }
+    .top-col:last-child { border-right: none; }
+
+    .rank-1-col { background: linear-gradient(180deg, #fffdf0 0%, #fff 100%); }
+    .rank-2-col { background: linear-gradient(180deg, #f7f7f7 0%, #fff 100%); }
+    .rank-3-col { background: linear-gradient(180deg, #fff5f0 0%, #fff 100%); }
+
+    .rank-label {
       font-weight: 900;
-      color: #444;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .rank-1-col .rank-label { color: #f0a500; font-size: 30px; }
+    .rank-2-col .rank-label { color: #999;    font-size: 22px; }
+    .rank-3-col .rank-label { color: #c97030; font-size: 22px; }
+
+    .top-img-wrap {
+      border-radius: 12px;
+      overflow: hidden;
+      background: #eee;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .rank-1-col .top-img-wrap { width: 120px; height: 120px; box-shadow: 0 4px 20px rgba(240,165,0,0.35); border: 3px solid #f0a500; }
+    .rank-2-col .top-img-wrap { width: 96px;  height: 96px;  box-shadow: 0 3px 12px rgba(0,0,0,0.12); border: 2px solid #bbb; }
+    .rank-3-col .top-img-wrap { width: 90px;  height: 90px;  box-shadow: 0 3px 12px rgba(0,0,0,0.10); border: 2px solid #c97030; }
+    .top-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .top-name {
+      font-weight: 900;
+      color: #1a1a2e;
+      text-align: center;
+      margin-top: 10px;
+      line-height: 1.3;
+    }
+    .rank-1-col .top-name { font-size: 17px; }
+    .rank-2-col .top-name { font-size: 14px; }
+    .rank-3-col .top-name { font-size: 13px; }
+
+    .top-votes {
+      font-weight: 900;
+      line-height: 1;
+      margin-top: 8px;
+    }
+    .rank-1-col .top-votes { font-size: 40px; color: #f0a500; }
+    .rank-2-col .top-votes { font-size: 32px; color: #888; }
+    .rank-3-col .top-votes { font-size: 28px; color: #c97030; }
+    .votes-unit { font-size: 13px; font-weight: 400; margin-left: 2px; }
+
+    /* ===== 4〜10位 ===== */
+    .divider-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #e0e0e0 20%, #e0e0e0 80%, transparent);
+    }
+
+    .lower-area {
+      background: #fafafa;
+      display: flex;
+      align-items: stretch;
+      flex-wrap: wrap;
+    }
+    .lower-col {
+      flex: 1;
+      min-width: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 6px;
+      border-right: 1px solid #eee;
+      gap: 5px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .lower-col:hover { background: #f0f0f0; }
+    .lower-col:last-child { border-right: none; }
+
+    .lower-rank {
+      font-size: 11px;
+      font-weight: 900;
+      color: #bbb;
+    }
+    .lower-img-wrap {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #e8e8e8;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .lower-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .lower-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .lower-votes {
+      font-size: 22px;
+      font-weight: 900;
+      color: #555;
+      text-align: center;
       line-height: 1;
     }
-    .rank-votes-num span {
-      font-size: 12px;
-      font-weight: 400;
-      margin-left: 2px;
+    .lower-votes span { font-size: 12px; font-weight: 400; }
+
+    /* ===== 11〜20位（全部同じ大きさ） ===== */
+    .mid-area {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #fafafa;
     }
-
-    /* TOP3 強調 */
-    .rank-item.top1 { border-left: 4px solid #f0a500; }
-    .rank-item.top2 { border-left: 4px solid #bbb; }
-    .rank-item.top3 { border-left: 4px solid #c97030; }
-
-    /* セクション区切り */
-    .rank-section-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #888;
-      margin: 20px 0 8px;
-      padding-left: 4px;
+    .mid-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      border-right: 1px solid #eee;
       border-bottom: 1px solid #eee;
-      padding-bottom: 6px;
+      gap: 6px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .mid-col:hover { background: #f0f0f0; }
+    .mid-col:nth-child(5n) { border-right: none; }
+    .mid-col:nth-child(n+6) { border-bottom: none; }
+
+    .mid-rank {
+      font-size: 12px;
+      font-weight: 900;
+      color: #bbb;
+    }
+    .mid-img-wrap {
+      width: 76px;
+      height: 76px;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #e8e8e8;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .mid-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .mid-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      line-height: 1.3;
+    }
+    .mid-votes {
+      font-size: 22px;
+      font-weight: 900;
+      color: #555;
+      text-align: center;
+      line-height: 1;
+    }
+    .mid-votes span { font-size: 12px; font-weight: 400; }
+
+    /* スマホ */
+    @media (max-width: 600px) {
+      .rank-1-col .top-img-wrap { width: 80px; height: 80px; }
+      .rank-2-col .top-img-wrap { width: 64px; height: 64px; }
+      .rank-3-col .top-img-wrap { width: 60px; height: 60px; }
+      .rank-1-col .top-votes { font-size: 28px; }
+      .rank-2-col .top-votes { font-size: 22px; }
+      .rank-3-col .top-votes { font-size: 20px; }
+      .rank-1-col .top-name { font-size: 13px; }
+      .rank-2-col .top-name, .rank-3-col .top-name { font-size: 11px; }
+      .lower-img-wrap { width: 48px; height: 48px; }
+      .lower-votes { font-size: 16px; }
+      .lower-name { font-size: 10px; }
+      .mid-area { grid-template-columns: repeat(5, 1fr); }
+      .mid-img-wrap { width: 50px; height: 50px; }
+      .mid-votes { font-size: 16px; }
+      .mid-name { font-size: 10px; }
     }
   </style>
 </head>
@@ -159,11 +259,31 @@
 
 <div class="container">
   <h1 class="page-title">🏆 最強アシストカードランキング</h1>
-  <p class="ranking-note">ユーザー投票結果（184名参加） ／ 2026.03.14 時点</p>
 
-  <ul class="rank-list" id="rankList">
-    <!-- JS で生成 -->
-  </ul>
+  <!-- 1〜10位ブロック -->
+  <div class="ranking-block">
+    <div class="block-header">
+      <div class="block-header-title">🃏 最強アシストカード <span>ランキング</span> <span style="font-size:14px;color:#f0a500;font-weight:700;margin-left:6px;">2026.03.14時点</span></div>
+      <div class="block-header-sub">ユーザー投票（184名参加）</div>
+    </div>
+
+    <!-- TOP3 -->
+    <div class="top3-area" id="top3"></div>
+
+    <div class="divider-line"></div>
+
+    <!-- 4〜10位 -->
+    <div class="lower-area" id="lower"></div>
+  </div>
+
+  <!-- 11〜20位ブロック -->
+  <div class="ranking-block">
+    <div class="block-header">
+      <div class="block-header-title">11〜20位</div>
+    </div>
+    <div class="mid-area" id="mid"></div>
+  </div>
+
 </div>
 
 <footer>
@@ -195,65 +315,77 @@ const RANKING = [
   { rank: 20, name: 'サフィン',       rarity: 'SSR', votes:   4, id: 'c9-SSR-safin' },
 ];
 
-const MAX_VOTES = RANKING[0].votes;
+const MAX = RANKING[0].votes;
+const RANK_CLS   = ['rank-1-col', 'rank-2-col', 'rank-3-col'];
+const RANK_LABEL = ['1 位', '2 位', '3 位'];
 
 function imgSrc(id) {
   if (!id || typeof cardsData === 'undefined' || !cardsData[id]) return null;
   return `assist-cards/${id}.${cardsData[id].ext}`;
 }
 
-function rankClass(rank) {
-  if (rank === 1) return 'top1';
-  if (rank === 2) return 'top2';
-  if (rank === 3) return 'top3';
-  return '';
-}
-
-function numClass(rank) {
-  if (rank === 1) return 'gold';
-  if (rank === 2) return 'silver';
-  if (rank === 3) return 'bronze';
-  return 'normal';
-}
-
-const list = document.getElementById('rankList');
-
-RANKING.forEach((item, i) => {
-  // セクション区切り
-  if (item.rank === 1) {
-    const t = document.createElement('li');
-    t.className = 'rank-section-title';
-    t.textContent = 'TOP 10';
-    list.appendChild(t);
-  }
-  if (item.rank === 11) {
-    const t = document.createElement('li');
-    t.className = 'rank-section-title';
-    t.textContent = '11〜20位';
-    list.appendChild(t);
-  }
-
-  const src = imgSrc(item.id);
-  const pct = (item.votes / MAX_VOTES * 100).toFixed(1);
-
-  const li = document.createElement('li');
-  li.innerHTML = `
-    <a class="rank-item ${rankClass(item.rank)}" href="cards/card.html#${item.id}">
-      <div class="rank-num ${numClass(item.rank)}">${item.rank}</div>
+/* ---- TOP3（表彰台順: 2位→1位→3位） ---- */
+const top3El = document.getElementById('top3');
+[1, 0, 2].forEach(idx => {
+  const v = RANKING[idx];
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = `top-col ${RANK_CLS[idx]}`;
+  col.href = `cards/card.html#${v.id}`;
+  col.innerHTML = `
+    <div class="rank-label">${RANK_LABEL[idx]}</div>
+    <div class="top-img-wrap">
       ${src
-        ? `<img class="rank-img" src="${src}" alt="${item.name}" onerror="this.outerHTML='<div class=\\"rank-img-placeholder\\">🃏</div>'">`
-        : '<div class="rank-img-placeholder">🃏</div>'}
-      <div class="rank-info">
-        <div class="rank-name">${item.name}</div>
-        <span class="rank-rarity r-${item.rarity}">${item.rarity}</span>
-      </div>
-      <div class="rank-votes-area">
-        <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${pct}%"></div></div>
-        <div class="rank-votes-num">${item.votes}<span>票</span></div>
-      </div>
-    </a>
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:10px;color:#aaa;font-size:22px\\'>🃏</div>'">`
+        : '<div style="padding:10px;color:#aaa;font-size:22px">🃏</div>'}
+      <span class="r-badge r-${v.rarity}">${v.rarity}</span>
+    </div>
+    <div class="top-name">${v.name}</div>
+    <div class="top-votes">${v.votes}<span class="votes-unit">票</span></div>
   `;
-  list.appendChild(li);
+  top3El.appendChild(col);
+});
+
+/* ---- 4〜10位 ---- */
+const lowerEl = document.getElementById('lower');
+RANKING.slice(3, 10).forEach(v => {
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = 'lower-col';
+  col.href = `cards/card.html#${v.id}`;
+  col.innerHTML = `
+    <div class="lower-rank">${v.rank} 位</div>
+    <div class="lower-img-wrap">
+      ${src
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:8px;color:#aaa\\'>🃏</div>'">`
+        : '<div style="padding:8px;color:#aaa">🃏</div>'}
+      <span class="r-badge r-${v.rarity}" style="font-size:7px">${v.rarity}</span>
+    </div>
+    <div class="lower-name">${v.name}</div>
+    <div class="lower-votes">${v.votes}<span>票</span></div>
+  `;
+  lowerEl.appendChild(col);
+});
+
+/* ---- 11〜20位 ---- */
+const midEl = document.getElementById('mid');
+RANKING.slice(10).forEach(v => {
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = 'mid-col';
+  col.href = `cards/card.html#${v.id}`;
+  col.innerHTML = `
+    <div class="mid-rank">${v.rank} 位</div>
+    <div class="mid-img-wrap">
+      ${src
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:8px;color:#aaa\\'>🃏</div>'">`
+        : '<div style="padding:8px;color:#aaa">🃏</div>'}
+      <span class="r-badge r-${v.rarity}" style="font-size:7px">${v.rarity}</span>
+    </div>
+    <div class="mid-name">${v.name}</div>
+    <div class="mid-votes">${v.votes}<span>票</span></div>
+  `;
+  midEl.appendChild(col);
 });
 </script>
 
