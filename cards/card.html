@@ -301,6 +301,117 @@
     }
     .form-add-btn:hover { border-color: #f0a500; color: #f0a500; }
 
+    /* ---- コメント欄 ---- */
+    .comment-section {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      padding: 22px 24px;
+      margin-top: 20px;
+    }
+    .comment-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .comment-section-title {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a1a2e;
+      border-left: 5px solid #f0a500;
+      padding-left: 12px;
+    }
+    .comment-list { margin-bottom: 20px; }
+    .comment-item {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .comment-item:last-child { border-bottom: none; }
+    .comment-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .comment-name-span {
+      font-size: 13px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .comment-date-span {
+      font-size: 11px;
+      color: #aaa;
+    }
+    .comment-body-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #333;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .comment-empty { color: #bbb; font-style: italic; font-size: 14px; }
+    .comment-delete-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #ddd;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .comment-delete-btn:hover { color: #e53e3e; background: #fff0f0; }
+    .admin-toggle-btn {
+      background: none;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      color: #aaa;
+      transition: all 0.2s;
+    }
+    .admin-toggle-btn:hover { border-color: #f0a500; color: #f0a500; }
+    .admin-toggle-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #f0a500; }
+    .comment-form-area { border-top: 2px solid #f0f0f0; padding-top: 16px; }
+    .comment-form-area h4 { font-size: 14px; color: #555; margin-bottom: 12px; }
+    .comment-input-row { margin-bottom: 10px; }
+    .comment-input-row label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .comment-text-input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      font-size: 14px;
+      font-family: inherit;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .comment-text-input:focus { outline: none; border-color: #f0a500; }
+    textarea.comment-text-input { min-height: 90px; resize: vertical; }
+    .comment-submit-btn2 {
+      padding: 9px 24px;
+      background: #1a1a2e;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .comment-submit-btn2:hover { background: #f0a500; }
+    .comment-submit-btn2:disabled { opacity: 0.5; cursor: not-allowed; }
+
     /* 評価セクション */
     .ratings-section {
       margin-top: 24px;
@@ -564,10 +675,34 @@
         </div>
         <div id="formation-content"><div class="formation-empty">読込中...</div></div>
       </div>
+
+      <!-- コメント欄 -->
+      <div class="comment-section">
+        <div class="comment-section-header">
+          <span class="comment-section-title">💬 コメント</span>
+          <button class="admin-toggle-btn" id="admin-toggle-btn" onclick="toggleAdmin()">🔒 管理</button>
+        </div>
+        <div class="comment-list" id="comment-list">
+          <div class="comment-empty">読込中...</div>
+        </div>
+        <div class="comment-form-area">
+          <h4>コメントを投稿する</h4>
+          <div class="comment-input-row">
+            <label>名前（省略可）</label>
+            <input class="comment-text-input" id="comment-name" type="text" placeholder="名無しトレーナー" maxlength="30">
+          </div>
+          <div class="comment-input-row">
+            <label>コメント <span style="color:#e53e3e">*</span></label>
+            <textarea class="comment-text-input" id="comment-body" placeholder="このカードについて自由にコメントしてください" maxlength="500"></textarea>
+          </div>
+          <button class="comment-submit-btn2" id="comment-submit-btn" onclick="submitComment()">投稿する</button>
+        </div>
+      </div>
     `;
 
     // Firestoreからデータを読み込んで表示
     loadCardData();
+    loadComments();
   }
 
   // ---- Firestoreデータ読み込み ----
@@ -901,6 +1036,89 @@
     btn.disabled = false;
     btn.onclick = startFormEdit;
     loadFormations();
+  }
+
+  // ---- コメント欄 ----
+
+  let adminMode = false;
+
+  function toggleAdmin() {
+    if (adminMode) {
+      adminMode = false;
+      const btn = document.getElementById('admin-toggle-btn');
+      if (btn) { btn.textContent = '🔒 管理'; btn.classList.remove('active'); }
+      loadComments();
+      return;
+    }
+    const pw = prompt('管理者パスワードを入力してください');
+    if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
+    adminMode = true;
+    const btn = document.getElementById('admin-toggle-btn');
+    if (btn) { btn.textContent = '🔓 管理中'; btn.classList.add('active'); }
+    loadComments();
+  }
+
+  async function deleteComment(commentDocId) {
+    if (!confirm('このコメントを削除しますか？')) return;
+    try {
+      await db.collection('cards').doc(id).collection('comments').doc(commentDocId).delete();
+      await loadComments();
+    } catch(e) {
+      alert('削除に失敗しました: ' + e.message);
+    }
+  }
+
+  async function loadComments() {
+    const listEl = document.getElementById('comment-list');
+    if (!listEl) return;
+    try {
+      const snap = await db.collection('cards').doc(id)
+        .collection('comments').orderBy('createdAt', 'asc').get();
+      if (snap.empty) {
+        listEl.innerHTML = '<div class="comment-empty">まだコメントがありません。最初のコメントを投稿してみましょう！</div>';
+        return;
+      }
+      listEl.innerHTML = snap.docs.map(d => {
+        const c = d.data();
+        const name = c.name ? escapeHtml(c.name) : '名無しトレーナー';
+        const date = c.createdAt ? new Date(c.createdAt.toDate()).toLocaleDateString('ja-JP', { year:'numeric', month:'2-digit', day:'2-digit', hour:'2-digit', minute:'2-digit' }) : '';
+        return `<div class="comment-item">
+          <div class="comment-meta">
+            <span class="comment-name-span">👤 ${name}</span>
+            <span class="comment-date-span">${date}</span>
+            ${adminMode ? `<button class="comment-delete-btn" onclick="deleteComment('${d.id}')">🗑️</button>` : ''}
+          </div>
+          <div class="comment-body-text">${escapeHtml(c.body)}</div>
+        </div>`;
+      }).join('');
+    } catch(e) {
+      listEl.innerHTML = '<div class="comment-empty">コメントの読み込みに失敗しました。</div>';
+    }
+  }
+
+  async function submitComment() {
+    const nameEl = document.getElementById('comment-name');
+    const bodyEl = document.getElementById('comment-body');
+    const btn = document.getElementById('comment-submit-btn');
+    const body = bodyEl.value.trim();
+    if (!body) { alert('コメントを入力してください'); return; }
+    if (body.length > 500) { alert('コメントは500文字以内で入力してください'); return; }
+    btn.disabled = true;
+    btn.textContent = '投稿中...';
+    try {
+      await db.collection('cards').doc(id).collection('comments').add({
+        name: nameEl.value.trim() || '',
+        body: body,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      nameEl.value = '';
+      bodyEl.value = '';
+      await loadComments();
+    } catch(e) {
+      alert('投稿に失敗しました: ' + e.message);
+    }
+    btn.disabled = false;
+    btn.textContent = '投稿する';
   }
 
   // ---- 評価解説ロジック ----

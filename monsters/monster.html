@@ -343,6 +343,31 @@
       word-break: break-word;
     }
     .comment-empty { color: #bbb; font-style: italic; font-size: 14px; }
+    .comment-delete-btn {
+      margin-left: auto;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      color: #ddd;
+      padding: 2px 6px;
+      border-radius: 4px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .comment-delete-btn:hover { color: #e53e3e; background: #fff0f0; }
+    .admin-toggle-btn {
+      background: none;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      color: #aaa;
+      transition: all 0.2s;
+    }
+    .admin-toggle-btn:hover { border-color: #f0a500; color: #f0a500; }
+    .admin-toggle-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #f0a500; }
 
     /* 投稿フォーム */
     .comment-form { border-top: 2px solid #f0f0f0; padding-top: 16px; }
@@ -489,6 +514,7 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
     <div class="section-box" id="comment-section">
       <div class="section-header">
         <span class="section-title">💬 コメント</span>
+        <button class="admin-toggle-btn" id="admin-toggle-btn" onclick="toggleAdmin()">🔒 管理</button>
       </div>
       <div class="comment-list" id="comment-list">
         <div class="comment-empty">読込中...</div>
@@ -757,6 +783,34 @@ async function saveFormations() {
 // =============================================
 // コメント欄
 // =============================================
+let adminMode = false;
+
+function toggleAdmin() {
+  if (adminMode) {
+    adminMode = false;
+    const btn = document.getElementById('admin-toggle-btn');
+    if (btn) { btn.textContent = '🔒 管理'; btn.classList.remove('active'); }
+    loadComments();
+    return;
+  }
+  const pw = prompt('管理者パスワードを入力してください');
+  if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
+  adminMode = true;
+  const btn = document.getElementById('admin-toggle-btn');
+  if (btn) { btn.textContent = '🔓 管理中'; btn.classList.add('active'); }
+  loadComments();
+}
+
+async function deleteComment(commentDocId) {
+  if (!confirm('このコメントを削除しますか？')) return;
+  try {
+    await db.collection('monsters').doc(docId).collection('comments').doc(commentDocId).delete();
+    await loadComments();
+  } catch(e) {
+    alert('削除に失敗しました: ' + e.message);
+  }
+}
+
 async function loadComments() {
   const listEl = document.getElementById('comment-list');
   if (!listEl) return;
@@ -775,6 +829,7 @@ async function loadComments() {
         <div class="comment-meta">
           <span class="comment-name">👤 ${name}</span>
           <span class="comment-date">${date}</span>
+          ${adminMode ? `<button class="comment-delete-btn" onclick="deleteComment('${d.id}')">🗑️</button>` : ''}
         </div>
         <div class="comment-body">${escHtml(c.body)}</div>
       </div>`;
