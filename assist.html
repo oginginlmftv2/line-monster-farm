@@ -27,6 +27,8 @@
     <button class="filter-btn active" onclick="filterCards('all', event)">すべて</button>
     <button class="filter-btn mr" onclick="filterCards('MR', event)">MR</button>
     <button class="filter-btn ssr" onclick="filterCards('SSR', event)">SSR</button>
+    <span style="color:#ddd;margin:0 2px;font-size:18px;line-height:1;">|</span>
+    <button class="filter-btn" id="sortScoreBtn" onclick="toggleSortScore(this)">⭐ 評価順</button>
   </div>
 
   <div class="card-grid" id="cardGrid">
@@ -439,14 +441,47 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+let currentRarity = 'all';
+let currentSort = 'default';
+const defaultOrder = [...document.querySelectorAll('#cardGrid .card')];
+
 function filterCards(rarity, event) {
-  const cards = document.querySelectorAll('.card');
-  const btns = document.querySelectorAll('.filter-btn');
+  currentRarity = rarity;
+  const btns = document.querySelectorAll('.filter-btn:not(#sortScoreBtn)');
   btns.forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
-  cards.forEach(card => {
-    card.style.display = (rarity === 'all' || card.dataset.rarity === rarity) ? 'block' : 'none';
+  applyFilter();
+}
+
+function applyFilter() {
+  document.querySelectorAll('#cardGrid .card').forEach(card => {
+    card.style.display = (currentRarity === 'all' || card.dataset.rarity === currentRarity) ? 'block' : 'none';
   });
+}
+
+function toggleSortScore(btn) {
+  const grid = document.getElementById('cardGrid');
+  if (currentSort === 'score') {
+    currentSort = 'default';
+    btn.classList.remove('active');
+    defaultOrder.forEach(card => grid.appendChild(card));
+  } else {
+    currentSort = 'score';
+    btn.classList.add('active');
+    applySortByScore();
+  }
+  applyFilter();
+}
+
+function applySortByScore() {
+  const grid = document.getElementById('cardGrid');
+  const cards = [...document.querySelectorAll('#cardGrid .card')];
+  cards.sort((a, b) => {
+    const sa = parseFloat(a.dataset.score) || 0;
+    const sb = parseFloat(b.dataset.score) || 0;
+    return sb - sa;
+  });
+  cards.forEach(card => grid.appendChild(card));
 }
 
 document.querySelectorAll('.card').forEach(card => {
@@ -505,6 +540,7 @@ document.querySelectorAll('.card').forEach(card => {
 
       const scoreEl = card.querySelector('.score-val');
       if (scoreEl) scoreEl.textContent = sogoText;
+      card.dataset.score = sogoText; // ソート用
 
       const ittiVals = ['ikusei', 'karyo', 'battle']
         .map(k => data.ratings[k])
@@ -515,6 +551,10 @@ document.querySelectorAll('.card').forEach(card => {
         if (ittiEl) ittiEl.textContent = (Math.floor(ittiAvg * 10) / 10).toFixed(1);
       }
     });
+
+    // スコード読み込み後にソート中なら再ソート
+    if (currentSort === 'score') applySortByScore();
+
   } catch (e) {
     console.error('スコア読み込みエラー:', e);
   }
