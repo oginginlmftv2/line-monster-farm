@@ -5,6 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LINEモンスターファーム徹底攻略</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* 育成サブメニュー */
+    .ikusei-submenu {
+      display: none;
+      margin-top: 12px;
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+      display: none;
+    }
+    .ikusei-submenu.open { display: block; }
+    .submenu-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .submenu-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .submenu-link:hover { background: #fff3cd; border-color: #f0a500; }
+    .submenu-link .submenu-icon { font-size: 18px; }
+    .submenu-link .submenu-arrow { margin-left: auto; color: #f0a500; font-size: 13px; }
+    .ikusei-toggle-btn {
+      cursor: pointer;
+    }
+    .ikusei-chevron {
+      margin-left: auto;
+      font-size: 11px;
+      transition: transform 0.2s;
+    }
+    .ikusei-chevron.open { transform: rotate(180deg); }
+  </style>
 </head>
 <body>
 
@@ -39,12 +81,39 @@
       <a href="assist-ranking.html" class="menu-link">
         <span class="icon">🏆</span> アシストカードランキング
       </a>
-      <a href="#" class="menu-link">
+      <div class="menu-link ikusei-toggle-btn" onclick="toggleIkusei(this)">
         <span class="icon">📈</span> 育成方法
-      </a>
+        <span class="ikusei-chevron" id="ikusei-chevron">▼</span>
+      </div>
       <a href="#" class="menu-link">
         <span class="icon">🎉</span> イベント情報
       </a>
+    </div>
+
+    <!-- 育成サブメニュー -->
+    <div class="ikusei-submenu" id="ikusei-submenu">
+      <div class="submenu-list">
+        <a href="ikusei/sogo.html" class="submenu-link">
+          <span class="submenu-icon">⭐</span> 総合力育成
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="ikusei/grand-slam.html" class="submenu-link">
+          <span class="submenu-icon">🏅</span> グランドスラム用育成
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="ikusei/lord-of-masters.html" class="submenu-link">
+          <span class="submenu-icon">👑</span> ロードオブマスターズ用育成
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="ikusei/solomon.html" class="submenu-link">
+          <span class="submenu-icon">🗺️</span> ソロモンクエスト用育成
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="ikusei/hiden.html" class="submenu-link">
+          <span class="submenu-icon">📜</span> 秘伝周回
+          <span class="submenu-arrow">›</span>
+        </a>
+      </div>
     </div>
   </div>
 
@@ -125,5 +194,19 @@
   &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
 </footer>
 
+<script>
+function toggleIkusei(btn) {
+  const menu = document.getElementById('ikusei-submenu');
+  const chevron = document.getElementById('ikusei-chevron');
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    chevron.classList.remove('open');
+  } else {
+    menu.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
+</script>
 </body>
 </html>
