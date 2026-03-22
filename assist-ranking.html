@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>最強アシストカードランキング | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .ranking-note {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 20px;
+    }
+
+    /* ランキングテーブル */
+    .rank-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .rank-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 12px 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .rank-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    }
+
+    /* 順位バッジ */
+    .rank-num {
+      flex-shrink: 0;
+      width: 42px;
+      text-align: center;
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+    }
+    .rank-num.gold   { color: #f0a500; }
+    .rank-num.silver { color: #999; }
+    .rank-num.bronze { color: #c97030; }
+    .rank-num.normal { color: #bbb; font-size: 18px; }
+
+    /* カード画像 */
+    .rank-img {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #eee;
+    }
+    .rank-img-placeholder {
+      flex-shrink: 0;
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #aaa;
+    }
+
+    /* カード情報 */
+    .rank-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .rank-name {
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .rank-rarity {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+    .r-SSR { background: #e11d48; color: #fff; }
+    .r-MR  { background: #7c3aed; color: #fff; }
+
+    /* 投票数バー */
+    .rank-votes-area {
+      flex-shrink: 0;
+      width: 120px;
+      text-align: right;
+    }
+    .rank-bar-bg {
+      width: 100%;
+      height: 6px;
+      background: #eee;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .rank-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #f0a500, #ff6b35);
+      border-radius: 3px;
+    }
+    .rank-votes-num {
+      font-size: 26px;
+      font-weight: 900;
+      color: #444;
+      line-height: 1;
+    }
+    .rank-votes-num span {
+      font-size: 12px;
+      font-weight: 400;
+      margin-left: 2px;
+    }
+
+    /* TOP3 強調 */
+    .rank-item.top1 { border-left: 4px solid #f0a500; }
+    .rank-item.top2 { border-left: 4px solid #bbb; }
+    .rank-item.top3 { border-left: 4px solid #c97030; }
+
+    /* セクション区切り */
+    .rank-section-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #888;
+      margin: 20px 0 8px;
+      padding-left: 4px;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <h1 class="page-title">🏆 最強アシストカードランキング</h1>
+  <p class="ranking-note">ユーザー投票結果（184名参加） ／ 2026.03.14 時点</p>
+
+  <ul class="rank-list" id="rankList">
+    <!-- JS で生成 -->
+  </ul>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+</footer>
+
+<script src="cards/cards-data.js"></script>
+<script>
+const RANKING = [
+  { rank:  1, name: 'フレリア',       rarity: 'MR',  votes: 153, id: 'a10j-MR-fureria' },
+  { rank:  2, name: 'リムル',         rarity: 'MR',  votes: 119, id: 'b21i-MR-rimuru' },
+  { rank:  3, name: 'ヴィトニル',     rarity: 'MR',  votes:  93, id: 'a24j-MR-vitoniru' },
+  { rank:  4, name: 'クリス',         rarity: 'MR',  votes:  62, id: 'b7-MR-kurisu' },
+  { rank:  5, name: 'カルキノス',     rarity: 'SSR', votes:  55, id: 'a4g-SSR-karukinosu' },
+  { rank:  6, name: 'シュナ',         rarity: 'MR',  votes:  39, id: 'a7-MR-syuna' },
+  { rank:  7, name: 'デミウルゴス',   rarity: 'MR',  votes:  38, id: 'f7-MR-demiurugosu' },
+  { rank:  8, name: 'メガラニカ',     rarity: 'MR',  votes:  36, id: 'f24i-MR-megaranika' },
+  { rank:  9, name: 'アカゾナエヌシ', rarity: 'SSR', votes:  29, id: 'a6j-SSR-akazonaenusi' },
+  { rank: 10, name: 'ホリィ',         rarity: 'SSR', votes:  14, id: 'f9-SSR-hori' },
+  { rank: 11, name: 'イブリース',     rarity: 'MR',  votes:  10, id: 'f16h-MR-iburiisu' },
+  { rank: 12, name: 'メリオダス',     rarity: 'SSR', votes:   9, id: 'c2h-SSR-meriodasu' },
+  { rank: 13, name: 'ナデシコ',       rarity: 'MR',  votes:   8, id: 'e20i-MR-nadeshiko' },
+  { rank: 14, name: 'オフリィ',       rarity: 'MR',  votes:   8, id: 'c19k-MR-ofurii' },
+  { rank: 15, name: 'ギフトン',       rarity: 'MR',  votes:   5, id: 'c12l-MR-gifton' },
+  { rank: 16, name: 'ステラ',         rarity: 'MR',  votes:   5, id: 'e7-MR-sutera' },
+  { rank: 17, name: 'ミルキィ',       rarity: 'MR',  votes:   5, id: 'c11j-MR-mirukii' },
+  { rank: 18, name: 'アウフィエル',   rarity: 'MR',  votes:   4, id: 'c19h-MR-aufieru' },
+  { rank: 19, name: 'リッピー',       rarity: 'MR',  votes:   4, id: 'e18l-MR-rippii' },
+  { rank: 20, name: 'サフィン',       rarity: 'SSR', votes:   4, id: 'c9-SSR-safin' },
+];
+
+const MAX_VOTES = RANKING[0].votes;
+
+function imgSrc(id) {
+  if (!id || typeof cardsData === 'undefined' || !cardsData[id]) return null;
+  return `assist-cards/${id}.${cardsData[id].ext}`;
+}
+
+function rankClass(rank) {
+  if (rank === 1) return 'top1';
+  if (rank === 2) return 'top2';
+  if (rank === 3) return 'top3';
+  return '';
+}
+
+function numClass(rank) {
+  if (rank === 1) return 'gold';
+  if (rank === 2) return 'silver';
+  if (rank === 3) return 'bronze';
+  return 'normal';
+}
+
+const list = document.getElementById('rankList');
+
+RANKING.forEach((item, i) => {
+  // セクション区切り
+  if (item.rank === 1) {
+    const t = document.createElement('li');
+    t.className = 'rank-section-title';
+    t.textContent = 'TOP 10';
+    list.appendChild(t);
+  }
+  if (item.rank === 11) {
+    const t = document.createElement('li');
+    t.className = 'rank-section-title';
+    t.textContent = '11〜20位';
+    list.appendChild(t);
+  }
+
+  const src = imgSrc(item.id);
+  const pct = (item.votes / MAX_VOTES * 100).toFixed(1);
+
+  const li = document.createElement('li');
+  li.innerHTML = `
+    <a class="rank-item ${rankClass(item.rank)}" href="cards/card.html#${item.id}">
+      <div class="rank-num ${numClass(item.rank)}">${item.rank}</div>
+      ${src
+        ? `<img class="rank-img" src="${src}" alt="${item.name}" onerror="this.outerHTML='<div class=\\"rank-img-placeholder\\">🃏</div>'">`
+        : '<div class="rank-img-placeholder">🃏</div>'}
+      <div class="rank-info">
+        <div class="rank-name">${item.name}</div>
+        <span class="rank-rarity r-${item.rarity}">${item.rarity}</span>
+      </div>
+      <div class="rank-votes-area">
+        <div class="rank-bar-bg"><div class="rank-bar-fill" style="width:${pct}%"></div></div>
+        <div class="rank-votes-num">${item.votes}<span>票</span></div>
+      </div>
+    </a>
+  `;
+  list.appendChild(li);
+});
+</script>
+
+</body>
+</html>
