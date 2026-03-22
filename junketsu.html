@@ -161,57 +161,6 @@
     .rank-val.mid   { color: #f0a500; }
     .rank-val.low   { color: #555; }
 
-    /* 相性表 */
-    .matrix-wrap {
-      overflow-x: auto;
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-      padding: 10px;
-    }
-    .matrix-table {
-      border-collapse: collapse;
-      font-size: 11px;
-      white-space: nowrap;
-    }
-    .matrix-table th, .matrix-table td {
-      border: 1px solid #ddd;
-      padding: 4px 5px;
-      text-align: center;
-    }
-    .matrix-table th.row-label {
-      background: #1a1a2e;
-      color: #fff;
-      min-width: 72px;
-      text-align: left;
-      padding-left: 6px;
-    }
-    .matrix-table th.col-label {
-      background: #1a1a2e;
-      color: #fff;
-      min-width: 44px;
-      font-size: 10px;
-    }
-    .matrix-table td.same { background: #e0e0e0; color: #888; }
-    .cell-h  { background: #ffe0e0; color: #c00; font-weight: bold; }
-    .cell-m  { background: #fff3cc; color: #a60; }
-    .cell-l  { background: #e8f5e9; color: #2e7d32; }
-    .cell-ll { background: #e3f2fd; color: #1565c0; }
-
-    .notice {
-      font-size: 12px;
-      color: #888;
-      margin-top: 10px;
-      text-align: center;
-    }
-
-    /* ハイライト検索セル */
-    .cell-highlight {
-      outline: 3px solid #f0a500;
-      position: relative;
-      z-index: 1;
-    }
-
     /* 血統色定義 */
     .t-pixie    { background:#e91e8c; }
     .t-dragon   { background:#d32f2f; }
@@ -263,7 +212,6 @@
 <div class="tab-bar">
   <button class="tab-btn active" onclick="switchTab('search', this)">🔍 相性検索</button>
   <button class="tab-btn" onclick="switchTab('ranking', this)">📊 ランキング</button>
-  <button class="tab-btn" onclick="switchTab('matrix', this)">📋 相性表</button>
 </div>
 
 <!-- ===================== 相性検索タブ ===================== -->
@@ -341,21 +289,6 @@
   </div>
 </div>
 
-<!-- ===================== 相性表タブ ===================== -->
-<div id="tab-matrix" class="tab-content">
-  <div class="inner">
-    <p style="font-size:13px;color:#666;margin-bottom:10px">横軸＝親の血統、縦軸＝子の血統。セルをクリックすると値を強調表示します。</p>
-    <p class="notice">
-      <span style="background:#ffe0e0;padding:2px 6px;border-radius:3px;font-size:11px">■ 38以上</span>
-      <span style="background:#fff3cc;padding:2px 6px;border-radius:3px;font-size:11px">■ 32〜37.5</span>
-      <span style="background:#e8f5e9;padding:2px 6px;border-radius:3px;font-size:11px">■ 25〜31.5</span>
-      <span style="background:#e3f2fd;padding:2px 6px;border-radius:3px;font-size:11px">■ 25未満</span>
-    </p>
-    <div class="matrix-wrap" style="margin-top:10px">
-      <table class="matrix-table" id="matrix-tbl"></table>
-    </div>
-  </div>
-</div>
 
 <script>
 // =====================================================
@@ -538,57 +471,6 @@ function updateRanking() {
 }
 
 // =====================================================
-// 相性表
-// =====================================================
-function cellClass(v, isSame) {
-  if (isSame) return 'same';
-  if (v >= 38)   return 'cell-h';
-  if (v >= 32)   return 'cell-m';
-  if (v >= 25)   return 'cell-l';
-  return 'cell-ll';
-}
-
-function buildMatrix() {
-  const tbl = document.getElementById('matrix-tbl');
-  // ヘッダー行
-  let html = '<thead><tr><th class="row-label" style="font-size:10px">子 ↓ 親 →</th>';
-  TYPES.forEach((t, i) => {
-    html += `<th class="col-label ${TYPE_COLOR[i]}">${t.slice(0,4)}</th>`;
-  });
-  html += '</tr></thead><tbody>';
-  // データ行
-  TYPES.forEach((rowType, ri) => {
-    html += `<tr><th class="row-label"><span class="badge ${TYPE_COLOR[ri]}" style="font-size:10px">${rowType}</span></th>`;
-    TYPES.forEach((colType, ci) => {
-      const v = MATRIX[ri][ci];
-      const cls = cellClass(v, ri === ci);
-      html += `<td class="${cls}" onclick="cellClick(${ri},${ci})" title="${colType}(親) × ${rowType}(子) = ${v}">${v}</td>`;
-    });
-    html += '</tr>';
-  });
-  html += '</tbody>';
-  tbl.innerHTML = html;
-}
-
-let lastHighlight = null;
-function cellClick(ri, ci) {
-  if (lastHighlight) {
-    lastHighlight.forEach(el => el.classList.remove('cell-highlight'));
-  }
-  const tbl = document.getElementById('matrix-tbl');
-  // +1 because of header row/col
-  const rows = tbl.querySelectorAll('tbody tr');
-  const cell = rows[ri].querySelectorAll('td')[ci];
-  cell.classList.add('cell-highlight');
-  lastHighlight = [cell];
-
-  // 「相性検索」タブに値をコピーして表示
-  document.getElementById('sel-parent').value = ci;
-  document.getElementById('sel-child').value  = ri;
-  updateSearch();
-}
-
-// =====================================================
 // タブ切り替え
 // =====================================================
 function switchTab(name, btn) {
@@ -602,7 +484,6 @@ function switchTab(name, btn) {
 // 初期化
 // =====================================================
 buildSelects();
-buildMatrix();
 </script>
 
 </body>

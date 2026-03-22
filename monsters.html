@@ -199,11 +199,15 @@ function buildGrid(assignments) {
     const localFile = m.localImg || (assignments && assignments[String(idx)]) || null;
     const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
 
-    const card = document.createElement('div');
+    const card = document.createElement('a');
     card.className = 'monster-card';
+    card.href = `monsters/monster.html?id=${idx}`;
     card.dataset.aura = m.aura;
     card.dataset.limited = m.limited ? '1' : '0';
     card.dataset.mon = m.mon || '';
+    card.style.textDecoration = 'none';
+    card.style.color = 'inherit';
+    card.style.display = 'block';
 
     card.innerHTML = `
       <div class="monster-img-wrap">
