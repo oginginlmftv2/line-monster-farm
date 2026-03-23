@@ -3,11 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>秘伝周回 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームの秘伝周回攻略。効率的な秘伝周回のやり方とおすすめモンスター・アシスト編成を解説します。">
+  <title>秘伝周回 完全ガイド | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの秘伝周回攻略。全秘伝の種類・ロード秘伝の仕組み・おすすめ大会ルート・超修行・ボスモン出現条件まで完全解説。">
   <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/ikusei/hiden.html">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc { background:#fffbf0; border:1px solid #f0a500; border-radius:8px; padding:16px 20px; margin-bottom:24px; }
+    .toc-title { font-weight:bold; font-size:14px; margin-bottom:8px; color:#f0a500; }
+    .toc ol { padding-left:20px; }
+    .toc li { font-size:13px; margin-bottom:4px; }
+    .toc a { color:#333; text-decoration:none; }
+    .toc a:hover { color:#f0a500; }
+    .info-box { background:#f0f8ff; border-left:4px solid #3b82f6; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .warn-box { background:#fff8e1; border-left:4px solid #f0a500; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .point-box { background:#f0fff4; border-left:4px solid #22c55e; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .h2 { font-size:17px; font-weight:bold; border-left:5px solid #f0a500; padding-left:10px; margin:26px 0 12px; color:#1a1a2e; }
+    .data-table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+    .data-table th { background:#1a1a2e; color:#fff; padding:8px 12px; text-align:center; }
+    .data-table td { padding:8px 12px; border-bottom:1px solid #eee; font-size:13px; }
+    .data-table tr:nth-child(even) td { background:#f9f9f9; }
+    .data-table td:first-child { font-weight:bold; white-space:nowrap; }
+    .tag-imp  { display:inline-block; background:#e11d48; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+    .tag-new  { display:inline-block; background:#3b82f6; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+    .tag-good { display:inline-block; background:#22c55e; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+    .tag-low  { display:inline-block; background:#aaa; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
+    .hc { background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:12px 16px; margin:8px 0; }
+    .hc-title { font-weight:bold; font-size:14px; margin-bottom:6px; display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
+    .hc p { margin:0; font-size:13px; line-height:1.7; }
+    .route-list { list-style:none; padding:0; margin:10px 0; }
+    .route-list li { display:flex; align-items:flex-start; gap:8px; padding:7px 10px; border-bottom:1px solid #f0f0f0; font-size:13px; line-height:1.6; }
+    .route-list li:last-child { border-bottom:none; }
+    .rt { min-width:120px; font-weight:bold; color:#f0a500; flex-shrink:0; }
+    p { font-size:14px; line-height:1.8; margin-bottom:8px; }
+    ul, ol { font-size:13px; line-height:1.8; padding-left:18px; }
+    li { margin-bottom:2px; }
+    .color-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+  </style>
 </head>
 <body>
 
@@ -24,13 +56,310 @@
 
 <div class="container">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">📜 秘伝周回</h1>
-  <div class="section">
-    <div style="text-align:center;padding:60px 20px;color:#bbb;">
-      <div style="font-size:48px;margin-bottom:16px;">🚧</div>
-      <div style="font-size:18px;font-weight:bold;margin-bottom:8px;">準備中</div>
-      <div style="font-size:14px;">このページは現在作成中です。</div>
+  <h1 class="page-title">📜 秘伝周回 完全ガイド</h1>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#types">秘伝の種類一覧（全種解説）</a></li>
+      <li><a href="#road-detail">ロード秘伝の詳細（★の仕組み・マスモン閃き）</a></li>
+      <li><a href="#nouryoku">ロード秘伝★を上げる：能力数を稼ぐコツ</a></li>
+      <li><a href="#compat">秘伝伝授と相性（大会秘伝の共通・ノーブル秘伝）</a></li>
+      <li><a href="#route">おすすめ大会ルート</a></li>
+      <li><a href="#chugyou">超修行のやり方</a></li>
+      <li><a href="#boss">ボスモン出現条件</a></li>
+      <li><a href="#assist">おすすめアシスト編成</a></li>
+    </ol>
+  </div>
+
+  <!-- ① 秘伝の種類 -->
+  <div class="section" id="types">
+    <div class="section-title">秘伝の種類一覧</div>
+    <p>秘伝には多くの種類があります。ゲーム内では色で分類されています。</p>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#5b9bd5;"></span>青のステータス秘伝<span class="tag-low">低重要度</span></div>
+      <p>レンジ時にステータスを上げてくれる秘伝。<br>
+      全ステータス<strong>900以上で★2以上が確定</strong>。900未満のステが抽選で選ばれると★1になる可能性あり。<br>
+      重要度は低めだが、全部★1と全部★3ではステ合計120×相性補正分の差が出るので、★が高いほど嬉しい。</p>
     </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#70ad47;"></span>緑の適正秘伝<span class="tag-low">低〜中</span></div>
+      <p>距離秘伝か地形秘伝のうち<strong>適正ランクB以上</strong>のものから抽選で選ばれる。<br>
+      <strong>☆合計1で1段階適性上昇、以降☆3つ増えるごとに1ランク上昇。</strong><br>
+      例：適性☆合計が砂漠7・火山4・遠距離1 → 砂漠3ランク・火山2ランク・遠距離1ランク上昇<br>
+      最近のシナリオで適性の上げやすさが緩和されたため昔ほど重要ではなくなったが、距離適性条件により強力な実力を発揮する能力がある限り需要はあり続ける。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#e74c3c;"></span>赤の技伝（ワザ秘伝）<span class="tag-good">中重要度</span></div>
+      <p>育成開始時から技を覚えた状態でスタートできる秘伝。<br>
+      <strong>☆合計7で技1つ、13で技2つ</strong>覚えた状態でスタート。目標は13以上。<br>
+      超修行と師匠の登場により重要度は少し落ち着いたが、なかなか良い要素。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#70ad47;"></span>緑の陣営秘伝（シナリオ秘伝）<span class="tag-low">低重要度</span></div>
+      <p>陣営によって忠誠度と人気を上げたり、その上限を上げたりする秘伝。能力ポイントもちょっとだけもらえる。<br>
+      以前のシナリオ秘伝は能力ポイントが大きかったが、陣営秘伝になってから重要性が落ちた。<strong>あったら嬉しいけど昔ほど重要ではない。</strong></p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#f5f5dc; border:1px solid #ccc;"></span>白の大会秘伝（白伝）<span class="tag-imp">最重要</span></div>
+      <p>ステータスや能力を伝授時にもらえる秘伝。<strong>四大大会（完全）制覇が抜けて強く</strong>、★3だと全ステ15(完全制覇は18)×相性補正×最大6セット上がるのでめちゃくちゃ強くなる。<br><br>
+      <strong>大会秘伝の真の価値は「共通秘伝」にある。</strong>伝授モン（親）と伝授元（祖父母）の共通した大会秘伝によって相性値を爆上げできる。共通させられるかは運も大きいため、試行回数を増やして強い秘伝を作ろう。<br><br>
+      <strong>今の推奨大会秘伝（優先順）：</strong><br>
+      ① 4大会制覇（グレイテスト4・M-1グランプリ・ウィナーズ杯・ワールドモンスターズ杯）<br>
+      ② モンスターダービー（ステータスも大きい）<br>
+      ③ ミカエル記念 または ガブリエル記念<br>
+      ④ 英雄杯 ⑤ 桔梗賞の冬</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#f0a500;"></span>黄色のノラモン秘伝（ノラモン秘伝）<span class="tag-good">バトル向け</span></div>
+      <p>バトル性能を変える能力を伝授できる秘伝。能力ポイント効率も高く、総合力用としてもちょっと優秀。ついてたらラッキー。<br>
+      <strong>特に強いノラモン秘伝：グジラキング・マグマハート・スナイプ・フェニックス</strong><br>
+      固有の名前がついているレアモンのノラモン秘伝は特に強い。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#a855f7;"></span>紫のモン類秘伝<span class="tag-low">低重要度</span></div>
+      <p>モン類レベルを上げやすくする、モン類経験値アップのようすを伝授できる秘伝。<br>
+      あったら嬉しいけど今はそこまで気にしてる余裕はない。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title">EX秘伝<span class="tag-low">低重要度</span></div>
+      <p>そこまで重要ではない。ついてたらラッキー程度。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#f97316;"></span>橙のソロモン秘伝<span class="tag-low">通常育成では不要</span></div>
+      <p>ソロモンクエストに必要な秘伝。供モンを育成するのに使うとソロモンクエストで有利になる伝授（カード強化）が発生しやすくなる。通常の育成では特別気にしなくてよい。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span style="font-size:13px;">✨</span> ノーブル秘伝（しゅわしゅわ）<span class="tag-imp">総合力 必須級</span></div>
+      <p>共通白秘伝とは別に、<strong>☆の合計数が高いほど相性値を上げてくれる</strong>秘伝。<br>
+      <strong>総合力育成用の秘伝としては必須級。</strong>あるのとないのでは最高相性（王冠相性）への到達しやすさが全然違う。<br>
+      注意：始めたばかりの状態では★1〜★2しかつかないため、★1〜★2モンスターを親にして少しずつ★を上げていく操作が必要。</p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#e74c3c;"></span>ロード秘伝<span class="tag-new">3周年実装</span><span class="tag-imp">バトル最重要</span></div>
+      <p>バトル用の秘伝として3周年で実装。<strong>自前のアシストカードの能力を自由にカスタマイズして次世代にひらめきとして受け継ぐことが可能</strong>。<br>
+      育成モンスターのオーラ関係なく、アシストカードの能力を伝授できる。アシストカードが揃っているほど強力なロード秘伝を作れる。<br>
+      伝授時に能力Ptを獲得、「先導」獲得率アップ、伝授モンスターが稽古トレーニングに出現する効果もある（※レンタルモンスターは出現しない）。<br>
+      <strong>総合力への影響は小さめ。バトル専用の夢の秘伝。</strong></p>
+    </div>
+
+    <div class="hc">
+      <div class="hc-title"><span class="color-dot" style="background:#3b82f6;"></span>ボスモン秘伝<span class="tag-new">新実装</span><span class="tag-imp">バトル最重要</span></div>
+      <p>新シナリオ「それぞれの育成論」で実装された秘伝。<strong>ロード秘伝と並んでバトルへのすさまじい影響力を持ち、場合によってはロード秘伝よりも影響が大きいかもしれない。</strong><br>
+      代表能力「レネゲイドマイティ」の効果：<br>
+      ・自身モン類レベル × 全ステータス+25<br>
+      ・モン類相性効果+50%が自分に発動<br>
+      ・[モン類有利] ライフが多いほど被ダメージ減少 最大50%<br><br>
+      レネゲイド能力は各モン類で2種類ずつある。<strong>モン類レベル20のモンスターでボスモン秘伝2種類発動すれば全ステータス+1000アップになる。</strong><br>
+      今の秘伝周回の最大の目的はこのボスモン秘伝を付けること。</p>
+    </div>
+  </div>
+
+  <!-- ② ロード秘伝詳細 -->
+  <div class="section" id="road-detail">
+    <div class="section-title">ロード秘伝の詳細（★の仕組み・マスモン閃き）</div>
+    <p>ロード秘伝は「能力ポイントブースト」と「マスモン閃きシステム」の2つの仕組みで動いている。</p>
+
+    <div class="h2">基本構成</div>
+    <ul>
+      <li>ロード秘伝は<strong>1モンスターにつき1個</strong></li>
+      <li>育成構成は<strong>6体構成</strong>（育成モン・父・父父・父母・母・母父・母母）</li>
+      <li>ロード秘伝の色：赤・青・緑・黄・黒・白（<strong>現在実装は赤のみ</strong>）</li>
+    </ul>
+
+    <div class="h2">① 能力ポイントブースト</div>
+    <ul>
+      <li>ロード秘伝が発動するたびに<strong>能力ポイント+50</strong></li>
+      <li>6体全員で発動すれば<strong>最大300ポイント</strong>（50×6）</li>
+      <li>先導が付与されると育成中の能力ポイント<strong>+20%</strong>（重複なし）</li>
+    </ul>
+    <div class="info-box">秘伝相性ランク：× ＜ △ ＜ ○ ＜ ◎ ＜ ☆ ＜ 👑（発動率に影響）</div>
+
+    <div class="h2">② マスモン閃きシステム</div>
+    <p>育成中、祖先のマスモンが技を閃かせてくれる確率が発生する。★が高いほど閃き確率が上昇。</p>
+
+    <p><strong>秘伝★の決まり方（仮説）：</strong>育成中の取得能力数が影響</p>
+    <div class="warn-box">
+      目安：<strong>60〜70個以上で★4以上確定？</strong>（体感・仮説）<br>
+      ★4 約60% ／ ★5 約30% ／ ★6 約10%<br>
+      ※総合力などの影響もある可能性あり（未検証）
+    </div>
+
+    <p><strong>マスモン出現ロジック：</strong>父ライン（父+父父+父母）と母ライン（母+母父+母母）の秘伝★合計を比較</p>
+    <ul>
+      <li>★合計が高いライン → そのモンスターの<strong>親マスモン</strong>が出現</li>
+      <li>★合計が同じ → <strong>親の総合力が高い方</strong>が優先</li>
+      <li>祖父母のマスモンは出ない（必ず「親部分」のマスモン）</li>
+    </ul>
+
+    <p><strong>閃き確率：</strong>マスモンが出たラインの親+祖父+祖母の3体の秘伝★合計で計算（1ターン毎に抽選）</p>
+    <table class="data-table">
+      <thead><tr><th>条件</th><th>体感閃き確率</th></tr></thead>
+      <tbody>
+        <tr><td>オーラ不一致</td><td>約1.5%（最大★18分）</td></tr>
+        <tr><td>オーラ一致</td><td>約2%（最大★18分）</td></tr>
+      </tbody>
+    </table>
+
+    <p><strong>オーラ一致条件（推測）：</strong>以下3つが一致すると閃き確率アップ</p>
+    <ul>
+      <li>ロード秘伝の色　・　親モンスターのオーラ　・　育成モンスターのオーラ</li>
+    </ul>
+    <div class="info-box">理論値：不一致 約27% ／ 一致 約36%</div>
+
+    <div class="h2">閃き対象外の能力（注意）</div>
+    <p>親マスモンの能力でも以下は閃きの対象外。</p>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin:8px 0;">
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">レンタルアシカ能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">ノラモン能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">ボスモン能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">モン類レベル能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">状態変化能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">殿堂能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">固有能力</span>
+      <span style="background:#fee;border:1px solid #fcc;color:#c33;font-size:12px;padding:3px 10px;border-radius:4px;">英雄能力</span>
+    </div>
+  </div>
+
+  <!-- ③ 能力数 -->
+  <div class="section" id="nouryoku">
+    <div class="section-title">ロード秘伝★を上げる：能力数を稼ぐコツ</div>
+    <p>ロード秘伝の★を上げるには、<strong>育成中の取得能力数を増やすことが最重要。</strong></p>
+    <div class="point-box">
+      <strong>✅ おすすめ：期末の能力変換</strong><br>
+      期末に能力変換を行うと1回あたり約5個の能力を取得できる。<br>
+      3期末（期末×3回）で<strong>約15個程度</strong>稼げる。
+    </div>
+  </div>
+
+  <!-- ④ 伝授と相性 -->
+  <div class="section" id="compat">
+    <div class="section-title">秘伝伝授と相性</div>
+
+    <div class="h2">大会秘伝の「共通秘伝」で相性を上げる</div>
+    <p>大会秘伝の真の価値は<strong>伝授モン（親）と伝授元（祖父母）の共通した大会秘伝</strong>によって相性値を爆上げできること。共通している大会秘伝が多いほど相性が○→◎→★→👑と上がる。</p>
+
+    <div class="h2">四大制覇★3を狙う理由</div>
+    <ul>
+      <li>四大大会完全制覇★3：ALL+18 ／ 四大大会制覇★3：ALL+15（全員分で最大+108 or +90）</li>
+      <li>四大制覇以外では<strong>モンスターダービー★3</strong>が強力（ライフ・回避・丈夫さ +24）</li>
+    </ul>
+    <div class="info-box">
+      <strong>四大大会の種類：</strong>グレイテスト4 ／ M-1グランプリ ／ ウィナーズ杯 ／ ワールドモンスターズ杯<br>
+      4つ全て勝利すると「祝！ 四大大会、制覇！」イベントが発生。
+    </div>
+
+    <div class="h2">相性ランクとボーナス補正</div>
+    <p>相性の良さで伝授時のステータスにボーナス補正がかかり、白秘伝の発動数にも関係する。</p>
+    <table class="data-table">
+      <thead><tr><th>相性</th><th>タバサのセリフ</th><th>白秘伝発動数</th><th>伝授ボーナス</th></tr></thead>
+      <tbody>
+        <tr><td>× △（ボーナスなし）</td><td>—</td><td>—</td><td>なし</td></tr>
+        <tr><td>○</td><td>相性は良さそう。秘伝もしっかり伝わるかな</td><td>0〜12個</td><td>×1.1</td></tr>
+        <tr><td>◎ <span class="tag-good">推奨</span></td><td>バツグンの相性！これなら期待できるね！</td><td>6〜18個</td><td>×1.15</td></tr>
+        <tr><td>★</td><td>すごい！これ以上ない完璧な相性だよ！</td><td>12〜24個</td><td>×1.2</td></tr>
+        <tr><td>👑</td><td>すっごい！奇跡の組み合わせだね！</td><td>未検証</td><td>×1.25</td></tr>
+        <tr><td>👑金継承<br><span style="font-size:11px;color:#999;">確率で発生</span></td><td>—</td><td>未検証</td><td>×1.3</td></tr>
+      </tbody>
+    </table>
+    <div class="point-box">
+      相性◎で四大制覇★3が6セット全発動すれば：<br>
+      15×6=90 × 1.15 = <strong>全ステータス+103</strong>（小数点以下切捨て）が育成開始時に加算される。
+    </div>
+
+    <div class="h2">モンスター相性の仕組み</div>
+    <ul>
+      <li>相性の大半は<strong>育成対象モンスター ↔ 1体目・2体目の伝授モンスター</strong>の相性で決まる</li>
+      <li>伝授枠同士（1体目 ↔ 2体目）にも小さな相性の影響がある</li>
+      <li>ギリギリの相性の時、1体変えるだけで◎→○に落ちることもある</li>
+    </ul>
+  </div>
+
+  <!-- ⑤ 大会ルート -->
+  <div class="section" id="route">
+    <div class="section-title">おすすめ大会ルート（秘伝周回）</div>
+    <ul class="route-list">
+      <li><span class="rt">ジュニア3T目</span><span>桔梗賞 に出場</span></li>
+      <li><span class="rt">ジュニアラスト4T</span><span>モンスターダービー</span></li>
+      <li><span class="rt">—</span><span>レジェンドリーグ（強制）</span></li>
+      <li><span class="rt">ミドル最初T</span><span>好きな距離のトーナメント（例：ニアライト。どの距離でも可）</span></li>
+      <li><span class="rt">ミドル3T目</span><span>グレイテスト4</span></li>
+      <li><span class="rt">ミドル4T目</span><span>桔梗賞の冬（2回目）</span></li>
+      <li><span class="rt">ミドルラスト4T</span><span>M-1グランプリ</span></li>
+      <li><span class="rt">ミドルラスト2T</span><span>スマートスター or パワースター（好きな方）</span></li>
+      <li><span class="rt">↑の結果で分岐</span><span>スマートスター → ガブリエル記念 ／ パワースター → ミカエル記念</span></li>
+      <li><span class="rt">緑機ラスト</span><span>レジェンドリーグ（強制）</span></li>
+      <li><span class="rt">プロ3T目</span><span>ウィナーズ杯</span></li>
+      <li><span class="rt">プロラスト4T</span><span>ワールドモンスターズ杯</span></li>
+      <li><span class="rt">プロラスト2T</span><span>ガブリエル記念 or ミカエル記念</span></li>
+      <li><span class="rt">—</span><span>レジェンドリーグ</span></li>
+      <li><span class="rt">最後</span><span>英雄杯 → 3連戦（or スキップ）→ 秘伝1周完了</span></li>
+    </ul>
+    <div class="info-box">ミドル期に注意が来た場合は、ミドル2ターン目でジュースを使ってランク4技＋ランク5技を習得するのが最もおすすめ。</div>
+  </div>
+
+  <!-- ⑥ 超修行 -->
+  <div class="section" id="chugyou">
+    <div class="section-title">超修行のやり方</div>
+    <div class="point-box">
+      <strong>✅ おすすめタイミング：ミドル2ターン目に注意が来た時にジュースを使って技2つ取りに行く</strong><br>
+      ランク4技 + ランク5技を習得すると<strong>ほぼ100%の確率で2つ技を習得</strong>でき、ノラモンにも出会えて、ボスモンにも出会える可能性がある。
+    </div>
+    <div class="h2">技の選び方（重要）</div>
+    <ul>
+      <li><strong>1つ目に選んだ技がノラモン抽選の対象</strong>になる</li>
+      <li>ノラモン表が出ている時は<strong>1つ目に「覚える可能性が高い技」</strong>を選ぶこと</li>
+      <li>1つ目が覚えられず2つ目だけ覚えてしまうと、ノラモンが出ていないのにノラモン注意が消えてしまう</li>
+    </ul>
+    <p>ジュニア期での超修行も可能だが出なかった時のリスクあり。ミドル2T目が最もおすすめ。<br>「超修行の方がボスモンに出会える確率が体感高い」という声もある（詳細は未検証）。</p>
+  </div>
+
+  <!-- ⑦ ボスモン -->
+  <div class="section" id="boss">
+    <div class="section-title">ボスモン出現条件</div>
+    <p>修行に行く距離によって出現するボスモンが異なる。</p>
+    <table class="data-table">
+      <thead><tr><th>距離</th><th>ボスモン名</th><th>モン類</th></tr></thead>
+      <tbody>
+        <tr><td>零距離</td><td>ヒノトリ</td><td>創造</td></tr>
+        <tr><td>近距離</td><td>キジン・イブ</td><td>怪物・幻霊</td></tr>
+        <tr><td>中距離</td><td>ムー・イルミネ</td><td>魔族・無機</td></tr>
+        <tr><td>遠距離</td><td>ハクタク</td><td>獣</td></tr>
+      </tbody>
+    </table>
+    <div class="info-box">零距離と遠距離は1種類ずつのため、創造や獣のボスモンを狙う場合は絞りやすい。</div>
+  </div>
+
+  <!-- ⑧ アシスト -->
+  <div class="section" id="assist">
+    <div class="section-title">おすすめアシスト編成</div>
+    <div class="point-box">
+      <strong>✅ 師匠（MRフレリア or SSRフレリア）を必ず入れる</strong><br>
+      オーラ・モン類関係なく全ての育成で強い。MRを持っている人はMRで。
+    </div>
+    <ul>
+      <li>修行時に<strong>全距離の習得率アップ</strong></li>
+      <li>育成開始時に<strong>修行チケット1枚</strong>をプレゼント</li>
+      <li>アイリス・サフィンと合わせると最初から<strong>修行チケット3枚</strong>でスタートできる</li>
+      <li>書いていない効果（体力回復など）も非常に大きい</li>
+    </ul>
+    <p>編成に悩んでいるなら<strong>まず師匠を入れればOK</strong>。</p>
+  </div>
+
+  <div style="font-size:12px;color:#aaa;margin-top:8px;margin-bottom:32px;">
+    ※本記事は非公式ファンサイトの攻略情報です。体感・検証ベースの情報を含みます。<br>
+    ※ゲームのアップデートにより内容が変わる場合があります。
   </div>
 </div>
 
