@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://oginginlmftv2.github.io/line-monster-farm/sitemap.xml

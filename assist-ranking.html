@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>最強アシストカードランキング | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの最強アシストカードランキング。ユーザー投票による人気カードランキングを掲載しています。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/assist-ranking.html">
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
@@ -278,14 +280,31 @@
 
     <!-- 4〜10位 -->
     <div class="lower-area" id="lower"></div>
+
+    <div class="divider-line"></div>
+
+    <!-- 11〜20位 -->
+    <div class="mid-area" id="mid"></div>
   </div>
 
-  <!-- 11〜20位ブロック -->
+  <!-- 202504ランキングブロック -->
   <div class="ranking-block">
     <div class="block-header">
-      <div class="block-header-title">11〜20位</div>
+      <div class="block-header-title">🃏 最強アシストカード <span>ランキング</span> <span style="font-size:14px;color:#f0a500;font-weight:700;margin-left:6px;">2025.04時点</span></div>
     </div>
-    <div class="mid-area" id="mid"></div>
+
+    <!-- TOP3 -->
+    <div class="top3-area" id="top3b"></div>
+
+    <div class="divider-line"></div>
+
+    <!-- 4〜10位 -->
+    <div class="lower-area" id="lowerb"></div>
+
+    <div class="divider-line"></div>
+
+    <!-- 11〜20位 -->
+    <div class="mid-area" id="midb"></div>
   </div>
 
 </div>
@@ -391,6 +410,98 @@ RANKING.slice(10).forEach(v => {
     <div class="mid-votes">${v.votes}<span>票</span></div>
   `;
   midEl.appendChild(col);
+});
+
+/* ============================================================
+   202504 ランキング
+   ============================================================ */
+const RANKING2 = [
+  { rank:  1, name: 'ホリィ',               rarity: 'SSR', votes: 139, id: 'f9-SSR-hori' },
+  { rank:  2, name: 'セレネ',               rarity: 'MR',  votes: 133, id: 'f21l-MR-serene' },
+  { rank:  3, name: 'リュージン',           rarity: 'MR',  votes:  85, id: 'b17h-MR-ryuujin' },
+  { rank:  4, name: 'オフリィ',             rarity: 'MR',  votes:  72, id: 'c19k-MR-ofurii' },
+  { rank:  5, name: 'リッピー',             rarity: 'MR',  votes:  57, id: 'e18l-MR-rippii' },
+  { rank:  6, name: 'リヴァイ',             rarity: 'SSR', votes:  40, id: 'd7-SSR-rivai' },
+  { rank:  7, name: 'チャコール',           rarity: 'SSR', votes:  32, id: 'f1g-SSR-tyakooru' },
+  { rank:  8, name: 'シエナ',               rarity: 'SSR', votes:  23, id: 'b9-SSR-siena' },
+  { rank:  9, name: 'リストン',             rarity: 'MR',  votes:  17, id: 'c18k-MR-risuton' },
+  { rank: 10, name: 'ミリアム＆メリオダス', rarity: 'SSR', votes:  10, id: null },
+  { rank: 12, name: 'アカゾナエヌシ',       rarity: 'SSR', votes: null, id: 'a6j-SSR-akazonaenusi' },
+  { rank: 13, name: 'レクス',               rarity: 'SSR', votes: null, id: 'e2j-SSR-rekusu' },
+  { rank: 14, name: 'ラブレス',             rarity: 'MR',  votes: null, id: 'e12i-MR-raburesu' },
+  { rank: 15, name: 'バン',                 rarity: 'SSR', votes: null, id: 'a9-SSR-ban' },
+  { rank: 16, name: 'タナトス',             rarity: 'MR',  votes: null, id: 'f15k-MR-tanatosu' },
+  { rank: 17, name: 'アライブ',             rarity: 'SSR', votes: null, id: 'f6l-SSR-araibu' },
+  { rank: 18, name: 'コルト',               rarity: 'SSR', votes: null, id: null },
+  { rank: 18, name: 'リムル',               rarity: 'SSR', votes: null, id: 'b1i-SSR-rimuru' },
+  { rank: 18, name: 'ミルフィー',           rarity: 'SSR', votes: null, id: null },
+  { rank: 267, name: 'ブリガンディ',        rarity: 'SSR', votes: null, id: null },
+];
+
+const MAX2 = RANKING2[0].votes;
+
+/* TOP3（2位→1位→3位） */
+const top3bEl = document.getElementById('top3b');
+[1, 0, 2].forEach(idx => {
+  const v = RANKING2[idx];
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = `top-col ${RANK_CLS[idx]}`;
+  col.href = v.id ? `cards/card.html#${v.id}` : '#';
+  col.innerHTML = `
+    <div class="rank-label">${RANK_LABEL[idx]}</div>
+    <div class="top-img-wrap">
+      ${src
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:10px;color:#aaa;font-size:22px\\'>🃏</div>'">`
+        : '<div style="padding:10px;color:#aaa;font-size:22px">🃏</div>'}
+      <span class="r-badge r-${v.rarity}">${v.rarity}</span>
+    </div>
+    <div class="top-name">${v.name}</div>
+    <div class="top-votes">${v.votes}<span class="votes-unit">票</span></div>
+  `;
+  top3bEl.appendChild(col);
+});
+
+/* 4〜10位 */
+const lowerbEl = document.getElementById('lowerb');
+RANKING2.slice(3, 10).forEach(v => {
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = 'lower-col';
+  col.href = v.id ? `cards/card.html#${v.id}` : '#';
+  col.innerHTML = `
+    <div class="lower-rank">${v.rank} 位</div>
+    <div class="lower-img-wrap">
+      ${src
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:8px;color:#aaa\\'>🃏</div>'">`
+        : '<div style="padding:8px;color:#aaa">🃏</div>'}
+      <span class="r-badge r-${v.rarity}" style="font-size:7px">${v.rarity}</span>
+    </div>
+    <div class="lower-name">${v.name}</div>
+    <div class="lower-votes">${v.votes}<span>票</span></div>
+  `;
+  lowerbEl.appendChild(col);
+});
+
+/* 12〜20位 */
+const midbEl = document.getElementById('midb');
+RANKING2.slice(10).forEach(v => {
+  const src = imgSrc(v.id);
+  const col = document.createElement('a');
+  col.className = 'mid-col';
+  col.href = v.id ? `cards/card.html#${v.id}` : '#';
+  col.innerHTML = `
+    <div class="mid-rank">${v.rank} 位</div>
+    <div class="mid-img-wrap">
+      ${src
+        ? `<img src="${src}" alt="${v.name}" onerror="this.parentElement.innerHTML='<div style=\\'padding:8px;color:#aaa\\'>🃏</div>'">`
+        : '<div style="padding:8px;color:#aaa">🃏</div>'}
+      <span class="r-badge r-${v.rarity}" style="font-size:7px">${v.rarity}</span>
+    </div>
+    <div class="mid-name">${v.name}</div>
+    ${v.votes !== null ? `<div class="mid-votes">${v.votes}<span>票</span></div>` : ''}
+  `;
+  midbEl.appendChild(col);
 });
 </script>
 
