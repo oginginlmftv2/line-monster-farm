@@ -29,11 +29,22 @@
     <button class="filter-btn active" onclick="filterCards('all', event)">すべて</button>
     <button class="filter-btn mr" onclick="filterCards('MR', event)">MR</button>
     <button class="filter-btn ssr" onclick="filterCards('SSR', event)">SSR</button>
+    <button class="filter-btn sss" onclick="filterCards('SSS', event)">SSS</button>
     <span style="color:#ddd;margin:0 2px;font-size:18px;line-height:1;">|</span>
     <button class="filter-btn" id="sortScoreBtn" onclick="toggleSortScore(this)">⭐ 評価順</button>
   </div>
 
   <div class="card-grid" id="cardGrid">
+
+    <a class="card" data-rarity="MR" href="cards/card.html#f10h-MR-rucas">
+      <img class="card-img" src="assist-cards/f10h-MR-rucas.jpg" alt="ルーカス">
+      <div class="card-info"><div class="card-name">ルーカス</div><span class="rarity rarity-MR">MR</span></div>
+    </a>
+
+    <a class="card" data-rarity="SSR" href="cards/card.html#f5h-SSR-tyakkuru">
+      <img class="card-img" src="assist-cards/f5h-SSR-tyakkuru.jpg" alt="チャックル">
+      <div class="card-info"><div class="card-name">チャックル</div><span class="rarity rarity-SSR">SSR</span></div>
+    </a>
 
     <a class="card" data-rarity="SSR" href="cards/card.html#a10j-SSR-fureria">
       <img class="card-img" src="assist-cards/a10j-SSR-fureria.jpg" alt="フレリア">

@@ -73,4 +73,6 @@ const cardsData = {
   'e12i-MR-raburesu':       { name: 'ラブレス',          rarity: 'MR',  oura: '白', type: 'アサルト',   mon: '魔族', ext: 'png' },
   'd11g-MR-ratatosuku':     { name: 'ラタトスク',        rarity: 'MR',  oura: '緑', type: 'タフネス',   mon: '創造', ext: 'png' },
   'f6g-SSR-momonandhamusuke': { name: 'モモン＆ハムスケ', rarity: 'SSR', oura: '黒', type: '丈夫さ',   mon: '創造', ext: 'jpg' },
+  'f10h-MR-rucas':            { name: 'ルーカス',          rarity: 'MR',  oura: '黒', type: '師匠',       mon: '幻霊', ext: 'jpg' },
+  'f5h-SSR-tyakkuru':         { name: 'チャックル',        rarity: 'SSR', oura: '黒', type: '回避',       mon: '幻霊', ext: 'jpg' },
 };

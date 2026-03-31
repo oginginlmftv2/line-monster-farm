@@ -109,6 +109,8 @@ nav a:hover, nav a.active {
 .filter-btn.r:hover, .filter-btn.r.active { background: #3b82f6; border-color: #3b82f6; color: #fff; }
 .filter-btn.mr { border-color: #e11d48; color: #e11d48; }
 .filter-btn.mr:hover, .filter-btn.mr.active { background: #e11d48; border-color: #e11d48; color: #fff; }
+.filter-btn.sss { border-color: #a855f7; color: #a855f7; }
+.filter-btn.sss:hover, .filter-btn.sss.active { background: #a855f7; border-color: #a855f7; color: #fff; }
 
 /* カードグリッド */
 .card-grid {
@@ -165,8 +167,11 @@ nav a:hover, nav a.active {
 
 .rarity-MR  { background: linear-gradient(135deg, #e11d48, #f59e0b); }
 .rarity-SSR { background: linear-gradient(135deg, #ff6b35, #f7c948); }
+.rarity-SSS { background: linear-gradient(135deg, #a855f7, #f7c948, #ff6b35); }
 .rarity-SR  { background: linear-gradient(135deg, #a855f7, #ec4899); }
 .rarity-R   { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+
+.pickup-desc { font-size: 10px; color: #555; font-weight: bold; line-height: 1.5; padding: 4px 8px 8px; }
 
 /* セクション */
 .section {

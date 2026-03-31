@@ -1,6 +1,8 @@
 // LINEモンスターファーム徹底攻略 - モンスターデータ
 // GameWith順（#1〜#330）
 const monstersData = [
+  { name: 'マグマグミ', aura: '黒', limited: false, limitedLabel: '',   gwImg: 332, localImg: null, mon: null },
+  { name: 'ラブカ',     aura: '黒', limited: true,  limitedLabel: '春限定', gwImg: 331, localImg: null, mon: null },
   { name: 'レツ', aura: '赤', limited: false, limitedLabel: '', gwImg: 330, localImg: null, mon: '創造' },
   { name: 'ヴァナルガンド', aura: '赤', limited: false, limitedLabel: '', gwImg: 329, localImg: null, mon: '獣' },
   { name: 'マグフロッグ', aura: '赤', limited: false, limitedLabel: '', gwImg: 328, localImg: '003_マグフロッグ.jpg', mon: '怪物' },
