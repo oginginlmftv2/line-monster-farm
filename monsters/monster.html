@@ -465,6 +465,9 @@ const params = new URLSearchParams(location.search);
 const idx = parseInt(params.get('id'), 10);
 const root = document.getElementById('detail-root');
 
+let pageData = { explanation: '', formations: [] };
+const docId = String(idx);
+
 // 画像URL
 function gwUrl(gwImg) {
   return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${gwImg}.png`;
@@ -544,9 +547,6 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
 // =============================================
 // Firestore データ読み込み
 // =============================================
-let pageData = { explanation: '', formations: [] };
-const docId = String(idx);
-
 async function loadMonsterData() {
   try {
     const doc = await db.collection('monsters').doc(docId).get();
