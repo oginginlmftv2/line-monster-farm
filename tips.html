@@ -209,6 +209,31 @@
 
   let tipsData = []; // { id, label, title, body, order }
 
+  const DEFAULT_TIPS = [
+    { label: 'ikusei', title: '育成前にアシストカードのCPを必ず確認する',
+      body: 'アシストカードを装備してもCPが足りないと効果が発動しません。\n育成開始前に合計CPが上限以内に収まっているかチェックしましょう。\nCPオーバーしているカードは効果が無効になります。', order: 1 },
+    { label: 'ikusei', title: '秘伝を受ける前に黒オーラを確認',
+      body: '秘伝の相性ボーナスはオーラの色が一致しているほど高くなります。\n育成中にモンスターのオーラが変わっていることがあるため、秘伝師匠を選ぶ前に現在のオーラを確認する習慣をつけましょう。', order: 2 },
+    { label: 'ikusei', title: '親モンスターの秘伝数は早めに積む',
+      body: 'ソロモンクエストや高難度コンテンツでは、親の秘伝数がスコアに直結します。\n強い親を作る際は、まず秘伝★3のモンスターを2体作ってそれを親にする流れが効率的です。', order: 3 },
+    { label: 'ikusei', title: '超修行はボスモン出現前に終わらせる',
+      body: '超修行はボスモンが出現するタイミングまでに完了していないと機会を逃します。\n大会ルートに入る前のターンを確認して、余裕を持って超修行を消化しましょう。', order: 4 },
+    { label: 'gacha', title: 'フレンド枠は常にMAX（40人）にしておく',
+      body: 'フレンドのアシストカードは育成に借りられるため、強いカードを持つフレンドを多く確保しておくと育成の幅が広がります。\nフレンド枠が空いていたら積極的に埋めましょう。', order: 5 },
+    { label: 'gacha', title: 'ピックアップ期間中は石を貯める',
+      body: '欲しいカードのピックアップが来るまで石を温存するのが基本です。\n特にMRカードはピックアップ時が最も排出率が高いため、タイミングを逃さないようにしましょう。', order: 6 },
+    { label: 'gacha', title: 'ログインボーナスを毎日受け取る',
+      body: '毎日のログインボーナスで石やアイテムが入手できます。\n連続ログインで豪華報酬が得られるイベントも多いため、少しでもいいので毎日ログインする癖をつけましょう。', order: 7 },
+    { label: 'battle', title: '距離適性は高いほど有利',
+      body: 'バトルでは距離適性評価値が高いほどダメージが増加します。\n使いたいモンスターの得意距離に合わせてアシストカードを選び、距離適性を伸ばすことが重要です。', order: 8 },
+    { label: 'battle', title: 'EXバフを最終ウェイブに合わせる',
+      body: 'ソロモンクエストなどではEXバフの発動タイミングが重要です。\n最終ウェイブで最大火力が出るようバフのスタックを管理しましょう。', order: 9 },
+    { label: 'basic', title: 'アシストカードは一致評価も確認する',
+      body: 'アシストカードの評価には「総合評価」と「一致評価」があります。\n一致評価は同色オーラのモンスターに使った場合の評価です。\n自分のモンスターのオーラに合ったカードを選ぶとより効果的です。', order: 10 },
+    { label: 'basic', title: 'ノラモンは見かけたら積極的に戦う',
+      body: '育成中に出現するノラモンは倒すことで経験値やアイテムが入手できます。\n特に強いノラモンほど報酬が豪華なので、逃げずに挑戦しましょう。', order: 11 },
+  ];
+
   // ---- 読み込み ----
 
   async function loadTips() {
@@ -216,10 +241,27 @@
     try {
       const snap = await db.collection('tips').orderBy('order', 'asc').get();
       tipsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      renderTips();
+      if (tipsData.length === 0) {
+        await seedDefaultTips();
+      } else {
+        renderTips();
+      }
     } catch (e) {
       listEl.innerHTML = '<div class="tips-empty">読み込みに失敗しました。</div>';
     }
+  }
+
+  async function seedDefaultTips() {
+    const batch = db.batch();
+    DEFAULT_TIPS.forEach(tip => {
+      const ref = db.collection('tips').doc();
+      batch.set(ref, tip);
+    });
+    await batch.commit();
+    // 書き込み後に再読み込み
+    const snap = await db.collection('tips').orderBy('order', 'asc').get();
+    tipsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderTips();
   }
 
   function renderTips() {
