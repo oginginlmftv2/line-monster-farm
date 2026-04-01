@@ -15,7 +15,6 @@
       border-radius: 10px;
       padding: 16px 18px;
       margin-bottom: 14px;
-      position: relative;
     }
     .tip-card-header {
       display: flex;
@@ -40,113 +39,20 @@
       font-size: 15px;
       font-weight: bold;
       color: #333;
-      flex: 1;
     }
-    .tip-edit-btn {
-      background: none;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      color: #999;
-      font-size: 12px;
-      padding: 3px 8px;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .tip-edit-btn:hover { border-color: #f0a500; color: #f0a500; }
-    .tip-edit-btn.active { background: #f0a500; color: #fff; border-color: #f0a500; }
     .tip-body {
       font-size: 13px;
       line-height: 1.8;
       color: #555;
-      white-space: pre-wrap;
     }
-    .tip-body strong { color: #f0a500; }
-    /* 編集UI */
-    .tip-edit-area { display: flex; flex-direction: column; gap: 8px; }
-    .tip-edit-row { display: flex; gap: 8px; align-items: center; }
-    .tip-edit-row label { font-size: 12px; color: #888; width: 50px; flex-shrink: 0; }
-    .tip-input-title {
-      width: 100%;
-      font-size: 14px;
+    .section-subtitle {
+      font-size: 15px;
       font-weight: bold;
-      padding: 6px 10px;
-      border: 1px solid #f0a500;
-      border-radius: 6px;
-      box-sizing: border-box;
-      color: #333;
+      color: #f0a500;
+      border-left: 4px solid #f0a500;
+      padding-left: 10px;
+      margin: 24px 0 12px;
     }
-    .tip-select-label {
-      font-size: 13px;
-      padding: 5px 8px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      color: #555;
-      background: #fff;
-    }
-    .tip-textarea-body {
-      width: 100%;
-      min-height: 100px;
-      font-size: 13px;
-      line-height: 1.8;
-      padding: 8px 10px;
-      border: 1px solid #f0a500;
-      border-radius: 6px;
-      box-sizing: border-box;
-      resize: vertical;
-      color: #444;
-    }
-    .tip-edit-btns { display: flex; gap: 8px; justify-content: flex-end; }
-    .tip-save-btn {
-      background: #f0a500;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px 16px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    .tip-save-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    .tip-cancel-btn {
-      background: #fff;
-      color: #999;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      padding: 6px 14px;
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .tip-delete-btn {
-      background: #fff;
-      color: #e53e3e;
-      border: 1px solid #e53e3e;
-      border-radius: 6px;
-      padding: 6px 12px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-right: auto;
-    }
-    .tip-delete-btn:hover { background: #fff0f0; }
-    /* 追加ボタン */
-    .add-tip-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px;
-      background: #fff;
-      border: 2px dashed #ddd;
-      border-radius: 10px;
-      color: #aaa;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 4px;
-    }
-    .add-tip-btn:hover { border-color: #f0a500; color: #f0a500; }
-    .tips-loading { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
-    .tips-empty { text-align: center; padding: 40px; color: #bbb; font-style: italic; font-size: 14px; }
   </style>
 </head>
 <body>
@@ -168,14 +74,142 @@
   <p style="font-size:13px;color:#888;margin:-8px 0 20px;">知っておくと育成効率・ガチャ効率が大きく変わるテクニック集です。</p>
 
   <div class="section">
-    <div id="tips-list">
-      <div class="tips-loading">読み込み中...</div>
+
+    <div class="section-subtitle">📈 育成テクニック</div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-ikusei">育成</span>
+        <span class="tip-title">育成前にアシストカードのCPを必ず確認する</span>
+      </div>
+      <div class="tip-body">
+        アシストカードを装備してもCPが足りないと効果が発動しません。
+        育成開始前に合計CPが上限以内に収まっているかチェックしましょう。
+        CPオーバーしているカードは効果が無効になります。
+      </div>
     </div>
-    <button class="add-tip-btn" id="add-tip-btn" onclick="addTip()">＋ 項目を追加</button>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-ikusei">育成</span>
+        <span class="tip-title">秘伝を受ける前に黒オーラを確認</span>
+      </div>
+      <div class="tip-body">
+        秘伝の相性ボーナスはオーラの色が一致しているほど高くなります。
+        育成中にモンスターのオーラが変わっていることがあるため、秘伝師匠を選ぶ前に現在のオーラを確認する習慣をつけましょう。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-ikusei">育成</span>
+        <span class="tip-title">親モンスターの秘伝数は早めに積む</span>
+      </div>
+      <div class="tip-body">
+        ソロモンクエストや高難度コンテンツでは、親の秘伝数がスコアに直結します。
+        強い親を作る際は、まず秘伝★3のモンスターを2体作ってそれを親にする流れが効率的です。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-ikusei">育成</span>
+        <span class="tip-title">超修行はボスモン出現前に終わらせる</span>
+      </div>
+      <div class="tip-body">
+        超修行はボスモンが出現するタイミングまでに完了していないと機会を逃します。
+        大会ルートに入る前のターンを確認して、余裕を持って超修行を消化しましょう。
+      </div>
+    </div>
+
+    <div class="section-subtitle">🎲 ガチャ・効率テクニック</div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-gacha">ガチャ</span>
+        <span class="tip-title">フレンド枠は常にMAX（40人）にしておく</span>
+      </div>
+      <div class="tip-body">
+        フレンドのアシストカードは育成に借りられるため、強いカードを持つフレンドを多く確保しておくと育成の幅が広がります。
+        フレンド枠が空いていたら積極的に埋めましょう。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-gacha">ガチャ</span>
+        <span class="tip-title">ピックアップ期間中は石を貯める</span>
+      </div>
+      <div class="tip-body">
+        欲しいカードのピックアップが来るまで石を温存するのが基本です。
+        特にMRカードはピックアップ時が最も排出率が高いため、タイミングを逃さないようにしましょう。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-gacha">ガチャ</span>
+        <span class="tip-title">ログインボーナスを毎日受け取る</span>
+      </div>
+      <div class="tip-body">
+        毎日のログインボーナスで石やアイテムが入手できます。
+        連続ログインで豪華報酬が得られるイベントも多いため、少しでもいいので毎日ログインする癖をつけましょう。
+      </div>
+    </div>
+
+    <div class="section-subtitle">⚔️ バトルテクニック</div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-battle">バトル</span>
+        <span class="tip-title">距離適性は高いほど有利</span>
+      </div>
+      <div class="tip-body">
+        バトルでは距離適性評価値が高いほどダメージが増加します。
+        使いたいモンスターの得意距離に合わせてアシストカードを選び、距離適性を伸ばすことが重要です。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-battle">バトル</span>
+        <span class="tip-title">EXバフを最終ウェイブに合わせる</span>
+      </div>
+      <div class="tip-body">
+        ソロモンクエストなどではEXバフの発動タイミングが重要です。
+        最終ウェイブで最大火力が出るようバフのスタックを管理しましょう。
+      </div>
+    </div>
+
+    <div class="section-subtitle">📌 基本・その他</div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-basic">基本</span>
+        <span class="tip-title">アシストカードは一致評価も確認する</span>
+      </div>
+      <div class="tip-body">
+        アシストカードの評価には「総合評価」と「一致評価」があります。
+        一致評価は同色オーラのモンスターに使った場合の評価です。
+        自分のモンスターのオーラに合ったカードを選ぶとより効果的です。
+      </div>
+    </div>
+
+    <div class="tip-card">
+      <div class="tip-card-header">
+        <span class="tip-label label-basic">基本</span>
+        <span class="tip-title">ノラモンは見かけたら積極的に戦う</span>
+      </div>
+      <div class="tip-body">
+        育成中に出現するノラモンは倒すことで経験値やアイテムが入手できます。
+        特に強いノラモンほど報酬が豪華なので、逃げずに挑戦しましょう。
+      </div>
+    </div>
+
   </div>
 
   <p style="font-size:12px;color:#aaa;text-align:center;margin-top:8px;">
-    情報は随時更新しています。コメント欄からの情報提供もお待ちしています。
+    情報は随時更新しています。
   </p>
 </div>
 
@@ -183,252 +217,6 @@
   &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
-
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script>
-  const EDIT_PASSWORD = 'mf2024';
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
-    authDomain: "line-monster-farm.firebaseapp.com",
-    projectId: "line-monster-farm",
-    storageBucket: "line-monster-farm.firebasestorage.app",
-    messagingSenderId: "952838892758",
-    appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-
-  const LABEL_MAP = {
-    ikusei: { text: '育成',   cls: 'label-ikusei' },
-    gacha:  { text: 'ガチャ', cls: 'label-gacha'  },
-    battle: { text: 'バトル', cls: 'label-battle' },
-    basic:  { text: '基本',   cls: 'label-basic'  },
-  };
-
-  let tipsData = []; // { id, label, title, body, order }
-
-  const DEFAULT_TIPS = [
-    { label: 'ikusei', title: '育成前にアシストカードのCPを必ず確認する',
-      body: 'アシストカードを装備してもCPが足りないと効果が発動しません。\n育成開始前に合計CPが上限以内に収まっているかチェックしましょう。\nCPオーバーしているカードは効果が無効になります。', order: 1 },
-    { label: 'ikusei', title: '秘伝を受ける前に黒オーラを確認',
-      body: '秘伝の相性ボーナスはオーラの色が一致しているほど高くなります。\n育成中にモンスターのオーラが変わっていることがあるため、秘伝師匠を選ぶ前に現在のオーラを確認する習慣をつけましょう。', order: 2 },
-    { label: 'ikusei', title: '親モンスターの秘伝数は早めに積む',
-      body: 'ソロモンクエストや高難度コンテンツでは、親の秘伝数がスコアに直結します。\n強い親を作る際は、まず秘伝★3のモンスターを2体作ってそれを親にする流れが効率的です。', order: 3 },
-    { label: 'ikusei', title: '超修行はボスモン出現前に終わらせる',
-      body: '超修行はボスモンが出現するタイミングまでに完了していないと機会を逃します。\n大会ルートに入る前のターンを確認して、余裕を持って超修行を消化しましょう。', order: 4 },
-    { label: 'gacha', title: 'フレンド枠は常にMAX（40人）にしておく',
-      body: 'フレンドのアシストカードは育成に借りられるため、強いカードを持つフレンドを多く確保しておくと育成の幅が広がります。\nフレンド枠が空いていたら積極的に埋めましょう。', order: 5 },
-    { label: 'gacha', title: 'ピックアップ期間中は石を貯める',
-      body: '欲しいカードのピックアップが来るまで石を温存するのが基本です。\n特にMRカードはピックアップ時が最も排出率が高いため、タイミングを逃さないようにしましょう。', order: 6 },
-    { label: 'gacha', title: 'ログインボーナスを毎日受け取る',
-      body: '毎日のログインボーナスで石やアイテムが入手できます。\n連続ログインで豪華報酬が得られるイベントも多いため、少しでもいいので毎日ログインする癖をつけましょう。', order: 7 },
-    { label: 'battle', title: '距離適性は高いほど有利',
-      body: 'バトルでは距離適性評価値が高いほどダメージが増加します。\n使いたいモンスターの得意距離に合わせてアシストカードを選び、距離適性を伸ばすことが重要です。', order: 8 },
-    { label: 'battle', title: 'EXバフを最終ウェイブに合わせる',
-      body: 'ソロモンクエストなどではEXバフの発動タイミングが重要です。\n最終ウェイブで最大火力が出るようバフのスタックを管理しましょう。', order: 9 },
-    { label: 'basic', title: 'アシストカードは一致評価も確認する',
-      body: 'アシストカードの評価には「総合評価」と「一致評価」があります。\n一致評価は同色オーラのモンスターに使った場合の評価です。\n自分のモンスターのオーラに合ったカードを選ぶとより効果的です。', order: 10 },
-    { label: 'basic', title: 'ノラモンは見かけたら積極的に戦う',
-      body: '育成中に出現するノラモンは倒すことで経験値やアイテムが入手できます。\n特に強いノラモンほど報酬が豪華なので、逃げずに挑戦しましょう。', order: 11 },
-  ];
-
-  // ---- 読み込み ----
-
-  async function loadTips() {
-    const listEl = document.getElementById('tips-list');
-    try {
-      const snap = await db.collection('tips').orderBy('order', 'asc').get();
-      tipsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-      if (tipsData.length === 0) {
-        await seedDefaultTips();
-      } else {
-        renderTips();
-      }
-    } catch (e) {
-      listEl.innerHTML = '<div class="tips-empty">読み込みに失敗しました。</div>';
-    }
-  }
-
-  async function seedDefaultTips() {
-    const batch = db.batch();
-    DEFAULT_TIPS.forEach(tip => {
-      const ref = db.collection('tips').doc();
-      batch.set(ref, tip);
-    });
-    await batch.commit();
-    // 書き込み後に再読み込み
-    const snap = await db.collection('tips').orderBy('order', 'asc').get();
-    tipsData = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderTips();
-  }
-
-  function renderTips() {
-    const listEl = document.getElementById('tips-list');
-    if (tipsData.length === 0) {
-      listEl.innerHTML = '<div class="tips-empty">まだ登録されていません。「＋ 項目を追加」から追加してください。</div>';
-      return;
-    }
-    listEl.innerHTML = tipsData.map(tip => buildTipHtml(tip)).join('');
-  }
-
-  function buildTipHtml(tip) {
-    const lbl = LABEL_MAP[tip.label] || LABEL_MAP.basic;
-    const bodyHtml = escHtml(tip.body || '').replace(/\n/g, '<br>');
-    return `
-      <div class="tip-card" id="tip-${tip.id}">
-        <div class="tip-card-header">
-          <span class="tip-label ${lbl.cls}">${lbl.text}</span>
-          <span class="tip-title">${escHtml(tip.title || '')}</span>
-          <button class="tip-edit-btn" onclick="startEdit('${tip.id}')">✏️ 編集</button>
-        </div>
-        <div class="tip-body">${bodyHtml}</div>
-      </div>`;
-  }
-
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
-  // ---- 編集 ----
-
-  function startEdit(tipId) {
-    const pw = prompt('編集パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) {
-      if (pw !== null) alert('パスワードが違います');
-      return;
-    }
-    showEditForm(tipId);
-  }
-
-  function showEditForm(tipId) {
-    const tip = tipsData.find(t => t.id === tipId);
-    if (!tip) return;
-    const el = document.getElementById('tip-' + tipId);
-    const labelOptions = Object.entries(LABEL_MAP).map(([val, { text }]) =>
-      `<option value="${val}" ${tip.label === val ? 'selected' : ''}>${text}</option>`
-    ).join('');
-    el.innerHTML = `
-      <div class="tip-edit-area">
-        <div class="tip-edit-row">
-          <label>ラベル</label>
-          <select class="tip-select-label" id="edit-label-${tipId}">${labelOptions}</select>
-        </div>
-        <div class="tip-edit-row">
-          <label>タイトル</label>
-          <input class="tip-input-title" id="edit-title-${tipId}" type="text" maxlength="80" value="${escHtml(tip.title || '')}">
-        </div>
-        <textarea class="tip-textarea-body" id="edit-body-${tipId}" maxlength="1000" placeholder="内容を入力...">${escHtml(tip.body || '')}</textarea>
-        <div class="tip-edit-btns">
-          <button class="tip-delete-btn" onclick="deleteTip('${tipId}')">🗑️ 削除</button>
-          <button class="tip-cancel-btn" onclick="cancelEdit('${tipId}')">キャンセル</button>
-          <button class="tip-save-btn" id="save-btn-${tipId}" onclick="saveTip('${tipId}')">💾 保存</button>
-        </div>
-      </div>`;
-  }
-
-  function cancelEdit(tipId) {
-    const tip = tipsData.find(t => t.id === tipId);
-    if (!tip) { loadTips(); return; }
-    const el = document.getElementById('tip-' + tipId);
-    el.outerHTML = buildTipHtml(tip);
-  }
-
-  async function saveTip(tipId) {
-    const isNew = tipId === '__new__';
-    const titleEl = document.getElementById('edit-title-' + tipId);
-    const bodyEl  = document.getElementById('edit-body-'  + tipId);
-    const labelEl = document.getElementById('edit-label-' + tipId);
-    const saveBtn = document.getElementById('save-btn-'   + tipId);
-
-    const title = titleEl.value.trim();
-    const body  = bodyEl.value.trim();
-    const label = labelEl.value;
-
-    if (!title) { alert('タイトルを入力してください'); return; }
-
-    saveBtn.textContent = '保存中...';
-    saveBtn.disabled = true;
-
-    try {
-      if (isNew) {
-        const maxOrder = tipsData.length > 0 ? Math.max(...tipsData.map(t => t.order || 0)) : 0;
-        const ref = await db.collection('tips').add({ label, title, body, order: maxOrder + 1 });
-        tipsData.push({ id: ref.id, label, title, body, order: maxOrder + 1 });
-      } else {
-        await db.collection('tips').doc(tipId).set({ label, title, body }, { merge: true });
-        const t = tipsData.find(t => t.id === tipId);
-        if (t) { t.label = label; t.title = title; t.body = body; }
-      }
-    } catch (e) {
-      alert('保存に失敗しました: ' + e.message);
-      saveBtn.textContent = '💾 保存';
-      saveBtn.disabled = false;
-      return;
-    }
-
-    renderTips();
-  }
-
-  async function deleteTip(tipId) {
-    if (!confirm('この項目を削除しますか？')) return;
-    try {
-      await db.collection('tips').doc(tipId).delete();
-      tipsData = tipsData.filter(t => t.id !== tipId);
-      renderTips();
-    } catch (e) {
-      alert('削除に失敗しました: ' + e.message);
-    }
-  }
-
-  // ---- 新規追加 ----
-
-  function addTip() {
-    const pw = prompt('編集パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) {
-      if (pw !== null) alert('パスワードが違います');
-      return;
-    }
-
-    const listEl = document.getElementById('tips-list');
-    const newEl = document.createElement('div');
-    newEl.className = 'tip-card';
-    newEl.id = 'tip-__new__';
-    const labelOptions = Object.entries(LABEL_MAP).map(([val, { text }]) =>
-      `<option value="${val}">${text}</option>`
-    ).join('');
-    newEl.innerHTML = `
-      <div class="tip-edit-area">
-        <div class="tip-edit-row">
-          <label>ラベル</label>
-          <select class="tip-select-label" id="edit-label-__new__">${labelOptions}</select>
-        </div>
-        <div class="tip-edit-row">
-          <label>タイトル</label>
-          <input class="tip-input-title" id="edit-title-__new__" type="text" maxlength="80" placeholder="タイトルを入力">
-        </div>
-        <textarea class="tip-textarea-body" id="edit-body-__new__" maxlength="1000" placeholder="内容を入力..."></textarea>
-        <div class="tip-edit-btns">
-          <button class="tip-cancel-btn" onclick="this.closest('.tip-card').remove()">キャンセル</button>
-          <button class="tip-save-btn" id="save-btn-__new__" onclick="saveTip('__new__')">💾 保存</button>
-        </div>
-      </div>`;
-
-    // 既存の空メッセージを消して追加
-    const emptyEl = listEl.querySelector('.tips-empty');
-    if (emptyEl) emptyEl.remove();
-    listEl.appendChild(newEl);
-    newEl.querySelector('input').focus();
-    newEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-
-  loadTips();
-</script>
 
 </body>
 </html>
