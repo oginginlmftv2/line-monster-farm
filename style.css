@@ -141,6 +141,8 @@ nav a:hover, nav a.active {
 .card-img {
   width: 100%;
   height: auto;
+  max-height: 180px;
+  object-fit: cover;
   display: block;
 }
 
@@ -171,7 +173,8 @@ nav a:hover, nav a.active {
 .rarity-SR  { background: linear-gradient(135deg, #a855f7, #ec4899); }
 .rarity-R   { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
 
-.pickup-desc { font-size: 10px; color: #555; font-weight: bold; line-height: 1.5; padding: 4px 8px 8px; }
+.name { font-size: 14px; font-weight: bold; padding: 8px 8px 2px; }
+.pickup-desc { font-size: 12px; color: #555; font-weight: bold; line-height: 1.5; padding: 4px 8px 10px; }
 
 /* セクション */
 .section {
