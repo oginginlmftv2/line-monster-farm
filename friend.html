@@ -302,7 +302,7 @@
     <div class="form-row">
       <div class="form-label">アシストカード凸数 <span class="badge-required">必須</span></div>
       <div class="kopu-group">
-        <label class="kopu-label"><input type="radio" name="f-kopu" value="無凸"> 無凸</label>
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="0凸"> 0凸</label>
         <label class="kopu-label"><input type="radio" name="f-kopu" value="1凸"> 1凸</label>
         <label class="kopu-label"><input type="radio" name="f-kopu" value="2凸"> 2凸</label>
         <label class="kopu-label"><input type="radio" name="f-kopu" value="3凸"> 3凸</label>
@@ -316,20 +316,8 @@
       </select>
     </div>
     <div class="form-row">
-      <div class="form-label">注目秘伝1 <span class="badge-optional">任意</span></div>
+      <div class="form-label">注目秘伝 <span class="badge-optional">任意</span></div>
       <select class="form-select" id="f-hiden1"><option value="">選択</option></select>
-    </div>
-    <div class="form-row">
-      <div class="form-label">注目秘伝2 <span class="badge-optional">任意</span></div>
-      <select class="form-select" id="f-hiden2"><option value="">選択</option></select>
-    </div>
-    <div class="form-row">
-      <div class="form-label">注目秘伝3 <span class="badge-optional">任意</span></div>
-      <select class="form-select" id="f-hiden3"><option value="">選択</option></select>
-    </div>
-    <div class="form-row">
-      <div class="form-label">注目秘伝4 <span class="badge-optional">任意</span></div>
-      <select class="form-select" id="f-hiden4"><option value="">選択</option></select>
     </div>
     <div class="form-row">
       <div class="form-label">コメント <span class="badge-optional">任意</span></div>
@@ -352,7 +340,7 @@
         <div class="form-label" style="margin-bottom:4px;">アシストカード凸数</div>
         <select class="form-select" id="s-kopu">
           <option value="">選択する</option>
-          <option>無凸</option><option>1凸</option><option>2凸</option><option>3凸</option><option>4凸</option>
+          <option>0凸</option><option>1凸</option><option>2凸</option><option>3凸</option><option>4凸</option>
         </select>
       </div>
       <div>
@@ -409,6 +397,7 @@
     '四大大会制覇',
     'グランドスラム制覇',
     'ロードオブマスターズ制覇',
+    'モンスターダービー',
     'ノーブル秘伝',
     'ロード秘伝',
     'ボスモン秘伝（怪物）',
@@ -417,16 +406,31 @@
     'ボスモン秘伝（幻霊）',
     'ボスモン秘伝（無機）',
     'ボスモン秘伝（創造）',
+    '森林適性',
+    '砂漠適性',
+    '海岸適性',
+    '火山適性',
+    '雪山適性',
+    '零距離適性',
+    '近距離適性',
+    '中距離適性',
+    '遠距離適性',
     'グジラキング（ノラモン）',
     'フェニックス（ノラモン）',
     'スナイプ（ノラモン）',
     'マグマハート（ノラモン）',
+    'ムネンド（ノラモン）',
+    'スピナー（ノラモン）',
+    'カムイ（ノラモン）',
+    'サンドゴーレム（ノラモン）',
+    'シロゾー（ノラモン）',
   ];
 
   // ---- ドロップダウン初期化 ----
   function initSelects() {
-    // カード一覧（レアリティ+名前）
+    // カード一覧（レアリティ+名前）師匠・ライバルタイプはレンタル不可のため除外
     const cardOptions = Object.values(cardsData)
+      .filter(c => c.type !== '師匠' && c.type !== 'ライバル')
       .map(c => `${c.rarity}${c.name}`)
       .filter((v, i, a) => a.indexOf(v) === i) // 重複除去
       .sort();
@@ -454,7 +458,7 @@
     });
 
     // 秘伝
-    ['f-hiden1','f-hiden2','f-hiden3','f-hiden4','s-hiden'].forEach(id => {
+    ['f-hiden1','s-hiden'].forEach(id => {
       const el = document.getElementById(id);
       HIDEN_LIST.forEach(h => {
         const opt = document.createElement('option');
@@ -480,9 +484,6 @@
     const kopuEl     = document.querySelector('input[name="f-kopu"]:checked');
     const monsterName = document.getElementById('f-monster-name').value;
     const hiden1     = document.getElementById('f-hiden1').value;
-    const hiden2     = document.getElementById('f-hiden2').value;
-    const hiden3     = document.getElementById('f-hiden3').value;
-    const hiden4     = document.getElementById('f-hiden4').value;
     const comment    = document.getElementById('f-comment').value.trim();
 
     if (!breederId)  { alert('ブリーダーIDを入力してください'); return; }
@@ -494,7 +495,7 @@
     btn.textContent = '投稿中...';
     btn.disabled = true;
 
-    const hidens = [hiden1, hiden2, hiden3, hiden4].filter(Boolean);
+    const hidens = [hiden1].filter(Boolean);
 
     try {
       await db.collection('friends').add({
@@ -511,7 +512,7 @@
       document.getElementById('f-card-name').value = '';
       document.querySelectorAll('input[name="f-kopu"]').forEach(r => r.checked = false);
       document.getElementById('f-monster-name').value = '';
-      ['f-hiden1','f-hiden2','f-hiden3','f-hiden4'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-hiden1').value = '';
       document.getElementById('f-comment').value = '';
       togglePostForm(document.querySelector('.post-toggle-btn'));
       loadPosts();
