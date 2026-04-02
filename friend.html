@@ -438,6 +438,20 @@
       </div>
     </div>
     <div class="form-row">
+      <div class="form-label">適性秘伝 <span class="badge-optional">任意</span></div>
+      <div class="check-group" id="f-tekisei-checks">
+        <label class="check-label"><input type="checkbox" value="火山適性"> 火山</label>
+        <label class="check-label"><input type="checkbox" value="森林適性"> 森林</label>
+        <label class="check-label"><input type="checkbox" value="雪山適性"> 雪山</label>
+        <label class="check-label"><input type="checkbox" value="砂漠適性"> 砂漠</label>
+        <label class="check-label"><input type="checkbox" value="海岸適性"> 海岸</label>
+        <label class="check-label"><input type="checkbox" value="零距離適性"> 零距離</label>
+        <label class="check-label"><input type="checkbox" value="近距離適性"> 近距離</label>
+        <label class="check-label"><input type="checkbox" value="中距離適性"> 中距離</label>
+        <label class="check-label"><input type="checkbox" value="遠距離適性"> 遠距離</label>
+      </div>
+    </div>
+    <div class="form-row">
       <div class="form-label">コメント <span class="badge-optional">任意</span></div>
       <textarea class="form-textarea" id="f-comment" placeholder="コメントを入力（最大300文字）" maxlength="300"></textarea>
     </div>
@@ -679,8 +693,9 @@
     const taikaiStar = starBtn ? starBtn.dataset.val : '';
     const nobleStar = document.querySelector('#noble-star-group .star-btn.active')?.dataset.val || '';
     const lordStar  = document.querySelector('#lord-star-group .star-btn.active')?.dataset.val || '';
-    const noramon = [...document.querySelectorAll('#f-noramon-checks input:checked')].map(c => c.value);
-    const bosmon  = [...document.querySelectorAll('#f-bosmon-checks input:checked')].map(c => c.value);
+    const noramon   = [...document.querySelectorAll('#f-noramon-checks input:checked')].map(c => c.value);
+    const bosmon    = [...document.querySelectorAll('#f-bosmon-checks input:checked')].map(c => c.value);
+    const tekisei   = [...document.querySelectorAll('#f-tekisei-checks input:checked')].map(c => c.value);
 
     if (!breederId)         { alert('ブリーダーIDを入力してください'); return; }
     if (cards.length === 0) { alert('レンタルアシストカードを1枚以上選択してください'); return; }
@@ -697,7 +712,7 @@
         taikaiType: taikaiType || '',
         taikaiStar: taikaiStar || '',
         taikaiCount: taikaiCount !== '' ? Number(taikaiCount) : null,
-        nobleStar, lordStar, noramon, bosmon,
+        nobleStar, lordStar, noramon, bosmon, tekisei,
         comment,
         editPw: editPw || '',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -711,7 +726,7 @@
       document.getElementById('f-taikai-count').value = '';
       document.querySelectorAll('#noble-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
       document.querySelectorAll('#lord-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-      document.querySelectorAll('#f-noramon-checks input, #f-bosmon-checks input').forEach(c => c.checked = false);
+      document.querySelectorAll('#f-noramon-checks input, #f-bosmon-checks input, #f-tekisei-checks input').forEach(c => c.checked = false);
       document.getElementById('f-comment').value = '';
       document.getElementById('f-edit-pw').value = '';
       togglePostForm(document.querySelector('.post-toggle-btn'));
@@ -780,6 +795,7 @@
     else if (p.noramon) taikaiHtml += `<span class="hiden-tag">${escHtml(p.noramon)}</span>`;
     if (Array.isArray(p.bosmon)) p.bosmon.forEach(v => { if(v) taikaiHtml += `<span class="hiden-tag">${escHtml(v)}</span>`; });
     else if (p.bosmon) taikaiHtml += `<span class="hiden-tag">${escHtml(p.bosmon)}</span>`;
+    if (Array.isArray(p.tekisei)) p.tekisei.forEach(v => { if(v) taikaiHtml += `<span class="hiden-tag">${escHtml(v)}</span>`; });
     const taikaiRow = taikaiHtml ? `<div class="hiden-tags">${taikaiHtml}</div>` : '';
 
     const commentHtml = p.comment ? `<div class="post-comment">${escHtml(p.comment)}</div>` : '';
