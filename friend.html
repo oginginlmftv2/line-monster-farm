@@ -308,6 +308,29 @@
     }
     .posts-empty { text-align: center; padding: 40px; color: #bbb; font-size: 14px; }
     .posts-loading { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+    .check-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .check-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 13px;
+      color: #555;
+      cursor: pointer;
+      user-select: none;
+    }
+    .check-label:has(input:checked) {
+      background: #f0a500;
+      color: #fff;
+      border-color: #f0a500;
+    }
+    .check-label input[type="checkbox"] { display: none; }
   </style>
 </head>
 <body>
@@ -401,19 +424,18 @@
     </div>
     <div class="form-row">
       <div class="form-label">ノラモン秘伝 <span class="badge-optional">任意</span></div>
-      <select class="form-select" id="f-noramon"></select>
+      <div class="check-group" id="f-noramon-checks"></div>
     </div>
     <div class="form-row">
       <div class="form-label">ボスモン秘伝 <span class="badge-optional">任意</span></div>
-      <select class="form-select" id="f-bosmon">
-        <option value="">なし</option>
-        <option>ボスモン秘伝（怪物）</option>
-        <option>ボスモン秘伝（魔族）</option>
-        <option>ボスモン秘伝（獣）</option>
-        <option>ボスモン秘伝（幻霊）</option>
-        <option>ボスモン秘伝（無機）</option>
-        <option>ボスモン秘伝（創造）</option>
-      </select>
+      <div class="check-group" id="f-bosmon-checks">
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（怪物）"> 怪物</label>
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（魔族）"> 魔族</label>
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（獣）"> 獣</label>
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（幻霊）"> 幻霊</label>
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（無機）"> 無機</label>
+        <label class="check-label"><input type="checkbox" value="ボスモン秘伝（創造）"> 創造</label>
+      </div>
     </div>
     <div class="form-row">
       <div class="form-label">コメント <span class="badge-optional">任意</span></div>
@@ -594,13 +616,15 @@
       });
     });
 
-    // ノラモン秘伝ドロップダウン
-    const noramonEl = document.getElementById('f-noramon');
-    noramonEl.innerHTML = '<option value="">なし</option>';
+    // ノラモン秘伝チェックボックス生成
+    const noramonContainer = document.getElementById('f-noramon-checks');
+    noramonContainer.innerHTML = '';
     HIDEN_LIST.filter(h => h.includes('（ノラモン）')).forEach(name => {
-      const opt = document.createElement('option');
-      opt.value = name; opt.textContent = name;
-      noramonEl.appendChild(opt);
+      const label = document.createElement('label');
+      label.className = 'check-label';
+      const shortName = name.replace('（ノラモン）', '');
+      label.innerHTML = `<input type="checkbox" value="${name}"> ${shortName}`;
+      noramonContainer.appendChild(label);
     });
   }
 
@@ -655,8 +679,8 @@
     const taikaiStar = starBtn ? starBtn.dataset.val : '';
     const nobleStar = document.querySelector('#noble-star-group .star-btn.active')?.dataset.val || '';
     const lordStar  = document.querySelector('#lord-star-group .star-btn.active')?.dataset.val || '';
-    const noramon   = document.getElementById('f-noramon').value;
-    const bosmon    = document.getElementById('f-bosmon').value;
+    const noramon = [...document.querySelectorAll('#f-noramon-checks input:checked')].map(c => c.value);
+    const bosmon  = [...document.querySelectorAll('#f-bosmon-checks input:checked')].map(c => c.value);
 
     if (!breederId)         { alert('ブリーダーIDを入力してください'); return; }
     if (cards.length === 0) { alert('レンタルアシストカードを1枚以上選択してください'); return; }
@@ -687,8 +711,7 @@
       document.getElementById('f-taikai-count').value = '';
       document.querySelectorAll('#noble-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
       document.querySelectorAll('#lord-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
-      document.getElementById('f-noramon').value = '';
-      document.getElementById('f-bosmon').value = '';
+      document.querySelectorAll('#f-noramon-checks input, #f-bosmon-checks input').forEach(c => c.checked = false);
       document.getElementById('f-comment').value = '';
       document.getElementById('f-edit-pw').value = '';
       togglePostForm(document.querySelector('.post-toggle-btn'));
@@ -753,8 +776,10 @@
     }
     if (p.nobleStar) taikaiHtml += `<span class="hiden-tag">ノーブル秘伝 ${escHtml(p.nobleStar)}</span>`;
     if (p.lordStar)  taikaiHtml += `<span class="hiden-tag">ロード秘伝 ${escHtml(p.lordStar)}</span>`;
-    if (p.noramon)   taikaiHtml += `<span class="hiden-tag">${escHtml(p.noramon)}</span>`;
-    if (p.bosmon)    taikaiHtml += `<span class="hiden-tag">${escHtml(p.bosmon)}</span>`;
+    if (Array.isArray(p.noramon)) p.noramon.forEach(v => { if(v) taikaiHtml += `<span class="hiden-tag">${escHtml(v)}</span>`; });
+    else if (p.noramon) taikaiHtml += `<span class="hiden-tag">${escHtml(p.noramon)}</span>`;
+    if (Array.isArray(p.bosmon)) p.bosmon.forEach(v => { if(v) taikaiHtml += `<span class="hiden-tag">${escHtml(v)}</span>`; });
+    else if (p.bosmon) taikaiHtml += `<span class="hiden-tag">${escHtml(p.bosmon)}</span>`;
     const taikaiRow = taikaiHtml ? `<div class="hiden-tags">${taikaiHtml}</div>` : '';
 
     const commentHtml = p.comment ? `<div class="post-comment">${escHtml(p.comment)}</div>` : '';
