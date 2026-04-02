@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NPC再生モンスター一覧 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのNPC再生で入手できるモンスター一覧。各NPCが排出するモンスターとレア度を全86名分まとめました。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/npc-regen.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .info-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 20px;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .filter-label {
+      font-size: 13px;
+      color: #888;
+      font-weight: bold;
+    }
+    .filter-btn {
+      padding: 5px 14px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      background: #fff;
+      color: #555;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .filter-btn:hover { border-color: #f0a500; color: #f0a500; }
+    .filter-btn.active { background: #f0a500; color: #fff; border-color: #f0a500; }
+    .search-input {
+      padding: 6px 12px;
+      border: 1px solid #ddd;
+      border-radius: 20px;
+      font-size: 13px;
+      width: 180px;
+      outline: none;
+    }
+    .search-input:focus { border-color: #f0a500; }
+    .npc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .npc-table th {
+      background: #f5f0e8;
+      color: #555;
+      font-weight: bold;
+      padding: 10px 12px;
+      text-align: center;
+      border-bottom: 2px solid #e8dcc8;
+      font-size: 13px;
+    }
+    .npc-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .npc-table tr:hover td { background: #fffbf0; }
+    .npc-table tr.hidden { display: none; }
+    .td-npc { font-weight: bold; color: #333; }
+    .td-monster { color: #333; }
+    .star-1 { color: #888; font-weight: bold; }
+    .star-2 { color: #f0a500; font-weight: bold; }
+    .star-3 { color: #e53e3e; font-weight: bold; }
+    .count-label {
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">👥 NPC再生モンスター一覧</h1>
+  <p style="font-size:12px;color:#aaa;margin:-8px 0 16px;">2026年4月時点</p>
+
+  <div class="info-box">
+    <strong>NPC再生とは？</strong><br>
+    フレンド再生の一種で、LINE友達以外の用意されたNPCから毎日モンスターを再生できます。
+    狙いのモンスターに対応するNPCをフレンドに加えておきましょう。
+  </div>
+
+  <div class="section">
+    <div class="filter-bar">
+      <span class="filter-label">レア度：</span>
+      <button class="filter-btn active" onclick="filterRarity('all', this)">全て</button>
+      <button class="filter-btn" onclick="filterRarity('1', this)">★1</button>
+      <button class="filter-btn" onclick="filterRarity('2', this)">★2</button>
+      <button class="filter-btn" onclick="filterRarity('3', this)">★3</button>
+      <input class="search-input" id="search-input" type="text" placeholder="NPC名・モンスター名で検索" oninput="filterSearch()">
+    </div>
+    <div class="count-label" id="count-label">全86件</div>
+
+    <table class="npc-table" id="npc-table">
+      <thead>
+        <tr>
+          <th>NPC名</th>
+          <th>排出モンスター</th>
+          <th>基本レア度</th>
+        </tr>
+      </thead>
+      <tbody id="npc-tbody">
+        <tr data-rarity="1"><td class="td-npc">アドルフ</td><td class="td-monster">ジュラスウォール</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">アベル</td><td class="td-monster">ダゴン</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">アンジェリーナ</td><td class="td-monster">イースター</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">アーミィ</td><td class="td-monster">ワイルドブロック</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">イオリ</td><td class="td-monster">グレイシア</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">イワミン</td><td class="td-monster">ウロコウサギ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ウエシー</td><td class="td-monster">ドライアド</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">エドガー</td><td class="td-monster">サイクロップス</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">エレーナ</td><td class="td-monster">ヘンガー</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">オリヴィエ</td><td class="td-monster">アローヘッド</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">カイリ</td><td class="td-monster">サクラチル</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">カトー</td><td class="td-monster">ケンタウロス</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">カミュ</td><td class="td-monster">ユニコ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">カーサイ</td><td class="td-monster">ネンドロ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">クララ</td><td class="td-monster">イワゾー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">クラリス</td><td class="td-monster">ガーラント</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">クリスティアーナ</td><td class="td-monster">エコノキックス</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">クレイ</td><td class="td-monster">ライガー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ケイト</td><td class="td-monster">ピンキー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ケレア</td><td class="td-monster">ムシメ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">コウメイ</td><td class="td-monster">スエゾー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ササ</td><td class="td-monster">ハムライガー</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">サムエル</td><td class="td-monster">ワーム</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ザンドラ</td><td class="td-monster">ピクシー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ジャンナ</td><td class="td-monster">ウロボロス・恐</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ジョバンニ</td><td class="td-monster">アモン</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ステイシー</td><td class="td-monster">カワズモー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">セシリア</td><td class="td-monster">ブルースポンジ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ソニア</td><td class="td-monster">メロンボ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ソル</td><td class="td-monster">シオンカメン</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">タカネ</td><td class="td-monster">ジャアクソウ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">タカーミャ</td><td class="td-monster">アロハノサウルス</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="3"><td class="td-npc">タバサ</td><td class="td-monster">オボロゲソウ</td><td class="star-3">★3</td></tr>
+        <tr data-rarity="1"><td class="td-npc">タベンス</td><td class="td-monster">モッチー</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">タマ</td><td class="td-monster">ブラックディノ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ターラ</td><td class="td-monster">ガリ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ダイキ</td><td class="td-monster">ガリオン</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ダンカン</td><td class="td-monster">マスタードアロー</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">チカ</td><td class="td-monster">カッチュウサウル</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ツンタ</td><td class="td-monster">ウンディーネ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">トト</td><td class="td-monster">ゼラチン</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">トビー</td><td class="td-monster">エッジホッグ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ドリー</td><td class="td-monster">ハム</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ナガーオ</td><td class="td-monster">フラッペ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ニコラ</td><td class="td-monster">ゲル</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ヌンツィオ</td><td class="td-monster">スタイルフォーム</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ネストリ</td><td class="td-monster">ディノ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ネリー</td><td class="td-monster">バロン</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ネル</td><td class="td-monster">ゴーレム</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="3"><td class="td-npc">ネロ</td><td class="td-monster">チシャ</td><td class="star-3">★3</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ノエ</td><td class="td-monster">イワムシ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ノンナ</td><td class="td-monster">アクアシザーズ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ハヤト</td><td class="td-monster">ナーガ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ハルカ</td><td class="td-monster">ミーア</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ヒギンス</td><td class="td-monster">ゲルキゾク</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ヒデトシ</td><td class="td-monster">プラント</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="3"><td class="td-npc">ピーシィ</td><td class="td-monster">ラクガキモノ</td><td class="star-3">★3</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ファイギ</td><td class="td-monster">ガンセキソウ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">フィリシア</td><td class="td-monster">レクサス</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ブラス</td><td class="td-monster">イシガキゲル</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ヘインズ</td><td class="td-monster">グジラ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ヘレナ</td><td class="td-monster">メタゾール</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ホクト</td><td class="td-monster">カメンワーム</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ホーガン</td><td class="td-monster">エコロガーデアン</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="3"><td class="td-npc">ボルツ</td><td class="td-monster">トルクレンチ</td><td class="star-3">★3</td></tr>
+        <tr data-rarity="2"><td class="td-npc">マリオン</td><td class="td-monster">アンゴルモア</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">マルコ</td><td class="td-monster">ジェリーヌ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ミア</td><td class="td-monster">モノリス</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ミゲル</td><td class="td-monster">ママニャー</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ミハイル</td><td class="td-monster">ワン</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">モーリス</td><td class="td-monster">ラミア</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ヤヨイ</td><td class="td-monster">クラブディノ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ユスチン</td><td class="td-monster">ラベンダーキール</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ユーリア</td><td class="td-monster">アクアストライク</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ヨッコ</td><td class="td-monster">ワイバーン・炎</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ヨースケ</td><td class="td-monster">カンテンムシ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ライオネル</td><td class="td-monster">クサズモー</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">リッキー</td><td class="td-monster">ウロコゲル</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ルイーズ</td><td class="td-monster">ザザムワーム</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ルッツ</td><td class="td-monster">クロスフォーアイ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">レオパルディ</td><td class="td-monster">ハムリーフ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">レベッカ</td><td class="td-monster">テロルシザーズ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ローズ</td><td class="td-monster">ムラサキチウ</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="2"><td class="td-npc">ローラント</td><td class="td-monster">ドラゴン</td><td class="star-2">★2</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ワクワク</td><td class="td-monster">ハムノフジ</td><td class="star-1">★1</td></tr>
+        <tr data-rarity="1"><td class="td-npc">ワークス</td><td class="td-monster">ヒネクレゾウ</td><td class="star-1">★1</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size:12px;color:#aaa;text-align:center;margin-top:8px;">
+    情報は随時更新しています。変更があればコメントで教えてください。
+  </p>
+</div>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script>
+  let currentRarity = 'all';
+  let currentSearch = '';
+
+  function filterRarity(rarity, btn) {
+    currentRarity = rarity;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    applyFilter();
+  }
+
+  function filterSearch() {
+    currentSearch = document.getElementById('search-input').value.trim();
+    applyFilter();
+  }
+
+  function applyFilter() {
+    const rows = document.querySelectorAll('#npc-tbody tr');
+    let count = 0;
+    rows.forEach(row => {
+      const rarity = row.dataset.rarity;
+      const text = row.textContent;
+      const rarityOk = currentRarity === 'all' || rarity === currentRarity;
+      const searchOk = currentSearch === '' || text.includes(currentSearch);
+      if (rarityOk && searchOk) {
+        row.classList.remove('hidden');
+        count++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+    document.getElementById('count-label').textContent = `${count}件表示中`;
+  }
+</script>
+
+</body>
+</html>
