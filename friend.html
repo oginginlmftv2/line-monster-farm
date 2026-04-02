@@ -376,6 +376,40 @@
       </select>
     </div>
     <div class="form-row">
+      <div class="form-label">ノーブル秘伝 <span class="badge-optional">任意</span></div>
+      <div class="star-group" id="noble-star-group">
+        <button type="button" class="star-btn active" data-val="" onclick="selectGroupStar('noble',this)">なし</button>
+        <button type="button" class="star-btn" data-val="☆1" onclick="selectGroupStar('noble',this)">☆1</button>
+        <button type="button" class="star-btn" data-val="☆2" onclick="selectGroupStar('noble',this)">☆2</button>
+        <button type="button" class="star-btn" data-val="☆3" onclick="selectGroupStar('noble',this)">☆3</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">ロード秘伝 <span class="badge-optional">任意</span></div>
+      <div class="star-group" id="lord-star-group">
+        <button type="button" class="star-btn active" data-val="" onclick="selectGroupStar('lord',this)">なし</button>
+        <button type="button" class="star-btn" data-val="☆1" onclick="selectGroupStar('lord',this)">☆1</button>
+        <button type="button" class="star-btn" data-val="☆2" onclick="selectGroupStar('lord',this)">☆2</button>
+        <button type="button" class="star-btn" data-val="☆3" onclick="selectGroupStar('lord',this)">☆3</button>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">ノラモン秘伝 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-noramon"></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">ボスモン秘伝 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-bosmon">
+        <option value="">なし</option>
+        <option>ボスモン秘伝（怪物）</option>
+        <option>ボスモン秘伝（魔族）</option>
+        <option>ボスモン秘伝（獣）</option>
+        <option>ボスモン秘伝（幻霊）</option>
+        <option>ボスモン秘伝（無機）</option>
+        <option>ボスモン秘伝（創造）</option>
+      </select>
+    </div>
+    <div class="form-row">
       <div class="form-label">コメント <span class="badge-optional">任意</span></div>
       <textarea class="form-textarea" id="f-comment" placeholder="コメントを入力（最大300文字）" maxlength="300"></textarea>
     </div>
@@ -553,6 +587,15 @@
         el.appendChild(opt);
       });
     });
+
+    // ノラモン秘伝ドロップダウン
+    const noramonEl = document.getElementById('f-noramon');
+    noramonEl.innerHTML = '<option value="">なし</option>';
+    HIDEN_LIST.filter(h => h.includes('（ノラモン）')).forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      noramonEl.appendChild(opt);
+    });
   }
 
   // ---- 大会秘伝タイプ選択 ----
@@ -569,7 +612,12 @@
   }
 
   function selectStar(btn) {
-    document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('#taikai-star-row .star-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  function selectGroupStar(group, btn) {
+    btn.closest('.star-group').querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
   }
 
@@ -597,8 +645,12 @@
 
     const taikaiTypeBtn = document.querySelector('.taikai-type-btn.active');
     const taikaiType = taikaiTypeBtn ? taikaiTypeBtn.dataset.val : '';
-    const starBtn = document.querySelector('.star-btn.active');
+    const starBtn = document.querySelector('#taikai-star-row .star-btn.active');
     const taikaiStar = starBtn ? starBtn.dataset.val : '';
+    const nobleStar = document.querySelector('#noble-star-group .star-btn.active')?.dataset.val || '';
+    const lordStar  = document.querySelector('#lord-star-group .star-btn.active')?.dataset.val || '';
+    const noramon   = document.getElementById('f-noramon').value;
+    const bosmon    = document.getElementById('f-bosmon').value;
 
     if (!breederId)         { alert('ブリーダーIDを入力してください'); return; }
     if (cards.length === 0) { alert('レンタルアシストカードを1枚以上選択してください'); return; }
@@ -615,6 +667,7 @@
         taikaiType: taikaiType || '',
         taikaiStar: taikaiStar || '',
         taikaiCount: taikaiCount !== '' ? Number(taikaiCount) : null,
+        nobleStar, lordStar, noramon, bosmon,
         comment,
         editPw: editPw || '',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
@@ -626,6 +679,10 @@
       document.getElementById('taikai-star-row').classList.remove('show');
       document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('f-taikai-count').value = '';
+      document.querySelectorAll('#noble-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+      document.querySelectorAll('#lord-star-group .star-btn').forEach((b,i) => b.classList.toggle('active', i===0));
+      document.getElementById('f-noramon').value = '';
+      document.getElementById('f-bosmon').value = '';
       document.getElementById('f-comment').value = '';
       document.getElementById('f-edit-pw').value = '';
       togglePostForm(document.querySelector('.post-toggle-btn'));
@@ -688,6 +745,10 @@
     if (p.taikaiCount !== null && p.taikaiCount !== undefined) {
       taikaiHtml += `<span class="hiden-tag">大会秘伝${p.taikaiCount}個</span>`;
     }
+    if (p.nobleStar) taikaiHtml += `<span class="hiden-tag">ノーブル秘伝 ${escHtml(p.nobleStar)}</span>`;
+    if (p.lordStar)  taikaiHtml += `<span class="hiden-tag">ロード秘伝 ${escHtml(p.lordStar)}</span>`;
+    if (p.noramon)   taikaiHtml += `<span class="hiden-tag">${escHtml(p.noramon)}</span>`;
+    if (p.bosmon)    taikaiHtml += `<span class="hiden-tag">${escHtml(p.bosmon)}</span>`;
     const taikaiRow = taikaiHtml ? `<div class="hiden-tags">${taikaiHtml}</div>` : '';
 
     const commentHtml = p.comment ? `<div class="post-comment">${escHtml(p.comment)}</div>` : '';
