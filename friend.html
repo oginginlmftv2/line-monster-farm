@@ -338,7 +338,7 @@
   <div class="post-form-wrap" id="post-form-wrap">
     <div class="form-row">
       <div class="form-label">ブリーダーID <span class="badge-required">必須</span></div>
-      <input class="form-input" id="f-breeder-id" type="text" placeholder="000 000 000" maxlength="11" oninput="formatBreederId(this)">
+      <input class="form-input" id="f-breeder-id" type="text" placeholder="000 000 000" maxlength="11" autocomplete="off" oninput="formatBreederId(this)">
     </div>
     <div class="form-row">
       <div class="form-label">レンタルアシストカード <span class="badge-required">1枚目必須</span> <span class="badge-optional">2〜7枚目任意</span></div>
@@ -377,20 +377,26 @@
     </div>
     <div class="form-row">
       <div class="form-label">ノーブル秘伝 <span class="badge-optional">任意</span></div>
-      <div class="star-group" id="noble-star-group">
+      <div class="star-group" id="noble-star-group" style="flex-wrap:wrap;">
         <button type="button" class="star-btn active" data-val="" onclick="selectGroupStar('noble',this)">なし</button>
         <button type="button" class="star-btn" data-val="☆1" onclick="selectGroupStar('noble',this)">☆1</button>
         <button type="button" class="star-btn" data-val="☆2" onclick="selectGroupStar('noble',this)">☆2</button>
         <button type="button" class="star-btn" data-val="☆3" onclick="selectGroupStar('noble',this)">☆3</button>
+        <button type="button" class="star-btn" data-val="☆4" onclick="selectGroupStar('noble',this)">☆4</button>
+        <button type="button" class="star-btn" data-val="☆5" onclick="selectGroupStar('noble',this)">☆5</button>
+        <button type="button" class="star-btn" data-val="☆6" onclick="selectGroupStar('noble',this)">☆6</button>
       </div>
     </div>
     <div class="form-row">
       <div class="form-label">ロード秘伝 <span class="badge-optional">任意</span></div>
-      <div class="star-group" id="lord-star-group">
+      <div class="star-group" id="lord-star-group" style="flex-wrap:wrap;">
         <button type="button" class="star-btn active" data-val="" onclick="selectGroupStar('lord',this)">なし</button>
         <button type="button" class="star-btn" data-val="☆1" onclick="selectGroupStar('lord',this)">☆1</button>
         <button type="button" class="star-btn" data-val="☆2" onclick="selectGroupStar('lord',this)">☆2</button>
         <button type="button" class="star-btn" data-val="☆3" onclick="selectGroupStar('lord',this)">☆3</button>
+        <button type="button" class="star-btn" data-val="☆4" onclick="selectGroupStar('lord',this)">☆4</button>
+        <button type="button" class="star-btn" data-val="☆5" onclick="selectGroupStar('lord',this)">☆5</button>
+        <button type="button" class="star-btn" data-val="☆6" onclick="selectGroupStar('lord',this)">☆6</button>
       </div>
     </div>
     <div class="form-row">
@@ -772,6 +778,7 @@
           <div style="display:flex;gap:8px;align-items:center;">
             ${p.editPw ? `<button class="copy-btn" onclick="editPost('${p.id}')">✏️ 編集</button>
             <button class="copy-btn" style="color:#e53e3e;" onclick="deletePost('${p.id}')">🗑️ 削除</button>` : ''}
+            <button class="copy-btn" style="color:#e53e3e;" onclick="adminDeletePost('${p.id}')">🔑 管理者削除</button>
             <button class="report-btn" onclick="reportPost('${p.id}')">通報</button>
           </div>
         </div>
@@ -819,6 +826,17 @@
       await db.collection('friends').doc(postId).update({ comment: newComment });
       loadPosts();
     } catch(e) { alert('編集に失敗しました: ' + e.message); }
+  }
+
+  async function adminDeletePost(postId) {
+    const pw = prompt('管理者パスワードを入力してください');
+    if (pw === null) return;
+    if (pw !== ADMIN_PASSWORD) { alert('パスワードが違います'); return; }
+    if (!confirm('この投稿を削除しますか？')) return;
+    try {
+      await db.collection('friends').doc(postId).delete();
+      loadPosts();
+    } catch(e) { alert('削除に失敗しました: ' + e.message); }
   }
 
   async function reportPost(postId) {
