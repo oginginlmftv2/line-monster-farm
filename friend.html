@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>フォロー・フォロワー募集板 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのフォロー・フォロワー募集掲示板。レンタルアシストカード・伝授モンスター・秘伝情報を掲載してフォロワーを募集・検索できます。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/friend.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .info-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin-bottom: 16px;
+    }
+
+    /* 投稿フォーム */
+    .post-toggle-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-bottom: 4px;
+    }
+    .post-toggle-btn:hover { background: #d4920a; }
+    .post-form-wrap {
+      display: none;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .post-form-wrap.open { display: block; }
+    .form-row { margin-bottom: 14px; }
+    .form-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #444;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .badge-required {
+      font-size: 10px;
+      background: #e53e3e;
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .badge-optional {
+      font-size: 10px;
+      background: #aaa;
+      color: #fff;
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+      font-size: 14px;
+      box-sizing: border-box;
+      color: #333;
+      background: #fff;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: #f0a500;
+    }
+    .form-textarea { min-height: 80px; resize: vertical; }
+    .kopu-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .kopu-label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 14px;
+      color: #444;
+      cursor: pointer;
+    }
+    .kopu-label input { accent-color: #f0a500; }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .submit-btn:hover { background: #d4920a; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* 検索 */
+    .search-section {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .search-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #555;
+      margin-bottom: 12px;
+    }
+    .search-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    @media (max-width: 480px) { .search-grid { grid-template-columns: 1fr; } }
+    .search-btn {
+      width: 100%;
+      padding: 12px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    .search-btn:hover { background: #d4920a; }
+    .reset-btn {
+      width: 100%;
+      padding: 10px;
+      background: #fff;
+      color: #999;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    /* 掲示板一覧 */
+    .board-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .board-title { font-size: 15px; font-weight: bold; color: #333; }
+    .board-count { font-size: 12px; color: #aaa; }
+    .post-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .post-id-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .post-id {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      letter-spacing: 0.5px;
+      flex: 1;
+      background: #f5f5f5;
+      padding: 6px 10px;
+      border-radius: 6px;
+      border: 1px solid #eee;
+    }
+    .copy-btn {
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #888;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .copy-btn:hover { border-color: #f0a500; color: #f0a500; }
+    .post-info-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .post-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .post-info-label {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+    .label-card  { background: #fff3cd; color: #b8860b; }
+    .label-mon   { background: #e8eaf6; color: #3949ab; }
+    .post-info-name { font-size: 13px; color: #333; font-weight: bold; }
+    .post-info-sub  { font-size: 11px; color: #888; }
+    .hiden-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+    .hiden-tag {
+      font-size: 11px;
+      background: #f0f0f0;
+      color: #555;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+    .post-comment { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+    .post-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: #bbb;
+    }
+    .report-btn {
+      background: none;
+      border: none;
+      font-size: 11px;
+      color: #ddd;
+      cursor: pointer;
+      padding: 0;
+    }
+    .report-btn:hover { color: #e53e3e; }
+    .admin-del-btn {
+      background: none;
+      border: 1px solid #e53e3e;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #e53e3e;
+      cursor: pointer;
+      padding: 2px 7px;
+    }
+    .posts-empty { text-align: center; padding: 40px; color: #bbb; font-size: 14px; }
+    .posts-loading { text-align: center; padding: 40px; color: #aaa; font-size: 14px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🤝 フォロー・フォロワー募集板</h1>
+
+  <div class="info-box">
+    レンタルアシストカードや伝授モンスターを探してフレンドを募集できます。<br>
+    <strong>投稿前にフォロワー枠（上限100人）を空けておきましょう。</strong>枠が満杯だと新規フォローができません。
+  </div>
+
+  <!-- 投稿フォーム -->
+  <button class="post-toggle-btn" onclick="togglePostForm(this)">▼ 投稿する</button>
+  <div class="post-form-wrap" id="post-form-wrap">
+    <div class="form-row">
+      <div class="form-label">ブリーダーID <span class="badge-required">必須</span></div>
+      <input class="form-input" id="f-breeder-id" type="text" placeholder="ブリーダーIDを入力" maxlength="20">
+    </div>
+    <div class="form-row">
+      <div class="form-label">レンタルアシストカード名 <span class="badge-required">必須</span></div>
+      <select class="form-select" id="f-card-name">
+        <option value="">選択</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">アシストカード凸数 <span class="badge-required">必須</span></div>
+      <div class="kopu-group">
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="無凸"> 無凸</label>
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="1凸"> 1凸</label>
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="2凸"> 2凸</label>
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="3凸"> 3凸</label>
+        <label class="kopu-label"><input type="radio" name="f-kopu" value="4凸"> 4凸</label>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-label">レンタル伝授モンスター名 <span class="badge-required">必須</span></div>
+      <select class="form-select" id="f-monster-name">
+        <option value="">選択</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">注目秘伝1 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-hiden1"><option value="">選択</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">注目秘伝2 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-hiden2"><option value="">選択</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">注目秘伝3 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-hiden3"><option value="">選択</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">注目秘伝4 <span class="badge-optional">任意</span></div>
+      <select class="form-select" id="f-hiden4"><option value="">選択</option></select>
+    </div>
+    <div class="form-row">
+      <div class="form-label">コメント <span class="badge-optional">任意</span></div>
+      <textarea class="form-textarea" id="f-comment" placeholder="コメントを入力（最大300文字）" maxlength="300"></textarea>
+    </div>
+    <button class="submit-btn" id="submit-btn" onclick="submitPost()">投稿する</button>
+  </div>
+
+  <!-- 検索 -->
+  <div class="search-section">
+    <div class="search-title">🔍 絞り込み検索</div>
+    <div class="search-grid">
+      <div>
+        <div class="form-label" style="margin-bottom:4px;">レンタルアシストカード名</div>
+        <select class="form-select" id="s-card-name">
+          <option value="">選択する</option>
+        </select>
+      </div>
+      <div>
+        <div class="form-label" style="margin-bottom:4px;">アシストカード凸数</div>
+        <select class="form-select" id="s-kopu">
+          <option value="">選択する</option>
+          <option>無凸</option><option>1凸</option><option>2凸</option><option>3凸</option><option>4凸</option>
+        </select>
+      </div>
+      <div>
+        <div class="form-label" style="margin-bottom:4px;">レンタル伝授モンスター名</div>
+        <select class="form-select" id="s-monster-name">
+          <option value="">選択する</option>
+        </select>
+      </div>
+      <div>
+        <div class="form-label" style="margin-bottom:4px;">秘伝</div>
+        <select class="form-select" id="s-hiden">
+          <option value="">選択する</option>
+        </select>
+      </div>
+    </div>
+    <button class="search-btn" onclick="applySearch()">検索する</button>
+    <button class="reset-btn" onclick="resetSearch()">条件をリセット</button>
+  </div>
+
+  <!-- 一覧 -->
+  <div class="board-header">
+    <div class="board-title">募集一覧</div>
+    <div class="board-count" id="board-count"></div>
+  </div>
+  <div id="posts-list"><div class="posts-loading">読み込み中...</div></div>
+</div>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="monsters-data.js"></script>
+<script src="cards/cards-data.js"></script>
+<script>
+  const ADMIN_PASSWORD = 'mf2024';
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+    authDomain: "line-monster-farm.firebaseapp.com",
+    projectId: "line-monster-farm",
+    storageBucket: "line-monster-farm.firebasestorage.app",
+    messagingSenderId: "952838892758",
+    appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+
+  // ---- 注目秘伝リスト ----
+  const HIDEN_LIST = [
+    '四大大会（完全）制覇',
+    '四大大会制覇',
+    'グランドスラム制覇',
+    'ロードオブマスターズ制覇',
+    'ノーブル秘伝',
+    'ロード秘伝',
+    'ボスモン秘伝（怪物）',
+    'ボスモン秘伝（魔族）',
+    'ボスモン秘伝（獣）',
+    'ボスモン秘伝（幻霊）',
+    'ボスモン秘伝（無機）',
+    'ボスモン秘伝（創造）',
+    'グジラキング（ノラモン）',
+    'フェニックス（ノラモン）',
+    'スナイプ（ノラモン）',
+    'マグマハート（ノラモン）',
+  ];
+
+  // ---- ドロップダウン初期化 ----
+  function initSelects() {
+    // カード一覧（レアリティ+名前）
+    const cardOptions = Object.values(cardsData)
+      .map(c => `${c.rarity}${c.name}`)
+      .filter((v, i, a) => a.indexOf(v) === i) // 重複除去
+      .sort();
+
+    ['f-card-name', 's-card-name'].forEach(id => {
+      const el = document.getElementById(id);
+      cardOptions.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        el.appendChild(opt);
+      });
+    });
+
+    // モンスター一覧
+    const monOptions = monstersData.map(m => m.name).sort();
+    ['f-monster-name', 's-monster-name'].forEach(id => {
+      const el = document.getElementById(id);
+      monOptions.forEach(name => {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        el.appendChild(opt);
+      });
+    });
+
+    // 秘伝
+    ['f-hiden1','f-hiden2','f-hiden3','f-hiden4','s-hiden'].forEach(id => {
+      const el = document.getElementById(id);
+      HIDEN_LIST.forEach(h => {
+        const opt = document.createElement('option');
+        opt.value = h;
+        opt.textContent = h;
+        el.appendChild(opt);
+      });
+    });
+  }
+
+  // ---- フォーム開閉 ----
+  function togglePostForm(btn) {
+    const wrap = document.getElementById('post-form-wrap');
+    const isOpen = wrap.classList.contains('open');
+    wrap.classList.toggle('open');
+    btn.textContent = isOpen ? '▼ 投稿する' : '▲ 閉じる';
+  }
+
+  // ---- 投稿 ----
+  async function submitPost() {
+    const breederId  = document.getElementById('f-breeder-id').value.trim();
+    const cardName   = document.getElementById('f-card-name').value;
+    const kopuEl     = document.querySelector('input[name="f-kopu"]:checked');
+    const monsterName = document.getElementById('f-monster-name').value;
+    const hiden1     = document.getElementById('f-hiden1').value;
+    const hiden2     = document.getElementById('f-hiden2').value;
+    const hiden3     = document.getElementById('f-hiden3').value;
+    const hiden4     = document.getElementById('f-hiden4').value;
+    const comment    = document.getElementById('f-comment').value.trim();
+
+    if (!breederId)  { alert('ブリーダーIDを入力してください'); return; }
+    if (!cardName)   { alert('レンタルアシストカード名を選択してください'); return; }
+    if (!kopuEl)     { alert('アシストカード凸数を選択してください'); return; }
+    if (!monsterName){ alert('レンタル伝授モンスター名を選択してください'); return; }
+
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = '投稿中...';
+    btn.disabled = true;
+
+    const hidens = [hiden1, hiden2, hiden3, hiden4].filter(Boolean);
+
+    try {
+      await db.collection('friends').add({
+        breederId,
+        cardName,
+        kopu: kopuEl.value,
+        monsterName,
+        hidens,
+        comment,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      // フォームリセット
+      document.getElementById('f-breeder-id').value = '';
+      document.getElementById('f-card-name').value = '';
+      document.querySelectorAll('input[name="f-kopu"]').forEach(r => r.checked = false);
+      document.getElementById('f-monster-name').value = '';
+      ['f-hiden1','f-hiden2','f-hiden3','f-hiden4'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f-comment').value = '';
+      togglePostForm(document.querySelector('.post-toggle-btn'));
+      loadPosts();
+    } catch(e) {
+      alert('投稿に失敗しました: ' + e.message);
+    }
+    btn.textContent = '投稿する';
+    btn.disabled = false;
+  }
+
+  // ---- 投稿一覧 ----
+  let allPosts = [];
+  let searchFilter = {};
+
+  async function loadPosts() {
+    const listEl = document.getElementById('posts-list');
+    try {
+      const snap = await db.collection('friends').orderBy('createdAt', 'desc').limit(200).get();
+      allPosts = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+      renderPosts(allPosts);
+    } catch(e) {
+      listEl.innerHTML = '<div class="posts-empty">読み込みに失敗しました。</div>';
+    }
+  }
+
+  function renderPosts(posts) {
+    const listEl = document.getElementById('posts-list');
+    const countEl = document.getElementById('board-count');
+    countEl.textContent = `${posts.length}件`;
+    if (posts.length === 0) {
+      listEl.innerHTML = '<div class="posts-empty">該当する投稿がありません。</div>';
+      return;
+    }
+    listEl.innerHTML = posts.map(p => buildPostHtml(p)).join('');
+  }
+
+  function buildPostHtml(p) {
+    const date = p.createdAt ? new Date(p.createdAt.seconds * 1000).toLocaleDateString('ja-JP') : '';
+    const hidenHtml = (p.hidens || []).length > 0
+      ? `<div class="hiden-tags">${p.hidens.map(h => `<span class="hiden-tag">${escHtml(h)}</span>`).join('')}</div>`
+      : '';
+    const commentHtml = p.comment ? `<div class="post-comment">${escHtml(p.comment)}</div>` : '';
+    return `
+      <div class="post-card" id="post-${p.id}">
+        <div class="post-id-row">
+          <div class="post-id">${escHtml(p.breederId)}</div>
+          <button class="copy-btn" onclick="copyId('${escHtml(p.breederId)}', this)">📋 コピー</button>
+        </div>
+        <div class="post-info-row">
+          <div class="post-info-item">
+            <span class="post-info-label label-card">アシストカード</span>
+            <span class="post-info-name">${escHtml(p.cardName)}</span>
+            <span class="post-info-sub">${escHtml(p.kopu || '')}</span>
+          </div>
+          <div class="post-info-item">
+            <span class="post-info-label label-mon">モンスター</span>
+            <span class="post-info-name">${escHtml(p.monsterName)}</span>
+          </div>
+        </div>
+        ${hidenHtml}
+        ${commentHtml}
+        <div class="post-footer">
+          <span>${date}</span>
+          <button class="report-btn" onclick="reportPost('${p.id}')">通報</button>
+        </div>
+      </div>`;
+  }
+
+  function escHtml(str) {
+    return String(str || '')
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function copyId(id, btn) {
+    navigator.clipboard.writeText(id).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✅ コピー完了';
+      setTimeout(() => btn.textContent = orig, 1500);
+    });
+  }
+
+  async function reportPost(postId) {
+    if (!confirm('この投稿を通報しますか？')) return;
+    try {
+      await db.collection('reports').add({ postId, reportedAt: firebase.firestore.FieldValue.serverTimestamp() });
+      alert('通報しました。確認後に対応します。');
+    } catch(e) {
+      alert('通報に失敗しました。');
+    }
+  }
+
+  // ---- 検索 ----
+  function applySearch() {
+    const card    = document.getElementById('s-card-name').value;
+    const kopu    = document.getElementById('s-kopu').value;
+    const monster = document.getElementById('s-monster-name').value;
+    const hiden   = document.getElementById('s-hiden').value;
+
+    const filtered = allPosts.filter(p => {
+      if (card    && p.cardName    !== card)    return false;
+      if (kopu    && p.kopu        !== kopu)    return false;
+      if (monster && p.monsterName !== monster) return false;
+      if (hiden   && !(p.hidens || []).includes(hiden)) return false;
+      return true;
+    });
+    renderPosts(filtered);
+  }
+
+  function resetSearch() {
+    ['s-card-name','s-kopu','s-monster-name','s-hiden'].forEach(id => document.getElementById(id).value = '');
+    renderPosts(allPosts);
+  }
+
+  // ---- 起動 ----
+  initSelects();
+  loadPosts();
+</script>
+
+</body>
+</html>
