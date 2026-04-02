@@ -4,11 +4,149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ロードオブマスターズ用育成 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームのロードオブマスターズ用育成攻略。上位ランクを目指すバトル向けモンスターの育て方を解説します。">
-  <meta name="robots" content="noindex">
+  <meta name="description" content="LINEモンスターファームのロードオブマスターズ攻略。モンスター選定・アシカ編成・秘伝準備・育成のポイントを解説します。">
   <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/ikusei/lord-of-masters.html">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #fff3cd; border-color: #f0a500; }
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: #f0a500;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .article-h2 {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      border-left: 4px solid #f0a500;
+      padding: 6px 12px;
+      margin: 0 0 14px;
+      background: #fffbf0;
+      border-radius: 0 6px 6px 0;
+    }
+    .article-h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #555;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #f0a500;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin: 0 0 10px;
+    }
+    .article-ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .point-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .warn-box {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .priority-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 8px 0 10px;
+    }
+    .priority-table th {
+      background: #f0a500;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .priority-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #444;
+    }
+    .priority-table tr:last-child td { border-bottom: none; }
+    .priority-table tr:nth-child(even) td { background: #fafafa; }
+    .star-rating {
+      color: #f0a500;
+      font-weight: bold;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
+    .summary-item {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .summary-item strong { color: #f0a500; display: block; margin-bottom: 4px; }
+  </style>
 </head>
 <body>
 
@@ -25,14 +163,177 @@
 
 <div class="container">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">👑 ロードオブマスターズ用育成</h1>
+  <h1 class="page-title">👑 ロードオブマスターズ 攻略</h1>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">〜頂上への道〜</p>
+
+  <!-- 目次 -->
   <div class="section">
-    <div style="text-align:center;padding:60px 20px;color:#bbb;">
-      <div style="font-size:48px;margin-bottom:16px;">🚧</div>
-      <div style="font-size:18px;font-weight:bold;margin-bottom:8px;">準備中</div>
-      <div style="font-size:14px;">このページは現在作成中です。</div>
+    <div class="section-title">📋 目次</div>
+    <ul class="toc-list">
+      <li><a href="#sentei"><span class="toc-num">1</span> 選定編</a></li>
+      <li><a href="#hiden"><span class="toc-num">2</span> 秘伝準備編</a></li>
+      <li><a href="#ikusei"><span class="toc-num">3</span> 育成編</a></li>
+      <li><a href="#entry"><span class="toc-num">4</span> エントリー編</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. 選定編 -->
+  <div class="section" id="sentei">
+    <div class="article-h2">1️⃣ 選定編（最重要）</div>
+
+    <div class="article-h3">モンスターの選定基準</div>
+    <p class="article-p">以下の3すくみを基本的な目安とする。</p>
+    <ul class="article-ul">
+      <li>① 当月ガチャ該当モンスター</li>
+      <li>② ①に対して有利を取れるモンスター</li>
+      <li>③ ②に対して有利を取れるモンスター</li>
+    </ul>
+    <div class="warn-box">⚠️ <strong>完全メタ特化はNG</strong><br>刺さる相手には強いが安定しない。</div>
+
+    <div class="article-h3">技設定</div>
+    <p class="article-p">選定したモンスターの技は<strong>事前に決定</strong>すること。アシカ編成に影響があるため、後から変更は非推奨。</p>
+
+    <div class="article-h3">アシカ編成（超重要）</div>
+    <p class="article-p">能力の優先度（数字が小さいほど強い）：</p>
+    <table class="priority-table">
+      <thead><tr><th>優先度</th><th>能力</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>完全回避</td></tr>
+        <tr><td>2</td><td>被ダメカット（無効含む）</td></tr>
+        <tr><td>3</td><td>連撃無効</td></tr>
+        <tr><td>4</td><td>必中</td></tr>
+        <tr><td>5</td><td>ダメージ割合連撃</td></tr>
+        <tr><td>6</td><td>アディション</td></tr>
+        <tr><td>7</td><td>ステータス割合連撃</td></tr>
+      </tbody>
+    </table>
+
+    <div class="article-h3">積む数の目安</div>
+    <ul class="article-ul">
+      <li>ロードなし：4〜6個前後</li>
+      <li>ロードあり：6〜12個程度</li>
+    </ul>
+
+    <div class="warn-box">
+      ⚠️ 能力の影響は非常に大きいが、ステータスも疎かにできない。<br>
+      モン類レベルを意識した編成にすること。<br>
+      能力・ステータス・モン類のバランスが重要。
+    </div>
+
+    <div class="point-box">
+      💡 後に紹介するロード秘伝に影響するため、<strong>この段階で編成と付ける能力を明確化すること。</strong>
+    </div>
+    <div class="point-box">
+      ⭐ 頂上を取るには<strong>苦手なモンスターを減らすことが重要。</strong>
     </div>
   </div>
+
+  <!-- 2. 秘伝準備編 -->
+  <div class="section" id="hiden">
+    <div class="article-h2">2️⃣ 秘伝準備編</div>
+    <p class="article-p">出場モンスターが決まったら秘伝を準備する。※相性に関しては割愛。</p>
+
+    <div class="article-h3">ボスモン秘伝 <span class="star-rating">★★★★★</span></div>
+    <p class="article-p">現環境で最も影響力の高い秘伝。</p>
+    <ul class="article-ul">
+      <li>最低2個</li>
+      <li>理想4個</li>
+    </ul>
+
+    <div class="article-h3">ノラモン秘伝 <span class="star-rating">★★☆</span></div>
+    <p class="article-p">3周年前は影響力が高かったが、ボスモン秘伝の登場により優先度低下。</p>
+    <ul class="article-ul">
+      <li>グロウ系は依然強力</li>
+      <li>ボスモンとの両立は難しい</li>
+    </ul>
+
+    <div class="article-h3">地形秘伝 <span class="star-rating">★★〜★★★</span></div>
+    <p class="article-p">基礎ステータスの割合上昇効果あり。</p>
+    <ul class="article-ul">
+      <li>デメリット：移動速度が低下</li>
+      <li>能力との組み合わせで評価が変動</li>
+      <li>ボスモン環境により影響力はやや低下</li>
+    </ul>
+
+    <div class="article-h3">距離秘伝 <span class="star-rating">★★★〜★★★★</span></div>
+    <p class="article-p">技ステータスに影響。</p>
+    <ul class="article-ul">
+      <li>距離依存能力が多く重要度が高い</li>
+      <li>スペシャルルールでさらに補正がかかる場合あり</li>
+    </ul>
+
+    <div class="article-h3">ロード秘伝 <span class="star-rating">★★★★★</span>（上級者向け）</div>
+    <div class="point-box">
+      💎 <strong>特徴</strong><br>
+      アシカ編成に関係なく能力を付与可能。自由度が非常に高い。
+    </div>
+    <p class="article-p"><strong>目標：</strong></p>
+    <ul class="article-ul">
+      <li>片親をロード秘伝で染める</li>
+      <li>★13以上が理想</li>
+      <li>能力6個前後</li>
+    </ul>
+    <div class="warn-box">
+      ⚠️ 作成難易度が非常に高い。理解するまでが難しい。<br>
+      ノーブル秘伝が付けにくく、相性値を上げづらい。
+    </div>
+  </div>
+
+  <!-- 3. 育成編 -->
+  <div class="section" id="ikusei">
+    <div class="article-h2">3️⃣ 育成編</div>
+
+    <div class="article-h3">持ち込みアイテム</div>
+    <ul class="article-ul">
+      <li>ガロエジュース</li>
+      <li>ブリーダーライセンス</li>
+    </ul>
+    <p class="article-p" style="color:#888;">※リタマラ前提のため推奨</p>
+
+    <div class="article-h3">厳選（スタートライン）</div>
+    <p class="article-p">以下が揃うまでリタマラする：</p>
+    <ul class="article-ul">
+      <li>ボスモン能力が2種類発動</li>
+      <li>距離適性・地形適性が良好</li>
+      <li>ステータス上昇が十分</li>
+      <li>有効能力が揃っている</li>
+    </ul>
+    <div class="point-box">💡 頂上を目指す場合は<strong>先導の伝授も必須級。</strong></div>
+
+    <div class="article-h3">育成中のポイント</div>
+    <ul class="article-ul">
+      <li>事前に決めた能力は必ず全て取得する</li>
+      <li>能力に合わせて距離適性・地形適性を上げる</li>
+      <li>ステータスは可能な限り高くする</li>
+    </ul>
+    <div class="warn-box">⚠️ 設定した能力を覚えきれないのは論外。</div>
+
+    <div class="point-box">
+      ⭐ ロードの閃きは運要素あり。ただし能力優先が絶対。<br>
+      トレーニングが弱くても踏む判断が必要。<br>
+      ※能力に余裕がある場合のみトレ優先
+    </div>
+  </div>
+
+  <!-- 4. エントリー編 -->
+  <div class="section" id="entry">
+    <div class="article-h2">4️⃣ エントリー編</div>
+    <p class="article-p">作成したモンスターに合わせて戦術カードを設定する。</p>
+    <div class="point-box">⭐ 機嫌が上がるカードは現環境で影響力が高い。迷ったら採用推奨。</div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="section">
+    <div class="section-title">🏁 まとめ</div>
+    <div class="summary-grid">
+      <div class="summary-item"><strong>モンスター選定</strong>環境と相性で決める</div>
+      <div class="summary-item"><strong>アシカ・能力構成</strong>事前に確定させる</div>
+      <div class="summary-item"><strong>ボスモン秘伝</strong>最低2個必須</div>
+      <div class="summary-item"><strong>育成</strong>能力取得が最優先</div>
+      <div class="summary-item"><strong>ロード秘伝</strong>最終強化枠（上級者向け）</div>
+    </div>
+  </div>
+
 </div>
 
 <footer>
