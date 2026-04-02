@@ -338,7 +338,7 @@
   <div class="post-form-wrap" id="post-form-wrap">
     <div class="form-row">
       <div class="form-label">ブリーダーID <span class="badge-required">必須</span></div>
-      <input class="form-input" id="f-breeder-id" type="text" placeholder="ブリーダーIDを入力" maxlength="20">
+      <input class="form-input" id="f-breeder-id" type="text" placeholder="000 000 000" maxlength="11" oninput="formatBreederId(this)">
     </div>
     <div class="form-row">
       <div class="form-label">レンタルアシストカード <span class="badge-required">1枚目必須</span> <span class="badge-optional">2〜7枚目任意</span></div>
@@ -378,6 +378,11 @@
     <div class="form-row">
       <div class="form-label">コメント <span class="badge-optional">任意</span></div>
       <textarea class="form-textarea" id="f-comment" placeholder="コメントを入力（最大300文字）" maxlength="300"></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-label">編集用パスワード <span class="badge-optional">任意</span></div>
+      <input class="form-input" id="f-edit-pw" type="password" placeholder="後で編集・削除したい場合は設定してください" maxlength="20">
+      <div style="font-size:12px;color:#aaa;margin-top:4px;">設定しない場合は編集・削除できません</div>
     </div>
     <button class="submit-btn" id="submit-btn" onclick="submitPost()">投稿する</button>
   </div>
@@ -483,6 +488,16 @@
     'サンドゴーレム（ノラモン）',
     'シロゾー（ノラモン）',
   ];
+
+  // ---- ブリーダーID フォーマット ----
+  function formatBreederId(input) {
+    const digits = input.value.replace(/\D/g, '').slice(0, 9);
+    const parts = [];
+    if (digits.length > 0) parts.push(digits.slice(0, 3));
+    if (digits.length > 3) parts.push(digits.slice(3, 6));
+    if (digits.length > 6) parts.push(digits.slice(6, 9));
+    input.value = parts.join(' ');
+  }
 
   // ---- カードスロット生成 ----
   let cardOptions = [];
@@ -594,12 +609,14 @@
     btn.disabled = true;
 
     try {
+      const editPw = document.getElementById('f-edit-pw').value;
       await db.collection('friends').add({
         breederId, cards, monsterName,
         taikaiType: taikaiType || '',
         taikaiStar: taikaiStar || '',
         taikaiCount: taikaiCount !== '' ? Number(taikaiCount) : null,
         comment,
+        editPw: editPw || '',
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       document.getElementById('f-breeder-id').value = '';
@@ -610,6 +627,7 @@
       document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('f-taikai-count').value = '';
       document.getElementById('f-comment').value = '';
+      document.getElementById('f-edit-pw').value = '';
       togglePostForm(document.querySelector('.post-toggle-btn'));
       loadPosts();
     } catch(e) {
@@ -690,7 +708,11 @@
         ${commentHtml}
         <div class="post-footer">
           <span>${date}</span>
-          <button class="report-btn" onclick="reportPost('${p.id}')">通報</button>
+          <div style="display:flex;gap:8px;align-items:center;">
+            ${p.editPw ? `<button class="copy-btn" onclick="editPost('${p.id}')">✏️ 編集</button>
+            <button class="copy-btn" style="color:#e53e3e;" onclick="deletePost('${p.id}')">🗑️ 削除</button>` : ''}
+            <button class="report-btn" onclick="reportPost('${p.id}')">通報</button>
+          </div>
         </div>
       </div>`;
   }
@@ -706,6 +728,36 @@
       btn.textContent = '✅ コピー完了';
       setTimeout(() => btn.textContent = orig, 1500);
     });
+  }
+
+  async function deletePost(postId) {
+    const post = allPosts.find(p => p.id === postId);
+    if (!post) return;
+    const pw = prompt('編集用パスワードを入力してください');
+    if (pw === null) return;
+    if (pw !== post.editPw) { alert('パスワードが違います'); return; }
+    if (!confirm('この投稿を削除しますか？')) return;
+    try {
+      await db.collection('friends').doc(postId).delete();
+      loadPosts();
+    } catch(e) { alert('削除に失敗しました: ' + e.message); }
+  }
+
+  async function editPost(postId) {
+    const post = allPosts.find(p => p.id === postId);
+    if (!post) return;
+    const pw = prompt('編集用パスワードを入力してください');
+    if (pw === null) return;
+    if (pw !== post.editPw) { alert('パスワードが違います'); return; }
+
+    const newComment = prompt('コメントを編集してください（最大300文字）', post.comment || '');
+    if (newComment === null) return;
+    if (newComment.length > 300) { alert('300文字以内で入力してください'); return; }
+
+    try {
+      await db.collection('friends').doc(postId).update({ comment: newComment });
+      loadPosts();
+    } catch(e) { alert('編集に失敗しました: ' + e.message); }
   }
 
   async function reportPost(postId) {
