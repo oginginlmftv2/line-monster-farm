@@ -328,8 +328,9 @@
   <h1 class="page-title">🤝 フォロー・フォロワー募集板</h1>
 
   <div class="info-box">
-    レンタルアシストカードや伝授モンスターを探してフレンドを募集できます。<br>
-    <strong>投稿前にフォロワー枠（上限100人）を空けておきましょう。</strong>枠が満杯だと新規フォローができません。
+    ここではアシストカードやモンスターのレンタル目当てでフォローやフォロワーを探すことができます。<br>
+    <span style="color:#e53e3e;font-weight:bold;">※このゲームのフォロー・フォロワーはフレンドではなく道具です。</span>勝手に外したり外されたり、ある日突然フォロー・フォロワーが0人になるなんて当たり前のことです。友達って申請してなるもんじゃなくて自然になってるものなので。<br>
+    あと冗談とかではなく本当に勝手に外れることが多々あります。恨まないようにしましょう。
   </div>
 
   <!-- 投稿フォーム -->
@@ -354,7 +355,7 @@
       <div class="taikai-type-group">
         <button type="button" class="taikai-type-btn active" data-val="" onclick="selectTaikaiType(this)">なし</button>
         <button type="button" class="taikai-type-btn" data-val="四大大会制覇" onclick="selectTaikaiType(this)">四大大会制覇</button>
-        <button type="button" class="taikai-type-btn" data-val="四大大会（完全）制覇" onclick="selectTaikaiType(this)">四大大会（完全）制覇</button>
+        <button type="button" class="taikai-type-btn" data-val="四大大会完全制覇" onclick="selectTaikaiType(this)">四大大会完全制覇</button>
       </div>
       <div class="taikai-star-row" id="taikai-star-row">
         <div class="form-label" style="margin-bottom:6px;">☆数</div>
@@ -409,7 +410,7 @@
         <select class="form-select" id="s-taikai">
           <option value="">選択する</option>
           <option>四大大会制覇</option>
-          <option>四大大会（完全）制覇</option>
+          <option>四大大会完全制覇</option>
         </select>
       </div>
     </div>
@@ -450,7 +451,7 @@
 
   // ---- 注目秘伝リスト ----
   const HIDEN_LIST = [
-    '四大大会（完全）制覇',
+    '四大大会完全制覇',
     '四大大会制覇',
     'グランドスラム制覇',
     'ロードオブマスターズ制覇',
