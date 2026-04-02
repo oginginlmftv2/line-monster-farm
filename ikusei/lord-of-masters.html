@@ -106,6 +106,16 @@
       color: #555;
       margin: 10px 0;
     }
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #388e3c;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
     .priority-table {
       width: 100%;
       border-collapse: collapse;
@@ -125,10 +135,7 @@
     }
     .priority-table tr:last-child td { border-bottom: none; }
     .priority-table tr:nth-child(even) td { background: #fafafa; }
-    .star-rating {
-      color: #f0a500;
-      font-weight: bold;
-    }
+    .star-rating { color: #f0a500; font-weight: bold; }
     .summary-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -146,6 +153,21 @@
       line-height: 1.7;
     }
     .summary-item strong { color: #f0a500; display: block; margin-bottom: 4px; }
+    .hiden-section {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .hiden-section-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   </style>
 </head>
 <body>
@@ -188,10 +210,16 @@
       <li>② ①に対して有利を取れるモンスター</li>
       <li>③ ②に対して有利を取れるモンスター</li>
     </ul>
+
+    <div class="info-box">
+      💡 <strong>好きなモンスターで頂上を目指したい場合</strong>、この選定基準は無視してOK。<br>
+      その場合は他の要素（秘伝・能力・育成精度）でカバーする必要がある。
+    </div>
+
     <div class="warn-box">⚠️ <strong>完全メタ特化はNG</strong><br>刺さる相手には強いが安定しない。</div>
 
     <div class="article-h3">技設定</div>
-    <p class="article-p">選定したモンスターの技は<strong>事前に決定</strong>すること。アシカ編成に影響があるため、後から変更は非推奨。</p>
+    <p class="article-p">選定したモンスターの技は<strong>事前に決定</strong>すること。アシカ編成に影響があるため後から変更は非推奨。</p>
 
     <div class="article-h3">アシカ編成（超重要）</div>
     <p class="article-p">能力の優先度（数字が小さいほど強い）：</p>
@@ -203,7 +231,7 @@
         <tr><td>3</td><td>連撃無効</td></tr>
         <tr><td>4</td><td>必中</td></tr>
         <tr><td>5</td><td>ダメージ割合連撃</td></tr>
-        <tr><td>6</td><td>アディション</td></tr>
+        <tr><td>6</td><td>攻撃ステータスアップ系（アディション等）</td></tr>
         <tr><td>7</td><td>ステータス割合連撃</td></tr>
       </tbody>
     </table>
@@ -233,49 +261,58 @@
     <div class="article-h2">2️⃣ 秘伝準備編</div>
     <p class="article-p">出場モンスターが決まったら秘伝を準備する。※相性に関しては割愛。</p>
 
-    <div class="article-h3">ボスモン秘伝 <span class="star-rating">★★★★★</span></div>
-    <p class="article-p">現環境で最も影響力の高い秘伝。</p>
-    <ul class="article-ul">
-      <li>最低2個</li>
-      <li>理想4個</li>
-    </ul>
-
-    <div class="article-h3">ノラモン秘伝 <span class="star-rating">★★☆</span></div>
-    <p class="article-p">3周年前は影響力が高かったが、ボスモン秘伝の登場により優先度低下。</p>
-    <ul class="article-ul">
-      <li>グロウ系は依然強力</li>
-      <li>ボスモンとの両立は難しい</li>
-    </ul>
-
-    <div class="article-h3">地形秘伝 <span class="star-rating">★★〜★★★</span></div>
-    <p class="article-p">基礎ステータスの割合上昇効果あり。</p>
-    <ul class="article-ul">
-      <li>デメリット：移動速度が低下</li>
-      <li>能力との組み合わせで評価が変動</li>
-      <li>ボスモン環境により影響力はやや低下</li>
-    </ul>
-
-    <div class="article-h3">距離秘伝 <span class="star-rating">★★★〜★★★★</span></div>
-    <p class="article-p">技ステータスに影響。</p>
-    <ul class="article-ul">
-      <li>距離依存能力が多く重要度が高い</li>
-      <li>スペシャルルールでさらに補正がかかる場合あり</li>
-    </ul>
-
-    <div class="article-h3">ロード秘伝 <span class="star-rating">★★★★★</span>（上級者向け）</div>
-    <div class="point-box">
-      💎 <strong>特徴</strong><br>
-      アシカ編成に関係なく能力を付与可能。自由度が非常に高い。
+    <div class="hiden-section">
+      <div class="hiden-section-title">ボスモン秘伝 <span class="star-rating">★★★★★</span></div>
+      <p class="article-p">現環境で最も影響力が高い。</p>
+      <ul class="article-ul">
+        <li>最低2個</li>
+        <li>理想4個</li>
+      </ul>
     </div>
-    <p class="article-p"><strong>目標：</strong></p>
-    <ul class="article-ul">
-      <li>片親をロード秘伝で染める</li>
-      <li>★13以上が理想</li>
-      <li>能力6個前後</li>
-    </ul>
-    <div class="warn-box">
-      ⚠️ 作成難易度が非常に高い。理解するまでが難しい。<br>
-      ノーブル秘伝が付けにくく、相性値を上げづらい。
+
+    <div class="hiden-section">
+      <div class="hiden-section-title">ノラモン秘伝 <span class="star-rating">★★☆</span></div>
+      <p class="article-p">3周年前は強かったが現在は優先度低下。</p>
+      <ul class="article-ul">
+        <li>グロウ系は依然強力</li>
+        <li>ボスモンとの両立は難しい</li>
+      </ul>
+    </div>
+
+    <div class="hiden-section">
+      <div class="hiden-section-title">地形秘伝 <span class="star-rating">★★〜★★★</span></div>
+      <p class="article-p">基礎ステータスの割合上昇効果あり。</p>
+      <ul class="article-ul">
+        <li>デメリット：移動速度が低下</li>
+        <li>能力との組み合わせで評価が変動</li>
+        <li>ボスモン環境により影響力はやや低下</li>
+      </ul>
+    </div>
+
+    <div class="hiden-section">
+      <div class="hiden-section-title">距離秘伝 <span class="star-rating">★★★〜★★★★</span></div>
+      <p class="article-p">技ステータスに影響。</p>
+      <ul class="article-ul">
+        <li>距離依存能力が多く重要度が高い</li>
+        <li>スペシャルルールでさらに補正がかかる場合あり</li>
+      </ul>
+    </div>
+
+    <div class="hiden-section">
+      <div class="hiden-section-title">ロード秘伝 <span class="star-rating">★★★★★</span>（上級者向け）</div>
+      <div class="point-box">
+        💎 アシカ編成に関係なく能力を付与可能。自由度が非常に高い。
+      </div>
+      <p class="article-p"><strong>目標：</strong></p>
+      <ul class="article-ul">
+        <li>片親をロード秘伝で染める</li>
+        <li>★13以上が理想</li>
+        <li>能力6個前後</li>
+      </ul>
+      <div class="warn-box">
+        ⚠️ 作成難易度が非常に高い。理解するまでが難しい。<br>
+        ノーブル秘伝が付けにくく、相性値を上げづらい。
+      </div>
     </div>
   </div>
 
@@ -289,6 +326,12 @@
       <li>ブリーダーライセンス</li>
     </ul>
     <p class="article-p" style="color:#888;">※リタマラ前提のため推奨</p>
+
+    <div class="point-box">
+      💡 <strong>代替パターン</strong><br>
+      相性が取れない・うけつぎ草が多数ある場合 → ガロエジュース＋うけつぎ草<br>
+      オイリーに余裕がある場合 → ガロエジュース＋オイリー
+    </div>
 
     <div class="article-h3">厳選（スタートライン）</div>
     <p class="article-p">以下が揃うまでリタマラする：</p>
@@ -326,7 +369,7 @@
   <div class="section">
     <div class="section-title">🏁 まとめ</div>
     <div class="summary-grid">
-      <div class="summary-item"><strong>モンスター選定</strong>環境と相性で決める</div>
+      <div class="summary-item"><strong>モンスター選定</strong>環境と相性で決める。好きなモンスターでも攻略は可能</div>
       <div class="summary-item"><strong>アシカ・能力構成</strong>事前に確定させる</div>
       <div class="summary-item"><strong>ボスモン秘伝</strong>最低2個必須</div>
       <div class="summary-item"><strong>育成</strong>能力取得が最優先</div>
