@@ -428,7 +428,7 @@ const LOCAL_FILES = [
 /* ================================================================
    状態
 ================================================================ */
-let assignments = {};       // { "0": "S__xxx.jpg", ... }
+let assignments = {};       // { "モンスター名": "S__xxx.jpg", ... }
 let selectedMonsterIdx = null;
 let db = null;
 let saveTimer = null;
@@ -471,12 +471,17 @@ function gwUrl(gwImg) {
   return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${gwImg}.png`;
 }
 
-// ファイル名 → 割り当て先モンスターインデックス (逆引き)
-function fileToMonsterIdx(filename) {
-  for (const [k, v] of Object.entries(assignments)) {
-    if (v === filename) return parseInt(k, 10);
+// ファイル名 → 割り当て先モンスター名 (逆引き)
+function fileToMonsterName(filename) {
+  for (const [name, file] of Object.entries(assignments)) {
+    if (file === filename) return name;
   }
   return null;
+}
+
+// モンスター名 → インデックス
+function monsterNameToIdx(name) {
+  return monstersData.findIndex(m => m.name === name);
 }
 
 function countAssigned() {
@@ -537,7 +542,7 @@ function refreshMonsterRows() {
     const row = document.getElementById(`mrow-${idx}`);
     if (!row) return;
 
-    const localFile = assignments[String(idx)] || null;
+    const localFile = assignments[m.name] || null;
     const assignedHTML = localFile
       ? `<img class="assigned-preview" src="monster/${localFile}" alt="${localFile}"
               onerror="this.style.display='none'">`
@@ -615,16 +620,16 @@ function buildLocalGrid() {
 }
 
 function refreshLocalGrid() {
-  // 逆引きマップ: filename -> monsterIdx
-  const fileToIdx = {};
-  for (const [k, v] of Object.entries(assignments)) {
-    fileToIdx[v] = parseInt(k, 10);
+  // 逆引きマップ: filename -> モンスター名
+  const fileToName = {};
+  for (const [name, file] of Object.entries(assignments)) {
+    fileToName[file] = name;
   }
 
   LOCAL_FILES.forEach(filename => {
     const item = document.getElementById(`limg-${filename}`);
     if (!item) return;
-    if (fileToIdx[filename] !== undefined) {
+    if (fileToName[filename] !== undefined) {
       item.classList.add('assigned');
     } else {
       item.classList.remove('assigned');
@@ -633,11 +638,12 @@ function refreshLocalGrid() {
 }
 
 function handleLocalClick(filename, item) {
-  const existingIdx = fileToMonsterIdx(filename);
+  const existingName = fileToMonsterName(filename);
 
-  if (existingIdx !== null) {
+  if (existingName !== null) {
     // 既に割り当て済み: どのモンスターか通知してそちらを選択
-    alert(`「${filename}」は #${existingIdx + 1} ${monstersData[existingIdx].name} に割り当て済みです。`);
+    const existingIdx = monsterNameToIdx(existingName);
+    alert(`「${filename}」は #${existingIdx + 1} ${existingName} に割り当て済みです。`);
     selectMonster(existingIdx);
     return;
   }
@@ -648,7 +654,8 @@ function handleLocalClick(filename, item) {
   }
 
   // 割り当て実行
-  assignments[String(selectedMonsterIdx)] = filename;
+  const selectedName = monstersData[selectedMonsterIdx].name;
+  assignments[selectedName] = filename;
   updateProgressUI();
   refreshMonsterRows();
   refreshLocalGrid();
@@ -667,10 +674,11 @@ function filterLocal(query) {
    ツールチップ
 ================================================================ */
 function showTooltip(e, filename) {
-  const idx = fileToMonsterIdx(filename);
-  if (idx === null) return;
+  const name = fileToMonsterName(filename);
+  if (name === null) return;
+  const idx = monsterNameToIdx(name);
   const tip = document.getElementById('tooltip');
-  tip.textContent = `割当済: #${idx + 1} ${monstersData[idx].name}`;
+  tip.textContent = `割当済: #${idx + 1} ${name}`;
   tip.style.display = 'block';
   positionTooltip(e);
 }
@@ -692,15 +700,14 @@ function positionTooltip(e) {
 ================================================================ */
 function resetSelected() {
   if (selectedMonsterIdx === null) return;
-  const key = String(selectedMonsterIdx);
-  if (!assignments[key]) {
+  const m = monstersData[selectedMonsterIdx];
+  if (!assignments[m.name]) {
     alert('このモンスターには割り当てがありません。');
     return;
   }
-  const m = monstersData[selectedMonsterIdx];
   if (!confirm(`#${selectedMonsterIdx + 1} ${m.name} の割り当てを解除しますか？`)) return;
 
-  delete assignments[key];
+  delete assignments[m.name];
   updateProgressUI();
   refreshMonsterRows();
   refreshLocalGrid();
@@ -715,7 +722,18 @@ async function initApp() {
   try {
     const doc = await db.collection('monsterImages').doc('assignments').get();
     if (doc.exists) {
-      assignments = doc.data() || {};
+      const data = doc.data() || {};
+      // 旧形式（インデックスベース: キーが数字）の場合はリセット
+      const keys = Object.keys(data);
+      const isOldFormat = keys.length > 0 && keys.every(k => /^\d+$/.test(k));
+      if (isOldFormat) {
+        console.warn('旧形式（インデックスベース）のデータを検出。名前ベースにリセットします。');
+        assignments = {};
+        // 旧データを上書き保存してクリア
+        await db.collection('monsterImages').doc('assignments').set({});
+      } else {
+        assignments = data;
+      }
     }
   } catch (e) {
     console.warn('Firestore 読み込みエラー:', e);
