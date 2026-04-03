@@ -171,26 +171,39 @@
       margin-top: 1px;
     }
 
-    .exchange-table {
-      width: 100%;
-      border-collapse: collapse;
+    .ex-card {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .ex-card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .ex-card-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .ex-card-body {
       font-size: 13px;
-      margin: 8px 0 10px;
+      color: #555;
+      line-height: 1.75;
     }
-    .exchange-table th {
-      background: #f0a500;
-      color: #fff;
-      padding: 8px 10px;
-      text-align: left;
+    .ex-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 7px;
+      border-radius: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
-    .exchange-table td {
-      padding: 8px 10px;
-      border-bottom: 1px solid #f0f0f0;
-      color: #444;
-      vertical-align: top;
-    }
-    .exchange-table tr:last-child td { border-bottom: none; }
-    .exchange-table tr:nth-child(even) td { background: #fafafa; }
+    .ex-badge-source { background: #e8eaf6; color: #3949ab; }
+    .ex-badge-danger { background: #fde8e8; color: #c0392b; }
   </style>
 </head>
 <body>
@@ -267,28 +280,149 @@
   <div class="section" id="exchange">
     <div class="article-h2">3️⃣ 交換所を毎週・毎月チェック</div>
     <p class="article-p">
-      交換所には毎週・毎月リセットされるアイテムが並ぶ。交換できる期間が限られているため、<strong>忘れずに交換しておくこと。</strong>
+      交換所には13種類の交換所がある。それぞれ入手できるメダルや通貨が異なるため、何と交換すべきかを把握しておこう。
     </p>
 
-    <table class="exchange-table">
-      <thead>
-        <tr><th>頻度</th><th>交換のポイント</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><strong>毎週</strong></td>
-          <td>ウィークリーのポイントで交換できるアイテムを確認して、必要なものは忘れずに交換する。リセットされると持ち越せないので注意。</td>
-        </tr>
-        <tr>
-          <td><strong>毎月</strong></td>
-          <td>月ごとに交換できるアイテムが更新される。ブリーダーP30,000報酬など月に一度しか受け取れないものがあるため優先的に確認する。</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="warn-box">
-      交換せずに期間が過ぎると消えてしまう。特に月末は忘れやすいので注意。
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">ハートメダル交換所</span>
+        <span class="ex-badge ex-badge-source">ガチャで入手</span>
+      </div>
+      <div class="ex-card-body">
+        ガチャを引くともらえる。自分が所持するモンスターのハートと交換しよう。<br>
+        優先順位は<strong>プシュケーモンスター ＞ プシュケーの粉モンスター</strong>（絞り込みで判別可能）。
+      </div>
     </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">遠征メダル交換所</span>
+        <span class="ex-badge ex-badge-source">遠征で入手</span>
+      </div>
+      <div class="ex-card-body">
+        遠征でもらえる。<strong>ラグナロックスを1枚だけ</strong>交換したら後はお好み。<br>
+        グランドスラムを頑張りたい人は<strong>魂のメガホン・超ごきげんキャンデー</strong>を交換しておこう。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">ブリーダーPt交換所</span>
+        <span class="ex-badge ex-badge-source">ブリーダーパスで入手</span>
+      </div>
+      <div class="ex-card-body">
+        ブリーダーパスでもらえる（有償のものもある）。<strong>一番上にあるガチャチケット</strong>と交換しよう。ガチャが更新されるとチケットの種類も変わる。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">アリーナメダル交換所</span>
+        <span class="ex-badge ex-badge-source">対抗戦で入手</span>
+      </div>
+      <div class="ex-card-body">
+        対抗戦でもらえる。<strong>ベビードラゴンを1枚だけ</strong>交換したらあとはお好み。<br>
+        基本は<strong>ガロエ印の野菜ジュース・ブリーダーライセンス</strong>を大量交換する場所。<br>
+        うけつぎ草・オイリーパックは長く遊ぶようになったら交換したい。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">フレンドメダル交換所</span>
+        <span class="ex-badge ex-badge-source">アシストレンタルで入手</span>
+      </div>
+      <div class="ex-card-body">
+        アシストカードをレンタルしてもらうともらえる。最初はほとんど手に入らないので気にしなくてよし。<br>
+        手に入るようになったら<strong>APドリンク・BPドリンク</strong>と交換しよう。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">モンスターズメダル交換所</span>
+        <span class="ex-badge ex-badge-source">ガチャで入手</span>
+      </div>
+      <div class="ex-card-body">
+        ガチャを引くともらえる。<strong>虹の時渡りの砂時計・APドリンク・BPドリンク</strong>と交換しよう。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">物々交換所</span>
+      </div>
+      <div class="ex-card-body">
+        書のかけらが20枚たまったらここで交換しよう。<strong>フレンド☆2カタログ円盤石</strong>は交換するのがおすすめ。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">ダイヤ交換所</span>
+        <span class="ex-badge ex-badge-danger">要注意</span>
+      </div>
+      <div class="ex-card-body">
+        <strong>立ち寄ってはいけない。</strong>ダイヤで交換する価値のあるアイテムは一つもおいていない。早くなくなってほしい。ダイヤ交換所について肯定的な意見を言うおじさんにはついていってはいけない。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">ナゲセン交換所</span>
+        <span class="ex-badge ex-badge-source">ミッション・デュエル・売却等で入手</span>
+      </div>
+      <div class="ex-card-body">
+        ウィークリーミッション・デュエルカップ・売却イベント等でもらえる。<strong>その月のガチャモンスターのハート</strong>と交換しよう。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">プチメダル交換所</span>
+        <span class="ex-badge ex-badge-source">各種イベントで入手</span>
+      </div>
+      <div class="ex-card-body">
+        いろんなイベントでもらえる。<strong>プシュケーモンスター・愛のあるモンスターのハート</strong>と交換しよう。<br>
+        効率よくプレイしたいならプシュケーモンスター一択。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">六英雄メダル交換所</span>
+        <span class="ex-badge ex-badge-source">グランドスラムで入手</span>
+      </div>
+      <div class="ex-card-body">
+        グランドスラムでもらえる。<strong>極意の頁・真を最優先</strong>で交換しよう。次に好きな色の英雄・英雄の心得も交換したい。<br>
+        おすすめはどれかの英雄を1凸にしてから他の色の英雄を取ること。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">お楽しみメダル交換所</span>
+        <span class="ex-badge ex-badge-source">お楽しみガチャで入手</span>
+      </div>
+      <div class="ex-card-body">
+        お楽しみガチャでもらえる。強い目的がない限り<strong>お楽しみガチャは引かないほうがいい</strong>（MRの排出率が0.1%と激低）。
+      </div>
+    </div>
+
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-card-title">プシュケー交換所</span>
+      </div>
+      <div class="ex-card-body">
+        プシュケーの粉を手に入れたらここで<strong>プシュケーと交換</strong>しよう。<br>
+        プシュケーからマスターハートやモンスター円盤石への交換は、その意味や価値がわかるようになるまでしないほうがいい。
+      </div>
+    </div>
+
+    <div class="info-box">
+      この他も、期間限定のイベントは有償のもの以外すべて交換しよう。
+    </div>
+
   </div>
 
   <!-- 4. イベント -->
