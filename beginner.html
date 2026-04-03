@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>初心者ガイド：やるべきこと | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファーム初心者がまずやるべきことをまとめました。初期設定・ミッション・交換所・各種イベントの基本を解説します。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/beginner.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #fff3cd; border-color: #f0a500; }
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: #f0a500;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .article-h2 {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      border-left: 4px solid #f0a500;
+      padding: 6px 12px;
+      margin: 0 0 14px;
+      background: #fffbf0;
+      border-radius: 0 6px 6px 0;
+    }
+    .article-h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #555;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #f0a500;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin: 0 0 10px;
+    }
+    .article-ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .point-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .warn-box {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #388e3c;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .event-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    @media (max-width: 480px) { .event-grid { grid-template-columns: 1fr; } }
+    .event-card {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .event-card-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a2e;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .event-card-body {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.7;
+    }
+
+    .setting-list {
+      list-style: none;
+      padding: 0;
+      margin: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .setting-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.6;
+    }
+    .setting-icon {
+      font-size: 18px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .exchange-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 8px 0 10px;
+    }
+    .exchange-table th {
+      background: #f0a500;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .exchange-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #444;
+      vertical-align: top;
+    }
+    .exchange-table tr:last-child td { border-bottom: none; }
+    .exchange-table tr:nth-child(even) td { background: #fafafa; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🔰 初心者ガイド：やるべきこと</h1>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">まずここから始めよう</p>
+
+  <!-- 目次 -->
+  <div class="section">
+    <div class="section-title">📋 目次</div>
+    <ul class="toc-list">
+      <li><a href="#settings"><span class="toc-num">1</span> まず最初に：初期設定</a></li>
+      <li><a href="#mission"><span class="toc-num">2</span> ミッションをクリアする</a></li>
+      <li><a href="#exchange"><span class="toc-num">3</span> 交換所を毎週・毎月チェック</a></li>
+      <li><a href="#events"><span class="toc-num">4</span> 各種イベントに参加する</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. 初期設定 -->
+  <div class="section" id="settings">
+    <div class="article-h2">1️⃣ まず最初に：初期設定</div>
+    <p class="article-p">
+      ゲームを始めたらまず設定を変更しておこう。これをするかしないかで<strong>1回の育成にかかる時間が倍以上変わる。</strong>
+    </p>
+    <ul class="setting-list">
+      <li class="setting-item">
+        <span class="setting-icon">⚡</span>
+        <div><strong>フレームレートを30→60に変更</strong><br>長く遊んでいる人で30のままにしている人はいない。</div>
+      </li>
+      <li class="setting-item">
+        <span class="setting-icon">⏩</span>
+        <div><strong>育成設定：倍速で再生する → ON</strong></div>
+      </li>
+      <li class="setting-item">
+        <span class="setting-icon">✂️</span>
+        <div><strong>育成設定：トレーニング演出を短縮 → ON</strong></div>
+      </li>
+    </ul>
+    <div class="warn-box">
+      この設定をしないまま育成を続けると時間を大きくロスする。最優先でやっておくこと。
+    </div>
+  </div>
+
+  <!-- 2. ミッション -->
+  <div class="section" id="mission">
+    <div class="article-h2">2️⃣ ミッションをクリアする</div>
+    <p class="article-p">
+      ミッションにはデイリー・ウィークリー・マンスリーがある。これらをコンスタントにクリアすることがナゲセンや各種リソースの安定した獲得につながる。
+    </p>
+
+    <div class="article-h3">ウィークリーミッション報酬の持ち越し</div>
+    <p class="article-p">
+      ウィークリーミッションの報酬を受け取らないまま月曜日4:00を迎えると、報酬がギフトボックスに送られる。ギフトの受け取り期限は1か月あるため、<strong>ナゲセンを翌月に持ち越す</strong>ことが可能。
+    </p>
+    <div class="point-box">
+      翌月のガチャに備えてナゲセンを貯めたいときは、ウィークリー報酬をあえて受け取らずに月をまたぐのが有効。
+    </div>
+  </div>
+
+  <!-- 3. 交換所 -->
+  <div class="section" id="exchange">
+    <div class="article-h2">3️⃣ 交換所を毎週・毎月チェック</div>
+    <p class="article-p">
+      交換所には毎週・毎月リセットされるアイテムが並ぶ。交換できる期間が限られているため、<strong>忘れずに交換しておくこと。</strong>
+    </p>
+
+    <table class="exchange-table">
+      <thead>
+        <tr><th>頻度</th><th>交換のポイント</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>毎週</strong></td>
+          <td>ウィークリーのポイントで交換できるアイテムを確認して、必要なものは忘れずに交換する。リセットされると持ち越せないので注意。</td>
+        </tr>
+        <tr>
+          <td><strong>毎月</strong></td>
+          <td>月ごとに交換できるアイテムが更新される。ブリーダーP30,000報酬など月に一度しか受け取れないものがあるため優先的に確認する。</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="warn-box">
+      交換せずに期間が過ぎると消えてしまう。特に月末は忘れやすいので注意。
+    </div>
+  </div>
+
+  <!-- 4. イベント -->
+  <div class="section" id="events">
+    <div class="article-h2">4️⃣ 各種イベントに参加する</div>
+    <p class="article-p">
+      LINEモンスターファームにはさまざまなイベントがある。参加するだけで報酬が得られるものも多いため、できる範囲で積極的に参加しよう。
+    </p>
+
+    <div class="event-grid">
+      <div class="event-card">
+        <div class="event-card-title">🏆 モンスターグランプリ</div>
+        <div class="event-card-body">
+          月ごとに開催されるランキングイベント。育成したモンスターを登録して他プレイヤーと競う。参加報酬・順位報酬が獲得できる。
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-card-title">👑 ロードオブマスターズ</div>
+        <div class="event-card-body">
+          上位を目指す高難度バトルイベント。しっかり育成したモンスターで挑むことで、豪華報酬が手に入る。
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-card-title">🥇 グランドスラム</div>
+        <div class="event-card-body">
+          定期開催のバトルイベント。参加して報酬を獲得しよう。
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-card-title">🗺️ ソロモンクエスト</div>
+        <div class="event-card-body">
+          探索系のイベント。進行度に応じて報酬が得られる。コンスタントに進めておくとリソースが安定する。
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      イベントは期間限定のものが多い。参加を忘れると受け取れない報酬が出てくるため、<strong>開催期間を意識してプレイする</strong>習慣をつけておこう。
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+</body>
+</html>
