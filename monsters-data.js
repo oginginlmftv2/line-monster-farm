@@ -56,7 +56,7 @@ const monstersData = [
   { name: 'スカラベ', aura: '緑', limited: true, limitedLabel: 'イベント限定', gwImg: 280, localImg: '051_スカラベ.jpg', mon: '怪物' },
   { name: 'メルホイップ', aura: '緑', limited: true, limitedLabel: '夏限定', gwImg: 279, localImg: '052_メルホイップ.jpg', mon: '創造' },
   { name: 'ウェディング', aura: '白', limited: true, limitedLabel: '夏限定', gwImg: 278, localImg: '053_ウェディング.jpg', mon: '幻霊' },
-  { name: 'ハオ', aura: '赤', limited: true, limitedLabel: 'コラボ限定', gwImg: 277, localImg: null, mon: '創造' },
+  { name: 'ハオ', aura: '赤', limited: true, limitedLabel: 'コラボ限定', gwImg: 277, localImg: 'S__93208580_0.jpg', mon: '創造' },
   { name: '麻倉葉', aura: '緑', limited: true, limitedLabel: 'コラボ限定', gwImg: 276, localImg: '055_麻倉葉.jpg', mon: '魔族' },
   { name: '恐山アンナ', aura: '赤', limited: true, limitedLabel: 'コラボ限定', gwImg: 275, localImg: '056_恐山アンナ.jpg', mon: '獣' },
   { name: '麻倉葉(武装)', aura: '緑', limited: true, limitedLabel: 'コラボ限定', gwImg: 274, localImg: '057_麻倉葉(武装).jpg', mon: '魔族' },

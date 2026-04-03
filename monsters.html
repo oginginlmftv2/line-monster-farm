@@ -199,7 +199,7 @@ function buildGrid(assignments) {
   grid.innerHTML = '';
 
   monstersData.forEach((m, idx) => {
-    const localFile = m.localImg || (assignments && assignments[String(idx)]) || null;
+    const localFile = m.localImg || null;
     const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
 
     const card = document.createElement('a');
