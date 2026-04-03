@@ -125,7 +125,7 @@ const monstersData = [
   { name: 'ラー', aura: '白', limited: false, limitedLabel: '', gwImg: 211, localImg: null, mon: '怪物' },
   { name: 'ヤシャガミ', aura: '黄', limited: false, limitedLabel: '', gwImg: 210, localImg: null, mon: '獣' },
   { name: 'ムネンド', aura: '黄', limited: false, limitedLabel: '', gwImg: 209, localImg: null, mon: '魔族' },
-  { name: 'スモーピオン', aura: '黄', limited: true, limitedLabel: 'イベント限定', gwImg: 208, localImg: null, mon: '怪物' },
+  { name: 'スモーピオン', aura: '黄', limited: false, limitedLabel: '', gwImg: 208, localImg: null, mon: '怪物' },
   { name: 'ラミア', aura: '黒', limited: false, limitedLabel: '', gwImg: 207, localImg: null, mon: '怪物' },
   { name: 'ディノテクノ', aura: '黄', limited: false, limitedLabel: '', gwImg: 206, localImg: null, mon: '獣' },
   { name: 'キジン', aura: '黄', limited: true, limitedLabel: '超スタフェス限定', gwImg: 205, localImg: null, mon: '怪物' },
