@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>能力画像マッチング | 管理</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f0f2f5; }
+
+    #pwScreen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+    }
+    .pw-box {
+      background: #fff;
+      border-radius: 14px;
+      padding: 40px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      text-align: center;
+      width: 320px;
+    }
+    .pw-box h2 { font-size: 20px; margin-bottom: 20px; color: #1a1a2e; }
+    .pw-box input {
+      width: 100%; padding: 10px 14px; border: 2px solid #ddd;
+      border-radius: 8px; font-size: 15px; margin-bottom: 14px; box-sizing: border-box;
+    }
+    .pw-box input:focus { outline: none; border-color: #f0a500; }
+    .pw-box button {
+      width: 100%; padding: 11px; background: #f0a500; color: #fff;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer;
+    }
+    .pw-box button:hover { background: #d4920a; }
+    .pw-error { color: #e53e3e; font-size: 13px; margin-top: 8px; }
+
+    #mainScreen { display: none; }
+
+    .match-container { max-width: 1400px; margin: 24px auto; padding: 0 16px; }
+
+    .status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; background: #fff; border-radius: 10px;
+      padding: 12px 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .progress-text { font-size: 16px; font-weight: bold; color: #1a1a2e; }
+    .progress-text span { color: #f0a500; }
+    .save-indicator { font-size: 13px; color: #aaa; min-width: 80px; text-align: right; transition: color 0.3s; }
+    .save-indicator.saving { color: #3182ce; font-weight: bold; }
+    .save-indicator.saved  { color: #38a169; font-weight: bold; }
+    .btn-reset-selected {
+      padding: 7px 16px; background: #fff; border: 2px solid #e53e3e;
+      color: #e53e3e; border-radius: 8px; font-size: 13px; font-weight: bold;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .btn-reset-selected:hover { background: #e53e3e; color: #fff; }
+    .btn-reset-selected:disabled { opacity: 0.4; cursor: default; }
+
+    .panels {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start;
+    }
+    @media (max-width: 800px) { .panels { grid-template-columns: 1fr; } }
+
+    .panel { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; }
+    .panel-header {
+      background: #1a1a2e; color: #fff; padding: 12px 18px;
+      font-size: 15px; font-weight: bold; display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-header small { font-size: 11px; color: #ccc; font-weight: normal; }
+    .panel-body { height: 75vh; overflow-y: auto; padding: 8px; }
+    .panel-search { padding: 8px 10px; border-bottom: 1px solid #eee; }
+    .panel-search input {
+      width: 100%; padding: 6px 10px; border: 1px solid #ddd;
+      border-radius: 6px; font-size: 13px; box-sizing: border-box;
+    }
+    .panel-search input:focus { outline: none; border-color: #f0a500; }
+
+    /* 左パネル：カードリスト */
+    .card-row {
+      display: flex; align-items: center; gap: 10px; padding: 7px 10px;
+      border-radius: 8px; cursor: pointer; transition: background 0.15s;
+      border: 2px solid transparent;
+    }
+    .card-row:hover { background: #f7f7f7; }
+    .card-row.selected { background: #fff3cd; border-color: #f0a500; }
+    .card-row-img {
+      width: 44px; height: 44px; object-fit: cover; border-radius: 6px;
+      background: #eee; flex-shrink: 0;
+    }
+    .card-row-info { flex: 1; min-width: 0; }
+    .card-row-name { font-size: 13px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-row-sub { font-size: 11px; color: #888; display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .rarity-badge-sm {
+      font-size: 9px; font-weight: bold; padding: 1px 5px; border-radius: 3px; color: #fff;
+    }
+    .rb-MR  { background: #9333ea; }
+    .rb-SSR { background: #f59e0b; }
+    .rb-SSS { background: #ef4444; }
+
+    /* 割り当て済みサムネイル（複数） */
+    .assigned-thumbs {
+      display: flex; flex-wrap: wrap; gap: 3px; max-width: 120px; flex-shrink: 0;
+    }
+    .assigned-thumb {
+      width: 34px; height: 34px; object-fit: cover; border-radius: 4px;
+      border: 2px solid #38a169; background: #eee;
+    }
+    .unassigned-mark {
+      width: 36px; height: 36px; border-radius: 6px; background: #f5f5f5;
+      border: 2px dashed #ddd; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: #ccc; flex-shrink: 0;
+    }
+
+    /* 右パネル：能力画像グリッド */
+    .ability-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 6px; padding: 4px;
+    }
+    .ability-img-item {
+      position: relative; border-radius: 6px; overflow: hidden; cursor: pointer;
+      border: 2px solid transparent; transition: border-color 0.15s, opacity 0.15s;
+      background: #eee;
+    }
+    .ability-img-item img { width: 100%; display: block; }
+    .ability-img-item:hover { border-color: #f0a500; }
+    .ability-img-item.assigned { opacity: 0.4; }
+    .ability-img-item.assigned:hover { opacity: 0.85; border-color: #3182ce; }
+    .ability-img-item .check-overlay {
+      display: none; position: absolute; top: 3px; right: 3px;
+      width: 18px; height: 18px; background: #38a169; border-radius: 50%;
+      align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: bold;
+    }
+    .ability-img-item.assigned .check-overlay { display: flex; }
+    .ability-img-item .assign-count {
+      position: absolute; top: 3px; left: 3px;
+      background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; font-weight: bold;
+      padding: 1px 4px; border-radius: 3px; display: none;
+    }
+    .ability-img-item.assigned .assign-count { display: block; }
+    .ability-img-item .filename-tip {
+      display: none; position: absolute; bottom: 0; left: 0; right: 0;
+      background: rgba(0,0,0,0.65); color: #fff; font-size: 9px; padding: 2px 3px;
+      text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .ability-img-item:hover .filename-tip { display: block; }
+
+    .assigned-to-tooltip {
+      position: fixed; background: #1a1a2e; color: #fff; font-size: 12px;
+      padding: 5px 10px; border-radius: 6px; pointer-events: none;
+      z-index: 999; display: none; white-space: nowrap; max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<!-- パスワード画面 -->
+<div id="pwScreen">
+  <div class="pw-box">
+    <h2>管理者ログイン</h2>
+    <input type="password" id="pwInput" placeholder="パスワードを入力" />
+    <button onclick="checkPassword()">ログイン</button>
+    <div class="pw-error" id="pwError"></div>
+  </div>
+</div>
+
+<!-- メイン画面 -->
+<div id="mainScreen">
+  <div class="match-container">
+
+    <div class="status-bar">
+      <div class="progress-text">
+        <span id="assignedCardCount">0</span> / <span id="totalCardCount">0</span> カード割り当て済
+      </div>
+      <button class="btn-reset-selected" id="btnReset" onclick="resetSelected()" disabled>
+        選択カードの割り当てを全解除
+      </button>
+      <div class="save-indicator" id="saveIndicator">-</div>
+    </div>
+
+    <div class="panels">
+
+      <!-- 左パネル：カード一覧 -->
+      <div class="panel">
+        <div class="panel-header">
+          アシストカード一覧
+          <small>クリックして選択</small>
+        </div>
+        <div class="panel-search">
+          <input type="text" id="cardSearch" placeholder="カード名で絞り込み..." oninput="filterCards(this.value)" />
+        </div>
+        <div class="panel-body" id="cardList"></div>
+      </div>
+
+      <!-- 右パネル：能力画像 -->
+      <div class="panel">
+        <div class="panel-header">
+          能力画像 (164枚)
+          <small>クリックして割り当て / 再クリックで解除</small>
+        </div>
+        <div class="panel-search">
+          <input type="text" id="abilitySearch" placeholder="ファイル名で絞り込み..." oninput="filterAbilities(this.value)" />
+        </div>
+        <div class="panel-body">
+          <div class="ability-grid" id="abilityGrid"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="assigned-to-tooltip" id="tooltip"></div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="cards/cards-data.js"></script>
+
+<script>
+const EDIT_PASSWORD = 'mf2024';
+
+const ABILITY_FILES = [
+  "S__29696008_0.jpg","S__29696009_0.jpg","S__29696010_0.jpg","S__29696011_0.jpg","S__29696012_0.jpg","S__29696013_0.jpg","S__29696014_0.jpg","S__29696015_0.jpg","S__29696016_0.jpg","S__29696017_0.jpg","S__29696020_0.jpg","S__29696021_0.jpg","S__29696022_0.jpg","S__29696023_0.jpg","S__29696024_0.jpg","S__29696025_0.jpg","S__29696026_0.jpg","S__29696027_0.jpg","S__29696028_0.jpg","S__29696029_0.jpg","S__29696031_0.jpg","S__29696032_0.jpg","S__29696034.jpg",
+  "S__29753348_0.jpg","S__29753349_0.jpg","S__29753350_0.jpg","S__29753351_0.jpg","S__29753352_0.jpg","S__29753353_0.jpg","S__29753354_0.jpg","S__29753355_0.jpg","S__29753356_0.jpg","S__29753357_0.jpg","S__29753359_0.jpg","S__29753360_0.jpg","S__29753361_0.jpg","S__29753362_0.jpg",
+  "S__29761540_0.jpg","S__29761541_0.jpg","S__29761542_0.jpg","S__29761543_0.jpg","S__29761544_0.jpg","S__29761545_0.jpg","S__29761546_0.jpg","S__29761547_0.jpg","S__29761550_0.jpg","S__29761551_0.jpg",
+  "S__71049220_0.jpg","S__71049221_0.jpg","S__71049222_0.jpg","S__71049223_0.jpg","S__71049224_0.jpg","S__71049225_0.jpg","S__71049226_0.jpg","S__71049227_0.jpg","S__71049228_0.jpg","S__71049229_0.jpg","S__71049231_0.jpg","S__71049232_0.jpg","S__71049233_0.jpg","S__71049234_0.jpg","S__71049235_0.jpg","S__71049236_0.jpg","S__71049237_0.jpg","S__71049238_0.jpg","S__71049239_0.jpg","S__71049240_0.jpg","S__71049242_0.jpg","S__71049243_0.jpg","S__71049244_0.jpg","S__71049245_0.jpg","S__71049246_0.jpg","S__71049247_0.jpg","S__71049248_0.jpg","S__71049249_0.jpg","S__71049250_0.jpg","S__71049251_0.jpg","S__71049253_0.jpg","S__71049254_0.jpg","S__71049255_0.jpg","S__71049256_0.jpg",
+  "S__143507475_0.jpg","S__143507477_0.jpg","S__143507478_0.jpg","S__143507479_0.jpg","S__143507482_0.jpg","S__143507483_0.jpg","S__143507484_0.jpg","S__143507485_0.jpg","S__143507486_0.jpg","S__143507488_0.jpg","S__143507494_0.jpg","S__143507495_0.jpg","S__143507496_0.jpg","S__143507497_0.jpg","S__143507498_0.jpg","S__143507500_0.jpg","S__143507501_0.jpg","S__143507503_0.jpg","S__143507504_0.jpg","S__143507506_0.jpg","S__143507509_0.jpg","S__143507511_0.jpg","S__143507512_0.jpg","S__143507514_0.jpg","S__143507515_0.jpg","S__143507517_0.jpg","S__143507518_0.jpg","S__143507520_0.jpg","S__143507521_0.jpg","S__143507522_0.jpg","S__143507523_0.jpg","S__143507524_0.jpg","S__143507525_0.jpg","S__143507526_0.jpg","S__143507527_0.jpg","S__143507528_0.jpg","S__143507529_0.jpg","S__143507531_0.jpg","S__143507532_0.jpg","S__143507533_0.jpg","S__143507535_0.jpg","S__143507537_0.jpg","S__143507538_0.jpg","S__143507539_0.jpg","S__143507540_0.jpg","S__143507541_0.jpg","S__143507542_0.jpg","S__143507543_0.jpg","S__143507544_0.jpg","S__143507545_0.jpg","S__143507546_0.jpg","S__143507548_0.jpg","S__143507549_0.jpg","S__143507550_0.jpg","S__143507552_0.jpg","S__143507554_0.jpg","S__143507555_0.jpg","S__143507556_0.jpg","S__143507557_0.jpg",
+  "S__143515652_0.jpg","S__143515654_0.jpg","S__143515655_0.jpg","S__143515656_0.jpg","S__143515657_0.jpg","S__143515658_0.jpg","S__143515659_0.jpg","S__143515660_0.jpg","S__143515661_0.jpg","S__143515662_0.jpg","S__143515663_0.jpg","S__143515665_0.jpg","S__143515666_0.jpg","S__143515667_0.jpg","S__143515669_0.jpg","S__143515671_0.jpg","S__143515672_0.jpg","S__143515673_0.jpg","S__143515674_0.jpg","S__143515675_0.jpg","S__143515676_0.jpg","S__143515677_0.jpg","S__143515678_0.jpg","S__143515679_0.jpg","S__143515681.jpg"
+];
+
+// assignments: { "cardId": ["S__xxx.jpg", ...], ... }
+let assignments = {};
+let selectedCardId = null;
+let db = null;
+let saveTimer = null;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+db = firebase.firestore();
+
+function checkPassword() {
+  const val = document.getElementById('pwInput').value;
+  if (val === EDIT_PASSWORD) {
+    document.getElementById('pwScreen').style.display = 'none';
+    document.getElementById('mainScreen').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('pwError').textContent = 'パスワードが違います';
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+/* ================================================================
+   ヘルパー
+================================================================ */
+function getCardAbilities(cardId) {
+  return assignments[cardId] || [];
+}
+
+function fileToCards(filename) {
+  // このファイルが割り当てられているカードID一覧
+  return Object.entries(assignments)
+    .filter(([, files]) => files.includes(filename))
+    .map(([cid]) => cid);
+}
+
+function countAssignedCards() {
+  return Object.keys(assignments).filter(k => assignments[k].length > 0).length;
+}
+
+function updateProgressUI() {
+  document.getElementById('assignedCardCount').textContent = countAssignedCards();
+  document.getElementById('totalCardCount').textContent = Object.keys(cardsData).length;
+}
+
+/* ================================================================
+   自動保存
+================================================================ */
+function scheduleSave() {
+  const ind = document.getElementById('saveIndicator');
+  ind.textContent = '保存中...';
+  ind.className = 'save-indicator saving';
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    try {
+      await db.collection('cardAbilities').doc('assignments').set(assignments);
+      ind.textContent = '保存済み';
+      ind.className = 'save-indicator saved';
+      setTimeout(() => { ind.textContent = '-'; ind.className = 'save-indicator'; }, 2000);
+    } catch (e) {
+      ind.textContent = '保存エラー';
+      ind.className = 'save-indicator';
+      console.error(e);
+    }
+  }, 800);
+}
+
+/* ================================================================
+   左パネル：カード一覧
+================================================================ */
+function buildCardList() {
+  const container = document.getElementById('cardList');
+  container.innerHTML = '';
+  Object.entries(cardsData).forEach(([cid, c]) => {
+    const row = document.createElement('div');
+    row.className = 'card-row';
+    row.id = `crow-${cid}`;
+    row.dataset.cid = cid;
+    row.dataset.name = c.name;
+    row.addEventListener('click', () => selectCard(cid));
+    container.appendChild(row);
+  });
+  refreshCardRows();
+}
+
+function refreshCardRows() {
+  Object.entries(cardsData).forEach(([cid, c]) => {
+    const row = document.getElementById(`crow-${cid}`);
+    if (!row) return;
+    const abilities = getCardAbilities(cid);
+    const thumbsHTML = abilities.length > 0
+      ? `<div class="assigned-thumbs">${abilities.map(f =>
+          `<img class="assigned-thumb" src="assist-abilities/${f}" onerror="this.style.display='none'">`
+        ).join('')}</div>`
+      : `<div class="unassigned-mark">?</div>`;
+
+    row.innerHTML = `
+      <img class="card-row-img" src="assist-cards/${cid}.${c.ext}" alt="${c.name}" onerror="this.style.opacity='0.3'">
+      <div class="card-row-info">
+        <div class="card-row-name">${c.name}</div>
+        <div class="card-row-sub">
+          <span class="rarity-badge-sm rb-${c.rarity}">${c.rarity}</span>
+          ${c.type} ${c.oura}
+        </div>
+      </div>
+      ${thumbsHTML}
+    `;
+    row.classList.toggle('selected', cid === selectedCardId);
+  });
+}
+
+function selectCard(cid) {
+  selectedCardId = cid;
+  document.querySelectorAll('.card-row').forEach(r => r.classList.remove('selected'));
+  const row = document.getElementById(`crow-${cid}`);
+  if (row) { row.classList.add('selected'); row.scrollIntoView({ block: 'nearest' }); }
+  document.getElementById('btnReset').disabled = false;
+  refreshAbilityGrid();
+}
+
+function filterCards(query) {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('.card-row').forEach(row => {
+    const name = (row.dataset.name || '').toLowerCase();
+    row.style.display = (!q || name.includes(q)) ? '' : 'none';
+  });
+}
+
+/* ================================================================
+   右パネル：能力画像グリッド
+================================================================ */
+function buildAbilityGrid() {
+  const grid = document.getElementById('abilityGrid');
+  grid.innerHTML = '';
+  ABILITY_FILES.forEach(filename => {
+    const item = document.createElement('div');
+    item.className = 'ability-img-item';
+    item.id = `aimg-${filename}`;
+    item.dataset.filename = filename;
+    item.innerHTML = `
+      <img src="assist-abilities/${filename}" alt="${filename}" loading="lazy">
+      <div class="check-overlay">&#10003;</div>
+      <div class="assign-count"></div>
+      <div class="filename-tip">${filename.replace(/_0\.jpg$/, '').replace(/\.jpg$/, '')}</div>
+    `;
+    item.addEventListener('click', () => handleAbilityClick(filename));
+    item.addEventListener('mouseenter', e => showTooltip(e, filename));
+    item.addEventListener('mouseleave', hideTooltip);
+    grid.appendChild(item);
+  });
+  refreshAbilityGrid();
+}
+
+function refreshAbilityGrid() {
+  ABILITY_FILES.forEach(filename => {
+    const item = document.getElementById(`aimg-${filename}`);
+    if (!item) return;
+    const cards = fileToCards(filename);
+    if (cards.length > 0) {
+      item.classList.add('assigned');
+      item.querySelector('.assign-count').textContent = cards.length;
+    } else {
+      item.classList.remove('assigned');
+      item.querySelector('.assign-count').textContent = '';
+    }
+    // 現在選択中カードに割り当て済みならボーダー強調
+    if (selectedCardId && getCardAbilities(selectedCardId).includes(filename)) {
+      item.style.borderColor = '#f0a500';
+    } else {
+      item.style.borderColor = '';
+    }
+  });
+}
+
+function handleAbilityClick(filename) {
+  if (!selectedCardId) {
+    alert('左パネルからカードを選択してください。');
+    return;
+  }
+  const abilities = getCardAbilities(selectedCardId);
+  if (abilities.includes(filename)) {
+    // 既に割り当て済み → 解除
+    assignments[selectedCardId] = abilities.filter(f => f !== filename);
+    if (assignments[selectedCardId].length === 0) delete assignments[selectedCardId];
+  } else {
+    // 追加
+    if (!assignments[selectedCardId]) assignments[selectedCardId] = [];
+    assignments[selectedCardId].push(filename);
+  }
+  updateProgressUI();
+  refreshCardRows();
+  refreshAbilityGrid();
+  scheduleSave();
+}
+
+function filterAbilities(query) {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('.ability-img-item').forEach(item => {
+    const fn = (item.dataset.filename || '').toLowerCase();
+    item.style.display = (!q || fn.includes(q)) ? '' : 'none';
+  });
+}
+
+/* ================================================================
+   ツールチップ
+================================================================ */
+function showTooltip(e, filename) {
+  const cards = fileToCards(filename);
+  if (cards.length === 0) return;
+  const names = cards.map(cid => cardsData[cid] ? cardsData[cid].name : cid).join(', ');
+  const tip = document.getElementById('tooltip');
+  tip.textContent = `割当済: ${names}`;
+  tip.style.display = 'block';
+  positionTooltip(e);
+}
+function hideTooltip() { document.getElementById('tooltip').style.display = 'none'; }
+document.addEventListener('mousemove', e => {
+  const tip = document.getElementById('tooltip');
+  if (tip.style.display === 'block') positionTooltip(e);
+});
+function positionTooltip(e) {
+  const tip = document.getElementById('tooltip');
+  tip.style.left = (e.clientX + 14) + 'px';
+  tip.style.top  = (e.clientY + 14) + 'px';
+}
+
+/* ================================================================
+   割り当て全解除（選択カード）
+================================================================ */
+function resetSelected() {
+  if (!selectedCardId) return;
+  const c = cardsData[selectedCardId];
+  if (!assignments[selectedCardId] || assignments[selectedCardId].length === 0) {
+    alert('このカードには割り当てがありません。');
+    return;
+  }
+  if (!confirm(`${c.name} の能力画像割り当てをすべて解除しますか？`)) return;
+  delete assignments[selectedCardId];
+  updateProgressUI();
+  refreshCardRows();
+  refreshAbilityGrid();
+  scheduleSave();
+}
+
+/* ================================================================
+   起動
+================================================================ */
+async function initApp() {
+  try {
+    const doc = await db.collection('cardAbilities').doc('assignments').get();
+    if (doc.exists) assignments = doc.data() || {};
+  } catch (e) {
+    console.warn('Firestore 読み込みエラー:', e);
+  }
+  buildCardList();
+  buildAbilityGrid();
+  updateProgressUI();
+}
+</script>
+
+</body>
+</html>
