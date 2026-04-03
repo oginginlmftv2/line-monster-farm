@@ -106,6 +106,28 @@
     .oura-白  { background: #95a5a6; }
     .oura-黒  { background: #2c3e50; }
 
+    .abilities-section {
+      padding: 16px 24px;
+      border-top: 1px solid #eee;
+    }
+    .abilities-title {
+      font-size: 13px;
+      font-weight: bold;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .abilities-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .ability-img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      display: block;
+    }
+
     .not-found {
       text-align: center;
       padding: 60px 20px;
@@ -622,6 +644,12 @@
             </tr>
           </table>
 
+          <!-- 能力セクション -->
+          <div class="abilities-section" id="abilitiesSection" style="display:none;">
+            <div class="abilities-title">能力</div>
+            <div class="abilities-grid" id="abilitiesGrid"></div>
+          </div>
+
           <!-- 評価セクション -->
           <div class="ratings-section">
             <div class="ratings-header">
@@ -722,6 +750,25 @@
     loadAndDisplayRatings();
     loadFormations();
     loadExplanation();
+    loadAbilities();
+  }
+
+  async function loadAbilities() {
+    try {
+      const doc = await db.collection('cardAbilities').doc('assignments').get();
+      if (!doc.exists) return;
+      const data = doc.data() || {};
+      const files = data[id];
+      if (!files || files.length === 0) return;
+      const grid = document.getElementById('abilitiesGrid');
+      const section = document.getElementById('abilitiesSection');
+      grid.innerHTML = files.map(f =>
+        `<img class="ability-img" src="../assist-abilities/${f}" alt="能力" loading="lazy">`
+      ).join('');
+      section.style.display = '';
+    } catch (e) {
+      console.warn('能力画像読み込みエラー:', e);
+    }
   }
 
   // ---- 評価ロジック ----
