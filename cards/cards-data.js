@@ -15,7 +15,7 @@ const cardsData = {
   'c12l-MR-gifton':         { name: 'ギフトン',          rarity: 'MR',  oura: '黄', type: 'アサルト',   mon: '無機', ext: 'jpg' },
   'c19h-MR-aufieru':        { name: 'アウフィエル',      rarity: 'MR',  oura: '黄', type: 'ジャッジ',   mon: '幻霊', ext: 'jpg' },
   'c9-SSR-safin':           { name: 'サフィン',          rarity: 'SSR', oura: '黄', type: 'ライバル',   mon: null,   ext: 'jpg' },
-  'f5l-SSR-sharutia':       { name: 'シャルティア',      rarity: 'SSR', oura: '黒', type: '回避',       mon: '無機', ext: 'jpg' },
+  'f5l-SSR-sharutia':       { name: 'シャルティア',      rarity: 'SSR', oura: '赤', type: '回避',       mon: '無機', ext: 'jpg' },
   'f7-MR-demiurugosu':      { name: 'デミウルゴス',      rarity: 'MR',  oura: '黒', type: '友人',       mon: null,   ext: 'jpg' },
   'f18k-MR-ainzu':          { name: 'アインズ',          rarity: 'MR',  oura: '黒', type: 'フォース',   mon: '怪物', ext: 'jpg' },
   'd14k-MR-sukeakurou':     { name: 'スケアクロウ',      rarity: 'MR',  oura: '緑', type: 'フィジカル', mon: '怪物', ext: 'jpg' },

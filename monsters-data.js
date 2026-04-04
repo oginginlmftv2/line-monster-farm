@@ -287,7 +287,7 @@ const monstersData = [
   { name: 'アクアストライク', aura: '青', limited: false, limitedLabel: '', gwImg: 49, localImg: null, mon: '獣' },
   { name: 'ライガー', aura: '青', limited: false, limitedLabel: '', gwImg: 48, localImg: null, mon: '獣' },
   { name: 'マスタードアロー', aura: '黄', limited: false, limitedLabel: '', gwImg: 47, localImg: null, mon: '怪物' },
-  { name: 'アクアマリン', aura: '青', limited: false, limitedLabel: '', gwImg: 46, localImg: null, mon: '獣' },
+  { name: 'アクアマリン', aura: '青', limited: false, limitedLabel: '', gwImg: 46, localImg: null, mon: '怪物' },
   { name: 'プライヤロックス', aura: '黒', limited: false, limitedLabel: '', gwImg: 45, localImg: null, mon: '怪物' },
   { name: 'レマクラスト', aura: '黄', limited: false, limitedLabel: '', gwImg: 44, localImg: null, mon: '怪物' },
   { name: 'アローヘッド', aura: '赤', limited: false, limitedLabel: '', gwImg: 43, localImg: null, mon: '怪物' },
