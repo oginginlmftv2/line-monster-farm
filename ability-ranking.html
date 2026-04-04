@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>能力ランキング | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .voting-banner {
+      background: #fff3cd;
+      border: 1px solid #f0a500;
+      border-radius: 10px;
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #7a4f00;
+    }
+    .voting-banner.closed {
+      background: #f0f0f0;
+      border-color: #ccc;
+      color: #666;
+    }
+    .voting-banner .sub {
+      font-size: 12px;
+      font-weight: normal;
+      margin-top: 4px;
+      color: #999;
+    }
+
+    .ability-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+
+    .ability-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .rank-badge {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: #555;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 4px;
+      z-index: 1;
+    }
+    .rank-badge.rank-1 { background: #f0a500; }
+    .rank-badge.rank-2 { background: #888; }
+    .rank-badge.rank-3 { background: #c97030; }
+
+    .ability-img-link { display: block; }
+    .ability-img-link img {
+      width: 100%;
+      display: block;
+    }
+
+    .ability-card-body {
+      padding: 8px 12px 10px;
+    }
+
+    .ability-card-name {
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 6px;
+    }
+
+    .ability-vote-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .vote-count {
+      font-size: 14px;
+      font-weight: bold;
+      color: #f0a500;
+    }
+
+    .vote-btn {
+      padding: 5px 16px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .vote-btn:hover:not(:disabled) { background: #d4920a; }
+    .vote-btn:disabled {
+      background: #ddd;
+      color: #aaa;
+      cursor: default;
+    }
+    .vote-btn.voted {
+      background: #e6f4ea;
+      color: #38a169;
+      border: 1px solid #38a169;
+    }
+
+    .loading-msg {
+      text-align: center;
+      padding: 40px;
+      color: #aaa;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>⚔️ 能力ランキング</h1>
+  <p>アシストカードの能力をユーザー投票でランキング</p>
+</div>
+
+<main>
+  <div class="section">
+    <div id="votingBanner" class="voting-banner" style="display:none;"></div>
+    <div id="loadingMsg" class="loading-msg">読み込み中...</div>
+    <div class="ability-grid" id="abilityGrid"></div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="cards/cards-data.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const RARITY_ORDER = { 'MR': 3, 'SSR': 2, 'SSS': 1, 'SR': 0 };
+const LS_KEY = 'abilityVotes_v1';
+const MAX_VOTES = 5;
+
+let votingOpen = true;
+let reverseMap = {}; // filename -> [cardIds]
+let voteCounts = {}; // filename -> count
+let votedSet = new Set();
+
+function getVotedSet() {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    return new Set(raw ? JSON.parse(raw) : []);
+  } catch { return new Set(); }
+}
+function saveVotedSet(s) {
+  localStorage.setItem(LS_KEY, JSON.stringify([...s]));
+}
+
+function getRemainingVotes() {
+  return Math.max(0, MAX_VOTES - votedSet.size);
+}
+
+function updateRemainingUI() {
+  const el = document.getElementById('remainingVotes');
+  if (el) {
+    const rem = getRemainingVotes();
+    el.textContent = rem;
+    el.style.color = rem === 0 ? '#e53e3e' : '#f0a500';
+  }
+  // 残票0なら未投票ボタンを全部無効化
+  document.querySelectorAll('.vote-btn:not(.voted)').forEach(btn => {
+    btn.disabled = getRemainingVotes() === 0;
+  });
+}
+
+function getBestCard(filename) {
+  const cardIds = reverseMap[filename] || [];
+  if (!cardIds.length) return null;
+  return [...cardIds].sort((a, b) => {
+    const ra = RARITY_ORDER[cardsData[a]?.rarity] || 0;
+    const rb = RARITY_ORDER[cardsData[b]?.rarity] || 0;
+    return rb - ra;
+  })[0];
+}
+
+async function vote(filename) {
+  if (!votingOpen || votedSet.has(filename) || getRemainingVotes() === 0) return;
+  votedSet.add(filename);
+  saveVotedSet(votedSet);
+  voteCounts[filename] = (voteCounts[filename] || 0) + 1;
+  updateCardUI(filename);
+  updateRemainingUI();
+  try {
+    await db.collection('abilityVotes').doc('counts').set(
+      { [filename]: firebase.firestore.FieldValue.increment(1) },
+      { merge: true }
+    );
+  } catch(e) { console.warn('投票エラー:', e); }
+}
+
+function updateCardUI(filename) {
+  const card = document.querySelector(`.ability-card[data-file="${filename}"]`);
+  if (!card) return;
+  const countEl = card.querySelector('.vote-count');
+  if (countEl) countEl.textContent = (voteCounts[filename] || 0) + '票';
+  const btn = card.querySelector('.vote-btn');
+  if (btn) {
+    btn.textContent = '投票済み';
+    btn.disabled = true;
+    btn.classList.add('voted');
+  }
+}
+
+function buildGrid(filenames) {
+  if (!votingOpen) {
+    filenames = [...filenames].sort((a, b) => (voteCounts[b] || 0) - (voteCounts[a] || 0));
+  }
+
+  const grid = document.getElementById('abilityGrid');
+  grid.innerHTML = '';
+
+  filenames.forEach((filename, idx) => {
+    const bestCardId = getBestCard(filename);
+    const card = bestCardId ? cardsData[bestCardId] : null;
+    const cardName = card ? card.name : '';
+    const count = voteCounts[filename] || 0;
+    const voted = votedSet.has(filename);
+    const rank = !votingOpen ? idx + 1 : null;
+    const href = bestCardId ? `cards/card.html#${bestCardId}` : null;
+
+    const div = document.createElement('div');
+    div.className = 'ability-card';
+    div.dataset.file = filename;
+
+    let rankBadge = '';
+    if (rank) {
+      const cls = rank <= 3 ? `rank-${rank}` : '';
+      rankBadge = `<div class="rank-badge ${cls}">${rank}位</div>`;
+    }
+
+    let imgEl = `<img src="assist-abilities/${filename}" alt="能力" loading="lazy">`;
+    let imgWrap = href
+      ? `<a href="${href}" class="ability-img-link">${imgEl}</a>`
+      : `<div class="ability-img-link">${imgEl}</div>`;
+
+    let voteSection = '';
+    if (votingOpen) {
+      const btnClass = voted ? 'vote-btn voted' : 'vote-btn';
+      const btnDisabled = (voted || getRemainingVotes() === 0) ? 'disabled' : '';
+      const btnText = voted ? '投票済み' : '投票';
+      voteSection = `
+        <div class="ability-vote-row">
+          <span class="vote-count">${count}票</span>
+          <button class="${btnClass}" ${btnDisabled} onclick="vote('${filename.replace(/'/g, "\\'")}')">
+            ${btnText}
+          </button>
+        </div>`;
+    } else {
+      voteSection = `<div class="vote-count">${count}票</div>`;
+    }
+
+    div.innerHTML = `
+      ${rankBadge}
+      ${imgWrap}
+      <div class="ability-card-body">
+        <div class="ability-card-name">${cardName ? '付与カード：' + cardName : ''}</div>
+        ${voteSection}
+      </div>
+    `;
+    grid.appendChild(div);
+  });
+}
+
+async function init() {
+  try {
+    const [assignDoc, countsDoc, metaDoc] = await Promise.all([
+      db.collection('cardAbilities').doc('assignments').get(),
+      db.collection('abilityVotes').doc('counts').get(),
+      db.collection('abilityVotes').doc('meta').get(),
+    ]);
+
+    const assignments = assignDoc.exists ? (assignDoc.data() || {}) : {};
+    voteCounts = countsDoc.exists ? (countsDoc.data() || {}) : {};
+    votingOpen = metaDoc.exists ? (metaDoc.data()?.votingOpen !== false) : true;
+    votedSet = getVotedSet();
+
+    // 逆引きマップ構築
+    reverseMap = {};
+    for (const [cardId, files] of Object.entries(assignments)) {
+      for (const f of files) {
+        if (!reverseMap[f]) reverseMap[f] = [];
+        reverseMap[f].push(cardId);
+      }
+    }
+
+    const filenames = Object.keys(reverseMap);
+
+    // バナー
+    const banner = document.getElementById('votingBanner');
+    banner.style.display = '';
+    if (votingOpen) {
+      banner.innerHTML = `🗳️ 現在投票受付中！好きな能力に投票しよう（1人<span id="remainingVotes" style="color:#f0a500;font-size:16px;">${getRemainingVotes()}</span>票残り）
+        <div class="sub">合計5票まで投票できます。同じ端末・ブラウザから追加投票はできません。</div>`;
+    } else {
+      banner.classList.add('closed');
+      banner.innerHTML = `🏆 投票終了。最終ランキングです。`;
+    }
+
+    document.getElementById('loadingMsg').style.display = 'none';
+    buildGrid(filenames);
+    if (votingOpen) updateRemainingUI();
+
+  } catch(e) {
+    console.error(e);
+    document.getElementById('loadingMsg').textContent = '読み込みエラーが発生しました。';
+  }
+}
+
+init();
+</script>
+
+</body>
+</html>

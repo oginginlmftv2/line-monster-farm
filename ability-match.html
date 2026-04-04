@@ -188,6 +188,14 @@
       <div class="save-indicator" id="saveIndicator">-</div>
     </div>
 
+    <!-- 投票管理 -->
+    <div style="background:#fff;border-radius:10px;padding:12px 20px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,0.07);display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+      <div style="font-size:14px;font-weight:bold;color:#1a1a2e;">🗳️ 投票管理</div>
+      <div style="font-size:13px;">現在の状態：<strong id="votingStatusText">読み込み中...</strong></div>
+      <button id="btnOpenVoting" onclick="setVoting(true)" style="padding:6px 16px;background:#38a169;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer;display:none;">投票を開始する</button>
+      <button id="btnCloseVoting" onclick="setVoting(false)" style="padding:6px 16px;background:#e53e3e;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:bold;cursor:pointer;display:none;">投票を終了する</button>
+    </div>
+
     <div class="panels">
 
       <!-- 左パネル：カード一覧 -->
@@ -497,14 +505,38 @@ function resetSelected() {
 ================================================================ */
 async function initApp() {
   try {
-    const doc = await db.collection('cardAbilities').doc('assignments').get();
-    if (doc.exists) assignments = doc.data() || {};
+    const [assignDoc, metaDoc] = await Promise.all([
+      db.collection('cardAbilities').doc('assignments').get(),
+      db.collection('abilityVotes').doc('meta').get(),
+    ]);
+    if (assignDoc.exists) assignments = assignDoc.data() || {};
+    const votingOpen = metaDoc.exists ? (metaDoc.data()?.votingOpen !== false) : true;
+    updateVotingStatusUI(votingOpen);
   } catch (e) {
     console.warn('Firestore 読み込みエラー:', e);
+    document.getElementById('votingStatusText').textContent = '取得失敗';
   }
   buildCardList();
   buildAbilityGrid();
   updateProgressUI();
+}
+
+function updateVotingStatusUI(isOpen) {
+  document.getElementById('votingStatusText').textContent = isOpen ? '受付中' : '終了';
+  document.getElementById('votingStatusText').style.color = isOpen ? '#38a169' : '#e53e3e';
+  document.getElementById('btnOpenVoting').style.display = isOpen ? 'none' : '';
+  document.getElementById('btnCloseVoting').style.display = isOpen ? '' : 'none';
+}
+
+async function setVoting(isOpen) {
+  const label = isOpen ? '開始' : '終了';
+  if (!confirm(`投票を${label}しますか？`)) return;
+  try {
+    await db.collection('abilityVotes').doc('meta').set({ votingOpen: isOpen }, { merge: true });
+    updateVotingStatusUI(isOpen);
+  } catch(e) {
+    alert('保存エラー: ' + e.message);
+  }
 }
 </script>
 
