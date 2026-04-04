@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>これから始める人へ | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームをこれから始めようと考えている方向けのガイド。リセマラ・天井・ダイヤの集め方を解説します。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/newbie.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #fff3cd; border-color: #f0a500; }
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: #f0a500;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .article-h2 {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      border-left: 4px solid #f0a500;
+      padding: 6px 12px;
+      margin: 0 0 14px;
+      background: #fffbf0;
+      border-radius: 0 6px 6px 0;
+    }
+    .article-h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #555;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #f0a500;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin: 0 0 10px;
+    }
+    .article-ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .point-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .warn-box {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #388e3c;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    @media (max-width: 500px) { .choice-grid { grid-template-columns: 1fr; } }
+    .choice-card {
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+    .choice-card-title {
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .choice-merit { background: #e8f5e9; border: 1px solid #a5d6a7; }
+    .choice-demerit { background: #fff5f5; border: 1px solid #ffcdd2; }
+    .choice-merit .choice-card-title { color: #388e3c; }
+    .choice-demerit .choice-card-title { color: #c0392b; }
+
+    .diamond-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .diamond-item {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+    }
+    .diamond-item-title {
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .diamond-item-body {
+      font-size: 13px;
+      color: #666;
+    }
+    .diamond-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: bold;
+      background: #1a1a2e;
+      color: #fff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🆕 これから始める人へ</h1>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">コラボきっかけで始めようと考えているあなたへ</p>
+
+  <!-- 初心者ガイドへのリンク -->
+  <div class="section">
+    <div class="point-box">
+      ✅ すでにゲームを始めた方は <a href="beginner.html" style="color:#f0a500;font-weight:bold;">初心者ガイド（やるべきこと）</a> もチェックしよう。
+    </div>
+  </div>
+
+  <!-- 目次 -->
+  <div class="section">
+    <div class="section-title">📋 目次</div>
+    <ul class="toc-list">
+      <li><a href="#choice"><span class="toc-num">1</span> 目当てのモンスターを引くための2つの選択肢</a></li>
+      <li><a href="#reroll"><span class="toc-num">2</span> リセマラのやり方・メリット・デメリット</a></li>
+      <li><a href="#tenjou"><span class="toc-num">3</span> 天井まで回す方法・メリット・デメリット</a></li>
+      <li><a href="#diamond"><span class="toc-num">4</span> ダイヤの集め方</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. 選択肢 -->
+  <div class="section" id="choice">
+    <div class="section-title">🎯 目当てのモンスターを引くための2つの選択肢</div>
+    <p class="article-p">特にコラボきっかけで、手に入れたいモンスターがいて始めようとしている場合、そのモンスターを引くための選択肢は次の2つがある。</p>
+    <div class="choice-grid">
+      <div style="background:#fff3cd;border:1px solid #f0a500;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:15px;font-weight:bold;color:#b8860b;margin-bottom:6px;">🎲 リセマラ</div>
+        <div style="font-size:13px;color:#555;line-height:1.7;">コラボ開始後に始めて、好きなモンスターが出るまでアカウントをリセットしながら引き直す</div>
+      </div>
+      <div style="background:#e8eaf6;border:1px solid #9fa8da;border-radius:10px;padding:14px 16px;">
+        <div style="font-size:15px;font-weight:bold;color:#3949ab;margin-bottom:6px;">🏆 天井狙い</div>
+        <div style="font-size:13px;color:#555;line-height:1.7;">コラボ開始前から始めてダイヤを貯め、天井（確定入手）を目指す</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. リセマラ -->
+  <div class="section" id="reroll">
+    <div class="section-title">🎲 リセマラ</div>
+
+    <div class="article-h3">やり方</div>
+    <p class="article-p">リセマラのやり方は <a href="reroll.html" style="color:#f0a500;font-weight:bold;">リセマラランキングページ</a> で詳しく解説している。</p>
+
+    <div class="article-h3">メリット</div>
+    <div class="choice-grid">
+      <div class="choice-card choice-merit">
+        <div class="choice-card-title">✅ メリット</div>
+        <ul style="padding-left:16px;margin:0;line-height:1.9;">
+          <li>初めから好きなモンスターで遊べる</li>
+          <li>リセマラでダイヤ資産を使わないため、その後に稼いだダイヤは使う場面を選べる</li>
+        </ul>
+      </div>
+      <div class="choice-card choice-demerit">
+        <div class="choice-card-title">❌ デメリット</div>
+        <ul style="padding-left:16px;margin:0;line-height:1.9;">
+          <li>完全に運任せ。いつリセマラを終えられるか分からない</li>
+          <li>ピックアップされていても排出率は1.5%前後</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 天井 -->
+  <div class="section" id="tenjou">
+    <div class="section-title">🏆 天井まで回す方法</div>
+
+    <div class="article-h3">準備すること</div>
+    <ul class="article-ul">
+      <li><strong>ダイヤを集める</strong>：始めてすぐはとにかく色々な所からダイヤを集めることができる（詳しくは下のダイヤの集め方を参照）</li>
+      <li><strong>限定ガチャチケットを集める</strong>：各限定ガチャごとにチケットが20〜30枚前後配布される。コラボの場合はキャンペーンで普段より多く手に入ることがある</li>
+    </ul>
+
+    <div class="warn-box">
+      ⚠️ <strong>注意：ガチャは分散させて引いてはいけない</strong><br>
+      だいたいのガチャは第1〜3弾まで開催される。それぞれで天井までに貰えるもの・排出率・天井回数が異なる。何を目的にしているかで何弾を引くかをよく考えてから引こう。よく考えずに分散させると天井に届かなくなる。
+    </div>
+
+    <div class="choice-grid">
+      <div class="choice-card choice-merit">
+        <div class="choice-card-title">✅ メリット</div>
+        <ul style="padding-left:16px;margin:0;line-height:1.9;">
+          <li>好きなモンスターを強く育てるための下地（遊び方の理解・アイテム資産）が出来ている</li>
+          <li>同時ピックアップのカードは好きなモンスターと相性がいいことが多く、天井までに引ければ儲け物</li>
+          <li>天井までに目的のモンスターorカードが出れば「そのまま天井まで凸を進めるか」「他ガチャのために貯めるか」選択肢が増える</li>
+        </ul>
+      </div>
+      <div class="choice-card choice-demerit">
+        <div class="choice-card-title">❌ デメリット</div>
+        <ul style="padding-left:16px;margin:0;line-height:1.9;">
+          <li>コラボ開始時点では好きなモンスターで遊べない</li>
+          <li>天井まで回してダイヤ資産が手元に残っていないかもしれない</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ダイヤの集め方 -->
+  <div class="section" id="diamond">
+    <div class="section-title">💎 ダイヤの集め方</div>
+    <p class="article-p">始めたばかりは普通に遊んでいても、とにかく色々な所からダイヤが手に入る。</p>
+
+    <div class="diamond-list">
+      <div class="diamond-item">
+        <div class="diamond-item-title">🔰 初心者ミッション・チャレンジミッション</div>
+        <div class="diamond-item-body">まずはこれをクリアしていこう。初心者ミッションをクリアするとチャレンジミッションが解放される。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">📋 通常ミッション</div>
+        <div class="diamond-item-body">遊んでいたら勝手にクリアされていく。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">🏡 ファームレベル報酬</div>
+        <div class="diamond-item-body">遊んでいたら勝手にクリアされていく。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">🎴 ビンゴミッション</div>
+        <div class="diamond-item-body">序盤のカードは条件が簡単なので、次の育成で達成できそうなカードを選んでいこう。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">🏅 ブリーダーランク報酬</div>
+        <div class="diamond-item-body">モンスターを育成したらブリーダー対抗戦でチーム編成して総合力を上げよう。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">⚔️ デイリーコロシアムの初回クリア報酬</div>
+        <div class="diamond-item-body">毎日こなしていこう。</div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">🏆 育成シナリオ内の大会の初優勝報酬 <span class="diamond-badge">大量</span></div>
+        <div class="diamond-item-body">
+          1大会50ダイヤ手に入るので、1シナリオあたり約140大会前後でだいたい7,000ダイヤ。<br>
+          2026年4月現在7つのシナリオがあるため、育成シナリオ全体で<strong>35,000ダイヤ以上</strong>が眠っている。
+        </div>
+      </div>
+      <div class="diamond-item">
+        <div class="diamond-item-title">👥 LINEフレンド招待 <span class="diamond-badge">最大5,000ダイヤ</span></div>
+        <div class="diamond-item-body">
+          LINEの友達に招待メッセージを送ることで報酬やダイヤが手に入る。500人招待すれば合計5,000ダイヤ。<br>
+          フレンド再生の通知と招待を同じ友達に送ることができるので、友達が500人必要な訳ではない。<br>
+          コラボ開始・終了時に招待のカウントリセットや報酬内容が変更されることがある。<br>
+          <span style="color:#999;">※ 500人は難しい、という人は某所で相談してみよう。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+</body>
+</html>
