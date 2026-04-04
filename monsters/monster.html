@@ -94,6 +94,27 @@
       background: #1a1a2e;
       color: #f0a500;
     }
+    .bloodline-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .bloodline-item {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .bloodline-label {
+      color: #bbb;
+      font-size: 11px;
+    }
+    .bloodline-value {
+      font-weight: bold;
+      color: #555;
+    }
     .limited-badge-inline {
       font-size: 11px;
       font-weight: bold;
@@ -494,6 +515,11 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
           ${m.mon ? `<span class="mon-badge">${m.mon}</span>` : ''}
           ${m.limited ? `<span class="limited-badge-inline">${m.limitedLabel || '限定'}</span>` : ''}
         </div>
+        ${(m.mainMon || m.subMon) ? `
+        <div class="bloodline-row">
+          ${m.mainMon ? `<div class="bloodline-item"><span class="bloodline-label">主血統</span><span class="bloodline-value">${m.mainMon}</span></div>` : ''}
+          ${m.subMon ? `<div class="bloodline-item"><span class="bloodline-label">副血統</span><span class="bloodline-value">${m.subMon}</span></div>` : ''}
+        </div>` : ''}
       </div>
     </div>
 
