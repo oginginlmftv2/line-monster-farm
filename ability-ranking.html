@@ -116,6 +116,23 @@
       color: #aaa;
       font-size: 14px;
     }
+    .sort-btn {
+      display: inline-block;
+      padding: 6px 16px;
+      border: 1px solid #f0a500;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #fff;
+      color: #f0a500;
+      transition: background 0.2s, color 0.2s;
+      margin-bottom: 14px;
+    }
+    .sort-btn.active {
+      background: #f0a500;
+      color: #fff;
+    }
   </style>
 </head>
 <body>
@@ -139,6 +156,9 @@
 <main>
   <div class="section">
     <div id="votingBanner" class="voting-banner" style="display:none;"></div>
+    <div id="sortArea" style="display:none;">
+      <button class="sort-btn" id="sortBtn" onclick="toggleSort()">票数順に並べ替え</button>
+    </div>
     <div id="loadingMsg" class="loading-msg">読み込み中...</div>
     <div class="ability-grid" id="abilityGrid"></div>
   </div>
@@ -173,6 +193,16 @@ let votingOpen = true;
 let reverseMap = {}; // filename -> [cardIds]
 let voteCounts = {}; // filename -> count
 let votedSet = new Set();
+let allFilenames = [];
+let sortByVotes = false;
+
+function toggleSort() {
+  sortByVotes = !sortByVotes;
+  const btn = document.getElementById('sortBtn');
+  btn.classList.toggle('active', sortByVotes);
+  btn.textContent = sortByVotes ? '元の順に戻す' : '票数順に並べ替え';
+  buildGrid(allFilenames);
+}
 
 function getVotedSet() {
   try {
@@ -240,7 +270,7 @@ function updateCardUI(filename) {
 }
 
 function buildGrid(filenames) {
-  if (!votingOpen) {
+  if (!votingOpen || sortByVotes) {
     filenames = [...filenames].sort((a, b) => (voteCounts[b] || 0) - (voteCounts[a] || 0));
   }
 
@@ -322,6 +352,7 @@ async function init() {
     }
 
     const filenames = Object.keys(reverseMap);
+    allFilenames = filenames;
 
     // バナー
     const banner = document.getElementById('votingBanner');
@@ -335,6 +366,7 @@ async function init() {
     }
 
     document.getElementById('loadingMsg').style.display = 'none';
+    if (votingOpen) document.getElementById('sortArea').style.display = '';
     buildGrid(filenames);
     if (votingOpen) updateRemainingUI();
 

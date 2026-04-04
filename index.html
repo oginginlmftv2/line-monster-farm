@@ -86,12 +86,10 @@
       <a href="assist.html" class="menu-link">
         <span class="icon">🃏</span> アシストカード一覧
       </a>
-      <a href="assist-ranking.html" class="menu-link">
-        <span class="icon">🏆</span> アシストカードランキング
-      </a>
-      <a href="ability-ranking.html" class="menu-link">
-        <span class="icon">⚔️</span> 能力ランキング
-      </a>
+      <div class="menu-link ikusei-toggle-btn" onclick="toggleRanking(this)">
+        <span class="icon">🏆</span> ランキング
+        <span class="ikusei-chevron" id="ranking-chevron">▼</span>
+      </div>
       <div class="menu-link ikusei-toggle-btn" onclick="toggleIkusei(this)">
         <span class="icon">📈</span> 育成方法
         <span class="ikusei-chevron" id="ikusei-chevron">▼</span>
@@ -108,6 +106,20 @@
       <a href="friend.html" class="menu-link">
         <span class="icon">🤝</span> フォロー・フォロワー募集
       </a>
+    </div>
+
+    <!-- ランキングサブメニュー -->
+    <div class="ikusei-submenu" id="ranking-submenu">
+      <div class="submenu-list">
+        <a href="assist-ranking.html" class="submenu-link">
+          <span class="submenu-icon">🏆</span> アシストカードランキング
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="ability-ranking.html" class="submenu-link">
+          <span class="submenu-icon">⚔️</span> 能力ランキング
+          <span class="submenu-arrow">›</span>
+        </a>
+      </div>
     </div>
 
     <!-- 初心者サブメニュー -->
@@ -279,6 +291,18 @@
 </footer>
 
 <script>
+function toggleRanking(btn) {
+  const menu = document.getElementById('ranking-submenu');
+  const chevron = document.getElementById('ranking-chevron');
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    chevron.classList.remove('open');
+  } else {
+    menu.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
 function toggleBeginner(btn) {
   const menu = document.getElementById('beginner-submenu');
   const chevron = document.getElementById('beginner-chevron');
