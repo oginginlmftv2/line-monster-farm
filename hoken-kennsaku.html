@@ -168,6 +168,55 @@
       margin-bottom: 16px;
       line-height: 1.7;
     }
+    .bonus-section {
+      margin-top: 16px;
+      border-top: 1px solid #eee;
+      padding-top: 14px;
+    }
+    .bonus-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .bonus-label {
+      font-size: 13px;
+      color: #555;
+      min-width: 120px;
+      flex-shrink: 0;
+    }
+    .bonus-counter {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cnt-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #f5f5f5;
+      font-size: 16px;
+      cursor: pointer;
+      line-height: 1;
+      color: #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .cnt-btn:hover { background: #ffe9b0; border-color: #f0a500; }
+    .cnt-val {
+      min-width: 36px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+    }
+    .bonus-note {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: 4px;
+    }
     .reset-btn {
       font-size: 12px;
       color: #aaa;
@@ -271,6 +320,40 @@
       </div>
     </div>
 
+    <div class="bonus-section">
+      <div class="section-title" style="margin-bottom:10px;">共通秘伝・加算値（任意）</div>
+
+      <div class="bonus-row">
+        <span class="bonus-label">共通秘伝III<span class="bonus-note">×12.5</span></span>
+        <div class="bonus-counter">
+          <button class="cnt-btn" onclick="adjustBonus('s3',-1)">−</button>
+          <span class="cnt-val" id="val-s3">0</span>
+          <button class="cnt-btn" onclick="adjustBonus('s3',1)">＋</button>
+        </div>
+        <span class="bonus-note" id="note-s3"></span>
+      </div>
+
+      <div class="bonus-row">
+        <span class="bonus-label">共通秘伝II<span class="bonus-note">×5</span></span>
+        <div class="bonus-counter">
+          <button class="cnt-btn" onclick="adjustBonus('s2',-1)">−</button>
+          <span class="cnt-val" id="val-s2">0</span>
+          <button class="cnt-btn" onclick="adjustBonus('s2',1)">＋</button>
+        </div>
+        <span class="bonus-note" id="note-s2"></span>
+      </div>
+
+      <div class="bonus-row">
+        <span class="bonus-label">ノーブル星数<span class="bonus-note">(★0〜36)</span></span>
+        <div class="bonus-counter">
+          <button class="cnt-btn" onclick="adjustBonus('noble',-1)">−</button>
+          <span class="cnt-val" id="val-noble">0</span>
+          <button class="cnt-btn" onclick="adjustBonus('noble',1)">＋</button>
+        </div>
+        <span class="bonus-note" id="note-noble"></span>
+      </div>
+    </div>
+
     <div style="margin-top:16px;">
       <button class="search-btn" onclick="doHokenSearch()">もっと相性検索</button>
     </div>
@@ -309,6 +392,31 @@
   const params = new URLSearchParams(location.search);
   if (params.has('child')) {
     childSel.value = params.get('child');
+  }
+
+  // ボーナス状態
+  const bonusState = { s3: 0, s2: 0, noble: 0 };
+  const bonusMax = { s3: 20, s2: 20, noble: 36 };
+
+  function adjustBonus(key, delta) {
+    bonusState[key] = Math.max(0, Math.min(bonusMax[key], bonusState[key] + delta));
+    document.getElementById('val-' + key).textContent = bonusState[key];
+    const noteEl = document.getElementById('note-' + key);
+    if (key === 's3') {
+      const v = bonusState.s3 * 12.5;
+      noteEl.textContent = v > 0 ? `+${v}` : '';
+    } else if (key === 's2') {
+      const v = bonusState.s2 * 5;
+      noteEl.textContent = v > 0 ? `+${v}` : '';
+    } else if (key === 'noble') {
+      const v = bonusState.noble > 0 ? (DEFAULT_NOBLE_DATA[bonusState.noble] || 0) : 0;
+      noteEl.textContent = v > 0 ? `+${v}` : '';
+    }
+  }
+
+  function getBonus() {
+    const nobleVal = bonusState.noble > 0 ? (DEFAULT_NOBLE_DATA[bonusState.noble] || 0) : 0;
+    return bonusState.s3 * 12.5 + bonusState.s2 * 5 + nobleVal;
   }
 
   function highlightFixed(sel) {
@@ -411,7 +519,7 @@
     const allCandidates = [];
     for (const p of pUnits) {
       for (const m of mUnits) {
-        const total = p.score + m.score + getComb(p.id, m.id) + 224;
+        const total = p.score + m.score + getComb(p.id, m.id) + 224 + getBonus();
         allCandidates.push({
           f: p.id, ff: p.gp1, fm: p.gp2,
           m: m.id, mf: m.gp1, mm: m.gp2,
@@ -424,7 +532,9 @@
     const top10 = allCandidates.slice(0, 10);
     const childName = MONSTER_NAMES[childId];
 
-    let html = `<div class="result-label">「${childName}」の相性検索結果（上位10組）</div><div class="result-list">`;
+    const bonus = getBonus();
+    const bonusText = bonus > 0 ? `　ボーナス+${bonus}込み` : '';
+    let html = `<div class="result-label">「${childName}」の相性検索結果（上位10組）${bonusText}</div><div class="result-list">`;
     top10.forEach((item, idx) => {
       const rank = idx + 1;
       const rankClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
