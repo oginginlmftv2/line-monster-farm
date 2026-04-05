@@ -46,6 +46,51 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/ability-ranking.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/reroll.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/tips.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/aisyoukennsaku.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/hoken-kennsaku.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/beginner.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/newbie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/npc-regen.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/ikusei/sogo-ikusei.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://oginginlmftv2.github.io/line-monster-farm/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
