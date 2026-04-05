@@ -66,52 +66,62 @@
     .result-row-top {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .result-rank {
       font-size: 12px;
       font-weight: bold;
       color: #aaa;
-      min-width: 30px;
-      text-align: right;
+      min-width: 28px;
       flex-shrink: 0;
     }
     .result-rank.r1 { color: #f0a500; font-size: 13px; }
     .result-rank.r2 { color: #888; }
     .result-rank.r3 { color: #c97030; }
-    .result-parents {
-      flex: 1;
-      font-size: 14px;
-      font-weight: bold;
-      color: #1a1a2e;
-    }
     .result-score {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       color: #333;
       white-space: nowrap;
       flex-shrink: 0;
+      margin-left: auto;
     }
     .result-symbol {
-      font-size: 15px;
+      font-size: 16px;
       min-width: 22px;
       text-align: center;
       flex-shrink: 0;
     }
+    .result-parents {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 4px;
+      margin: 2px 0;
+    }
+    .result-parent-line {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .result-parent-label {
+      font-size: 11px;
+      color: #bbb;
+      margin-right: 3px;
+    }
     .result-gp {
       display: flex;
-      gap: 12px;
-      padding-left: 40px;
-      flex-wrap: wrap;
+      flex-direction: column;
+      gap: 2px;
+      padding-left: 4px;
     }
     .result-gp-item {
       font-size: 11px;
       color: #999;
-      white-space: nowrap;
     }
     .result-gp-item span {
       color: #bbb;
-      margin-right: 3px;
+      margin-right: 2px;
     }
     .no-result {
       text-align: center;
@@ -281,9 +291,12 @@
         <div class="result-row">
           <div class="result-row-top">
             <span class="result-rank ${rankClass}">${rank}位</span>
-            <span class="result-parents">父: ${MONSTER_NAMES[item.f]}　×　母: ${MONSTER_NAMES[item.m]}</span>
             <span class="result-score">${score}</span>
             <span class="result-symbol">${symbol}</span>
+          </div>
+          <div class="result-parents">
+            <div class="result-parent-line"><span class="result-parent-label">父</span>${MONSTER_NAMES[item.f]}</div>
+            <div class="result-parent-line"><span class="result-parent-label">母</span>${MONSTER_NAMES[item.m]}</div>
           </div>
           <div class="result-gp">
             <div class="result-gp-item"><span>父祖父:</span>${MONSTER_NAMES[item.ff]}　<span>父祖母:</span>${MONSTER_NAMES[item.fm]}</div>
