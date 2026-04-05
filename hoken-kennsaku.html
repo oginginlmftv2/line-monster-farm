@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>補完探索ツール | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="育成モンスターと固定する秘伝親を指定して、残りの最適な組み合わせを探索します。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/hoken-kennsaku.html">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .search-area {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .child-select {
+      flex: 1;
+      min-width: 160px;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+      background: #fff;
+      color: #333;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+    .search-btn {
+      padding: 10px 28px;
+      background: #f0a500;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .search-btn:hover { background: #d4920a; }
+
+    .fixed-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .fixed-col-label {
+      font-size: 11px;
+      color: #999;
+      text-align: center;
+      margin-bottom: 3px;
+    }
+    .parent-row-label {
+      font-size: 12px;
+      font-weight: bold;
+      color: #666;
+      margin-bottom: 4px;
+      margin-top: 10px;
+    }
+    .slot-select {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 13px;
+      background: #fff;
+      color: #333;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23aaa' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 26px;
+    }
+    .slot-select.fixed {
+      border-color: #f0a500;
+      background-color: #fffbf0;
+    }
+
+    .result-label {
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .result-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .result-row {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .result-row-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .result-rank {
+      font-size: 12px;
+      font-weight: bold;
+      color: #aaa;
+      min-width: 30px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .result-rank.r1 { color: #f0a500; font-size: 13px; }
+    .result-rank.r2 { color: #888; }
+    .result-rank.r3 { color: #c97030; }
+    .result-parents {
+      flex: 1;
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .result-score {
+      font-size: 14px;
+      font-weight: bold;
+      color: #333;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .result-symbol {
+      font-size: 15px;
+      min-width: 22px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .result-gp {
+      display: flex;
+      gap: 12px;
+      padding-left: 40px;
+      flex-wrap: wrap;
+    }
+    .result-gp-item {
+      font-size: 11px;
+      color: #999;
+      white-space: nowrap;
+    }
+    .result-gp-item span {
+      color: #bbb;
+      margin-right: 3px;
+    }
+    .no-result {
+      text-align: center;
+      color: #aaa;
+      padding: 40px 20px;
+      font-size: 14px;
+    }
+    .note-box {
+      background: #fffbf0;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #888;
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .reset-btn {
+      font-size: 12px;
+      color: #aaa;
+      background: none;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 4px 10px;
+      cursor: pointer;
+      float: right;
+    }
+    .reset-btn:hover { border-color: #bbb; color: #666; }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #f0a500;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="aisyoukennsaku.html" class="back-link">← 相性検索に戻る</a>
+  <h1 class="page-title">🧩 補完探索ツール</h1>
+
+  <div class="section">
+    <div class="section-title">育成血統を選択（必須）</div>
+
+    <div class="search-area">
+      <select id="childSelect" class="child-select">
+        <option value="">血統を選択してください</option>
+      </select>
+    </div>
+
+    <div class="note-box">
+      固定枠に血統を指定すると、その枠を固定して残りを最適探索します。空欄は全血統から探索。上位10組を表示。
+    </div>
+
+    <div class="section-title" style="margin-bottom:8px;">
+      固定枠（任意）
+      <button class="reset-btn" onclick="resetSlots()">リセット</button>
+    </div>
+
+    <div class="parent-row-label">父親側</div>
+    <div class="fixed-grid">
+      <div>
+        <div class="fixed-col-label">父</div>
+        <select id="sel_f" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+      <div>
+        <div class="fixed-col-label">父祖父</div>
+        <select id="sel_ff" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+      <div>
+        <div class="fixed-col-label">父祖母</div>
+        <select id="sel_fm" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="parent-row-label">母親側</div>
+    <div class="fixed-grid">
+      <div>
+        <div class="fixed-col-label">母</div>
+        <select id="sel_m" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+      <div>
+        <div class="fixed-col-label">母祖父</div>
+        <select id="sel_mf" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+      <div>
+        <div class="fixed-col-label">母祖母</div>
+        <select id="sel_mm" class="slot-select" onchange="highlightFixed(this)">
+          <option value="">指定なし</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:16px;">
+      <button class="search-btn" onclick="doHokenSearch()">補完探索</button>
+    </div>
+
+    <div id="results" style="margin-top:20px;"></div>
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  // ドロップダウン生成
+  const childSel = document.getElementById('childSelect');
+  const slotIds = ['sel_f', 'sel_ff', 'sel_fm', 'sel_m', 'sel_mf', 'sel_mm'];
+
+  MONSTER_NAMES.forEach((name, i) => {
+    const opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = name;
+    childSel.appendChild(opt);
+
+    slotIds.forEach(id => {
+      const s = document.getElementById(id);
+      const o = document.createElement('option');
+      o.value = i;
+      o.textContent = name;
+      s.appendChild(o);
+    });
+  });
+
+  // URLパラメータからchild引き継ぎ
+  const params = new URLSearchParams(location.search);
+  if (params.has('child')) {
+    childSel.value = params.get('child');
+  }
+
+  function highlightFixed(sel) {
+    if (sel.value !== '') {
+      sel.classList.add('fixed');
+    } else {
+      sel.classList.remove('fixed');
+    }
+  }
+
+  function resetSlots() {
+    slotIds.forEach(id => {
+      const s = document.getElementById(id);
+      s.value = '';
+      s.classList.remove('fixed');
+    });
+  }
+
+  function getComb(a, b) {
+    if (a === null || b === null || a < 0 || b < 0) return 0;
+    return (COMPATIBILITY_MATRIX[a] && COMPATIBILITY_MATRIX[a][b]) || 0;
+  }
+
+  function getSymbol(score) {
+    if (score >= 660) return '👑';
+    if (score >= 614) return '☆';
+    if (score >= 490) return '◎';
+    if (score >= 374) return '○';
+    if (score >= 255) return '△';
+    return '×';
+  }
+
+  function doHokenSearch() {
+    const resultsEl = document.getElementById('results');
+    if (childSel.value === '') {
+      resultsEl.innerHTML = '<div class="no-result">血統を選択してください</div>';
+      return;
+    }
+
+    const childId = parseInt(childSel.value);
+
+    const slots = {
+      f:  document.getElementById('sel_f').value  !== '' ? parseInt(document.getElementById('sel_f').value)  : null,
+      ff: document.getElementById('sel_ff').value !== '' ? parseInt(document.getElementById('sel_ff').value) : null,
+      fm: document.getElementById('sel_fm').value !== '' ? parseInt(document.getElementById('sel_fm').value) : null,
+      m:  document.getElementById('sel_m').value  !== '' ? parseInt(document.getElementById('sel_m').value)  : null,
+      mf: document.getElementById('sel_mf').value !== '' ? parseInt(document.getElementById('sel_mf').value) : null,
+      mm: document.getElementById('sel_mm').value !== '' ? parseInt(document.getElementById('sel_mm').value) : null,
+    };
+
+    const validMonsters = MONSTER_NAMES.map((_, i) => i);
+    const GP_POOL_SIZE = 5;
+
+    function getBestUnit(isMother) {
+      const p   = isMother ? slots.m  : slots.f;
+      const gp1 = isMother ? slots.mf : slots.ff;
+      const gp2 = isMother ? slots.mm : slots.fm;
+
+      const candidates = [];
+      const pList = (p !== null) ? [p] : validMonsters;
+
+      for (const i of pList) {
+        const gp1List = (gp1 !== null) ? [gp1] : validMonsters;
+        const gp1Cands = gp1List.map(g => ({
+          id: g, score: Math.min(getComb(i, g), getComb(childId, g))
+        }));
+        gp1Cands.sort((a, b) => b.score - a.score);
+        const topGP1 = gp1Cands.slice(0, GP_POOL_SIZE);
+
+        const gp2List = (gp2 !== null) ? [gp2] : validMonsters;
+        const gp2Cands = gp2List.map(g => ({
+          id: g, score: Math.min(getComb(i, g), getComb(childId, g))
+        }));
+        gp2Cands.sort((a, b) => b.score - a.score);
+        const topGP2 = gp2Cands.slice(0, GP_POOL_SIZE);
+
+        if (topGP1.length === 0 || topGP2.length === 0) continue;
+
+        const base = getComb(childId, i);
+        const tuples = [];
+        for (const g1 of topGP1) {
+          for (const g2 of topGP2) {
+            tuples.push({ id: i, gp1: g1.id, gp2: g2.id, score: base + g1.score + g2.score });
+          }
+        }
+        tuples.sort((a, b) => b.score - a.score);
+        candidates.push(...tuples.slice(0, GP_POOL_SIZE));
+      }
+      return candidates;
+    }
+
+    const pUnits = getBestUnit(false);
+    const mUnits = getBestUnit(true);
+
+    if (pUnits.length === 0 || mUnits.length === 0) {
+      resultsEl.innerHTML = '<div class="no-result">有効な結果が見つかりませんでした</div>';
+      return;
+    }
+
+    const allCandidates = [];
+    for (const p of pUnits) {
+      for (const m of mUnits) {
+        const total = p.score + m.score + getComb(p.id, m.id) + 224;
+        allCandidates.push({
+          f: p.id, ff: p.gp1, fm: p.gp2,
+          m: m.id, mf: m.gp1, mm: m.gp2,
+          score: total
+        });
+      }
+    }
+    allCandidates.sort((a, b) => b.score - a.score);
+
+    const top10 = allCandidates.slice(0, 10);
+    const childName = MONSTER_NAMES[childId];
+
+    let html = `<div class="result-label">「${childName}」の補完探索結果（上位10組）</div><div class="result-list">`;
+    top10.forEach((item, idx) => {
+      const rank = idx + 1;
+      const rankClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
+      const score = Math.round(item.score * 10) / 10;
+      const symbol = getSymbol(score);
+      html += `
+        <div class="result-row">
+          <div class="result-row-top">
+            <span class="result-rank ${rankClass}">${rank}位</span>
+            <span class="result-parents">父: ${MONSTER_NAMES[item.f]}　×　母: ${MONSTER_NAMES[item.m]}</span>
+            <span class="result-score">${score}</span>
+            <span class="result-symbol">${symbol}</span>
+          </div>
+          <div class="result-gp">
+            <div class="result-gp-item"><span>父祖父:</span>${MONSTER_NAMES[item.ff]}　<span>父祖母:</span>${MONSTER_NAMES[item.fm]}</div>
+            <div class="result-gp-item"><span>母祖父:</span>${MONSTER_NAMES[item.mf]}　<span>母祖母:</span>${MONSTER_NAMES[item.mm]}</div>
+          </div>
+        </div>`;
+    });
+    html += '</div>';
+    resultsEl.innerHTML = html;
+  }
+</script>
+
+</body>
+</html>

@@ -165,6 +165,12 @@
     </div>
 
     <div id="results"></div>
+
+    <div id="hoken-btn-wrap" style="display:none; margin-top:20px; text-align:center;">
+      <a id="hoken-link" href="hoken-kennsaku.html" style="display:inline-block; padding:12px 28px; background:#fff; color:#f0a500; border:2px solid #f0a500; border-radius:8px; font-size:14px; font-weight:bold; text-decoration:none; transition:background 0.2s, color 0.2s;">
+        🧩 もっと詳しく相性を調べる（補完探索）
+      </a>
+    </div>
   </div>
 </div>
 
@@ -288,6 +294,11 @@
 
     html += '</div>';
     resultsEl.innerHTML = html;
+
+    // 補完探索ボタンを表示してchildパラメータをセット
+    const btnWrap = document.getElementById('hoken-btn-wrap');
+    document.getElementById('hoken-link').href = `hoken-kennsaku.html?child=${childId}`;
+    btnWrap.style.display = 'block';
   }
 </script>
 
