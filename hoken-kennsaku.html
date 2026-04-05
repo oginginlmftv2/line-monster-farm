@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>補完探索ツール | LINEモンスターファーム徹底攻略</title>
+  <title>もっと相性検索 | LINEモンスターファーム徹底攻略</title>
   <meta name="description" content="育成モンスターと固定する秘伝親を指定して、残りの最適な組み合わせを探索します。">
   <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/hoken-kennsaku.html">
   <link rel="manifest" href="manifest.json">
@@ -207,7 +207,7 @@
 
 <div class="container">
   <a href="aisyoukennsaku.html" class="back-link">← 相性検索に戻る</a>
-  <h1 class="page-title">🧩 補完探索ツール</h1>
+  <h1 class="page-title">🧩 もっと相性検索</h1>
 
   <div class="section">
     <div class="section-title">育成血統を選択（必須）</div>
@@ -272,7 +272,7 @@
     </div>
 
     <div style="margin-top:16px;">
-      <button class="search-btn" onclick="doHokenSearch()">補完探索</button>
+      <button class="search-btn" onclick="doHokenSearch()">もっと相性検索</button>
     </div>
 
     <div id="results" style="margin-top:20px;"></div>
@@ -424,7 +424,7 @@
     const top10 = allCandidates.slice(0, 10);
     const childName = MONSTER_NAMES[childId];
 
-    let html = `<div class="result-label">「${childName}」の補完探索結果（上位10組）</div><div class="result-list">`;
+    let html = `<div class="result-label">「${childName}」の相性検索結果（上位10組）</div><div class="result-list">`;
     top10.forEach((item, idx) => {
       const rank = idx + 1;
       const rankClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
