@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#121212">
+
+    <title>LMF ギフトンツール</title>
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <style>
+        html {
+            touch-action: manipulation;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <h1>LMF ギフトンツール</h1>
+    </header>
+
+    <main>
+        <!-- Feature 1: Gift & Tyrant -->
+        <section id="tab-gift" class="active">
+            <details class="iframe-details">
+                <summary class="iframe-summary">ギフトンツール (クリックで開閉)</summary>
+                <div class="iframe-container">
+                    <iframe src="https://monster-farm-simulator.onrender.com" title="MF Simulator"></iframe>
+                </div>
+            </details>
+
+            <div id="tyrant-calc" class="feature-title">タイラントツール</div>
+
+            <!-- 1. Parents Input First -->
+            <div class="input-group">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label style="margin-bottom:10px;">親・祖父母を指定</label>
+                    <button onclick="resetInputs('gift')"
+                        style="font-size:0.75rem; padding:4px 8px; background:#444; border:none; color:#eee; border-radius:4px; cursor:pointer;">リセット</button>
+                </div>
+
+                <div class="parent-grid-row">
+                    <div class="parent-label">父親側</div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">父親</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_f" onclick="openMonsterModal('gf_f')">
+                            選択</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_ff"
+                            onclick="openMonsterModal('gf_ff')">選択</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_fm"
+                            onclick="openMonsterModal('gf_fm')">選択</div>
+                    </div>
+                </div>
+
+                <div class="parent-grid-row">
+                    <div class="parent-label">母親側</div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">母親</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_m" onclick="openMonsterModal('gf_m')">
+                            選択</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_mf"
+                            onclick="openMonsterModal('gf_mf')">選択</div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母</div>
+                        <div class="monster-btn large placeholder" data-slot="gf_mm"
+                            onclick="openMonsterModal('gf_mm')">選択</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 2. Items Second -->
+            <div class="input-group">
+                <label>共通秘伝・加算値</label>
+                <div class="slider-container">
+                    <label>共通秘伝III (<span id="v3-val">0</span>個)</label>
+                    <div class="slider-wrapper">
+                        <button class="adjust-btn" onclick="adjustSlider('secret3', -1)">-</button>
+                        <div class="slider-track-container">
+                            <input type="range" id="secret3" min="0" max="20" value="0" list="list-secret3"
+                                oninput="document.getElementById('v3-val').innerText = this.value">
+                            <div class="slider-markers">
+                                <span class="marker-label" style="left: 0%">0</span>
+                                <span class="marker-label" style="left: 50%">10</span>
+                                <span class="marker-label" style="left: 100%">20</span>
+                            </div>
+                        </div>
+                        <button class="adjust-btn" onclick="adjustSlider('secret3', 1)">+</button>
+                    </div>
+                </div>
+                <div class="slider-container">
+                    <label>共通秘伝II (<span id="v2-val">0</span>個)</label>
+                    <div class="slider-wrapper">
+                        <button class="adjust-btn" onclick="adjustSlider('secret2', -1)">-</button>
+                        <div class="slider-track-container">
+                            <input type="range" id="secret2" min="0" max="20" value="0" list="list-secret2"
+                                oninput="document.getElementById('v2-val').innerText = this.value">
+                            <div class="slider-markers">
+                                <span class="marker-label" style="left: 0%">0</span>
+                                <span class="marker-label" style="left: 50%">10</span>
+                                <span class="marker-label" style="left: 100%">20</span>
+                            </div>
+                        </div>
+                        <button class="adjust-btn" onclick="adjustSlider('secret2', 1)">+</button>
+                    </div>
+                </div>
+                <div class="slider-container">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                        <label style="margin:0;">
+                            <span id="noble-label-text">ノーブル加算値</span>: <span id="noble-val">0</span>
+                        </label>
+                        <div class="segment-control">
+                            <div id="nb-mode-star" class="segment-item" onclick="toggleNobleMode('star')">★</div>
+                            <div id="nb-mode-val" class="segment-item active" onclick="toggleNobleMode('val')">123</div>
+                        </div>
+                    </div>
+                    <div class="slider-wrapper">
+                        <button class="adjust-btn" onclick="adjustSlider('noble', -1)">-</button>
+                        <div class="slider-track-container">
+                            <input type="range" id="noble" min="0" max="300" value="0"
+                                oninput="onNobleInput(this.value)">
+                            <div class="slider-markers" id="noble-markers">
+                                <span class="marker-label" style="left: 0%">0</span>
+                                <span class="marker-label" style="left: 50%">150</span>
+                                <span class="marker-label" style="left: 100%">300</span>
+                            </div>
+                        </div>
+                        <button class="adjust-btn" onclick="adjustSlider('noble', 1)">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="runGiftSearch()">相性計算 / 一覧表示</button>
+
+            <div id="gift-results" class="result-grid">
+                <!-- Results will be injected here -->
+            </div>
+        </section>
+
+        <!-- Feature 2: Optimization -->
+        <section id="tab-optimize">
+            <div class="feature-title">最適探索</div>
+
+            <div class="input-group">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label>育成モンスター (子)</label>
+                    <button onclick="resetInputs('opt')"
+                        style="font-size:0.75rem; padding:4px 8px; background:#444; border:none; color:#eee; border-radius:4px; cursor:pointer;">リセット</button>
+                </div>
+                <div class="monster-selector-row">
+                    <div class="monster-btn large placeholder" data-slot="opt_child"
+                        onclick="openMonsterModal('opt_child')">選択</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>除外モンスター</label>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <button class="action-btn"
+                        style="background:#444; font-size:0.9rem; width:auto; padding:8px 15px; margin-top:0;"
+                        onclick="openExclusionModal()">設定を開く</button>
+                    <div id="exclusion-count-opt" style="font-size:0.8rem; color:#aaa;">0体 除外中</div>
+                </div>
+                <div id="exclusion-icons-opt" class="excluded-list"></div>
+            </div>
+
+            <div class="input-group">
+                <label>目標相性シンボル</label>
+                <select id="target-symbol"
+                    style="width:100%; padding:10px; background:#333; color:white; border:1px solid #555;">
+                    <option value="999">指定なし (最大値を探索)</option>
+                    <option value="660">👑 (660~)</option>
+                    <option value="614">☆ (614~)</option>
+                    <option value="490">◎ (490~)</option>
+                </select>
+            </div>
+
+            <button class="action-btn" onclick="runOptimization()">最適化スタート</button>
+
+            <div id="opt-results"></div>
+        </section>
+
+        <!-- Feature 3: Completion Search (Renamed from Reverse Opt) -->
+        <section id="tab-reverse-opt">
+            <div class="feature-title">補完探索</div>
+            <div class="input-group">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <label>育成モンスター (子)</label>
+                    <button onclick="resetInputs('rev')"
+                        style="font-size:0.75rem; padding:4px 8px; background:#444; border:none; color:#eee; border-radius:4px; cursor:pointer;">リセット</button>
+                </div>
+                <div class="monster-selector-row">
+                    <div class="monster-btn large placeholder" data-slot="rev_child"
+                        onclick="openMonsterModal('rev_child')">選択</div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>除外モンスター</label>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <button class="action-btn"
+                        style="background:#444; font-size:0.9rem; width:auto; padding:8px 15px; margin-top:0;"
+                        onclick="openExclusionModal()">設定を開く</button>
+                    <div id="exclusion-count-rev" style="font-size:0.8rem; color:#aaa;">0体 除外中</div>
+                </div>
+                <div id="exclusion-icons-rev" class="excluded-list"></div>
+            </div>
+
+            <div class="input-group">
+                <label>目標相性シンボル</label>
+                <select id="target-symbol-rev"
+                    style="width:100%; padding:10px; background:#333; color:white; border:1px solid #555;">
+                    <option value="999">指定なし (最大値を探索)</option>
+                    <option value="660">👑 (660~)</option>
+                    <option value="614">☆ (614~)</option>
+                    <option value="490">◎ (490~)</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label style="margin-bottom:10px;">固定枠 (空欄は最適探索)</label>
+
+                <div class="parent-grid-row">
+                    <div class="parent-label">父親側</div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">父親</div>
+                        <div class="monster-btn placeholder" data-slot="rev_f" onclick="openMonsterModal('rev_f')">選択
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父</div>
+                        <div class="monster-btn placeholder" data-slot="rev_ff" onclick="openMonsterModal('rev_ff')">選択
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母</div>
+                        <div class="monster-btn placeholder" data-slot="rev_fm" onclick="openMonsterModal('rev_fm')">選択
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parent-grid-row">
+                    <div class="parent-label">母親側</div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">母親</div>
+                        <div class="monster-btn placeholder" data-slot="rev_m" onclick="openMonsterModal('rev_m')">選択
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父</div>
+                        <div class="monster-btn placeholder" data-slot="rev_mf" onclick="openMonsterModal('rev_mf')">選択
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母</div>
+                        <div class="monster-btn placeholder" data-slot="rev_mm" onclick="openMonsterModal('rev_mm')">選択
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="action-btn" onclick="runReverseOpt()">補完探索</button>
+            <div id="rev-opt-results"></div>
+        </section>
+
+        <!-- Feature 4: General Reverse -->
+        <section id="tab-general">
+            <div class="feature-title">汎用探索</div>
+            <!-- Old p location removed -->
+
+            <div class="input-group">
+                <label>除外モンスター</label>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <button class="action-btn"
+                        style="background:#444; font-size:0.9rem; width:auto; padding:8px 15px; margin-top:0;"
+                        onclick="openExclusionModal()">設定を開く</button>
+                    <div id="exclusion-count-gen" style="font-size:0.8rem; color:#aaa;">0体 除外中</div>
+                </div>
+                <div id="exclusion-icons-gen" class="excluded-list"></div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-group">
+                    <!-- Sub-tabs for Mode Switching -->
+                    <div class="sub-tabs">
+                        <div id="tab-gen-gp" class="sub-tab active" onclick="toggleGenMode('grandparents')">祖父母から探索
+                        </div>
+                        <div id="tab-gen-match" class="sub-tab" onclick="toggleGenMode('matching')">マッチングモード</div>
+                    </div>
+                    <!-- Hidden input to store mode -->
+                    <input type="hidden" id="gen_mode" value="grandparents">
+
+                    <!-- Target Mode Toggle (All vs Designated) -->
+                    <div style="margin-top:10px; padding:10px; background:#222; border-radius:8px;">
+                        <div style="display:flex; justify-content:center; gap:20px;">
+                            <label style="display:block; margin-bottom:5px;">育成対象</label>
+                            <label style="cursor:pointer; display:flex; align-items:center;">
+                                <input type="radio" name="target_mode" value="all" checked
+                                    onchange="toggleTargetMode()">
+                                <span style="margin-left:5px;">全血統</span>
+                            </label>
+                            <label style="cursor:pointer; display:flex; align-items:center;">
+                                <input type="radio" name="target_mode" value="designated" onchange="toggleTargetMode()">
+                                <span style="margin-left:5px;">血統指定</span>
+                            </label>
+                        </div>
+
+                        <!-- Target Value Slider (For All Bloodlines) -->
+                        <div id="target-val-area"
+                            style="margin-top:15px; padding-top:10px; border-top:1px dashed #444;">
+                            <label style="font-size:0.9rem;">目標相性値 (この値を超える数を最大化)</label>
+                            <div style="display:flex; align-items:center; margin-top:5px;">
+                                <input type="range" id="gen-target-val" min="100" max="700" value="420" style="flex:1;"
+                                    oninput="document.getElementById('gen-target-val-disp').innerText = this.value">
+                                <span id="gen-target-val-disp"
+                                    style="width:40px; text-align:right; margin-left:10px; font-weight:bold; color:var(--accent-color);">420</span>
+                            </div>
+                        </div>
+
+                        <div id="target-selector-area" style="display:none; margin-top:10px; text-align:center;">
+                            <button class="action-btn" style="width:auto; padding:5px 15px; font-size:0.9rem;"
+                                onclick="openBloodlineModal()">
+                                対象モンスターを選択 <span id="target-btn-count">(0)</span>
+                            </button>
+                            <div id="target-icons-preview"
+                                style="display:flex; justify-content:center; flex-wrap:wrap; gap:5px; margin-top:10px; min-height:5px;">
+                                <!-- Selected icons will appear here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-top:15px;">
+                        <label style="margin-bottom:10px;">
+                            <span id="gen-label-gp">祖父母から探索 (祖父母を指定)</span>
+                            <span id="gen-label-match" style="display:none;">片親系統を指定</span>
+                            <span id="gen-note-gp"
+                                style="display:block; font-size:0.8rem; color:#aaa; margin-top:2px;">※2枠まで空欄可</span>
+                        </label>
+                        <button onclick="resetInputs('gen')"
+                            style="font-size:0.75rem; padding:4px 8px; background:#444; border:none; color:#eee; border-radius:4px; cursor:pointer;">リセット</button>
+                    </div>
+
+
+                    <!-- Existing Mode: Grandparents Search -->
+                    <div id="gen-input-grandparents">
+                        <div class="parent-grid-row">
+                            <div class="parent-label">父親側</div>
+                            <div></div> <!-- Spacer -->
+                            <div>
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父
+                                </div>
+                                <div class="monster-btn placeholder" data-slot="gen_ff"
+                                    onclick="openMonsterModal('gen_ff')">選択
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母
+                                </div>
+                                <div class="monster-btn placeholder" data-slot="gen_fm"
+                                    onclick="openMonsterModal('gen_fm')">選択
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="parent-grid-row">
+                            <div class="parent-label">母親側</div>
+                            <div></div> <!-- Spacer -->
+                            <div>
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父
+                                </div>
+                                <div class="monster-btn placeholder" data-slot="gen_mf"
+                                    onclick="openMonsterModal('gen_mf')">選択
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母
+                                </div>
+                                <div class="monster-btn placeholder" data-slot="gen_mm"
+                                    onclick="openMonsterModal('gen_mm')">選択
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- New Mode: Matching Mode -->
+                    <div id="gen-input-matching" style="display:none;">
+                        <div class="centered-flex">
+                            <div class="fixed-slot">
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">親</div>
+                                <div class="monster-btn large placeholder" data-slot="gen_match_p"
+                                    onclick="openMonsterModal('gen_match_p')">
+                                    選択</div>
+                            </div>
+                            <div class="fixed-slot">
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖父
+                                </div>
+                                <div class="monster-btn large placeholder" data-slot="gen_match_gp1"
+                                    onclick="openMonsterModal('gen_match_gp1')">
+                                    選択</div>
+                            </div>
+                            <div class="fixed-slot">
+                                <div style="font-size:0.7rem; color:#888; text-align:center; margin-bottom:2px;">祖母
+                                </div>
+                                <div class="monster-btn large placeholder" data-slot="gen_match_gp2"
+                                    onclick="openMonsterModal('gen_match_gp2')">
+                                    選択</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="action-btn" onclick="runGeneralSearch()">汎用探索</button>
+                <div id="gen-loading" style="display:none; text-align:center; margin-top:20px;">
+                    <div class="loader"></div>
+                    <div style="margin-top:10px; color:#aaa; font-size:0.9rem;">探索中... (数秒かかります)</div>
+                </div>
+                <div id="gen-results" class="result-grid"></div>
+        </section>
+
+        <!-- Feature 5: Data Management -->
+        <section id="tab-data">
+            <div class="feature-title">データ管理</div>
+
+            <div class="input-group" id="patch-settings-group">
+                <div id="patch-config-container">
+                    <label>パッチ設定</label>
+                    <div id="patch-toggle-area" style="display:flex; gap:10px; margin-bottom:10px;">
+                        <label style="display:flex; align-items:center; cursor:pointer;">
+                            <input type="checkbox" id="overlay-toggle" onchange="toggleOverlaySetting()">
+                            <span style="margin-left:5px;">パッチ適用ON/OFFスイッチを表示する</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Matrix Operations -->
+                <div id="matrix-ops-container" style="display:flex; gap:10px; flex-wrap:wrap;">
+                    <button class="action-btn" style="flex:1; margin-top:0;" onclick="exportPatch()">エクスポート
+                        (パッチ)</button>
+                    <button class="action-btn" style="flex:1; margin-top:0; position:relative;">
+                        インポート (パッチ)
+                        <input type="file" id="patch-file-input" accept=".json"
+                            style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;"
+                            onchange="importPatch(this)">
+                    </button>
+                    <button class="action-btn" style="background:#555; margin-top:10px;" onclick="resetPatch()">元の数値に戻す
+                        (パッチリセット)</button>
+                </div>
+
+                <!-- Noble Operations (Hidden by default) -->
+                <div id="noble-ops-container" style="display:none; gap:10px; flex-wrap:wrap;">
+                    <button class="action-btn" style="flex:1; margin-top:0;" onclick="exportNobleData()">エクスポート
+                        (ノーブル)</button>
+                    <button class="action-btn" style="flex:1; margin-top:0; position:relative;">
+                        インポート (ノーブル)
+                        <input type="file" id="noble-file-input" accept=".json"
+                            style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;"
+                            onchange="importPatch(this)">
+                    </button>
+                    <button class="action-btn" style="background:#555; margin-top:10px;"
+                        onclick="resetNobleData()">元の数値に戻す
+                        (ノーブルリセット)</button>
+                </div>
+            </div>
+
+            <div class="sub-tabs" style="margin-top:20px; margin-bottom:10px;">
+                <div id="dt-tab-matrix" class="sub-tab active" onclick="switchDataTab('matrix')">基礎相性値</div>
+                <div id="dt-tab-noble" class="sub-tab" onclick="switchDataTab('noble')">ノーブル秘伝</div>
+            </div>
+
+            <div id="data-view-matrix" class="matrix-container">
+                <table class="matrix-table" id="matrix-table">
+                    <!-- JS Injected -->
+                </table>
+            </div>
+
+            <div id="data-view-noble" class="matrix-container"
+                style="display:none; text-align:center; background:none; border:none; max-height:none; overflow:visible;">
+                <!-- JS Injected Grid -->
+            </div>
+        </section>
+
+    </main>
+
+    <nav class="bottom-nav">
+        <a class="nav-item active" onclick="switchTab('tab-gift', this)">
+            <span class="nav-icon">🎁</span>
+            <span>Gift/Tyrant</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-optimize', this)">
+            <span class="nav-icon">✨</span>
+            <span>最適探索</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-reverse-opt', this)">
+            <span class="nav-icon">🧩</span>
+            <span>補完探索</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-general', this)">
+            <span class="nav-icon">🔍</span>
+            <span>汎用探索</span>
+        </a>
+        <a class="nav-item" onclick="switchTab('tab-data', this)">
+            <span class="nav-icon">📊</span>
+            <span>データ</span>
+        </a>
+    </nav>
+
+    <!-- Overlay -->
+    <div id="patch-overlay" style="display:none;">
+        <div id="patch-toggle-btn" class="patch-toggle-switch" onclick="togglePatchActive()"></div>
+        <span id="patch-status-text">パッチOFF</span>
+    </div>
+
+    <!-- Modal -->
+    <div id="monster-modal" class="modal">
+        <div class="modal-content">
+            <h3>モンスター選択</h3>
+            <div id="modal-grid" class="modal-grid">
+                <!-- Injected via JS -->
+            </div>
+            <button class="modal-close" onclick="closeModal()">閉じる</button>
+        </div>
+    </div>
+
+    <!-- Exclusion Modal -->
+    <div id="exclusion-modal" class="modal">
+        <div class="modal-content">
+            <h3>除外モンスター設定</h3>
+            <div style="display:flex; justify-content:center; gap:10px; margin-bottom:10px;">
+                <button class="action-btn" style="width:auto; padding:5px 15px; font-size:0.8rem; background:#444;"
+                    onclick="selectNonNoble()">非ノーブル</button>
+                <button class="action-btn" style="width:auto; padding:5px 15px; font-size:0.8rem; background:#444;"
+                    onclick="clearExclusions()">一括解除</button>
+            </div>
+            <p style="font-size:0.8rem; color:#aaa; margin-bottom:10px;">タップして除外/解除</p>
+            <div id="exclusion-grid" class="modal-grid">
+                <!-- Injected via JS -->
+            </div>
+            <button class="modal-close" onclick="closeExclusionModal()">完了</button>
+        </div>
+    </div>
+
+    <!-- Bloodline Selection Modal -->
+    <div id="bloodline-modal" class="modal">
+        <div class="modal-content" style="max-width:600px;">
+            <h3>育成対象血統の指定</h3>
+
+            <div style="margin-bottom:15px;">
+                <label>一括選択 (モン類)</label>
+                <div style="display:flex; flex-wrap:wrap; gap:5px; margin-top:5px;">
+                    <button class="action-btn group-btn" onclick="selectGroup('inorganic')">無機</button>
+                    <button class="action-btn group-btn" onclick="selectGroup('creation')">創造</button>
+                    <button class="action-btn group-btn" onclick="selectGroup('phantom')">幻霊</button>
+                    <button class="action-btn group-btn" onclick="selectGroup('demon')">魔族</button>
+                    <button class="action-btn group-btn" onclick="selectGroup('beast')">獣族</button>
+                    <button class="action-btn group-btn" onclick="selectGroup('monster')">怪物</button>
+                </div>
+                <div style="display:flex; gap:10px; margin-top:10px;">
+                    <button class="action-btn" style="background:#444;" onclick="selectAllTargets()">全選択</button>
+                    <button class="action-btn" style="background:#444;" onclick="clearAllTargets()">全解除</button>
+                </div>
+            </div>
+
+            <p style="font-size:0.8rem; color:#aaa; margin-bottom:10px;">個別にタップして選択/解除</p>
+            <div id="target-grid" class="modal-grid">
+                <!-- Injected via JS -->
+            </div>
+            <div style="margin-top:20px; text-align:right;">
+                <span id="target-count" style="margin-right:15px; font-weight:bold; color:var(--accent-color);">0体
+                    選択中</span>
+                <button class="modal-close" style="width:auto; display:inline-block;"
+                    onclick="closeBloodlineModal()">完了</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Value Modal -->
+    <div id="edit-value-modal" class="modal">
+        <div class="modal-content" style="max-width:300px;">
+            <h3>相性値の変更</h3>
+            <div style="text-align:center; margin-bottom:15px;">
+                <div id="edit-target-label" style="font-size:0.9rem; color:#aaa; margin-bottom:5px;"></div>
+                <div style="display:flex; align-items:center; justify-content:center; gap:10px;">
+                    <img id="edit-child-img" src="" style="width:40px; height:40px;">
+                    <span style="font-size:1.5rem;">⬅</span>
+                    <img id="edit-parent-img" src="" style="width:40px; height:40px;">
+                </div>
+                <div style="font-size:0.75rem; color:#888; margin-top:5px;">(左:子 / 右:親)</div>
+            </div>
+
+            <label>相性値 (0-99)</label>
+            <input type="number" id="edit-val-input" style="font-size:1.2rem; text-align:center;">
+
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button class="action-btn" onclick="confirmEditValue()">決定</button>
+                <button class="action-btn" style="background:#444;" onclick="closeEditModal()">キャンセル</button>
+            </div>
+            <button class="action-btn" style="background:#553333; margin-top:10px;"
+                onclick="resetEditValue()">元の数値に戻す</button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
