@@ -132,21 +132,11 @@
       flex-shrink: 0;
     }
     .result-parents {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      padding-left: 4px;
-      margin: 2px 0;
-    }
-    .result-parent-line {
       font-size: 14px;
       font-weight: bold;
       color: #1a1a2e;
-    }
-    .result-parent-label {
-      font-size: 11px;
-      color: #bbb;
-      margin-right: 3px;
+      padding-left: 4px;
+      margin: 2px 0;
     }
     .result-gp {
       display: flex;
@@ -565,10 +555,7 @@
             <span class="result-score">${score}</span>
             <span class="result-symbol">${symbol}</span>
           </div>
-          <div class="result-parents">
-            <div class="result-parent-line"><span class="result-parent-label">父</span>${MONSTER_NAMES[item.f]}</div>
-            <div class="result-parent-line"><span class="result-parent-label">母</span>${MONSTER_NAMES[item.m]}</div>
-          </div>
+          <div class="result-parents">父: ${MONSTER_NAMES[item.f]}　×　母: ${MONSTER_NAMES[item.m]}</div>
           <div class="result-gp">
             <div class="result-gp-item"><span>父祖父:</span>${MONSTER_NAMES[item.ff]}　<span>父祖母:</span>${MONSTER_NAMES[item.fm]}</div>
             <div class="result-gp-item"><span>母祖父:</span>${MONSTER_NAMES[item.mf]}　<span>母祖母:</span>${MONSTER_NAMES[item.mm]}</div>
