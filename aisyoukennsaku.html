@@ -160,7 +160,7 @@
     </div>
 
     <div class="note-box">
-      スコアは最適な祖父母を自動計算した値（秘伝・ノーブルなし）。上位20組を表示。
+      スコアは主血統＋副血統の相性値を合算し、最適な祖父母を自動計算した値（秘伝・ノーブルなし）。上位20組を表示。レアモン・ロード種・ノーブル副血統は0として計算。
     </div>
 
     <div id="results"></div>
@@ -173,19 +173,49 @@
 </footer>
 
 <script src="data.js"></script>
+<script src="../monsters-data.js"></script>
 <script>
+  const SPECIAL_SUBS = ['レアモン', 'ロード種', 'ノーブル', 'ザン'];
+  const RAREMON_VALUE = 32;
+
+  function getMonIdx(name) { return MONSTER_NAMES.indexOf(name); }
+
+  // 全モンスターの血統インデックスを事前計算
+  const monsterBL = monstersData.map(mon => {
+    const mainIdx = getMonIdx(mon.mainMon);
+    const subIsSpecial = !mon.subMon || SPECIAL_SUBS.includes(mon.subMon);
+    const subIdx = subIsSpecial ? -1 : getMonIdx(mon.subMon);
+    return { mainIdx, subIdx, subIsSpecial };
+  });
+
+  // 血統の組み合わせが同じモンスターは代表1体に絞る（gwImg最大=最新を優先）
+  const blKeyMap = {}; // "mainMon/subMon" -> best monstersData index
+  monstersData.forEach((mon, i) => {
+    const key = `${mon.mainMon}/${mon.subMon || ''}`;
+    if (!(key in blKeyMap) || mon.gwImg > monstersData[blKeyMap[key]].gwImg) {
+      blKeyMap[key] = i;
+    }
+  });
+  const uniqueParentIdxs = Object.values(blKeyMap); // 重複排除した親候補インデックス
+
   // ドロップダウン生成
   const sel = document.getElementById('childSelect');
-  MONSTER_NAMES.forEach((name, i) => {
+  monstersData.forEach((mon, i) => {
     const opt = document.createElement('option');
     opt.value = i;
-    opt.textContent = name;
+    opt.textContent = mon.name;
     sel.appendChild(opt);
   });
 
   function getComb(yi, oi) {
-    if (yi === null || yi === undefined || oi === null || oi === undefined) return 0;
+    if (yi < 0 || oi < 0) return 0;
     return (COMPATIBILITY_MATRIX[yi] && COMPATIBILITY_MATRIX[yi][oi]) || 0;
+  }
+
+  // 特殊血統を考慮したサブ側の相性値
+  function subVal(aIsSpecial, aIdx, bIsSpecial, bIdx) {
+    if (aIsSpecial || bIsSpecial) return RAREMON_VALUE;
+    return getComb(aIdx, bIdx);
   }
 
   function getSymbol(score) {
@@ -197,33 +227,40 @@
     return '×';
   }
 
-  // 親に対して最適な祖父母2体を返す（子との相性も考慮）
-  function bestGPs(childId, parentId) {
+  // 親に対して最適な祖父母2体を返す（純血統33種から選択）
+  // 祖父母貢献 = MIN(親メイン→gp, 子メイン→gp) + MIN(親サブ→gp, 子サブ→gp)
+  function bestGPs(cMain, cSub, cSubSp, pMain, pSub, pSubSp) {
     const list = [];
     for (let i = 0; i < MONSTER_NAMES.length; i++) {
-      list.push({ id: i, val: Math.min(getComb(parentId, i), getComb(childId, i)) });
+      const mainContrib = Math.min(getComb(pMain, i), getComb(cMain, i));
+      const pSubV = pSubSp ? RAREMON_VALUE : getComb(pSub, i);
+      const cSubV = cSubSp ? RAREMON_VALUE : getComb(cSub, i);
+      const subContrib = Math.min(pSubV, cSubV);
+      list.push({ id: i, val: mainContrib + subContrib });
     }
     list.sort((a, b) => b.val - a.val);
-    const gp1 = list[0];
-    const gp2 = list.find(g => g.id !== gp1.id);
-    return [gp1, gp2];
+    return [list[0], list.find(g => g.id !== list[0].id)];
   }
 
-  // 父×母の組み合わせに対して最適スコアと祖父母を返す
-  function calcPairScore(childId, fId, mId) {
-    const [fGP1, fGP2] = bestGPs(childId, fId);
-    const [mGP1, mGP2] = bestGPs(childId, mId);
+  // 父×母のスコア計算（混血対応）
+  function calcPairScore(cBL, fBL, mBL) {
+    const { mainIdx: cMain, subIdx: cSub, subIsSpecial: cSp } = cBL;
+    const { mainIdx: fMain, subIdx: fSub, subIsSpecial: fSp } = fBL;
+    const { mainIdx: mMain, subIdx: mSub, subIsSpecial: mSp } = mBL;
 
-    const t1 = getComb(childId, fId);
+    const [fGP1, fGP2] = bestGPs(cMain, cSub, cSp, fMain, fSub, fSp);
+    const [mGP1, mGP2] = bestGPs(cMain, cSub, cSp, mMain, mSub, mSp);
+
+    const t1 = getComb(cMain, fMain) + subVal(cSp, cSub, fSp, fSub); // 子→父
     const t2 = fGP1 ? fGP1.val : 0;
     const t3 = fGP2 ? fGP2.val : 0;
-    const t4 = getComb(childId, mId);
+    const t4 = getComb(cMain, mMain) + subVal(cSp, cSub, mSp, mSub); // 子→母
     const t5 = mGP1 ? mGP1.val : 0;
     const t6 = mGP2 ? mGP2.val : 0;
-    const t7 = getComb(fId, mId);
+    const t7 = getComb(fMain, mMain) + subVal(fSp, fSub, mSp, mSub); // 父×母
 
     return {
-      score: t1 + t2 + t3 + t4 + t5 + t6 + t7 + 224,
+      score: t1 + t2 + t3 + t4 + t5 + t6 + t7,
       ff: fGP1 ? fGP1.id : null,
       fm: fGP2 ? fGP2.id : null,
       mf: mGP1 ? mGP1.id : null,
@@ -234,20 +271,22 @@
   function doSearch() {
     const val = sel.value;
     const resultsEl = document.getElementById('results');
-
     if (val === '') {
       resultsEl.innerHTML = '<div class="no-result">モンスターを選択してください</div>';
       return;
     }
 
-    const childId = parseInt(val);
-    const n = MONSTER_NAMES.length;
+    const childIdx = parseInt(val);
+    const cBL = monsterBL[childIdx];
     const pairs = [];
 
-    for (let f = 0; f < n; f++) {
-      for (let m = 0; m < n; m++) {
-        if (f === m) continue;
-        const res = calcPairScore(childId, f, m);
+    for (let fi = 0; fi < uniqueParentIdxs.length; fi++) {
+      const f = uniqueParentIdxs[fi];
+      if (f === childIdx) continue;
+      for (let mi = 0; mi < uniqueParentIdxs.length; mi++) {
+        const m = uniqueParentIdxs[mi];
+        if (m === childIdx || m === f) continue;
+        const res = calcPairScore(cBL, monsterBL[f], monsterBL[m]);
         pairs.push({ f, m, ...res });
       }
     }
@@ -255,14 +294,22 @@
     pairs.sort((a, b) => b.score - a.score);
     const top20 = pairs.slice(0, 20);
 
-    const childName = MONSTER_NAMES[childId];
-    let html = `<div class="result-label">「${childName}」の相性ランキング（上位20組）</div><div class="result-list">`;
+    const childData = monstersData[childIdx];
+    const subName = childData.subMon;
+    const subLabel = !cBL.subIsSpecial ? `（主: ${childData.mainMon} / 副: ${subName}）` : `（主: ${childData.mainMon}）`;
+    let html = `<div class="result-label">「${childData.name}」${subLabel} の相性ランキング（上位20組）</div><div class="result-list">`;
 
     top20.forEach((item, idx) => {
       const rank = idx + 1;
       const rankClass = rank === 1 ? 'r1' : rank === 2 ? 'r2' : rank === 3 ? 'r3' : '';
       const symbol = getSymbol(item.score);
       const score = Math.round(item.score * 10) / 10;
+      const fData = monstersData[item.f];
+      const mData = monstersData[item.m];
+      const fBL = monsterBL[item.f];
+      const mBL = monsterBL[item.m];
+      const fSubLabel = fBL.subIsSpecial ? fData.subMon : fData.subMon;
+      const mSubLabel = mBL.subIsSpecial ? mData.subMon : mData.subMon;
       const ffName = item.ff !== null ? MONSTER_NAMES[item.ff] : '—';
       const fmName = item.fm !== null ? MONSTER_NAMES[item.fm] : '—';
       const mfName = item.mf !== null ? MONSTER_NAMES[item.mf] : '—';
@@ -271,9 +318,12 @@
         <div class="result-row">
           <div class="result-row-top">
             <span class="result-rank ${rankClass}">${rank}位</span>
-            <span class="result-parents">父: ${MONSTER_NAMES[item.f]}　×　母: ${MONSTER_NAMES[item.m]}</span>
+            <span class="result-parents">父: ${fData.name}　×　母: ${mData.name}</span>
             <span class="result-score">${score}</span>
             <span class="result-symbol">${symbol}</span>
+          </div>
+          <div class="result-gp">
+            <div class="result-gp-item"><span>父血統:</span>${fData.mainMon}/${fSubLabel}　<span>母血統:</span>${mData.mainMon}/${mSubLabel}</div>
           </div>
           <div class="result-gp">
             <div class="result-gp-item"><span>父祖父:</span>${ffName}　<span>父祖母:</span>${fmName}</div>
