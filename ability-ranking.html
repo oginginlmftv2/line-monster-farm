@@ -2,136 +2,206 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>能力ランキング | LINEモンスターファーム徹底攻略</title>
+  <title>能力ランキング 最終結果 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの能力ランキング最終結果。ユーザー投票による確定ランキングです。">
+  <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/ability-ranking.html">
   <link rel="stylesheet" href="style.css">
   <style>
-    .voting-banner {
-      background: #fff3cd;
-      border: 1px solid #f0a500;
-      border-radius: 10px;
-      padding: 14px 18px;
-      margin-bottom: 20px;
-      font-size: 14px;
-      font-weight: bold;
-      color: #7a4f00;
-    }
-    .voting-banner.closed {
-      background: #f0f0f0;
-      border-color: #ccc;
-      color: #666;
-    }
-    .voting-banner .sub {
-      font-size: 12px;
-      font-weight: normal;
-      margin-top: 4px;
-      color: #999;
-    }
-
-    .ability-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 12px;
-    }
-
-    .ability-card {
+    .ranking-block {
       background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      border-radius: 14px;
       overflow: hidden;
-      position: relative;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+      margin-bottom: 24px;
     }
-
-    .rank-badge {
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      background: #555;
-      color: #fff;
-      font-size: 11px;
+    .block-header {
+      background: #1a1a2e;
+      padding: 14px 20px;
+    }
+    .block-header-title {
+      font-size: 17px;
       font-weight: 900;
-      padding: 2px 8px;
-      border-radius: 4px;
-      z-index: 1;
+      color: #fff;
     }
-    .rank-badge.rank-1 { background: #f0a500; }
-    .rank-badge.rank-2 { background: #888; }
-    .rank-badge.rank-3 { background: #c97030; }
+    .block-header-title span { color: #f0a500; }
 
-    .ability-img-link { display: block; }
-    .ability-img-link img {
-      width: 100%;
-      display: block;
-    }
-
-    .ability-card-body {
-      padding: 8px 12px 10px;
-    }
-
-    .ability-card-name {
-      font-size: 12px;
-      color: #888;
-      margin-bottom: 6px;
-    }
-
-    .ability-vote-row {
+    /* TOP3 */
+    .top3-area {
       display: flex;
+    }
+    .top-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 8px;
+      justify-content: center;
+      padding: 20px 10px;
+      border-right: 1px solid #f0f0f0;
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
     }
+    .top-col:hover { opacity: 0.85; }
+    .top-col:last-child { border-right: none; }
+    .rank-1-col { background: linear-gradient(180deg,#fffdf0 0%,#fff 100%); }
+    .rank-2-col { background: linear-gradient(180deg,#f7f7f7 0%,#fff 100%); }
+    .rank-3-col { background: linear-gradient(180deg,#fff5f0 0%,#fff 100%); }
 
-    .vote-count {
-      font-size: 14px;
-      font-weight: bold;
-      color: #f0a500;
-    }
+    .rank-label { font-weight: 900; letter-spacing: 1px; margin-bottom: 8px; }
+    .rank-1-col .rank-label { color: #f0a500; font-size: 30px; }
+    .rank-2-col .rank-label { color: #999;    font-size: 22px; }
+    .rank-3-col .rank-label { color: #c97030; font-size: 22px; }
 
-    .vote-btn {
-      padding: 5px 16px;
-      background: #f0a500;
-      color: #fff;
-      border: none;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
+    .top-img-wrap {
+      border-radius: 10px;
+      overflow: hidden;
+      background: #eee;
+      position: relative;
+      flex-shrink: 0;
     }
-    .vote-btn:hover:not(:disabled) { background: #d4920a; }
-    .vote-btn:disabled {
-      background: #ddd;
-      color: #aaa;
-      cursor: default;
-    }
-    .vote-btn.voted {
-      background: #e6f4ea;
-      color: #38a169;
-      border: 1px solid #38a169;
-    }
+    .rank-1-col .top-img-wrap { width: 170px; box-shadow: 0 4px 20px rgba(240,165,0,0.35); border: 3px solid #f0a500; }
+    .rank-2-col .top-img-wrap { width: 140px; box-shadow: 0 3px 12px rgba(0,0,0,0.12); border: 2px solid #bbb; }
+    .rank-3-col .top-img-wrap { width: 130px; box-shadow: 0 3px 12px rgba(0,0,0,0.10); border: 2px solid #c97030; }
+    .top-img-wrap img { width: 100%; display: block; }
 
-    .loading-msg {
+    .top-name {
+      font-weight: 900;
+      color: #1a1a2e;
       text-align: center;
-      padding: 40px;
-      color: #aaa;
-      font-size: 14px;
+      margin-top: 8px;
+      line-height: 1.3;
     }
-    .sort-btn {
-      display: inline-block;
-      padding: 6px 16px;
-      border: 1px solid #f0a500;
+    .rank-1-col .top-name { font-size: 14px; }
+    .rank-2-col .top-name { font-size: 12px; }
+    .rank-3-col .top-name { font-size: 11px; }
+
+    .top-votes { font-weight: 900; line-height: 1; margin-top: 6px; }
+    .rank-1-col .top-votes { font-size: 38px; color: #f0a500; }
+    .rank-2-col .top-votes { font-size: 30px; color: #888; }
+    .rank-3-col .top-votes { font-size: 26px; color: #c97030; }
+    .votes-unit { font-size: 13px; font-weight: 400; margin-left: 2px; }
+
+    /* 4〜10位 */
+    .divider-line { height: 1px; background: linear-gradient(90deg,transparent,#e0e0e0 20%,#e0e0e0 80%,transparent); }
+    .lower-area {
+      background: #fafafa;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .lower-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 8px;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      gap: 4px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .lower-col:hover { background: #f0f0f0; }
+    .lower-col:nth-child(4n) { border-right: none; }
+    .lower-col:nth-last-child(-n+3) { border-bottom: none; }
+    .lower-rank { font-size: 11px; font-weight: 900; color: #bbb; }
+    .lower-img-wrap {
+      width: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #e8e8e8;
+      flex-shrink: 0;
+    }
+    .lower-img-wrap img { width: 100%; display: block; }
+    .lower-name { font-size: 10px; font-weight: 700; color: #555; text-align: center; line-height: 1.3; }
+    .lower-votes { font-size: 20px; font-weight: 900; color: #555; line-height: 1; }
+    .lower-votes span { font-size: 11px; font-weight: 400; }
+
+    /* 11〜20位 */
+    .mid-area {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #fafafa;
+    }
+    .mid-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 6px;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      gap: 5px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .mid-col:hover { background: #f0f0f0; }
+    .mid-col:nth-child(5n) { border-right: none; }
+    .mid-col:nth-child(n+6) { border-bottom: none; }
+    .mid-rank { font-size: 11px; font-weight: 900; color: #bbb; }
+    .mid-img-wrap {
+      width: 100px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #e8e8e8;
+      flex-shrink: 0;
+    }
+    .mid-img-wrap img { width: 100%; display: block; }
+    .mid-name { font-size: 10px; font-weight: 700; color: #555; text-align: center; line-height: 1.3; }
+    .mid-votes { font-size: 18px; font-weight: 900; color: #555; line-height: 1; }
+    .mid-votes span { font-size: 11px; font-weight: 400; }
+
+    /* 21位以降 */
+    .rest-area {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      background: #f5f5f5;
+    }
+    .rest-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 4px;
+      border-right: 1px solid #eee;
+      border-bottom: 1px solid #eee;
+      gap: 4px;
+      text-decoration: none;
+      color: inherit;
+      transition: background 0.15s;
+    }
+    .rest-col:hover { background: #ebebeb; }
+    .rest-col:nth-child(5n) { border-right: none; }
+    .rest-rank { font-size: 10px; font-weight: 900; color: #ccc; }
+    .rest-img-wrap {
+      width: 80px;
       border-radius: 6px;
-      font-size: 13px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #fff;
-      color: #f0a500;
-      transition: background 0.2s, color 0.2s;
-      margin-bottom: 14px;
+      overflow: hidden;
+      background: #e0e0e0;
+      flex-shrink: 0;
     }
-    .sort-btn.active {
-      background: #f0a500;
-      color: #fff;
+    .rest-img-wrap img { width: 100%; display: block; }
+    .rest-name { font-size: 9px; font-weight: 700; color: #888; text-align: center; line-height: 1.3; }
+    .rest-votes { font-size: 14px; font-weight: 900; color: #aaa; line-height: 1; }
+    .rest-votes span { font-size: 10px; font-weight: 400; }
+
+    @media (max-width: 600px) {
+      .rank-1-col .top-img-wrap { width: 110px; }
+      .rank-2-col .top-img-wrap { width: 88px; }
+      .rank-3-col .top-img-wrap { width: 80px; }
+      .rank-1-col .top-votes { font-size: 26px; }
+      .rank-2-col .top-votes { font-size: 20px; }
+      .rank-3-col .top-votes { font-size: 18px; }
+      .lower-area { grid-template-columns: repeat(2, 1fr); }
+      .lower-col:nth-child(4n) { border-right: revert; }
+      .lower-col:nth-child(2n) { border-right: none; }
+      .lower-col:nth-last-child(-n+3) { border-bottom: revert; }
+      .lower-col:nth-last-child(-n+1) { border-bottom: none; }
+      .lower-img-wrap { width: 64px; }
+      .mid-img-wrap { width: 64px; }
+      .rest-img-wrap { width: 54px; }
     }
   </style>
 </head>
@@ -148,235 +218,173 @@
   </div>
 </header>
 
-<div class="hero">
-  <h1>⚔️ 能力ランキング</h1>
-  <p>アシストカードの能力をユーザー投票でランキング</p>
+<div class="container">
+  <h1 class="page-title">⚔️ 能力ランキング</h1>
+
+  <div class="ranking-block">
+    <div class="block-header">
+      <div class="block-header-title">⚔️ 能力 <span>ランキング</span> <span style="font-size:14px;font-weight:700;margin-left:6px;">最終結果</span></div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px;">
+        <div style="font-size:12px;color:#f0a500;background:rgba(240,165,0,0.15);border:1px solid rgba(240,165,0,0.4);border-radius:4px;padding:2px 8px;white-space:nowrap;">投票終了</div>
+        <div style="font-size:12px;color:#aaa;">一人5票制</div>
+        <div style="font-size:12px;color:#aaa;">集計日：2026年4月9日</div>
+      </div>
+    </div>
+
+    <!-- TOP3（2位→1位→3位） -->
+    <div class="top3-area" id="top3"></div>
+    <div class="divider-line"></div>
+    <!-- 4〜10位 -->
+    <div class="lower-area" id="lower"></div>
+    <div class="divider-line"></div>
+    <!-- 11〜20位 -->
+    <div class="mid-area" id="mid"></div>
+    <div class="divider-line"></div>
+    <!-- 21位以降 -->
+    <div class="rest-area" id="rest"></div>
+  </div>
 </div>
 
-<main>
-  <div class="section">
-    <div id="votingBanner" class="voting-banner" style="display:none;"></div>
-    <div id="sortArea" style="display:none;">
-      <button class="sort-btn" id="sortBtn" onclick="toggleSort()">票数順に並べ替え</button>
-    </div>
-    <div id="loadingMsg" class="loading-msg">読み込み中...</div>
-    <div class="ability-grid" id="abilityGrid"></div>
-  </div>
-</main>
-
 <footer>
-  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
 
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="cards/cards-data.js"></script>
-
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
-  authDomain: "line-monster-farm.firebaseapp.com",
-  projectId: "line-monster-farm",
-  storageBucket: "line-monster-farm.firebasestorage.app",
-  messagingSenderId: "952838892758",
-  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+const RANKING = [
+  {rank:1, file:"S__71049225_0.jpg", count:62, cardName:"アカゾナエヌシ", bestId:"a6j-SSR-akazonaenusi"},
+  {rank:2, file:"S__29696012_0.jpg", count:52, cardName:"リムル", bestId:"b21i-MR-rimuru"},
+  {rank:3, file:"S__29696017_0.jpg", count:46, cardName:"クリス", bestId:"b7-MR-kurisu"},
+  {rank:4, file:"S__94117891_0.jpg", count:28, cardName:"フレリア", bestId:"a10j-MR-fureria"},
+  {rank:5, file:"S__29696024_0.jpg", count:24, cardName:"リムル・グラサン", bestId:"b5i-SSR-rimurugurasan"},
+  {rank:6, file:"S__143507542_0.jpg", count:21, cardName:"バロム", bestId:"f3k-SSR-baromu"},
+  {rank:7, file:"S__71049221_0.jpg", count:21, cardName:"シュナ", bestId:"a7-MR-syuna"},
+  {rank:8, file:"S__29761540_0.jpg", count:20, cardName:"リヴァイ", bestId:"d7-SSR-rivai"},
+  {rank:9, file:"S__143507511_0.jpg", count:20, cardName:"ルーカス", bestId:"f10h-MR-rucas"},
+  {rank:10, file:"S__29696008_0.jpg", count:19, cardName:"ノア", bestId:"b22h-MR-noa"},
+  {rank:11, file:"S__143507543_0.jpg", count:19, cardName:"バロム", bestId:"f3k-SSR-baromu"},
+  {rank:12, file:"S__143507557_0.jpg", count:17, cardName:"ホリィ", bestId:"f9-SSR-hori"},
+  {rank:13, file:"S__29696021_0.jpg", count:15, cardName:"リムル", bestId:"b1i-SSR-rimuru"},
+  {rank:14, file:"S__143507514_0.jpg", count:14, cardName:"ルーカス", bestId:"f10h-MR-rucas"},
+  {rank:15, file:"S__29761546_0.jpg", count:14, cardName:"アイリス(ライバル)", bestId:"d9-SSR-airisu"},
+  {rank:16, file:"S__29753348_0.jpg", count:12, cardName:"スケアクロウ", bestId:"d14k-MR-sukeakurou"},
+  {rank:17, file:"S__143515661_0.jpg", count:12, cardName:"オフリィ", bestId:"c19k-MR-ofurii"},
+  {rank:18, file:"S__71049253_0.jpg", count:11, cardName:"カルキノス", bestId:"a4g-SSR-karukinosu"},
+  {rank:19, file:"S__71049237_0.jpg", count:10, cardName:"フレリア", bestId:"a10j-MR-fureria"},
+  {rank:20, file:"S__143507517_0.jpg", count:9, cardName:"ルーカス", bestId:"f10h-MR-rucas"},
+  {rank:21, file:"S__143507541_0.jpg", count:8, cardName:"モモン＆ハムスケ", bestId:"f6g-SSR-momonandhamusuke"},
+  {rank:22, file:"S__71049238_0.jpg", count:8, cardName:"ミリアム", bestId:"a13i-MR-miriamu"},
+  {rank:23, file:"S__143515669_0.jpg", count:8, cardName:"サフィン", bestId:"c9-SSR-safin"},
+  {rank:24, file:"S__143507537_0.jpg", count:7, cardName:"チャックル", bestId:"f5h-SSR-tyakkuru"},
+  {rank:25, file:"S__29696015_0.jpg", count:7, cardName:"リュージン", bestId:"b17h-MR-ryuujin"},
+  {rank:26, file:"S__71049235_0.jpg", count:7, cardName:"フレリア", bestId:"a10j-MR-fureria"},
+  {rank:27, file:"S__71049244_0.jpg", count:6, cardName:"ヴィトニル", bestId:"a24j-MR-vitoniru"},
+  {rank:28, file:"S__143507531_0.jpg", count:5, cardName:"セレネ", bestId:"f21l-MR-serene"},
+  {rank:29, file:"S__143507478_0.jpg", count:5, cardName:"ナデシコ", bestId:"e20i-MR-nadeshiko"},
+  {rank:30, file:"S__143515671_0.jpg", count:4, cardName:"サフィン", bestId:"c9-SSR-safin"},
+  {rank:31, file:"S__29753352_0.jpg", count:4, cardName:"エムロード", bestId:"d22g-MR-emuroudo"},
+  {rank:32, file:"S__143507521_0.jpg", count:4, cardName:"メガラニカ", bestId:"f24i-MR-megaranika"},
+  {rank:33, file:"S__29696025_0.jpg", count:3, cardName:"リムル・グラサン", bestId:"b5i-SSR-rimurugurasan"},
+  {rank:34, file:"S__71049233_0.jpg", count:3, cardName:"バン", bestId:"a9-SSR-ban"},
+  {rank:35, file:"S__143507486_0.jpg", count:3, cardName:"リッピー", bestId:"e18l-MR-rippii"},
+  {rank:36, file:"S__71049250_0.jpg", count:3, cardName:"シャルティア", bestId:"f5l-SSR-sharutia"},
+  {rank:37, file:"S__29753361_0.jpg", count:3, cardName:"フラン", bestId:"d18k-MR-furan"},
+  {rank:38, file:"S__71049228_0.jpg", count:3, cardName:"シュナ", bestId:"a7-MR-syuna"},
+  {rank:39, file:"S__29696023_0.jpg", count:2, cardName:"シエナ", bestId:"b9-SSR-siena"},
+  {rank:40, file:"S__71049255_0.jpg", count:2, cardName:"ミリム・リゾート", bestId:"a6i-SSR-mirimuresort"},
+  {rank:41, file:"S__143507523_0.jpg", count:2, cardName:"デミウルゴス", bestId:"f7-MR-demiurugosu"},
+  {rank:42, file:"S__29761544_0.jpg", count:2, cardName:"キング", bestId:"d6g-SSR-king"},
+  {rank:43, file:"S__143507484_0.jpg", count:2, cardName:"ラブレス", bestId:"e12i-MR-raburesu"},
+  {rank:44, file:"S__29753354_0.jpg", count:2, cardName:"ドルチェ", bestId:"d12g-MR-doruche"},
+  {rank:45, file:"S__143507515_0.jpg", count:2, cardName:"ルーカス", bestId:"f10h-MR-rucas"},
+  {rank:46, file:"S__143515654_0.jpg", count:2, cardName:"ギフトン", bestId:"c12l-MR-gifton"},
+  {rank:47, file:"S__143515677_0.jpg", count:1, cardName:"ジョンソン", bestId:"c6k-SSR-jonson"},
+  {rank:48, file:"S__143507526_0.jpg", count:1, cardName:"アインズ", bestId:"f18k-MR-ainzu"},
+  {rank:49, file:"S__143507550_0.jpg", count:1, cardName:"チャコール", bestId:"f1g-SSR-tyakooru"},
+  {rank:50, file:"S__94117892_0.jpg", count:1, cardName:"フレリア", bestId:"a10j-MR-fureria"},
+  {rank:51, file:"S__143507498_0.jpg", count:1, cardName:"アルカディアス", bestId:"e6l-SSR-arukadiasu"},
+  {rank:52, file:"S__71049251_0.jpg", count:1, cardName:"カルキノス", bestId:"a4g-SSR-karukinosu"},
+  {rank:53, file:"S__143515672_0.jpg", count:1, cardName:"ピーシィ(黄)", bestId:"c7-SSR-piisii"},
+  {rank:54, file:"S__143507497_0.jpg", count:1, cardName:"マリッジ", bestId:"e3h-SSR-marijji"},
+  {rank:55, file:"S__143507477_0.jpg", count:1, cardName:"ステラ", bestId:"e7-MR-sutera"},
+  {rank:56, file:"S__143507475_0.jpg", count:1, cardName:"ステラ", bestId:"e7-MR-sutera"},
+  {rank:57, file:"S__29696020_0.jpg", count:1, cardName:"リムル", bestId:"b1i-SSR-rimuru"},
+  {rank:58, file:"S__71049236_0.jpg", count:1, cardName:"フレリア", bestId:"a10j-MR-fureria"},
+  {rank:59, file:"S__143507544_0.jpg", count:1, cardName:"ホリィ", bestId:"f9-SSR-hori"},
+  {rank:60, file:"S__143507546_0.jpg", count:1, cardName:"アライブ", bestId:"f6l-SSR-araibu"},
+  {rank:61, file:"S__143507535_0.jpg", count:1, cardName:"チャックル", bestId:"f5h-SSR-tyakkuru"},
+  {rank:62, file:"S__71049243_0.jpg", count:1, cardName:"ヴィトニル", bestId:"a24j-MR-vitoniru"},
+  {rank:63, file:"S__71049234_0.jpg", count:1, cardName:"バン", bestId:"a9-SSR-ban"},
+];
 
-const RARITY_ORDER = { 'MR': 3, 'SSR': 2, 'SSS': 1, 'SR': 0 };
-const LS_KEY = 'abilityVotes_v1';
-const MAX_VOTES = 5;
+function imgSrc(file) { return `assist-abilities/${file}`; }
+function href(bestId) { return bestId ? `cards/card.html#${bestId}` : '#'; }
 
-let votingOpen = true;
-let reverseMap = {}; // filename -> [cardIds]
-let voteCounts = {}; // filename -> count
-let votedSet = new Set();
-let allFilenames = [];
-let sortByVotes = false;
+const RANK_CLS   = ['rank-1-col', 'rank-2-col', 'rank-3-col'];
+const RANK_LABEL = ['1 位', '2 位', '3 位'];
 
-function toggleSort() {
-  sortByVotes = !sortByVotes;
-  const btn = document.getElementById('sortBtn');
-  btn.classList.toggle('active', sortByVotes);
-  btn.textContent = sortByVotes ? '元の順に戻す' : '票数順に並べ替え';
-  buildGrid(allFilenames);
-}
+/* TOP3（2位→1位→3位） */
+const top3El = document.getElementById('top3');
+[1, 0, 2].forEach(i => {
+  const v = RANKING[i];
+  const col = document.createElement('a');
+  col.className = `top-col ${RANK_CLS[i]}`;
+  col.href = href(v.bestId);
+  col.innerHTML = `
+    <div class="rank-label">${RANK_LABEL[i]}</div>
+    <div class="top-img-wrap">
+      <img src="${imgSrc(v.file)}" alt="${v.cardName}" loading="lazy">
+    </div>
+    <div class="top-name">${v.cardName}</div>
+    <div class="top-votes">${v.count}<span class="votes-unit">票</span></div>
+  `;
+  top3El.appendChild(col);
+});
 
-function getVotedSet() {
-  try {
-    const raw = localStorage.getItem(LS_KEY);
-    return new Set(raw ? JSON.parse(raw) : []);
-  } catch { return new Set(); }
-}
-function saveVotedSet(s) {
-  localStorage.setItem(LS_KEY, JSON.stringify([...s]));
-}
+/* 4〜10位 */
+const lowerEl = document.getElementById('lower');
+RANKING.slice(3, 10).forEach(v => {
+  const col = document.createElement('a');
+  col.className = 'lower-col';
+  col.href = href(v.bestId);
+  col.innerHTML = `
+    <div class="lower-rank">${v.rank} 位</div>
+    <div class="lower-img-wrap"><img src="${imgSrc(v.file)}" alt="${v.cardName}" loading="lazy"></div>
+    <div class="lower-name">${v.cardName}</div>
+    <div class="lower-votes">${v.count}<span>票</span></div>
+  `;
+  lowerEl.appendChild(col);
+});
 
-function getRemainingVotes() {
-  return Math.max(0, MAX_VOTES - votedSet.size);
-}
+/* 11〜20位 */
+const midEl = document.getElementById('mid');
+RANKING.slice(10, 20).forEach(v => {
+  const col = document.createElement('a');
+  col.className = 'mid-col';
+  col.href = href(v.bestId);
+  col.innerHTML = `
+    <div class="mid-rank">${v.rank} 位</div>
+    <div class="mid-img-wrap"><img src="${imgSrc(v.file)}" alt="${v.cardName}" loading="lazy"></div>
+    <div class="mid-name">${v.cardName}</div>
+    <div class="mid-votes">${v.count}<span>票</span></div>
+  `;
+  midEl.appendChild(col);
+});
 
-function updateRemainingUI() {
-  const el = document.getElementById('remainingVotes');
-  if (el) {
-    const rem = getRemainingVotes();
-    el.textContent = rem;
-    el.style.color = rem === 0 ? '#e53e3e' : '#f0a500';
-  }
-  // 残票0なら未投票ボタンを全部無効化
-  document.querySelectorAll('.vote-btn:not(.voted)').forEach(btn => {
-    btn.disabled = getRemainingVotes() === 0;
-  });
-}
-
-function getBestCard(filename) {
-  const cardIds = reverseMap[filename] || [];
-  if (!cardIds.length) return null;
-  return [...cardIds].sort((a, b) => {
-    const ra = RARITY_ORDER[cardsData[a]?.rarity] || 0;
-    const rb = RARITY_ORDER[cardsData[b]?.rarity] || 0;
-    return rb - ra;
-  })[0];
-}
-
-async function vote(filename) {
-  if (!votingOpen || votedSet.has(filename) || getRemainingVotes() === 0) return;
-  votedSet.add(filename);
-  saveVotedSet(votedSet);
-  voteCounts[filename] = (voteCounts[filename] || 0) + 1;
-  updateCardUI(filename);
-  updateRemainingUI();
-  try {
-    await db.collection('abilityVotes').doc('counts').set(
-      { [filename]: firebase.firestore.FieldValue.increment(1) },
-      { merge: true }
-    );
-  } catch(e) { console.warn('投票エラー:', e); }
-}
-
-function updateCardUI(filename) {
-  const card = document.querySelector(`.ability-card[data-file="${filename}"]`);
-  if (!card) return;
-  const countEl = card.querySelector('.vote-count');
-  if (countEl) countEl.textContent = (voteCounts[filename] || 0) + '票';
-  const btn = card.querySelector('.vote-btn');
-  if (btn) {
-    btn.textContent = '投票済み';
-    btn.disabled = true;
-    btn.classList.add('voted');
-  }
-}
-
-function buildGrid(filenames) {
-  if (!votingOpen || sortByVotes) {
-    filenames = [...filenames].sort((a, b) => (voteCounts[b] || 0) - (voteCounts[a] || 0));
-  }
-
-  const grid = document.getElementById('abilityGrid');
-  grid.innerHTML = '';
-
-  filenames.forEach((filename, idx) => {
-    const bestCardId = getBestCard(filename);
-    const card = bestCardId ? cardsData[bestCardId] : null;
-    const cardName = card ? card.name : '';
-    const count = voteCounts[filename] || 0;
-    const voted = votedSet.has(filename);
-    const rank = !votingOpen ? idx + 1 : null;
-    const href = bestCardId ? `cards/card.html#${bestCardId}` : null;
-
-    const div = document.createElement('div');
-    div.className = 'ability-card';
-    div.dataset.file = filename;
-
-    let rankBadge = '';
-    if (rank) {
-      const cls = rank <= 3 ? `rank-${rank}` : '';
-      rankBadge = `<div class="rank-badge ${cls}">${rank}位</div>`;
-    }
-
-    let imgEl = `<img src="assist-abilities/${filename}" alt="能力" loading="lazy">`;
-    let imgWrap = href
-      ? `<a href="${href}" class="ability-img-link">${imgEl}</a>`
-      : `<div class="ability-img-link">${imgEl}</div>`;
-
-    let voteSection = '';
-    if (votingOpen) {
-      const btnClass = voted ? 'vote-btn voted' : 'vote-btn';
-      const btnDisabled = (voted || getRemainingVotes() === 0) ? 'disabled' : '';
-      const btnText = voted ? '投票済み' : '投票';
-      voteSection = `
-        <div class="ability-vote-row">
-          <span class="vote-count">${count}票</span>
-          <button class="${btnClass}" ${btnDisabled} onclick="vote('${filename.replace(/'/g, "\\'")}')">
-            ${btnText}
-          </button>
-        </div>`;
-    } else {
-      voteSection = `<div class="vote-count">${count}票</div>`;
-    }
-
-    div.innerHTML = `
-      ${rankBadge}
-      ${imgWrap}
-      <div class="ability-card-body">
-        <div class="ability-card-name">${cardName ? '付与カード：' + cardName : ''}</div>
-        ${voteSection}
-      </div>
-    `;
-    grid.appendChild(div);
-  });
-}
-
-async function init() {
-  try {
-    const [assignDoc, countsDoc, metaDoc] = await Promise.all([
-      db.collection('cardAbilities').doc('assignments').get(),
-      db.collection('abilityVotes').doc('counts').get(),
-      db.collection('abilityVotes').doc('meta').get(),
-    ]);
-
-    const assignments = assignDoc.exists ? (assignDoc.data() || {}) : {};
-    voteCounts = countsDoc.exists ? (countsDoc.data() || {}) : {};
-    votingOpen = metaDoc.exists ? (metaDoc.data()?.votingOpen !== false) : true;
-    votedSet = getVotedSet();
-
-    // 逆引きマップ構築
-    reverseMap = {};
-    for (const [cardId, files] of Object.entries(assignments)) {
-      for (const f of files) {
-        if (!reverseMap[f]) reverseMap[f] = [];
-        reverseMap[f].push(cardId);
-      }
-    }
-
-    const filenames = Object.keys(reverseMap);
-    allFilenames = filenames;
-
-    // バナー
-    const banner = document.getElementById('votingBanner');
-    banner.style.display = '';
-    if (votingOpen) {
-      banner.innerHTML = `🗳️ 現在投票受付中！好きな能力に投票しよう（1人<span id="remainingVotes" style="color:#f0a500;font-size:16px;">${getRemainingVotes()}</span>票残り）
-        <div class="sub">合計5票まで投票できます。同じ端末・ブラウザから追加投票はできません。</div>`;
-    } else {
-      banner.classList.add('closed');
-      banner.innerHTML = `🏆 投票終了。最終ランキングです。`;
-    }
-
-    document.getElementById('loadingMsg').style.display = 'none';
-    if (votingOpen) document.getElementById('sortArea').style.display = '';
-    buildGrid(filenames);
-    if (votingOpen) updateRemainingUI();
-
-  } catch(e) {
-    console.error(e);
-    document.getElementById('loadingMsg').textContent = '読み込みエラーが発生しました。';
-  }
-}
-
-init();
+/* 21位以降 */
+const restEl = document.getElementById('rest');
+RANKING.slice(20).forEach(v => {
+  const col = document.createElement('a');
+  col.className = 'rest-col';
+  col.href = href(v.bestId);
+  col.innerHTML = `
+    <div class="rest-rank">${v.rank} 位</div>
+    <div class="rest-img-wrap"><img src="${imgSrc(v.file)}" alt="${v.cardName}" loading="lazy"></div>
+    <div class="rest-name">${v.cardName}</div>
+    <div class="rest-votes">${v.count}<span>票</span></div>
+  `;
+  restEl.appendChild(col);
+});
 </script>
 
 </body>
