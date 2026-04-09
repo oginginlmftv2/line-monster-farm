@@ -1,7 +1,6 @@
 // LINEモンスターファーム徹底攻略 - モンスターデータ
 // GameWith順（#1〜#330）
 const monstersData = [
-  { name: 'アスファール', aura: '黒', limited: false, limitedLabel: '', gwImg: 333, localImg: 'S__94371854.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'ナーガ' },
   { name: 'マグマグミ', aura: '黒', limited: false, limitedLabel: '',   gwImg: 332, localImg: null, mon: null, mainMon: 'ゲル', subMon: 'モノリス' },
   { name: 'ラブカ',     aura: '黒', limited: true,  limitedLabel: '春限定', gwImg: 331, localImg: null, mon: null, mainMon: 'ウンディーネ', subMon: 'レアモン' },
   { name: 'レツ', aura: '赤', limited: false, limitedLabel: '', gwImg: 330, localImg: null, mon: '創造', mainMon: 'ザン', subMon: 'アローヘッド' },
@@ -334,4 +333,5 @@ const monstersData = [
   { name: 'モチモチエイト', aura: '黄', limited: false, limitedLabel: '', gwImg: 3, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'ヘンガー' },
   { name: 'ペンギンダマシ', aura: '青', limited: false, limitedLabel: '', gwImg: 2, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'ライガー' },
   { name: 'モッチー', aura: '赤', limited: false, limitedLabel: '', gwImg: 1, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'モッチー' },
+  { name: 'アスファール', aura: '黒', limited: false, limitedLabel: '', gwImg: 333, localImg: 'S__94371854.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'ナーガ' },
 ];
