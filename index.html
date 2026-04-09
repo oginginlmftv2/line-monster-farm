@@ -118,9 +118,10 @@
       <a href="friend.html" class="menu-link">
         <span class="icon">🤝</span> フォロー・フォロワー募集
       </a>
-      <a href="aisyoukennsaku.html" class="menu-link">
-        <span class="icon">🔍</span> 相性検索ツール
-      </a>
+      <div class="menu-link ikusei-toggle-btn" onclick="toggleAisyou(this)">
+        <span class="icon">🔍</span> 相性検索
+        <span class="ikusei-chevron" id="aisyou-chevron">▼</span>
+      </div>
     </div>
 
     <!-- ランキングサブメニュー -->
@@ -146,6 +147,24 @@
         </a>
         <a href="newbie.html" class="submenu-link">
           <span class="submenu-icon">🆕</span> これから始める人へ
+          <span class="submenu-arrow">›</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- 相性検索サブメニュー -->
+    <div class="ikusei-submenu" id="aisyou-submenu">
+      <div class="submenu-list">
+        <a href="aisyoukennsaku.html" class="submenu-link">
+          <span class="submenu-icon">🔍</span> 初心者相性検索
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="hoken-kennsaku.html" class="submenu-link">
+          <span class="submenu-icon">🧩</span> もっと相性検索
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="tyrant-kennsaku.html" class="submenu-link">
+          <span class="submenu-icon">👑</span> タイラントツール
           <span class="submenu-arrow">›</span>
         </a>
       </div>
@@ -348,6 +367,18 @@ function toggleRanking(btn) {
 function toggleBeginner(btn) {
   const menu = document.getElementById('beginner-submenu');
   const chevron = document.getElementById('beginner-chevron');
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    chevron.classList.remove('open');
+  } else {
+    menu.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
+function toggleAisyou(btn) {
+  const menu = document.getElementById('aisyou-submenu');
+  const chevron = document.getElementById('aisyou-chevron');
   const isOpen = menu.classList.contains('open');
   if (isOpen) {
     menu.classList.remove('open');
