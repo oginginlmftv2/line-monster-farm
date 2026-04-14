@@ -91,6 +91,36 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/friend.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/tyrant-kennsaku.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/motonoyatu.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/ability-ranking-result.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/cards/SSR-hori.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://oginginlmftv2.github.io/line-monster-farm/diary.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://oginginlmftv2.github.io/line-monster-farm/privacy.html</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
