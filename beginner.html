@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>初心者ガイド：やるべきこと | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファーム初心者がまずやるべきことをまとめました。初期設定・ミッション・交換所・各種イベントの基本を解説します。">
+  <title>初心者ガイド | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファーム初心者向けガイド。ゲームの基本説明・育成の流れ・初期設定・各コンテンツの参加方法をまとめました。">
   <link rel="canonical" href="https://oginginlmftv2.github.io/line-monster-farm/beginner.html">
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
@@ -116,35 +116,6 @@
       color: #555;
       margin: 10px 0;
     }
-
-    .event-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-top: 10px;
-    }
-    @media (max-width: 480px) { .event-grid { grid-template-columns: 1fr; } }
-    .event-card {
-      background: #f9f9f9;
-      border: 1px solid #eee;
-      border-radius: 10px;
-      padding: 12px 14px;
-    }
-    .event-card-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #1a1a2e;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .event-card-body {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.7;
-    }
-
     .setting-list {
       list-style: none;
       padding: 0;
@@ -170,7 +141,6 @@
       flex-shrink: 0;
       margin-top: 1px;
     }
-
     .ex-card {
       border: 1px solid #eee;
       border-radius: 10px;
@@ -204,6 +174,119 @@
     }
     .ex-badge-source { background: #e8eaf6; color: #3949ab; }
     .ex-badge-danger { background: #fde8e8; color: #c0392b; }
+
+    /* ゲームサイクル */
+    .cycle-list {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      margin: 12px 0;
+    }
+    .cycle-item {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 14px;
+      color: #333;
+      font-weight: bold;
+    }
+    .cycle-arrow {
+      text-align: center;
+      font-size: 18px;
+      color: #f0a500;
+      padding: 2px 0;
+    }
+
+    /* 育成ステップ */
+    .step-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .step-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 28px;
+      height: 28px;
+      background: #1a1a2e;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .step-body {
+      font-size: 14px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .step-title {
+      font-weight: bold;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+
+    /* コンテンツカード */
+    .content-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      margin-bottom: 14px;
+      overflow: hidden;
+    }
+    .content-card-header {
+      background: #1a1a2e;
+      color: #fff;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .content-card-name {
+      font-size: 15px;
+      font-weight: bold;
+    }
+    .content-period {
+      font-size: 11px;
+      background: rgba(255,255,255,0.15);
+      padding: 3px 8px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .content-card-body {
+      padding: 12px 16px;
+    }
+    .content-sub {
+      font-size: 13px;
+      font-weight: bold;
+      color: #f0a500;
+      margin: 12px 0 4px;
+    }
+    .content-sub:first-child { margin-top: 0; }
+    .content-ul {
+      padding-left: 18px;
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .content-p {
+      font-size: 13px;
+      color: #444;
+      line-height: 1.8;
+      margin: 0 0 8px;
+    }
   </style>
 </head>
 <body>
@@ -221,8 +304,8 @@
 
 <div class="container">
   <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">🔰 初心者ガイド：やるべきこと</h1>
-  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">まずここから始めよう</p>
+  <h1 class="page-title">🔰 初心者ガイド</h1>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">ゲームの基本から各コンテンツの参加方法まで</p>
 
   <div class="section">
     <div class="point-box">
@@ -234,16 +317,116 @@
   <div class="section">
     <div class="section-title">📋 目次</div>
     <ul class="toc-list">
-      <li><a href="#settings"><span class="toc-num">1</span> まず最初に：初期設定</a></li>
-      <li><a href="#mission"><span class="toc-num">2</span> ミッションをクリアする</a></li>
-      <li><a href="#exchange"><span class="toc-num">3</span> 交換所を毎週・毎月チェック</a></li>
-      <li><a href="#events"><span class="toc-num">4</span> 各種イベントに参加する</a></li>
+      <li><a href="#about"><span class="toc-num">1</span> このゲームについて</a></li>
+      <li><a href="#ikusei"><span class="toc-num">2</span> 育成の流れ</a></li>
+      <li><a href="#settings"><span class="toc-num">3</span> まず最初に：初期設定</a></li>
+      <li><a href="#mission"><span class="toc-num">4</span> ミッションをクリアする</a></li>
+      <li><a href="#exchange"><span class="toc-num">5</span> 交換所を毎週・毎月チェック</a></li>
+      <li><a href="#josetsu"><span class="toc-num">6</span> 常設コンテンツ</a></li>
+      <li><a href="#limited"><span class="toc-num">7</span> 期間限定イベント</a></li>
     </ul>
   </div>
 
-  <!-- 1. 初期設定 -->
+  <!-- 1. このゲームについて -->
+  <div class="section" id="about">
+    <div class="article-h2">1️⃣ このゲームについて</div>
+    <p class="article-p">LINEモンスターファームは、育成したモンスターで様々なコンテンツに挑戦するゲームです。</p>
+    <p class="article-p">大まかな流れは以下になります。</p>
+    <div class="cycle-list">
+      <div class="cycle-item">🥚 モンスターを育成する</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-item">🏆 育成完了でマスターモンスター（マスモン）として獲得</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-item">⚔️ 獲得したマスモンで常設コンテンツや期間限定イベントに参加する</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-item">🎁 獲得したアイテムでモンスター・アシストカードを強化、またはガチャで新しいモンスター・アシストカードを獲得する</div>
+      <div class="cycle-arrow">↓</div>
+      <div class="cycle-item">🥚 モンスターを育成する（最初に戻る）</div>
+    </div>
+    <p class="article-p">最初は強いモンスターを育てるのは難しいと思いますが、アイテムでモンスターやアシストカードを強化したり、ガチャを引いて新しいモンスターやアシストカードを獲得して、少しずつ強いモンスターを育てられるようになっていくのを楽しむゲームです。</p>
+    <div class="info-box">
+      このページでは育成の流れや各コンテンツの大まかな説明をしています。<br>
+      <strong>強いモンスターを育てたい・各コンテンツでもっと活躍したい</strong>という人は、別ページの <a href="ikusei/sogo-ikusei.html" style="color:#388e3c;font-weight:bold;">育成方法</a> もご覧ください。
+    </div>
+  </div>
+
+  <!-- 2. 育成の流れ -->
+  <div class="section" id="ikusei">
+    <div class="article-h2">2️⃣ 育成の流れ</div>
+
+    <div class="article-h3">育成開始まで</div>
+    <div class="step-list">
+      <div class="step-item">
+        <span class="step-num">1</span>
+        <div class="step-body">
+          <div class="step-title">育成をタップ</div>
+          ホームの右下、【育成】をタップします。
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">2</span>
+        <div class="step-body">
+          <div class="step-title">育成モンスター選択</div>
+          どのモンスターを選んでもかまいません。好きなモンスターを選びましょう。
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">3</span>
+        <div class="step-body">
+          <div class="step-title">アシストカードを編成</div>
+          自分が持っているアシストカードを5枚＋他のプレイヤーから1枚レンタルで、合計6枚をセットします。<br>
+          育てるモンスターのオーラ色（育成モンスターの名前左にある色のついた●）と同じカードをセットすると、強い効果が出る場合が多いです。<br>
+          最初は手持ちが少ないので、全て同じオーラ色にできなくても大丈夫です。
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">4</span>
+        <div class="step-body">
+          <div class="step-title">伝授モンスター選択</div>
+          手持ちのマスモンから2体、もしくは1体＋フレンドのマスモン1体の合計2体を選択します。<br>
+          伝授モンスターから秘伝を伝授させ、育成開始時のステータスを上げたり、能力を上げたりすることができます。<br>
+          最初は伝授モンスターが少ないので、任意のモンスターを選択してください。
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">5</span>
+        <div class="step-body">
+          <div class="step-title">育成アイテム選択</div>
+          育成に持ち込むアイテムを2個まで選択できます。持ち込んだアイテムは自動で使用されて【ようす】が獲得できるものや、育成中に任意のタイミングで使用できるものがあります。<br>
+          最初はアイテムの所持数が少ないので、持ち込まなくて大丈夫です。
+        </div>
+      </div>
+      <div class="step-item">
+        <span class="step-num">6</span>
+        <div class="step-body">
+          <div class="step-title">育成開始</div>
+          【育成開始】をタップすると、AP（スタミナのようなもの、時間回復）を30消費して育成が開始します。
+        </div>
+      </div>
+    </div>
+
+    <div class="article-h3">育成中</div>
+    <ul class="article-ul">
+      <li>トレーニングでステータスを上げ、体力が減ってきたら休養します。</li>
+      <li>ステータスが上がってきたら大会に出場します。大会に参加して賞金を手に入れるとランクが上がり、修行チケットがもらえます。</li>
+      <li>修行チケットを消費して修行に行き、技を覚えます。</li>
+      <li>以上を繰り返してモンスターを強化し、最後の大会での優勝を目指します。</li>
+    </ul>
+
+    <div class="article-h3">育成完了</div>
+    <ul class="article-ul">
+      <li>途中の大会では敗北しても育成は完了しませんが、最後の大会では勝敗に関わらず育成完了になります。</li>
+      <li>育成完了したモンスターはマスモンとして登録され、各コンテンツに挑戦できます。</li>
+      <li>マスモンは伝授モンスターとしても使用できるので、伝授が強いマスモンを育てることも重要です。</li>
+    </ul>
+    <div class="point-box">
+      以上を繰り返すのがこのゲームのメインコンテンツです。まずは気に入ったモンスターを育ててみましょう！
+    </div>
+  </div>
+
+  <!-- 3. 初期設定 -->
   <div class="section" id="settings">
-    <div class="article-h2">1️⃣ まず最初に：初期設定</div>
+    <div class="article-h2">3️⃣ まず最初に：初期設定</div>
     <p class="article-p">
       ゲームを始めたらまず設定を変更しておこう。これをするかしないかで<strong>1回の育成にかかる時間が倍以上変わる。</strong>
     </p>
@@ -266,13 +449,12 @@
     </div>
   </div>
 
-  <!-- 2. ミッション -->
+  <!-- 4. ミッション -->
   <div class="section" id="mission">
-    <div class="article-h2">2️⃣ ミッションをクリアする</div>
+    <div class="article-h2">4️⃣ ミッションをクリアする</div>
     <p class="article-p">
       ミッションにはデイリー・ウィークリー・マンスリーがある。これらをコンスタントにクリアすることがナゲセンや各種リソースの安定した獲得につながる。
     </p>
-
     <div class="article-h3">ウィークリーミッション報酬の持ち越し</div>
     <p class="article-p">
       ウィークリーミッションの報酬を受け取らないまま月曜日4:00を迎えると、報酬がギフトボックスに送られる。ギフトの受け取り期限は1か月あるため、<strong>ナゲセンを翌月に持ち越す</strong>ことが可能。
@@ -282,9 +464,9 @@
     </div>
   </div>
 
-  <!-- 3. 交換所 -->
+  <!-- 5. 交換所 -->
   <div class="section" id="exchange">
-    <div class="article-h2">3️⃣ 交換所を毎週・毎月チェック</div>
+    <div class="article-h2">5️⃣ 交換所を毎週・毎月チェック</div>
     <p class="article-p">
       交換所には13種類の交換所がある。それぞれ入手できるメダルや通貨が異なるため、何と交換すべきかを把握しておこう。
     </p>
@@ -428,46 +610,371 @@
     <div class="info-box">
       この他も、期間限定のイベントは有償のもの以外すべて交換しよう。
     </div>
-
   </div>
 
-  <!-- 4. イベント -->
-  <div class="section" id="events">
-    <div class="article-h2">4️⃣ 各種イベントに参加する</div>
-    <p class="article-p">
-      LINEモンスターファームにはさまざまなイベントがある。参加するだけで報酬が得られるものも多いため、できる範囲で積極的に参加しよう。
-    </p>
+  <!-- 6. 常設コンテンツ -->
+  <div class="section" id="josetsu">
+    <div class="article-h2">6️⃣ 常設コンテンツ</div>
+    <div class="warn-box">
+      ※ 一部コンテンツはファームレベルが上がることで解放されたり、要素が増えていきます。参加できない場合は後回しにして他のコンテンツを進めるか、ファームレベルを上げましょう。
+    </div>
 
-    <div class="event-grid">
-      <div class="event-card">
-        <div class="event-card-title">🏆 モンスターグランプリ</div>
-        <div class="event-card-body">
-          月ごとに開催されるランキングイベント。育成したモンスターを登録して他プレイヤーと競う。参加報酬・順位報酬が獲得できる。
-        </div>
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">⚔️ ブリーダー対抗戦</span>
+        <span class="content-period">毎週月曜日15:00〜日曜日23:59</span>
       </div>
-      <div class="event-card">
-        <div class="event-card-title">👑 ロードオブマスターズ</div>
-        <div class="event-card-body">
-          上位を目指す高難度バトルイベント。しっかり育成したモンスターで挑むことで、豪華報酬が手に入る。
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-card-title">🥇 グランドスラム</div>
-        <div class="event-card-body">
-          定期開催のバトルイベント。参加して報酬を獲得しよう。
-        </div>
-      </div>
-      <div class="event-card">
-        <div class="event-card-title">🗺️ ソロモンクエスト</div>
-        <div class="event-card-body">
-          探索系のイベント。進行度に応じて報酬が得られる。コンスタントに進めておくとリソースが安定する。
-        </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">最大25体のマスモンを設定し、他のブリーダー（プレイヤー）のチームと対戦するコンテンツです。各地形最大5体ずつ設定し、各地形のリーダー5体で対戦します。勝敗やバトル内容によってランキングポイントが得られ、シーズンの最高得点によって階級が変動します。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>【チーム編成】でマスモンを設定した後、【参加】⇒対戦相手を選択します。強い相手ほど高いポイントが得られます。</li>
+          <li>対戦相手を確定し、バトルアイテムを2個まで選択（選ばなくてもOK）したら、対戦開始でBPを1消費してバトルが始まります。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>参加するだけでアリーナメダルを獲得できます。</li>
+          <li>バトルに勝利するとランダムでドロップアイテムが獲得できます。</li>
+          <li>シーズン終了後、ランクに応じたダイヤとアリーナメダルを獲得できます。</li>
+          <li>チーム編成の総合力合計が一定値になるたびにダイヤが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>BPは2時間に1回復し、最大5まで貯められます。溢れないように適宜消費しましょう。</li>
+          <li>デイリー・ウィークリーミッションにもなっているので、BPが貯まったら忘れずに消化しましょう。</li>
+        </ul>
       </div>
     </div>
 
-    <div class="info-box">
-      イベントは期間限定のものが多い。参加を忘れると受け取れない報酬が出てくるため、<strong>開催期間を意識してプレイする</strong>習慣をつけておこう。
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🏟️ デイリーコロシアム</span>
+        <span class="content-period">毎日（4:00リセット）</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンでNPCモンスターと1日3回対戦するコンテンツです。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>【ブリーダーズカップ】または【メモリーズカップ】を選択し、挑戦するランクを選んで決定します。</li>
+          <li>マスモンを選択後、戦闘アイテムを2個まで選択（選ばなくてもOK）してNPCとバトルします。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>【ブリーダーズカップ】ではBC、【メモリーズカップ】ではメモリーPtを獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>下位のランクをクリアすると上位のランクが解放されます。</li>
+          <li>曜日によって対戦するモンスターが異なります。</li>
+          <li>一度勝利したモンスターとランクは次回から戦闘をスキップできます。</li>
+          <li>デイリー・ウィークリーミッションにもなっているので、毎日忘れずに消化しましょう。</li>
+        </ul>
+      </div>
     </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🎯 デュエルカップ</span>
+        <span class="content-period">毎週月曜日15:00〜翌月曜日14:59</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンで週替わりのモンスターと対戦するコンテンツです。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>挑戦するランクを選んで決定します。マスモンを選択後、戦闘アイテムを2個まで選択（選ばなくてもOK）してNPCとバトルします。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>初回勝利することでダイヤとナゲセンが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>下位のランクをクリアすると上位のランクが解放されます。</li>
+          <li>参加で消費するポイントや回数制限はなく、何度でも挑戦できます。</li>
+          <li>ウィークリーミッションにもなっているので、毎週忘れずに消化しましょう。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🆚 フリーマッチ</span>
+        <span class="content-period">常時</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">自分が育てたマスモン同士や、他人が育てたマスモンと対戦するコンテンツです。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>【募集】で自分のマスモンを設定して対戦を募集できます。</li>
+          <li>【挑戦】で対戦を募集している人に挑戦できます。</li>
+          <li>【演習】で自分のマスモン同士でバトルができます。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <p class="content-p">報酬はありません。自分で育てたマスモンのバトルでの強さを確認するためのコンテンツです。</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">📖 クロニクルジャーニー</span>
+        <span class="content-period">常時</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">過去に開催したイベントのストーリーを閲覧できるコンテンツです。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>閲覧したいストーリーを選択してストーリーを読み進め、途中にあるバトルをマスモンで撃破します。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>最初のストーリーを閲覧するだけで☆2モンスターを獲得できます。</li>
+          <li>その後のストーリーとバトルをクリアすると該当モンスターの☆を上げるアイテムが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <p class="content-p">クリアだけで獲得した☆2モンスターを☆3に上げることができるので、ぜひゲットしましょう。</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🎴 カードミッション（常設）</span>
+        <span class="content-period">常時</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">指定された条件を満たして育成を完了すると枠がめくれていき、ビンゴすると報酬が獲得できるコンテンツです（9マス）。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>育成前にホーム画面の【カードミッション】から、挑戦したいビンゴカードをセットします。</li>
+          <li>条件を満たすように育成を完了すると、ビンゴで報酬が獲得できます。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <p class="content-p">ダイヤや育成アイテムを獲得できます。</p>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>1つだけカードをセットできます。育成前にセットするのを忘れないようにしましょう。</li>
+          <li>育成中にはカードの変更はできません。育成前であれば、未クリアでもカードの変更は可能です。</li>
+          <li>カードを変更しても、それ以前に条件を満たしたものは残ります。クリアできないものは後回しにして別のカードを進めましょう。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🗺️ 遠征</span>
+        <span class="content-period">常時</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">各地方に最大4体マスモンを配置し、8時間の遠征をさせるコンテンツです。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>参加する地方を選択し、遠征をさせるマスモンを選択して出発します。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>アイテムと交換できる遠征メダルや、バトルコンテンツで使用できるアイテムを獲得できます。</li>
+          <li>遠征に参加したモンスターの絆が上昇します。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>マスモンを遠征に行かせても、他のコンテンツでは使用できます（売却を除く）。</li>
+          <li>遠征に行ける地方はファームレベルが上がると増えます。</li>
+          <li>デイリー・ウィークリーミッション、イベントデイリーミッションにもなっているので毎日忘れずに行いましょう。</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 期間限定イベント -->
+  <div class="section" id="limited">
+    <div class="article-h2">7️⃣ 期間限定イベント</div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🏆 モンスターグランプリ（モングラ）</span>
+        <span class="content-period">毎月月末〜1ヶ月（前半・後半）</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">主に3つのコンテンツがあります。</p>
+        <ul class="content-ul">
+          <li>①テーマに沿ったモンスターを育成し、主にマスモンの総合力で得られるポイントを競うイベント</li>
+          <li>②モンスターを育成し、育成Ptを獲得して報酬をもらうイベント</li>
+          <li>③1日1回アイテムがもらえるくじを引けるイベント</li>
+        </ul>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>①テーマに沿ったモンスターを育成完了すると自動的に参加できます。</li>
+          <li>②任意のモンスターを育成完了するたびに育成Ptが獲得できます。</li>
+          <li>③任意のモンスターを育成完了すると、毎日1回【たからさがし】からくじを引けます。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>①順位によってダイヤや強化アイテムなどが獲得できます。</li>
+          <li>②累計育成Ptに応じてメダル・ダイヤ・期間限定ガチャチケ・☆3モンスター確定アイテムなど様々なアイテムが獲得できます。</li>
+          <li>③ガチャチケットやダイヤ、BCやメモリーPtなど様々なアイテムが獲得できます。</li>
+          <li>イベント終了時にストーリーが追加され、読むことでダイヤが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>①のテーマは前半・後半で変わりますので、忘れずに参加しましょう。</li>
+          <li>②育成Pt報酬も前半・後半に分かれていますが、育成すれば大丈夫です。</li>
+          <li>③毎日1回引けます。【もう1回】を選ぶと続けてくじが引けて報酬が倍になります（最大16倍）。毎日忘れずに実施しましょう。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">👑 ロードオブマスターズ（ローマス）</span>
+        <span class="content-period">毎月上旬〜中旬</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンをエントリーして、他のプレイヤーと自動でバトルして順位を競うイベントです。3日間の認定戦（5体総当たり戦）→5日間の本戦（5体総当たり戦）→最終戦（トーナメント）→頂上決戦（トーナメント）の流れです。</p>
+        <div class="content-sub">参加方法</div>
+        <p class="content-p">マスモンをエントリーするだけで参加完了です。</p>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>エントリーしてバトルすると参加報酬でダイヤとBCが獲得できます。</li>
+          <li>勝利して大会ランクが上がるとダイヤや期間限定チケットなどが獲得できます。</li>
+          <li>認定戦終了時と最終戦終了時にはロードメダルが貰え、希少なアイテムと交換できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>毎日3体ずつエントリーでき、日によって種族やオーラが指定されている場合があります。</li>
+          <li>エントリーするだけで報酬が獲得できますので、毎日忘れずにエントリーしましょう。</li>
+          <li>頂上決戦ではベスト4以内を予想する投票があり、的中数が多いほど報酬が獲得できます（外れても豪華な報酬あり）。忘れずに投票しましょう。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🥇 グランドスラム（グラスラ）</span>
+        <span class="content-period">毎月中旬〜下旬</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンをNPCモンスターと戦わせてスコアを競うイベントです。4つのコンテンツの合計スコアで順位を競います。</p>
+        <ul class="content-ul">
+          <li>①連戦：マスモンでNPCモンスターを撃破していくコンテンツ</li>
+          <li>②決戦：グラスラ用のボスモンスター（超モンスター）と戦いスコアを競うコンテンツ</li>
+          <li>③編成：各ステータスに対応するアシストカードを設定し、レベルによるスコアを競うコンテンツ</li>
+          <li>④超連戦：強力なモンスターと戦いスコアを競うコンテンツ</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>①連戦：撃破のたびにグラスラメダルやダイヤなどが獲得できます。</li>
+          <li>②決戦：各難易度の初勝利でダイヤやアイテムが獲得できます。</li>
+          <li>④超連戦：各モンスターの初勝利でダイヤやアイテムが獲得できます。</li>
+          <li>毎日0時の総合順位に応じたダイヤやBCが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>①連戦のTPは毎日補充される他、イベントデイリーミッションで獲得できます。毎日欠かさず消化しましょう。</li>
+          <li>②決戦は最初は勝利が難しいですが、③編成でアシストカードをセットすることで自分のマスモンを強化し超モンスターを弱化させることができます。</li>
+          <li>③編成枠は①連戦を進めることで解放されます。セットするカードが増えるほど超モンスターに勝ちやすくなります。</li>
+          <li>④超連戦は③編成の影響を受けません。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🗺️ ソロモンクエスト（ソロクエ）</span>
+        <span class="content-period">毎月中旬〜月末</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンを5体【供モン】として設定し、NPCの【勇者モン】と一緒にステージをクリアしていくイベントです。零・近・中・遠距離の各4距離それぞれの最高スコア合計で順位を競います。カードを選択して敵モンスターを撃破していく独自のバトル形式です。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>参加する距離と【勇者モン】を選択し、マスモン5体を【供モン】として設定します。</li>
+          <li>SPを消費して出発し、途中で敗北またはwave10のボス撃破時にスコアを獲得します。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>各距離初回クリア時にダイヤが獲得できます。</li>
+          <li>複数回クリアで希少なアイテムと交換できるソロモンメダルを獲得できます。</li>
+          <li>最終的な順位に応じてダイヤやアイテムを獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <p class="content-p">イベント終盤にはSP消費が半分になります。</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">💰 売却キャンペーン</span>
+        <span class="content-period">毎月2回（前半：上旬、後半：中旬）</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">マスモンを売却してポイントに応じた報酬が貰えるイベントです。</p>
+        <div class="content-sub">参加方法</div>
+        <p class="content-p">該当ページでマスモンを売却するとポイントが累積し、一定値以上になると報酬が獲得できます。</p>
+        <div class="content-sub">報酬</div>
+        <p class="content-p">期間限定ガチャチケット、ナゲセン、ダイヤなどが獲得できます。</p>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>売却ボーナスがある種族もありますが、どのマスモンを売却しても報酬は獲得できます。</li>
+          <li>使わないマスモンはこのタイミングで売却するのがおすすめです。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🎴 カードミッション（期間限定）</span>
+        <span class="content-period">前半：上旬〜中旬、後半：中旬〜下旬</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">指定された条件を満たして育成を完了すると枠がめくれていき、ビンゴすると報酬が獲得できるイベントです。常設の9マスと異なり、25マスになっています。</p>
+        <div class="content-sub">参加方法</div>
+        <ul class="content-ul">
+          <li>育成前にホーム画面の【カードミッション】→【期間限定】から、挑戦したいビンゴカードをセットします。</li>
+          <li>条件を満たすように育成を完了すると、ビンゴで報酬が獲得できます。</li>
+        </ul>
+        <div class="content-sub">報酬</div>
+        <p class="content-p">ダイヤや育成アイテム、期間限定ガチャチケットなどが獲得できます。</p>
+        <div class="content-sub">補足</div>
+        <p class="content-p">常設と同時にセットすることが可能です。育成前にセットするのを忘れずにクリアしましょう。</p>
+      </div>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-header">
+        <span class="content-card-name">🎯 WANTEDキャンペーン</span>
+        <span class="content-period">月末〜中旬</span>
+      </div>
+      <div class="content-card-body">
+        <div class="content-sub">コンテンツ説明</div>
+        <p class="content-p">開催期間中、特定のモンスター（WANTED）がフレンド再生で出やすくなるイベントです。</p>
+        <div class="content-sub">参加方法</div>
+        <p class="content-p">フレンド再生を行うことで参加できます。</p>
+        <div class="content-sub">報酬</div>
+        <ul class="content-ul">
+          <li>WANTEDをフレンド再生するたびに、6回までそのモンスターの☆を上げるアイテムが獲得できます。</li>
+          <li>7回目以降はBCが獲得できます。</li>
+        </ul>
+        <div class="content-sub">補足</div>
+        <ul class="content-ul">
+          <li>期間中1回のみ、確定NPCとしてWANTEDが固定で出現し続けます（再生すると固定が外れます）。</li>
+          <li>固定以外にもランダムで確定NPCが出現し、その都度1回ずつ再生できます。</li>
+          <li>NPCの再生では確定NPC以外からWANTEDは再生されません。</li>
+          <li>WANTEDはモングラのテーマとなっているため、たくさん再生して☆を上げてスコアを伸ばしましょう。</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 
 </div>
