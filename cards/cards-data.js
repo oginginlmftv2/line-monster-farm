@@ -1,4 +1,5 @@
 const cardsData = {
+  'f18l-MR-esueru':         { name: 'エスエル',          rarity: 'MR',  oura: '黒', type: 'フォース',   mon: '無機', ext: 'jpg' },
   'a10j-SSR-fureria':       { name: 'フレリア',          rarity: 'SSR', oura: '赤', type: '師匠',       mon: '獣',   ext: 'jpg' },
   'a4g-SSR-karukinosu':     { name: 'カルキノス',        rarity: 'SSR', oura: '赤', type: '命中',       mon: '創造', ext: 'jpg' },
   'a24j-MR-vitoniru':       { name: 'ヴィトニル',        rarity: 'MR',  oura: '赤', type: 'メンタル',   mon: '獣',   ext: 'jpg' },
