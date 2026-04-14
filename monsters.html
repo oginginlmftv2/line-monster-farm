@@ -201,7 +201,7 @@ function buildGrid(assignments) {
   const grid = document.getElementById('monsterGrid');
   grid.innerHTML = '';
 
-  const sortedMonsters = monstersData.map((m, idx) => ({ ...m, idx })).sort((a, b) => b.gwImg - a.gwImg);
+  const sortedMonsters = monstersData.map((m, idx) => ({ ...m, idx })).sort((a, b) => (b.gwImg ?? Infinity) - (a.gwImg ?? Infinity));
   sortedMonsters.forEach((m) => {
     const idx = m.idx;
     const validLocalImg = (m.localImg && m.localImg.startsWith('S__')) ? m.localImg : null;
@@ -221,7 +221,7 @@ function buildGrid(assignments) {
     card.innerHTML = `
       <div class="monster-img-wrap">
         <img src="${imgSrc}" alt="${m.name}"
-             onerror="this.src='${gwUrl(m.gwImg)}'">
+             onerror="this.onerror=null;${m.gwImg ? `this.src='${gwUrl(m.gwImg)}'` : ''}">
         ${m.limited ? `<span class="badge-limited">限定</span>` : ''}
       </div>
       <div class="monster-info">

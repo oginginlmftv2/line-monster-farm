@@ -334,5 +334,5 @@ const monstersData = [
   { name: 'ペンギンダマシ', aura: '青', limited: false, limitedLabel: '', gwImg: 2, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'ライガー' },
   { name: 'モッチー', aura: '赤', limited: false, limitedLabel: '', gwImg: 1, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'モッチー' },
   { name: 'アスファール', aura: '黒', limited: false, limitedLabel: '', gwImg: 333, localImg: 'S__94371854.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'ナーガ' },
-  { name: 'シュシュポッポ', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'monster/S__71286791_0.jpg', mon: '無機', mainMon: 'ゴーレム', subMon: 'レアモン' },
+  { name: 'シュシュポッポ', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__71286791_0.jpg', mon: '無機', mainMon: 'ゴーレム', subMon: 'レアモン' },
 ];
