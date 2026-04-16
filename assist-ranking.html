@@ -230,6 +230,30 @@
     }
     .mid-votes span { font-size: 12px; font-weight: 400; }
 
+    /* コメント */
+    .top-comment {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      line-height: 1.5;
+      margin-top: 6px;
+      padding: 0 6px;
+    }
+    .lower-comment {
+      font-size: 10px;
+      color: #666;
+      text-align: center;
+      line-height: 1.4;
+      padding: 0 4px;
+    }
+    .mid-comment {
+      font-size: 10px;
+      color: #666;
+      text-align: center;
+      line-height: 1.4;
+      padding: 0 4px;
+    }
+
     /* スマホ */
     @media (max-width: 600px) {
       .rank-1-col .top-img-wrap { width: 80px; height: 80px; }
@@ -320,26 +344,26 @@
 <script src="cards/cards-data.js"></script>
 <script>
 const RANKING = [
-  { rank:  1, name: 'フレリア',       rarity: 'MR',  votes: 153, id: 'a10j-MR-fureria' },
-  { rank:  2, name: 'リムル',         rarity: 'MR',  votes: 119, id: 'b21i-MR-rimuru' },
-  { rank:  3, name: 'ヴィトニル',     rarity: 'MR',  votes:  93, id: 'a24j-MR-vitoniru' },
-  { rank:  4, name: 'クリス',         rarity: 'MR',  votes:  62, id: 'b7-MR-kurisu' },
-  { rank:  5, name: 'カルキノス',     rarity: 'SSR', votes:  55, id: 'a4g-SSR-karukinosu' },
-  { rank:  6, name: 'シュナ',         rarity: 'MR',  votes:  39, id: 'a7-MR-syuna' },
-  { rank:  7, name: 'デミウルゴス',   rarity: 'MR',  votes:  38, id: 'f7-MR-demiurugosu' },
-  { rank:  8, name: 'メガラニカ',     rarity: 'MR',  votes:  36, id: 'f24i-MR-megaranika' },
-  { rank:  9, name: 'アカゾナエヌシ', rarity: 'SSR', votes:  29, id: 'a6j-SSR-akazonaenusi' },
-  { rank: 10, name: 'ホリィ',         rarity: 'SSR', votes:  14, id: 'f9-SSR-hori' },
-  { rank: 11, name: 'イブリース',     rarity: 'MR',  votes:  10, id: 'f16h-MR-iburiisu' },
-  { rank: 12, name: 'メリオダス',     rarity: 'SSR', votes:   9, id: 'c2h-SSR-meriodasu' },
-  { rank: 13, name: 'ナデシコ',       rarity: 'MR',  votes:   8, id: 'e20i-MR-nadeshiko' },
-  { rank: 14, name: 'オフリィ',       rarity: 'MR',  votes:   8, id: 'c19k-MR-ofurii' },
-  { rank: 15, name: 'ギフトン',       rarity: 'MR',  votes:   5, id: 'c12l-MR-gifton' },
-  { rank: 16, name: 'ステラ',         rarity: 'MR',  votes:   5, id: 'e7-MR-sutera' },
-  { rank: 17, name: 'ミルキィ',       rarity: 'MR',  votes:   5, id: 'c11j-MR-mirukii' },
-  { rank: 18, name: 'アウフィエル',   rarity: 'MR',  votes:   4, id: 'c19h-MR-aufieru' },
-  { rank: 19, name: 'リッピー',       rarity: 'MR',  votes:   4, id: 'e18l-MR-rippii' },
-  { rank: 20, name: 'サフィン',       rarity: 'SSR', votes:   4, id: 'c9-SSR-safin' },
+  { rank:  1, name: 'フレリア',       rarity: 'MR',  votes: 153, id: 'a10j-MR-fureria',      comment: 'たった1枚で獣の歴史を変えた最強カード。汎用性も抜群で他モン類の総合力も爆上げできる' },
+  { rank:  2, name: 'リムル',         rarity: 'MR',  votes: 119, id: 'b21i-MR-rimuru',        comment: '強すぎる能力「俺は喰らうものだ」で環境を激変させた。出現数アップ持ちでトレ性能も最強クラス' },
+  { rank:  3, name: 'ヴィトニル',     rarity: 'MR',  votes:  93, id: 'a24j-MR-vitoniru',      comment: '最強クラスのトレ性能とハイレベルな火力増強で高評価' },
+  { rank:  4, name: 'クリス',         rarity: 'MR',  votes:  62, id: 'b7-MR-kurisu',           comment: '' },
+  { rank:  5, name: 'カルキノス',     rarity: 'SSR', votes:  55, id: 'a4g-SSR-karukinosu',    comment: '' },
+  { rank:  6, name: 'シュナ',         rarity: 'MR',  votes:  39, id: 'a7-MR-syuna',            comment: '' },
+  { rank:  7, name: 'デミウルゴス',   rarity: 'MR',  votes:  38, id: 'f7-MR-demiurugosu',     comment: '' },
+  { rank:  8, name: 'メガラニカ',     rarity: 'MR',  votes:  36, id: 'f24i-MR-megaranika',    comment: '' },
+  { rank:  9, name: 'アカゾナエヌシ', rarity: 'SSR', votes:  29, id: 'a6j-SSR-akazonaenusi',  comment: '' },
+  { rank: 10, name: 'ホリィ',         rarity: 'SSR', votes:  14, id: 'f9-SSR-hori',            comment: '' },
+  { rank: 11, name: 'イブリース',     rarity: 'MR',  votes:  10, id: 'f16h-MR-iburiisu',      comment: '' },
+  { rank: 12, name: 'メリオダス',     rarity: 'SSR', votes:   9, id: 'c2h-SSR-meriodasu',     comment: '' },
+  { rank: 13, name: 'ナデシコ',       rarity: 'MR',  votes:   8, id: 'e20i-MR-nadeshiko',     comment: '' },
+  { rank: 14, name: 'オフリィ',       rarity: 'MR',  votes:   8, id: 'c19k-MR-ofurii',        comment: '' },
+  { rank: 15, name: 'ギフトン',       rarity: 'MR',  votes:   5, id: 'c12l-MR-gifton',        comment: '' },
+  { rank: 16, name: 'ステラ',         rarity: 'MR',  votes:   5, id: 'e7-MR-sutera',          comment: '' },
+  { rank: 17, name: 'ミルキィ',       rarity: 'MR',  votes:   5, id: 'c11j-MR-mirukii',       comment: '' },
+  { rank: 18, name: 'アウフィエル',   rarity: 'MR',  votes:   4, id: 'c19h-MR-aufieru',       comment: '' },
+  { rank: 19, name: 'リッピー',       rarity: 'MR',  votes:   4, id: 'e18l-MR-rippii',        comment: '' },
+  { rank: 20, name: 'サフィン',       rarity: 'SSR', votes:   4, id: 'c9-SSR-safin',           comment: '' },
 ];
 
 const MAX = RANKING[0].votes;
@@ -369,6 +393,7 @@ const top3El = document.getElementById('top3');
     </div>
     <div class="top-name">${v.name}</div>
     <div class="top-votes">${v.votes}<span class="votes-unit">票</span></div>
+    ${v.comment ? `<div class="top-comment">${v.comment}</div>` : ''}
   `;
   top3El.appendChild(col);
 });
@@ -390,6 +415,7 @@ RANKING.slice(3, 10).forEach(v => {
     </div>
     <div class="lower-name">${v.name}</div>
     <div class="lower-votes">${v.votes}<span>票</span></div>
+    ${v.comment ? `<div class="lower-comment">${v.comment}</div>` : ''}
   `;
   lowerEl.appendChild(col);
 });
@@ -411,6 +437,7 @@ RANKING.slice(10).forEach(v => {
     </div>
     <div class="mid-name">${v.name}</div>
     <div class="mid-votes">${v.votes}<span>票</span></div>
+    ${v.comment ? `<div class="mid-comment">${v.comment}</div>` : ''}
   `;
   midEl.appendChild(col);
 });
