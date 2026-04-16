@@ -142,6 +142,11 @@
       background: #f0f0f0;
       color: #666;
     }
+    a.ability-card:hover {
+      box-shadow: 0 4px 14px rgba(240,165,0,0.25);
+      border: 1px solid #f0a500;
+    }
+    a.ability-card { border: 1px solid transparent; }
     .no-result {
       text-align: center;
       color: #aaa;
@@ -231,7 +236,16 @@
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
 
+<script src="cards/cards-data.js"></script>
 <script>
+// カード名 → カードID マップ（同名カードは先に定義された方を優先）
+const cardNameToId = {};
+for (const [id, card] of Object.entries(cardsData)) {
+  if (!cardNameToId[card.name]) {
+    cardNameToId[card.name] = id;
+  }
+}
+
 const TAG_GROUPS = {
   aura:   ['オーラ黒','オーラ青','オーラ赤','オーラ黄','オーラ緑','オーラ白'],
   effect: ['攻撃強化','デバフ','追撃','連撃','クリティカル','命中強化','被ダメ軽減','ガッツ回復','シールド','完全回避','回避','必中','無効化'],
@@ -322,8 +336,8 @@ function render() {
       : `<span class="source-badge flash">閃き</span>`;
     const tags = (a.tags || []).map(t => `<span class="ability-tag">${escHtml(t)}</span>`).join('');
     const desc = a.desc.replace(/<br>/g, '<br>');
-    return `
-      <div class="ability-card">
+    const cardId = cardNameToId[a.card];
+    const inner = `
         <div class="ability-header">
           <span class="ability-name">${escHtml(a.name)}</span>
           <span class="ability-card-name">${escHtml(a.card)}</span>
@@ -331,8 +345,12 @@ function render() {
         </div>
         <div class="ability-desc">${desc}</div>
         ${tags ? `<div class="ability-tags">${tags}</div>` : ''}
-      </div>
     `;
+    if (cardId) {
+      return `<a class="ability-card" href="cards/card.html#${cardId}" style="display:block;text-decoration:none;color:inherit;">${inner}</a>`;
+    } else {
+      return `<div class="ability-card">${inner}</div>`;
+    }
   }).join('');
 }
 
