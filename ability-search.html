@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>能力検索 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのアシストカード能力を検索。タグ・キーワード・カード名で絞り込めます。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ability-search.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .search-box {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .search-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+    }
+    .search-input:focus {
+      border-color: #f0a500;
+    }
+    .tag-filter {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .tag-btn {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+    .tag-btn:hover { background: #fff3cd; border-color: #f0a500; color: #b8860b; }
+    .tag-btn.active { background: #f0a500; border-color: #f0a500; color: #fff; }
+    .source-filter {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .source-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #666;
+    }
+    .source-btn {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .source-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
+    .result-count {
+      font-size: 13px;
+      color: #999;
+      margin-bottom: 12px;
+    }
+    .ability-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .ability-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 14px 16px;
+    }
+    .ability-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap: wrap;
+    }
+    .ability-name {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .ability-card-name {
+      font-size: 12px;
+      color: #999;
+      background: #f5f5f5;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .source-badge {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-left: auto;
+    }
+    .source-badge.event {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #c8e6c9;
+    }
+    .source-badge.flash {
+      background: #fff8e1;
+      color: #f57f17;
+      border: 1px solid #ffe082;
+    }
+    .ability-desc {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 8px;
+    }
+    .ability-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .ability-tag {
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: #f0f0f0;
+      color: #666;
+    }
+    .no-result {
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+      padding: 40px 0;
+    }
+    .filter-section-title {
+      font-size: 12px;
+      font-weight: bold;
+      color: #888;
+      margin-bottom: 6px;
+    }
+    .clear-btn {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #888;
+      cursor: pointer;
+    }
+    .clear-btn:hover { background: #fee; border-color: #f88; color: #c00; }
+    .tag-group {
+      margin-bottom: 14px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🔎 能力検索</h1>
+
+  <!-- キーワード検索 -->
+  <div class="search-box">
+    <input class="search-input" id="searchInput" type="text" placeholder="能力名・効果・カード名で検索...">
+  </div>
+
+  <!-- ソースフィルター -->
+  <div class="source-filter">
+    <span class="source-label">入手方法：</span>
+    <button class="source-btn active" data-source="all" onclick="setSource(this)">すべて</button>
+    <button class="source-btn" data-source="イベント" onclick="setSource(this)">イベント</button>
+    <button class="source-btn" data-source="閃き" onclick="setSource(this)">閃き</button>
+  </div>
+
+  <!-- タグフィルター -->
+  <div class="tag-group">
+    <div class="filter-section-title">オーラ条件</div>
+    <div class="tag-filter" id="tagFilterAura"></div>
+  </div>
+  <div class="tag-group">
+    <div class="filter-section-title">効果種別</div>
+    <div class="tag-filter" id="tagFilterEffect"></div>
+  </div>
+  <div class="tag-group">
+    <div class="filter-section-title">種族・タイプ</div>
+    <div class="tag-filter" id="tagFilterType"></div>
+  </div>
+  <div class="tag-group">
+    <div class="filter-section-title">タイミング・条件</div>
+    <div class="tag-filter" id="tagFilterTiming"></div>
+  </div>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+    <div class="result-count" id="resultCount"></div>
+    <button class="clear-btn" onclick="clearAll()">フィルターをリセット</button>
+  </div>
+
+  <!-- 結果 -->
+  <div class="ability-list" id="abilityList"></div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script>
+const TAG_GROUPS = {
+  aura:   ['オーラ黒','オーラ青','オーラ赤','オーラ黄','オーラ緑','オーラ白'],
+  effect: ['攻撃強化','デバフ','追撃','連撃','クリティカル','命中強化','被ダメ軽減','ガッツ回復','シールド','完全回避','回避','必中','無効化'],
+  type:   ['無機','幻霊','獣族','怪物','魔族','創造'],
+  timing: ['序盤','前半','後半','終盤','有利時','不利以外'],
+};
+
+let allData = [];
+let activeTags = new Set();
+let activeSource = 'all';
+
+function buildTagButtons() {
+  const map = { aura: 'tagFilterAura', effect: 'tagFilterEffect', type: 'tagFilterType', timing: 'tagFilterTiming' };
+  for (const [key, tags] of Object.entries(TAG_GROUPS)) {
+    const el = document.getElementById(map[key]);
+    tags.forEach(tag => {
+      const btn = document.createElement('button');
+      btn.className = 'tag-btn';
+      btn.textContent = tag;
+      btn.dataset.tag = tag;
+      btn.onclick = () => toggleTag(btn, tag);
+      el.appendChild(btn);
+    });
+  }
+}
+
+function toggleTag(btn, tag) {
+  if (activeTags.has(tag)) {
+    activeTags.delete(tag);
+    btn.classList.remove('active');
+  } else {
+    activeTags.add(tag);
+    btn.classList.add('active');
+  }
+  render();
+}
+
+function setSource(btn) {
+  document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeSource = btn.dataset.source;
+  render();
+}
+
+function clearAll() {
+  activeTags.clear();
+  document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+  activeSource = 'all';
+  document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-source="all"]').classList.add('active');
+  document.getElementById('searchInput').value = '';
+  render();
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function render() {
+  const keyword = document.getElementById('searchInput').value.trim().toLowerCase();
+  const list = document.getElementById('abilityList');
+
+  const filtered = allData.filter(a => {
+    // ソースフィルター
+    if (activeSource !== 'all' && a.source !== activeSource) return false;
+    // タグフィルター（AND検索）
+    for (const tag of activeTags) {
+      if (!a.tags || !a.tags.includes(tag)) return false;
+    }
+    // キーワード検索
+    if (keyword) {
+      const text = (a.name + a.desc + a.card).toLowerCase();
+      if (!text.includes(keyword)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('resultCount').textContent = `${filtered.length}件`;
+
+  if (filtered.length === 0) {
+    list.innerHTML = '<div class="no-result">条件に一致する能力が見つかりませんでした</div>';
+    return;
+  }
+
+  list.innerHTML = filtered.map(a => {
+    const sourceBadge = a.source === 'イベント'
+      ? `<span class="source-badge event">イベント</span>`
+      : `<span class="source-badge flash">閃き</span>`;
+    const tags = (a.tags || []).map(t => `<span class="ability-tag">${escHtml(t)}</span>`).join('');
+    const desc = a.desc.replace(/<br>/g, '<br>');
+    return `
+      <div class="ability-card">
+        <div class="ability-header">
+          <span class="ability-name">${escHtml(a.name)}</span>
+          <span class="ability-card-name">${escHtml(a.card)}</span>
+          ${sourceBadge}
+        </div>
+        <div class="ability-desc">${desc}</div>
+        ${tags ? `<div class="ability-tags">${tags}</div>` : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+// データ読み込み
+fetch('lmfdb_abilities_data.json')
+  .then(r => r.json())
+  .then(data => {
+    allData = data;
+    buildTagButtons();
+    render();
+    document.getElementById('searchInput').addEventListener('input', render);
+  })
+  .catch(() => {
+    document.getElementById('abilityList').innerHTML = '<div class="no-result">データの読み込みに失敗しました</div>';
+  });
+</script>
+
+</body>
+</html>
