@@ -196,7 +196,7 @@ const monstersData = [
   { name: 'フロッグロック', aura: '緑', limited: false, limitedLabel: '', gwImg: 140, localImg: null, mon: '怪物', mainMon: 'ゴーレム', subMon: 'カワズモー' },
   { name: 'カチョウフウゲツ', aura: '白', limited: false, limitedLabel: '', gwImg: 139, localImg: null, mon: '獣', mainMon: 'ピクシー', subMon: 'キュービ' },
   { name: 'メカお父さん', aura: '白', limited: true, limitedLabel: 'コラボ限定', gwImg: 138, localImg: null, mon: '獣', mainMon: 'ライガー', subMon: 'レアモン' },
-  { name: 'リヴァイアサン', aura: '青', limited: false, limitedLabel: '', gwImg: 137, localImg: null, mon: '幻霊', mainMon: 'ナーガ', subMon: 'レアモン' },
+  { name: 'リヴァイアサン', aura: '青', limited: false, limitedLabel: '', gwImg: 137, localImg: null, mon: '魔族', mainMon: 'ナーガ', subMon: 'レアモン' },
   { name: 'テクノドラゴン', aura: '黄', limited: false, limitedLabel: '', gwImg: 136, localImg: null, mon: '魔族', mainMon: 'ドラゴン', subMon: 'ヘンガー' },
   { name: 'キュービ', aura: '白', limited: false, limitedLabel: '', gwImg: 135, localImg: null, mon: '獣', mainMon: 'キュービ', subMon: 'キュービ' },
   { name: 'セイラン', aura: '青', limited: false, limitedLabel: '', gwImg: 134, localImg: null, mon: '獣', mainMon: 'キュービ', subMon: 'ライガー' },
