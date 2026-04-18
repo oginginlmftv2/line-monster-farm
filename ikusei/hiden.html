@@ -325,20 +325,143 @@
     <p>ジュニア期での超修行も可能だが出なかった時のリスクあり。ミドル2T目が最もおすすめ。<br>「超修行の方がボスモンに出会える確率が体感高い」という声もある（詳細は未検証）。</p>
   </div>
 
-  <!-- ⑦ ボスモン -->
+  <!-- ⑦ ボスモン・ノラモン -->
   <div class="section" id="boss">
-    <div class="section-title">ボスモン出現条件</div>
-    <p>修行に行く距離によって出現するボスモンが異なる。</p>
-    <table class="data-table">
-      <thead><tr><th>距離</th><th>ボスモン名</th><th>モン類</th></tr></thead>
-      <tbody>
-        <tr><td>零距離</td><td>ヒノトリ</td><td>創造</td></tr>
-        <tr><td>近距離</td><td>キジン・イブ</td><td>怪物・幻霊</td></tr>
-        <tr><td>中距離</td><td>ムー・イルミネ</td><td>魔族・無機</td></tr>
-        <tr><td>遠距離</td><td>ハクタク</td><td>獣</td></tr>
-      </tbody>
-    </table>
-    <div class="info-box">零距離と遠距離は1種類ずつのため、創造や獣のボスモンを狙う場合は絞りやすい。</div>
+    <div class="section-title">ボスモン・ノラモン出現条件</div>
+    <p>ノラモン注意報中に修行で出会えるボスモン・ノラモンは距離によって異なる。各モンスターの画像は出会えるモンスターと伝授できる能力の内容。</p>
+    <div class="info-box">零距離と遠距離はボスモンが1種類ずつのため、創造や獣のボスモン秘伝を狙う場合は絞りやすい。</div>
+
+    <style>
+      .distance-block {
+        border: 1px solid #eee;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 16px;
+      }
+      .distance-block-header {
+        background: #1a1a2e;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .distance-block-body {
+        padding: 14px 16px;
+      }
+      .monster-category-label {
+        font-size: 12px;
+        font-weight: bold;
+        color: #999;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin: 0 0 8px;
+      }
+      .monster-img-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .monster-img-grid img {
+        width: 100%;
+        border-radius: 8px;
+        border: 1px solid #eee;
+        display: block;
+      }
+      .monster-img-grid.bossmon {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+      .divider { border: none; border-top: 1px solid #f0f0f0; margin: 12px 0; }
+    </style>
+
+    <!-- 零距離 -->
+    <div class="distance-block">
+      <div class="distance-block-header">⚡ 零距離</div>
+      <div class="distance-block-body">
+        <p class="monster-category-label">ボスモン（創造）</p>
+        <div class="monster-img-grid bossmon">
+          <img src="../hiden-monsters/zerokyori-bossmon-hinotori.jpg" alt="ヒノトリ">
+        </div>
+        <hr class="divider">
+        <p class="monster-category-label">ノラモン</p>
+        <div class="monster-img-grid">
+          <img src="../hiden-monsters/zerokyori-noramon-magumahaato.jpg" alt="マグマハート">
+          <img src="../hiden-monsters/zerokyori-noramon-sandogoremu.jpg" alt="サンドゴレム">
+          <img src="../hiden-monsters/zerokyori-noramon-nyaa.jpg" alt="ニャー">
+        </div>
+      </div>
+    </div>
+
+    <!-- 近距離 -->
+    <div class="distance-block">
+      <div class="distance-block-header">🗡️ 近距離</div>
+      <div class="distance-block-body">
+        <p class="monster-category-label">ボスモン（怪物・幻霊）</p>
+        <div class="monster-img-grid bossmon">
+          <img src="../hiden-monsters/kinkyori-bossmon-kijin.jpg" alt="キジン">
+          <img src="../hiden-monsters/kinkyori-bossmon-iburiisu.jpg" alt="イブリース">
+        </div>
+        <hr class="divider">
+        <p class="monster-category-label">ノラモン</p>
+        <div class="monster-img-grid">
+          <img src="../hiden-monsters/kinkyori-noramon-gujiraking.jpg" alt="グジラキング">
+          <img src="../hiden-monsters/kinkyori-noramon-munendo.jpg" alt="ムネンド">
+          <img src="../hiden-monsters/kinkyori-noramon-hamu.jpg" alt="ハム">
+        </div>
+      </div>
+    </div>
+
+    <!-- 中距離 -->
+    <div class="distance-block">
+      <div class="distance-block-header">🏹 中距離</div>
+      <div class="distance-block-body">
+        <p class="monster-category-label">ボスモン（魔族・無機）</p>
+        <div class="monster-img-grid bossmon">
+          <img src="../hiden-monsters/tyukyori-bossmon-muu.jpg" alt="ムー">
+          <img src="../hiden-monsters/tyukyori-bossmon-irumine.jpg" alt="イルミネ">
+        </div>
+        <hr class="divider">
+        <p class="monster-category-label">ノラモン</p>
+        <div class="monster-img-grid">
+          <img src="../hiden-monsters/tyukyori-noramon-fenikkusu.jpg" alt="フェニックス">
+          <img src="../hiden-monsters/tyukyori-noramon-kamui.jpg" alt="カムイ">
+          <img src="../hiden-monsters/tyukyori-noramon-dino.jpg" alt="ディノ">
+        </div>
+      </div>
+    </div>
+
+    <!-- 遠距離 -->
+    <div class="distance-block">
+      <div class="distance-block-header">🏔️ 遠距離</div>
+      <div class="distance-block-body">
+        <p class="monster-category-label">ボスモン（獣）</p>
+        <div class="monster-img-grid bossmon">
+          <img src="../hiden-monsters/enkyori-bossmon-hakutaku.jpg" alt="ハクタク">
+        </div>
+        <hr class="divider">
+        <p class="monster-category-label">ノラモン</p>
+        <div class="monster-img-grid">
+          <img src="../hiden-monsters/enkyori-noramon-sunaipu.jpg" alt="スナイプ">
+          <img src="../hiden-monsters/enkyori-noramon-supinaa.jpg" alt="スピナー">
+          <img src="../hiden-monsters/enkyori-noramon-puranto.jpg" alt="プラント">
+        </div>
+      </div>
+    </div>
+
+    <!-- 全距離共通 -->
+    <div class="distance-block">
+      <div class="distance-block-header">🔄 全距離共通</div>
+      <div class="distance-block-body">
+        <p class="monster-category-label">ノラモン</p>
+        <div class="monster-img-grid bossmon">
+          <img src="../hiden-monsters/donokyoridemoderureawaku-noramon-sirozo.jpg" alt="シロゾー">
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <!-- ⑧ アシスト -->
