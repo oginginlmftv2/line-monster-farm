@@ -3,41 +3,210 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ソロモンクエスト スコアの出し方 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームのソロモンクエスト攻略。距離適正評価・ソロモン秘伝の数・集中と必死と闘魂の状態変化・電授・EXバフの仕組みまで、スコアを伸ばすコツを完全解説。">
+  <title>ソロモンクエスト 攻略 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのソロモンクエスト攻略。秘伝準備・供モン育成・実践の立ち回りまでハイスコアを狙うための攻略を解説します。">
   <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/solomon.html">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
-    .toc { background:#fffbf0; border:1px solid #f0a500; border-radius:8px; padding:16px 20px; margin-bottom:24px; }
-    .toc-title { font-weight:bold; font-size:14px; margin-bottom:8px; color:#f0a500; }
-    .toc ol { padding-left:20px; }
-    .toc li { font-size:13px; margin-bottom:4px; }
-    .toc a { color:#333; text-decoration:none; }
-    .toc a:hover { color:#f0a500; }
-    .info-box { background:#f0f8ff; border-left:4px solid #3b82f6; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
-    .warn-box { background:#fff8e1; border-left:4px solid #f0a500; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
-    .point-box { background:#f0fff4; border-left:4px solid #22c55e; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
-    .danger-box { background:#fff0f0; border-left:4px solid #e11d48; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
-    .h2 { font-size:17px; font-weight:bold; border-left:5px solid #f0a500; padding-left:10px; margin:26px 0 12px; color:#1a1a2e; }
-    .data-table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
-    .data-table th { background:#1a1a2e; color:#fff; padding:8px 12px; text-align:center; }
-    .data-table td { padding:8px 12px; border-bottom:1px solid #eee; font-size:13px; }
-    .data-table tr:nth-child(even) td { background:#f9f9f9; }
-    .data-table td:first-child { font-weight:bold; white-space:nowrap; }
-    .tag-imp  { display:inline-block; background:#e11d48; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
-    .tag-good { display:inline-block; background:#22c55e; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
-    .tag-low  { display:inline-block; background:#aaa; color:#fff; font-size:10px; font-weight:bold; padding:1px 7px; border-radius:4px; margin-left:5px; vertical-align:middle; }
-    .card { background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:14px 16px; margin:8px 0; }
-    .card-title { font-weight:bold; font-size:15px; margin-bottom:8px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-    .card p { margin:0; font-size:13px; line-height:1.7; }
-    .step-list { list-style:none; padding:0; margin:10px 0; counter-reset: step-counter; }
-    .step-list li { display:flex; align-items:flex-start; gap:10px; padding:8px 10px; border-bottom:1px solid #f0f0f0; font-size:13px; line-height:1.6; }
-    .step-list li:last-child { border-bottom:none; }
-    .step-num { background:#f0a500; color:#fff; font-weight:bold; font-size:12px; min-width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px; }
-    p { font-size:14px; line-height:1.8; margin-bottom:8px; }
-    ul, ol { font-size:13px; line-height:1.8; padding-left:18px; }
-    li { margin-bottom:2px; }
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #fff3cd; border-color: #f0a500; }
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: #f0a500;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .article-h2 {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      border-left: 4px solid #f0a500;
+      padding: 6px 12px;
+      margin: 0 0 14px;
+      background: #fffbf0;
+      border-radius: 0 6px 6px 0;
+    }
+    .article-h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #555;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #f0a500;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #444;
+      margin: 0 0 10px;
+    }
+    .article-ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .point-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .warn-box {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #388e3c;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    @media (max-width: 480px) { .summary-grid { grid-template-columns: 1fr; } }
+    .summary-item {
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .summary-item strong { color: #f0a500; display: block; margin-bottom: 4px; }
+    .wave-block {
+      border: 1px solid #eee;
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+    .wave-title {
+      font-size: 15px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .wave-title .wave-badge {
+      background: #f0a500;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      padding: 2px 10px;
+      border-radius: 12px;
+    }
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 8px 0;
+    }
+    .flow-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 0;
+      font-size: 13px;
+      color: #444;
+      line-height: 1.7;
+      border-bottom: none;
+    }
+    .flow-step:first-child { border-radius: 8px 8px 0 0; }
+    .flow-step:last-child { border-radius: 0 0 8px 8px; border-bottom: 1px solid #eee; }
+    .flow-step:only-child { border-radius: 8px; border-bottom: 1px solid #eee; }
+    .flow-arrow {
+      text-align: center;
+      font-size: 16px;
+      color: #f0a500;
+      padding: 2px 0;
+      background: #fff;
+      border-left: 1px solid #eee;
+      border-right: 1px solid #eee;
+      line-height: 1;
+    }
+    .priority-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 8px 0 10px;
+    }
+    .priority-table th {
+      background: #f0a500;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+    }
+    .priority-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid #f0f0f0;
+      color: #444;
+    }
+    .priority-table tr:last-child td { border-bottom: none; }
+    .priority-table tr:nth-child(even) td { background: #fafafa; }
   </style>
 </head>
 <body>
@@ -55,157 +224,225 @@
 
 <div class="container">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">🗺️ ソロモンクエスト スコアの出し方</h1>
+  <h1 class="page-title">🗺️ ソロモンクエスト 攻略</h1>
 
-  <div class="toc">
-    <div class="toc-title">📋 目次</div>
-    <ol>
-      <li><a href="#prep">準備段階：スコアに影響する2大要素</a></li>
-      <li><a href="#kyori">距離適正評価の上げ方</a></li>
-      <li><a href="#hiden">ソロモン秘伝の数（目標7以上）</a></li>
-      <li><a href="#items">ソロモンアイテムの使い方</a></li>
-      <li><a href="#denshi">電授の活用法</a></li>
-      <li><a href="#score">スコアの目安</a></li>
-    </ol>
+  <!-- はじめに -->
+  <div class="section">
+    <div class="section-title">はじめに</div>
+    <p class="article-p">本記事ではハイスコアで上位を狙う事を前提に記述しています。最低限の労力で最高報酬圏内に入るための攻略とは異なるため注意してください。</p>
   </div>
 
-  <!-- ① 準備段階 -->
-  <div class="section" id="prep">
-    <div class="section-title">準備段階：スコアに影響する2大要素</div>
-    <p>ソロモンクエストはモンスター5体（共モン）を連れて出発する。クエスト前の準備でスコアが大きく変わるため、まず以下の2点を押さえよう。</p>
-    <div class="point-box">
-      <strong>✅ スコアに直結する準備の2本柱</strong><br>
-      ① <strong>距離適性評価値の高いモンスターを育成する</strong><br>
-      ② <strong>ソロモン秘伝の星数を合計7以上にする</strong>
-    </div>
+  <!-- 目次 -->
+  <div class="section">
+    <div class="section-title">📋 目次</div>
+    <ul class="toc-list">
+      <li><a href="#hiden"><span class="toc-num">1</span> 秘伝準備編</a></li>
+      <li><a href="#ikusei"><span class="toc-num">2</span> 育成編</a></li>
+      <li><a href="#jissen"><span class="toc-num">3</span> 実践編</a></li>
+    </ul>
   </div>
 
-  <!-- ② 距離適正評価 -->
-  <div class="section" id="kyori">
-    <div class="section-title">距離適正評価の上げ方</div>
-    <p>クエスト中のダメージスコアは、モンスターの<strong>距離適性評価値</strong>に大きく依存する。評価値を上げるには以下の3点を意識しよう。</p>
-
-    <table class="data-table">
-      <thead>
-        <tr><th>要素</th><th>内容</th><th>備考</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>① オーラ色・モン類・血統を一致させる</td><td>勇者モンと共モンのオーラ・モン類・血統を合わせる</td><td>評価値に影響する可能性大（確定情報ではない）</td></tr>
-        <tr><td>② 距離適性ランクを上げる</td><td>特化距離の適性ランク（★の数）を上げる</td><td>高いほど評価値が上がる</td></tr>
-        <tr><td>③ 高ランク技を覚える</td><td>勇者モンと同じオーラの技だと評価値がさらにアップ</td><td>技の数も多いほど良い</td></tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <!-- ③ ソロモン秘伝 -->
+  <!-- 1. 秘伝準備編 -->
   <div class="section" id="hiden">
-    <div class="section-title">ソロモン秘伝の数（目標7以上）</div>
-    <p>マスターモンスター3体（デンジも含む）のソロモン秘伝の星の合計数がクエスト画面に表示される。この数が多いほど、もらえるカードの<strong>レアリティ・伝授率が優遇</strong>される。ただし、カードの内容自体はランダム。</p>
-
-    <table class="data-table">
-      <thead>
-        <tr><th>ソロモン秘伝合計</th><th>電授発生率</th><th>目安</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>7以上</td><td>ほぼ100%（限りなく確定）</td><td><strong>★まずここを目指す</strong></td></tr>
-        <tr><td>7〜9</td><td>差はほとんどない</td><td>それ以上は無理に狙わなくてOK</td></tr>
-      </tbody>
-    </table>
-
-    <div class="h2">ソロモン秘伝7以上にする具体的手順</div>
-    <ul class="step-list">
-      <li><span class="step-num">1</span><span>今期ボーナスモンスター（ドライアド・アゴルモア・エコロ・ガーディアン）をお任せ育成等でソロモン秘伝<strong>★3</strong>にしたものを<strong>2体</strong>用意する</span></li>
-      <li><span class="step-num">2</span><span>その<strong>2体を親</strong>にして、ソロモンの財宝・秘宝・至宝を持ち込んで育成する</span></li>
-      <li><span class="step-num">3</span><span>→ 子モンスターのソロモン秘伝が<strong>7以上確定</strong></span></li>
+    <div class="article-h2">1️⃣ 秘伝準備編</div>
+    <p class="article-p">重要な秘伝は2つ</p>
+    <ul class="article-ul">
+      <li>ソロモン秘伝</li>
+      <li>距離秘伝</li>
     </ul>
 
-    <div class="info-box">
-      💡 親2体がそれぞれ秘伝★3なら子モンは3+3+α（自身の秘伝）でほぼ確実に7以上になる。
-    </div>
-  </div>
+    <div class="article-h3">🎯 ソロモン秘伝は事前準備不可</div>
+    <p class="article-p">ソロモン秘伝☆3はソロクエ期間中でしか発現しないため、事前準備は不可。</p>
+    <p class="article-p" style="color:#888;">（ソロモン秘伝☆2までは準備可能だが、実用性は低い）</p>
 
-  <!-- ④ ソロモンアイテム -->
-  <div class="section" id="items">
-    <div class="section-title">ソロモンアイテムの使い方</div>
-    <p>ソロモンクエスト期間限定アイテムには<strong>使用期限</strong>がある。クエスト終了後は無意味になるため、惜しまず積極的に使っていこう。持ち込みアイテムは<strong>最大3種類</strong>まで選べる。</p>
+    <div class="article-h3">🐣 距離秘伝は事前準備可能</div>
+    <p class="article-p">ソロクエでは全ての距離で距離適性の評価がされるため、距離秘伝も全距離があると良い。</p>
+    <p class="article-p">ソロモン秘伝は、供モンとして育成するモンスターの親まで反映されるため、祖父母にあたるモンスターは事前準備可能。</p>
+    <p class="article-p">総合力も評価対象になるため、秘伝は「距離適性秘伝のついた総合力育成用」を使いたい。モングラ用の使い回しでもOK。</p>
+    <p class="article-p">手持ちに無い距離秘伝があればあらかじめ作っておくと良い。</p>
 
-    <table class="data-table">
-      <thead>
-        <tr><th>アイテム</th><th>入手ペース</th><th>使い方</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>ソロモンの財宝</td><td>1日3〜5個程度入手可能</td><td>全育成に使ってもなくならないレベル。どんどん使おう</td></tr>
-        <tr><td>ソロモンの秘宝</td><td>クエスト報酬など</td><td>財宝より希少。レアリティが高い分効果も大きい</td></tr>
-        <tr><td>ソロモンの至宝</td><td>クエスト報酬など</td><td>最高レアリティ。使わずに終わるのがもったいないので積極活用</td></tr>
-      </tbody>
-    </table>
-
-    <div class="warn-box">
-      ⚠️ 特にソロモンの秘宝・至宝は「もったいない」と感じて使わないまま期限切れになりがち。ソロモンクエスト期間中に使い切るつもりで臨もう。
-    </div>
-  </div>
-
-  <!-- ⑦ 電授 -->
-  <div class="section" id="denshi">
-    <div class="section-title">電授（でんじゅ）の活用法</div>
-    <p>トモン加入のタイミングで発生する強化イベント。ソロモン秘伝合計7以上でほぼ確定発生する。</p>
-
-    <table class="data-table">
-      <thead>
-        <tr><th>電授の仕様</th><th>詳細</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>強化枚数</td><td>1枚 or 2枚（ランダム）→ <strong>2枚引けることを祈る</strong></td></tr>
-        <tr><td>1回目の電授で選ぶべきカード</td><td>攻撃力アップ（集中+3）があれば迷わず選ぶ</td></tr>
-        <tr><td>黄色以外の場合</td><td>赤カードでも集中プラスがつくカードは強化候補</td></tr>
-      </tbody>
-    </table>
-
-    <div class="point-box">
-      <strong>✅ トモン加入時のカード選びのコツ</strong><br>
-      加入カードはSSRレアリティ（ガチャのSSR枠のような演出）かつ<strong>状態変化の数値が大きいもの</strong>を優先。<br>
-      3体の選択肢がある場合は基本的に<strong>おすすめのスラッシャー</strong>を選ぶのが安定。
-    </div>
-
-    <div class="info-box">
-      電授は「発生するかどうか」よりも「1枚じゃなく2枚強化してくれるか」を祈るゲーム。ソロモン秘伝7以上なら発生はほぼ確定。
-    </div>
-  </div>
-
-
-  <!-- ⑨ スコアの目安 -->
-  <div class="section" id="score">
-    <div class="section-title">スコアの目安と心構え</div>
-
-    <table class="data-table">
-      <thead>
-        <tr><th>目安</th><th>スコア</th><th>備考</th></tr>
-      </thead>
-      <tbody>
-        <tr><td>7ウェイブ目終了時</td><td>約25,000〜</td><td>上位ランキング圏内の目安</td></tr>
-        <tr><td>最終トータル（下限目安）</td><td>約102,000</td><td>これを下回ることは展開的に難しい</td></tr>
-        <tr><td>最終トータル（好展開時）</td><td>最終ダメージ17,000超え</td><td>ラストアタックが上振れた時</td></tr>
-      </tbody>
-    </table>
-
-    <div class="info-box">
-      💡 ソロモンクエストはカード引きによる<strong>運の要素が大きい</strong>。黄色カードを引けるかどうかがスコアに直結するため、試行回数が重要になる。<br>
-      ただし、クエスト参加に必要なEPは自然回復のみ（ミッション除く）のため試行回数には限りがある。
+    <div class="article-h3">💡 イベント開始後は供モンのソロモン秘伝合計☆7以上を目指す</div>
+    <div class="flow-steps">
+      <div class="flow-step">最初は供モンが揃っていないためスコアを出すのは難しいが、報酬のソロモンの秘宝を手に入れるためまずはプレイする</div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">ソロモンの秘宝を用いてソロモン秘伝⭐3のモンスターを育成<br><span style="font-size:12px;color:#888;">※秘宝無しでも⭐3がつく可能性はあるが、確率は低い</span></div>
+      <div class="flow-arrow">↓</div>
+      <div class="flow-step">ソロモン秘伝☆3が2体できたら、その2体を親にして供モンを育成<br>供モンにソロモン秘伝がつけば合計☆7〜9になる。</div>
     </div>
 
     <div class="point-box">
-      <strong>✅ 高スコアを目指すポイントまとめ</strong>
-      <ul style="margin-top:8px;">
-        <li>ソロモン秘伝合計<strong>7以上</strong>のモンスターで出発する（秘伝★3の2体を親にして育成）</li>
-        <li>距離適正評価が<strong>★</strong>になる距離が1つ以上あるモンスターを用意する</li>
-        <li>序盤は黄色カードを優先し<strong>集中をLv20</strong>まで上げる（1ターン2枚使用可能に）</li>
-        <li>電授では<strong>攻撃力アップ（集中+3）</strong>を最優先で強化</li>
-        <li>超焦点など距離を動かすカードは<strong>とどめ専用</strong>に取っておく</li>
-        <li>7ウェイブ目以降は残り3ターンで必ず攻撃できるよう準備する</li>
-        <li>ラストアタック3枚は<strong>ダメージ高い順</strong>に並べる</li>
-        <li>クリアできない場合は<strong>闘魂を先に上げる</strong>と安定しやすい</li>
+      ⭐ <strong>ワンポイント</strong><br>
+      秘伝は総合育成用として強ければ強いほど良いが、モングラのように直接スコアを競うわけではないので、スピード効率重視で最低限の質で十分。<br>
+      最低限距離適性とソロモン秘伝だけに気をつければOK<br><br>
+      <strong>ソロクエのスコアは実践のプレイングの方が重要❗</strong>
+    </div>
+  </div>
+
+  <!-- 2. 供モン育成編 -->
+  <div class="section" id="ikusei">
+    <div class="article-h2">2️⃣ 供モン育成編</div>
+    <ol class="article-ul">
+      <li>モンスターを選ぶ</li>
+      <li>育成する</li>
+    </ol>
+    <p class="article-p">目標はソロモン秘伝⭐7以上、距離評価値⭐</p>
+
+    <div class="article-h3">👾 モンスターを選ぶ</div>
+    <p class="article-p">各距離毎に推奨されるオーラ、モン類があらかじめ決まっている。</p>
+    <p class="article-p"><strong>優先順位</strong></p>
+    <table class="priority-table">
+      <thead><tr><th>優先度</th><th>条件</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>勇者モンと同じオーラ、種族</td></tr>
+        <tr><td>2</td><td>勇者モンと同じオーラ、モン類</td></tr>
+        <tr><td>3</td><td>勇者モンと同じオーラ</td></tr>
+        <tr><td>4</td><td>勇者モンと同じモン類</td></tr>
+      </tbody>
+    </table>
+    <p class="article-p" style="color:#888;">優先順位が高い方が評価☆になりやすい</p>
+    <div class="info-box">
+      💡 ※3と4は検証不十分のため、優先度に差があるかは不明<br><br>
+      ※手持ちのモンスターの技登録やアシカ編成によっては、推奨オーラやモン類での育成が難しい場合もある。そのときは自分が育てやすいモンスターで評価値を上げることを優先してもよい。
+    </div>
+
+    <div class="article-h3">🐮 育成</div>
+    <p class="article-p">距離評価値⭐を目標に育成</p>
+    <p class="article-p">距離評価値はスコアに大きく影響するため、上位を狙う人は必ず⭐になるようにする。</p>
+    <p class="article-p"><strong>以下評価基準</strong></p>
+
+    <div class="wave-block">
+      <div class="wave-title"><span>🚗</span> 距離適性</div>
+      <p class="article-p">高ければ高いほど良い。適性Mを目標に上げる</p>
+    </div>
+
+    <div class="wave-block">
+      <div class="wave-title"><span>⚾</span> 技</div>
+      <p class="article-p">技数が多いほど、また推奨オーラと同じ色のオーラ技が多いほどよい。特に高ランク技の数と、高ランクに推奨オーラと同じ色のオーラ技があるとよい。</p>
+      <p class="article-p">評価基準は不明だが、その距離の技があるランク数の合計（オーラ一致ならさらに+1）をして、合計数が高いほど評価が高いと考えるとよい</p>
+      <div class="point-box" style="margin-top:8px;">
+        例）推奨オーラ青の場合<br>
+        ランク1　オーラなし技<br>
+        ランク2　技なし<br>
+        ランク3　青オーラ技<br>
+        ランク4　黒オーラ技<br>
+        → 1+0+(3+1)+4=9
+      </div>
+    </div>
+
+    <div class="wave-block">
+      <div class="wave-title"><span>🧮</span> 総合力</div>
+      <p class="article-p">高ければ高いほど良い。距離適性、技を意識しながら、基本は総合育成と同じ考えで育成してOK</p>
+    </div>
+
+    <div class="article-h3">☆の基準</div>
+    <p class="article-p">推奨オーラのみ同じ場合</p>
+    <div class="info-box">
+      適性M、技評価10、総合力3万<br>
+      くらいが⭐になる目安になる
+    </div>
+  </div>
+
+  <!-- 3. 実践編 -->
+  <div class="section" id="jissen">
+    <div class="article-h2">3️⃣ 実践編</div>
+    <ul class="article-ul">
+      <li>序盤は状態変化を上げる</li>
+      <li>中盤は状態変化と供モンの攻撃力を上げる</li>
+      <li>終盤はトータルダメージを意識</li>
+    </ul>
+
+    <div class="article-h3">各状態変化について</div>
+
+    <div class="wave-block">
+      <div class="wave-title">闘魂</div>
+      <p class="article-p">ガッツ回復と攻撃力上昇に影響<br>ガッツ回復は最序盤、攻撃力上昇も中盤から重要なので、序盤のうちから上げておきたい</p>
+    </div>
+
+    <div class="wave-block">
+      <div class="wave-title">必死</div>
+      <p class="article-p">クリティカル率、クリティカルダメージに影響<br>30になると全員クリティカル確定になるのが強力だが、終盤の2パン調節が効かなくなるため、最終waveのラストアタック時に30になるのがベスト</p>
+    </div>
+
+    <div class="wave-block">
+      <div class="wave-title">集中</div>
+      <p class="article-p">与ダメージ、使用カード枚数に影響<br>基本は高くしたいが、使用カード枚数が増えると時間稼ぎができなくなる場合もある。所持カードや供モンの攻撃力次第で価値が変わるので、集中をどれくらい上げるのがベストかを判断できるように。</p>
+    </div>
+
+    <p class="article-p" style="margin-top:16px;">ソロクエのスコアはダメージと残りターン数から決まり、高いスコアを出しやすくする基本的なチャートを以下wave毎に記載</p>
+
+    <!-- wave1〜3 -->
+    <div class="wave-block" style="margin-top:16px;">
+      <div class="wave-title"><span class="wave-badge">wave 1〜3</span></div>
+      <ul class="article-ul">
+        <li>最初は攻撃カード以外を選び、敵モンスターが別の距離へ移動するのを待つ<br><span style="font-size:12px;color:#888;">（攻撃力アップやガードなど、攻撃以外のカードがあればこの間に使っておく。なければ緊急回復で時間を稼ぐ）</span></li>
       </ul>
+      <ul class="article-ul" style="margin-top:8px;">
+        <li>敵モンスターが移動をしたら、攻撃開始。別距離に移動すればダメージが下がり、3〜4回攻撃することができる。この時は状態変化付きの攻撃カードを優先する。<br>
+        闘魂があれば先に使っておくと良い（序盤はガッツが足りなくなるリスクがあるため、闘魂はガッツ回復でリスクを下げることができる）<br>
+        残りターン数と残りガッツに注意しながら、状態変化をできるだけ上げてから敵を倒す。</li>
+      </ul>
+    </div>
+
+    <!-- wave4〜6 -->
+    <div class="wave-block">
+      <div class="wave-title"><span class="wave-badge">wave 4〜6</span></div>
+      <ul class="article-ul">
+        <li>供モンが加入、カードの強化あり<br>供モンは距離⭐を前提とし、状態変化が上がるカードが多い供モンを優先的に選択</li>
+      </ul>
+      <ul class="article-ul" style="margin-top:8px;">
+        <li>カード強化はオレンジのカード（攻撃力アップや急所ブースト）の優先度が高い。状態変化が多く増えるものを優先的に強化する</li>
+        <li>攻撃カードも、供モン攻撃力上昇や終盤のダメージに関わるため、強力な攻撃カードがあれば強化候補になる。</li>
+      </ul>
+      <ul class="article-ul" style="margin-top:8px;">
+        <li>中盤は状態変化を上げることと、供モンの与ダメージを稼ぎ攻撃力を上げることを意識する。</li>
+      </ul>
+      <ul class="article-ul" style="margin-top:8px;">
+        <li>勇者モンの位置に敵モンスターがいる場合は、攻撃カード以外で時間を稼ぎ、状態変化を上げることを優先する。</li>
+        <li>供モンの位置に敵モンスターがいる場合は、そのまま倒して与ダメージを稼ぐのがよい。ただし、ワンパンで倒してしまいそうな場合はあえて時間を稼ぐ手段もあり。<br>可能なら、敵モンスターの体力をギリギリまで削った段階で供モンにフィニッシュしてもらいたい。</li>
+        <li>勇者モン、供モンがいない距離に敵が移動した場合は、基本は状態変化を上げながら、供モンの位置に戻ることを期待する。衝転等が無い限りは運に任せるので、移動方向が分かり次第待つか倒すかを決める。<br>ハイスコアを狙うなら理想展開を期待したプレイングでOK。ダメならリトライ。</li>
+      </ul>
+    </div>
+
+    <!-- wave7〜9 -->
+    <div class="wave-block">
+      <div class="wave-title"><span class="wave-badge">wave 7〜9</span></div>
+      <ul class="article-ul">
+        <li>供モンが全距離揃う。強化カードは攻撃カードか強化カードかを選択する</li>
+      </ul>
+      <ul class="article-ul" style="margin-top:8px;">
+        <li>現在の状態変化がどのくらいかで優先順位が変わる。特に集中、必死は最終waveのラストアタック時に丁度30になるのがベスト<br>ハイスコア更新を狙うならここに照準を当てたい</li>
+        <li>ラストアタックは攻撃力の高いカードから選ばれるため、攻撃カードの強化も重要</li>
+        <li>時間稼ぎはほぼできないため、基本は即攻撃。状態変化の調節は最小限に。</li>
+      </ul>
+      <div class="warn-box" style="margin-top:8px;">
+        ⚠️ ハイスコアに必須なのは、ギリギリ2パンを狙うこと。攻撃力が上がりきっていない供モンの位置に敵モンスターが来るのが理想で、そうでない場合はハイスコアはほぼ諦めることになる。<br><br>
+        終盤はスコア影響が大きく、ターンをかければスコアは減るため、時間稼ぎはやっても1〜2ターン程度まで。
+      </div>
+      <div class="flow-steps" style="margin-top:10px;">
+        <div class="flow-step">1ターン目攻撃でギリギリまで減らす</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">2ターン目フィニッシュ　or　チャージや攻撃力強化</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-step">3ターン目フィニッシュ</div>
+      </div>
+      <p class="article-p" style="margin-top:8px;color:#888;">が基本の流れ</p>
+    </div>
+
+    <div class="point-box">
+      💡 1プレイだけでは運の影響に左右されやすいため、何度もプレイして良いカードを引いたり敵が良い位置に来たりしたタイミングでベストな選択をできるように心がけること。<br>
+      <strong>上位を狙うなら試行回数が大事。</strong>
+    </div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="section">
+    <div class="section-title">🏁 まとめ</div>
+    <div class="summary-grid">
+      <div class="summary-item"><strong>秘伝準備</strong>イベント開始後、ソロモン秘伝と距離適性を意識</div>
+      <div class="summary-item"><strong>育成</strong>距離適性、技の数とオーラ、総合力の3点を意識</div>
+      <div class="summary-item"><strong>実践（序盤〜中盤）</strong>状態変化を上げることを優先</div>
+      <div class="summary-item"><strong>実践（中盤以降）</strong>攻撃力アップを意識</div>
+      <div class="summary-item"><strong>実践（終盤）</strong>合計ダメージを最大化する</div>
     </div>
   </div>
 
