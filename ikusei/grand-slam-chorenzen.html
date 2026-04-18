@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>グランドスラム 攻略 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームのグランドスラム攻略。選定・秘伝準備・育成・決戦編成・バトルの立ち回りまで徹底解説します。">
-  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/grand-slam.html">
+  <title>グランドスラム 超連戦 攻略 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのグランドスラム超連戦攻略。決戦との違いを踏まえた選定・秘伝準備・育成・バトルの立ち回りを解説します。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/grand-slam-chorenzen.html">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
@@ -116,6 +116,16 @@
       color: #555;
       margin: 10px 0;
     }
+    .diff-box {
+      background: #f0f4ff;
+      border-left: 4px solid #4a6cf7;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #444;
+      margin: 10px 0;
+    }
     .priority-table {
       width: 100%;
       border-collapse: collapse;
@@ -193,6 +203,23 @@
       font-weight: 900;
       flex-shrink: 0;
     }
+    .page-link-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s, border-color 0.2s;
+      margin-bottom: 8px;
+    }
+    .page-link-box:hover { background: #fff3cd; border-color: #f0a500; }
+    .page-link-arrow { margin-left: auto; color: #f0a500; }
   </style>
 </head>
 <body>
@@ -211,16 +238,28 @@
 <div class="container">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
   <h1 class="page-title">🏅 グランドスラム 攻略</h1>
-  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">〜決戦編〜</p>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">〜超連戦編〜</p>
 
-  <!-- 超連戦編へのリンク -->
+  <!-- 決戦編へのリンク -->
   <div class="section">
     <div class="section-title">📄 関連ページ</div>
-    <a href="grand-slam-chorenzen.html" style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:#f9f9f9;border:1px solid #eee;border-radius:8px;text-decoration:none;color:#333;font-size:14px;font-weight:bold;transition:background 0.2s,border-color 0.2s;" onmouseover="this.style.background='#fff3cd';this.style.borderColor='#f0a500'" onmouseout="this.style.background='#f9f9f9';this.style.borderColor='#eee'">
+    <a href="grand-slam.html" class="page-link-box">
       <span>🏅</span>
-      <span>グランドスラム 攻略 〜超連戦編〜</span>
-      <span style="margin-left:auto;color:#f0a500;">›</span>
+      <span>グランドスラム 攻略 〜決戦編〜</span>
+      <span class="page-link-arrow">›</span>
     </a>
+  </div>
+
+  <!-- 決戦との違い -->
+  <div class="section">
+    <div class="section-title">⚡ 超連戦と決戦の違い（重要）</div>
+    <div class="diff-box">
+      <ul style="padding-left:16px;margin:0;line-height:2;">
+        <li>ダメージ上限に届きにくい → メインダメージを伸ばす必要がある</li>
+        <li>ステータスの影響が大きい → 決戦よりステータス重視</li>
+        <li>撃破タイミングの調整が必要 → 早く倒すとスコアは伸びるが、能力未発動だと火力不足で逆にスコアが落ちる</li>
+      </ul>
+    </div>
   </div>
 
   <!-- 目次 -->
@@ -230,8 +269,7 @@
       <li><a href="#sentei"><span class="toc-num">1</span> 選定編</a></li>
       <li><a href="#hiden"><span class="toc-num">2</span> 秘伝準備編</a></li>
       <li><a href="#ikusei"><span class="toc-num">3</span> 育成編</a></li>
-      <li><a href="#hensei"><span class="toc-num">4</span> 決戦編成編</a></li>
-      <li><a href="#battle"><span class="toc-num">5</span> バトル編</a></li>
+      <li><a href="#battle"><span class="toc-num">4</span> バトル編</a></li>
     </ul>
   </div>
 
@@ -249,10 +287,10 @@
     <div class="article-h3">補足</div>
     <p class="article-p">火力の高い技、連撃数が多い技を持っていることが重要</p>
 
-    <div class="article-h3">注意点</div>
-    <div class="warn-box">
-      ⚠️ 火力が高いだけでは上限に届く<br>
-      → 連撃％と連撃数のバランスを意識する
+    <div class="article-h3">注意点（決戦との違い）</div>
+    <div class="diff-box">
+      ⚡ ダメージ上限に届きにくい → メインダメージを重視する<br><br>
+      連撃自体の影響力は高いが、決戦と比べると優先度がやや下がるため、メインダメージとのバランスを意識することが重要
     </div>
 
     <div class="article-h3">技設定</div>
@@ -265,18 +303,17 @@
       <tbody>
         <tr><td>1</td><td>攻撃ステータスアップ系（アディション等）</td></tr>
         <tr><td>2</td><td>ダメージ割合連撃</td></tr>
-        <tr><td>3</td><td>ガッツ回復系</td></tr>
+        <tr><td>3</td><td>超本気</td></tr>
+        <tr><td>4</td><td>ガッツ回復系</td></tr>
+        <tr><td>5</td><td>与ダメ上昇／被ダメ上昇等</td></tr>
       </tbody>
     </table>
-    <div class="point-box">
-      💡 メインダメージが上限に届かない場合<br>
-      → 与ダメ上昇系や超本気なども有効
-    </div>
 
     <div class="article-h3">基本的に入れない能力</div>
     <div class="warn-box">
       ⚠️ ステータス割合連撃<br>
-      → ライフ調整が難しくなるため
+      → ライフ調整が難しくなるため<br>
+      ※超本気発動目的で採用するケースはあり
     </div>
 
     <div class="article-h3">積む数の目安</div>
@@ -285,13 +322,13 @@
       <li>ロードあり：6〜12個程度</li>
     </ul>
 
-    <div class="article-h3">編成の重要ポイント</div>
+    <div class="article-h3">編成の重要ポイント（決戦との差）</div>
     <ul class="article-ul">
-      <li>能力の影響が非常に大きい（ステータスの影響は低め）</li>
-      <li>※ただし高いに越したことはない</li>
+      <li>能力の影響が非常に大きい</li>
+      <li>ステータスの影響も非常に大きい（決戦より重要）</li>
       <li>モン類レベルを意識する</li>
-      <li>地形適性の影響が大きい</li>
-      <li>距離適性の影響も大きい</li>
+      <li>地形適性の影響は決戦よりやや低下</li>
+      <li>距離適性は引き続き重要</li>
     </ul>
 
     <div class="point-box">
@@ -341,6 +378,7 @@
         <li>近距離：ムネンド（ニアチェイス）</li>
         <li>中距離：カムイ（ミドルチェイス）</li>
       </ul>
+      <div class="diff-box">⚡ 決戦と違い初期ガッツが低いため優先度は低下</div>
       <p class="article-p" style="margin-bottom:4px;">フィクスブリッツ</p>
       <ul class="article-ul">
         <li>全距離：シロゾー</li>
@@ -352,11 +390,11 @@
     </div>
 
     <div class="hiden-section">
-      <div class="hiden-section-title">地形秘伝 <span class="star-rating">★★★〜★★★☆</span></div>
+      <div class="hiden-section-title">地形秘伝 <span class="star-rating">★★☆〜★★★☆</span></div>
       <p class="article-p">基礎ステータス割合上昇</p>
       <div class="point-box">
         💡 能力との組み合わせで評価が変動<br>
-        決戦では特に有効
+        決戦ほどではないが依然として有効
       </div>
     </div>
 
@@ -395,22 +433,23 @@
       <li>ガロエジュース</li>
       <li>出会いのミサンガ</li>
     </ul>
-    <p class="article-p" style="color:#888;">→ アシカイベント消化目的で有効</p>
+    <p class="article-p" style="color:#888;">→ アシカイベント消化目的</p>
 
     <div class="point-box">
       💡 <strong>代替パターン</strong><br>
       相性が取れない＋うけつぎ草が多い → ガロエジュース＋うけつぎ草<br>
       オイリーに余裕あり → ガロエジュース＋オイリー<br>
-      イベント消化が十分＋ステータスを伸ばしたい → ガロエジュース＋ブリーダーライセンス
+      イベント消化が十分＋ステータスを伸ばしたい → ガロエジュース＋ブリーダーライセンス<br><br>
+      <span style="color:#4a6cf7;font-weight:bold;">⚡ 超連戦はステータスの影響が大きいため、ステータスを最大限伸ばせる選択も有効</span>
     </div>
 
     <div class="article-h3">厳選（スタートライン）</div>
     <p class="article-p">以下が揃うまでリタマラ：</p>
     <ul class="article-ul">
       <li>ボスモン能力2種</li>
+      <li>ステータスが高い</li>
       <li>距離適性、地形適性が良好</li>
       <li>有効ノラモン能力が揃っている</li>
-      <li>※ステータスは優先度低め</li>
     </ul>
     <div class="point-box">💡 上位狙いは先導の伝授も確保したい</div>
 
@@ -418,7 +457,8 @@
     <ul class="article-ul">
       <li>事前に決めた能力は必ず全て取得する</li>
       <li>能力に合わせて適性を強化する</li>
-      <li>能力変換は攻撃系ステータス上昇を優先する</li>
+      <li>能力変換は攻撃系ステータスを優先する</li>
+      <li>攻撃ステータスはカンストを目指す</li>
     </ul>
 
     <div class="article-h3">優先能力変換</div>
@@ -427,72 +467,57 @@
       <li>根源系</li>
     </ul>
 
-    <div class="article-h3">最低ライン</div>
-    <ul class="article-ul">
-      <li>どれだけ仕上げられるかがすべて</li>
-      <li>自己満の世界</li>
-      <li>1位かそうじゃないかにラインがある</li>
-    </ul>
-
     <div class="point-box">
       ⭐ <strong>ワンポイント</strong><br>
       ロード閃きは運要素がある<br>
-      ただし能力取得を最優先に判断する
+      能力取得を最優先に判断する<br>
+      ステータスも同様に重要
     </div>
   </div>
 
-  <!-- 4. 決戦編成編 -->
-  <div class="section" id="hensei">
-    <div class="article-h2">4️⃣ 決戦編成編</div>
-
-    <div class="article-h3">基本</div>
-    <p class="article-p">レベル順で編成する</p>
-
-    <div class="article-h3">調整ポイント</div>
-    <ul class="article-ul">
-      <li><strong>力・丈夫さ</strong> → オーラ一致を優先（不一致SSRより一致SRが上回る場合あり）</li>
-      <li><strong>命中</strong> → オーラ一致かつ高レアリティを優先</li>
-      <li><strong>EX</strong> → 基本はレベル順（オーラ一致が上回る場合あり）</li>
-    </ul>
-
-    <div class="point-box">
-      ⭐ <strong>ワンポイント</strong><br>
-      基本はレベル順で問題ないが、能力とオーラの影響が大きい部分は例外として調整する
-    </div>
-  </div>
-
-  <!-- 5. バトル編 -->
+  <!-- 4. バトル編 -->
   <div class="section" id="battle">
-    <div class="article-h2">5️⃣ バトル編</div>
+    <div class="article-h2">4️⃣ バトル編</div>
 
-    <div class="article-h3">持ち込みアイテム</div>
-    <ul class="article-ul">
-      <li>魂のメガホン</li>
-      <li>機嫌上昇系アイテム</li>
-    </ul>
-    <div class="warn-box">⚠️ 必ず超ご機嫌で挑む</div>
+    <div class="warn-box">⚠️ 必ず超ご機嫌で挑む（育成完了24時間後に機嫌低下に注意）</div>
 
-    <div class="article-h3">立ち回り</div>
+    <div class="article-h3">立ち回り（最重要）</div>
     <div class="battle-step">
       <span class="battle-step-num">①</span>
-      <div>フィニッシュは41〜45秒を狙う<br><span style="font-size:13px;color:#888;">（ブロック軽減のタイミング）</span></div>
+      <div>早く倒すほどスコアは伸びる</div>
     </div>
     <div class="battle-step">
       <span class="battle-step-num">②</span>
-      <div>クリティカルでブロックを軽減<br><span style="font-size:13px;color:#888;">→ 最大4回</span></div>
+      <div>ただし能力未発動だと火力が不足しスコアが落ちる</div>
     </div>
     <div class="battle-step">
       <span class="battle-step-num">③</span>
-      <div>ガッツダメージ20以上を与える<br><span style="font-size:13px;color:#888;">→ 連撃ダメージ上昇（最大5回）</span></div>
+      <div>
+        倒し切る前に攻撃ステータス上昇系（アディション等）や超本気などを<br>
+        できるだけ発動させることが重要
+      </div>
     </div>
     <div class="battle-step">
       <span class="battle-step-num">④</span>
-      <div>フィニッシュ時の状態<br><span style="font-size:13px;color:#888;">・自分のガッツは高く保つ<br>・相手のガッツは低くする</span></div>
+      <div>ガッツダメージ20以上を与える<br><span style="font-size:13px;color:#888;">→ 連撃ダメージ上昇（最大5回）</span></div>
+    </div>
+    <div class="battle-step">
+      <span class="battle-step-num">⑤</span>
+      <div>
+        フィニッシュ時の状態<br>
+        <span style="font-size:13px;color:#888;">
+          ・自分のガッツは高く保つ<br>
+          ・相手のガッツは低くする<br>
+          ・残り時間は41秒以内（序盤）を目安<br>
+          ※序盤フォイルの効果が切れるため
+        </span>
+      </div>
     </div>
 
     <div class="point-box">
       ⭐ <strong>ワンポイント</strong><br>
-      距離調整、攻撃回数、時間管理の精度が結果に直結する
+      「早く倒す」と「発動させる」のバランスが最重要<br>
+      どこで倒すかの判断がスコアに直結する
     </div>
   </div>
 
@@ -500,12 +525,15 @@
   <div class="section">
     <div class="section-title">🏁 まとめ</div>
     <div class="summary-grid">
-      <div class="summary-item"><strong>モンスター選定</strong>有利条件を満たすモンスターを選定する</div>
-      <div class="summary-item"><strong>アシカ・能力構成</strong>事前に明確に設計する</div>
-      <div class="summary-item"><strong>秘伝</strong>ボスモンを軸に構成する</div>
-      <div class="summary-item"><strong>育成</strong>能力取得を最優先とする</div>
-      <div class="summary-item"><strong>決戦編成</strong>レベル順を基本に必要に応じて調整する</div>
-      <div class="summary-item"><strong>バトル</strong>クリティカル管理、時間管理、ガッツ管理が重要</div>
+      <div class="summary-item"><strong>決戦との違い</strong>ダメージ上限に届きにくいためメイン火力重視</div>
+      <div class="summary-item"><strong>連撃</strong>依然として重要だが優先度はやや下がる</div>
+      <div class="summary-item"><strong>ステータス</strong>影響が非常に大きく育成段階から意識が必要</div>
+      <div class="summary-item"><strong>能力構成</strong>事前に明確に決める</div>
+      <div class="summary-item"><strong>育成</strong>能力とステータスの両立を目指す</div>
+      <div class="summary-item"><strong>バトル</strong>「早く倒す」と「能力発動」のバランス管理が最重要</div>
+    </div>
+    <div class="diff-box" style="margin-top:12px;">
+      ⚡ フィニッシュタイミング（41秒以内）を意識してスコアを最大化する
     </div>
   </div>
 
