@@ -215,6 +215,15 @@
       color: #7b1fa2;
       border: 1px solid #ce93d8;
     }
+    .apt-badge {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 1px 6px;
+      border-radius: 8px;
+      white-space: nowrap;
+    }
+    .apt-dist    { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .apt-terrain { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
   </style>
 </head>
 <body>
@@ -257,6 +266,27 @@
     <button class="source-btn active" data-rarity="all" onclick="setRarity(this)">すべて</button>
     <button class="source-btn" data-rarity="SSR" onclick="setRarity(this)">SSR</button>
     <button class="source-btn" data-rarity="MR" onclick="setRarity(this)">MR</button>
+  </div>
+
+  <!-- 距離適性フィルター -->
+  <div class="source-filter">
+    <span class="source-label">距離適性↑：</span>
+    <button class="source-btn active" data-dist="all" onclick="setDist(this)">すべて</button>
+    <button class="source-btn" data-dist="零距離" onclick="setDist(this)">零距離</button>
+    <button class="source-btn" data-dist="近距離" onclick="setDist(this)">近距離</button>
+    <button class="source-btn" data-dist="中距離" onclick="setDist(this)">中距離</button>
+    <button class="source-btn" data-dist="遠距離" onclick="setDist(this)">遠距離</button>
+  </div>
+
+  <!-- 地形適性フィルター -->
+  <div class="source-filter">
+    <span class="source-label">地形適性↑：</span>
+    <button class="source-btn active" data-terrain="all" onclick="setTerrain(this)">すべて</button>
+    <button class="source-btn" data-terrain="砂漠" onclick="setTerrain(this)">砂漠</button>
+    <button class="source-btn" data-terrain="海岸" onclick="setTerrain(this)">海岸</button>
+    <button class="source-btn" data-terrain="雪山" onclick="setTerrain(this)">雪山</button>
+    <button class="source-btn" data-terrain="火山" onclick="setTerrain(this)">火山</button>
+    <button class="source-btn" data-terrain="森林" onclick="setTerrain(this)">森林</button>
   </div>
 
   <!-- タグフィルター -->
@@ -313,6 +343,33 @@ for (const [id, card] of Object.entries(cardsData)) {
   }
 }
 
+// カード名 → 適性情報マップ（cardsDataから自動構築 + 例外追加）
+const CARD_APTITUDE_MAP = {};
+for (const [id, card] of Object.entries(cardsData)) {
+  if (card.dist || card.terrain) {
+    const n = card.name;
+    if (!CARD_APTITUDE_MAP[n]) CARD_APTITUDE_MAP[n] = {};
+    if (card.dist)    CARD_APTITUDE_MAP[n].dist    = card.dist;
+    if (card.terrain) CARD_APTITUDE_MAP[n].terrain = card.terrain;
+  }
+}
+// abilities JSONでの表記がカード名と異なるもの
+CARD_APTITUDE_MAP['フォールン']  = { dist: '遠距離' };       // カードページ名はイブリース
+CARD_APTITUDE_MAP['ヒマワリ']   = { terrain: ['砂漠', '海岸'] };
+// ページなしSRカード（適性データ判明次第追記）
+// CARD_APTITUDE_MAP['セレスト']  = { ... };
+// CARD_APTITUDE_MAP['エネロン']  = { ... };
+// CARD_APTITUDE_MAP['ルーガルー'] = { ... };
+// CARD_APTITUDE_MAP['スティーブ'] = { ... };
+// CARD_APTITUDE_MAP['トロイダル'] = { ... };
+// ページなしSSRカード
+// CARD_APTITUDE_MAP['ドレッドスパイク'] = { ... };
+// CARD_APTITUDE_MAP['ルーブス']  = { ... };
+// CARD_APTITUDE_MAP['マグニス']  = { ... };
+// CARD_APTITUDE_MAP['サラセニア'] = { ... };
+// CARD_APTITUDE_MAP['ヨツミン']  = { ... };
+// CARD_APTITUDE_MAP['ソウキュウ'] = { ... };
+
 const TAG_GROUPS = {
   aura:   ['オーラ黒','オーラ青','オーラ赤','オーラ黄','オーラ緑','オーラ白'],
   effect: ['攻撃強化','デバフ','追撃','連撃','クリティカル','命中強化','被ダメ軽減','ガッツ回復','シールド','完全回避','回避','必中','無効化'],
@@ -324,6 +381,8 @@ let allData = [];
 let activeTags = new Set();
 let activeSource = 'all';
 let activeRarity = 'all';
+let activeDist    = 'all';
+let activeTerrain = 'all';
 let tagMode = 'AND'; // 'AND' or 'OR'
 let kwMode = 'AND';  // 'AND' or 'OR'
 
@@ -381,6 +440,20 @@ function setTagMode(mode) {
   render();
 }
 
+function setDist(btn) {
+  document.querySelectorAll('.source-btn[data-dist]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeDist = btn.dataset.dist;
+  render();
+}
+
+function setTerrain(btn) {
+  document.querySelectorAll('.source-btn[data-terrain]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeTerrain = btn.dataset.terrain;
+  render();
+}
+
 function clearAll() {
   activeTags.clear();
   document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
@@ -390,6 +463,12 @@ function clearAll() {
   activeRarity = 'all';
   document.querySelectorAll('.source-btn[data-rarity]').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-rarity="all"]').classList.add('active');
+  activeDist = 'all';
+  document.querySelectorAll('.source-btn[data-dist]').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-dist="all"]').classList.add('active');
+  activeTerrain = 'all';
+  document.querySelectorAll('.source-btn[data-terrain]').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-terrain="all"]').classList.add('active');
   tagMode = 'AND';
   document.getElementById('btnAnd').classList.add('active');
   document.getElementById('btnOr').classList.remove('active');
@@ -413,6 +492,18 @@ function render() {
     if (activeSource !== 'all' && a.source !== activeSource) return false;
     // レアリティフィルター
     if (activeRarity !== 'all' && a.rarity !== activeRarity) return false;
+    // 距離適性フィルター
+    if (activeDist !== 'all') {
+      const apt = CARD_APTITUDE_MAP[a.card];
+      if (!apt || apt.dist !== activeDist) return false;
+    }
+    // 地形適性フィルター
+    if (activeTerrain !== 'all') {
+      const apt = CARD_APTITUDE_MAP[a.card];
+      if (!apt) return false;
+      const terrainList = Array.isArray(apt.terrain) ? apt.terrain : (apt.terrain ? [apt.terrain] : []);
+      if (!terrainList.includes(activeTerrain)) return false;
+    }
     // タグフィルター（AND / OR）
     if (activeTags.size > 0) {
       if (tagMode === 'AND') {
@@ -452,6 +543,16 @@ function render() {
     const rarityBadge = rarityClass
       ? `<span class="rarity-badge ${rarityClass}">${escHtml(a.rarity)}</span>`
       : '';
+    // 適性バッジ
+    const apt = CARD_APTITUDE_MAP[a.card];
+    let aptBadges = '';
+    if (apt) {
+      if (apt.dist) aptBadges += `<span class="apt-badge apt-dist">${escHtml(apt.dist)}</span>`;
+      if (apt.terrain) {
+        const terrains = Array.isArray(apt.terrain) ? apt.terrain : [apt.terrain];
+        terrains.forEach(t => { aptBadges += `<span class="apt-badge apt-terrain">${escHtml(t)}</span>`; });
+      }
+    }
     const tags = (a.tags || []).map(t => `<span class="ability-tag">${escHtml(t)}</span>`).join('');
     const desc = a.desc.replace(/<br>/g, '<br>');
     const cardId = cardNameToId[a.card];
@@ -460,6 +561,7 @@ function render() {
           <span class="ability-name">${escHtml(a.name)}</span>
           <span class="ability-card-name">${escHtml(a.card)}</span>
           ${rarityBadge}
+          ${aptBadges}
           ${sourceBadge}
         </div>
         <div class="ability-desc">${desc}</div>

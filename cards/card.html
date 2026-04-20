@@ -106,6 +106,17 @@
     .oura-白  { background: #95a5a6; }
     .oura-黒  { background: #2c3e50; }
 
+    .apt-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 2px 10px;
+      border-radius: 10px;
+      margin-right: 4px;
+    }
+    .apt-dist    { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .apt-terrain { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+
     .abilities-section {
       padding: 16px 24px;
       border-top: 1px solid #eee;
@@ -619,6 +630,10 @@
     const c = cardsData[id];
     const imgSrc = `../assist-cards/${id}.${c.ext}`;
     const monText = c.mon ? c.mon : 'なし';
+    const distRow = c.dist
+      ? `<tr><th>距離適性↑</th><td><span class="apt-badge apt-dist">${c.dist}</span></td></tr>` : '';
+    const terrainRow = c.terrain
+      ? `<tr><th>地形適性↑</th><td>${(Array.isArray(c.terrain) ? c.terrain : [c.terrain]).map(t => `<span class="apt-badge apt-terrain">${t}</span>`).join('')}</td></tr>` : '';
 
     document.title = `${c.name} | LINEモンスターファーム徹底攻略`;
 
@@ -643,6 +658,8 @@
               <th>モン類</th>
               <td>${monText}</td>
             </tr>
+            ${distRow}
+            ${terrainRow}
           </table>
 
           <!-- 評価セクション -->
