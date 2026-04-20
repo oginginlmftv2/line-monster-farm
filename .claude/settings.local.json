@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "mcp__Claude_Preview__preview_start",
-      "Bash(dir \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\assist-abilities\")"
+      "Bash(dir \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\assist-abilities\")",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const old=require\\('C:/Users/KCE/Desktop/LINEモンスターファーム徹底攻略/lmfdb_abilities_data.json'\\);const newf=require\\('C:/Users/KCE/Desktop/LINEモンスターファーム徹底攻略/lMfDB_abilities.json'\\);const oldArr=Array.isArray\\(old\\)?old:Object.values\\(old\\);const newArr=Array.isArray\\(newf\\)?newf:Object.values\\(newf\\);console.log\\('旧件数:',oldArr.length,'新件数:',newArr.length\\);console.log\\('旧キー:',JSON.stringify\\(Object.keys\\(oldArr[0]\\)\\)\\);console.log\\('新キー:',JSON.stringify\\(Object.keys\\(newArr[0]\\)\\)\\);console.log\\('旧サンプル:',JSON.stringify\\(oldArr[0]\\)\\);console.log\\('新サンプル:',JSON.stringify\\(newArr[0]\\)\\);\")"
     ]
   }
 }

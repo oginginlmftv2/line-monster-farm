@@ -172,6 +172,49 @@
     .tag-group {
       margin-bottom: 14px;
     }
+    .tag-group-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .and-or-toggle {
+      display: inline-flex;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      overflow: hidden;
+      margin-left: 8px;
+    }
+    .and-or-btn {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 10px;
+      border: none;
+      background: #f9f9f9;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.15s;
+      line-height: 1.6;
+    }
+    .and-or-btn.active {
+      background: #1a1a2e;
+      color: #fff;
+    }
+    .rarity-badge {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .rarity-badge.ssr {
+      background: #fff8e1;
+      color: #b8860b;
+      border: 1px solid #ffe082;
+    }
+    .rarity-badge.mr {
+      background: #f3e5f5;
+      color: #7b1fa2;
+      border: 1px solid #ce93d8;
+    }
   </style>
 </head>
 <body>
@@ -204,21 +247,41 @@
     <button class="source-btn" data-source="閃き" onclick="setSource(this)">閃き</button>
   </div>
 
+  <!-- レアリティフィルター -->
+  <div class="source-filter">
+    <span class="source-label">レアリティ：</span>
+    <button class="source-btn active" data-rarity="all" onclick="setRarity(this)">すべて</button>
+    <button class="source-btn" data-rarity="SSR" onclick="setRarity(this)">SSR</button>
+    <button class="source-btn" data-rarity="MR" onclick="setRarity(this)">MR</button>
+  </div>
+
   <!-- タグフィルター -->
   <div class="tag-group">
-    <div class="filter-section-title">オーラ条件</div>
+    <div class="tag-group-header">
+      <span class="filter-section-title" style="margin-bottom:0;">オーラ条件</span>
+    </div>
     <div class="tag-filter" id="tagFilterAura"></div>
   </div>
   <div class="tag-group">
-    <div class="filter-section-title">効果種別</div>
+    <div class="tag-group-header">
+      <span class="filter-section-title" style="margin-bottom:0;">効果種別</span>
+      <div class="and-or-toggle" id="andOrToggle">
+        <button class="and-or-btn active" id="btnAnd" onclick="setTagMode('AND')">AND</button>
+        <button class="and-or-btn" id="btnOr" onclick="setTagMode('OR')">OR</button>
+      </div>
+    </div>
     <div class="tag-filter" id="tagFilterEffect"></div>
   </div>
   <div class="tag-group">
-    <div class="filter-section-title">種族・タイプ</div>
+    <div class="tag-group-header">
+      <span class="filter-section-title" style="margin-bottom:0;">種族・タイプ</span>
+    </div>
     <div class="tag-filter" id="tagFilterType"></div>
   </div>
   <div class="tag-group">
-    <div class="filter-section-title">タイミング・条件</div>
+    <div class="tag-group-header">
+      <span class="filter-section-title" style="margin-bottom:0;">タイミング・条件</span>
+    </div>
     <div class="tag-filter" id="tagFilterTiming"></div>
   </div>
 
@@ -256,6 +319,8 @@ const TAG_GROUPS = {
 let allData = [];
 let activeTags = new Set();
 let activeSource = 'all';
+let activeRarity = 'all';
+let tagMode = 'AND'; // 'AND' or 'OR'
 
 function buildTagButtons() {
   const map = { aura: 'tagFilterAura', effect: 'tagFilterEffect', type: 'tagFilterType', timing: 'tagFilterTiming' };
@@ -284,9 +349,23 @@ function toggleTag(btn, tag) {
 }
 
 function setSource(btn) {
-  document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.source-btn[data-source]').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   activeSource = btn.dataset.source;
+  render();
+}
+
+function setRarity(btn) {
+  document.querySelectorAll('.source-btn[data-rarity]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeRarity = btn.dataset.rarity;
+  render();
+}
+
+function setTagMode(mode) {
+  tagMode = mode;
+  document.getElementById('btnAnd').classList.toggle('active', mode === 'AND');
+  document.getElementById('btnOr').classList.toggle('active', mode === 'OR');
   render();
 }
 
@@ -294,8 +373,14 @@ function clearAll() {
   activeTags.clear();
   document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
   activeSource = 'all';
-  document.querySelectorAll('.source-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.source-btn[data-source]').forEach(b => b.classList.remove('active'));
   document.querySelector('[data-source="all"]').classList.add('active');
+  activeRarity = 'all';
+  document.querySelectorAll('.source-btn[data-rarity]').forEach(b => b.classList.remove('active'));
+  document.querySelector('[data-rarity="all"]').classList.add('active');
+  tagMode = 'AND';
+  document.getElementById('btnAnd').classList.add('active');
+  document.getElementById('btnOr').classList.remove('active');
   document.getElementById('searchInput').value = '';
   render();
 }
@@ -311,9 +396,18 @@ function render() {
   const filtered = allData.filter(a => {
     // ソースフィルター
     if (activeSource !== 'all' && a.source !== activeSource) return false;
-    // タグフィルター（AND検索）
-    for (const tag of activeTags) {
-      if (!a.tags || !a.tags.includes(tag)) return false;
+    // レアリティフィルター
+    if (activeRarity !== 'all' && a.rarity !== activeRarity) return false;
+    // タグフィルター（AND / OR）
+    if (activeTags.size > 0) {
+      if (tagMode === 'AND') {
+        for (const tag of activeTags) {
+          if (!a.tags || !a.tags.includes(tag)) return false;
+        }
+      } else {
+        const hit = [...activeTags].some(tag => a.tags && a.tags.includes(tag));
+        if (!hit) return false;
+      }
     }
     // キーワード検索
     if (keyword) {
@@ -334,6 +428,10 @@ function render() {
     const sourceBadge = a.source === 'イベント'
       ? `<span class="source-badge event">イベント</span>`
       : `<span class="source-badge flash">閃き</span>`;
+    const rarityClass = a.rarity === 'SSR' ? 'ssr' : a.rarity === 'MR' ? 'mr' : '';
+    const rarityBadge = rarityClass
+      ? `<span class="rarity-badge ${rarityClass}">${escHtml(a.rarity)}</span>`
+      : '';
     const tags = (a.tags || []).map(t => `<span class="ability-tag">${escHtml(t)}</span>`).join('');
     const desc = a.desc.replace(/<br>/g, '<br>');
     const cardId = cardNameToId[a.card];
@@ -341,6 +439,7 @@ function render() {
         <div class="ability-header">
           <span class="ability-name">${escHtml(a.name)}</span>
           <span class="ability-card-name">${escHtml(a.card)}</span>
+          ${rarityBadge}
           ${sourceBadge}
         </div>
         <div class="ability-desc">${desc}</div>
@@ -355,7 +454,7 @@ function render() {
 }
 
 // データ読み込み
-fetch('lmfdb_abilities_data.json')
+fetch('lMfDB_abilities.json')
   .then(r => r.json())
   .then(data => {
     allData = data;
