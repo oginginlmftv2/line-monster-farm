@@ -236,7 +236,11 @@
 
   <!-- キーワード検索 -->
   <div class="search-box">
-    <input class="search-input" id="searchInput" type="text" placeholder="能力名・効果・カード名で検索...">
+    <input class="search-input" id="searchInput" type="text" placeholder="能力名・効果・カード名で検索（スペース区切り）">
+    <div class="and-or-toggle">
+      <button class="and-or-btn active" id="btnKwAnd" onclick="setKwMode('AND')">AND</button>
+      <button class="and-or-btn" id="btnKwOr" onclick="setKwMode('OR')">OR</button>
+    </div>
   </div>
 
   <!-- ソースフィルター -->
@@ -321,6 +325,7 @@ let activeTags = new Set();
 let activeSource = 'all';
 let activeRarity = 'all';
 let tagMode = 'AND'; // 'AND' or 'OR'
+let kwMode = 'AND';  // 'AND' or 'OR'
 
 function buildTagButtons() {
   const map = { aura: 'tagFilterAura', effect: 'tagFilterEffect', type: 'tagFilterType', timing: 'tagFilterTiming' };
@@ -362,6 +367,13 @@ function setRarity(btn) {
   render();
 }
 
+function setKwMode(mode) {
+  kwMode = mode;
+  document.getElementById('btnKwAnd').classList.toggle('active', mode === 'AND');
+  document.getElementById('btnKwOr').classList.toggle('active', mode === 'OR');
+  render();
+}
+
 function setTagMode(mode) {
   tagMode = mode;
   document.getElementById('btnAnd').classList.toggle('active', mode === 'AND');
@@ -381,6 +393,9 @@ function clearAll() {
   tagMode = 'AND';
   document.getElementById('btnAnd').classList.add('active');
   document.getElementById('btnOr').classList.remove('active');
+  kwMode = 'AND';
+  document.getElementById('btnKwAnd').classList.add('active');
+  document.getElementById('btnKwOr').classList.remove('active');
   document.getElementById('searchInput').value = '';
   render();
 }
@@ -409,10 +424,15 @@ function render() {
         if (!hit) return false;
       }
     }
-    // キーワード検索
+    // キーワード検索（スペース区切りでAND/OR）
     if (keyword) {
       const text = (a.name + a.desc + a.card).toLowerCase();
-      if (!text.includes(keyword)) return false;
+      const words = keyword.split(/\s+/).filter(w => w.length > 0);
+      if (kwMode === 'AND') {
+        if (!words.every(w => text.includes(w))) return false;
+      } else {
+        if (!words.some(w => text.includes(w))) return false;
+      }
     }
     return true;
   });
