@@ -84,6 +84,103 @@
 
 <main>
 
+  <!-- 更新履歴（折りたたみ） -->
+  <div class="section" style="margin-bottom:12px;">
+    <div onclick="toggleHistory(this)" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;">
+      <div class="section-title" style="margin:0;">🕐 更新履歴</div>
+      <span id="history-chevron" style="color:#f0a500;font-size:13px;transition:transform 0.2s;">▼</span>
+    </div>
+    <div id="history-body" style="display:none;margin-top:12px;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <tbody>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.18</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="ikusei/grand-slam.html" style="color:#f0a500;text-decoration:none;">グランドスラム攻略（決戦編）追加</a>・
+              <a href="ikusei/grand-slam-chorenzen.html" style="color:#f0a500;text-decoration:none;">超連戦編追加</a>・
+              <a href="ikusei/solomon.html" style="color:#f0a500;text-decoration:none;">ソロモンクエスト攻略更新</a>・
+              <a href="ikusei/hiden.html#boss" style="color:#f0a500;text-decoration:none;">秘伝周回ボスモン・ノラモン一覧追加</a>・
+              <a href="diary.html" style="color:#f0a500;text-decoration:none;">プレイ日記更新</a>・
+              <a href="profile.html" style="color:#f0a500;text-decoration:none;">管理人プロフィールページ追加</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.16</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="ability-search.html" style="color:#f0a500;text-decoration:none;">能力検索ツール追加</a>・
+              <a href="npc-regen.html" style="color:#f0a500;text-decoration:none;">NPC再生一覧にナタリア追加</a>・
+              <a href="diary.html" style="color:#f0a500;text-decoration:none;">プレイ日記更新</a>・
+              <a href="assist-ranking.html" style="color:#f0a500;text-decoration:none;">ランキングにコメント追加</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.15</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="monsters.html" style="color:#f0a500;text-decoration:none;">シュシュポッポ・エスエル追加</a>・
+              <a href="diary.html" style="color:#f0a500;text-decoration:none;">プレイ日記ページ開設</a>・
+              独自ドメイン移行
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.05</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="aisyoukennsaku.html" style="color:#f0a500;text-decoration:none;">相性検索ツール追加</a>・
+              <a href="hoken-kennsaku.html" style="color:#f0a500;text-decoration:none;">補完探索ツール追加</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.02</td>
+            <td style="padding:8px 4px;color:#444;">
+              <a href="monsters.html" style="color:#f0a500;text-decoration:none;">コメント機能をモンスター詳細・カード詳細ページに追加</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.04.02</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="tips.html" style="color:#f0a500;text-decoration:none;">裏技・小技ページ追加</a>・
+              <a href="reroll.html" style="color:#f0a500;text-decoration:none;">リセマラランキングページ追加</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.24</td>
+            <td style="padding:8px 4px;color:#444;">
+              <a href="ikusei/solomon.html" style="color:#f0a500;text-decoration:none;">ソロモンクエスト攻略ページを更新（状態変化詳細など）</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.23</td>
+            <td style="padding:8px 4px;color:#444;">
+              <a href="ikusei/hiden.html" style="color:#f0a500;text-decoration:none;">秘伝周回完全ガイドを更新（相性表・継承情報追加）</a>
+            </td>
+          </tr>
+          <tr style="border-bottom:1px solid #f0f0f0;">
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.14</td>
+            <td style="padding:8px 4px;color:#444;">
+              <a href="assist-ranking.html" style="color:#f0a500;text-decoration:none;">アシストカードランキング（ユーザー投票184名）を掲載</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.02</td>
+            <td style="padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;">
+              <a href="monsters.html" style="color:#f0a500;text-decoration:none;">サイト公開。モンスター一覧</a>・
+              <a href="assist.html" style="color:#f0a500;text-decoration:none;">アシストカード一覧を掲載</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    function toggleHistory(el) {
+      const body = document.getElementById('history-body');
+      const chevron = document.getElementById('history-chevron');
+      const open = body.style.display === 'block';
+      body.style.display = open ? 'none' : 'block';
+      chevron.style.transform = open ? '' : 'rotate(180deg)';
+    }
+  </script>
+
   <!-- コンテンツメニュー -->
   <div class="section">
     <div class="section-title">攻略コンテンツ</div>
@@ -280,57 +377,13 @@
          style="display:inline-flex;align-items:center;gap:8px;color:#f0a500;font-weight:bold;text-decoration:none;font-size:14px;">
         📩 お問い合わせフォーム
       </a>
+      <a href="profile.html"
+         style="display:inline-flex;align-items:center;gap:8px;color:#f0a500;font-weight:bold;text-decoration:none;font-size:14px;">
+        👤 管理人プロフィール
+      </a>
     </div>
   </div>
 
-  <!-- 更新履歴 -->
-  <div class="section">
-    <div class="section-title">🕐 更新履歴</div>
-    <table style="width:100%;border-collapse:collapse;font-size:13px;">
-      <tbody>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.18</td>
-          <td style="padding:8px 4px;color:#444;">グランドスラム攻略ページを追加（決戦編・超連戦編）・ソロモンクエスト攻略ページを更新・秘伝周回にボスモン・ノラモン一覧を追加・プレイ日記更新・管理人プロフィールページを追加</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.16</td>
-          <td style="padding:8px 4px;color:#444;">能力検索ツールを追加・NPC再生一覧にナタリア追加・プレイ日記更新・ランキングにコメント追加</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.15</td>
-          <td style="padding:8px 4px;color:#444;">シュシュポッポ・エスエル追加。プレイ日記ページ開設。独自ドメイン移行</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.05</td>
-          <td style="padding:8px 4px;color:#444;">相性検索ツール・補完探索ツールを追加</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;width:90px;">2026.04.02</td>
-          <td style="padding:8px 4px;color:#444;">コメント機能をモンスター詳細・カード詳細ページに追加</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.04.02</td>
-          <td style="padding:8px 4px;color:#444;">裏技・小技ページ・リセマラランキングページを追加</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.24</td>
-          <td style="padding:8px 4px;color:#444;">ソロモンクエスト攻略ページを更新（状態変化詳細など）</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.23</td>
-          <td style="padding:8px 4px;color:#444;">秘伝周回完全ガイドを更新（相性表・継承情報追加）</td>
-        </tr>
-        <tr style="border-bottom:1px solid #f0f0f0;">
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.03.14</td>
-          <td style="padding:8px 4px;color:#444;">アシストカードランキング（ユーザー投票184名）を掲載</td>
-        </tr>
-        <tr>
-          <td style="padding:8px 4px;color:#999;white-space:nowrap;">2026.02</td>
-          <td style="padding:8px 4px;color:#444;">サイト公開。モンスター一覧・アシストカード一覧を掲載</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 
   <!-- アシストカードランキング -->
   <div class="section">
