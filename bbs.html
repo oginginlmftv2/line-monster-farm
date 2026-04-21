@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>質問・雑談掲示板 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファーム徹底攻略の質問・雑談掲示板。育成の疑問・編成相談・雑談などお気軽にどうぞ。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/bbs.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .bbs-form-box {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 18px 16px;
+      margin-bottom: 20px;
+    }
+    .bbs-form-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #1a1a2e;
+      margin-bottom: 12px;
+    }
+    .bbs-field { margin-bottom: 10px; }
+    .bbs-field label {
+      display: block;
+      font-size: 11px;
+      font-weight: bold;
+      color: #888;
+      margin-bottom: 4px;
+    }
+    .bbs-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+    .bbs-input:focus { border-color: #f0a500; }
+    .bbs-textarea {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      outline: none;
+      resize: vertical;
+      min-height: 90px;
+      transition: border 0.2s;
+      box-sizing: border-box;
+    }
+    .bbs-textarea:focus { border-color: #f0a500; }
+    .bbs-cat-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .bbs-cat-btn {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 2px solid #ddd;
+      background: #f9f9f9;
+      font-size: 13px;
+      font-weight: bold;
+      color: #888;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .bbs-cat-btn.active-shitsumon {
+      border-color: #2196f3;
+      background: #e3f2fd;
+      color: #1565c0;
+    }
+    .bbs-cat-btn.active-zatsudan {
+      border-color: #66bb6a;
+      background: #e8f5e9;
+      color: #2e7d32;
+    }
+    .bbs-submit {
+      width: 100%;
+      padding: 11px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f0a500, #e05000);
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      font-family: inherit;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .bbs-submit:hover { opacity: 0.85; }
+    .bbs-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .bbs-err {
+      font-size: 12px;
+      color: #c00;
+      margin-top: 6px;
+      display: none;
+    }
+    /* フィルタータブ */
+    .bbs-filter {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .bbs-filter-btn {
+      padding: 5px 14px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      font-size: 12px;
+      font-weight: bold;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .bbs-filter-btn.active {
+      background: #1a1a2e;
+      border-color: #1a1a2e;
+      color: #fff;
+    }
+    /* 投稿リスト */
+    .bbs-post {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .bbs-post-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .bbs-cat-badge {
+      font-size: 10px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .bbs-cat-badge.shitsumon {
+      background: #e3f2fd;
+      color: #1565c0;
+      border: 1px solid #90caf9;
+    }
+    .bbs-cat-badge.zatsudan {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border: 1px solid #a5d6a7;
+    }
+    .bbs-post-name {
+      font-size: 13px;
+      font-weight: bold;
+      color: #1a1a2e;
+    }
+    .bbs-post-date {
+      font-size: 11px;
+      color: #aaa;
+      margin-left: auto;
+    }
+    .bbs-post-content {
+      font-size: 13px;
+      line-height: 1.8;
+      color: #333;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .bbs-del-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: none;
+      border: none;
+      color: #ddd;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: all 0.15s;
+      line-height: 1;
+    }
+    .bbs-del-btn:hover { color: #c00; background: rgba(200,0,0,0.07); }
+    .bbs-loadmore {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background: #f9f9f9;
+      font-size: 13px;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+      margin-top: 4px;
+    }
+    .bbs-loadmore:hover { background: #f0f0f0; }
+    .bbs-empty {
+      text-align: center;
+      color: #aaa;
+      font-size: 14px;
+      padding: 40px 0;
+    }
+    .bbs-loading {
+      text-align: center;
+      color: #aaa;
+      font-size: 13px;
+      padding: 20px 0;
+    }
+    .bbs-notice {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #6d4c00;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .bbs-count {
+      font-size: 12px;
+      color: #999;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">💬 質問・雑談掲示板</h1>
+
+  <div class="bbs-notice">
+    ⚠️ 荒らし・スパム・誹謗中傷・個人情報の投稿は禁止です。<br>
+    管理人による削除が行われる場合があります。<br>
+    ゲームの質問・育成相談・雑談などお気軽にどうぞ。
+  </div>
+
+  <!-- 投稿フォーム -->
+  <div class="bbs-form-box">
+    <div class="bbs-form-title">✏️ 投稿する</div>
+    <div class="bbs-field">
+      <label>名前（任意）</label>
+      <input class="bbs-input" id="post-name" type="text" placeholder="名無し" maxlength="20">
+    </div>
+    <div class="bbs-field">
+      <label>カテゴリ</label>
+      <div class="bbs-cat-row">
+        <button class="bbs-cat-btn active-shitsumon" id="cat-shitsumon" onclick="selectCat('質問')">❓ 質問</button>
+        <button class="bbs-cat-btn" id="cat-zatsudan" onclick="selectCat('雑談')">💬 雑談</button>
+      </div>
+    </div>
+    <div class="bbs-field">
+      <label>内容 <span style="color:#c00">*</span></label>
+      <textarea class="bbs-textarea" id="post-content" placeholder="質問・雑談を書いてください（最大500文字）" maxlength="500"></textarea>
+      <div style="text-align:right;font-size:11px;color:#bbb;margin-top:2px"><span id="char-count">0</span>/500</div>
+    </div>
+    <button class="bbs-submit" id="submit-btn" onclick="submitPost()">投稿する</button>
+    <div class="bbs-err" id="post-err"></div>
+  </div>
+
+  <!-- フィルター -->
+  <div class="bbs-filter">
+    <button class="bbs-filter-btn active" data-filter="all" onclick="setFilter(this,'all')">すべて</button>
+    <button class="bbs-filter-btn" data-filter="質問" onclick="setFilter(this,'質問')">❓ 質問</button>
+    <button class="bbs-filter-btn" data-filter="雑談" onclick="setFilter(this,'雑談')">💬 雑談</button>
+  </div>
+
+  <div class="bbs-count" id="post-count"></div>
+
+  <!-- 投稿リスト -->
+  <div id="post-list"><div class="bbs-loading">読み込み中...</div></div>
+  <button class="bbs-loadmore" id="loadmore-btn" style="display:none;" onclick="loadMore()">もっと見る</button>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const DEL_PASSWORD = 'mf2024';
+const PAGE_SIZE = 20;
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const col = db.collection('bbs_posts');
+
+let selectedCat = '質問';
+let activeFilter = 'all';
+let posts = [];
+let lastDoc = null;
+let hasMore = false;
+let totalCount = 0;
+
+// カテゴリ選択
+function selectCat(cat) {
+  selectedCat = cat;
+  document.getElementById('cat-shitsumon').className = 'bbs-cat-btn' + (cat === '質問' ? ' active-shitsumon' : '');
+  document.getElementById('cat-zatsudan').className = 'bbs-cat-btn' + (cat === '雑談' ? ' active-zatsudan' : '');
+}
+
+// 文字数カウント
+document.getElementById('post-content').addEventListener('input', function() {
+  document.getElementById('char-count').textContent = this.value.length;
+});
+
+// フィルター切替
+function setFilter(btn, filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.bbs-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  posts = [];
+  lastDoc = null;
+  loadPosts(true);
+}
+
+// 投稿一覧取得（deleted・category はクライアントでフィルタ、複合インデックス不要）
+async function loadPosts(reset = false) {
+  if (reset) { posts = []; lastDoc = null; }
+  document.getElementById('loadmore-btn').style.display = 'none';
+  if (reset) document.getElementById('post-list').innerHTML = '<div class="bbs-loading">読み込み中...</div>';
+
+  try {
+    let q = col.orderBy('createdAt', 'desc').limit(PAGE_SIZE * 3 + 1);
+    if (lastDoc) q = q.startAfter(lastDoc);
+    const snap = await q.get();
+    const docs = snap.docs;
+
+    // クライアントサイドフィルタ
+    const newPosts = docs
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(p => !p.deleted && (activeFilter === 'all' || p.category === activeFilter));
+
+    if (docs.length > 0) lastDoc = docs[docs.length - 1];
+    hasMore = docs.length > PAGE_SIZE * 3;
+
+    posts = reset ? newPosts : [...posts, ...newPosts];
+    renderPosts();
+    if (hasMore) document.getElementById('loadmore-btn').style.display = 'block';
+  } catch (e) {
+    document.getElementById('post-list').innerHTML = '<div class="bbs-empty">読み込みに失敗しました</div>';
+  }
+}
+
+function loadMore() { loadPosts(false); }
+
+// 日時フォーマット
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// 投稿レンダリング
+function renderPosts() {
+  const list = document.getElementById('post-list');
+  if (posts.length === 0) {
+    list.innerHTML = '<div class="bbs-empty">まだ投稿がありません<br>最初の投稿者になりましょう！</div>';
+    document.getElementById('post-count').textContent = '';
+    return;
+  }
+  document.getElementById('post-count').textContent = `${posts.length}件表示中${hasMore ? '（さらに読み込めます）' : ''}`;
+  list.innerHTML = posts.map(p => {
+    const catClass = p.category === '質問' ? 'shitsumon' : 'zatsudan';
+    const catIcon = p.category === '質問' ? '❓' : '💬';
+    const name = esc(p.name || '名無し');
+    const content = esc(p.content || '').replace(/\n/g, '<br>');
+    return `<div class="bbs-post" data-id="${p.id}">
+      <button class="bbs-del-btn" onclick="deletePost('${p.id}')" title="削除（管理者用）">🗑</button>
+      <div class="bbs-post-head">
+        <span class="bbs-cat-badge ${catClass}">${catIcon} ${esc(p.category)}</span>
+        <span class="bbs-post-name">${name}</span>
+        <span class="bbs-post-date">${formatDate(p.createdAt)}</span>
+      </div>
+      <div class="bbs-post-content">${content}</div>
+    </div>`;
+  }).join('');
+}
+
+// 投稿送信
+async function submitPost() {
+  const name = document.getElementById('post-name').value.trim() || '名無し';
+  const content = document.getElementById('post-content').value.trim();
+  const errEl = document.getElementById('post-err');
+  errEl.style.display = 'none';
+
+  if (!content) { errEl.textContent = '内容を入力してください'; errEl.style.display = 'block'; return; }
+  if (content.length > 500) { errEl.textContent = '500文字以内で入力してください'; errEl.style.display = 'block'; return; }
+
+  // スパム防止（30秒インターバル）
+  const lastPost = +localStorage.getItem('bbs_last_post') || 0;
+  const now = Date.now();
+  if (now - lastPost < 30000) {
+    const wait = Math.ceil((30000 - (now - lastPost)) / 1000);
+    errEl.textContent = `連続投稿防止のため、あと${wait}秒お待ちください`;
+    errEl.style.display = 'block';
+    return;
+  }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = '投稿中...';
+
+  try {
+    await col.add({
+      name,
+      category: selectedCat,
+      content,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      deleted: false
+    });
+    localStorage.setItem('bbs_last_post', String(Date.now()));
+    document.getElementById('post-content').value = '';
+    document.getElementById('post-name').value = '';
+    document.getElementById('char-count').textContent = '0';
+    // フィルターを全てに戻して再読み込み
+    activeFilter = 'all';
+    document.querySelectorAll('.bbs-filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+    await loadPosts(true);
+  } catch (e) {
+    errEl.textContent = '投稿に失敗しました。しばらくしてから再試行してください';
+    errEl.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '投稿する';
+  }
+}
+
+// 削除（管理者パスワード入力）
+async function deletePost(id) {
+  const pw = prompt('管理者パスワードを入力してください');
+  if (pw === null) return;
+  if (pw !== DEL_PASSWORD) { alert('パスワードが違います'); return; }
+  try {
+    await col.doc(id).update({ deleted: true });
+    posts = posts.filter(p => p.id !== id);
+    renderPosts();
+  } catch (e) {
+    alert('削除に失敗しました');
+  }
+}
+
+// 初期ロード
+loadPosts(true);
+</script>
+
+</body>
+</html>
