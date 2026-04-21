@@ -632,8 +632,21 @@
     const monText = c.mon ? c.mon : 'なし';
     const distRow = c.dist
       ? `<tr><th>距離適性↑</th><td><span class="apt-badge apt-dist">${c.dist}</span></td></tr>` : '';
-    const terrainRow = c.terrain
-      ? `<tr><th>地形適性↑</th><td>${(Array.isArray(c.terrain) ? c.terrain : [c.terrain]).map(t => `<span class="apt-badge apt-terrain">${t}</span>`).join('')}</td></tr>` : '';
+    const NO_EVENT2_TYPES = ['友人', 'ライバル', '師匠'];
+    let terrainRow = '';
+    if (!NO_EVENT2_TYPES.includes(c.type) && !c.dist) {
+      let event2Content;
+      if (c.terrain) {
+        event2Content = (Array.isArray(c.terrain) ? c.terrain : [c.terrain])
+          .map(t => `<span class="apt-badge apt-terrain">${t}</span>`).join('') +
+          '<span style="font-size:12px;color:#555;margin-left:4px;">地形適性↑</span>';
+      } else if (c.event2) {
+        event2Content = `<span style="font-size:13px;color:#333;">${c.event2}</span>`;
+      } else {
+        event2Content = '<span style="color:#ccc;font-size:13px;">（未設定）</span>';
+      }
+      terrainRow = `<tr><th>イベント2左選択</th><td>${event2Content}</td></tr>`;
+    }
 
     document.title = `${c.name} | LINEモンスターファーム徹底攻略`;
 

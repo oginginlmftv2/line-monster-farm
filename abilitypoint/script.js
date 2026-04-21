@@ -110,6 +110,9 @@ const allAbilities = [
   { id:"hero_w120",group:"その他", label:"英雄白", cost:120, discount:null,  value:102, eff:0.8500, searchable:true },
   { id:"hero_w114",group:"その他", label:"英雄白", cost:114, discount:"5%",  value:102, eff:0.8947, searchable:true },
   { id:"hero_w108",group:"その他", label:"英雄白", cost:108, discount:"10%", value:102, eff:0.9444, searchable:true },
+  { id:"hero_w84", group:"その他", label:"英雄白", cost:84,  discount:"30%", value:102, eff:1.2143, searchable:true },
+  { id:"hero_w78", group:"その他", label:"英雄白", cost:78,  discount:"35%", value:102, eff:1.3077, searchable:true },
+  { id:"hero_w72", group:"その他", label:"英雄白", cost:72,  discount:"40%", value:102, eff:1.4167, searchable:true },
   // 英雄金+白
   { id:"hero_gw204",group:"その他",label:"英雄金+白", cost:204, discount:null, value:204, eff:1.0000, searchable:true },
   { id:"hero_gw192",group:"その他",label:"英雄金+白", cost:192, discount:null, value:204, eff:1.0625, searchable:true },
