@@ -11,6 +11,57 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"アシストカード一覧","item":"https://line-monster-farm-tetteikouryaku.com/assist.html"}]}</script>
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .assist-search-input {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.2s;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+    .assist-search-input:focus { border-color: #f0a500; }
+    .apt-filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .apt-filter-label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #666;
+      white-space: nowrap;
+    }
+    .apt-filter-btn {
+      font-size: 12px;
+      font-weight: bold;
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #f9f9f9;
+      color: #555;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .apt-filter-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
+    .apt-filter-btn:hover:not(.active) { background: #fff3cd; border-color: #f0a500; color: #b8860b; }
+    .assist-clear-btn {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      background: #fff;
+      color: #888;
+      cursor: pointer;
+      margin-left: auto;
+    }
+    .assist-clear-btn:hover { background: #fee; border-color: #f88; color: #c00; }
+  </style>
 </head>
 <body>
 
@@ -28,12 +79,36 @@
 <div class="container">
   <h1 class="page-title">アシストカード一覧</h1>
 
+  <!-- カード名検索 -->
+  <input class="assist-search-input" id="assistSearch" type="text" placeholder="カード名で検索（あいまい可：リルム→リムル・リリム なども表示）" oninput="setSearch(this.value)">
+
   <div class="filter-bar">
     <button class="filter-btn active" onclick="filterCards('all', event)">すべて</button>
     <button class="filter-btn mr" onclick="filterCards('MR', event)">MR</button>
     <button class="filter-btn ssr" onclick="filterCards('SSR', event)">SSR</button>
 <span style="color:#ddd;margin:0 2px;font-size:18px;line-height:1;">|</span>
     <button class="filter-btn" id="sortScoreBtn" onclick="toggleSortScore(this)">⭐ 評価順</button>
+  </div>
+
+  <!-- 距離適性フィルター -->
+  <div class="apt-filter-row">
+    <span class="apt-filter-label">距離適性↑：</span>
+    <button class="apt-filter-btn active" data-dist="all" onclick="setDistFilter(this)">すべて</button>
+    <button class="apt-filter-btn" data-dist="零距離" onclick="setDistFilter(this)">零距離</button>
+    <button class="apt-filter-btn" data-dist="近距離" onclick="setDistFilter(this)">近距離</button>
+    <button class="apt-filter-btn" data-dist="中距離" onclick="setDistFilter(this)">中距離</button>
+    <button class="apt-filter-btn" data-dist="遠距離" onclick="setDistFilter(this)">遠距離</button>
+  </div>
+  <!-- 地形適性フィルター -->
+  <div class="apt-filter-row">
+    <span class="apt-filter-label">地形適性↑：</span>
+    <button class="apt-filter-btn active" data-terrain="all" onclick="setTerrainFilter(this)">すべて</button>
+    <button class="apt-filter-btn" data-terrain="砂漠" onclick="setTerrainFilter(this)">砂漠</button>
+    <button class="apt-filter-btn" data-terrain="海岸" onclick="setTerrainFilter(this)">海岸</button>
+    <button class="apt-filter-btn" data-terrain="雪山" onclick="setTerrainFilter(this)">雪山</button>
+    <button class="apt-filter-btn" data-terrain="火山" onclick="setTerrainFilter(this)">火山</button>
+    <button class="apt-filter-btn" data-terrain="森林" onclick="setTerrainFilter(this)">森林</button>
+    <button class="assist-clear-btn" onclick="clearAssistFilter()">リセット</button>
   </div>
 
   <div class="card-grid" id="cardGrid">
@@ -434,6 +509,7 @@
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="cards/cards-data.js"></script>
 
 <script>
 const firebaseConfig = {
@@ -468,7 +544,58 @@ document.head.appendChild(style);
 
 let currentRarity = 'all';
 let currentSort = 'default';
+let currentSearch = '';
+let currentDist = 'all';
+let currentTerrain = 'all';
 const defaultOrder = [...document.querySelectorAll('#cardGrid .card')];
+
+// あいまい検索：部分一致 OR クエリ文字の60%以上がターゲットに含まれる
+function fuzzyMatch(query, target) {
+  if (!query) return true;
+  if (target.includes(query)) return true;
+  const qArr = [...query];
+  const tCopy = [...target];
+  let matched = 0;
+  for (const c of qArr) {
+    const idx = tCopy.indexOf(c);
+    if (idx !== -1) { matched++; tCopy.splice(idx, 1); }
+  }
+  return matched / qArr.length >= 0.6;
+}
+
+function setSearch(val) {
+  currentSearch = val.trim();
+  applyFilter();
+}
+
+function setDistFilter(btn) {
+  document.querySelectorAll('.apt-filter-btn[data-dist]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentDist = btn.dataset.dist;
+  applyFilter();
+}
+
+function setTerrainFilter(btn) {
+  document.querySelectorAll('.apt-filter-btn[data-terrain]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentTerrain = btn.dataset.terrain;
+  applyFilter();
+}
+
+function clearAssistFilter() {
+  currentSearch = '';
+  document.getElementById('assistSearch').value = '';
+  currentDist = 'all';
+  document.querySelectorAll('.apt-filter-btn[data-dist]').forEach(b => b.classList.remove('active'));
+  document.querySelector('.apt-filter-btn[data-dist="all"]').classList.add('active');
+  currentTerrain = 'all';
+  document.querySelectorAll('.apt-filter-btn[data-terrain]').forEach(b => b.classList.remove('active'));
+  document.querySelector('.apt-filter-btn[data-terrain="all"]').classList.add('active');
+  currentRarity = 'all';
+  document.querySelectorAll('.filter-btn:not(#sortScoreBtn)').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[onclick*="\'all\'"]').classList.add('active');
+  applyFilter();
+}
 
 function filterCards(rarity, event) {
   currentRarity = rarity;
@@ -480,7 +607,39 @@ function filterCards(rarity, event) {
 
 function applyFilter() {
   document.querySelectorAll('#cardGrid .card').forEach(card => {
-    card.style.display = (currentRarity === 'all' || card.dataset.rarity === currentRarity) ? 'block' : 'none';
+    // レアリティ
+    const rarityOk = currentRarity === 'all' || card.dataset.rarity === currentRarity;
+
+    // カード名あいまい検索
+    let searchOk = true;
+    if (currentSearch) {
+      const name = card.querySelector('.card-name')?.textContent
+                || card.querySelector('.card-info')?.dataset.name || '';
+      searchOk = fuzzyMatch(currentSearch, name);
+    }
+
+    // 距離適性
+    let distOk = true;
+    if (currentDist !== 'all') {
+      const id = (card.getAttribute('href') || '').split('#')[1] || '';
+      const cd = cardsData?.[id];
+      distOk = !!(cd && cd.dist === currentDist);
+    }
+
+    // 地形適性
+    let terrainOk = true;
+    if (currentTerrain !== 'all') {
+      const id = (card.getAttribute('href') || '').split('#')[1] || '';
+      const cd = cardsData?.[id];
+      if (!cd || !cd.terrain) {
+        terrainOk = false;
+      } else {
+        const terrains = Array.isArray(cd.terrain) ? cd.terrain : [cd.terrain];
+        terrainOk = terrains.includes(currentTerrain);
+      }
+    }
+
+    card.style.display = (rarityOk && searchOk && distOk && terrainOk) ? 'block' : 'none';
   });
 }
 
@@ -525,15 +684,18 @@ document.querySelectorAll('.card').forEach(card => {
   const rarityEl = info.querySelector('.rarity');
   if (!nameEl || !rarityEl) return;
 
-  // data-* 属性に名前・レアリティのクラスを保存しておく
-  info.dataset.name = nameEl.textContent;
+  // cardsDataから最新名を取得（リムル→リムル・リゾートなどの名前変更に自動対応）
+  const cardId = (card.getAttribute('href') || '').split('#')[1] || '';
+  const displayName = (cardsData?.[cardId]?.name) || nameEl.textContent;
+
+  info.dataset.name = displayName;
   info.dataset.rarityClass = rarityEl.className;
   info.dataset.rarityText = rarityEl.textContent;
 
   info.innerHTML = `
     <div class="card-name-row">
       <span class="${rarityEl.className}">${rarityEl.textContent}</span>
-      <span class="card-name">${nameEl.textContent}</span>
+      <span class="card-name">${displayName}</span>
     </div>
     <div class="card-score">総合評価 <span class="score-val">-</span></div>
     <div class="card-score">一致評価 <span class="itti-val">-</span></div>
