@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>モンスターファーム 能力最適化ツール</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <header>
+    <div class="header-titles">
+      <h1>MONSTER FARM<br>能力最適取得支援ツール</h1>
+      <p>総合力育成における能力取得を最適化するツールです。</p>
+    </div>
+    <div class="header-buttons">
+      <button class="header-btn" onclick="openHelpModal()">💡 ツールの活用法</button>
+      <button class="header-btn" onclick="openModal()">📊 効率一覧</button>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="card-title">所持pt</div>
+    <div class="pt-input-wrap">
+      <label for="totalPt">現在の所持pt</label>
+      <input type="number" id="totalPt" min="0" max="9999" value="300">
+      <span class="pt-unit">pt</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">候補能力設定</div>
+    <div id="abilityList"></div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-primary" onclick="calculate()">▶ 最適な組み合わせを計算</button>
+  </div>
+  <div class="reset-link"><button onclick="resetAll()">すべてリセット</button></div>
+  <div id="result"></div>
+</div>
+
+<!-- Efficiency Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>EFFICIENCY LIST</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-tabs">
+      <button class="modal-tab-btn active" id="tab-btn-efficiency" onclick="switchModalTab('efficiency')">効率一覧</button>
+      <button class="modal-tab-btn" id="tab-btn-baserate" onclick="switchModalTab('baserate'); renderBaseRateTab()">基礎還元率</button>
+    </div>
+    <div class="modal-body">
+      <div id="tab-content-efficiency" class="modal-tab-content">
+        <table>
+          <thead>
+            <tr>
+              <th>種類</th>
+              <th>取得pt</th>
+              <th>割引率</th>
+              <th>総合力</th>
+              <th>効率</th>
+            </tr>
+          </thead>
+          <tbody id="modalTable"></tbody>
+        </table>
+      </div>
+      <div id="tab-content-baserate" class="modal-tab-content" style="display:none;">
+        <p class="base-rate-desc">割引なし・1個取得時の基礎的な還元率です。</p>
+        <table>
+          <thead>
+            <tr>
+              <th>種類</th>
+              <th>基礎還元率</th>
+            </tr>
+          </thead>
+          <tbody id="baseRateTable"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Link Modal -->
+<div class="modal-overlay" id="linkOverlay" onclick="closeLinkModalOnBg(event)">
+  <div class="modal modal-sm">
+    <div class="modal-header">
+      <h2 id="linkModalTitle">部分能力をリンク</h2>
+      <button class="modal-close" onclick="closeLinkModal()">✕</button>
+    </div>
+    <div class="modal-body link-modal-body">
+      <p class="link-modal-hint">この能力に含まれる部分能力を選択してください。<br>リンクされた能力同士は計算で同時に選択されなくなります。</p>
+      <div id="linkCandidateList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Help Modal -->
+<div class="modal-overlay" id="helpOverlay" onclick="closeHelpModalOnBg(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>HOW TO USE</h2>
+      <button class="modal-close" onclick="closeHelpModal()">✕</button>
+    </div>
+    <div class="modal-body help-body">
+      <ul>
+        <li>育成中は効率一覧の上位から取得していきましょう。</li>
+        <li>このツールを使う場面は育成完了直前を想定しているので、高効率となる"ノラモン・ボス能力"や"律"、"調"はすでに取得済みであるという前提のもと組合せの計算からは除外しています。</li>
+        <li>所持している能力ptと取得可能な能力を設定して組合せを計算ボタンを押すと最適な組み合わせが出力されます。</li>
+        <li>白（特殊）は最近のモンスターの解放能力の[距離]与ダメ+5%、シナリオ能力、Exトレーニングで取得できるようになる能力を指します。</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
