@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
   :root {
-    --bg: #0a0c14;
-    --surface: #111827;
-    --surface2: #1c2333;
-    --border: #2a3450;
-    --accent: #00e5ff;
-    --accent2: #ffd700;
-    --accent3: #ff6b6b;
-    --text: #e0e8ff;
-    --text-dim: #6b7fa3;
-    --glow: 0 0 20px rgba(0,229,255,0.3);
+    --bg: #f4f6fa;
+    --surface: #ffffff;
+    --surface2: #f0f2f7;
+    --border: #dde2ee;
+    --accent: #0099bb;
+    --accent2: #e08800;
+    --accent3: #e53e3e;
+    --text: #1a2340;
+    --text-dim: #7a8aaa;
+    --glow: 0 0 20px rgba(0,153,187,0.15);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -52,7 +52,7 @@
     text-align: left;
     margin-bottom: 28px;
     padding: 24px 20px;
-    background: linear-gradient(135deg, #111827 0%, #1a2340 100%);
+    background: linear-gradient(135deg, #e8f4f8 0%, #ddeef5 100%);
     border: 1px solid var(--border);
     border-radius: 16px;
     position: relative;
@@ -160,7 +160,7 @@
   /* Ability Group */
   .ability-group { margin-bottom: 18px; }
 
-  .gl-白       { color: #c8d8ff; background: rgba(200,216,255,0.08); }
+  .gl-白       { color: #333333; background: rgba(200,216,255,0.15); }
   .gl-金       { color: #ffd700; background: rgba(255,215,0,0.08); }
   .gl-白金     { color: #a78bfa; background: rgba(167,139,250,0.08); }
   .gl-ひらめき { color: #34d399; background: rgba(52,211,153,0.08); }
