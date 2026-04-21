@@ -224,6 +224,267 @@
     }
     .apt-dist    { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
     .apt-terrain { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+
+    /* ===== マイセット ===== */
+    :root {
+      --ms-bg: #f8f9fa; --ms-s1: #fff; --ms-s2: #f2f3f7;
+      --ms-bd: #e0e0e0; --ms-bd2: #bbb;
+      --ms-tx: #1a1a2e; --ms-tm: #555; --ms-ts: #999;
+      --ms-acc: #f0a500; --ms-red: #c00;
+    }
+    /* FAB */
+    .myset-fab {
+      position: fixed; bottom: 80px; right: 14px; z-index: 90;
+      display: flex; align-items: center; gap: 5px;
+      background: #f0a500; color: #fff;
+      border-radius: 24px; padding: 9px 16px;
+      font-size: 13px; font-weight: bold; cursor: pointer;
+      box-shadow: 0 3px 12px rgba(240,165,0,0.45);
+      transition: all 0.18s; white-space: nowrap;
+    }
+    .myset-fab:hover { background: #d4920a; box-shadow: 0 4px 16px rgba(240,165,0,0.6); }
+    .myset-fab-name { max-width: 110px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    /* オーバーレイ */
+    .myset-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 91;
+    }
+    .myset-overlay.open { display: block; }
+    /* ドロワー */
+    .myset-drawer {
+      display: flex; flex-direction: column;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 92;
+      background: var(--ms-s1); border-top: 2px solid var(--ms-acc);
+      border-radius: 16px 16px 0 0;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.15);
+      max-height: 80vh; transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(0.32,0.72,0,1);
+    }
+    .myset-drawer.open { transform: translateY(0); }
+    .myset-drawer-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 16px 8px; border-bottom: 1px solid var(--ms-bd); flex-shrink: 0;
+    }
+    .myset-tabbar-wrap {
+      display: flex; align-items: center; gap: 4px;
+      padding: 8px 12px 0; border-bottom: 1px solid var(--ms-bd); flex-shrink: 0;
+    }
+    .myset-tabbar { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
+    .myset-tabbar::-webkit-scrollbar { display: none; }
+    .myset-set-tab {
+      padding: 5px 12px; border-radius: 8px 8px 0 0;
+      border: 1px solid transparent; border-bottom: none;
+      font-weight: bold; font-size: 12px; cursor: pointer;
+      color: var(--ms-tm); background: none; white-space: nowrap;
+      transition: all 0.15s; margin-bottom: -1px;
+    }
+    .myset-set-tab:hover { background: var(--ms-s2); color: var(--ms-tx); }
+    .myset-set-tab.active {
+      background: var(--ms-s1); border-color: var(--ms-bd);
+      border-bottom-color: var(--ms-s1); color: #f0a500;
+    }
+    .myset-new-btn {
+      background: none; border: 1px solid rgba(240,165,0,0.4); border-radius: 7px;
+      padding: 3px 10px; color: #f0a500; font-size: 15px; font-weight: bold;
+      cursor: pointer; flex-shrink: 0; margin-bottom: 1px; transition: background 0.15s;
+    }
+    .myset-new-btn:hover { background: rgba(240,165,0,0.1); }
+    .myset-pane { flex: 1; overflow-y: auto; padding: 12px; }
+    /* 能力カード内チェック */
+    .ms-check {
+      width: 18px; height: 18px; border-radius: 4px;
+      border: 1.5px solid #ccc; background: #f5f5f5;
+      flex-shrink: 0; cursor: pointer; display: flex;
+      align-items: center; justify-content: center;
+      font-size: 11px; font-weight: bold; transition: all 0.15s; user-select: none;
+    }
+    .ms-check.in { background: #f0a500; border-color: #f0a500; color: #fff; }
+    .ms-check:hover { border-color: #f0a500; }
+    /* マイセット内コンポーネント */
+    .myset-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+    .myset-title-input {
+      font-weight: 900; font-size: 15px; color: #f0a500;
+      background: none; border: none; border-bottom: 1px solid transparent;
+      outline: none; flex: 1; min-width: 0; padding: 1px 2px; transition: border-color 0.2s;
+    }
+    .myset-title-input:focus { border-bottom-color: #f0a500; }
+    .myset-del-btn {
+      background: none; border: none; font-size: 17px; color: var(--ms-ts);
+      cursor: pointer; padding: 2px 5px; border-radius: 5px; transition: all 0.15s;
+    }
+    .myset-del-btn:hover { color: var(--ms-red); background: rgba(200,0,0,0.08); }
+    .myset-memo {
+      width: 100%; background: var(--ms-s2); border: 1px solid var(--ms-bd);
+      border-radius: 8px; padding: 6px 10px; color: var(--ms-tx);
+      font-family: inherit; font-size: 12px; outline: none;
+      resize: none; min-height: 36px; max-height: 72px;
+      line-height: 1.5; margin-bottom: 10px; display: block; box-sizing: border-box;
+    }
+    .myset-memo:focus { border-color: #f0a500; }
+    .myset-section-title {
+      font-size: 13px; color: var(--ms-tm); font-weight: bold;
+      margin: 10px 0 6px;
+    }
+    .myset-card-group { margin-bottom: 10px; }
+    .myset-card-label {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--ms-tm); font-weight: bold;
+      margin-bottom: 3px; padding: 0 2px;
+    }
+    .myset-ability-row {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border-radius: 9px;
+      background: var(--ms-s1); border: 1px solid var(--ms-bd);
+      margin-bottom: 3px; transition: border-color 0.15s;
+    }
+    .myset-ability-row:hover { border-color: var(--ms-bd2); }
+    .myset-ability-name {
+      font-weight: bold; font-size: 12px; cursor: pointer; flex: 1;
+      min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      color: var(--ms-tx);
+    }
+    .myset-remove-btn {
+      background: none; border: none; color: var(--ms-ts);
+      font-size: 15px; cursor: pointer; padding: 1px 4px;
+      border-radius: 4px; transition: all 0.15s; flex-shrink: 0;
+    }
+    .myset-remove-btn:hover { color: var(--ms-red); background: rgba(200,0,0,0.08); }
+    /* 編成枠 */
+    .deck-section { margin-bottom: 12px; }
+    .deck-title { font-size: 10px; color: var(--ms-ts); font-weight: bold; margin-bottom: 6px; letter-spacing: .06em; }
+    .deck-slots { display: grid; grid-template-columns: repeat(3,1fr); gap: 5px; margin-bottom: 4px; }
+    .deck-slot {
+      border: 1.5px dashed var(--ms-bd2); border-radius: 9px; padding: 6px 8px;
+      cursor: pointer; transition: all 0.15s; min-height: 52px;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center; gap: 2px; user-select: none;
+    }
+    .deck-slot:hover { border-color: #f0a500; background: rgba(240,165,0,0.05); }
+    .deck-slot.filled { position: relative; border-style: solid; border-color: var(--ms-bd); background: var(--ms-s1); }
+    .deck-slot.filled:hover { border-color: #f0a500; }
+    .deck-slot.rental { border-color: rgba(120,80,200,0.4); }
+    .deck-slot.rental.filled { border-color: rgba(120,80,200,0.6); background: rgba(120,80,200,0.04); }
+    .deck-slot-label { font-size: 9px; color: var(--ms-ts); font-weight: bold; }
+    .deck-slot.rental .deck-slot-label { color: rgba(120,80,200,0.8); }
+    .deck-slot-card { font-weight: bold; font-size: 11px; color: var(--ms-tx); line-height: 1.2; word-break: break-all; }
+    .deck-slot-owned { font-size: 9px; color: #2e7d32; }
+    .deck-slot-empty { font-size: 18px; color: var(--ms-bd2); }
+    .deck-slot-cnt { font-size: 9px; color: var(--ms-ts); }
+    .deck-slot-clear-btn {
+      position: absolute; top: 3px; right: 4px; background: none; border: none;
+      color: var(--ms-ts); font-size: 12px; cursor: pointer; line-height: 1;
+      padding: 1px 2px; border-radius: 3px; transition: all 0.15s;
+    }
+    .deck-slot-clear-btn:hover { color: var(--ms-red); background: rgba(200,0,0,0.1); }
+    /* カード選択ピッカー */
+    .card-picker-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 200; align-items: flex-end; justify-content: center;
+    }
+    .card-picker-overlay.open { display: flex; }
+    .card-picker {
+      background: var(--ms-s1); border: 1px solid var(--ms-bd2);
+      border-radius: 16px 16px 0 0; width: 100%; max-width: 600px;
+      padding: 14px 14px 28px; max-height: 70vh; display: flex; flex-direction: column;
+    }
+    .card-picker-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-shrink: 0; }
+    .card-picker-title { font-weight: 900; font-size: 14px; color: var(--ms-tx); }
+    .card-picker-close { background: none; border: none; color: var(--ms-tm); font-size: 20px; cursor: pointer; }
+    .card-picker-list { overflow-y: auto; flex: 1; }
+    .card-picker-item {
+      display: flex; align-items: center; gap: 8px; padding: 9px 4px;
+      border-bottom: 1px solid var(--ms-bd); cursor: pointer; transition: background 0.12s;
+    }
+    .card-picker-item:hover { background: var(--ms-s2); }
+    .card-picker-item.selected { color: #f0a500; font-weight: bold; }
+    .card-picker-name { font-weight: bold; font-size: 13px; flex: 1; color: var(--ms-tx); }
+    .card-picker-cnt { font-size: 10px; color: var(--ms-ts); flex-shrink: 0; }
+    .card-picker-clear {
+      padding: 10px 12px; font-size: 13px; font-weight: bold; color: #c00;
+      cursor: pointer; display: flex; align-items: center; gap: 6px;
+      background: rgba(200,0,0,0.06); border-radius: 8px; margin: 4px 4px 0;
+      transition: all 0.15s;
+    }
+    .card-picker-clear:hover { background: rgba(200,0,0,0.12); }
+    /* セット作成モーダル */
+    .set-modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      z-index: 300; align-items: flex-end; justify-content: center;
+    }
+    .set-modal-overlay.open { display: flex; }
+    .set-modal {
+      background: var(--ms-s1); border: 1px solid var(--ms-bd2);
+      border-radius: 16px 16px 0 0; width: 100%; max-width: 600px; padding: 18px 16px 28px;
+    }
+    .set-modal-title {
+      font-weight: 900; font-size: 14px; margin-bottom: 14px;
+      display: flex; justify-content: space-between; align-items: center; color: var(--ms-tx);
+    }
+    .set-modal-close { background: none; border: none; color: var(--ms-tm); font-size: 20px; cursor: pointer; }
+    .set-modal-field { margin-bottom: 10px; }
+    .set-modal-field label { display: block; font-size: 11px; color: var(--ms-ts); margin-bottom: 3px; font-weight: bold; }
+    .set-modal-field input {
+      width: 100%; background: var(--ms-s2); border: 1px solid var(--ms-bd2);
+      border-radius: 8px; padding: 8px 10px; color: var(--ms-tx);
+      font-family: inherit; font-size: 13px; outline: none; box-sizing: border-box;
+    }
+    .set-modal-field input:focus { border-color: #f0a500; }
+    .set-modal-save {
+      width: 100%; background: linear-gradient(135deg, #f0a500, #e05000);
+      border: none; border-radius: 10px; padding: 10px; color: #fff;
+      font-family: inherit; font-size: 13px; font-weight: bold;
+      cursor: pointer; margin-top: 4px; transition: opacity 0.15s;
+    }
+    .set-modal-save:hover { opacity: 0.85; }
+    /* 削除確認モーダル */
+    .del-confirm-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65);
+      z-index: 400; align-items: center; justify-content: center; padding: 20px;
+    }
+    .del-confirm-overlay.open { display: flex; }
+    .del-confirm-modal {
+      background: var(--ms-s1); border: 1px solid var(--ms-bd2);
+      border-radius: 14px; padding: 20px; width: 100%; max-width: 320px; text-align: center;
+    }
+    .del-confirm-title { font-size: 13px; color: var(--ms-tx); margin-bottom: 10px; font-weight: bold; }
+    .del-confirm-name { font-size: 16px; color: var(--ms-tx); font-weight: 900; margin-bottom: 6px; word-break: break-all; }
+    .del-confirm-sub { font-size: 11px; color: var(--ms-ts); margin-bottom: 18px; }
+    .del-confirm-btns { display: flex; gap: 10px; }
+    .del-confirm-cancel {
+      flex: 1; background: var(--ms-s2); border: 1px solid var(--ms-bd2);
+      border-radius: 8px; padding: 10px; color: var(--ms-tm); font-size: 13px; cursor: pointer;
+    }
+    .del-confirm-ok {
+      flex: 1; background: rgba(200,0,0,0.1); border: 1px solid rgba(200,0,0,0.35);
+      border-radius: 8px; padding: 10px; color: #c00; font-size: 13px; font-weight: bold; cursor: pointer;
+    }
+    /* ロード閃き枠 */
+    .flash-section {
+      border: 1px dashed rgba(200,150,255,0.4); border-radius: 10px;
+      padding: 8px 10px; margin-top: 4px; background: rgba(200,150,255,0.05);
+    }
+    .flash-title { font-size: 13px; color: #8b5cf6; font-weight: bold; margin-bottom: 6px; }
+    .flash-place-btn {
+      background: rgba(240,165,0,0.1); border: 1px solid rgba(240,165,0,0.3);
+      border-radius: 5px; padding: 1px 6px; font-size: 9px; font-weight: bold;
+      color: #a07800; cursor: pointer; white-space: nowrap; flex-shrink: 0; transition: all 0.15s;
+    }
+    .flash-place-btn:hover { background: rgba(240,165,0,0.2); }
+    .flash-place-menu {
+      position: fixed; z-index: 500; background: var(--ms-s1); border: 1px solid var(--ms-bd2);
+      border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.2); overflow: hidden; min-width: 160px;
+    }
+    .flash-place-item {
+      padding: 10px 14px; font-size: 12px; cursor: pointer; display: flex; align-items: center;
+      gap: 8px; transition: background 0.12s; border-bottom: 1px solid var(--ms-bd);
+    }
+    .flash-place-item:last-child { border-bottom: none; }
+    .flash-place-item:hover { background: var(--ms-s2); }
+    .flash-place-item.active { color: #f0a500; font-weight: bold; }
+    .myset-count-badge {
+      margin-left: auto; font-size: 10px; background: rgba(240,165,0,0.12);
+      border: 1px solid rgba(240,165,0,0.3); color: #a07800;
+      border-radius: 5px; padding: 0 5px; font-weight: bold; flex-shrink: 0;
+    }
   </style>
 </head>
 <body>
@@ -332,6 +593,66 @@
   LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
+
+<!-- マイセット FAB -->
+<div id="myset-fab" class="myset-fab" onclick="openMysetDrawer()">
+  ⭐ <span class="myset-fab-name" id="fab-set-name">セットなし</span>
+</div>
+
+<!-- マイセット オーバーレイ -->
+<div id="myset-overlay" class="myset-overlay" onclick="closeMysetDrawer()"></div>
+
+<!-- マイセット ドロワー -->
+<div id="myset-drawer" class="myset-drawer">
+  <div class="myset-drawer-bar">
+    <span style="font-size:14px;font-weight:bold;color:#f0a500;">⭐ マイセット</span>
+    <button onclick="closeMysetDrawer()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#888;line-height:1;">✕</button>
+  </div>
+  <div class="myset-tabbar-wrap">
+    <div class="myset-tabbar" id="myset-set-tabs"></div>
+    <button class="myset-new-btn" onclick="openSetModal()">＋</button>
+  </div>
+  <div class="myset-pane" id="myset-pane"></div>
+</div>
+
+<!-- セット作成モーダル -->
+<div class="set-modal-overlay" id="set-modal-overlay">
+  <div class="set-modal">
+    <div class="set-modal-title">
+      新規セット作成
+      <button class="set-modal-close" onclick="document.getElementById('set-modal-overlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="set-modal-field">
+      <label>セット名</label>
+      <input id="set-name-input" type="text" placeholder="例：砂漠攻略用" maxlength="30">
+    </div>
+    <button class="set-modal-save" id="set-modal-save-btn">作成する</button>
+  </div>
+</div>
+
+<!-- 削除確認モーダル -->
+<div class="del-confirm-overlay" id="del-confirm-overlay">
+  <div class="del-confirm-modal">
+    <div class="del-confirm-title">このセットを削除しますか？</div>
+    <div class="del-confirm-name" id="del-confirm-name"></div>
+    <div class="del-confirm-sub">この操作は取り消せません</div>
+    <div class="del-confirm-btns">
+      <button class="del-confirm-cancel" id="del-confirm-cancel">キャンセル</button>
+      <button class="del-confirm-ok" id="del-confirm-ok">削除する</button>
+    </div>
+  </div>
+</div>
+
+<!-- カード選択ピッカー -->
+<div class="card-picker-overlay" id="card-picker-overlay">
+  <div class="card-picker">
+    <div class="card-picker-head">
+      <div class="card-picker-title" id="card-picker-title">カードを選択</div>
+      <button class="card-picker-close" onclick="document.getElementById('card-picker-overlay').classList.remove('open')">✕</button>
+    </div>
+    <div class="card-picker-list" id="card-picker-list"></div>
+  </div>
+</div>
 
 <script src="cards/cards-data.js"></script>
 <script>
@@ -589,9 +910,12 @@ function render() {
     return;
   }
 
+  const activeItems = getActiveItems();
   list.innerHTML = filtered.map(a => {
     const sourceBadge = a.source === 'イベント'
       ? `<span class="source-badge event">イベント</span>`
+      : a.source === 'EXトレ'
+      ? `<span class="source-badge flash" style="background:#e8f0fe;color:#1a56a0;border-color:#b0c8f8;">EXトレ</span>`
       : `<span class="source-badge flash">閃き</span>`;
     const rarityClass = a.rarity === 'SSR' ? 'ssr' : a.rarity === 'MR' ? 'mr' : '';
     const rarityBadge = rarityClass
@@ -610,8 +934,11 @@ function render() {
     const tags = (a.tags || []).map(t => `<span class="ability-tag">${escHtml(t)}</span>`).join('');
     const desc = a.desc.replace(/<br>/g, '<br>');
     const cardId = cardNameToId[a.card];
+    const inSet = activeItems.has(a.id);
+    const checkBtn = `<div class="ms-check${inSet?' in':''}" data-chk="${a.id}" onclick="toggleInSet(event,${a.id})">${inSet?'✓':''}</div>`;
     const inner = `
-        <div class="ability-header">
+        <div class="ability-header" style="position:relative;">
+          ${checkBtn}
           <span class="ability-name">${escHtml(a.name)}</span>
           <span class="ability-card-name">${escHtml(a.card)}</span>
           ${rarityBadge}
@@ -636,11 +963,363 @@ fetch('lMfDB_abilities.json')
     allData = data;
     buildTagButtons();
     render();
+    updateFab();
     document.getElementById('searchInput').addEventListener('input', render);
   })
   .catch(() => {
     document.getElementById('abilityList').innerHTML = '<div class="no-result">データの読み込みに失敗しました</div>';
   });
+
+// ===== マイセット =====
+let mySets = JSON.parse(localStorage.getItem('mf_sets') || '[]');
+let activeSetId = mySets.length ? mySets[0].id : null;
+let ownedCards = new Set(JSON.parse(localStorage.getItem('mf_owned') || '[]'));
+
+function saveSets() { localStorage.setItem('mf_sets', JSON.stringify(mySets)); }
+function saveOwned() { localStorage.setItem('mf_owned', JSON.stringify([...ownedCards])); }
+function getActiveSet() { return mySets.find(s => s.id === activeSetId) || null; }
+function getActiveItems() { const s = getActiveSet(); return s ? new Set(s.items) : new Set(); }
+
+function updateFab() {
+  const s = getActiveSet();
+  document.getElementById('fab-set-name').textContent = s ? s.name : 'セットなし';
+}
+
+function openMysetDrawer() {
+  document.getElementById('myset-overlay').classList.add('open');
+  document.getElementById('myset-drawer').classList.add('open');
+  renderMyset();
+}
+
+function closeMysetDrawer() {
+  document.getElementById('myset-overlay').classList.remove('open');
+  document.getElementById('myset-drawer').classList.remove('open');
+}
+
+function toggleInSet(e, id) {
+  e.preventDefault();
+  e.stopPropagation();
+  const set = getActiveSet();
+  if (!set) { openMysetDrawer(); openSetModal(); return; }
+  const idx = set.items.indexOf(id);
+  if (idx >= 0) {
+    set.items.splice(idx, 1);
+    // カード内の能力が全削除されたら編成枠もクリア
+    const a = allData.find(x => x.id === id);
+    if (a) {
+      const remaining = set.items.filter(i => { const x = allData.find(y => y.id === i); return x && x.card === a.card; });
+      if (remaining.length === 0 && set.deck) {
+        set.deck.own = set.deck.own.map(c => c === a.card ? null : c);
+        if (set.deck.rental === a.card) set.deck.rental = null;
+      }
+    }
+  } else {
+    set.items.push(id);
+  }
+  saveSets();
+  render();
+  if (document.getElementById('myset-drawer').classList.contains('open')) renderMyset();
+}
+
+function openSetModal() {
+  document.getElementById('set-name-input').value = '';
+  document.getElementById('set-modal-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('set-name-input').focus(), 200);
+}
+
+document.getElementById('set-modal-save-btn').addEventListener('click', () => {
+  const name = document.getElementById('set-name-input').value.trim() || '新しいセット';
+  const id = Date.now().toString(36) + Math.random().toString(36).slice(2);
+  const newSet = { id, name, items: [], deck: { own: [null,null,null,null,null], rental: null }, memo: '', flashSettings: {} };
+  mySets.push(newSet);
+  activeSetId = id;
+  saveSets();
+  document.getElementById('set-modal-overlay').classList.remove('open');
+  updateFab();
+  render();
+  renderMyset();
+});
+
+document.getElementById('set-name-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('set-modal-save-btn').click();
+});
+
+function renderMyset() {
+  const tabbar = document.getElementById('myset-set-tabs');
+  tabbar.innerHTML = mySets.map(s =>
+    `<button class="myset-set-tab${s.id === activeSetId ? ' active' : ''}" data-sid="${s.id}">${escHtml(s.name)}</button>`
+  ).join('');
+  tabbar.querySelectorAll('.myset-set-tab').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeSetId = btn.dataset.sid;
+      saveSets(); renderMyset(); render(); updateFab();
+    });
+  });
+
+  const pane = document.getElementById('myset-pane');
+  const set = getActiveSet();
+  if (!set) {
+    pane.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#999"><div style="font-size:32px;margin-bottom:8px">⭐</div><div style="font-size:12px;line-height:1.7">セットがまだありません<br>「＋」ボタンで作成してください</div></div>';
+    return;
+  }
+
+  if (!set.deck) set.deck = { own: [null,null,null,null,null], rental: null };
+  if (!set.flashSettings) set.flashSettings = {};
+
+  // セット内カード集計
+  const cardMap = {};
+  for (const id of set.items) {
+    const a = allData.find(x => x.id === id); if (!a) continue;
+    if (!cardMap[a.card]) cardMap[a.card] = [];
+    cardMap[a.card].push(a);
+  }
+  const allCards = Object.keys(cardMap);
+  const deckCards = [...set.deck.own, set.deck.rental].filter(Boolean);
+  const EX_CARDS = new Set(allData.filter(a => a.source === 'EXトレ').map(a => a.card));
+
+  function slotHtml(card, idx, isRental) {
+    const slotClass = `deck-slot${card ? ' filled' : ''}${isRental ? ' rental' : ''}`;
+    const label = isRental ? 'レンタル' : `自前${idx + 1}`;
+    if (card) {
+      const own = ownedCards.has(card);
+      const cnt = cardMap[card] ? cardMap[card].length : 0;
+      return `<div class="${slotClass}" data-slot="${isRental ? 'rental' : idx}">
+        <button class="deck-slot-clear-btn" data-clear="${isRental ? 'rental' : idx}" title="クリア">✕</button>
+        <div class="deck-slot-label">${label}</div>
+        <div class="deck-slot-card">${escHtml(card)}</div>
+        <div class="deck-slot-owned">${own ? '✅所持' : '📛未所持'}</div>
+        <div class="deck-slot-cnt">能力${cnt}件</div>
+      </div>`;
+    }
+    return `<div class="${slotClass}" data-slot="${isRental ? 'rental' : idx}">
+      <div class="deck-slot-label">${label}</div>
+      <div class="deck-slot-empty">＋</div>
+    </div>`;
+  }
+
+  const ownSlots = set.deck.own.map((c, i) => slotHtml(c, i, false)).join('');
+  const rentalSlot = slotHtml(set.deck.rental, 0, true);
+
+  function getFlashPlace(a) {
+    if (a.source === '閃き' || a.source === 'EXトレ') return set.flashSettings[a.id] || 'flash';
+    return null;
+  }
+
+  function abilityRowsHtml(abs) {
+    return abs.map(a => {
+      const place = getFlashPlace(a);
+      const placeLabel = place === 'deck' ? '編成' : place === 'flash' ? (a.source === 'EXトレ' ? 'EX' : '閃き') : '両方';
+      const placeBtn = place !== null
+        ? `<button class="flash-place-btn" data-id="${a.id}" data-place="${place}">${placeLabel}</button>` : '';
+      return `<div class="myset-ability-row">
+        <div class="myset-ability-name">${escHtml(a.name)}</div>
+        ${placeBtn}
+        <button class="myset-remove-btn" data-id="${a.id}">×</button>
+      </div>`;
+    }).join('');
+  }
+
+  // 編成カード能力（閃きはdeck/both設定のもの）
+  const deckAbilityHtml = deckCards.filter(c => cardMap[c]).map(card => {
+    const abs = (cardMap[card] || []).filter(a => {
+      const p = getFlashPlace(a);
+      return p === null || p === 'deck' || p === 'both';
+    });
+    if (!abs.length) return '';
+    const own = ownedCards.has(card);
+    return `<div class="myset-card-group">
+      <div class="myset-card-label">${own ? '✅' : '📛'} ${escHtml(card)}</div>
+      <div>${abilityRowsHtml(abs)}</div>
+    </div>`;
+  }).filter(Boolean).join('');
+
+  // ロード閃き枠（編成外 + 閃き/EXトレでflash/both）
+  const flashCards = allCards.filter(c => !deckCards.includes(c));
+  const flashAbs = [];
+  flashCards.forEach(card => {
+    (cardMap[card] || []).forEach(a => {
+      const p = getFlashPlace(a);
+      if (p === null || p === 'flash' || p === 'both') flashAbs.push({ card, a });
+    });
+  });
+  // EXトレが編成枠内でflash設定のものも追加
+  deckCards.forEach(card => {
+    (cardMap[card] || []).filter(a => EX_CARDS.has(card)).forEach(a => {
+      const p = getFlashPlace(a);
+      if (p === 'flash' || p === 'both') flashAbs.push({ card, a });
+    });
+  });
+  const flashGroups = {};
+  flashAbs.forEach(({ card, a }) => { if (!flashGroups[card]) flashGroups[card] = []; flashGroups[card].push(a); });
+  const flashHtml = Object.entries(flashGroups).map(([card, abs]) => {
+    const own = ownedCards.has(card);
+    const isEx = EX_CARDS.has(card);
+    return `<div class="myset-card-label" style="grid-column:1/-1;margin-top:4px;">${isEx ? '[EX]' : (own ? '✅' : '📛')} ${escHtml(card)}</div>` +
+      abs.map(a => {
+        const place = getFlashPlace(a);
+        const placeLabel = place === 'deck' ? '編成' : place === 'flash' ? (a.source === 'EXトレ' ? 'EX' : '閃き') : '両方';
+        const placeBtn = place !== null ? `<button class="flash-place-btn" data-id="${a.id}" data-place="${place}">${placeLabel}</button>` : '';
+        return `<div class="myset-ability-row" style="grid-column:span 1;">
+          <div class="myset-ability-name">${escHtml(a.name)}</div>
+          ${placeBtn}
+          <button class="myset-remove-btn" data-id="${a.id}">×</button>
+        </div>`;
+      }).join('');
+  }).join('');
+
+  pane.innerHTML = `
+    <div class="myset-header">
+      <input class="myset-title-input" id="myset-title-input" value="${escHtml(set.name)}" placeholder="セット名">
+      <button class="myset-del-btn" id="myset-del-btn">🗑️</button>
+    </div>
+    <textarea class="myset-memo" id="myset-memo" placeholder="メモ（任意）...">${escHtml(set.memo || '')}</textarea>
+    <div class="deck-section">
+      <div class="deck-title">🃏 編成カード（タップで設定）</div>
+      <div class="deck-slots">${ownSlots}</div>
+      <div class="deck-slots" style="grid-template-columns:1fr 1fr 1fr">${rentalSlot}<div></div><div></div></div>
+    </div>
+    ${set.items.length === 0
+      ? '<div style="text-align:center;padding:20px;color:#999;font-size:12px">📋 検索結果のチェックボックスから能力を追加してください</div>'
+      : `${deckAbilityHtml ? `<div class="myset-section-title">📋 編成カードの能力</div>${deckAbilityHtml}` : ''}
+         ${flashHtml ? `<div class="flash-section"><div class="flash-title">💡 ロード閃き/EX枠<span class="myset-count-badge" style="margin-left:7px">計${flashAbs.length}個</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">${flashHtml}</div></div>` : ''}`
+    }
+  `;
+
+  // 編成枠クリア
+  pane.querySelectorAll('.deck-slot-clear-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      const key = btn.dataset.clear;
+      if (key === 'rental') set.deck.rental = null; else set.deck.own[+key] = null;
+      saveSets(); renderMyset();
+    });
+  });
+
+  // 編成枠タップ → カード選択
+  pane.querySelectorAll('.deck-slot').forEach(slot => {
+    slot.addEventListener('click', () => openCardPicker(allCards, set, slot.dataset.slot));
+  });
+
+  // 削除ボタン
+  pane.querySelector('#myset-del-btn').addEventListener('click', () => {
+    const overlay = document.getElementById('del-confirm-overlay');
+    document.getElementById('del-confirm-name').textContent = `「${set.name}」`;
+    overlay.classList.add('open');
+    document.getElementById('del-confirm-ok').onclick = () => {
+      overlay.classList.remove('open');
+      mySets = mySets.filter(s => s.id !== set.id);
+      if (activeSetId === set.id) activeSetId = mySets.length ? mySets[0].id : null;
+      saveSets(); renderMyset(); render(); updateFab();
+    };
+    document.getElementById('del-confirm-cancel').onclick = () => overlay.classList.remove('open');
+  });
+
+  // メモ
+  pane.querySelector('#myset-memo').addEventListener('input', e => { set.memo = e.target.value; saveSets(); });
+
+  // タイトル編集
+  pane.querySelector('#myset-title-input').addEventListener('input', e => {
+    set.name = e.target.value; saveSets(); updateFab();
+    document.querySelectorAll('.myset-set-tab').forEach(btn => {
+      if (btn.dataset.sid === set.id) btn.textContent = e.target.value || '（名前なし）';
+    });
+  });
+
+  // 閃き配置ボタン
+  let flashMenuEl = null;
+  function closeFlashMenu() { if (flashMenuEl) { flashMenuEl.remove(); flashMenuEl = null; } }
+  pane.querySelectorAll('.flash-place-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.stopPropagation();
+      closeFlashMenu();
+      const id = +btn.dataset.id;
+      const cur = btn.dataset.place;
+      const opts = [
+        { v: 'deck', l: '📋 編成カードの能力' },
+        { v: 'flash', l: '💡 ロード閃き/EX枠' },
+        { v: 'both', l: '📋💡 両方に表示' },
+      ];
+      const menu = document.createElement('div');
+      menu.className = 'flash-place-menu';
+      menu.innerHTML = opts.map(o => `<div class="flash-place-item${o.v === cur ? ' active' : ''}" data-v="${o.v}">${o.l}</div>`).join('');
+      const r = btn.getBoundingClientRect();
+      menu.style.top = (r.bottom + 4) + 'px';
+      menu.style.left = Math.min(r.left, window.innerWidth - 180) + 'px';
+      document.body.appendChild(menu);
+      flashMenuEl = menu;
+      menu.querySelectorAll('.flash-place-item').forEach(item => {
+        item.addEventListener('click', () => {
+          set.flashSettings[id] = item.dataset.v;
+          saveSets(); closeFlashMenu(); renderMyset();
+        });
+      });
+    });
+  });
+  document.addEventListener('click', closeFlashMenu);
+
+  // 能力削除ボタン
+  pane.querySelectorAll('.myset-remove-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = +btn.dataset.id;
+      const idx = set.items.indexOf(id);
+      if (idx >= 0) set.items.splice(idx, 1);
+      if (set.deck) {
+        const a = allData.find(x => x.id === id);
+        if (a) {
+          const remaining = set.items.filter(i => { const x = allData.find(y => y.id === i); return x && x.card === a.card; });
+          if (remaining.length === 0) {
+            set.deck.own = set.deck.own.map(c => c === a.card ? null : c);
+            if (set.deck.rental === a.card) set.deck.rental = null;
+          }
+        }
+      }
+      saveSets(); renderMyset(); render();
+    });
+  });
+}
+
+function openCardPicker(cards, set, slotKey) {
+  const overlay = document.getElementById('card-picker-overlay');
+  const titleEl = document.getElementById('card-picker-title');
+  const listEl = document.getElementById('card-picker-list');
+  const isRental = slotKey === 'rental';
+  titleEl.textContent = isRental ? 'レンタル枠のカードを選択' : `自前${+slotKey + 1}枠のカードを選択`;
+
+  const currentCard = isRental ? set.deck.rental : set.deck.own[+slotKey];
+  const usedCards = new Set([...set.deck.own, set.deck.rental].filter(Boolean));
+  if (currentCard) usedCards.delete(currentCard);
+
+  listEl.innerHTML =
+    `<div class="card-picker-clear" id="picker-clear">✕ 枠をクリア</div>` +
+    cards.map(card => {
+      const own = ownedCards.has(card);
+      const disabled = usedCards.has(card);
+      const sel = card === currentCard;
+      return `<div class="card-picker-item${sel ? ' selected' : ''}${disabled ? ' disabled' : ''}" data-card="${escHtml(card)}" style="${disabled ? 'opacity:.4;pointer-events:none' : ''}">
+        <span>${own ? '✅' : '📛'}</span>
+        <span class="card-picker-name">${escHtml(card)}</span>
+        ${own ? '<span class="card-picker-cnt" style="color:#2e7d32">所持済</span>' : ''}
+        ${sel ? '<span style="color:#f0a500;font-size:11px">選択中</span>' : ''}
+      </div>`;
+    }).join('');
+
+  overlay.classList.add('open');
+  listEl.querySelector('#picker-clear').addEventListener('click', () => {
+    if (isRental) set.deck.rental = null; else set.deck.own[+slotKey] = null;
+    saveSets(); overlay.classList.remove('open'); renderMyset();
+  });
+  listEl.querySelectorAll('.card-picker-item:not(.disabled)').forEach(el => {
+    el.addEventListener('click', () => {
+      const card = el.dataset.card;
+      if (!isRental && !ownedCards.has(card)) {
+        if (!confirm(`「${card}」は未所持のカードです。自前枠に設定しますか？`)) return;
+      }
+      if (isRental) set.deck.rental = card; else set.deck.own[+slotKey] = card;
+      saveSets(); overlay.classList.remove('open'); renderMyset();
+    });
+  });
+}
+
 </script>
 
 </body>
