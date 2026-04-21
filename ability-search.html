@@ -354,21 +354,75 @@ for (const [id, card] of Object.entries(cardsData)) {
   }
 }
 // abilities JSONでの表記がカード名と異なるもの
-CARD_APTITUDE_MAP['フォールン']  = { dist: '遠距離' };       // カードページ名はイブリース
-CARD_APTITUDE_MAP['ヒマワリ']   = { terrain: ['砂漠', '海岸'] };
-// ページなしSRカード（適性データ判明次第追記）
-// CARD_APTITUDE_MAP['セレスト']  = { ... };
-// CARD_APTITUDE_MAP['エネロン']  = { ... };
-// CARD_APTITUDE_MAP['ルーガルー'] = { ... };
-// CARD_APTITUDE_MAP['スティーブ'] = { ... };
-// CARD_APTITUDE_MAP['トロイダル'] = { ... };
-// ページなしSSRカード
-// CARD_APTITUDE_MAP['ドレッドスパイク'] = { ... };
-// CARD_APTITUDE_MAP['ルーブス']  = { ... };
-// CARD_APTITUDE_MAP['マグニス']  = { ... };
-// CARD_APTITUDE_MAP['サラセニア'] = { ... };
-// CARD_APTITUDE_MAP['ヨツミン']  = { ... };
-// CARD_APTITUDE_MAP['ソウキュウ'] = { ... };
+CARD_APTITUDE_MAP['フォールン']     = { dist: '遠距離' };   // カードページ名はイブリース
+// ページなしカード（距離適性）
+// --- 零距離 ---
+CARD_APTITUDE_MAP['シュン']         = { dist: '零距離' };
+CARD_APTITUDE_MAP['オービン']       = { dist: '零距離' };
+CARD_APTITUDE_MAP['ババルク=レール'] = { dist: '零距離' };
+CARD_APTITUDE_MAP['エコール']       = { dist: '零距離' };
+CARD_APTITUDE_MAP['ヨツミン']       = { dist: '零距離' };
+CARD_APTITUDE_MAP['アントン']       = { dist: '零距離' };
+CARD_APTITUDE_MAP['ハクヨウキ']     = { dist: '零距離' };
+CARD_APTITUDE_MAP['ストロッグ']     = { dist: '零距離' };
+// --- 近距離 ---
+CARD_APTITUDE_MAP['ファイナライザー'] = { dist: '近距離' };
+CARD_APTITUDE_MAP['ズッカール']     = { dist: '近距離' };
+CARD_APTITUDE_MAP['アーキュロン']   = { dist: '近距離' };
+CARD_APTITUDE_MAP['ゼーランディア'] = { dist: '近距離' };
+CARD_APTITUDE_MAP['グランド']       = { dist: '近距離' };
+// --- 中距離 ---
+CARD_APTITUDE_MAP['エイメイ']       = { dist: '中距離' };
+CARD_APTITUDE_MAP['バールラ']       = { dist: '中距離' };
+CARD_APTITUDE_MAP['ガンバーン']     = { dist: '中距離' };
+CARD_APTITUDE_MAP['メカお父さん']   = { dist: '中距離' };
+CARD_APTITUDE_MAP['ミルフィー']     = { dist: '中距離' };
+// --- 遠距離 ---
+CARD_APTITUDE_MAP['タツドシ']       = { dist: '遠距離' };
+CARD_APTITUDE_MAP['ソウキュウ']     = { dist: '遠距離' };
+CARD_APTITUDE_MAP['リリィ']         = { dist: '遠距離' };
+CARD_APTITUDE_MAP['ムーンダスト']   = { dist: '遠距離' };
+CARD_APTITUDE_MAP['ユノウ']         = { dist: '遠距離' };
+CARD_APTITUDE_MAP['アルミン']       = { dist: '遠距離' };
+// ページなしカード（地形適性）
+// --- 砂漠 ---
+CARD_APTITUDE_MAP['セレスト']       = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['カーマイン']     = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ハカイシ']       = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['フレアガス']     = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ラファール']     = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ブリキノ']       = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ハクトウリキ']   = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ドレッドスパイク'] = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ハイペリオン']   = { terrain: '砂漠' };
+CARD_APTITUDE_MAP['ヒマワリ']       = { terrain: ['砂漠', '海岸'] };
+// --- 海岸 ---
+CARD_APTITUDE_MAP['ドルーガード']   = { terrain: '海岸' };
+CARD_APTITUDE_MAP['スイゲキ']       = { terrain: '海岸' };
+CARD_APTITUDE_MAP['エリザベス']     = { terrain: '海岸' };
+CARD_APTITUDE_MAP['シオン']         = { terrain: '海岸' };
+CARD_APTITUDE_MAP['カペラ']         = { terrain: '海岸' };
+CARD_APTITUDE_MAP['カイリウ']       = { terrain: '海岸' };
+// --- 雪山 ---
+CARD_APTITUDE_MAP['ルーガルー']     = { terrain: '雪山' };
+CARD_APTITUDE_MAP['ルーブス']       = { terrain: '雪山' };
+CARD_APTITUDE_MAP['コーン']         = { terrain: '雪山' };
+// --- 火山 ---
+CARD_APTITUDE_MAP['ツートン']       = { terrain: '火山' };
+CARD_APTITUDE_MAP['トウリュウモン'] = { terrain: '火山' };
+CARD_APTITUDE_MAP['テレース']       = { terrain: '火山' };
+CARD_APTITUDE_MAP['スヴィズニル']   = { terrain: '火山' };
+// --- 森林 ---
+CARD_APTITUDE_MAP['トロイダル']     = { terrain: '森林' };
+CARD_APTITUDE_MAP['エネロン']       = { terrain: '森林' };
+CARD_APTITUDE_MAP['マグニス']       = { terrain: '森林' };
+CARD_APTITUDE_MAP['サクラアート']   = { terrain: '森林' };
+CARD_APTITUDE_MAP['ロンター']       = { terrain: '森林' };
+CARD_APTITUDE_MAP['テテュース']     = { terrain: '森林' };
+CARD_APTITUDE_MAP['スティーブ']     = { terrain: '森林' };
+CARD_APTITUDE_MAP['ウロコン']       = { terrain: '森林' };
+CARD_APTITUDE_MAP['サラセニア']     = { terrain: '森林' };
+CARD_APTITUDE_MAP['ルージュ']       = { terrain: '森林' };
 
 const TAG_GROUPS = {
   aura:   ['オーラ黒','オーラ青','オーラ赤','オーラ黄','オーラ緑','オーラ白'],
