@@ -12,226 +12,141 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
     .bbs-form-box {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-      padding: 18px 16px;
-      margin-bottom: 20px;
+      background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      padding: 18px 16px; margin-bottom: 20px;
     }
-    .bbs-form-title {
-      font-size: 14px;
-      font-weight: bold;
-      color: #1a1a2e;
-      margin-bottom: 12px;
-    }
+    .bbs-form-title { font-size: 14px; font-weight: bold; color: #1a1a2e; margin-bottom: 12px; }
     .bbs-field { margin-bottom: 10px; }
-    .bbs-field label {
-      display: block;
-      font-size: 11px;
-      font-weight: bold;
-      color: #888;
-      margin-bottom: 4px;
-    }
+    .bbs-field label { display: block; font-size: 11px; font-weight: bold; color: #888; margin-bottom: 4px; }
     .bbs-input {
-      width: 100%;
-      padding: 9px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      outline: none;
-      transition: border 0.2s;
-      box-sizing: border-box;
+      width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px;
+      font-size: 14px; font-family: inherit; outline: none; transition: border 0.2s; box-sizing: border-box;
     }
     .bbs-input:focus { border-color: #f0a500; }
     .bbs-textarea {
-      width: 100%;
-      padding: 9px 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      outline: none;
-      resize: vertical;
-      min-height: 90px;
-      transition: border 0.2s;
-      box-sizing: border-box;
+      width: 100%; padding: 9px 12px; border: 1px solid #ddd; border-radius: 8px;
+      font-size: 14px; font-family: inherit; outline: none; resize: vertical;
+      min-height: 90px; transition: border 0.2s; box-sizing: border-box;
     }
     .bbs-textarea:focus { border-color: #f0a500; }
-    .bbs-cat-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
+    .bbs-cat-row { display: flex; gap: 8px; margin-bottom: 10px; }
     .bbs-cat-btn {
-      flex: 1;
-      padding: 8px;
-      border-radius: 8px;
-      border: 2px solid #ddd;
-      background: #f9f9f9;
-      font-size: 13px;
-      font-weight: bold;
-      color: #888;
-      cursor: pointer;
-      transition: all 0.15s;
+      flex: 1; padding: 8px; border-radius: 8px; border: 2px solid #ddd;
+      background: #f9f9f9; font-size: 13px; font-weight: bold; color: #888; cursor: pointer; transition: all 0.15s;
     }
-    .bbs-cat-btn.active-shitsumon {
-      border-color: #2196f3;
-      background: #e3f2fd;
-      color: #1565c0;
-    }
-    .bbs-cat-btn.active-zatsudan {
-      border-color: #66bb6a;
-      background: #e8f5e9;
-      color: #2e7d32;
-    }
+    .bbs-cat-btn.active-shitsumon { border-color: #2196f3; background: #e3f2fd; color: #1565c0; }
+    .bbs-cat-btn.active-zatsudan  { border-color: #66bb6a; background: #e8f5e9; color: #2e7d32; }
     .bbs-submit {
-      width: 100%;
-      padding: 11px;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(135deg, #f0a500, #e05000);
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      font-family: inherit;
-      cursor: pointer;
-      transition: opacity 0.15s;
+      width: 100%; padding: 11px; border: none; border-radius: 10px;
+      background: linear-gradient(135deg, #f0a500, #e05000); color: #fff;
+      font-size: 14px; font-weight: bold; font-family: inherit; cursor: pointer; transition: opacity 0.15s;
     }
     .bbs-submit:hover { opacity: 0.85; }
     .bbs-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-    .bbs-err {
-      font-size: 12px;
-      color: #c00;
-      margin-top: 6px;
-      display: none;
-    }
-    /* フィルタータブ */
-    .bbs-filter {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 14px;
-    }
+    .bbs-err { font-size: 12px; color: #c00; margin-top: 6px; display: none; }
+    /* フィルター */
+    .bbs-filter { display: flex; gap: 6px; margin-bottom: 14px; }
     .bbs-filter-btn {
-      padding: 5px 14px;
-      border-radius: 20px;
-      border: 1px solid #ddd;
-      background: #f9f9f9;
-      font-size: 12px;
-      font-weight: bold;
-      color: #666;
-      cursor: pointer;
-      transition: all 0.15s;
+      padding: 5px 14px; border-radius: 20px; border: 1px solid #ddd;
+      background: #f9f9f9; font-size: 12px; font-weight: bold; color: #666; cursor: pointer; transition: all 0.15s;
     }
-    .bbs-filter-btn.active {
-      background: #1a1a2e;
-      border-color: #1a1a2e;
-      color: #fff;
-    }
-    /* 投稿リスト */
+    .bbs-filter-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
+    /* 投稿 */
     .bbs-post {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-      padding: 14px 16px;
-      margin-bottom: 10px;
-      position: relative;
+      background: #fff; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      padding: 14px 16px; margin-bottom: 10px;
     }
-    .bbs-post-head {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
+    .bbs-post-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .bbs-cat-badge { font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
+    .bbs-cat-badge.shitsumon { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .bbs-cat-badge.zatsudan  { background: #e8f5e9; color: #2e7d32;  border: 1px solid #a5d6a7; }
+    .bbs-post-name { font-size: 13px; font-weight: bold; color: #1a1a2e; }
+    .bbs-post-date { font-size: 11px; color: #aaa; margin-left: auto; }
+    .bbs-post-content { font-size: 13px; line-height: 1.8; color: #333; white-space: pre-wrap; word-break: break-word; }
+    .bbs-post-footer {
+      display: flex; align-items: center; gap: 8px; margin-top: 10px;
+      padding-top: 8px; border-top: 1px solid #f0f0f0; flex-wrap: wrap;
     }
-    .bbs-cat-badge {
-      font-size: 10px;
-      font-weight: bold;
-      padding: 2px 8px;
-      border-radius: 10px;
+    .bbs-reply-btn {
+      background: none; border: none; font-size: 12px; color: #888; cursor: pointer;
+      padding: 3px 8px; border-radius: 6px; transition: all 0.15s;
     }
-    .bbs-cat-badge.shitsumon {
-      background: #e3f2fd;
-      color: #1565c0;
-      border: 1px solid #90caf9;
+    .bbs-reply-btn:hover { background: #f0f0f0; color: #555; }
+    .bbs-show-replies-btn {
+      background: none; border: none; font-size: 12px; font-weight: bold;
+      color: #1a6ec7; cursor: pointer; padding: 3px 8px; border-radius: 6px;
+      transition: all 0.15s; display: flex; align-items: center; gap: 4px;
     }
-    .bbs-cat-badge.zatsudan {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border: 1px solid #a5d6a7;
-    }
-    .bbs-post-name {
-      font-size: 13px;
-      font-weight: bold;
-      color: #1a1a2e;
-    }
-    .bbs-post-date {
-      font-size: 11px;
-      color: #aaa;
-      margin-left: auto;
-    }
-    .bbs-post-content {
-      font-size: 13px;
-      line-height: 1.8;
-      color: #333;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+    .bbs-show-replies-btn:hover { background: #e8f0fe; }
     .bbs-del-btn {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      background: none;
-      border: none;
-      color: #ddd;
-      font-size: 14px;
-      cursor: pointer;
-      padding: 2px 4px;
-      border-radius: 4px;
-      transition: all 0.15s;
-      line-height: 1;
+      margin-left: auto; background: none; border: none; color: #ddd;
+      font-size: 13px; cursor: pointer; padding: 2px 4px; border-radius: 4px; transition: all 0.15s;
     }
-    .bbs-del-btn:hover { color: #c00; background: rgba(200,0,0,0.07); }
-    .bbs-loadmore {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      background: #f9f9f9;
-      font-size: 13px;
-      color: #666;
-      cursor: pointer;
-      transition: all 0.15s;
-      margin-top: 4px;
+    .bbs-del-btn:hover { color: #c00; }
+    /* 返信エリア（折りたたみ） */
+    .bbs-replies { display: none; margin-top: 8px; padding-left: 12px; border-left: 3px solid #e8f0fe; }
+    .bbs-replies.open { display: block; }
+    .bbs-reply {
+      background: #f8f9fa; border-radius: 8px; padding: 10px 12px; margin-bottom: 6px;
     }
-    .bbs-loadmore:hover { background: #f0f0f0; }
-    .bbs-empty {
-      text-align: center;
-      color: #aaa;
-      font-size: 14px;
-      padding: 40px 0;
+    .bbs-reply-head { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; flex-wrap: wrap; }
+    .bbs-reply-name { font-size: 12px; font-weight: bold; color: #1a1a2e; }
+    .bbs-reply-date { font-size: 11px; color: #bbb; margin-left: auto; }
+    .bbs-reply-content { font-size: 13px; line-height: 1.7; color: #444; white-space: pre-wrap; word-break: break-word; }
+    .bbs-reply-del-btn {
+      background: none; border: none; color: #ddd; font-size: 12px;
+      cursor: pointer; padding: 1px 3px; border-radius: 3px; transition: all 0.15s;
     }
-    .bbs-loading {
-      text-align: center;
-      color: #aaa;
-      font-size: 13px;
-      padding: 20px 0;
+    .bbs-reply-del-btn:hover { color: #c00; }
+    /* インライン返信フォーム */
+    .bbs-reply-form { display: none; background: #f8f9fa; border-radius: 8px; padding: 12px; margin-top: 8px; }
+    .bbs-reply-form.open { display: block; }
+    .bbs-reply-input {
+      width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 7px;
+      font-size: 13px; font-family: inherit; outline: none; margin-bottom: 8px;
+      box-sizing: border-box; transition: border 0.2s;
     }
+    .bbs-reply-input:focus { border-color: #f0a500; }
+    .bbs-reply-textarea {
+      width: 100%; padding: 8px 10px; border: 1px solid #ddd; border-radius: 7px;
+      font-size: 13px; font-family: inherit; outline: none; resize: vertical;
+      min-height: 70px; box-sizing: border-box; margin-bottom: 8px; transition: border 0.2s;
+    }
+    .bbs-reply-textarea:focus { border-color: #f0a500; }
+    .bbs-reply-form-btns { display: flex; gap: 8px; }
+    .bbs-reply-submit {
+      flex: 1; padding: 8px; border: none; border-radius: 8px;
+      background: #f0a500; color: #fff; font-size: 13px; font-weight: bold;
+      font-family: inherit; cursor: pointer; transition: opacity 0.15s;
+    }
+    .bbs-reply-submit:hover { opacity: 0.85; }
+    .bbs-reply-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+    .bbs-reply-cancel {
+      padding: 8px 14px; border: 1px solid #ddd; border-radius: 8px;
+      background: #fff; font-size: 13px; color: #888; cursor: pointer; font-family: inherit;
+    }
+    /* ページネーション */
+    .bbs-pagination {
+      display: flex; align-items: center; justify-content: center;
+      gap: 4px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .bbs-page-btn {
+      min-width: 36px; height: 36px; padding: 0 8px;
+      border: 1px solid #ddd; border-radius: 8px; background: #fff;
+      font-size: 13px; font-weight: bold; color: #555; cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .bbs-page-btn:hover { background: #f5f5f5; border-color: #bbb; }
+    .bbs-page-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; cursor: default; }
+    .bbs-page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    /* その他 */
+    .bbs-empty { text-align: center; color: #aaa; font-size: 14px; padding: 40px 0; }
+    .bbs-loading { text-align: center; color: #aaa; font-size: 13px; padding: 20px 0; }
     .bbs-notice {
-      background: #fff8e1;
-      border: 1px solid #ffe082;
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-size: 12px;
-      color: #6d4c00;
-      line-height: 1.7;
-      margin-bottom: 16px;
+      background: #fff8e1; border: 1px solid #ffe082; border-radius: 8px;
+      padding: 10px 14px; font-size: 12px; color: #6d4c00; line-height: 1.7; margin-bottom: 16px;
     }
-    .bbs-count {
-      font-size: 12px;
-      color: #999;
-      margin-bottom: 10px;
-    }
+    .bbs-count { font-size: 12px; color: #999; margin-bottom: 10px; }
   </style>
 </head>
 <body>
@@ -288,10 +203,8 @@
   </div>
 
   <div class="bbs-count" id="post-count"></div>
-
-  <!-- 投稿リスト -->
   <div id="post-list"><div class="bbs-loading">読み込み中...</div></div>
-  <button class="bbs-loadmore" id="loadmore-btn" style="display:none;" onclick="loadMore()">もっと見る</button>
+  <div class="bbs-pagination" id="pagination"></div>
 </div>
 
 <footer>
@@ -303,7 +216,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script>
 const DEL_PASSWORD = 'mf2024';
-const PAGE_SIZE = 20;
+const PER_PAGE = 10;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
@@ -319,128 +232,222 @@ const col = db.collection('bbs_posts');
 
 let selectedCat = '質問';
 let activeFilter = 'all';
-let posts = [];
-let lastDoc = null;
-let hasMore = false;
-let totalCount = 0;
+let topPosts  = [];
+let allReplies = {}; // { parentId: [reply,...] }
+let currentPage = 1;
 
-// カテゴリ選択
-function selectCat(cat) {
-  selectedCat = cat;
-  document.getElementById('cat-shitsumon').className = 'bbs-cat-btn' + (cat === '質問' ? ' active-shitsumon' : '');
-  document.getElementById('cat-zatsudan').className = 'bbs-cat-btn' + (cat === '雑談' ? ' active-zatsudan' : '');
-}
-
-// 文字数カウント
-document.getElementById('post-content').addEventListener('input', function() {
-  document.getElementById('char-count').textContent = this.value.length;
-});
-
-// フィルター切替
-function setFilter(btn, filter) {
-  activeFilter = filter;
-  document.querySelectorAll('.bbs-filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  posts = [];
-  lastDoc = null;
-  loadPosts(true);
-}
-
-// 投稿一覧取得（deleted・category はクライアントでフィルタ、複合インデックス不要）
-async function loadPosts(reset = false) {
-  if (reset) { posts = []; lastDoc = null; }
-  document.getElementById('loadmore-btn').style.display = 'none';
-  if (reset) document.getElementById('post-list').innerHTML = '<div class="bbs-loading">読み込み中...</div>';
+// ===== 初期ロード =====
+async function loadAll() {
+  document.getElementById('post-list').innerHTML = '<div class="bbs-loading">読み込み中...</div>';
+  document.getElementById('pagination').innerHTML = '';
+  topPosts = []; allReplies = {};
 
   try {
-    let q = col.orderBy('createdAt', 'desc').limit(PAGE_SIZE * 3 + 1);
-    if (lastDoc) q = q.startAfter(lastDoc);
-    const snap = await q.get();
-    const docs = snap.docs;
-
-    // クライアントサイドフィルタ
-    const newPosts = docs
-      .map(d => ({ id: d.id, ...d.data() }))
-      .filter(p => !p.deleted && (activeFilter === 'all' || p.category === activeFilter));
-
-    if (docs.length > 0) lastDoc = docs[docs.length - 1];
-    hasMore = docs.length > PAGE_SIZE * 3;
-
-    posts = reset ? newPosts : [...posts, ...newPosts];
-    renderPosts();
-    if (hasMore) document.getElementById('loadmore-btn').style.display = 'block';
-  } catch (e) {
+    // 全件取得（削除済み除外はクライアント側）
+    const snap = await col.orderBy('createdAt', 'desc').limit(500).get();
+    snap.docs.forEach(d => {
+      const p = { id: d.id, ...d.data() };
+      if (p.deleted) return;
+      if (p.parentId) {
+        if (!allReplies[p.parentId]) allReplies[p.parentId] = [];
+        allReplies[p.parentId].push(p);
+      } else {
+        if (activeFilter === 'all' || p.category === activeFilter) topPosts.push(p);
+      }
+    });
+    // 返信は古い順
+    Object.values(allReplies).forEach(arr => arr.sort((a,b) => (a.createdAt?.toMillis?.()??0) - (b.createdAt?.toMillis?.()??0)));
+    currentPage = 1;
+    renderPage();
+  } catch(e) {
     document.getElementById('post-list').innerHTML = '<div class="bbs-empty">読み込みに失敗しました</div>';
   }
 }
 
-function loadMore() { loadPosts(false); }
-
-// 日時フォーマット
-function formatDate(ts) {
-  if (!ts) return '';
-  const d = ts.toDate ? ts.toDate() : new Date(ts);
-  const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// 投稿レンダリング
-function renderPosts() {
+// ===== ページ描画 =====
+function renderPage() {
   const list = document.getElementById('post-list');
-  if (posts.length === 0) {
+  const totalPages = Math.max(1, Math.ceil(topPosts.length / PER_PAGE));
+  if (currentPage > totalPages) currentPage = totalPages;
+
+  const start = (currentPage - 1) * PER_PAGE;
+  const pagePosts = topPosts.slice(start, start + PER_PAGE);
+
+  document.getElementById('post-count').textContent =
+    topPosts.length > 0 ? `全${topPosts.length}件 / ${totalPages}ページ中 ${currentPage}ページ` : '';
+
+  if (topPosts.length === 0) {
     list.innerHTML = '<div class="bbs-empty">まだ投稿がありません<br>最初の投稿者になりましょう！</div>';
-    document.getElementById('post-count').textContent = '';
+    document.getElementById('pagination').innerHTML = '';
     return;
   }
-  document.getElementById('post-count').textContent = `${posts.length}件表示中${hasMore ? '（さらに読み込めます）' : ''}`;
-  list.innerHTML = posts.map(p => {
-    const catClass = p.category === '質問' ? 'shitsumon' : 'zatsudan';
-    const catIcon = p.category === '質問' ? '❓' : '💬';
-    const name = esc(p.name || '名無し');
-    const content = esc(p.content || '').replace(/\n/g, '<br>');
-    return `<div class="bbs-post" data-id="${p.id}">
-      <button class="bbs-del-btn" onclick="deletePost('${p.id}')" title="削除（管理者用）">🗑</button>
-      <div class="bbs-post-head">
-        <span class="bbs-cat-badge ${catClass}">${catIcon} ${esc(p.category)}</span>
-        <span class="bbs-post-name">${name}</span>
-        <span class="bbs-post-date">${formatDate(p.createdAt)}</span>
-      </div>
-      <div class="bbs-post-content">${content}</div>
-    </div>`;
-  }).join('');
+
+  list.innerHTML = pagePosts.map(p => postHtml(p)).join('');
+  renderPagination(totalPages);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 投稿送信
+function postHtml(p) {
+  const catClass = p.category === '質問' ? 'shitsumon' : 'zatsudan';
+  const catIcon  = p.category === '質問' ? '❓' : '💬';
+  const replies  = allReplies[p.id] || [];
+
+  const repliesHtml = replies.map(r => `
+    <div class="bbs-reply" data-id="${r.id}">
+      <div class="bbs-reply-head">
+        <span class="bbs-reply-name">↩ ${esc(r.name || '名無し')}</span>
+        <span class="bbs-reply-date">${formatDate(r.createdAt)}</span>
+        <button class="bbs-reply-del-btn" onclick="deletePost('${r.id}')">🗑</button>
+      </div>
+      <div class="bbs-reply-content">${esc(r.content||'').replace(/\n/g,'<br>')}</div>
+    </div>`).join('');
+
+  const showRepliesBtn = replies.length > 0
+    ? `<button class="bbs-show-replies-btn" onclick="toggleReplies('${p.id}', this)">
+        ▶ ${replies.length}件の返信を見る
+       </button>` : '';
+
+  return `<div class="bbs-post" data-id="${p.id}">
+    <div class="bbs-post-head">
+      <span class="bbs-cat-badge ${catClass}">${catIcon} ${esc(p.category)}</span>
+      <span class="bbs-post-name">${esc(p.name||'名無し')}</span>
+      <span class="bbs-post-date">${formatDate(p.createdAt)}</span>
+    </div>
+    <div class="bbs-post-content">${esc(p.content||'').replace(/\n/g,'<br>')}</div>
+    ${replies.length > 0 ? `<div class="bbs-replies" id="replies-${p.id}">${repliesHtml}</div>` : ''}
+    <div class="bbs-post-footer">
+      <button class="bbs-reply-btn" onclick="toggleReplyForm('${p.id}')">↩ 返信する</button>
+      ${showRepliesBtn}
+      <button class="bbs-del-btn" onclick="deletePost('${p.id}')">🗑</button>
+    </div>
+    <div class="bbs-reply-form" id="reply-form-${p.id}">
+      <input class="bbs-reply-input" id="reply-name-${p.id}" type="text" placeholder="名前（任意）" maxlength="20">
+      <textarea class="bbs-reply-textarea" id="reply-content-${p.id}" placeholder="返信を書いてください（最大300文字）" maxlength="300"></textarea>
+      <div class="bbs-reply-form-btns">
+        <button class="bbs-reply-submit" onclick="submitReply('${p.id}')">返信する</button>
+        <button class="bbs-reply-cancel" onclick="toggleReplyForm('${p.id}')">キャンセル</button>
+      </div>
+      <div class="bbs-err" id="reply-err-${p.id}"></div>
+    </div>
+  </div>`;
+}
+
+// ===== ページネーション描画 =====
+function renderPagination(totalPages) {
+  const el = document.getElementById('pagination');
+  if (totalPages <= 1) { el.innerHTML = ''; return; }
+
+  let html = `<button class="bbs-page-btn" onclick="goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>‹</button>`;
+
+  for (let i = 1; i <= totalPages; i++) {
+    if (totalPages > 7 && i > 2 && i < totalPages - 1 && Math.abs(i - currentPage) > 1) {
+      if (i === 3 || i === totalPages - 2) html += `<span style="padding:0 4px;color:#bbb">…</span>`;
+      continue;
+    }
+    html += `<button class="bbs-page-btn${i===currentPage?' active':''}" onclick="goPage(${i})">${i}</button>`;
+  }
+
+  html += `<button class="bbs-page-btn" onclick="goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>›</button>`;
+  el.innerHTML = html;
+}
+
+function goPage(n) {
+  const totalPages = Math.ceil(topPosts.length / PER_PAGE);
+  if (n < 1 || n > totalPages) return;
+  currentPage = n;
+  renderPage();
+}
+
+// ===== 返信折りたたみ =====
+function toggleReplies(postId, btn) {
+  const area = document.getElementById('replies-' + postId);
+  if (!area) return;
+  const isOpen = area.classList.toggle('open');
+  const replies = allReplies[postId] || [];
+  btn.textContent = isOpen
+    ? `▼ ${replies.length}件の返信を隠す`
+    : `▶ ${replies.length}件の返信を見る`;
+}
+
+function toggleReplyForm(postId) {
+  const form = document.getElementById('reply-form-' + postId);
+  if (!form) return;
+  const isOpen = form.classList.toggle('open');
+  if (isOpen) form.querySelector('.bbs-reply-textarea').focus();
+}
+
+// ===== フィルター =====
+function setFilter(btn, filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.bbs-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  loadAll();
+}
+
+// ===== 返信送信 =====
+async function submitReply(parentId) {
+  const nameEl    = document.getElementById('reply-name-' + parentId);
+  const contentEl = document.getElementById('reply-content-' + parentId);
+  const errEl     = document.getElementById('reply-err-' + parentId);
+  const submitBtn = document.querySelector(`#reply-form-${parentId} .bbs-reply-submit`);
+  errEl.style.display = 'none';
+
+  const name    = nameEl.value.trim() || '名無し';
+  const content = contentEl.value.trim();
+  if (!content) { errEl.textContent = '返信内容を入力してください'; errEl.style.display = 'block'; return; }
+
+  const lastPost = +localStorage.getItem('bbs_last_post') || 0;
+  if (Date.now() - lastPost < 30000) {
+    errEl.textContent = `あと${Math.ceil((30000-(Date.now()-lastPost))/1000)}秒お待ちください`;
+    errEl.style.display = 'block'; return;
+  }
+
+  submitBtn.disabled = true; submitBtn.textContent = '送信中...';
+  try {
+    const docRef = await col.add({
+      name, content, parentId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      deleted: false
+    });
+    localStorage.setItem('bbs_last_post', String(Date.now()));
+    contentEl.value = ''; nameEl.value = '';
+    const newReply = { id: docRef.id, name, content, parentId,
+      createdAt: { toDate: ()=>new Date(), toMillis: ()=>Date.now() }, deleted: false };
+    if (!allReplies[parentId]) allReplies[parentId] = [];
+    allReplies[parentId].push(newReply);
+    renderPage();
+    // 返信エリアを開いてフォームを閉じる
+    setTimeout(() => {
+      const area = document.getElementById('replies-' + parentId);
+      const btn  = document.querySelector(`[onclick="toggleReplies('${parentId}', this)"]`);
+      if (area && !area.classList.contains('open')) toggleReplies(parentId, btn);
+    }, 50);
+  } catch(e) {
+    errEl.textContent = '送信に失敗しました'; errEl.style.display = 'block';
+    submitBtn.disabled = false; submitBtn.textContent = '返信する';
+  }
+}
+
+// ===== 投稿送信 =====
 async function submitPost() {
-  const name = document.getElementById('post-name').value.trim() || '名無し';
+  const name    = document.getElementById('post-name').value.trim() || '名無し';
   const content = document.getElementById('post-content').value.trim();
-  const errEl = document.getElementById('post-err');
+  const errEl   = document.getElementById('post-err');
   errEl.style.display = 'none';
 
   if (!content) { errEl.textContent = '内容を入力してください'; errEl.style.display = 'block'; return; }
-  if (content.length > 500) { errEl.textContent = '500文字以内で入力してください'; errEl.style.display = 'block'; return; }
 
-  // スパム防止（30秒インターバル）
   const lastPost = +localStorage.getItem('bbs_last_post') || 0;
-  const now = Date.now();
-  if (now - lastPost < 30000) {
-    const wait = Math.ceil((30000 - (now - lastPost)) / 1000);
-    errEl.textContent = `連続投稿防止のため、あと${wait}秒お待ちください`;
-    errEl.style.display = 'block';
-    return;
+  if (Date.now() - lastPost < 30000) {
+    errEl.textContent = `連続投稿防止のため、あと${Math.ceil((30000-(Date.now()-lastPost))/1000)}秒お待ちください`;
+    errEl.style.display = 'block'; return;
   }
 
   const btn = document.getElementById('submit-btn');
-  btn.disabled = true;
-  btn.textContent = '投稿中...';
-
+  btn.disabled = true; btn.textContent = '投稿中...';
   try {
-    await col.add({
-      name,
-      category: selectedCat,
-      content,
+    const docRef = await col.add({
+      name, category: selectedCat, content, parentId: null,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       deleted: false
     });
@@ -448,37 +455,62 @@ async function submitPost() {
     document.getElementById('post-content').value = '';
     document.getElementById('post-name').value = '';
     document.getElementById('char-count').textContent = '0';
-    // フィルターを全てに戻して再読み込み
+    const newPost = { id: docRef.id, name, category: selectedCat, content, parentId: null,
+      createdAt: { toDate: ()=>new Date(), toMillis: ()=>Date.now() }, deleted: false };
+    // フィルターをリセットして1ページ目に先頭表示
     activeFilter = 'all';
     document.querySelectorAll('.bbs-filter-btn').forEach(b => b.classList.remove('active'));
     document.querySelector('[data-filter="all"]').classList.add('active');
-    await loadPosts(true);
-  } catch (e) {
-    errEl.textContent = '投稿に失敗しました。しばらくしてから再試行してください';
-    errEl.style.display = 'block';
+    topPosts.unshift(newPost);
+    currentPage = 1;
+    renderPage();
+  } catch(e) {
+    errEl.textContent = '投稿に失敗しました'; errEl.style.display = 'block';
   } finally {
-    btn.disabled = false;
-    btn.textContent = '投稿する';
+    btn.disabled = false; btn.textContent = '投稿する';
   }
 }
 
-// 削除（管理者パスワード入力）
+// ===== 削除 =====
 async function deletePost(id) {
   const pw = prompt('管理者パスワードを入力してください');
   if (pw === null) return;
   if (pw !== DEL_PASSWORD) { alert('パスワードが違います'); return; }
   try {
     await col.doc(id).update({ deleted: true });
-    posts = posts.filter(p => p.id !== id);
-    renderPosts();
-  } catch (e) {
-    alert('削除に失敗しました');
-  }
+    if (topPosts.find(p => p.id === id)) {
+      topPosts = topPosts.filter(p => p.id !== id);
+      delete allReplies[id];
+    } else {
+      Object.keys(allReplies).forEach(pid => {
+        allReplies[pid] = allReplies[pid].filter(r => r.id !== id);
+      });
+    }
+    renderPage();
+  } catch(e) { alert('削除に失敗しました'); }
 }
 
-// 初期ロード
-loadPosts(true);
-</script>
+// ===== ユーティリティ =====
+function selectCat(cat) {
+  selectedCat = cat;
+  document.getElementById('cat-shitsumon').className = 'bbs-cat-btn' + (cat==='質問'?' active-shitsumon':'');
+  document.getElementById('cat-zatsudan').className  = 'bbs-cat-btn' + (cat==='雑談' ?' active-zatsudan' :'');
+}
 
+document.getElementById('post-content').addEventListener('input', function() {
+  document.getElementById('char-count').textContent = this.value.length;
+});
+
+function formatDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const pad = n => String(n).padStart(2,'0');
+  return `${d.getFullYear()}.${pad(d.getMonth()+1)}.${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+loadAll();
+</script>
 </body>
 </html>
