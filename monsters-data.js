@@ -186,7 +186,7 @@ const monstersData = [
   { name: 'ハスタ', aura: '青', limited: true, limitedLabel: '超スタフェス限定', gwImg: 150, localImg: null, mon: '獣', mainMon: 'キュービ', subMon: 'ウンディーネ' },
   { name: 'サクラモッチーニ', aura: '赤', limited: false, limitedLabel: '', gwImg: 149, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'レアモン' },
   { name: 'イナリ', aura: '白', limited: false, limitedLabel: '', gwImg: 148, localImg: null, mon: '無機', mainMon: 'ニャー', subMon: 'キュービ' },
-  { name: 'デュランダル', aura: '黄', limited: false, limitedLabel: '', gwImg: 147, localImg: null, mon: '魔族', mainMon: 'ケンタウロス', subMon: 'ヘンガー' },
+  { name: 'デュランダル', aura: '黄', limited: false, limitedLabel: '', gwImg: 147, localImg: null, mon: '獣', mainMon: 'ケンタウロス', subMon: 'ヘンガー' },
   { name: 'ブルードリル', aura: '青', limited: true, limitedLabel: 'イベント限定', gwImg: 146, localImg: null, mon: '怪物', mainMon: 'ワーム', subMon: 'ライガー' },
   { name: 'オメガレックス', aura: '緑', limited: false, limitedLabel: '', gwImg: 145, localImg: null, mon: '無機', mainMon: 'ヘンガー', subMon: 'ディノ' },
   { name: 'ヨコヅナ', aura: '黄', limited: true, limitedLabel: 'イベント限定', gwImg: 144, localImg: null, mon: '怪物', mainMon: 'カワズモー', subMon: 'レアモン' },
