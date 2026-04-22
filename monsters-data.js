@@ -275,7 +275,7 @@ const monstersData = [
   { name: 'トルクレンチ', aura: '黄', limited: false, limitedLabel: '', gwImg: 61, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'ワーム' },
   { name: 'ハムリーフ', aura: '緑', limited: false, limitedLabel: '', gwImg: 60, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'プラント' },
   { name: 'クロスフォーアイ', aura: '黄', limited: false, limitedLabel: '', gwImg: 59, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'スエゾー' },
-  { name: 'ウロコウサギ', aura: '緑', limited: false, limitedLabel: '', gwImg: 58, localImg: null, mon: '幻霊', mainMon: 'ハム', subMon: 'ディノ' },
+  { name: 'ウロコウサギ', aura: '緑', limited: false, limitedLabel: '', gwImg: 58, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'ディノ' },
   { name: 'ブルーフレア', aura: '青', limited: false, limitedLabel: '', gwImg: 57, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'ゲル' },
   { name: 'ダークハム', aura: '黒', limited: false, limitedLabel: '', gwImg: 56, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'モノリス' },
   { name: 'ハム', aura: '黄', limited: false, limitedLabel: '', gwImg: 55, localImg: null, mon: '獣', mainMon: 'ハム', subMon: 'ハム' },
