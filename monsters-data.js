@@ -171,7 +171,7 @@ const monstersData = [
   { name: 'ヒガンバナ', aura: '赤', limited: false, limitedLabel: '', gwImg: 165, localImg: null, mon: '幻霊', mainMon: 'スエゾー', subMon: 'ヒノトリ' },
   { name: 'アオサギビ', aura: '青', limited: false, limitedLabel: '', gwImg: 164, localImg: null, mon: '創造', mainMon: 'ヒノトリ', subMon: 'ウンディーネ' },
   { name: 'フレアデス', aura: '赤', limited: false, limitedLabel: '', gwImg: 163, localImg: null, mon: '創造', mainMon: 'ジョーカー', subMon: 'ドラゴン' },
-  { name: 'ダイナ', aura: '赤', limited: true, limitedLabel: 'イベント限定', gwImg: 162, localImg: null, mon: '獣', mainMon: 'ピクシー', subMon: 'ドラゴン' },
+  { name: 'ダイナ', aura: '赤', limited: true, limitedLabel: 'イベント限定', gwImg: 162, localImg: null, mon: '魔族', mainMon: 'ピクシー', subMon: 'ドラゴン' },
   { name: 'ワイバーン・炎', aura: '赤', limited: false, limitedLabel: '', gwImg: 161, localImg: null, mon: '魔族', mainMon: 'ヒノトリ', subMon: 'ドラゴン' },
   { name: 'セイレーン', aura: '黒', limited: false, limitedLabel: '', gwImg: 160, localImg: null, mon: '幻霊', mainMon: 'ウンディーネ', subMon: 'ジョーカー' },
   { name: 'ヒノトリ', aura: '赤', limited: true, limitedLabel: '周年限定', gwImg: 159, localImg: null, mon: '創造', mainMon: 'ヒノトリ', subMon: 'ヒノトリ' },

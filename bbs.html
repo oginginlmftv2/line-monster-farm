@@ -5,8 +5,8 @@
   <link rel="icon" href="S__94175247.jpg">
   <link rel="apple-touch-icon" href="S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>質問・雑談掲示板 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファーム徹底攻略の質問・雑談掲示板。育成の疑問・編成相談・雑談などお気軽にどうぞ。">
+  <title>質問・攻略・雑談掲示板 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファーム徹底攻略の質問・攻略・雑談掲示板。育成の疑問・編成相談・攻略情報・雑談などお気軽にどうぞ。">
   <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/bbs.html">
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
@@ -35,6 +35,7 @@
       background: #f9f9f9; font-size: 13px; font-weight: bold; color: #888; cursor: pointer; transition: all 0.15s;
     }
     .bbs-cat-btn.active-shitsumon { border-color: #2196f3; background: #e3f2fd; color: #1565c0; }
+    .bbs-cat-btn.active-kouryaku  { border-color: #f0a500; background: #fff8e1; color: #8a5e00; }
     .bbs-cat-btn.active-zatsudan  { border-color: #66bb6a; background: #e8f5e9; color: #2e7d32; }
     .bbs-submit {
       width: 100%; padding: 11px; border: none; border-radius: 10px;
@@ -59,6 +60,7 @@
     .bbs-post-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
     .bbs-cat-badge { font-size: 10px; font-weight: bold; padding: 2px 8px; border-radius: 10px; }
     .bbs-cat-badge.shitsumon { background: #e3f2fd; color: #1565c0; border: 1px solid #90caf9; }
+    .bbs-cat-badge.kouryaku  { background: #fff8e1; color: #8a5e00; border: 1px solid #ffe082; }
     .bbs-cat-badge.zatsudan  { background: #e8f5e9; color: #2e7d32;  border: 1px solid #a5d6a7; }
     .bbs-post-name { font-size: 13px; font-weight: bold; color: #1a1a2e; }
     .bbs-post-date { font-size: 11px; color: #aaa; margin-left: auto; }
@@ -164,12 +166,12 @@
 
 <div class="container">
   <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">💬 質問・雑談掲示板</h1>
+  <h1 class="page-title">💬 質問・攻略・雑談掲示板</h1>
 
   <div class="bbs-notice">
     ⚠️ 荒らし・スパム・誹謗中傷・個人情報の投稿は禁止です。<br>
     管理人による削除が行われる場合があります。<br>
-    ゲームの質問・育成相談・雑談などお気軽にどうぞ。
+    ゲームの質問・育成相談・攻略情報・雑談などお気軽にどうぞ。
   </div>
 
   <!-- 投稿フォーム -->
@@ -183,6 +185,7 @@
       <label>カテゴリ</label>
       <div class="bbs-cat-row">
         <button class="bbs-cat-btn active-shitsumon" id="cat-shitsumon" onclick="selectCat('質問')">❓ 質問</button>
+        <button class="bbs-cat-btn" id="cat-kouryaku" onclick="selectCat('攻略')">⚔️ 攻略</button>
         <button class="bbs-cat-btn" id="cat-zatsudan" onclick="selectCat('雑談')">💬 雑談</button>
       </div>
     </div>
@@ -199,6 +202,7 @@
   <div class="bbs-filter">
     <button class="bbs-filter-btn active" data-filter="all" onclick="setFilter(this,'all')">すべて</button>
     <button class="bbs-filter-btn" data-filter="質問" onclick="setFilter(this,'質問')">❓ 質問</button>
+    <button class="bbs-filter-btn" data-filter="攻略" onclick="setFilter(this,'攻略')">⚔️ 攻略</button>
     <button class="bbs-filter-btn" data-filter="雑談" onclick="setFilter(this,'雑談')">💬 雑談</button>
   </div>
 
@@ -288,8 +292,8 @@ function renderPage() {
 }
 
 function postHtml(p) {
-  const catClass = p.category === '質問' ? 'shitsumon' : 'zatsudan';
-  const catIcon  = p.category === '質問' ? '❓' : '💬';
+  const catClass = p.category === '質問' ? 'shitsumon' : p.category === '攻略' ? 'kouryaku' : 'zatsudan';
+  const catIcon  = p.category === '質問' ? '❓' : p.category === '攻略' ? '⚔️' : '💬';
   const replies  = allReplies[p.id] || [];
 
   const repliesHtml = replies.map(r => `
@@ -494,6 +498,7 @@ async function deletePost(id) {
 function selectCat(cat) {
   selectedCat = cat;
   document.getElementById('cat-shitsumon').className = 'bbs-cat-btn' + (cat==='質問'?' active-shitsumon':'');
+  document.getElementById('cat-kouryaku').className  = 'bbs-cat-btn' + (cat==='攻略' ?' active-kouryaku' :'');
   document.getElementById('cat-zatsudan').className  = 'bbs-cat-btn' + (cat==='雑談' ?' active-zatsudan' :'');
 }
 
