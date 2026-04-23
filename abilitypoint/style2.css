@@ -1,16 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700&display=swap');
 
   :root {
-    --bg: #0a0c14;
-    --surface: #111827;
-    --surface2: #1c2333;
-    --border: #2a3450;
-    --accent: #00e5ff;
-    --accent2: #ffd700;
-    --accent3: #ff6b6b;
-    --text: #e0e8ff;
+    --bg: #f0f4fb;
+    --surface: #ffffff;
+    --surface2: #edf1f9;
+    --border: #c8d2e8;
+    --accent: #0099bb;
+    --accent2: #d4880a;
+    --accent3: #e53e3e;
+    --text: #1a2340;
     --text-dim: #6b7fa3;
-    --glow: 0 0 20px rgba(0,229,255,0.3);
+    --glow: 0 0 16px rgba(0,153,187,0.2);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,8 +28,8 @@
     position: fixed;
     inset: 0;
     background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      linear-gradient(rgba(0,153,187,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,153,187,0.04) 1px, transparent 1px);
     background-size: 40px 40px;
     pointer-events: none;
     z-index: 0;
@@ -52,7 +52,7 @@
     text-align: left;
     margin-bottom: 28px;
     padding: 24px 20px;
-    background: linear-gradient(135deg, #111827 0%, #1a2340 100%);
+    background: linear-gradient(135deg, #e8eef8 0%, #d8e6f4 100%);
     border: 1px solid var(--border);
     border-radius: 16px;
     position: relative;
@@ -74,7 +74,7 @@
     font-weight: 900;
     letter-spacing: 0.08em;
     color: var(--accent);
-    text-shadow: 0 0 20px rgba(0,229,255,0.5);
+    text-shadow: 0 0 16px rgba(0,153,187,0.3);
     margin-bottom: 6px;
   }
   .header-titles p { font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em; }
@@ -87,7 +87,7 @@
 
   .header-btn {
     padding: 10px 14px;
-    background: rgba(0, 229, 255, 0.05);
+    background: rgba(0, 153, 187, 0.06);
     border: 1px solid var(--accent);
     border-radius: 8px;
     color: var(--accent);
@@ -101,7 +101,7 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
   .header-btn:hover {
-    background: rgba(0, 229, 255, 0.15);
+    background: rgba(0, 153, 187, 0.15);
     box-shadow: var(--glow);
     transform: translateY(-1px);
   }
@@ -277,20 +277,20 @@
   .btn-primary {
     width: 100%;
     padding: 16px;
-    background: linear-gradient(135deg, #0097aa, #00e5ff);
+    background: linear-gradient(135deg, #0099bb, #00b8d9);
     border: none;
     border-radius: 10px;
-    color: #000;
+    color: #fff;
     font-family: 'Orbitron', monospace;
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.1em;
     cursor: pointer;
     transition: all 0.2s;
-    box-shadow: 0 4px 20px rgba(0,229,255,0.25);
+    box-shadow: 0 4px 20px rgba(0,153,187,0.25);
     -webkit-tap-highlight-color: transparent;
   }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(0,229,255,0.4); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 30px rgba(0,153,187,0.4); }
   .btn-primary:active { transform: translateY(0); }
 
   .btn-secondary {
@@ -362,7 +362,7 @@
     font-family: 'Orbitron', monospace;
     font-size: 12px;
     color: var(--accent);
-    background: rgba(0,229,255,0.08);
+    background: rgba(0,153,187,0.08);
     padding: 2px 8px;
     border-radius: 4px;
   }
@@ -512,8 +512,8 @@
   .link-btn.link-btn-active {
     border-color: var(--accent);
     color: var(--accent);
-    background: rgba(0,229,255,0.1);
-    box-shadow: 0 0 8px rgba(0,229,255,0.2);
+    background: rgba(0,153,187,0.1);
+    box-shadow: 0 0 8px rgba(0,153,187,0.2);
   }
 
   /* Link Modal */
@@ -579,7 +579,7 @@
     bottom: 0; left: 0; right: 0;
     z-index: 50;
     padding: 12px 16px;
-    background: linear-gradient(to top, rgba(10,12,20,0.98) 70%, transparent);
+    background: linear-gradient(to top, rgba(240,244,251,0.98) 70%, transparent);
     pointer-events: none;
   }
   .calc-bar .btn-primary {
@@ -587,7 +587,7 @@
     max-width: 680px;
     margin: 0 auto;
     display: block;
-    box-shadow: 0 -4px 24px rgba(0,229,255,0.2), 0 4px 20px rgba(0,229,255,0.25);
+    box-shadow: 0 -4px 24px rgba(0,153,187,0.15), 0 4px 20px rgba(0,153,187,0.25);
   }
   /* コンテナ下部に固定バーの高さ分の余白を追加 */
   .container { padding-bottom: 90px; }
@@ -690,7 +690,7 @@
     gap: 3px;
     font-size: 10px;
     color: var(--accent);
-    background: rgba(0,229,255,0.1);
+    background: rgba(0,153,187,0.1);
     border: 1px solid var(--accent);
     border-radius: 4px;
     padding: 1px 6px;
@@ -700,7 +700,7 @@
     transition: all 0.15s;
     -webkit-tap-highlight-color: transparent;
   }
-  .link-badge:hover { background: rgba(0,229,255,0.2); }
+  .link-badge:hover { background: rgba(0,153,187,0.2); }
   .link-badge-static {
     cursor: default;
     background: rgba(160,160,160,0.1);
@@ -805,10 +805,10 @@
   .combo-ok-btn {
     flex: 1;
     padding: 12px;
-    background: linear-gradient(135deg, #0097aa, #00e5ff);
+    background: linear-gradient(135deg, #0099bb, #00b8d9);
     border: none;
     border-radius: 8px;
-    color: #000;
+    color: #fff;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
