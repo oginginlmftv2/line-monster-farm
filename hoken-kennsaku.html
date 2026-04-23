@@ -307,6 +307,10 @@
       </div>
     </div>
 
+    <div style="text-align:center;margin:4px 0;">
+      <button onclick="swapParents()" style="padding:5px 18px;background:#fff;border:1.5px solid #ddd;border-radius:20px;font-size:13px;color:#888;cursor:pointer;transition:all 0.2s;" onmouseover="this.style.borderColor='#f0a500';this.style.color='#f0a500';" onmouseout="this.style.borderColor='#ddd';this.style.color='#888';">⇅ 父母入れ替え</button>
+    </div>
+
     <div class="parent-row-label">母親側</div>
     <div class="fixed-grid">
       <div>
@@ -440,6 +444,15 @@
     } else {
       sel.classList.remove('fixed');
     }
+  }
+
+  function swapParents() {
+    const pairs = [['sel_f','sel_m'],['sel_ff','sel_mf'],['sel_fm','sel_mm']];
+    pairs.forEach(([a, b]) => {
+      const sa = document.getElementById(a), sb = document.getElementById(b);
+      const tmp = sa.value; sa.value = sb.value; sb.value = tmp;
+      highlightFixed(sa); highlightFixed(sb);
+    });
   }
 
   function resetSlots() {
