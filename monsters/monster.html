@@ -578,8 +578,10 @@ async function loadMonsterData() {
     const doc = await db.collection('monsters').doc(docId).get();
     if (doc.exists) {
       const d = doc.data();
-      pageData.explanation = d.explanation || '';
+      pageData.explanation = d.explanation || monstersData[idx]?.explanation || '';
       pageData.formations  = d.formations  || [];
+    } else {
+      pageData.explanation = monstersData[idx]?.explanation || '';
     }
   } catch(e) { console.error(e); }
   renderExplanation();
