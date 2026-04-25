@@ -6,7 +6,12 @@
       "Bash(node -e ' *)",
       "Bash(node -e \"const old=require\\('C:/Users/KCE/Desktop/LINEモンスターファーム徹底攻略/lmfdb_abilities_data.json'\\);const newf=require\\('C:/Users/KCE/Desktop/LINEモンスターファーム徹底攻略/lMfDB_abilities.json'\\);const oldArr=Array.isArray\\(old\\)?old:Object.values\\(old\\);const newArr=Array.isArray\\(newf\\)?newf:Object.values\\(newf\\);console.log\\('旧件数:',oldArr.length,'新件数:',newArr.length\\);console.log\\('旧キー:',JSON.stringify\\(Object.keys\\(oldArr[0]\\)\\)\\);console.log\\('新キー:',JSON.stringify\\(Object.keys\\(newArr[0]\\)\\)\\);console.log\\('旧サンプル:',JSON.stringify\\(oldArr[0]\\)\\);console.log\\('新サンプル:',JSON.stringify\\(newArr[0]\\)\\);\")",
       "Bash(python -c ' *)",
-      "PowerShell($lines = Get-Content \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\lMfdb-index-20-23.html\" -Encoding UTF8; $line = $lines[903]; $idx = $line.IndexOf\\('蹂躙を開始'\\); $line.Substring\\($idx, [Math]::Min\\(40, $line.Length - $idx\\)\\))"
+      "PowerShell($lines = Get-Content \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\lMfdb-index-20-23.html\" -Encoding UTF8; $line = $lines[903]; $idx = $line.IndexOf\\('蹂躙を開始'\\); $line.Substring\\($idx, [Math]::Min\\(40, $line.Length - $idx\\)\\))",
+      "WebFetch(domain:gamewith.jp)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(python -c \"import sys; data=sys.stdin.read\\(\\); print\\(data[-5000:]\\)\")",
+      "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\KCE\\\\.claude\\\\projects\\\\C--Users-KCE-Desktop-LINE-------------\\\\94f77c59-7c66-45ac-bfbe-69e44aa38708.jsonl' -Tail 50 | Select-String 'content|text' | Select-Object -Last 30\")",
+      "PowerShell(Get-Content 'C:\\\\Users\\\\KCE\\\\.claude\\\\projects\\\\C--Users-KCE-Desktop-LINE-------------\\\\94f77c59-7c66-45ac-bfbe-69e44aa38708.jsonl' -Tail 20 | ForEach-Object { $_.Substring\\(0, [Math]::Min\\(500, $_.Length\\)\\) })"
     ]
   }
 }

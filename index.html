@@ -98,6 +98,8 @@
     const td2 = 'padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;';
     const a   = (href,text) => `<a href="${href}" style="color:#f0a500;text-decoration:none;">${text}</a>`;
     const rows = [
+      ['2026.04.25', a('monsters.html','ニャハト追加')],
+      ['2026.04.24', a('ikusei/hiden-kouka.html','秘伝効果一覧ページを追加（種類別・50音・優先度順ソート対応）')],
       ['2026.04.22', a('monsters.html','複数モンスターの種族データを修正（ヒガンバナ・サクラチル・フロッグロック・ダイナ・カチョウフウゲツ・タイラント・フレアデス・ヒトツメオウジ・ワイバーン・アンゴルモア・ベビードラゴン・ラクガキモノ）')+'・'+a('npc-regen.html','ムラサキチュウの表記を修正')],
       ['2026.04.22', a('bbs.html','質問・攻略・雑談掲示板を追加')],
       ['2026.04.21', a('ability-search.html','能力検索ツールにマイセット（編成セット）機能を追加')],
@@ -290,6 +292,10 @@
           <span class="submenu-icon">📜</span> 秘伝周回
           <span class="submenu-arrow">›</span>
         </a>
+        <a href="ikusei/hiden-kouka.html" class="submenu-link">
+          <span class="submenu-icon">📋</span> 秘伝効果一覧
+          <span class="submenu-arrow">›</span>
+        </a>
         <a href="ikusei/lord-of-masters.html" class="submenu-link">
           <span class="submenu-icon">👑</span> ロードオブマスターズ
           <span class="submenu-arrow">›</span>
@@ -310,6 +316,11 @@
   <div class="section">
     <div class="section-title">モンスター一覧（ピックアップ）</div>
     <div class="card-grid">
+      <a href="monsters/monster.html?id=334" class="card">
+        <img class="card-img" src="monster/S__107036676.jpg" alt="ニャハト">
+        <div class="name">ニャハト <span style="font-size:11px;color:#888;font-weight:normal;">GW限定</span></div>
+        <div class="pickup-desc">ニャー種のノーブルモンスター<br>現存のノーブルモンスター全てと相性が良く王冠相性を狙いやすいので、すでに1体でもノーブルモンスターを持っている人はほしい1体<br>本体の強さはまぁまぁまぁ</div>
+      </a>
       <a href="monsters/monster.html?id=333" class="card">
         <img class="card-img" src="monster/S__71286791_0.jpg" alt="シュシュポッポ">
         <div class="name">シュシュポッポ</div>

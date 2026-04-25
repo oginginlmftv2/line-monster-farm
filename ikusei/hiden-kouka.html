@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>秘伝効果一覧 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの全秘伝の効果・付与条件を種類別にまとめた一覧。大会秘伝・ノラモン秘伝・技秘伝・ノーブル秘伝など全種類掲載。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/hiden-kouka.html">
+  <link rel="stylesheet" href="../style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .sort-bar { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:10px; }
+    .sort-btn {
+      padding:6px 16px; border-radius:20px; border:2px solid #ccc;
+      background:#fff; font-size:13px; font-weight:bold; cursor:pointer; transition:all 0.15s;
+    }
+    .sort-btn.active { border-color:#f0a500; background:#fff8e8; color:#c27800; }
+    .search-box {
+      width:100%; box-sizing:border-box; padding:9px 14px;
+      font-size:14px; border:1px solid #ddd; border-radius:8px; margin-bottom:10px; outline:none;
+    }
+    .search-box:focus { border-color:#f0a500; }
+    .table-wrap { overflow-x:auto; }
+    .ht { width:100%; border-collapse:collapse; font-size:13px; }
+    .ht th { background:#1a1a2e; color:#fff; padding:8px 10px; text-align:left; white-space:nowrap; }
+    .ht td { padding:7px 10px; border-bottom:1px solid #eee; vertical-align:top; line-height:1.6; }
+    .ht tr:nth-child(even) td { background:#f9f9f9; }
+    .ht tr:hover td { background:#fffbf0; }
+    .ht td:first-child { font-weight:bold; min-width:100px; }
+    .cat-hd td {
+      background:#1a1a2e; color:#f0a500; font-weight:bold; font-size:13px;
+      padding:7px 12px; letter-spacing:1px;
+    }
+    .entry-note { font-size:11px; color:#888; font-weight:normal; margin-top:2px; }
+    .count-label { font-size:12px; color:#999; margin-bottom:6px; }
+    .info-box { background:#f0f8ff; border-left:4px solid #3b82f6; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .h2 { font-size:17px; font-weight:bold; border-left:5px solid #f0a500; padding-left:10px; margin:26px 0 12px; color:#1a1a2e; }
+    p { font-size:14px; line-height:1.8; margin-bottom:8px; }
+    .cond-cell { font-size:12px; color:#555; }
+    .ht td a { color:#f0a500; font-weight:bold; text-decoration:none; }
+    .ht td a:hover { text-decoration:underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="../index.html">トップ</a>
+      <a href="../monsters.html">モンスター一覧</a>
+      <a href="../assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">📜 秘伝効果一覧</h1>
+
+  <div class="info-box">
+    ★の効果は★1〜★3まで強化され、★4以降は効果なし（ノーブル秘伝を除く）。ノーブル秘伝は★ではなく☆の合計数が多いほど伝授相性が上昇し、☆4以降も上昇し続ける。
+    秘伝の仕組みや周回方法は<a href="hiden.html" style="color:#f0a500;">秘伝周回 完全ガイド</a>を参照。
+  </div>
+
+  <div class="h2">秘伝一覧</div>
+
+  <div class="sort-bar">
+    <button class="sort-btn active" data-sort="cat">種類別</button>
+    <button class="sort-btn" data-sort="yomi">50音順</button>
+    <button class="sort-btn" data-sort="priority">優先度順</button>
+  </div>
+  <input type="text" class="search-box" id="searchBox" placeholder="秘伝名・効果・付与条件で検索...">
+  <div class="count-label" id="countLabel"></div>
+
+  <div class="table-wrap">
+    <table class="ht">
+      <thead>
+        <tr>
+          <th>秘伝名</th>
+          <th>★1 効果</th>
+          <th>★2 効果</th>
+          <th>★3 効果</th>
+          <th>付与条件</th>
+        </tr>
+      </thead>
+      <tbody id="htBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <p>© 2024 LINEモンスターファーム徹底攻略</p>
+</footer>
+
+<script>
+// cat: 0=ノーブル 1=大会 2=シナリオ 3=陣営 4=ノラモン 5=ボスモン 6=ロード 7=モン類 8=ソロモン 9=ステータス 10=適性 11=技
+const CATS = ['ノーブル秘伝','大会秘伝','シナリオ秘伝','陣営秘伝','ノラモン秘伝','ボスモン秘伝','EX秘伝','モン類秘伝','ソロモン秘伝','ステータス秘伝','適性秘伝','技秘伝'];
+
+// e1/e2/e3 省略記号 "=" は e1と同じ意味でrenderで展開する
+const H = [
+  // ===== ノーブル秘伝 =====
+  { name:'高貴なる〇〇', note:'幻霊・無機・創造・獣族・魔族・怪物の全6種。☆の合計数が多いほど伝授相性が上昇。',
+    yomi:'こうきなるまるまる', cat:0, pri:1,
+    e1:'伝授相性がアップ\n「殿堂の覇者」または「殿堂の守護」のひらめきLvが上昇（確率）', e2:'=', e3:'=',
+    cond:'ノーブルモンスターを育成するか、ノーブル秘伝持ちのモンスターを親か祖母に設定して育成（レンタルを親にした場合は対象外）' },
+
+  // ===== 大会秘伝 =====
+  { name:'四大大会制覇', yomi:'しだいたいかいせいは', cat:1, pri:3,
+    e1:'全ステータス+7', e2:'全ステータス+10', e3:'全ステータス+15',
+    cond:'四大大会すべてで優勝した際に獲得（確率）' },
+  { name:'モンスターダービー', yomi:'もんすたーだーびー', cat:1, pri:10,
+    e1:'ライフ+4／回避+4／丈夫さ+4', e2:'ライフ+8／回避+8／丈夫さ+8', e3:'ライフ+12／回避+12／丈夫さ+12',
+    cond:'モンスターダービーで優勝した際に獲得（確率）' },
+  { name:'IMa会長賞制覇', yomi:'いまかいちょうしょうせいは', cat:1, pri:99.2,
+    e1:'ライフ／命中／回避+1、ちから／かしこさ／丈夫さ+2', e2:'ライフ／命中／回避+2、ちから／かしこさ／丈夫さ+3', e3:'ライフ／命中／回避+3、ちから／かしこさ／丈夫さ+4',
+    cond:'IMa会長賞（春）と（秋）の両方で優勝した際に獲得（確率）' },
+  { name:'サファイア記念', yomi:'さふぁいあきねん', cat:1, pri:101,
+    e1:'「サファイア記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'サファイア記念で優勝した際に獲得（確率）' },
+  { name:'エメラルド記念', yomi:'えめらるどきねん', cat:1, pri:102,
+    e1:'「エメラルド記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'エメラルド記念で優勝した際に獲得（確率）' },
+  { name:'プラチナ記念', yomi:'ぷらちなきねん', cat:1, pri:103,
+    e1:'「プラチナ記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'プラチナ記念で優勝した際に獲得（確率）' },
+  { name:'ルビー記念', yomi:'るびーきねん', cat:1, pri:104,
+    e1:'「ルビー記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'ルビー記念で優勝した際に獲得（確率）' },
+  { name:'アンバー記念', yomi:'あんばーきねん', cat:1, pri:105,
+    e1:'「アンバー記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'アンバー記念で優勝した際に獲得（確率）' },
+  { name:'スピネル記念', yomi:'すぴねるきねん', cat:1, pri:106,
+    e1:'「スピネル記念の力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'スピネル記念で優勝した際に獲得（確率）' },
+  { name:'毎育新聞杯制覇', yomi:'まいいくしんぶんはいせいは', cat:1, pri:99.4,
+    e1:'ライフ／命中／丈夫さ+1、ちから／かしこさ／回避+2', e2:'ライフ／命中／丈夫さ+2、ちから／かしこさ／回避+3', e3:'ライフ／命中／丈夫さ+3、ちから／かしこさ／回避+4',
+    cond:'毎育新聞杯（春）と（秋）の両方で優勝した際に獲得（確率）' },
+  { name:'キュマイラ記念', yomi:'きゅまいらきねん', cat:1, pri:108,
+    e1:'「剛王の誇り」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'キュマイラ記念で優勝した際に獲得（確率）' },
+  { name:'アルテミス記念', yomi:'あるてみすきねん', cat:1, pri:109,
+    e1:'「撃王の誇り」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'アルテミス記念で優勝した際に獲得（確率）' },
+  { name:'アトロポス記念', yomi:'あとろぽすきねん', cat:1, pri:110,
+    e1:'「心王の誇り」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'アトロポス記念で優勝した際に獲得（確率）' },
+  { name:'アトランタ記念', yomi:'あとらんたきねん', cat:1, pri:111,
+    e1:'「迅王の誇り」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'アトランタ記念で優勝した際に獲得（確率）' },
+  { name:'桔梗賞制覇', yomi:'ききょうしょうせいは', cat:1, pri:11, priCat:99.6,
+    e1:'ライフ+2／命中+2／丈夫さ+2', e2:'ライフ+4／命中+4／丈夫さ+4', e3:'ライフ+6／命中+6／丈夫さ+6',
+    cond:'桔梗賞（冬）と（夏）の両方で優勝した際に獲得（確率）' },
+  { name:'雪月花賞制覇', yomi:'せつげつかしょうせいは', cat:1, pri:99.8,
+    e1:'全ステータス+1', e2:'全ステータス+2', e3:'全ステータス+3',
+    cond:'雪月花賞（夏）と（冬）の両方で優勝した際に獲得（確率）' },
+  { name:'花水木賞制覇', yomi:'はなみずきしょうせいは', cat:1, pri:99.9,
+    e1:'全ステータス+1', e2:'全ステータス+2', e3:'全ステータス+3',
+    cond:'花水木賞（夏）と（冬）の両方で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・蒼', yomi:'ろくえいゆうはいあお', cat:1, pri:24,
+    e1:'ライフ／命中+4', e2:'ライフ／命中+5', e3:'ライフ／命中+6',
+    cond:'六英雄杯・蒼で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・煌', yomi:'ろくえいゆうはいきら', cat:1, pri:25,
+    e1:'命中／丈夫さ+4', e2:'命中／丈夫さ+5', e3:'命中／丈夫さ+6',
+    cond:'六英雄杯・煌で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・紅', yomi:'ろくえいゆうはいくれない', cat:1, pri:26,
+    e1:'ちから／かしこさ+4', e2:'ちから／かしこさ+5', e3:'ちから／かしこさ+6',
+    cond:'六英雄杯・紅で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・冥', yomi:'ろくえいゆうはいめい', cat:1, pri:27,
+    e1:'命中／回避+4', e2:'命中／回避+5', e3:'命中／回避+6',
+    cond:'六英雄杯・冥で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・翠', yomi:'ろくえいゆうはいみどり', cat:1, pri:28,
+    e1:'回避／丈夫さ+4', e2:'回避／丈夫さ+5', e3:'回避／丈夫さ+6',
+    cond:'六英雄杯・翠で優勝した際に獲得（確率）' },
+  { name:'六英雄杯・琥', yomi:'ろくえいゆうはいこ', cat:1, pri:29,
+    e1:'ちから／かしこさ+4', e2:'ちから／かしこさ+5', e3:'ちから／かしこさ+6',
+    cond:'六英雄杯・琥で優勝した際に獲得（確率）' },
+  { name:'トーブル豪海杯', yomi:'とーぶるごうかいはい', cat:1, pri:114,
+    e1:'「火山適応Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'トーブル豪海杯で優勝した際に獲得（確率）' },
+  { name:'マンディー熱砂杯', yomi:'まんでぃーねっさはい', cat:1, pri:115,
+    e1:'「砂漠適応Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'マンディー熱砂杯で優勝した際に獲得（確率）' },
+  { name:'パパス雪華杯', yomi:'ぱぱすゆきはなはい', cat:1, pri:116,
+    e1:'「雪山適応Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'パパス雪華杯で優勝した際に獲得（確率）' },
+  { name:'バレバレ風樹杯', yomi:'ばればれふうじゅはい', cat:1, pri:117,
+    e1:'「森林適応Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'バレバレ風樹杯で優勝した際に獲得（確率）' },
+  { name:'カウレア火群杯', yomi:'かうれあひぐれはい', cat:1, pri:118,
+    e1:'「海岸適応Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'カウレア火群杯で優勝した際に獲得（確率）' },
+  { name:'ベルロス記念', yomi:'べるろすきねん', cat:1, pri:119,
+    e1:'ちから+5', e2:'ちから+10', e3:'ちから+15',
+    cond:'ベルロス記念で優勝した際に獲得（確率）' },
+  { name:'ポリトカ記念', yomi:'ぽりとかきねん', cat:1, pri:120,
+    e1:'かしこさ+5', e2:'かしこさ+10', e3:'かしこさ+15',
+    cond:'ポリトカ記念で優勝した際に獲得（確率）' },
+  { name:'スーパーニュートラル杯', yomi:'すーぱーにゅーとらるはい', cat:1, pri:59.3,
+    e1:'回避+3', e2:'回避+5', e3:'回避+8',
+    cond:'スーパーニュートラル杯で優勝した際に獲得（確率）' },
+  { name:'ニアライト・チャンピオンズ', yomi:'にあらいとちゃんぴおんず', cat:1, pri:56.3,
+    e1:'「近・巧者Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'ニアライト・チャンピオンズで優勝した際に獲得（確率）' },
+  { name:'ウィナーズ杯', yomi:'うぃなーずはい', cat:1, pri:55.3,
+    e1:'丈夫さ+3', e2:'丈夫さ+5', e3:'丈夫さ+8',
+    cond:'ウィナーズ杯で優勝した際に獲得（確率）' },
+  { name:'スーパーヒールズ杯', yomi:'すーぱーひーるずはい', cat:1, pri:59.6,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'スーパーヒールズ杯で優勝した際に獲得（確率）' },
+  { name:'M-1グランプリ', yomi:'えむわんぐらんぷり', cat:1, pri:54,
+    e1:'回避+3', e2:'回避+5', e3:'回避+8',
+    cond:'M-1グランプリで優勝した際に獲得（確率）' },
+  { name:'グレイテスト4', yomi:'ぐれいてすとふぉー', cat:1, pri:55,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'グレイテスト4で優勝した際に獲得（確率）' },
+  { name:'インファイト・チャンピオンズ', yomi:'いんふぁいとちゃんぴおんず', cat:1, pri:56,
+    e1:'「零・巧者Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'インファイト・チャンピオンズで優勝した際に獲得（確率）' },
+  { name:'ミドルレンジ・チャンピオンズ', yomi:'みどるれんじちゃんぴおんず', cat:1, pri:57,
+    e1:'「中・巧者Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'ミドルレンジ・チャンピオンズで優勝した際に獲得（確率）' },
+  { name:'ロングレイル・チャンピオンズ', yomi:'ろんぐれいるちゃんぴおんず', cat:1, pri:58,
+    e1:'「遠・巧者Ⅱ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'ロングレイル・チャンピオンズで優勝した際に獲得（確率）' },
+  { name:'スーパーヒーローズ杯', yomi:'すーぱーひーろーずはい', cat:1, pri:59,
+    e1:'ライフ+3', e2:'ライフ+5', e3:'ライフ+8',
+    cond:'スーパーヒーローズ杯で優勝した際に獲得（確率）' },
+  { name:'ワールドモンスターズ杯', yomi:'わーるどもんすたーずはい', cat:1, pri:55.6,
+    e1:'ライフ+3', e2:'ライフ+5', e3:'ライフ+8',
+    cond:'ワールドモンスターズ杯で優勝した際に獲得（確率）' },
+  { sep:true, pri:55.8, text:'ここから先は全部同じ優先度' },
+  { name:'雪月花賞（夏）', yomi:'せつげつかしょうなつ', cat:1, pri:61,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'雪月花賞（夏）で優勝した際に獲得（確率）' },
+  { name:'雪月花賞（冬）', yomi:'せつげつかしょうふゆ', cat:1, pri:62,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'雪月花賞（冬）で優勝した際に獲得（確率）' },
+  { name:'桔梗賞（夏）', yomi:'ききょうしょうなつ', cat:1, pri:63,
+    e1:'丈夫さ+3', e2:'丈夫さ+5', e3:'丈夫さ+8',
+    cond:'桔梗賞（夏）で優勝した際に獲得（確率）' },
+  { name:'桔梗賞（冬）', yomi:'ききょうしょうふゆ', cat:1, pri:64,
+    e1:'丈夫さ+3', e2:'丈夫さ+5', e3:'丈夫さ+8',
+    cond:'桔梗賞（冬）で優勝した際に獲得（確率）' },
+  { name:'花水木賞（夏）', yomi:'はなみずきしょうなつ', cat:1, pri:65,
+    e1:'回避+3', e2:'回避+5', e3:'回避+8',
+    cond:'花水木賞（夏）で優勝した際に獲得（確率）' },
+  { name:'花水木賞（冬）', yomi:'はなみずきしょうふゆ', cat:1, pri:66,
+    e1:'回避+3', e2:'回避+5', e3:'回避+8',
+    cond:'花水木賞（冬）で優勝した際に獲得（確率）' },
+  { name:'毎育新聞杯（春）', yomi:'まいいくしんぶんはいはる', cat:1, pri:67,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'毎育新聞杯（春）で優勝した際に獲得（確率）' },
+  { name:'毎育新聞杯（秋）', yomi:'まいいくしんぶんはいあき', cat:1, pri:68,
+    e1:'命中+3', e2:'命中+5', e3:'命中+8',
+    cond:'毎育新聞杯（秋）で優勝した際に獲得（確率）' },
+  { name:'IMa会長賞（春）', yomi:'いまかいちょうしょうはる', cat:1, pri:69,
+    e1:'ライフ+3', e2:'ライフ+5', e3:'ライフ+8',
+    cond:'IMa会長賞（春）で優勝した際に獲得（確率）' },
+  { name:'IMa会長賞（秋）', yomi:'いまかいちょうしょうあき', cat:1, pri:70,
+    e1:'ライフ+3', e2:'ライフ+5', e3:'ライフ+8',
+    cond:'IMa会長賞（秋）で優勝した際に獲得（確率）' },
+
+  // ===== シナリオ秘伝 =====
+  { name:'四大大会完全制覇', yomi:'しだいたいかいかんぜんせいは', cat:1, pri:2,
+    e1:'全ステータス+9', e2:'全ステータス+12', e3:'全ステータス+18',
+    cond:'シナリオ「交錯する運命」にて四大大会すべてで優勝かつ1位を獲得（確率）' },
+  { name:'白と黒の境界線', yomi:'しろとくろのきょうかいせん', cat:2, pri:145,
+    e1:'全ステータス+5\n「白と黒の境界線」のひらめきLvが上昇', e2:'全ステータス+6\n「白と黒の境界線」のひらめきLvが上昇', e3:'全ステータス+7\n「白と黒の境界線」のひらめきLvが上昇',
+    cond:'IMaチャンピオンズクラシックまたはIMa地形チャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'星統べる六天', yomi:'ほしすべるろくてん', cat:2, pri:15.5,
+    e1:'ちから+10／かしこさ+10／丈夫さ+10／能力Pt+60\n「星統べる六天」のひらめきLvが上昇', e2:'ちから+12／かしこさ+12／丈夫さ+12／能力Pt+90\n「星統べる六天」のひらめきLvが上昇', e3:'ちから+14／かしこさ+14／丈夫さ+14／能力Pt+120\n「星統べる六天」のひらめきLvが上昇',
+    cond:'IMaチャンピオンズクラシックで優勝（確率）※星統べる六天シナリオ限定' },
+  { name:'傷だらけのプライド', yomi:'きずだらけのぷらいど', cat:2, pri:15.6,
+    e1:'ライフ+10／命中+10／回避+10／能力Pt+60\n「傷だらけのプライド」のひらめきLvが上昇', e2:'ライフ+12／命中+12／回避+12／能力Pt+90\n「傷だらけのプライド」のひらめきLvが上昇', e3:'ライフ+14／命中+14／回避+14／能力Pt+120\n「傷だらけのプライド」のひらめきLvが上昇',
+    cond:'IMaチャンピオンズクラシックまたはIMa距離チャンピオンズで優勝（確率）※傷だらけのプライドシナリオ限定' },
+  { name:'IMaチャンピオンズC', yomi:'いまちゃんぴおんずしー', cat:2, pri:201,
+    e1:'全ステータス+5\n「ICC」のひらめきLvが上昇', e2:'全ステータス+6\n「ICC」のひらめきLvが上昇', e3:'全ステータス+7\n「ICC」のひらめきLvが上昇',
+    cond:'IMaチャンピオンズクラシックで優勝（確率）※ICC編シナリオ限定' },
+  { name:'炎心のメリッサ', yomi:'えんしんのめりっさ', cat:2, pri:202,
+    e1:'全ステータス+5\n「炎心のメリッサ」のひらめきLvが上昇', e2:'全ステータス+6\n「炎心のメリッサ」のひらめきLvが上昇', e3:'全ステータス+7\n「炎心のメリッサ」のひらめきLvが上昇',
+    cond:'IMaチャンピオンズクラシックで優勝（確率）※炎心のメリッサ編シナリオ限定' },
+  { name:'マンディーの力', yomi:'まんでぃーのちから', cat:1, pri:210,
+    e1:'「マンディーの力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaマンディークラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パレパレの力', yomi:'ぱれぱれのちから', cat:1, pri:211,
+    e1:'「パレパレの力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパレパレクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パパスの力', yomi:'ぱぱすのちから', cat:1, pri:212,
+    e1:'「パパスの力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパパスクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'トーブルの力', yomi:'とーぶるのちから', cat:1, pri:213,
+    e1:'「トーブルの力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaトーブルクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'カウレアの力', yomi:'かうれあのちから', cat:1, pri:214,
+    e1:'「カウレアの力」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaカウレアクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'ミカエル記念', yomi:'みかえるきねん', cat:1, pri:23,
+    e1:'「拳王の誇り（ちから大幅UP）」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'シナリオ「交錯する運命」でミカエル記念を優勝した際に獲得（確率）' },
+  { name:'ガブリエル記念', yomi:'がぶりえるきねん', cat:1, pri:22,
+    e1:'「賢王の誇り（かしこさ大幅UP）」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'シナリオ「交錯する運命」でガブリエル記念を優勝した際に獲得（確率）' },
+  { name:'マンディーの星', yomi:'まんでぃーのほし', cat:1, pri:220,
+    e1:'「マンディーの星」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaマンディークラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'マンディーの速さ', yomi:'まんでぃーのはやさ', cat:1, pri:221,
+    e1:'「マンディーの速さ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaマンディークラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パレパレの星', yomi:'ぱれぱれのほし', cat:1, pri:222,
+    e1:'「パレパレの星」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパレパレクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パレパレの速さ', yomi:'ぱれぱれのはやさ', cat:1, pri:223,
+    e1:'「パレパレの速さ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパレパレクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パパスの星', yomi:'ぱぱすのほし', cat:1, pri:224,
+    e1:'「パパスの星」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパパスクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'パパスの速さ', yomi:'ぱぱすのはやさ', cat:1, pri:225,
+    e1:'「パパスの速さ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaパパスクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'トーブルの星', yomi:'とーぶるのほし', cat:1, pri:226,
+    e1:'「トーブルの星」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaトーブルクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'トーブルの速さ', yomi:'とーぶるのはやさ', cat:1, pri:227,
+    e1:'「トーブルの速さ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaトーブルクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'カウレアの星', yomi:'かうれあのほし', cat:1, pri:228,
+    e1:'「カウレアの星」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaカウレアクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+  { name:'カウレアの速さ', yomi:'かうれあのはやさ', cat:1, pri:229,
+    e1:'「カウレアの速さ」のひらめきLvが上昇', e2:'=', e3:'=',
+    cond:'IMaカウレアクラシックまたはチャンピオンズで優勝（確率）※白と黒の境界線シナリオ限定' },
+
+  // ===== 陣営秘伝 =====
+  { name:'交錯する運命・天', yomi:'こうさくするうんめいてん', cat:3, pri:16,
+    e1:'命中&丈夫さ+4／能力Pt+10／忠誠度上限+3', e2:'命中&丈夫さ+6／能力Pt+20／忠誠度上限+4', e3:'命中&丈夫さ+8／能力Pt+30／忠誠度上限+5',
+    cond:'シナリオ「交錯する運命」で陣営「六天将」を選んでIMaレジェンドファイナル(ILF)を優勝（確率）' },
+  { name:'交錯する運命・星', yomi:'こうさくするうんめいほし', cat:3, pri:17,
+    e1:'ちから&かしこさ+6／能力Pt+10／初期人気&忠誠度+3', e2:'ちから&かしこさ+10／能力Pt+20／初期人気&忠誠度+4', e3:'ちから&かしこさ+12／能力Pt+30／初期人気&忠誠度+5',
+    cond:'シナリオ「交錯する運命」で陣営「ブリードマスターズ」を選んでIMaレジェンドファイナル(ILF)を優勝（確率）' },
+  { name:'交錯する運命・翼', yomi:'こうさくするうんめいつばさ', cat:3, pri:18,
+    e1:'ライフ&回避+4／能力Pt+10／人気上限+3', e2:'ライフ&回避+6／能力Pt+20／人気上限+4', e3:'ライフ&回避+8／能力Pt+30／人気上限+5',
+    cond:'シナリオ「交錯する運命」で陣営「六英雄」を選んでIMaレジェンドファイナル(ILF)を優勝（確率）' },
+  { name:'それぞれの育成論・友人', yomi:'それぞれのいくせいろんゆうじん', cat:3, pri:19,
+    e1:'ライフ+4／命中+4／能力ポイント+10／人気上限UP+3', e2:'ライフ+6／命中+6／能力ポイント+20／人気上限UP+4', e3:'ライフ+8／命中+8／能力ポイント+30／人気上限UP+5',
+    cond:'友人陣営で育成完了時に獲得（確率）' },
+  { name:'それぞれの育成論・好敵', yomi:'それぞれのいくせいろんこうてき', cat:3, pri:20,
+    e1:'かしこさ+8／丈夫さ+8／能力ポイント+10／初期人気+3／初期忠誠+3', e2:'かしこさ+10／丈夫さ+10／能力ポイント+20／初期人気+4／初期忠誠+4', e3:'かしこさ+12／丈夫さ+12／能力ポイント+30／初期人気+5／初期忠誠+5',
+    cond:'ライバル陣営で育成完了時に獲得（確率）' },
+  { name:'それぞれの育成論・師匠', yomi:'それぞれのいくせいろんししょう', cat:3, pri:21,
+    e1:'ちから+4／回避+4／能力ポイント+10／忠誠度上限UP+3', e2:'ちから+6／回避+6／能力ポイント+20／忠誠度上限UP+4', e3:'ちから+8／回避+8／能力ポイント+30／忠誠度上限UP+5',
+    cond:'師匠陣営で育成完了時に獲得（確率）' },
+
+  // ===== ノラモン秘伝 =====
+  { name:'スナイプ', yomi:'すないぷ', cat:4, pri:15,
+    e1:'<a href="hiden.html#img-sunaipu">ストレイロングブリッツ</a>／<a href="hiden.html#img-sunaipu">ストレイゲイルフォイル</a>／<a href="hiden.html#img-sunaipu">ストレイロンググロウ</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'遠距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'グジラキング', yomi:'ぐじらきんぐ', cat:4, pri:12,
+    e1:'<a href="hiden.html#img-gujiraking">ストレイニアグロウ</a>／<a href="hiden.html#img-gujiraking">ストレイニアブリッツ</a>／<a href="hiden.html#img-gujiraking">ストレイフレアフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'近距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'フェニックス', yomi:'ふぇにっくす', cat:4, pri:13,
+    e1:'<a href="hiden.html#img-fenikkusu">ストレイミドルグロウ</a>／<a href="hiden.html#img-fenikkusu">ストレイレンジフォイル</a>／<a href="hiden.html#img-fenikkusu">ストレイミドルブリッツ</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'中距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'マグマハート', yomi:'まぐまはーと', cat:4, pri:14,
+    e1:'<a href="hiden.html#img-magumahaato">ストレイアタックフォイル</a>／<a href="hiden.html#img-magumahaato">ストレイゼログロウ</a>／<a href="hiden.html#img-magumahaato">ストレイゼロブリッツ</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'零距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'プラント', yomi:'ぷらんと', cat:4, pri:81,
+    e1:'<a href="hiden.html#img-puranto">ストレイロングアームド</a>／<a href="hiden.html#img-puranto">ストレイロングゲイル</a>／<a href="hiden.html#img-puranto">ストレイロングフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'遠距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'サンドゴーレム', yomi:'さんどごーれむ', cat:4, pri:23.6,
+    e1:'<a href="hiden.html#img-sandogoremu">ストレイゼロブーム</a>／<a href="hiden.html#img-sandogoremu">ストレイゼロフォース</a>／<a href="hiden.html#img-sandogoremu">ストレイエイムフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'零距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'ディノ', yomi:'でぃの', cat:4, pri:83,
+    e1:'<a href="hiden.html#img-dino">ストレイミドルアームド</a>／<a href="hiden.html#img-dino">ストレイミドルゲイル</a>／<a href="hiden.html#img-dino">ストレイミドルフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'中距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'スピナー', yomi:'すぴなー', cat:4, pri:23.8,
+    e1:'<a href="hiden.html#img-supinaa">ストレイロングブーム</a>／<a href="hiden.html#img-supinaa">ストレイロングフォース</a>／<a href="hiden.html#img-supinaa">ストレイアームドフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'遠距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'ニャー', yomi:'にゃー', cat:4, pri:85,
+    e1:'<a href="hiden.html#img-nyaa">ストレイゼロアームド</a>／<a href="hiden.html#img-nyaa">ストレイゼロゲイル</a>／<a href="hiden.html#img-nyaa">ストレイゼロフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'零距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'カムイ', yomi:'かむい', cat:4, pri:23.4,
+    e1:'<a href="hiden.html#img-kamui">ストレイミドルチェイス</a>／<a href="hiden.html#img-kamui">ストレイミドルフォース</a>／<a href="hiden.html#img-kamui">ストレイプレイスフォイル</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'中距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'ハム', yomi:'はむ', cat:4, pri:87,
+    e1:'<a href="hiden.html#img-hamu">ストレイニアゲイル</a>／<a href="hiden.html#img-hamu">ストレイブリッツフォイル</a>／<a href="hiden.html#img-hamu">ストレイニアアームド</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'近距離の修行で遭遇時、撃破で確率で抽選' },
+  { name:'ムネンド', yomi:'むねんど', cat:4, pri:23.2,
+    e1:'<a href="hiden.html#img-munendo">ストレイニアチェイス</a>／<a href="hiden.html#img-munendo">ストレイアクセルフォイル</a>／<a href="hiden.html#img-munendo">ストレイニアフォース</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'近距離の修行で遭遇時、撃破で確率で抽選' },
+
+  // ===== ボスモン秘伝 =====
+  { name:'ヒノトリ', yomi:'ひのとり', cat:5, pri:159,
+    e1:'<a href="hiden.html#img-hinotori">レネゲイドマイティ</a>または<a href="hiden.html#img-hinotori">レネゲイドカウンター</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'零距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+  { name:'キジン', yomi:'きじん', cat:5, pri:160,
+    e1:'<a href="hiden.html#img-kijin">レネゲイドリネージ</a>または<a href="hiden.html#img-kijin">レネゲイドカース</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'近距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+  { name:'イブリース', yomi:'いぶりーす', cat:5, pri:161,
+    e1:'<a href="hiden.html#img-iburiisu">レネゲイドエレメンタル</a>または<a href="hiden.html#img-iburiisu">レネゲイドブーム</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'近距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+  { name:'ムー', yomi:'むー', cat:5, pri:162,
+    e1:'<a href="hiden.html#img-muu">レネゲイドコンバート</a>または<a href="hiden.html#img-muu">レネゲイドブロック</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'中距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+  { name:'イルミネ', yomi:'いるみね', cat:5, pri:163,
+    e1:'<a href="hiden.html#img-irumine">レネゲイドチェイス</a>または<a href="hiden.html#img-irumine">レネゲイドフリッチ</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'中距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+  { name:'ハクタク', yomi:'はくたく', cat:5, pri:164,
+    e1:'<a href="hiden.html#img-hakutaku">レネゲイドリジェクト</a>または<a href="hiden.html#img-hakutaku">レネゲイドディケイ</a>のひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'遠距離の修行中にノラモンを撃破した際、確率でボスモンと遭遇。撃破で獲得抽選。' },
+
+  // ===== ノラモン秘伝（シロゾー） =====
+  { name:'シロゾー', yomi:'しろぞー', cat:4, pri:23.9,
+    e1:'<a href="hiden.html#img-sirozo">ストレイフィクスブリッツ</a>／<a href="hiden.html#img-sirozo">ストレイアンフリンチ</a>／<a href="hiden.html#img-sirozo">ストレイエピックパージ</a>のうちいずれかのひらめきLvがランダムで上昇', e2:'=', e3:'=',
+    cond:'全距離の修行で遭遇時、撃破で確率で抽選' },
+
+  // ===== EX秘伝 =====
+  { name:'育成論', note:'伝授時に①②③のうち2つがランダムで発動する', yomi:'いくせいろん', cat:6, pri:88,
+    e1:'①ライフ/命中/回避+3　②能力Pt+10　③初期忠誠度+1', e2:'①ライフ/命中/回避+5　②能力Pt+20　③初期忠誠度+1', e3:'①ライフ/命中/回避+7　②能力Pt+30　③初期忠誠度+1',
+    cond:'調査中' },
+  { name:'六天将', note:'伝授時に①②③のうち2つがランダムで発動する', yomi:'ろくてんしょう', cat:6, pri:89,
+    e1:'ライフ+3／命中+3／回避+3／能力Pt+10', e2:'ライフ+5／命中+5／回避+5／能力Pt+20', e3:'ライフ+7／命中+7／回避+7／能力Pt+30',
+    cond:'シナリオ「星統べる六天」でEXトレーニングを育成中に実施することで獲得（確率）' },
+  { name:'天星翼', note:'伝授時に①②③のうち2つがランダムで発動する', yomi:'てんせいよく', cat:6, pri:90,
+    e1:'ちから&かしこさ&丈夫さ+3／能力Pt+10', e2:'ちから&かしこさ&丈夫さ+5／能力Pt+20', e3:'ちから&かしこさ&丈夫さ+7／能力Pt+30',
+    cond:'シナリオ「交錯する運命」でEXトレーニングを育成中に実施することで獲得（確率）' },
+
+  // ===== モン類秘伝 =====
+  { name:'モン類秘伝（全6種）', note:'獣族・魔族・幻霊・創造・無機・怪物の6種。それぞれ対応するモン類の経験値獲得量がアップするようすを習得できる。', yomi:'もんるいひでん', cat:7, pri:91,
+    e1:'★の合計数が一定以上で対応するモン類の経験値獲得量がアップするようす「モン類秘伝Lv～」を習得できる', e2:'=', e3:'=',
+    cond:'モン類Lv10以上で獲得抽選。15以上で★3抽選発生。確率は低め。' },
+
+  // ===== ソロモン秘伝 =====
+  { name:'ソロモン秘伝', yomi:'そろもんひでん', cat:8, pri:97,
+    e1:'対応する月のソロモンクエストで効果を発揮する。★の合計数が多いほど伝授発生時の強化枚数が2枚になる確率がアップ（推定）。★1以上で伝授自体は確定。', e2:'=', e3:'=',
+    cond:'月始めから獲得可能で、ソロモンクエスト期間中に獲得率が上昇。★5のボーナスモンスター育成完了時、50%近い確率で★3が付くが、ボーナスモンスターの★が4以下なら★3は体感10%前後。ソロモン秘伝の親は全員★5にできるイベント配布モンスターを選ぼう。' },
+
+  // ===== ステータス秘伝 =====
+  { name:'ステータス秘伝（全6種）', note:'ちから・かしこさ・ライフ・命中・回避・丈夫さの6種。それぞれ対応するステータスが上昇する。', yomi:'すてーたすひでん', cat:9, pri:110,
+    e1:'対応するステータス+10', e2:'対応するステータス+20', e3:'対応するステータス+30',
+    cond:'育成終了時に抽選で付与。全ステータス900以上で★2以上が確定。900未満のステータスが抽選で選ばれると★1になる可能性あり。' },
+
+  // ===== 適性秘伝 =====
+  { name:'近距離適性', yomi:'きんきょりてきせい', cat:10, pri:55.61, priCat:120,
+    e1:'近距離適性の上昇値に影響する（小）', e2:'近距離適性の上昇値に影響する（中）', e3:'近距離適性の上昇値に影響する（大）',
+    cond:'近距離適性をBランク以上にして育成完了' },
+  { name:'中距離適性', yomi:'ちゅうきょりてきせい', cat:10, pri:55.63, priCat:121,
+    e1:'中距離適性の上昇値に影響する（小）', e2:'中距離適性の上昇値に影響する（中）', e3:'中距離適性の上昇値に影響する（大）',
+    cond:'中距離適性をBランク以上にして育成完了' },
+  { name:'遠距離適性', yomi:'えんきょりてきせい', cat:10, pri:55.65, priCat:122,
+    e1:'遠距離適性の上昇値に影響する（小）', e2:'遠距離適性の上昇値に影響する（中）', e3:'遠距離適性の上昇値に影響する（大）',
+    cond:'遠距離適性をBランク以上にして育成完了' },
+  { name:'零距離適性', yomi:'ぜろきょりてきせい', cat:10, pri:55.67, priCat:123,
+    e1:'零距離適性の上昇値に影響する（小）', e2:'零距離適性の上昇値に影響する（中）', e3:'零距離適性の上昇値に影響する（大）',
+    cond:'零距離適性をBランク以上にして育成完了' },
+  { name:'雪山適性', yomi:'ゆきやまてきせい', cat:10, pri:55.70, priCat:124,
+    e1:'雪山適性の上昇値に影響する（小）', e2:'雪山適性の上昇値に影響する（中）', e3:'雪山適性の上昇値に影響する（大）',
+    cond:'雪山適性をBランク以上にして育成完了' },
+  { name:'砂漠適性', yomi:'さばくてきせい', cat:10, pri:55.72, priCat:125,
+    e1:'砂漠適性の上昇値に影響する（小）', e2:'砂漠適性の上昇値に影響する（中）', e3:'砂漠適性の上昇値に影響する（大）',
+    cond:'砂漠適性をBランク以上にして育成完了' },
+  { name:'火山適性', yomi:'かざんてきせい', cat:10, pri:55.74, priCat:126,
+    e1:'火山適性の上昇値に影響する（小）', e2:'火山適性の上昇値に影響する（中）', e3:'火山適性の上昇値に影響する（大）',
+    cond:'火山適性をBランク以上にして育成完了' },
+  { name:'森林適性', yomi:'しんりんてきせい', cat:10, pri:55.76, priCat:127,
+    e1:'森林適性の上昇値に影響する（小）', e2:'森林適性の上昇値に影響する（中）', e3:'森林適性の上昇値に影響する（大）',
+    cond:'森林適性をBランク以上にして育成完了' },
+  { name:'海岸適性', yomi:'かいがんてきせい', cat:10, pri:55.78, priCat:128,
+    e1:'海岸適性の上昇値に影響する（小）', e2:'海岸適性の上昇値に影響する（中）', e3:'海岸適性の上昇値に影響する（大）',
+    cond:'海岸適性をBランク以上にして育成完了' },
+
+  // ===== 技秘伝 =====
+  { name:'近・中・遠・零距離技（無印）', note:'近距離技・中距離技・遠距離技・零距離技の4種', yomi:'きんちゅうえんぜろきょりわざ', cat:11, pri:130,
+    e1:'技の初期習得および「距離技センス」の習得に影響する（小）', e2:'技の初期習得および「距離技センス」の習得に影響する（中）', e3:'技の初期習得および「距離技センス」の習得に影響する（大）',
+    cond:'育成中の技習得数が少ない場合に獲得（確率）' },
+  { name:'全色距離技（近/中/遠/零）', note:'赤・青・緑・黄・白・黒の6色×4距離、計24種。すべて同じ効果。', yomi:'ぜんしょくきょりわざ', cat:11, pri:132,
+    e1:'技の初期習得および「距離技センス」の習得に影響する（小）', e2:'技の初期習得および「距離技センス」の習得に影響する（中）', e3:'技の初期習得および「距離技センス」の習得に影響する（大）',
+    cond:'育成中に技を多く習得した場合に獲得（確率）' },
+];
+
+function exp(h, field) {
+  const v = h[field];
+  return v === '=' ? h.e1 : v;
+}
+function nb(s) { return s.replace(/\n/g,'<br>'); }
+
+let currentSort = 'cat';
+let currentSearch = '';
+
+function matches(h, q) {
+  return [h.name, h.e1, exp(h,'e2'), exp(h,'e3'), h.cond, h.note||'', CATS[h.cat]].join(' ').toLowerCase().includes(q);
+}
+
+function render() {
+  const body = document.getElementById('htBody');
+  const q = currentSearch.toLowerCase();
+  let list = H.filter(h => !q || matches(h, q));
+
+  if (currentSort === 'yomi') {
+    list = [...list].sort((a,b) => a.yomi.localeCompare(b.yomi, 'ja'));
+  } else if (currentSort === 'priority') {
+    list = [...list].sort((a,b) => a.pri - b.pri);
+  } else {
+    list = [...list].sort((a,b) => a.cat !== b.cat ? a.cat - b.cat : (a.priCat??a.pri) - (b.priCat??b.pri));
+  }
+
+  const displayList = currentSort === 'priority' ? list : list.filter(h => !h.sep);
+  document.getElementById('countLabel').textContent = displayList.filter(h => !h.sep).length + '件 表示中';
+
+  let html = '';
+  let lastCat = -1;
+  for (const h of displayList) {
+    if (h.sep) {
+      html += `<tr><td colspan="5" style="text-align:center;color:#aaa;font-size:12px;padding:6px;border-bottom:2px dashed #ddd;">── ${h.text} ──</td></tr>`;
+      continue;
+    }
+    if (currentSort === 'cat' && h.cat !== lastCat) {
+      html += `<tr class="cat-hd"><td colspan="5">▌ ${CATS[h.cat]}</td></tr>`;
+      lastCat = h.cat;
+    }
+    const e2 = exp(h,'e2'), e3 = exp(h,'e3');
+    html += `<tr>
+      <td>${h.name}${h.note ? `<div class="entry-note">${h.note}</div>` : ''}</td>
+      <td>${nb(h.e1)}</td>
+      <td>${nb(e2)}</td>
+      <td>${nb(e3)}</td>
+      <td class="cond-cell">${h.cond}</td>
+    </tr>`;
+  }
+  body.innerHTML = html;
+}
+
+document.querySelector('.sort-bar').addEventListener('click', e => {
+  const btn = e.target.closest('.sort-btn');
+  if (!btn) return;
+  document.querySelectorAll('.sort-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  currentSort = btn.dataset.sort;
+  render();
+});
+
+document.getElementById('searchBox').addEventListener('input', e => {
+  currentSearch = e.target.value;
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>

@@ -15,9 +15,9 @@
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | シュシュポッポ |
-| monsters-data.js 末尾インデックス | **333**（配列の要素数334、0始まりなので末尾=333） |
-| index.html のリンク | `monsters/monster.html?id=333` |
+| ピックアップモンスター | ニャハト（新）・シュシュポッポ（継続） |
+| monsters-data.js 末尾インデックス | **334**（配列の要素数335、0始まりなので末尾=334） |
+| index.html のリンク | `monsters/monster.html?id=334`（ニャハト）・`monsters/monster.html?id=333`（シュシュポッポ） |
 | ピックアップカード | エスエル |
 | カードID | `f18l-MR-esueru` |
 | index.html のリンク | `cards/card.html#f18l-MR-esueru` |

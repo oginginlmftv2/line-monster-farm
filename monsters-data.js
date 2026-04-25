@@ -335,4 +335,5 @@ const monstersData = [
   { name: 'モッチー', aura: '赤', limited: false, limitedLabel: '', gwImg: 1, localImg: null, mon: '幻霊', mainMon: 'モッチー', subMon: 'モッチー' },
   { name: 'アスファール', aura: '黒', limited: false, limitedLabel: '', gwImg: 333, localImg: 'S__94371854.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'ナーガ' },
   { name: 'シュシュポッポ', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__71286791_0.jpg', mon: '無機', mainMon: 'ゴーレム', subMon: 'レアモン' },
+  { name: 'ニャハト', aura: '黒', limited: true, limitedLabel: 'GW限定', gwImg: null, localImg: 'S__107036676.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'ノーブル' },
 ];

@@ -58,6 +58,10 @@
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
   <h1 class="page-title">📜 秘伝周回 完全ガイド</h1>
 
+  <div class="info-box">
+    全秘伝の効果・付与条件は→ <a href="hiden-kouka.html" style="color:#f0a500;font-weight:bold;">秘伝効果一覧</a> で確認できます。
+  </div>
+
   <div class="toc">
     <div class="toc-title">📋 目次</div>
     <ol>
@@ -380,6 +384,10 @@
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       }
       .divider { border: none; border-top: 1px solid #f0f0f0; margin: 12px 0; }
+      .monster-img-grid img:target {
+        outline: 3px solid #f0a500;
+        border-radius: 8px;
+      }
     </style>
 
     <!-- 零距離 -->
@@ -388,14 +396,14 @@
       <div class="distance-block-body">
         <p class="monster-category-label">ボスモン（創造）</p>
         <div class="monster-img-grid bossmon">
-          <img src="../hiden-monsters/zerokyori-bossmon-hinotori.jpg" alt="ヒノトリ">
+          <img id="img-hinotori" src="../hiden-monsters/zerokyori-bossmon-hinotori.jpg" alt="ヒノトリ">
         </div>
         <hr class="divider">
         <p class="monster-category-label">ノラモン</p>
         <div class="monster-img-grid">
-          <img src="../hiden-monsters/zerokyori-noramon-magumahaato.jpg" alt="マグマハート">
-          <img src="../hiden-monsters/zerokyori-noramon-sandogoremu.jpg" alt="サンドゴレム">
-          <img src="../hiden-monsters/zerokyori-noramon-nyaa.jpg" alt="ニャー">
+          <img id="img-magumahaato" src="../hiden-monsters/zerokyori-noramon-magumahaato.jpg" alt="マグマハート">
+          <img id="img-sandogoremu" src="../hiden-monsters/zerokyori-noramon-sandogoremu.jpg" alt="サンドゴレム">
+          <img id="img-nyaa" src="../hiden-monsters/zerokyori-noramon-nyaa.jpg" alt="ニャー">
         </div>
       </div>
     </div>
@@ -406,15 +414,15 @@
       <div class="distance-block-body">
         <p class="monster-category-label">ボスモン（怪物・幻霊）</p>
         <div class="monster-img-grid bossmon">
-          <img src="../hiden-monsters/kinkyori-bossmon-kijin.jpg" alt="キジン">
-          <img src="../hiden-monsters/kinkyori-bossmon-iburiisu.jpg" alt="イブリース">
+          <img id="img-kijin" src="../hiden-monsters/kinkyori-bossmon-kijin.jpg" alt="キジン">
+          <img id="img-iburiisu" src="../hiden-monsters/kinkyori-bossmon-iburiisu.jpg" alt="イブリース">
         </div>
         <hr class="divider">
         <p class="monster-category-label">ノラモン</p>
         <div class="monster-img-grid">
-          <img src="../hiden-monsters/kinkyori-noramon-gujiraking.jpg" alt="グジラキング">
-          <img src="../hiden-monsters/kinkyori-noramon-munendo.jpg" alt="ムネンド">
-          <img src="../hiden-monsters/kinkyori-noramon-hamu.jpg" alt="ハム">
+          <img id="img-gujiraking" src="../hiden-monsters/kinkyori-noramon-gujiraking.jpg" alt="グジラキング">
+          <img id="img-munendo" src="../hiden-monsters/kinkyori-noramon-munendo.jpg" alt="ムネンド">
+          <img id="img-hamu" src="../hiden-monsters/kinkyori-noramon-hamu.jpg" alt="ハム">
         </div>
       </div>
     </div>
@@ -425,15 +433,15 @@
       <div class="distance-block-body">
         <p class="monster-category-label">ボスモン（魔族・無機）</p>
         <div class="monster-img-grid bossmon">
-          <img src="../hiden-monsters/tyukyori-bossmon-muu.jpg" alt="ムー">
-          <img src="../hiden-monsters/tyukyori-bossmon-irumine.jpg" alt="イルミネ">
+          <img id="img-muu" src="../hiden-monsters/tyukyori-bossmon-muu.jpg" alt="ムー">
+          <img id="img-irumine" src="../hiden-monsters/tyukyori-bossmon-irumine.jpg" alt="イルミネ">
         </div>
         <hr class="divider">
         <p class="monster-category-label">ノラモン</p>
         <div class="monster-img-grid">
-          <img src="../hiden-monsters/tyukyori-noramon-fenikkusu.jpg" alt="フェニックス">
-          <img src="../hiden-monsters/tyukyori-noramon-kamui.jpg" alt="カムイ">
-          <img src="../hiden-monsters/tyukyori-noramon-dino.jpg" alt="ディノ">
+          <img id="img-fenikkusu" src="../hiden-monsters/tyukyori-noramon-fenikkusu.jpg" alt="フェニックス">
+          <img id="img-kamui" src="../hiden-monsters/tyukyori-noramon-kamui.jpg" alt="カムイ">
+          <img id="img-dino" src="../hiden-monsters/tyukyori-noramon-dino.jpg" alt="ディノ">
         </div>
       </div>
     </div>
@@ -444,14 +452,14 @@
       <div class="distance-block-body">
         <p class="monster-category-label">ボスモン（獣）</p>
         <div class="monster-img-grid bossmon">
-          <img src="../hiden-monsters/enkyori-bossmon-hakutaku.jpg" alt="ハクタク">
+          <img id="img-hakutaku" src="../hiden-monsters/enkyori-bossmon-hakutaku.jpg" alt="ハクタク">
         </div>
         <hr class="divider">
         <p class="monster-category-label">ノラモン</p>
         <div class="monster-img-grid">
-          <img src="../hiden-monsters/enkyori-noramon-sunaipu.jpg" alt="スナイプ">
-          <img src="../hiden-monsters/enkyori-noramon-supinaa.jpg" alt="スピナー">
-          <img src="../hiden-monsters/enkyori-noramon-puranto.jpg" alt="プラント">
+          <img id="img-sunaipu" src="../hiden-monsters/enkyori-noramon-sunaipu.jpg" alt="スナイプ">
+          <img id="img-supinaa" src="../hiden-monsters/enkyori-noramon-supinaa.jpg" alt="スピナー">
+          <img id="img-puranto" src="../hiden-monsters/enkyori-noramon-puranto.jpg" alt="プラント">
         </div>
       </div>
     </div>
@@ -462,7 +470,7 @@
       <div class="distance-block-body">
         <p class="monster-category-label">ノラモン</p>
         <div class="monster-img-grid bossmon">
-          <img src="../hiden-monsters/donokyoridemoderureawaku-noramon-sirozo.jpg" alt="シロゾー">
+          <img id="img-sirozo" src="../hiden-monsters/donokyoridemoderureawaku-noramon-sirozo.jpg" alt="シロゾー">
         </div>
       </div>
     </div>
