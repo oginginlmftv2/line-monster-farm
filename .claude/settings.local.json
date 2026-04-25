@@ -11,7 +11,12 @@
       "mcp__Claude_in_Chrome__tabs_context_mcp",
       "Bash(python -c \"import sys; data=sys.stdin.read\\(\\); print\\(data[-5000:]\\)\")",
       "Bash(powershell -Command \"Get-Content 'C:\\\\Users\\\\KCE\\\\.claude\\\\projects\\\\C--Users-KCE-Desktop-LINE-------------\\\\94f77c59-7c66-45ac-bfbe-69e44aa38708.jsonl' -Tail 50 | Select-String 'content|text' | Select-Object -Last 30\")",
-      "PowerShell(Get-Content 'C:\\\\Users\\\\KCE\\\\.claude\\\\projects\\\\C--Users-KCE-Desktop-LINE-------------\\\\94f77c59-7c66-45ac-bfbe-69e44aa38708.jsonl' -Tail 20 | ForEach-Object { $_.Substring\\(0, [Math]::Min\\(500, $_.Length\\)\\) })"
+      "PowerShell(Get-Content 'C:\\\\Users\\\\KCE\\\\.claude\\\\projects\\\\C--Users-KCE-Desktop-LINE-------------\\\\94f77c59-7c66-45ac-bfbe-69e44aa38708.jsonl' -Tail 20 | ForEach-Object { $_.Substring\\(0, [Math]::Min\\(500, $_.Length\\)\\) })",
+      "Read(//c/Users/KCE/**)",
+      "PowerShell(pip install pandas openpyxl -q)",
+      "PowerShell(Out-File -Encoding utf8 \"C:\\\\Users\\\\KCE\\\\Downloads\\\\sheet1.txt\")",
+      "Bash(python3 -c ' *)",
+      "PowerShell(\\(Get-Content \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\ability-search.html\"\\).Count)"
     ]
   }
 }
