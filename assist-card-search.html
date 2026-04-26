@@ -93,6 +93,85 @@
     .filter-select:focus { border-color: #f0a500; }
     .filter-select.active { border-color: #1a1a2e; background: #1a1a2e; color: #fff; }
 
+    .multi-container { position: relative; flex: 1; max-width: calc(100% - 70px); }
+    .multi-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      color: #555;
+      user-select: none;
+      width: 100%;
+      box-sizing: border-box;
+      transition: all 0.15s;
+    }
+    .multi-toggle.has-selection { border-color: #1a1a2e; background: #1a1a2e; color: #fff; }
+    .multi-summary { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .multi-panel {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      min-width: 300px;
+      max-height: 300px;
+      overflow-y: auto;
+      background: #fff;
+      border: 1.5px solid #ddd;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.14);
+      z-index: 200;
+      padding: 8px;
+    }
+    .mode-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f0f0f0;
+      flex-wrap: wrap;
+    }
+    .mode-label { font-size: 11px; color: #888; }
+    .mode-btn {
+      font-size: 11px;
+      font-weight: bold;
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1.5px solid #ddd;
+      background: #f9f9f9;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mode-btn.active { background: #1a1a2e; border-color: #1a1a2e; color: #fff; }
+    .mode-clear {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 12px;
+      border: 1.5px solid #f88;
+      background: #fff;
+      color: #c00;
+      cursor: pointer;
+    }
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 6px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      color: #444;
+    }
+    .check-item:hover { background: #f5f5f5; }
+    .check-item input[type=checkbox] { cursor: pointer; accent-color: #1a1a2e; }
+
     .scope-row {
       display: flex;
       align-items: center;
@@ -341,61 +420,41 @@
     <!-- オーラ効果 -->
     <div class="filter-row">
       <span class="filter-label">オーラ効果：</span>
-      <select class="filter-select" id="filter-oura-effect" onchange="setSelectFilter('oura_effect', this)">
-        <option value="all">すべて</option>
-        <option>オーラトレ効果アップ</option>
-        <option>オーラトレ経験値アップ</option>
-        <option>オーラトレ集合率アップ</option>
-        <option>オーラトレブースト</option>
-        <option>オーラトレ出現アップ</option>
-        <option>オーラトレ忠誠度効果アップ</option>
-        <option>オーラEXトレパワーアップ</option>
-        <option>オーラブリーダー</option>
-        <option>オーラ修行</option>
-        <option>オーラステブースト</option>
-        <option>オーラステ上限ブースト</option>
-        <option>オーラステータスボーナス</option>
-        <option>オーラ基礎ステータス上限アップ</option>
-        <option>オーラ初期ステアップ</option>
-        <option>オーラ素質アップ</option>
-        <option>オーラモン類ブースト</option>
-        <option>オーラモン類Lvブースト</option>
-        <option>オーラピークターンアップ</option>
-        <option>オーラ適正アップ</option>
-        <option>オーラ忠誠度効果アップ</option>
-        <option>オーラ人気度効果アップ</option>
-        <option>オーラ賞金アップ</option>
-        <option>オーラ大会ご褒美アップ</option>
-        <option>オーラ大会後ご褒美アップ</option>
-        <option>オーラ大会サポート</option>
-        <option>オーラ大会賞金効果アップ</option>
-        <option>オーラ集合率アップ</option>
-        <option>オーラ名声開放</option>
-        <option>オーラワイルド</option>
-        <option>オーラあそぶ回数アップ</option>
-        <option>オーラチョコを添えて</option>
-        <option>オーラ追加トレボーナス</option>
-      </select>
+      <div class="multi-container" id="oura-container">
+        <div class="multi-toggle" id="oura-toggle" onclick="toggleMulti('oura', event)">
+          <span class="multi-summary" id="oura-summary">すべて</span>
+          <span>▼</span>
+        </div>
+        <div class="multi-panel" id="oura-panel" style="display:none">
+          <div class="mode-row">
+            <span class="mode-label">一致条件：</span>
+            <button class="mode-btn active" id="oura-or" onclick="setMode('oura','or',this)">いずれか(OR)</button>
+            <button class="mode-btn" id="oura-and" onclick="setMode('oura','and',this)">すべて(AND)</button>
+            <button class="mode-clear" onclick="clearMulti('oura')">クリア</button>
+          </div>
+          <div class="check-list" id="oura-checks"></div>
+        </div>
+      </div>
     </div>
 
     <!-- モン類効果 -->
     <div class="filter-row">
       <span class="filter-label">モン類効果：</span>
-      <select class="filter-select" id="filter-montype-effect" onchange="setSelectFilter('montype_effect', this)">
-        <option value="all">すべて</option>
-        <option>モン類ブリーダー</option>
-        <option>モン類EXトレブースト</option>
-        <option>モン類トレ共鳴</option>
-        <option>モン類ボーナス</option>
-        <option>モン類強化</option>
-        <option>モン類上限解放</option>
-        <option>モン類超修行</option>
-        <option>モン類素質共鳴</option>
-        <option>モン類技習得効果アップ</option>
-        <option>モン類忠誠度効果アップ</option>
-        <option>モン類編成ボーナス</option>
-        <option>モン類名声ボーナス</option>
-      </select>
+      <div class="multi-container" id="montype-container">
+        <div class="multi-toggle" id="montype-toggle" onclick="toggleMulti('montype', event)">
+          <span class="multi-summary" id="montype-summary">すべて</span>
+          <span>▼</span>
+        </div>
+        <div class="multi-panel" id="montype-panel" style="display:none">
+          <div class="mode-row">
+            <span class="mode-label">一致条件：</span>
+            <button class="mode-btn active" id="montype-or" onclick="setMode('montype','or',this)">いずれか(OR)</button>
+            <button class="mode-btn" id="montype-and" onclick="setMode('montype','and',this)">すべて(AND)</button>
+            <button class="mode-clear" onclick="clearMulti('montype')">クリア</button>
+          </div>
+          <div class="check-list" id="montype-checks"></div>
+        </div>
+      </div>
     </div>
 
     <!-- 血統効果 -->
@@ -446,8 +505,74 @@ function getCardId(c) {
   return CARD_LOOKUP[name + '_' + rarity] || null;
 }
 
-const FILTERS = { kind: 'all', rarity: 'all', montype: 'all', tokui: 'all', oura_effect: 'all', montype_effect: 'all', bloodline_effect: 'all' };
+const FILTERS = { kind: 'all', rarity: 'all', montype: 'all', tokui: 'all', bloodline_effect: 'all' };
 const SCOPES = { assist: true, totsu: true, noryoku: false, event: false, name: false };
+
+const OURA_OPTS = ['オーラトレ効果アップ','オーラトレ経験値アップ','オーラトレ集合率アップ','オーラトレブースト','オーラトレ出現アップ','オーラトレ忠誠度効果アップ','オーラEXトレパワーアップ','オーラブリーダー','オーラ修行','オーラステブースト','オーラステ上限ブースト','オーラステータスボーナス','オーラ基礎ステータス上限アップ','オーラ初期ステアップ','オーラ素質アップ','オーラモン類ブースト','オーラモン類Lvブースト','オーラピークターンアップ','オーラ適正アップ','オーラ忠誠度効果アップ','オーラ人気度効果アップ','オーラ賞金アップ','オーラ大会ご褒美アップ','オーラ大会後ご褒美アップ','オーラ大会サポート','オーラ大会賞金効果アップ','オーラ集合率アップ','オーラ名声開放','オーラワイルド','オーラあそぶ回数アップ','オーラチョコを添えて','オーラ追加トレボーナス'];
+const MONTYPE_OPTS = ['モン類ブリーダー','モン類EXトレブースト','モン類トレ共鳴','モン類ボーナス','モン類強化','モン類上限解放','モン類超修行','モン類素質共鳴','モン類技習得効果アップ','モン類忠誠度効果アップ','モン類編成ボーナス','モン類名声ボーナス'];
+
+const MULTI = {
+  oura:    { opts: OURA_OPTS,    selected: new Set(), mode: 'or' },
+  montype: { opts: MONTYPE_OPTS, selected: new Set(), mode: 'or' }
+};
+
+function buildMultiSelects() {
+  ['oura','montype'].forEach(key => {
+    const wrap = document.getElementById(key + '-checks');
+    MULTI[key].opts.forEach(opt => {
+      const label = document.createElement('label');
+      label.className = 'check-item';
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.value = opt;
+      cb.onchange = () => {
+        if (cb.checked) MULTI[key].selected.add(opt);
+        else MULTI[key].selected.delete(opt);
+        updateMultiToggle(key);
+        render();
+      };
+      label.appendChild(cb);
+      label.appendChild(document.createTextNode(opt));
+      wrap.appendChild(label);
+    });
+  });
+}
+
+function toggleMulti(key, e) {
+  e && e.stopPropagation();
+  const panel = document.getElementById(key + '-panel');
+  const isOpen = panel.style.display !== 'none';
+  document.querySelectorAll('.multi-panel').forEach(p => p.style.display = 'none');
+  if (!isOpen) panel.style.display = 'block';
+}
+
+function setMode(key, mode, btn) {
+  MULTI[key].mode = mode;
+  btn.closest('.mode-row').querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  if (MULTI[key].selected.size > 0) render();
+}
+
+function clearMulti(key) {
+  MULTI[key].selected.clear();
+  document.querySelectorAll('#' + key + '-checks input').forEach(cb => cb.checked = false);
+  updateMultiToggle(key);
+  render();
+}
+
+function updateMultiToggle(key) {
+  const toggle = document.getElementById(key + '-toggle');
+  const summary = document.getElementById(key + '-summary');
+  const sel = MULTI[key].selected;
+  if (sel.size === 0) {
+    toggle.classList.remove('has-selection');
+    summary.textContent = 'すべて';
+  } else {
+    toggle.classList.add('has-selection');
+    const arr = [...sel];
+    summary.textContent = arr.slice(0,2).join('・') + (arr.length > 2 ? ` 他${arr.length - 2}件` : '');
+  }
+}
 
 // 得意トレボタン生成
 function buildTokuiButtons() {
@@ -483,6 +608,12 @@ function setSelectFilter(type, sel) {
   render();
 }
 
+document.addEventListener('click', e => {
+  if (!e.target.closest('.multi-container')) {
+    document.querySelectorAll('.multi-panel').forEach(p => p.style.display = 'none');
+  }
+});
+
 function toggleScope(key) {
   SCOPES[key] = !SCOPES[key];
   document.getElementById('scope-' + key).classList.toggle('on', SCOPES[key]);
@@ -496,10 +627,10 @@ function clearAll() {
     const isAll = b.dataset.kind === 'all' || b.dataset.rarity === 'all' || b.dataset.montype === 'all' || b.dataset.tokui === 'all';
     b.classList.toggle('active', isAll);
   });
-  ['filter-oura-effect','filter-montype-effect','filter-bloodline-effect'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.value = 'all'; el.classList.remove('active'); }
-  });
+  const bel = document.getElementById('filter-bloodline-effect');
+  if (bel) { bel.value = 'all'; bel.classList.remove('active'); }
+  clearMulti('oura');
+  clearMulti('montype');
   render();
 }
 
@@ -552,7 +683,7 @@ function matchesKeyword(c, kws) {
   }
   const haystack = fields.join(' ');
   const matchedKws = kws.filter(kw => haystack.includes(kw));
-  return { matched: matchedKws.length === kws.length, kws: matchedKws };
+  return { matched: matchedKws.length > 0, kws: matchedKws };
 }
 
 function render() {
@@ -565,23 +696,30 @@ function render() {
     if (FILTERS.rarity !== 'all' && rar !== FILTERS.rarity) return false;
     if (FILTERS.montype !== 'all' && (c['モン類'] || '') !== FILTERS.montype) return false;
     if (FILTERS.tokui !== 'all' && (c['得意トレ'] || '') !== FILTERS.tokui) return false;
-    if (FILTERS.oura_effect !== 'all' || FILTERS.montype_effect !== 'all' || FILTERS.bloodline_effect !== 'all') {
-      const effectText = [
-        ...getAssists(c),
-        ...getTotsu(c).map(x => x.val)
-      ].join(' ');
-      if (FILTERS.oura_effect !== 'all' && !effectText.includes(FILTERS.oura_effect)) return false;
-      if (FILTERS.montype_effect !== 'all' && !effectText.includes(FILTERS.montype_effect)) return false;
-      if (FILTERS.bloodline_effect !== 'all' && !effectText.includes(FILTERS.bloodline_effect)) return false;
+    const effectText = [...getAssists(c), ...getTotsu(c).map(x => x.val)].join(' ');
+    const ouraSel = MULTI.oura.selected;
+    if (ouraSel.size > 0) {
+      const ok = MULTI.oura.mode === 'and'
+        ? [...ouraSel].every(kw => effectText.includes(kw))
+        : [...ouraSel].some(kw => effectText.includes(kw));
+      if (!ok) return false;
     }
+    const montypeSel = MULTI.montype.selected;
+    if (montypeSel.size > 0) {
+      const ok = MULTI.montype.mode === 'and'
+        ? [...montypeSel].every(kw => effectText.includes(kw))
+        : [...montypeSel].some(kw => effectText.includes(kw));
+      if (!ok) return false;
+    }
+    if (FILTERS.bloodline_effect !== 'all' && !effectText.includes(FILTERS.bloodline_effect)) return false;
     const { matched } = matchesKeyword(c, kws);
     return matched;
   });
 
   const summary = document.getElementById('resultSummary');
-  summary.textContent = kws.length > 0 || Object.values(FILTERS).some(v => v !== 'all')
-    ? `${filtered.length} 件ヒット`
-    : `全 ${SAPO_DATA.length} 件`;
+  const hasFilter = kws.length > 0 || Object.values(FILTERS).some(v => v !== 'all')
+    || MULTI.oura.selected.size > 0 || MULTI.montype.selected.size > 0;
+  summary.textContent = hasFilter ? `${filtered.length} 件ヒット` : `全 ${SAPO_DATA.length} 件`;
 
   const list = document.getElementById('cardList');
   if (filtered.length === 0) {
@@ -687,6 +825,7 @@ function renderCard(c, kws) {
 }
 
 buildTokuiButtons();
+buildMultiSelects();
 render();
 </script>
 </body>
