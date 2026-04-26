@@ -125,6 +125,19 @@
     .scope-chk.on { background: #e8f5e9; border-color: #66bb6a; color: #2e7d32; font-weight: bold; }
     .scope-chk:hover { border-color: #66bb6a; }
 
+    a.assist-card-item {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+    }
+    a.assist-card-item::after {
+      content: '詳細 ›';
+      float: right;
+      font-size: 11px;
+      color: #f0a500;
+      font-weight: bold;
+    }
+
     .result-summary {
       font-size: 13px;
       color: #999;
@@ -414,8 +427,24 @@
 </div>
 
 <script src="assist-card-data.js"></script>
+<script src="cards/cards-data.js"></script>
 <script>
 const TOKUI_LIST = ['タフネス','スピード','テクニック','ちから','かしこさ','バイタル','アサルト','インパクト','ガード','クイック','フォーカス','ルミナス','フィジカル','メンタル','ライフ','アキュメン','サバイブ','フォース','ジャッジ','丈夫さ','命中','回避','桜'];
+
+// cardsData (cards/cards-data.js) から 名前+レアリティ → カードID の逆引きマップを作成
+const CARD_LOOKUP = {};
+if (typeof cardsData !== 'undefined') {
+  Object.entries(cardsData).forEach(([id, card]) => {
+    const key = (card.name || '') + '_' + (card.rarity || '');
+    if (!CARD_LOOKUP[key]) CARD_LOOKUP[key] = id;
+  });
+}
+
+function getCardId(c) {
+  const name = c._type === 'sub' ? (c['キャラ名'] || c['固有名'] || '') : (c['固有名'] || '');
+  const rarity = c._type === 'sub' ? (c['名称'] || '') : (c['レアリティ'] || '');
+  return CARD_LOOKUP[name + '_' + rarity] || null;
+}
 
 const FILTERS = { kind: 'all', rarity: 'all', montype: 'all', tokui: 'all', oura_effect: 'all', montype_effect: 'all', bloodline_effect: 'all' };
 const SCOPES = { assist: true, totsu: true, noryoku: false, event: false, name: false };
@@ -639,7 +668,10 @@ function renderCard(c, kws) {
   if (cardType) metaItems.push(`<span class="meta-item"><span class="meta-key">タイプ</span><span class="meta-val">${escHtml(cardType)}</span></span>`);
   if (date) metaItems.push(`<span class="meta-item"><span class="meta-key">実装</span><span class="meta-val">${escHtml(date)}</span></span>`);
 
-  return `<div class="assist-card-item">
+  const cardId = getCardId(c);
+  const tag = cardId ? `a href="cards/card.html#${cardId}"` : 'div';
+  const closeTag = cardId ? 'a' : 'div';
+  return `<${tag} class="assist-card-item">
     <div class="card-head">
       <span class="card-name">${highlight(name, SCOPES.name ? kws : [])}</span>
       <span class="badge ${typeCls}">${typeLabel}</span>
@@ -651,7 +683,7 @@ function renderCard(c, kws) {
     ${totsuHtml}
     ${noryokuHtml}
     ${eventHtml}
-  </div>`;
+  </${closeTag}>`;
 }
 
 buildTokuiButtons();
