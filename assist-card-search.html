@@ -5,9 +5,9 @@
   <link rel="icon" href="S__94175247.jpg">
   <link rel="apple-touch-icon" href="S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>サポカ効果検索 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームのサポートカード（メイン・副）のアシスト効果・凸効果をキーワードで検索できます。">
-  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/sapo-search.html">
+  <title>アシストカード検索 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのアシストカード（メイン・副）のアシスト効果・凸効果をキーワードで検索できます。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/assist-card-search.html">
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
@@ -122,7 +122,7 @@
       gap: 10px;
     }
 
-    .sapo-card {
+    .assist-card-item {
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.06);
@@ -130,7 +130,7 @@
       border: 1px solid #eee;
       transition: box-shadow 0.15s, border-color 0.15s;
     }
-    .sapo-card:hover { box-shadow: 0 4px 14px rgba(240,165,0,0.2); border-color: #f0a500; }
+    .assist-card-item:hover { box-shadow: 0 4px 14px rgba(240,165,0,0.2); border-color: #f0a500; }
 
     .card-head {
       display: flex;
@@ -265,7 +265,7 @@
 
 <div class="container">
   <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">🔍 サポカ効果検索</h1>
+  <h1 class="page-title">🔍 アシストカード検索</h1>
 
   <div class="search-wrap">
     <!-- キーワード -->
@@ -324,7 +324,7 @@
   <div class="card-list" id="cardList"></div>
 </div>
 
-<script src="sapo-data.js"></script>
+<script src="assist-card-data.js"></script>
 <script>
 const TOKUI_LIST = ['タフネス','スピード','テクニック','ちから','かしこさ','バイタル','アサルト','インパクト','ガード','クイック','フォーカス','ルミナス','フィジカル','メンタル','ライフ','アキュメン','サバイブ','フォース','ジャッジ','丈夫さ','命中','回避','桜'];
 
@@ -531,7 +531,7 @@ function renderCard(c, kws) {
   if (cardType) metaItems.push(`<span class="meta-item"><span class="meta-key">タイプ</span><span class="meta-val">${escHtml(cardType)}</span></span>`);
   if (date) metaItems.push(`<span class="meta-item"><span class="meta-key">実装</span><span class="meta-val">${escHtml(date)}</span></span>`);
 
-  return `<div class="sapo-card">
+  return `<div class="assist-card-item">
     <div class="card-head">
       <span class="card-name">${highlight(name, SCOPES.name ? kws : [])}</span>
       <span class="badge ${typeCls}">${typeLabel}</span>
