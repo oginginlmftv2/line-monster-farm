@@ -772,28 +772,28 @@ function renderCard(c, kws) {
       </div>
     </div>` : '';
 
-  // 能力（スコープ ON 時のみ表示）
+  // ひらめき能力（常時表示）
   const noryokuList = getNoryoku(c);
-  const noryokuHtml = SCOPES.noryoku && noryokuList.length > 0 ? `
+  const noryokuHtml = noryokuList.length > 0 ? `
     <div class="effect-section">
-      <div class="effect-title">能力</div>
+      <div class="effect-title">ひらめき能力</div>
       <div class="effect-chips">
         ${noryokuList.map(n => {
           const isHit = kws.length > 0 && kws.some(kw => n.includes(kw));
-          return `<span class="effect-chip${isHit ? ' hit' : ''}">${highlight(n, kws)}</span>`;
+          return `<span class="effect-chip${isHit ? ' hit' : ''}">${highlight(n, SCOPES.noryoku ? kws : [])}</span>`;
         }).join('')}
       </div>
     </div>` : '';
 
-  // イベント（スコープ ON 時のみ表示）
+  // イベント名（常時表示）
   const eventList = getEvent(c);
-  const eventHtml = SCOPES.event && eventList.length > 0 ? `
+  const eventHtml = eventList.length > 0 ? `
     <div class="effect-section">
-      <div class="effect-title">イベント</div>
+      <div class="effect-title">イベント名</div>
       <div class="effect-chips">
         ${eventList.map(e => {
           const isHit = kws.length > 0 && kws.some(kw => e.includes(kw));
-          return `<span class="effect-chip${isHit ? ' hit' : ''}">${highlight(e, kws)}</span>`;
+          return `<span class="effect-chip${isHit ? ' hit' : ''}">${highlight(e, SCOPES.event ? kws : [])}</span>`;
         }).join('')}
       </div>
     </div>` : '';
@@ -806,6 +806,17 @@ function renderCard(c, kws) {
   if (cardType) metaItems.push(`<span class="meta-item"><span class="meta-key">タイプ</span><span class="meta-val">${escHtml(cardType)}</span></span>`);
   if (date) metaItems.push(`<span class="meta-item"><span class="meta-key">実装</span><span class="meta-val">${escHtml(date)}</span></span>`);
 
+  // ステータス情報
+  const shinmitsu = c['初期親密度'] || '';
+  const ouen = c['応援効果'] || '';
+  const tokuiRate = c['得意率'] || '';
+  const initSte = c['初期ステ+'] || '';
+  const statsItems = [];
+  if (shinmitsu) statsItems.push(`<span class="meta-item"><span class="meta-key">初期親密度</span><span class="meta-val">${escHtml(String(shinmitsu))}</span></span>`);
+  if (ouen) statsItems.push(`<span class="meta-item"><span class="meta-key">応援効果</span><span class="meta-val">${escHtml(String(ouen))}</span></span>`);
+  if (tokuiRate) statsItems.push(`<span class="meta-item"><span class="meta-key">得意率</span><span class="meta-val">${escHtml(String(tokuiRate))}%</span></span>`);
+  if (initSte) statsItems.push(`<span class="meta-item"><span class="meta-key">初期ステ+</span><span class="meta-val">${escHtml(String(initSte))}</span></span>`);
+
   const cardId = getCardId(c);
   const tag = cardId ? `a href="cards/card.html#${cardId}"` : 'div';
   const closeTag = cardId ? 'a' : 'div';
@@ -817,6 +828,7 @@ function renderCard(c, kws) {
       ${subTitle ? `<span style="font-size:11px;color:#aaa;">「${escHtml(subTitle)}」</span>` : ''}
     </div>
     ${metaItems.length > 0 ? `<div class="meta-row">${metaItems.join('')}</div>` : ''}
+    ${statsItems.length > 0 ? `<div class="meta-row">${statsItems.join('')}</div>` : ''}
     ${assistHtml}
     ${totsuHtml}
     ${noryokuHtml}
