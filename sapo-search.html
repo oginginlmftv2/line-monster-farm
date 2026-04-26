@@ -460,8 +460,11 @@ function renderCard(c, kws) {
   const rarClass = rar === 'MR' ? 'badge-mr' : rar === 'SSR' ? 'badge-ssr' : rar === 'SR' ? 'badge-sr' : 'badge-type';
   const typeLabel = c._type === 'main' ? 'メイン' : '副';
   const typeCls = c._type === 'main' ? 'badge-main' : 'badge-sub';
-  const name = c['固有名'] || c['名称'] || '―';
-  const charName = c['キャラ名'] ? `（${c['キャラ名']}）` : '';
+  // 副カードはキャラ名をメイン表示、固有名（シナリオタイトル）はサブ表示
+  const name = c._type === 'sub'
+    ? (c['キャラ名'] || c['固有名'] || '―')
+    : (c['固有名'] || '―');
+  const subTitle = c._type === 'sub' && c['固有名'] ? c['固有名'] : '';
   const monType = c['モン類'] || '';
   const tokui = c['得意トレ'] || '';
   const aura = c['オーラ色'] || '';
@@ -530,9 +533,10 @@ function renderCard(c, kws) {
 
   return `<div class="sapo-card">
     <div class="card-head">
-      <span class="card-name">${highlight(name, SCOPES.name ? kws : [])}${escHtml(charName)}</span>
+      <span class="card-name">${highlight(name, SCOPES.name ? kws : [])}</span>
       <span class="badge ${typeCls}">${typeLabel}</span>
       ${rar ? `<span class="badge ${rarClass}">${escHtml(rar)}</span>` : ''}
+      ${subTitle ? `<span style="font-size:11px;color:#aaa;">「${escHtml(subTitle)}」</span>` : ''}
     </div>
     ${metaItems.length > 0 ? `<div class="meta-row">${metaItems.join('')}</div>` : ''}
     ${assistHtml}
