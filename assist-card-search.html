@@ -411,6 +411,18 @@
       <button class="filter-btn" data-montype="魔族" onclick="setFilter('montype',this)">魔族</button>
     </div>
 
+    <!-- オーラ色 -->
+    <div class="filter-row">
+      <span class="filter-label">オーラ色：</span>
+      <button class="filter-btn active" data-auracolor="all" onclick="setFilter('auracolor',this)">すべて</button>
+      <button class="filter-btn" data-auracolor="赤" onclick="setFilter('auracolor',this)">赤</button>
+      <button class="filter-btn" data-auracolor="青" onclick="setFilter('auracolor',this)">青</button>
+      <button class="filter-btn" data-auracolor="緑" onclick="setFilter('auracolor',this)">緑</button>
+      <button class="filter-btn" data-auracolor="黄" onclick="setFilter('auracolor',this)">黄</button>
+      <button class="filter-btn" data-auracolor="白" onclick="setFilter('auracolor',this)">白</button>
+      <button class="filter-btn" data-auracolor="黒" onclick="setFilter('auracolor',this)">黒</button>
+    </div>
+
     <!-- 得意トレ（メインカードのみ） -->
     <div class="filter-row" id="tokui-row">
       <span class="filter-label">得意トレ：</span>
@@ -505,7 +517,7 @@ function getCardId(c) {
   return CARD_LOOKUP[name + '_' + rarity] || null;
 }
 
-const FILTERS = { kind: 'all', rarity: 'all', montype: 'all', tokui: 'all', bloodline_effect: 'all' };
+const FILTERS = { kind: 'all', rarity: 'all', montype: 'all', auracolor: 'all', tokui: 'all', bloodline_effect: 'all' };
 const SCOPES = { assist: true, totsu: true, noryoku: false, event: false, name: false };
 
 const OURA_OPTS = ['オーラトレ効果アップ','オーラトレ経験値アップ','オーラトレ集合率アップ','オーラトレブースト','オーラトレ出現アップ','オーラトレ忠誠度効果アップ','オーラEXトレパワーアップ','オーラブリーダー','オーラ修行','オーラステブースト','オーラステ上限ブースト','オーラステータスボーナス','オーラ基礎ステータス上限アップ','オーラ初期ステアップ','オーラ素質アップ','オーラモン類ブースト','オーラモン類Lvブースト','オーラピークターンアップ','オーラ適正アップ','オーラ忠誠度効果アップ','オーラ人気度効果アップ','オーラ賞金アップ','オーラ大会ご褒美アップ','オーラ大会後ご褒美アップ','オーラ大会サポート','オーラ大会賞金効果アップ','オーラ集合率アップ','オーラ名声開放','オーラワイルド','オーラあそぶ回数アップ','オーラチョコを添えて','オーラ追加トレボーナス'];
@@ -624,7 +636,7 @@ function clearAll() {
   document.getElementById('kwInput').value = '';
   Object.keys(FILTERS).forEach(k => FILTERS[k] = 'all');
   document.querySelectorAll('.filter-btn').forEach(b => {
-    const isAll = b.dataset.kind === 'all' || b.dataset.rarity === 'all' || b.dataset.montype === 'all' || b.dataset.tokui === 'all';
+    const isAll = b.dataset.kind === 'all' || b.dataset.rarity === 'all' || b.dataset.montype === 'all' || b.dataset.auracolor === 'all' || b.dataset.tokui === 'all';
     b.classList.toggle('active', isAll);
   });
   const bel = document.getElementById('filter-bloodline-effect');
@@ -695,6 +707,7 @@ function render() {
     const rar = getRarity(c);
     if (FILTERS.rarity !== 'all' && rar !== FILTERS.rarity) return false;
     if (FILTERS.montype !== 'all' && (c['モン類'] || '') !== FILTERS.montype) return false;
+    if (FILTERS.auracolor !== 'all' && (c['オーラ色'] || '') !== FILTERS.auracolor) return false;
     if (FILTERS.tokui !== 'all' && (c['得意トレ'] || '') !== FILTERS.tokui) return false;
     const effectText = [...getAssists(c), ...getTotsu(c).map(x => x.val)].join(' ');
     const ouraSel = MULTI.oura.selected;
