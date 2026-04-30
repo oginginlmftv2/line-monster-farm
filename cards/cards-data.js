@@ -1,4 +1,6 @@
 const cardsData = {
+  'b16i-MR-diana':          { name: 'ディアナ',          rarity: 'MR',  oura: '青', type: 'インパクト', mon: '魔族', ext: 'jpg', dist: '遠距離' },
+  'b5g-SSR-norun':          { name: 'ノルン',            rarity: 'SSR', oura: '青', type: '回避',       mon: '創造', ext: 'jpg' },
   'f18l-MR-esueru':           { name: 'エスエル',          rarity: 'MR',  oura: '黒', type: 'フォース',   mon: '無機', ext: 'jpg', event2: '超闘魂' },
   'a10j-SSR-fureria':         { name: 'フレリア',          rarity: 'SSR', oura: '赤', type: '師匠',       mon: '獣',   ext: 'jpg' },
   'a4g-SSR-karukinosu':       { name: 'カルキノス',        rarity: 'SSR', oura: '赤', type: '命中',       mon: '創造', ext: 'jpg', event2: '超闘魂' },

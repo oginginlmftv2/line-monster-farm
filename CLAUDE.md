@@ -18,9 +18,9 @@
 | ピックアップモンスター | ニャハト（新）・シュシュポッポ（継続） |
 | monsters-data.js 末尾インデックス | **334**（配列の要素数335、0始まりなので末尾=334） |
 | index.html のリンク | `monsters/monster.html?id=334`（ニャハト）・`monsters/monster.html?id=333`（シュシュポッポ） |
-| ピックアップカード | エスエル |
-| カードID | `f18l-MR-esueru` |
-| index.html のリンク | `cards/card.html#f18l-MR-esueru` |
+| ピックアップカード | ディアナ（新）・ノルン（新） |
+| カードID | `b16i-MR-diana` / `b5g-SSR-norun` |
+| index.html のリンク | `cards/card.html#b16i-MR-diana` / `cards/card.html#b5g-SSR-norun` |
 
 ---
 
