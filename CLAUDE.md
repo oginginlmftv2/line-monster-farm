@@ -65,9 +65,10 @@
 2. `assist.html` → `#cardGrid` の **先頭に** HTMLブロックを追加
 3. `ability-match.html` → `ABILITY_FILES` 配列に能力画像ファイル名を2枚追加
 4. `index.html` → ピックアップのカード画像・リンク・説明文を更新
-5. `assist-abilities/` → 能力画像を配置（フォルダがなければ作成）
-6. `assist-cards/` → カード画像を配置
-7. 上の「現在のピックアップ状態」テーブルを書き換える
+5. `reroll.html` → 「現在のおすすめ」をピックアップカードに差し替え・更新日付を更新
+6. `assist-abilities/` → 能力画像を配置（フォルダがなければ作成）
+7. `assist-cards/` → カード画像を配置
+8. 上の「現在のピックアップ状態」テーブルを書き換える
 
 ### カードHTMLブロックのテンプレート
 ```html
