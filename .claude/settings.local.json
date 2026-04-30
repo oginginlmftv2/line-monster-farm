@@ -18,7 +18,9 @@
       "Bash(python3 -c ' *)",
       "PowerShell(\\(Get-Content \"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\ability-search.html\"\\).Count)",
       "Bash(node -e \"const fs=require\\('fs'\\);const txt=fs.readFileSync\\('assist-card-data.js','utf8'\\);const m=txt.matchAll\\(/オーラ色['\\\\\"]:\\\\s*['\\\\\"]\\(.*?\\)['\\\\\"][,}]/g\\);const counts={};for\\(const r of m\\){counts[r[1]]=\\(counts[r[1]]||0\\)+1;}console.log\\(JSON.stringify\\(counts,null,2\\)\\)\")",
-      "PowerShell([System.IO.File]::ReadAllText\\(\"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\assist-card-data.js\"\\) | Select-String -Pattern \"オーラ色.:.\\([^'`\"]+\\)\" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Groups[1].Value } | Sort-Object | Get-Unique)"
+      "PowerShell([System.IO.File]::ReadAllText\\(\"C:\\\\Users\\\\KCE\\\\Desktop\\\\LINEモンスターファーム徹底攻略\\\\assist-card-data.js\"\\) | Select-String -Pattern \"オーラ色.:.\\([^'`\"]+\\)\" -AllMatches | ForEach-Object { $_.Matches } | ForEach-Object { $_.Groups[1].Value } | Sort-Object | Get-Unique)",
+      "WebFetch(domain:line-monster-farm-tetteikouryaku.com)",
+      "WebFetch(domain:oginginlmftv2.github.io)"
     ]
   }
 }
