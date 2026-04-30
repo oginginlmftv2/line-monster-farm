@@ -337,4 +337,6 @@ const monstersData = [
   { name: 'シュシュポッポ', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__71286791_0.jpg', mon: '無機', mainMon: 'ゴーレム', subMon: 'レアモン' },
   { name: 'ニャハト', aura: '黒', limited: true, limitedLabel: 'GW限定', gwImg: null, localImg: 'S__107036676.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'ノーブル',
     explanation: 'ニャー種のノーブルモンスター\n現存のノーブルモンスター全てと相性が良く王冠相性を狙いやすいので、すでに1体でもノーブルモンスターを持っている人はほしい1体\n本体の強さはまぁまぁまぁ' },
+  { name: 'ティターニア', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167750_0.jpg', mon: '魔族', mainMon: 'ピクシー', subMon: 'ロード種' },
+  { name: 'ウルズ', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167751_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'ライガー' },
 ];
