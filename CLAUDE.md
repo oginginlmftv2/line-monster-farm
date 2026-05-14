@@ -15,12 +15,12 @@
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | ティターニア（新）・ウルズ（新） |
-| monsters-data.js 末尾インデックス | **336**（配列の要素数337、0始まりなので末尾=336） |
-| index.html のリンク | `monsters/monster.html?id=336`（ウルズ）・`monsters/monster.html?id=335`（ティターニア） |
-| ピックアップカード | ディアナ（新）・ノルン（新） |
-| カードID | `b16i-MR-diana` / `b5g-SSR-norun` |
-| index.html のリンク | `cards/card.html#b16i-MR-diana` / `cards/card.html#b5g-SSR-norun` |
+| ピックアップモンスター | ヤマト（新） |
+| monsters-data.js 末尾インデックス | **337**（配列の要素数338、0始まりなので末尾=337） |
+| index.html のリンク | `monsters/monster.html?id=337`（ヤマト） |
+| ピックアップカード | ニシキ（新） |
+| カードID | `a13i-MR-nishiki` |
+| index.html のリンク | `cards/card.html#a13i-MR-nishiki` |
 
 ---
 

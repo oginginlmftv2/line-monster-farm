@@ -339,4 +339,5 @@ const monstersData = [
     explanation: 'ニャー種のノーブルモンスター\n現存のノーブルモンスター全てと相性が良く王冠相性を狙いやすいので、すでに1体でもノーブルモンスターを持っている人はほしい1体\n本体の強さはまぁまぁまぁ' },
   { name: 'ティターニア', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167750_0.jpg', mon: '魔族', mainMon: 'ピクシー', subMon: 'ロード種' },
   { name: 'ウルズ', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167751_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'ライガー' },
+  { name: 'ヤマト', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S_3399682.jpg', mon: '魔族', mainMon: 'ナーガ', subMon: 'レアモン' },
 ];
