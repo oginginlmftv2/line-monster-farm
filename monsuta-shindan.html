@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>あなたに合うモンスター診断 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="5つの質問に答えてあなたにぴったりのモンスターを診断！338種類のモンスターから、あなたのブリーダータイプに合った1体が出ます。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsuta-shindan.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .shindan-wrap { max-width: 520px; margin: 0 auto; }
+
+    /* ===== イントロ ===== */
+    #intro-screen { text-align: center; padding: 12px 0 28px; }
+    .shindan-eyecatch { font-size: 64px; line-height: 1; margin-bottom: 18px; }
+    .shindan-lead { font-size: 14px; color: #666; line-height: 1.9; margin-bottom: 8px; }
+    .shindan-sub { font-size: 12px; color: #bbb; margin-bottom: 24px; }
+    .start-btn {
+      display: inline-block; background: #f0a500; color: #fff;
+      font-size: 17px; font-weight: 900; padding: 14px 48px;
+      border-radius: 50px; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(240,165,0,.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(240,165,0,.45); }
+    .start-btn:active { transform: translateY(0); }
+
+    /* ===== 進捗 ===== */
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-bottom: 6px; }
+    .progress-bar-bg { background: #f0f0f0; border-radius: 10px; height: 6px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; background: linear-gradient(90deg, #f0a500, #ffcc44);
+      border-radius: 10px; transition: width .4s ease; width: 0%;
+    }
+    .progress-dots { display: flex; justify-content: center; gap: 8px; margin-top: 8px; }
+    .progress-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #eee; border: 2px solid #ddd; transition: background .3s, border-color .3s;
+    }
+    .progress-dot.done    { background: #f0a500; border-color: #f0a500; }
+    .progress-dot.current { background: #fff; border-color: #f0a500; }
+
+    /* ===== 質問 ===== */
+    #quiz-screen { display: none; }
+    .q-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 14px rgba(0,0,0,.09); padding: 24px 20px; margin-bottom: 16px;
+    }
+    .q-num-badge {
+      display: inline-block; background: #f0a500; color: #fff;
+      font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
+    }
+    .q-text { font-size: 17px; font-weight: bold; color: #1a1a2e; line-height: 1.5; }
+    .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .choice-btn {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: #f9f9f9; border: 2px solid #eee; border-radius: 10px;
+      padding: 13px 14px; font-size: 14px; color: #333; cursor: pointer;
+      text-align: left; line-height: 1.5; width: 100%;
+      transition: background .15s, border-color .15s, transform .1s;
+    }
+    .choice-btn:hover   { background: #fff8e1; border-color: #f0a500; }
+    .choice-btn:active  { transform: scale(.98); }
+    .choice-btn.selected { background: #fff3cd; border-color: #f0a500; }
+    .choice-label {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 24px; height: 24px; background: #f0a500; color: #fff;
+      border-radius: 50%; font-size: 12px; font-weight: 900; flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* ===== 結果 ===== */
+    #result-screen { display: none; }
+    .result-type-section { text-align: center; margin-bottom: 16px; }
+    .result-type-eyecatch { font-size: 48px; line-height: 1; margin-bottom: 10px; }
+    .result-type-badge {
+      display: inline-block; background: linear-gradient(135deg, #f0a500, #ffcc44);
+      color: #fff; font-size: 13px; font-weight: 900;
+      padding: 5px 18px; border-radius: 30px;
+      box-shadow: 0 2px 8px rgba(240,165,0,.3); margin-bottom: 10px;
+    }
+    .result-type-desc { font-size: 13px; color: #666; line-height: 1.8; }
+
+    .monster-card {
+      background: #fff; border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.12); overflow: hidden;
+      border-top: 4px solid #f0a500; margin: 16px 0;
+    }
+    .monster-card-inner { padding: 20px; }
+    .monster-img-wrap {
+      width: 100%; aspect-ratio: 1/1; max-width: 220px;
+      margin: 0 auto 16px; display: flex; align-items: center; justify-content: center;
+      background: #f9f9f9; border-radius: 12px; overflow: hidden;
+    }
+    .monster-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .monster-img-placeholder { font-size: 72px; line-height: 1; }
+    .monster-header { text-align: center; margin-bottom: 14px; }
+    .aura-badge {
+      display: inline-block; font-size: 11px; font-weight: 900;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 8px;
+    }
+    .monster-name { font-size: 28px; font-weight: 900; color: #1a1a2e; margin-bottom: 6px; }
+    .monster-types { font-size: 13px; color: #888; }
+    .monster-divider { width: 40px; height: 3px; background: #f0a500; border-radius: 2px; margin: 14px auto; }
+
+    .score-section { padding: 0 0 4px; }
+    .score-label { font-size: 12px; color: #999; margin-bottom: 8px; text-align: center; }
+    .score-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 13px; }
+    .score-row-label { width: 72px; color: #666; flex-shrink: 0; font-weight: bold; font-size: 12px; }
+    .score-bar-bg { flex: 1; background: #f0f0f0; border-radius: 6px; height: 8px; overflow: hidden; }
+    .score-bar-fill { height: 100%; border-radius: 6px; transition: width .6s ease; width: 0%; }
+    .bar-sen { background: #e53e3e; }
+    .bar-iku { background: #3182ce; }
+    .bar-ken { background: #805ad5; }
+    .bar-ai  { background: #38a169; }
+    .score-num { width: 16px; text-align: right; color: #aaa; font-size: 12px; }
+
+    .result-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .detail-btn {
+      display: block; text-align: center; background: #f0a500; color: #fff;
+      font-size: 14px; font-weight: 900; padding: 13px 20px; border-radius: 10px;
+      text-decoration: none; transition: opacity .15s;
+    }
+    .detail-btn:hover { opacity: .88; }
+    .retry-btn {
+      display: block; text-align: center; background: #f9f9f9; color: #555;
+      font-size: 14px; font-weight: bold; padding: 12px 20px; border-radius: 10px;
+      border: 2px solid #eee; cursor: pointer; transition: background .15s, border-color .15s;
+    }
+    .retry-btn:hover { background: #fff3cd; border-color: #f0a500; color: #b8860b; }
+
+    /* アニメーション */
+    .fade-in { animation: fadeIn .35s ease forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .pop-in { animation: popIn .45s cubic-bezier(.34,1.56,.64,1) forwards; }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.85); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🔮 あなたに合うモンスター診断</h1>
+
+  <div class="shindan-wrap">
+
+    <!-- ===== イントロ ===== -->
+    <div id="intro-screen">
+      <div class="shindan-eyecatch">🥚</div>
+      <p class="shindan-lead">
+        5つの質問に答えるだけで、<br>あなたにぴったりのモンスターがわかります！
+      </p>
+      <p class="shindan-sub">全338種類のモンスターの中から診断します</p>
+      <button class="start-btn" onclick="startQuiz()">診断スタート ▶</button>
+    </div>
+
+    <!-- ===== クイズ ===== -->
+    <div id="quiz-screen">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Q<span id="q-num-label">1</span> / 5</span>
+          <span id="q-pct-label">0%</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-dots" id="progress-dots"></div>
+      </div>
+      <div class="q-card" id="q-card">
+        <div class="q-num-badge" id="q-num-badge">Q1</div>
+        <div class="q-text" id="q-text"></div>
+        <div class="choices" id="choices"></div>
+      </div>
+    </div>
+
+    <!-- ===== 結果 ===== -->
+    <div id="result-screen">
+
+      <div class="result-type-section fade-in">
+        <div class="result-type-eyecatch" id="result-type-eyecatch"></div>
+        <div class="result-type-badge" id="result-type-badge"></div>
+        <p class="result-type-desc" id="result-type-desc"></p>
+      </div>
+
+      <div class="monster-card pop-in">
+        <div class="monster-card-inner">
+          <div class="monster-img-wrap" id="monster-img-wrap"></div>
+          <div class="monster-header">
+            <div class="aura-badge" id="aura-badge"></div>
+            <div class="monster-name" id="monster-name"></div>
+            <div class="monster-types" id="monster-types"></div>
+          </div>
+          <div class="monster-divider"></div>
+          <div class="score-section">
+            <div class="score-label">あなたのブリーダースコア</div>
+            <div class="score-row">
+              <div class="score-row-label">⚔️ バトル</div>
+              <div class="score-bar-bg"><div class="score-bar-fill bar-sen" id="bar-sen"></div></div>
+              <div class="score-num" id="num-sen"></div>
+            </div>
+            <div class="score-row">
+              <div class="score-row-label">📈 育成</div>
+              <div class="score-bar-bg"><div class="score-bar-fill bar-iku" id="bar-iku"></div></div>
+              <div class="score-num" id="num-iku"></div>
+            </div>
+            <div class="score-row">
+              <div class="score-row-label">🔍 探究</div>
+              <div class="score-bar-bg"><div class="score-bar-fill bar-ken" id="bar-ken"></div></div>
+              <div class="score-num" id="num-ken"></div>
+            </div>
+            <div class="score-row">
+              <div class="score-row-label">🌸 愛情</div>
+              <div class="score-bar-bg"><div class="score-bar-fill bar-ai" id="bar-ai"></div></div>
+              <div class="score-num" id="num-ai"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <a id="detail-btn" class="detail-btn" href="#">このモンスターの詳細を見る →</a>
+        <button class="retry-btn" onclick="resetQuiz()">🔄 もう一度診断する</button>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="monsters-data.js"></script>
+<script>
+/* ===== 質問データ (labelOffset: 選択肢ラベルのASCIIオフセット) ===== */
+const questions = [
+  {
+    text: '育てるなら？',
+    labelOffset: 0,  // A B C D
+    choices: [
+      { text: 'ふわふわでかわいすぎるヤツ',           axis: 'ai'  },
+      { text: '雰囲気がかっこよすぎるヤツ',           axis: 'ken' },
+      { text: 'どう見ても強そうなヤツ',               axis: 'sen' },
+      { text: 'こんなヤツ好きなの自分だけだろなヤツ', axis: null  },
+    ]
+  },
+  {
+    text: '修行で覚える技は',
+    labelOffset: 4,  // E F G H
+    choices: [
+      { text: '小さな技からコツコツと',       axis: 'iku' },
+      { text: '一撃必殺に全てをかける',       axis: 'sen' },
+      { text: 'ガッツダウンが一番おもしろい', axis: 'ken' },
+      { text: 'とにかくランクが高い技',       axis: null  },
+    ]
+  },
+  {
+    text: '失敗率10％か…',
+    labelOffset: 8,  // I J K L
+    choices: [
+      { text: '10％は嫌だな。アイテムを使おう',                               axis: 'ai'  },
+      { text: '10％なら恐る恐る勝負だ',                                       axis: 'sen' },
+      { text: '10％は四捨五入したら0％だ',                                    axis: 'ken' },
+      { text: 'そんなこともあろうかとさっき失敗しておいたから今回は大丈夫',   axis: null  },
+    ]
+  },
+  {
+    text: 'トレーニング失敗しちゃったのか',
+    labelOffset: 12,  // M N O P
+    choices: [
+      { text: 'ドンマイドンマイ！次頑張れば大丈夫！', axis: 'ai'  },
+      { text: '二度と失敗しないように対策案を出して', axis: 'iku' },
+      { text: '何度失敗しても可愛いのでモーマンタイ', axis: 'ai'  },
+      { text: '悪即斬',                               axis: null  },
+    ]
+  },
+  {
+    text: '育成完了！',
+    labelOffset: 16,  // Q R S T
+    choices: [
+      { text: 'どんな結果でも可愛いからずっとうちの子だ', axis: 'ai'  },
+      { text: 'バトルに強いモンスターができたぞ',         axis: 'sen' },
+      { text: '総合力が高くて最高だ',                     axis: 'iku' },
+      { text: 'ナゲセンと交換？よし、荷台に乗せてくれ',  axis: null  },
+    ]
+  },
+];
+
+/* ===== タイプデータ ===== */
+const typeData = {
+  sen: { eyecatch: '⚔️', badge: '勝負師タイプ', desc: '勝利への執念が人一倍強く、大会やランキングで結果を出すことに燃えているタイプ。その闘争心に応えるだけの力を秘めたモンスターがあなたに合っています。' },
+  iku: { eyecatch: '📈', badge: '研究家タイプ', desc: '育成の数値を徹底的に追求するコアなブリーダータイプ。秘伝・忠誠度・トレーニング効率を細かく管理するあなたには、育成のポテンシャルが高いモンスターが合っています。' },
+  ken: { eyecatch: '🔍', badge: '分析家タイプ', desc: '攻略法や血統の相性を研究することが楽しいタイプ。誰よりも深くゲームを理解しようとするあなたには、個性豊かで奥が深いモンスターが合っています。' },
+  ai:  { eyecatch: '🌸', badge: '愛情育成タイプ', desc: 'モンスターへの愛情を何より大切にするタイプ。数値や勝敗よりも、モンスターとの時間そのものに価値を見いだすあなたには、愛着の湧くモンスターが合っています。' },
+  mix:      { eyecatch: '⭐', badge: 'バランスタイプ', desc: 'バトル・育成・研究・愛情をバランスよく持ち合わせたオールラウンドタイプ。どんな状況でも柔軟に対応できるあなたには、可能性に満ちたモンスターが合っています。' },
+  kawazumo: { eyecatch: '🐸', badge: '荷台行き判定タイプ', desc: '独自の価値観とルールで生きる超個性派ブリーダー。モンスターへの愛はその独特の形で表現されています。カワズモーもそう思っているはず…たぶん。' },
+};
+
+/* ===== オーラ色 ===== */
+const auraStyle = {
+  '黒': { bg: '#4a5568', color: '#fff' },
+  '赤': { bg: '#fc8181', color: '#fff' },
+  '青': { bg: '#63b3ed', color: '#fff' },
+  '白': { bg: '#e2e8f0', color: '#4a5568' },
+  '緑': { bg: '#68d391', color: '#fff' },
+  '黄': { bg: '#f6e05e', color: '#744210' },
+};
+
+/* ===== モン種族emoji ===== */
+const monEmoji = {
+  '幻霊': '👻', '創造': '✨', '獣': '🐾', '怪物': '👾', '魔族': '⚡', '無機': '⚙️',
+};
+
+/* ===== 状態 ===== */
+let answers = [];
+
+/* ===== 開始 ===== */
+function startQuiz() {
+  answers = [];
+  document.getElementById('intro-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+  buildDots();
+  showQuestion();
+}
+
+function buildDots() {
+  const wrap = document.getElementById('progress-dots');
+  wrap.innerHTML = '';
+  for (let i = 0; i < 5; i++) {
+    const d = document.createElement('div');
+    d.className = 'progress-dot' + (i === 0 ? ' current' : '');
+    d.id = 'dot-' + i;
+    wrap.appendChild(d);
+  }
+}
+
+function showQuestion() {
+  const qi = answers.length;
+  const q  = questions[qi];
+  const pct = (qi / 5) * 100;
+
+  document.getElementById('q-num-label').textContent = qi + 1;
+  document.getElementById('q-pct-label').textContent = Math.round(pct) + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('q-num-badge').textContent = 'Q' + (qi + 1);
+  document.getElementById('q-text').textContent = q.text;
+
+  for (let i = 0; i < 5; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (!dot) continue;
+    dot.className = 'progress-dot' + (i < qi ? ' done' : i === qi ? ' current' : '');
+  }
+
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  q.choices.forEach((c, i) => {
+    const label = String.fromCharCode(65 + q.labelOffset + i);
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = `<span class="choice-label">${label}</span><span>${c.text}</span>`;
+    btn.onclick = () => answer(i, btn);
+    choicesEl.appendChild(btn);
+  });
+
+  const card = document.getElementById('q-card');
+  card.classList.remove('fade-in');
+  void card.offsetWidth;
+  card.classList.add('fade-in');
+}
+
+function answer(idx, btn) {
+  btn.classList.add('selected');
+  document.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+  answers.push(idx);
+
+  setTimeout(() => {
+    if (answers.length < 5) {
+      showQuestion();
+    } else {
+      showResult();
+    }
+  }, 280);
+}
+
+/* ===== 結果計算 ===== */
+function showResult() {
+  // 進捗を100%に
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('q-pct-label').textContent = '100%';
+  for (let i = 0; i < 5; i++) {
+    const dot = document.getElementById('dot-' + i);
+    if (dot) dot.className = 'progress-dot done';
+  }
+
+  setTimeout(() => {
+    document.getElementById('quiz-screen').style.display = 'none';
+
+    // パーソナリティスコア（axis:nullは無視）
+    const scores = { sen: 0, iku: 0, ken: 0, ai: 0 };
+    answers.forEach((a, qi) => {
+      const axis = questions[qi].choices[a].axis;
+      if (axis) scores[axis]++;
+    });
+
+    // L/P/T（Q3〜Q5の選択肢index=3）を1つでも選んでいたらカワズモー種
+    const isKawazumo = answers[2] === 3 || answers[3] === 3 || answers[4] === 3;
+    let monster, monIdx, typeKey;
+    const code = answers[0]*256 + answers[1]*64 + answers[2]*16 + answers[3]*4 + answers[4];
+
+    if (isKawazumo) {
+      const kawazumoList = monstersData
+        .map((m, i) => ({ m, i }))
+        .filter(({ m }) => m.mainMon === 'カワズモー');
+      const pick = Math.floor(code * kawazumoList.length / 1024);
+      monster = kawazumoList[pick].m;
+      monIdx  = kawazumoList[pick].i;
+      typeKey = 'kawazumo';
+    } else {
+      monIdx  = Math.floor(code * monstersData.length / 1024);
+      monster = monstersData[monIdx];
+      const maxScore = Math.max(...Object.values(scores));
+      const tops = Object.keys(scores).filter(k => scores[k] === maxScore);
+      typeKey = tops.length === 1 ? tops[0] : 'mix';
+    }
+    const type = typeData[typeKey];
+
+    // タイプ表示
+    document.getElementById('result-type-eyecatch').textContent = type.eyecatch;
+    document.getElementById('result-type-badge').textContent    = type.badge;
+    document.getElementById('result-type-desc').textContent     = type.desc;
+
+    // モンスター画像
+    const imgWrap = document.getElementById('monster-img-wrap');
+    if (monster.localImg) {
+      imgWrap.innerHTML = `<img src="monster/${monster.localImg}" alt="${monster.name}" onerror="this.parentNode.innerHTML='<span class=monster-img-placeholder>${monEmoji[monster.mon] || '🥚'}</span>'">`;
+    } else {
+      imgWrap.innerHTML = `<span class="monster-img-placeholder">${monEmoji[monster.mon] || '🥚'}</span>`;
+    }
+
+    // モンスター名・タイプ
+    document.getElementById('monster-name').textContent = monster.name;
+
+    const aura = monster.aura || '';
+    const auraBadge = document.getElementById('aura-badge');
+    const aStyle = auraStyle[aura] || { bg: '#eee', color: '#333' };
+    auraBadge.textContent = aura ? aura + 'オーラ' : '';
+    auraBadge.style.background = aStyle.bg;
+    auraBadge.style.color      = aStyle.color;
+
+    const emoji = monEmoji[monster.mon] || '';
+    document.getElementById('monster-types').textContent =
+      `${emoji} ${monster.mon || ''}　${monster.mainMon || ''} × ${monster.subMon || ''}`;
+
+    // スコアバー
+    ['sen','iku','ken','ai'].forEach(k => {
+      document.getElementById('bar-' + k).style.width = (scores[k] / 5 * 100) + '%';
+      document.getElementById('num-' + k).textContent  = scores[k];
+    });
+
+    // 詳細リンク
+    document.getElementById('detail-btn').href = `monsters/monster.html?id=${monIdx}`;
+
+    // 表示
+    document.getElementById('result-screen').style.display = 'block';
+  }, 400);
+}
+
+function resetQuiz() {
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('intro-screen').style.display  = 'block';
+}
+</script>
+
+</body>
+</html>
