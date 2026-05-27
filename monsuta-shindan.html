@@ -252,8 +252,27 @@
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
 
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 <script src="monsters-data.js"></script>
 <script>
+/* ===== Firebase ===== */
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+let assignments = {};
+db.collection('monsterImages').doc('assignments').get()
+  .then(doc => { if (doc.exists) assignments = doc.data(); })
+  .catch(() => {});
+
 /* ===== 質問データ (labelOffset: 選択肢ラベルのASCIIオフセット) ===== */
 const questions = [
   {
@@ -453,8 +472,10 @@ function showResult() {
 
     // モンスター画像
     const imgWrap = document.getElementById('monster-img-wrap');
-    if (monster.localImg) {
-      imgWrap.innerHTML = `<img src="monster/${monster.localImg}" alt="${monster.name}" onerror="this.parentNode.innerHTML='<span class=monster-img-placeholder>${monEmoji[monster.mon] || '🥚'}</span>'">`;
+    const validLocalImg = (monster.localImg && monster.localImg.startsWith('S_')) ? monster.localImg : null;
+    const localFile = validLocalImg || (assignments && assignments[monster.name]) || null;
+    if (localFile) {
+      imgWrap.innerHTML = `<img src="monster/${localFile}" alt="${monster.name}" onerror="this.style.display='none'">`;
     } else {
       imgWrap.innerHTML = `<span class="monster-img-placeholder">${monEmoji[monster.mon] || '🥚'}</span>`;
     }
