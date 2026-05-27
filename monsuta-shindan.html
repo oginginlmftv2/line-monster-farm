@@ -125,6 +125,12 @@
       text-decoration: none; transition: opacity .15s;
     }
     .detail-btn:hover { opacity: .88; }
+    .tweet-btn {
+      display: block; text-align: center; background: #000; color: #fff;
+      font-size: 14px; font-weight: 900; padding: 13px 20px; border-radius: 10px;
+      text-decoration: none; transition: opacity .15s;
+    }
+    .tweet-btn:hover { opacity: .8; }
     .retry-btn {
       display: block; text-align: center; background: #f9f9f9; color: #555;
       font-size: 14px; font-weight: bold; padding: 12px 20px; border-radius: 10px;
@@ -239,6 +245,7 @@
 
       <div class="result-actions">
         <a id="detail-btn" class="detail-btn" href="#">このモンスターの詳細を見る →</a>
+        <a id="tweet-btn" class="tweet-btn" href="#" target="_blank" rel="noopener">𝕏 結果をポストする</a>
         <button class="retry-btn" onclick="resetQuiz()">🔄 もう一度診断する</button>
       </div>
 
@@ -502,6 +509,12 @@ function showResult() {
 
     // 詳細リンク
     document.getElementById('detail-btn').href = `monsters/monster.html?id=${monIdx}`;
+
+    // Xポストリンク
+    const tweetText = `【モンスター占い】\n私のブリーダータイプは「${type.badge}」！\n診断されたモンスターは「${monster.name}」でした！\n\n#LINEモンスターファーム`;
+    const tweetUrl  = 'https://line-monster-farm-tetteikouryaku.com/monsuta-shindan.html';
+    document.getElementById('tweet-btn').href =
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&url=${encodeURIComponent(tweetUrl)}`;
 
     // 表示
     document.getElementById('result-screen').style.display = 'block';
