@@ -3,12 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>総合力育成 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファームの総合力育成攻略。おすすめアシスト編成と育成の流れをわかりやすく解説します。">
-  <meta name="robots" content="noindex">
+  <title>初心者向け総合力育成方法 完全ガイド | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの初心者向け総合力育成方法を完全解説。編成・持ち込みアイテム・デビュー期からプロ期までの立ち回りを実際の育成画像つきで紹介します。">
   <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/sogo.html">
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc-list li a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      background: #f9f9f9;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .toc-list li a:hover { background: #fff3cd; border-color: #f0a500; }
+    .toc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      background: #f0a500;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+    .article-h2 {
+      font-size: 17px;
+      font-weight: bold;
+      color: #333;
+      border-left: 4px solid #f0a500;
+      padding: 6px 12px;
+      margin: 0 0 14px;
+      background: #fffbf0;
+      border-radius: 0 6px 6px 0;
+    }
+    .article-h3 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #555;
+      margin: 16px 0 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .article-h3::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 14px;
+      background: #f0a500;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .article-p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: #444;
+      margin: 0 0 10px;
+    }
+    .article-p:last-child { margin-bottom: 0; }
+    .article-ul {
+      padding-left: 18px;
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #444;
+      line-height: 1.9;
+    }
+    .point-box {
+      background: #fff8e1;
+      border-left: 4px solid #f0a500;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .warn-box {
+      background: #fff5f5;
+      border-left: 4px solid #e53e3e;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #388e3c;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .step-box {
+      background: #f0f4ff;
+      border-left: 4px solid #3182ce;
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: #555;
+      margin: 10px 0;
+    }
+    .img-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .img-grid img {
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      display: block;
+    }
+    .img-single {
+      margin: 12px 0;
+    }
+    .img-single img {
+      max-width: 360px;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #eee;
+      display: block;
+    }
+  </style>
 </head>
 <body>
 
@@ -25,14 +166,338 @@
 
 <div class="container">
   <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
-  <h1 class="page-title">⭐ 総合力育成</h1>
+  <h1 class="page-title">⭐ 初心者向け総合力育成方法</h1>
+  <p style="font-size:13px;color:#999;margin:-8px 0 20px;">ログイン5日目のリセマラアカウントで実際に育成した記録を元にした完全ガイド</p>
+
+  <!-- 目次 -->
   <div class="section">
-    <div style="text-align:center;padding:60px 20px;color:#bbb;">
-      <div style="font-size:48px;margin-bottom:16px;">🚧</div>
-      <div style="font-size:18px;font-weight:bold;margin-bottom:8px;">準備中</div>
-      <div style="font-size:14px;">このページは現在作成中です。</div>
+    <div class="section-title">📋 目次</div>
+    <ul class="toc-list">
+      <li><a href="#junbi"><span class="toc-num">1</span> 始める前の準備（伝授・編成・持ち込みアイテム）</a></li>
+      <li><a href="#debut"><span class="toc-num">2</span> デビュー期の立ち回り</a></li>
+      <li><a href="#junior"><span class="toc-num">3</span> ジュニア期の立ち回り</a></li>
+      <li><a href="#middle"><span class="toc-num">4</span> ミドル期の立ち回り</a></li>
+      <li><a href="#pro"><span class="toc-num">5</span> プロ期・育成完了</a></li>
+    </ul>
+  </div>
+
+  <!-- 1. 始める前の準備 -->
+  <div class="section" id="junbi">
+    <div class="article-h2">1️⃣ 始める前の準備</div>
+
+    <div class="article-h3">育成するモンスターと秘伝親について</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies1.jpg" alt="育成するモンスターと伝授">
+    </div>
+    <p class="article-p">今回はログイン5日目のリセマラアカウントを使って育成しています。初心者の方でも真似しやすい内容なので参考にしてもらえたら嬉しいです。</p>
+    <p class="article-p">育成するのは最初にゲットしたモノリス×ゲルのアイスキャンディ。継承の伝授元（秘伝親）は前に育成した同じアイスキャンディにしています。</p>
+    <div class="warn-box">
+      秘伝親が育成モンスターと同じだと<strong>相性値が下がってしまう</strong>というデメリットがあります。本当は別のモンスターを伝授元に使いたいですが、始めたばかりだと仕方ないので同じモンスターでも気にせず親にしていきましょう。
+    </div>
+    <div class="info-box">
+      レンタルで強い親を借りれば結構すぐ強くなれるので、<a href="../friend.html" style="color:#388e3c;font-weight:bold;">フレンド募集板</a>もぜひ活用してみてください。
+    </div>
+
+    <div class="article-h3">編成</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies2.jpg" alt="編成①">
+      <img src="../diary-img/newbies/newbies3.jpg" alt="編成②">
+      <img src="../diary-img/newbies/newbies4.jpg" alt="編成③">
+    </div>
+    <p class="article-p">編成はこんな感じです。リセマラでMRリムルを引き、もう10連でもう1枚引いたので1凸になっていますが、この編成の核はレンタルのリッピーなので気にしないでください。</p>
+    <p class="article-p">Rのカードを入れているのは、MRリッピーのモン類共鳴の効果を上げるためです。モン類のMRを入れているときはできるだけ同じモン類のアシストカードを編成するといいでしょう。</p>
+
+    <div class="article-h3">持ち込みアイテム</div>
+    <p class="article-p">持ち込みアイテムは<strong>ガロエジュースとブリーダーライセンス</strong>です。慣れるまでは基本はどの育成もこの2つで大丈夫です。</p>
+    <div class="point-box">
+      この2つに文句をつけてくるおじさんの体臭はきついので信用しないようにしましょう。
+    </div>
+
+    <div class="article-h3">伝授スタート</div>
+    <p class="article-p">育成は伝授から始まります。秘伝が揃ってくるまではこのくらいがいいところですが、秘伝が強くなってきたら全ステータス200前後あるいはそれ以上上がった状態からスタートできるようになります。秘伝はとても大事ですね。</p>
+    <p class="article-p">秘伝について詳しく知りたい場合は<a href="hiden.html" style="color:#f0a500;font-weight:bold;">秘伝一覧</a>や<a href="hiden-kouka.html" style="color:#f0a500;font-weight:bold;">秘伝周回完全ガイド</a>のページも見てみてください。</p>
+  </div>
+
+  <!-- 2. デビュー期 -->
+  <div class="section" id="debut">
+    <div class="article-h2">2️⃣ デビュー期の立ち回り</div>
+
+    <div class="article-h3">出発直後・ブリーダーライセンスを即使用</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies5.jpg" alt="デビュー期①">
+      <img src="../diary-img/newbies/newbies6.jpg" alt="デビュー期②">
+      <img src="../diary-img/newbies/newbies7.jpg" alt="デビュー期③">
+      <img src="../diary-img/newbies/newbies8.jpg" alt="デビュー期④">
+    </div>
+    <p class="article-p">出発したら最初は総合力が1000くらいですね。まずは<strong>ブリーダーライセンスを即使用すること</strong>。これだけで上振れです。人によっては2回に1回くらい使うのを忘れるとかなんとか。</p>
+
+    <div class="article-h3">デビュー期のトレーニング選択</div>
+    <p class="article-p">いよいよターンの消化の仕方ですが、デビュー期は<strong>人数が多いトレーニングをひたすら選びましょう</strong>。失敗率が出てきたら遊びや休養を入れるのもありです。</p>
+    <p class="article-p">そしてデビュー戦にいきます。初心者でもデビュー戦はほぼ負けません。負けたら日頃の行いが悪いです。ゴミ拾いをしましょう。</p>
+
+    <div class="article-h3">大会後のエサとスパルタ管理</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies9.jpg" alt="大会後のエサ">
+    </div>
+    <p class="article-p">大会の後のエサは、序盤は<strong>おそれ度が上がるもの</strong>にしましょう。（インテリセット、パワフルセット、ビタミンもどき）</p>
+    <p class="article-p">スパルタ寄りの育成にするとトレ性能が上がるので、ミドル期のラスト4ターンくらいまで<strong>超スパルタを目指しておそれ度を上げていきます</strong>。おそれ度はトレーニングをしているだけでも上がっていくので特に意識しなくてもきびしい寄りになっていきます。</p>
+
+    <div class="article-h3">アシストカードのイベント選択肢</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies10.jpg" alt="アシストカードイベント">
+    </div>
+    <p class="article-p">アシストカードのイベント選択肢は、</p>
+    <ul class="article-ul">
+      <li>トレーニングを踏んだ時に発動する番号つきのイベント → 2回目で左が超状態変化か適性を1段階アップ</li>
+      <li>月の前半に勝手に起きるイベント → 左で体力10回復</li>
+    </ul>
+    <p class="article-p">画像は勝手に起きるほうのイベントです。基本は<strong>左を選んで体力回復</strong>を選びましょう。</p>
+  </div>
+
+  <!-- 3. ジュニア期 -->
+  <div class="section" id="junior">
+    <div class="article-h2">3️⃣ ジュニア期の立ち回り</div>
+
+    <div class="article-h3">師匠の初回イベントとチャレンジ</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies11.jpg" alt="ジュニア期①">
+      <img src="../diary-img/newbies/newbies12.jpg" alt="ジュニア期②">
+      <img src="../diary-img/newbies/newbies13.jpg" alt="ジュニア期③">
+    </div>
+    <p class="article-p">ジュニア期からは師匠のチャレンジを意識していきたいところです。今回は師匠の初回イベント（トレで師匠をふむと確率で発生）を起こしてなかったので急いで師匠をふみにいきます。イベント後にアイテムアイコンの隣にチャレンジアイコンが出てきます。</p>
+
+    <div class="article-h3">チャレンジの仕組み</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies14.jpg" alt="チャレンジ①">
+      <img src="../diary-img/newbies/newbies15.jpg" alt="チャレンジ②">
+      <img src="../diary-img/newbies/newbies16.jpg" alt="チャレンジ③">
+    </div>
+    <p class="article-p">チャレンジは何種類かある中からランダムで選ばれます。それぞれのチャレンジをクリアすると報酬がもらえますが、<strong>報酬内容が気に食わないときは各期で1回ずつチャレンジ内容＆報酬の再抽選ができます</strong>。再抽選を選んで報酬がさらに悪くなるなんてこともあるあるですね。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies18.jpg" alt="チャレンジ活用①">
+      <img src="../diary-img/newbies/newbies19.jpg" alt="チャレンジ活用②">
+    </div>
+    <p class="article-p">チャレンジ内容の中でも、<strong>アイテム使用と能力取得でいいやつは任意のタイミングで達成できる</strong>ので、全チャレンジ達成の報酬（体力回復）を好きな時に次のターンに持ってこられます。これで体力管理が楽になります。</p>
+
+    <div class="article-h3">ジュニア期ラスト10ターン</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies20.jpg" alt="ジュニア期ラスト①">
+      <img src="../diary-img/newbies/newbies21.jpg" alt="ジュニア期ラスト②">
+      <img src="../diary-img/newbies/newbies22.jpg" alt="ジュニア期ラスト③">
+    </div>
+    <p class="article-p">ジュニア期ラスト10ターンに<strong>～賞の大会に出ましょう</strong>。慣れるまではどれでもいいです。「勝ち目なし」と出ても意外と勝ってきてくれたりするので気にせず挑みましょう。</p>
+    <p class="article-p">負けましたね。そういうときもあります。砂時計でリベンジしてやりました。</p>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies23.jpg" alt="チャレンジ報酬">
+    </div>
+    <p class="article-p">大会後チャレンジを全部まとめて達成した報酬がもらえます。報酬は師匠のレアリティや凸の数によってそこそこ変わります。今回は無凸SSRのフレリアなのでこんなものですね。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies24.jpg" alt="師匠修行後①">
+      <img src="../diary-img/newbies/newbies25.jpg" alt="師匠修行後②">
+      <img src="../diary-img/newbies/newbies26.jpg" alt="師匠修行後③">
+    </div>
+    <p class="article-p">師匠は修行後に確率で体力回復と能力ポイントをくれるので編成するだけ得ですね。</p>
+
+    <div class="article-h3">ランク4技と「俺は喰らうものだ」取得</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies27.jpg" alt="技取得①">
+      <img src="../diary-img/newbies/newbies28.jpg" alt="技取得②">
+      <img src="../diary-img/newbies/newbies29.jpg" alt="技取得③">
+      <img src="../diary-img/newbies/newbies30.jpg" alt="技取得④">
+    </div>
+    <p class="article-p">ここからの戦いは厳しくなってくるので<strong>ランク4技と「俺は喰らうものだ」を取っておきます</strong>。ラスト4ターンのモンスターダービーまでトレーニングで鍛えていきます。</p>
+
+    <div class="article-h3">モンスターダービー</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies31.jpg" alt="モンダビ①">
+      <img src="../diary-img/newbies/newbies32.jpg" alt="モンダビ②">
+      <img src="../diary-img/newbies/newbies33.jpg" alt="モンダビ③">
+      <img src="../diary-img/newbies/newbies34.jpg" alt="モンダビ④">
+      <img src="../diary-img/newbies/newbies35.jpg" alt="モンダビ⑤">
+      <img src="../diary-img/newbies/newbies36.jpg" alt="モンダビ⑥">
+      <img src="../diary-img/newbies/newbies37.jpg" alt="モンダビ⑦">
+    </div>
+    <p class="article-p">えー激闘の末砂時計を使い切り敗退してしまいました。そういうときもあります。</p>
+    <p class="article-p">モンスターダービーに敗退してしまうと最初の四大大会であるグレイテスト4へ挑戦するための賞金が足りなくなる可能性が上がります。ここでもういいやとあきらめてしまうのも一つの選択です。ちなみにこのモンダビ4タテ現象はベテランでもたまにおきます。</p>
+    <div class="info-box">
+      今回はこのまま四大大会に出ないミドル期の立ち回りをしていきます。
     </div>
   </div>
+
+  <!-- 4. ミドル期 -->
+  <div class="section" id="middle">
+    <div class="article-h2">4️⃣ ミドル期の立ち回り</div>
+
+    <div class="article-h3">メロ/ネロイベントの選択</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies38.jpg" alt="メロネロ①">
+      <img src="../diary-img/newbies/newbies39.jpg" alt="メロネロ②">
+      <img src="../diary-img/newbies/newbies41.jpg" alt="メロネロ③">
+    </div>
+    <p class="article-p">このメロだかネロだかの方は序盤で踏めた場合ホッカイイラブを選んでおそれ度を上げるのに役立てたいところなんですが、今回はモンスターダービーに負けてしまったので左上を選んで体力の上限を上げます。</p>
+
+    <div class="article-h3">陣営選択</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies42.jpg" alt="陣営選択">
+    </div>
+    <p class="article-p"><strong>陣営選択はバトルコンテンツを楽しめるようになるまでは右側の師匠がおすすめです。</strong>シンプルに一番トレーニング性能が高いからです。</p>
+
+    <div class="article-h3">ステータス変換の考え方</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies43.jpg" alt="ステ変換①">
+      <img src="../diary-img/newbies/newbies44.jpg" alt="ステ変換②">
+    </div>
+    <p class="article-p">各期の終わりにあるステータス変換は、<strong>ステータスがあふれることが確実な場合以外は「～の根源1」だけ交換するようにしましょう</strong>。交換に使うステータス1あたりの総合力換算が一番高いです。</p>
+
+    <div class="article-h3">ミドル期最初の選択肢</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies45.jpg" alt="ミドル期最初の選択">
+    </div>
+    <p class="article-p"><strong>ミドル期最初の選択肢は左上の体力40回復以外が弱すぎる</strong>ので、ジュニア期ラストには体力を40以上減らした状態にできるのが理想です。</p>
+
+    <div class="article-h3">ミドル期チャレンジ</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies46.jpg" alt="ミドルチャレンジ①">
+      <img src="../diary-img/newbies/newbies47.jpg" alt="ミドルチャレンジ②">
+    </div>
+    <p class="article-p">ミドル期もチャレンジがあるので確認しておきましょう。</p>
+
+    <div class="article-h3">ノラモン注意報と超修行</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies48.jpg" alt="ノラモン①">
+      <img src="../diary-img/newbies/newbies49.jpg" alt="ノラモン②">
+      <img src="../diary-img/newbies/newbies50.jpg" alt="ノラモン③">
+    </div>
+    <p class="article-p">このメロだかネロだかの方は、ノラモンと出会える「ノラモン注意報」を手動で起こすことができるのでいいタイミングで呼びたいですね。今回はすでに注意報が来ているので修行のチケットをもらいにいきます。修行のチケットがもらえる確率は体感35％くらいです。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies51.jpg" alt="超修行①">
+      <img src="../diary-img/newbies/newbies52.jpg" alt="超修行②">
+      <img src="../diary-img/newbies/newbies53.jpg" alt="超修行③">
+    </div>
+    <p class="article-p"><strong>ノラモン注意報中は技習得率がかなり上がる</strong>ので、超修行を駆使して一気に技を覚えましょう。ちなみにノラモン遭遇判定は1個目に選んだ技だけあって、2個目に選んだ技にはありません。1個目を覚えられず2個目だけを覚えてしまった場合はノラモン注意報が消えちゃうので注意しましょう。</p>
+
+    <div class="article-h3">ピーク期の過ごし方</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies54.jpg" alt="ピーク①">
+      <img src="../diary-img/newbies/newbies55.jpg" alt="ピーク②">
+      <img src="../diary-img/newbies/newbies56.jpg" alt="ピーク③">
+    </div>
+    <p class="article-p">ピークが始まりました。ミドル期ラスト10ターンは本来四大大会のグレイテスト4に出たいところですが賞金が足りないのであきらめてトレーニングします。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies57.jpg" alt="ピーク④">
+      <img src="../diary-img/newbies/newbies58.jpg" alt="ピーク⑤">
+      <img src="../diary-img/newbies/newbies59.jpg" alt="ピーク⑥">
+      <img src="../diary-img/newbies/newbies60.jpg" alt="ピーク⑦">
+      <img src="../diary-img/newbies/newbies61.jpg" alt="ピーク⑧">
+    </div>
+    <p class="article-p">ガロエジュースで体力管理をしつつトレーニングしていきます。<strong>ピーク中はあまりにも弱いトレーニングしかない場合をのぞいて基本はトレーニングを優先します</strong>。めちゃくちゃ強いトレの場合は四大大会を無視することもあります。</p>
+
+    <div class="article-h3">人気度確保のための大会</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies63.jpg" alt="大会①">
+      <img src="../diary-img/newbies/newbies64.jpg" alt="大会②">
+      <img src="../diary-img/newbies/newbies65.jpg" alt="大会③">
+    </div>
+    <p class="article-p">総合力を上げる要素の一つに人気度があります。<strong>人気度確保とプロ期あたりから四大大会に出るために</strong>このあたりで大会に出ておきます。トレーニングが強かったら気にせずトレーニングをふみます。</p>
+
+    <div class="article-h3">モーマンタイ博士</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies66.jpg" alt="モーマンタイ①">
+      <img src="../diary-img/newbies/newbies67.jpg" alt="モーマンタイ②">
+      <img src="../diary-img/newbies/newbies68.jpg" alt="モーマンタイ③">
+    </div>
+    <p class="article-p">モーマンタイ博士は右上「力をつけたい！」が全ステータス20とトレーニング得意◎、右中断「たくさん技を習得したい！」が体力30と修行得意◎、下段がライフ5アップ、その他は覚えなくていいので実質3つとなってます。成功率は体感で上から25％、70％、100％くらいです。余計なことをしてほしくない場合は「願いごとはない」を選んでライフ5だけもらいましょう。</p>
+    <p class="article-p">失敗時のデメリットは「力をつけたい」が全ステ-5となまけ癖（トレ失敗率+5％）、「たくさん技を習得したい」は体力-30とうつ気味（忠誠度が増減しなくなる）です。</p>
+    <p class="article-p">今回はたくさん技を習得したいを選んで体力回復を狙いましたが失敗してしまいました。ちなみにうつ気味は通常の遊びで直すことができるので診療所にいかずに治すことができます。</p>
+
+    <div class="article-h3">ミドル期終盤・チャレンジ完走</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies69.jpg" alt="ミドル終盤①">
+      <img src="../diary-img/newbies/newbies70.jpg" alt="ミドル終盤②">
+      <img src="../diary-img/newbies/newbies71.jpg" alt="ミドル終盤③">
+      <img src="../diary-img/newbies/newbies72.jpg" alt="ミドル終盤④">
+    </div>
+    <p class="article-p">ではミドル期も終盤、チャレンジを完走して総合力を上げていきましょう。</p>
+  </div>
+
+  <!-- 5. プロ期・育成完了 -->
+  <div class="section" id="pro">
+    <div class="article-h2">5️⃣ プロ期・育成完了</div>
+
+    <div class="article-h3">ミドル期終了・プロ期スタート</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies75.jpg" alt="ミドル期終了①">
+      <img src="../diary-img/newbies/newbies76.jpg" alt="ミドル期終了②">
+      <img src="../diary-img/newbies/newbies77.jpg" alt="ミドル期終了③">
+      <img src="../diary-img/newbies/newbies78.jpg" alt="ミドル期終了④">
+    </div>
+    <p class="article-p">ミドル期が終わったときはこんな感じでした。ステータス変換も特に取れそうなやつがなかったのでスルー。プロ期もチャレンジを確認して進めていきます。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies79.jpg" alt="プロ期トレ①">
+      <img src="../diary-img/newbies/newbies80.jpg" alt="プロ期トレ②">
+    </div>
+    <p class="article-p"><strong>初心者でもこのくらいのトレーニングがきます</strong>。こういうトレーニングを何回呼び込めるかで総合力がかなり変わってきますね。ちなみにこのトレーニングは大成功をしてトレ数値+40％になっています。</p>
+
+    <div class="article-h3">プロ期ラスト10ターンの動き</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies81.jpg" alt="プロ期ラスト①">
+      <img src="../diary-img/newbies/newbies82.jpg" alt="プロ期ラスト②">
+      <img src="../diary-img/newbies/newbies83.jpg" alt="プロ期ラスト③">
+      <img src="../diary-img/newbies/newbies84.jpg" alt="プロ期ラスト④">
+      <img src="../diary-img/newbies/newbies85.jpg" alt="プロ期ラスト⑤">
+    </div>
+    <p class="article-p"><strong>プロ期ラスト10ターンは四大大会ウィナーズ杯に出てから休養→修行</strong>しています。</p>
+
+    <div class="article-h3">NPC親密度について</div>
+    <div class="img-single">
+      <img src="../diary-img/newbies/newbies86.jpg" alt="NPC親密度">
+    </div>
+    <p class="article-p">育成画面右上のターン数のあたりをタップするとNPCの親密度を確認することができます。</p>
+    <div class="point-box">
+      <strong>NPC親密度の恩恵まとめ</strong><br>
+      ・50超え → プロ期ラスト3ターン目始まりに全ステ+5＆体力24or能力ポイントのイベント発生<br>
+      ・50超え → プロ期ラスト2ターン始まりに全ステ+10のイベントが発生（発生条件諸説あり）<br>
+      ・50超え → 最後の3連戦の1回戦スルー権を獲得<br>
+      ・90超え → 最後の3連戦の準決勝スルー権＋ベリーグッドエンディングが確定<br>
+      ベリーグッドエンディングは通常のグッドエンディングより<strong>全ステ+12</strong>
+    </div>
+    <p class="article-p">こんな感じでNPC親密度を上げる恩恵は結構強いのでタイミング的に50や90を狙えそうだなと思ったときはNPC親密度を上げにいくのもかなり有効です。今回はプロ期ラスト7ターン時点で親密度77なので最終的に90以上にしてベリーグッドエンディングを狙っていきたいと思います。</p>
+
+    <div class="article-h3">四大大会ワールドモンスターズ杯</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies87.jpg" alt="ワールドモンスターズ①">
+      <img src="../diary-img/newbies/newbies88.jpg" alt="ワールドモンスターズ②">
+    </div>
+    <p class="article-p">チャレンジを消化しプロ期ラスト4ターンに四大大会ワールドモンスターズ杯に出て四大大会制覇したつもりになります。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies89.jpg" alt="NPC親密度イベント①">
+      <img src="../diary-img/newbies/newbies90.jpg" alt="NPC親密度イベント②">
+    </div>
+    <p class="article-p">そしてNPC親密度イベント後、プロ期終わりの総当たり戦で敗北しましたが些細なことです。ただ総当たり戦は非常に評判がよくないという噂を耳にした時代もありました。振り返れば泡沫の記憶の影に佇む埃のようで、改善してほしいなという思いが浮かんでは消え夕暮れの眩しさに目を細める野良猫を横目にひび割れた手鏡をかき集めたものです。</p>
+
+    <div class="article-h3">プロ期終了・育成完了</div>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies91.jpg" alt="プロ期終了①">
+      <img src="../diary-img/newbies/newbies92.jpg" alt="プロ期終了②">
+    </div>
+    <p class="article-p">プロ期が終わってこんな感じです。NPC親密度も90を超えてベリーグッドエンディングが確定したのはいい感じです。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies93.jpg" alt="最終3連戦①">
+      <img src="../diary-img/newbies/newbies94.jpg" alt="最終3連戦②">
+      <img src="../diary-img/newbies/newbies95.jpg" alt="最終3連戦③">
+      <img src="../diary-img/newbies/newbies96.jpg" alt="最終3連戦④">
+      <img src="../diary-img/newbies/newbies97.jpg" alt="最終3連戦⑤">
+    </div>
+    <p class="article-p">また英雄は持っていないので最後の3連戦の決勝に勝ち、能力ポイントを割り振って育成完了です。能力ポイントどれをとったらいいかわからない人は<a href="../abilitypoint/index.html" style="color:#f0a500;font-weight:bold;">能力ポイント最適化ツール</a>を使ってみてください。</p>
+    <div class="img-grid">
+      <img src="../diary-img/newbies/newbies98.jpg" alt="育成完了①">
+      <img src="../diary-img/newbies/newbies99.jpg" alt="育成完了②">
+      <img src="../diary-img/newbies/newbies100.jpg" alt="育成完了③">
+      <img src="../diary-img/newbies/newbies101.jpg" alt="育成完了④">
+    </div>
+    <p class="article-p">こんな感じで育成完了になります。ぜひ参考にしてみてください。でも四大大会は出たほうが強くなると思います。</p>
+  </div>
+
 </div>
 
 <footer>
