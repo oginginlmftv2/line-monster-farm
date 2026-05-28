@@ -137,6 +137,13 @@
       border: 2px solid #eee; cursor: pointer; transition: background .15s, border-color .15s;
     }
     .retry-btn:hover { background: #fff3cd; border-color: #f0a500; color: #b8860b; }
+    .save-img-btn {
+      display: block; width: 100%; text-align: center; background: #2d8a4e; color: #fff;
+      font-size: 14px; font-weight: 900; padding: 13px 20px; border-radius: 10px;
+      border: none; cursor: pointer; transition: opacity .15s;
+    }
+    .save-img-btn:hover { opacity: .85; }
+    .save-hint { text-align: center; font-size: 12px; color: #999; margin: -2px 0 4px; }
 
     /* アニメーション */
     .fade-in { animation: fadeIn .35s ease forwards; }
@@ -245,7 +252,9 @@
 
       <div class="result-actions">
         <a id="detail-btn" class="detail-btn" href="#">このモンスターの詳細を見る →</a>
-        <a id="tweet-btn" class="tweet-btn" href="#" target="_blank" rel="noopener">𝕏 結果をポストする</a>
+        <button class="save-img-btn" id="save-img-btn" onclick="saveResultImage()">📷 結果画像を保存する</button>
+        <p class="save-hint">保存した画像をポストに添付してシェアしよう！</p>
+        <a id="tweet-btn" class="tweet-btn" href="#" target="_blank" rel="noopener">𝕏 テキストでポストする</a>
         <button class="retry-btn" onclick="resetQuiz()">🔄 もう一度診断する</button>
       </div>
 
@@ -259,6 +268,8 @@
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
 
+<!-- html2canvas -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -524,6 +535,31 @@ function showResult() {
 function resetQuiz() {
   document.getElementById('result-screen').style.display = 'none';
   document.getElementById('intro-screen').style.display  = 'block';
+}
+
+async function saveResultImage() {
+  const btn = document.getElementById('save-img-btn');
+  btn.textContent = '⏳ 画像を生成中...';
+  btn.disabled = true;
+  try {
+    const card = document.querySelector('.monster-card');
+    const canvas = await html2canvas(card, {
+      backgroundColor: '#ffffff',
+      scale: 2,
+      useCORS: true,
+      allowTaint: false,
+      logging: false,
+    });
+    const link = document.createElement('a');
+    link.download = 'モンスター占い結果.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (e) {
+    alert('画像の生成に失敗しました。');
+  } finally {
+    btn.textContent = '📷 結果画像を保存する';
+    btn.disabled = false;
+  }
 }
 </script>
 
