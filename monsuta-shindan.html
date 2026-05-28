@@ -185,6 +185,7 @@
       </p>
       <p class="shindan-sub">全338種類のモンスターの中から診断します</p>
       <button class="start-btn" onclick="startQuiz()">診断スタート ▶</button>
+      <p style="font-size:11px;color:#bbb;margin-top:18px;line-height:1.7;">※プレイスタイルによっておすすめのモンスターを絞り込む機能ではありません。あくまでも占いとしてお楽しみください。</p>
     </div>
 
     <!-- ===== クイズ ===== -->
@@ -462,7 +463,7 @@ function showResult() {
     });
 
     // L/P/T（Q3〜Q5の選択肢index=3）を1つでも選んでいたらカワズモー種
-    const isKawazumo = answers[2] === 3 || answers[3] === 3 || answers[4] === 3;
+    const isKawazumo = answers[3] === 3 || answers[4] === 3;
     let monster, monIdx, typeKey;
     const code = answers[0]*256 + answers[1]*64 + answers[2]*16 + answers[3]*4 + answers[4];
 
