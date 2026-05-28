@@ -476,7 +476,11 @@ function showResult() {
       monIdx  = kawazumoList[pick].i;
       typeKey = 'kawazumo';
     } else {
-      monIdx  = Math.floor(code * monstersData.length / 1024);
+      // answers[3]・[4]は0〜2の3値なので混合基数で通し番号化（0〜575）
+      // さらに線形合同スクランブル（×401+137）でランダム感を出しつつ全338体カバー
+      const code2    = answers[0]*144 + answers[1]*36 + answers[2]*9 + answers[3]*3 + answers[4];
+      const shuffled = (code2 * 401 + 137) % 576;
+      monIdx  = Math.floor(shuffled * monstersData.length / 576);
       monster = monstersData[monIdx];
       const maxScore = Math.max(...Object.values(scores));
       const tops = Object.keys(scores).filter(k => scores[k] === maxScore);

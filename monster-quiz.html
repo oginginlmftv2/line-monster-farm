@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モンスター当てクイズ | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="種族・オーラなどのヒントからモンスター名を当てよう！全338種類が出題対象のLINEモンスターファームクイズ。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monster-quiz.html">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .quiz-wrap { max-width: 520px; margin: 0 auto; }
+
+    /* ===== イントロ ===== */
+    #intro-screen { text-align: center; padding: 12px 0 28px; }
+    .quiz-eyecatch { font-size: 64px; line-height: 1; margin-bottom: 18px; }
+    .quiz-lead { font-size: 14px; color: #666; line-height: 1.9; margin-bottom: 8px; }
+    .quiz-sub  { font-size: 12px; color: #bbb; margin-bottom: 24px; }
+    .start-btn {
+      display: inline-block; background: #f0a500; color: #fff;
+      font-size: 17px; font-weight: 900; padding: 14px 48px;
+      border-radius: 50px; border: none; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(240,165,0,.35);
+      transition: transform .15s, box-shadow .15s;
+    }
+    .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(240,165,0,.45); }
+    .start-btn:active { transform: translateY(0); }
+
+    /* ===== 進捗 ===== */
+    .progress-wrap { margin-bottom: 20px; }
+    .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: #999; margin-bottom: 6px; }
+    .progress-bar-bg { background: #f0f0f0; border-radius: 10px; height: 6px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; background: linear-gradient(90deg, #f0a500, #ffcc44);
+      border-radius: 10px; transition: width .4s ease; width: 0%;
+    }
+
+    /* ===== 問題カード ===== */
+    #quiz-screen { display: none; }
+    .q-card {
+      background: #fff; border-radius: 14px;
+      box-shadow: 0 2px 14px rgba(0,0,0,.09); padding: 24px 20px; margin-bottom: 12px;
+    }
+    .q-num-badge {
+      display: inline-block; background: #f0a500; color: #fff;
+      font-size: 11px; font-weight: 900; padding: 3px 10px; border-radius: 20px; margin-bottom: 14px;
+    }
+    .q-label { font-size: 14px; color: #999; margin-bottom: 14px; }
+
+    /* ===== ヒント ===== */
+    .hint-list { display: flex; flex-direction: column; gap: 10px; }
+    .hint-row { display: flex; align-items: center; gap: 10px; }
+    .hint-key {
+      width: 72px; font-size: 12px; color: #999; flex-shrink: 0;
+      font-weight: bold; text-align: right;
+    }
+    .hint-val { font-size: 15px; font-weight: bold; color: #1a1a2e; }
+    .hint-divider { width: 100%; height: 1px; background: #f0f0f0; margin: 4px 0; }
+    .aura-dot {
+      display: inline-block; width: 13px; height: 13px; border-radius: 50%;
+      margin-right: 6px; vertical-align: middle; flex-shrink: 0;
+    }
+    .limited-badge {
+      display: inline-block; font-size: 11px; font-weight: 900;
+      padding: 2px 8px; border-radius: 20px;
+      background: #fff3cd; color: #b8860b; border: 1px solid #f0d080;
+    }
+
+    /* ===== 選択肢 ===== */
+    .choices { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+    .choice-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: #f9f9f9; border: 2px solid #eee; border-radius: 10px;
+      padding: 13px 14px; font-size: 14px; color: #333; cursor: pointer;
+      text-align: left; width: 100%;
+      transition: background .15s, border-color .15s, transform .1s;
+    }
+    .choice-btn:hover   { background: #fff8e1; border-color: #f0a500; }
+    .choice-btn:active  { transform: scale(.98); }
+    .choice-btn.correct { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; pointer-events: none; }
+    .choice-btn.wrong   { background: #fde8e8; border-color: #ef5350; color: #c62828; pointer-events: none; }
+    .choice-btn.reveal  { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; pointer-events: none; }
+    .choice-btn:disabled { pointer-events: none; }
+    .choice-label {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 24px; height: 24px; background: #f0a500; color: #fff;
+      border-radius: 50%; font-size: 12px; font-weight: 900; flex-shrink: 0;
+    }
+
+    /* ===== 次へボタン ===== */
+    .next-btn {
+      display: none; width: 100%; text-align: center; background: #f0a500; color: #fff;
+      font-size: 14px; font-weight: 900; padding: 13px 20px; border-radius: 10px;
+      border: none; cursor: pointer; margin-top: 4px; transition: opacity .15s;
+    }
+    .next-btn:hover { opacity: .88; }
+
+    /* ===== 結果 ===== */
+    #result-screen { display: none; text-align: center; padding: 12px 0 28px; }
+    .result-card {
+      background: #fff; border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.12);
+      border-top: 4px solid #f0a500; padding: 32px 20px 24px; margin-bottom: 20px;
+    }
+    .result-score-num { font-size: 72px; font-weight: 900; color: #f0a500; line-height: 1; }
+    .result-score-den { font-size: 18px; color: #bbb; margin-bottom: 16px; }
+    .result-rank { font-size: 20px; font-weight: bold; color: #1a1a2e; margin-bottom: 10px; }
+    .result-msg  { font-size: 13px; color: #666; line-height: 1.8; }
+    .result-actions { display: flex; flex-direction: column; gap: 10px; }
+    .retry-btn {
+      display: block; text-align: center; background: #f0a500; color: #fff;
+      font-size: 14px; font-weight: 900; padding: 13px 20px; border-radius: 10px;
+      border: none; cursor: pointer; transition: opacity .15s;
+    }
+    .retry-btn:hover { opacity: .88; }
+    .monsters-btn {
+      display: block; text-align: center; background: #f9f9f9; color: #555;
+      font-size: 14px; font-weight: bold; padding: 12px 20px; border-radius: 10px;
+      border: 2px solid #eee; text-decoration: none;
+      transition: background .15s, border-color .15s;
+    }
+    .monsters-btn:hover { background: #fff3cd; border-color: #f0a500; color: #b8860b; }
+
+    /* ===== アニメーション ===== */
+    .fade-in { animation: fadeIn .35s ease forwards; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="monsters.html">モンスター一覧</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">🎯 モンスター当てクイズ</h1>
+
+  <div class="quiz-wrap">
+
+    <!-- ===== イントロ ===== -->
+    <div id="intro-screen">
+      <div class="quiz-eyecatch">🎯</div>
+      <p class="quiz-lead">
+        ヒントからモンスター名を当てよう！<br>全338種類のモンスターが出題対象です。
+      </p>
+      <p class="quiz-sub">全5問 / オーラ・種族・主副種族がヒント</p>
+      <button class="start-btn" onclick="startQuiz()">クイズスタート ▶</button>
+    </div>
+
+    <!-- ===== クイズ ===== -->
+    <div id="quiz-screen">
+      <div class="progress-wrap">
+        <div class="progress-label">
+          <span>Q<span id="q-num-label">1</span> / 5</span>
+          <span id="score-label">0問正解</span>
+        </div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <div class="q-card" id="q-card">
+        <div class="q-num-badge" id="q-num-badge">Q1</div>
+        <div class="q-label">このモンスターは？</div>
+        <div class="hint-list" id="hint-list"></div>
+        <div class="choices" id="choices"></div>
+      </div>
+
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()">次の問題 →</button>
+    </div>
+
+    <!-- ===== 結果 ===== -->
+    <div id="result-screen">
+      <div class="result-card">
+        <div class="result-score-num" id="result-num">0</div>
+        <div class="result-score-den">/ 5問正解</div>
+        <div class="result-rank" id="result-rank"></div>
+        <p class="result-msg" id="result-msg"></p>
+      </div>
+      <div class="result-actions">
+        <button class="retry-btn" onclick="startQuiz()">🔄 もう一度挑戦する</button>
+        <a class="monsters-btn" href="monsters.html">📋 モンスター一覧で復習する</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+<script src="monsters-data.js"></script>
+<script>
+const TOTAL_Q = 5;
+let questions = [];
+let current  = 0;
+let score    = 0;
+
+const auraColor = {
+  '黒': '#4a5568', '赤': '#fc8181', '青': '#63b3ed',
+  '白': '#cbd5e0', '緑': '#68d391', '黄': '#f6e05e',
+};
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startQuiz() {
+  score   = 0;
+  current = 0;
+
+  const pool = shuffle(monstersData).slice(0, TOTAL_Q);
+  questions = pool.map(m => {
+    const decoys = shuffle(monstersData.filter(x => x.name !== m.name))
+      .slice(0, 3).map(x => x.name);
+    const choices = shuffle([...decoys, m.name]);
+    return { monster: m, choices };
+  });
+
+  document.getElementById('intro-screen').style.display  = 'none';
+  document.getElementById('result-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display   = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const { monster: m, choices } = questions[current];
+
+  document.getElementById('progress-fill').style.width  = (current / TOTAL_Q * 100) + '%';
+  document.getElementById('q-num-label').textContent    = current + 1;
+  document.getElementById('q-num-badge').textContent    = 'Q' + (current + 1);
+  document.getElementById('score-label').textContent    = score + '問正解';
+  document.getElementById('next-btn').style.display     = 'none';
+
+  // ヒント描画
+  const hl = document.getElementById('hint-list');
+  hl.innerHTML = '';
+
+  const rows = [];
+  if (m.limited && m.limitedLabel) {
+    rows.push({ key: '入手方法', html: `<span class="limited-badge">${m.limitedLabel}</span>` });
+    rows.push({ key: '', html: '<div class="hint-divider"></div>', isDivider: true });
+  }
+  const ac = auraColor[m.aura] || '#ddd';
+  rows.push({ key: 'オーラ',   html: `<span class="aura-dot" style="background:${ac}"></span><span class="hint-val">${m.aura ? m.aura + 'オーラ' : 'なし'}</span>` });
+  rows.push({ key: '種族',     html: `<span class="hint-val">${m.mon || '不明'}</span>` });
+  rows.push({ key: '主種族',   html: `<span class="hint-val">${m.mainMon || '不明'}</span>` });
+  rows.push({ key: '副種族',   html: `<span class="hint-val">${m.subMon  || '不明'}</span>` });
+
+  rows.forEach(r => {
+    if (r.isDivider) { hl.insertAdjacentHTML('beforeend', r.html); return; }
+    const row = document.createElement('div');
+    row.className = 'hint-row';
+    row.innerHTML = `<span class="hint-key">${r.key}</span>${r.html}`;
+    hl.appendChild(row);
+  });
+
+  // 選択肢描画
+  const ce = document.getElementById('choices');
+  ce.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  choices.forEach((name, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.innerHTML = `<span class="choice-label">${labels[i]}</span><span>${name}</span>`;
+    btn.onclick = () => answer(name, btn, m.name);
+    ce.appendChild(btn);
+  });
+
+  const card = document.getElementById('q-card');
+  card.classList.remove('fade-in');
+  void card.offsetWidth;
+  card.classList.add('fade-in');
+}
+
+function answer(selected, btn, correct) {
+  document.querySelectorAll('.choice-btn').forEach(b => { b.disabled = true; });
+
+  if (selected === correct) {
+    btn.classList.add('correct');
+    score++;
+    document.getElementById('score-label').textContent = score + '問正解';
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.choice-btn').forEach(b => {
+      if (b.querySelector('span:last-child').textContent === correct) b.classList.add('reveal');
+    });
+  }
+
+  const nb = document.getElementById('next-btn');
+  nb.textContent    = current < TOTAL_Q - 1 ? '次の問題 →' : '結果を見る';
+  nb.style.display  = 'block';
+}
+
+function nextQuestion() {
+  current++;
+  if (current >= TOTAL_Q) {
+    showResult();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResult() {
+  document.getElementById('quiz-screen').style.display   = 'none';
+  document.getElementById('result-screen').style.display = 'block';
+  document.getElementById('result-num').textContent      = score;
+
+  const ranks = [
+    { min: 5, rank: '🏆 パーフェクト！',   msg: '全問正解！完璧なモンスター知識の持ち主です！' },
+    { min: 4, rank: '⭐ 優秀！',           msg: 'あと1問でパーフェクト。かなりの上級者ですね。' },
+    { min: 3, rank: '👍 まずまず',         msg: '3問正解！もう少しでベテランブリーダーです。' },
+    { min: 1, rank: '😅 もう少し！',       msg: 'モンスター一覧で知識を深めればもっと伸びます！' },
+    { min: 0, rank: '😢 ドンマイ…',        msg: '0問正解…まずはモンスター一覧をチェックしよう！' },
+  ];
+  const r = ranks.find(x => score >= x.min);
+  document.getElementById('result-rank').textContent = r.rank;
+  document.getElementById('result-msg').textContent  = r.msg;
+}
+</script>
+
+</body>
+</html>
