@@ -81,6 +81,13 @@
     @keyframes tpop { from { transform: scale(.7); opacity: .3; } to { transform: scale(1); opacity: 1; } }
     .tile.new { animation: tpop .15s ease; }
 
+    @keyframes mergeFlash {
+      0%   { transform: scale(1); filter: brightness(1); }
+      35%  { transform: scale(1.3); filter: brightness(1.7); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+    .tile.merged { animation: mergeFlash 0.25s ease-out; }
+
     /* タイル色（モッチー=最小） */
     .t2    { background: #ffe0b2; color: #5d4037; }  /* モッチー */
     .t4    { background: #ffcc80; color: #4e342e; }  /* ハム */
@@ -280,8 +287,9 @@ const EVO = {
 
 // ===== 定数・状態 =====
 const COLS = 4;
-const ROWS = 5;  // 列の最大高さ
+const ROWS = 4;  // 列の最大高さ
 let stacks = [];   // stacks[c][0]=一番下, stacks[c][length-1]=一番上
+let flashCells = []; // 合体エフェクトを出すセル [{col, h}]
 let curTile = 2;
 let nxtTile = 2;
 let curCol = 1;
@@ -310,8 +318,9 @@ function canDrop(c) {
 // 現在選択中の列にタイルを落とす
 function drop() {
   if (!gameActive || !canDrop(curCol)) return;
+  flashCells = [];
   stacks[curCol].push(curTile);
-  resolveAllMerges();
+  cascadeAbsorb(curCol, stacks[curCol].length - 1);
   curTile = nxtTile;
   nxtTile = genTile();
   render();
@@ -337,59 +346,51 @@ function moveRight() {
 }
 
 // 列の上から2つが同じ値なら合体（連鎖あり）
-// 縦マージ（1列、上2つが同値なら合体・連鎖）
-function mergeVertical(c) {
-  const s = stacks[c];
-  let changed = false;
-  while (s.length >= 2 && s[s.length - 1] === s[s.length - 2]) {
-    s.pop();
-    s[s.length - 1] *= 2;
-    changed = true;
-  }
-  return changed;
-}
-
-// 横マージ（全行を1回スキャン、変化があればtrue）
-function mergeHorizontalOnce() {
-  const maxH = Math.max(...stacks.map(s => s.length), 0);
-  for (let h = 0; h < maxH; h++) {
-    for (let c = 0; c < COLS; c++) {
-      const val = stacks[c][h];
-      if (!val) continue;
-      const L = c > 0 ? (stacks[c - 1][h] || 0) : 0;
-      const R = c < COLS - 1 ? (stacks[c + 1][h] || 0) : 0;
-
-      if (L === val && R === val) {
-        // 両隣が同じ → 2段階進化（×4）
-        stacks[c][h] = val * 4;
-        stacks[c - 1].splice(h, 1);
-        stacks[c + 1].splice(h, 1);
-        return true;
-      }
-      if (L === val) {
-        stacks[c][h] = val * 2;
-        stacks[c - 1].splice(h, 1);
-        return true;
-      }
-      if (R === val) {
-        stacks[c][h] = val * 2;
-        stacks[c + 1].splice(h, 1);
-        return true;
-      }
-    }
-  }
-  return false;
-}
-
-// 縦・横マージを変化がなくなるまで繰り返す
-function resolveAllMerges() {
+// 新タイルが隣接する同値タイル（左・右・下）を吸い込んで進化する
+// 吸い込み数だけ進化段階が上がる（×2^n）→ 連鎖あり
+function cascadeAbsorb(c, h) {
   let changed = true;
   while (changed) {
     changed = false;
-    for (let c = 0; c < COLS; c++) {
-      if (mergeVertical(c)) changed = true;
+    const val = stacks[c][h];
+    if (!val) break;
+
+    let absorbed = 0;
+    const sideRems = []; // 横に吸い込む列
+    let hasBelow = false;
+
+    // 下を確認（同列・1段下）
+    if (h > 0 && stacks[c][h - 1] === val) {
+      hasBelow = true;
+      absorbed++;
     }
-    if (mergeHorizontalOnce()) changed = true;
+    // 左を確認（同高さ）
+    if (c > 0 && (stacks[c - 1][h] || 0) === val) {
+      sideRems.push(c - 1);
+      absorbed++;
+    }
+    // 右を確認（同高さ）
+    if (c < COLS - 1 && (stacks[c + 1][h] || 0) === val) {
+      sideRems.push(c + 1);
+      absorbed++;
+    }
+
+    if (absorbed > 0) {
+      stacks[c][h] = val * Math.pow(2, absorbed);
+      changed = true;
+
+      // 横の吸い込み（独立した列なのでインデックスは安定）
+      sideRems.forEach(sc => stacks[sc].splice(h, 1));
+
+      // 下の吸い込み（同列なので現タイルが1段下にずれる）
+      if (hasBelow) {
+        stacks[c].splice(h - 1, 1);
+        h--;
+      }
+
+      // エフェクト対象に追記
+      flashCells.push({ col: c, h });
+    }
   }
 }
 
@@ -428,11 +429,12 @@ function render() {
       const dropRow = ROWS - 1 - stacks[c].length;
       const isPreview = (c === curCol && row === dropRow && stacks[c].length < ROWS);
 
+      const isFlash = flashCells.some(f => f.col === c && f.h === stackIdx);
       let el;
       if (isPreview) {
         el = tileHtml(curTile, 'drop-prev');
       } else if (val) {
-        el = tileHtml(val, null);
+        el = tileHtml(val, isFlash ? 'merged' : null);
       } else {
         el = document.createElement('div');
         el.className = 'cell' +
@@ -450,6 +452,7 @@ function render() {
   // プレビュー更新
   setPreview('curTileEl', curTile);
   setPreview('nxtTileEl', nxtTile);
+  flashCells = []; // エフェクト情報をクリア
 }
 
 function setPreview(id, val) {
