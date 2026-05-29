@@ -5,242 +5,115 @@
   <link rel="icon" href="S__94175247.jpg">
   <link rel="apple-touch-icon" href="S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>モンスター進化2048 | LINEモンスターファーム徹底攻略</title>
+  <title>モンスタードロップ | LINEモンスターファーム徹底攻略</title>
   <link rel="stylesheet" href="style.css">
   <style>
-    .game-wrapper {
-      max-width: 460px;
-      margin: 0 auto;
-      padding: 16px 16px 32px;
-    }
-    .game-title {
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-      color: #1a1a2e;
-      margin-bottom: 16px;
-    }
+    .game-wrapper { max-width: 420px; margin: 0 auto; padding: 16px 16px 32px; }
+    .game-title { text-align: center; font-size: 22px; font-weight: bold; color: #1a1a2e; margin-bottom: 16px; }
     .game-title span { color: #f0a500; }
 
     /* スタート画面 */
-    .start-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-    }
-    .rules {
-      font-size: 13px;
-      color: #555;
-      line-height: 1.9;
-      background: #f9f9f9;
-      border-radius: 8px;
-      padding: 12px 14px;
-      margin-bottom: 16px;
-    }
-    .rules strong { color: #1a1a2e; }
-    .evo-chain {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-      margin-top: 6px;
-      font-size: 12px;
-      color: #444;
-    }
-    .evo-chip {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 2px 6px;
-      white-space: nowrap;
-    }
-    .name-row {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .name-input {
-      flex: 1;
-      padding: 10px 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-size: 15px;
-      font-family: inherit;
-    }
+    .start-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.1); }
+    .rules { font-size: 13px; color: #555; line-height: 1.9; background: #f9f9f9; border-radius: 8px; padding: 12px 14px; margin-bottom: 16px; }
+    .evo-chain { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-top: 6px; font-size: 12px; }
+    .evo-chip { background: #fff; border: 1px solid #ddd; border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
+    .name-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .name-input { flex: 1; padding: 10px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; font-family: inherit; }
     .name-input:focus { outline: none; border-color: #f0a500; }
     .name-input.err { border-color: #e53935; }
-    .start-btn {
-      padding: 10px 20px;
-      background: #f0a500;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: inherit;
-      white-space: nowrap;
-      transition: background 0.15s;
-    }
+    .start-btn { padding: 10px 20px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; font-family: inherit; white-space: nowrap; transition: background .15s; }
     .start-btn:hover { background: #d4920a; }
+    .pre-ranking { margin-top: 20px; }
 
     /* タイマーバー */
-    .timer-bar-wrap {
-      height: 8px;
-      background: #ddd;
-      border-radius: 4px;
-      margin-bottom: 10px;
-      overflow: hidden;
-    }
-    .timer-bar {
-      height: 100%;
-      width: 100%;
-      background: #4CAF50;
-      border-radius: 4px;
-      transition: width 1s linear, background 0.4s;
-    }
+    .timer-bar-wrap { height: 8px; background: #ddd; border-radius: 4px; margin-bottom: 10px; overflow: hidden; }
+    .timer-bar { height: 100%; width: 100%; background: #4CAF50; border-radius: 4px; transition: width 1s linear, background .4s; }
 
     /* ゲームヘッダー */
-    .game-hd {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-    .info-box {
-      flex: 1;
-      background: #1a1a2e;
-      border-radius: 8px;
-      padding: 8px 10px;
-      text-align: center;
-    }
+    .game-hd { display: flex; gap: 8px; margin-bottom: 10px; }
+    .info-box { flex: 1; background: #1a1a2e; border-radius: 8px; padding: 8px 10px; text-align: center; }
     .info-label { font-size: 11px; color: #aaa; }
-    .info-val {
-      font-size: 26px;
-      font-weight: bold;
-      color: #f0a500;
-      line-height: 1.2;
-    }
+    .info-val { font-size: 26px; font-weight: bold; color: #f0a500; line-height: 1.2; }
     #timerVal { color: #4CAF50; }
     #timerVal.warn { color: #f0a500; }
     #timerVal.danger { color: #e53935; }
 
+    /* NOW / NEXT プレビュー */
+    .tile-preview-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .tile-preview-box { flex: 1; background: #1a1a2e; border-radius: 8px; padding: 8px; text-align: center; }
+    .tile-preview-label { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+    .preview-tile {
+      display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+      border-radius: 6px; padding: 6px 10px; min-width: 64px; font-weight: bold; gap: 1px;
+    }
+    .preview-tile .tn { font-size: 13px; }
+    .preview-tile .tv { font-size: 10px; opacity: .8; }
+
+    /* ボード */
+    .grid-board { background: #bbada0; border-radius: 10px; padding: 8px; touch-action: none; user-select: none; }
+
+    /* 列ヘッダー */
+    .col-headers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 4px; }
+    .col-hd {
+      height: 26px; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; border-radius: 4px; cursor: pointer;
+      color: rgba(255,255,255,.25); transition: all .15s;
+    }
+    .col-hd.active { color: #f0a500; background: rgba(240,165,0,.18); font-size: 20px; }
+    .col-hd.full { color: rgba(229,57,53,.5); cursor: not-allowed; }
+
     /* グリッド */
-    .grid-wrap {
-      background: #bbada0;
-      border-radius: 10px;
-      padding: 8px;
-      touch-action: none;
-      user-select: none;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-    }
-    .cell {
-      aspect-ratio: 1;
-      background: rgba(238,228,218,0.35);
-      border-radius: 6px;
-    }
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+    .cell { aspect-ratio: 1; background: rgba(238,228,218,.35); border-radius: 6px; cursor: pointer; transition: background .1s; }
+    .cell.col-active { background: rgba(240,165,0,.12); }
+    .cell.col-full { background: rgba(229,57,53,.1); cursor: not-allowed; }
+
+    /* タイル共通 */
     .tile {
-      aspect-ratio: 1;
-      border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      text-align: center;
-      padding: 4px;
-      line-height: 1.2;
-      word-break: break-all;
-      animation: tpop 0.12s ease;
+      aspect-ratio: 1; border-radius: 6px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: bold; text-align: center; padding: 3px; cursor: pointer; gap: 1px;
     }
-    @keyframes tpop {
-      from { transform: scale(0.8); opacity: 0.5; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-    /* フォントサイズはタイル価値で変える */
-    .tile { font-size: 15px; }
-    .tile.sm { font-size: 12px; }
-    .tile.xs { font-size: 10px; }
+    .tile .tn { font-size: 12px; line-height: 1.1; }
+    .tile .tv { font-size: 9px; opacity: .75; }
+    .tile.drop-prev { opacity: .5; outline: 2px dashed rgba(255,255,255,.7); outline-offset: -2px; }
 
-    /* タイル色 */
-    .t2    { background: #eee4da; color: #776e65; }
-    .t4    { background: #ffe0b2; color: #5d4037; }
-    .t8    { background: #ffcc80; color: #4e342e; }
-    .t16   { background: #ffb74d; color: #fff; }
-    .t32   { background: #ffa726; color: #fff; }
-    .t64   { background: #fb8c00; color: #fff; }
-    .t128  { background: #e91e8c; color: #fff; }
-    .t256  { background: #8e24aa; color: #fff; }
-    .t512  { background: #3949ab; color: #fff; }
-    .t1024 { background: #00897b; color: #fff; }
-    .t2048 { background: #9e9d24; color: #fff; }
-    .t4096 { background: #e53935; color: #fff; }
+    @keyframes tpop { from { transform: scale(.7); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+    .tile.new { animation: tpop .15s ease; }
 
-    .how-to {
-      text-align: center;
-      font-size: 12px;
-      color: #888;
-      margin-top: 7px;
-    }
+    /* タイル色（モッチー=最小） */
+    .t2    { background: #ffe0b2; color: #5d4037; }  /* モッチー */
+    .t4    { background: #ffcc80; color: #4e342e; }  /* ハム */
+    .t8    { background: #ffb74d; color: #fff; }     /* スエゾー */
+    .t16   { background: #ffa726; color: #fff; }     /* ディノ */
+    .t32   { background: #fb8c00; color: #fff; }     /* ライガー */
+    .t64   { background: #e91e8c; color: #fff; }     /* ピクシー */
+    .t128  { background: #8e24aa; color: #fff; }     /* ニャー */
+    .t256  { background: #3949ab; color: #fff; }     /* ナーガ */
+    .t512  { background: #00897b; color: #fff; }     /* ゴーレム */
+    .t1024 { background: #558b2f; color: #fff; }     /* ムー */
+    .t2048 { background: linear-gradient(135deg, #e53935, #f0a500); color: #fff; } /* カワズモー */
+
+    /* 操作ボタン */
+    .ctrl-btns { display: flex; gap: 8px; margin-top: 8px; justify-content: center; }
+    .ctrl-btn { padding: 10px 18px; background: #1a1a2e; color: #fff; border: none; border-radius: 8px; font-size: 17px; cursor: pointer; font-family: inherit; transition: background .1s; }
+    .ctrl-btn:hover, .ctrl-btn:active { background: #374060; }
+    .ctrl-btn.drop { background: #f0a500; padding: 10px 28px; }
+    .ctrl-btn.drop:hover, .ctrl-btn.drop:active { background: #d4920a; }
+    .how-to { text-align: center; font-size: 12px; color: #888; margin-top: 7px; }
 
     /* 終了画面 */
-    .end-card {
-      background: #fff;
-      border-radius: 12px;
-      padding: 24px 20px;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .end-title { font-size: 20px; font-weight: bold; }
-    .end-label { font-size: 13px; color: #888; margin: 6px 0 2px; }
-    .end-score {
-      font-size: 54px;
-      font-weight: bold;
-      color: #f0a500;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
+    .end-card { background: #fff; border-radius: 12px; padding: 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.1); text-align: center; }
+    .end-score { font-size: 54px; font-weight: bold; color: #f0a500; line-height: 1; margin: 6px 0 2px; }
     .best-note { font-size: 13px; color: #f0a500; font-weight: bold; min-height: 18px; }
     .submit-msg { font-size: 13px; color: #888; margin: 8px 0 4px; }
-    .retry-btn {
-      display: inline-block;
-      padding: 12px 36px;
-      background: #f0a500;
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      font-family: inherit;
-      margin-top: 16px;
-      transition: background 0.15s;
-    }
+    .retry-btn { display: inline-block; padding: 12px 36px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; font-family: inherit; margin-top: 16px; transition: background .15s; }
     .retry-btn:hover { background: #d4920a; }
-
-    /* ランキングテーブル */
-    .rank-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 14px;
-      margin: 12px 0 4px;
-    }
-    .rank-table th {
-      background: #1a1a2e;
-      color: #fff;
-      padding: 8px 6px;
-      font-size: 13px;
-    }
-    .rank-table td {
-      padding: 8px 6px;
-      border-bottom: 1px solid #eee;
-    }
+    .rank-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 4px; }
+    .rank-table th { background: #1a1a2e; color: #fff; padding: 8px 6px; font-size: 13px; }
+    .rank-table td { padding: 8px 6px; border-bottom: 1px solid #eee; }
     .rank-table tr.me { background: #fff8e1; font-weight: bold; }
     .rank-sec-title { font-size: 15px; font-weight: bold; margin: 16px 0 4px; }
-
-    .pre-ranking { margin-top: 20px; }
   </style>
 </head>
 <body>
@@ -258,19 +131,20 @@
 
 <main>
 <div class="game-wrapper">
-  <div class="game-title">🎮 モンスター<span>進化</span>2048</div>
+  <div class="game-title">🎮 モンスター<span>ドロップ</span></div>
 
   <!-- スタート画面 -->
   <div id="startScreen" class="start-card">
     <div class="rules">
       <strong>🎮 遊び方</strong><br>
-      矢印キー（PC）またはスワイプ（スマホ）でタイルを動かそう。<br>
-      同じモンスターがぶつかると<strong>進化</strong>する！<br>
-      <strong>60秒間</strong>でボード上のスコアの合計を競う。<br>
+      モンスタータイルを列に落として合体させよう！<br>
+      同じモンスターが重なると<strong>進化</strong>して2倍に！連鎖もあり。<br>
+      <strong>60秒間</strong>でボード上の合計スコアを競う。<br>
+      PC：← →で列移動、↓/スペースで落とす<br>
+      スマホ：列をタップ or スワイプで操作<br>
       <br>
       <strong>進化順：</strong>
       <div class="evo-chain">
-        <span class="evo-chip">2</span><span>→</span>
         <span class="evo-chip">モッチー</span><span>→</span>
         <span class="evo-chip">ハム</span><span>→</span>
         <span class="evo-chip">スエゾー</span><span>→</span>
@@ -306,16 +180,40 @@
         <div class="info-val" id="timerVal">60</div>
       </div>
     </div>
-    <div class="grid-wrap" id="gridWrap">
+
+    <div class="tile-preview-row">
+      <div class="tile-preview-box">
+        <div class="tile-preview-label">NOW</div>
+        <div id="curTileEl"></div>
+      </div>
+      <div class="tile-preview-box">
+        <div class="tile-preview-label">NEXT</div>
+        <div id="nxtTileEl"></div>
+      </div>
+    </div>
+
+    <div class="grid-board" id="gridBoard">
+      <div class="col-headers" id="colHeaders">
+        <div class="col-hd" data-col="0" onclick="selectAndDrop(0)">▼</div>
+        <div class="col-hd" data-col="1" onclick="selectAndDrop(1)">▼</div>
+        <div class="col-hd" data-col="2" onclick="selectAndDrop(2)">▼</div>
+        <div class="col-hd" data-col="3" onclick="selectAndDrop(3)">▼</div>
+      </div>
       <div class="grid" id="gameGrid"></div>
     </div>
-    <div class="how-to">PC：矢印キー　スマホ：スワイプ</div>
+
+    <div class="ctrl-btns">
+      <button class="ctrl-btn" onclick="moveLeft()">←</button>
+      <button class="ctrl-btn drop" onclick="drop()">↓</button>
+      <button class="ctrl-btn" onclick="moveRight()">→</button>
+    </div>
+    <div class="how-to">PC：← →で列移動　↓/スペースで落とす　スマホ：列タップ</div>
   </div>
 
   <!-- 終了画面 -->
   <div id="endScreen" class="end-card" style="display:none;">
-    <div class="end-title">⏱ タイムアップ！</div>
-    <div class="end-label">最終スコア</div>
+    <div style="font-size:20px;font-weight:bold;">⏱ タイムアップ！</div>
+    <div style="font-size:13px;color:#888;margin-top:6px;">最終スコア</div>
     <div class="end-score" id="endScore">0</div>
     <div class="best-note" id="bestNote"></div>
     <div class="submit-msg" id="submitMsg"></div>
@@ -343,122 +241,168 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 進化チェーン
+// ===== 進化チェーン =====
 const EVO = {
-  2:    { name: '2',         cls: 't2' },
-  4:    { name: 'モッチー',   cls: 't4',   sz: '' },
-  8:    { name: 'ハム',       cls: 't8',   sz: '' },
-  16:   { name: 'スエゾー',   cls: 't16',  sz: '' },
-  32:   { name: 'ディノ',     cls: 't32',  sz: '' },
-  64:   { name: 'ライガー',   cls: 't64',  sz: '' },
-  128:  { name: 'ピクシー',   cls: 't128', sz: '' },
-  256:  { name: 'ニャー',     cls: 't256', sz: '' },
-  512:  { name: 'ナーガ',     cls: 't512', sz: '' },
-  1024: { name: 'ゴーレム',   cls: 't1024', sz: 'sm' },
-  2048: { name: 'ムー',       cls: 't2048', sz: '' },
-  4096: { name: 'カワズモー', cls: 't4096', sz: 'xs' },
+  2:    { name: 'モッチー',   cls: 't2' },
+  4:    { name: 'ハム',       cls: 't4' },
+  8:    { name: 'スエゾー',   cls: 't8' },
+  16:   { name: 'ディノ',     cls: 't16' },
+  32:   { name: 'ライガー',   cls: 't32' },
+  64:   { name: 'ピクシー',   cls: 't64' },
+  128:  { name: 'ニャー',     cls: 't128' },
+  256:  { name: 'ナーガ',     cls: 't256' },
+  512:  { name: 'ゴーレム',   cls: 't512' },
+  1024: { name: 'ムー',       cls: 't1024' },
+  2048: { name: 'カワズモー', cls: 't2048' },
 };
 
-let board = [];
+// ===== 定数・状態 =====
+const COLS = 4;
+const ROWS = 8;  // 列の最大高さ
+let stacks = [];   // stacks[c][0]=一番下, stacks[c][length-1]=一番上
+let curTile = 2;
+let nxtTile = 2;
+let curCol = 1;
 let gameActive = false;
 let timeLeft = 60;
 let timerId = null;
 let playerName = '';
-let touchX = 0, touchY = 0;
+let touchStartX = 0, touchStartY = 0;
 
-// ===== ボード操作 =====
-function newBoard() {
-  board = Array.from({length:4}, () => Array(4).fill(0));
-  addTile(); addTile();
+// ===== ゲームロジック =====
+function genTile() {
+  return Math.random() < 0.85 ? 2 : 4;
 }
 
-function addTile() {
-  const empty = [];
-  for (let r=0;r<4;r++) for (let c=0;c<4;c++) if (!board[r][c]) empty.push([r,c]);
-  if (!empty.length) return;
-  const [r,c] = empty[Math.floor(Math.random()*empty.length)];
-  board[r][c] = Math.random() < 0.9 ? 2 : 4;
+function initGame() {
+  stacks = Array.from({length: COLS}, () => []);
+  curTile = genTile();
+  nxtTile = genTile();
+  curCol = 1;
+}
+
+function canDrop(c) {
+  return stacks[c].length < ROWS;
+}
+
+// 現在選択中の列にタイルを落とす
+function drop() {
+  if (!gameActive || !canDrop(curCol)) return;
+  stacks[curCol].push(curTile);
+  mergeTile(curCol);
+  curTile = nxtTile;
+  nxtTile = genTile();
+  render();
+}
+
+// 列を選択して即落とす（タップ操作用）
+function selectAndDrop(c) {
+  if (!gameActive || !canDrop(c)) return;
+  curCol = c;
+  drop();
+}
+
+function moveLeft() {
+  if (!gameActive) return;
+  curCol = (curCol - 1 + COLS) % COLS;
+  render();
+}
+
+function moveRight() {
+  if (!gameActive) return;
+  curCol = (curCol + 1) % COLS;
+  render();
+}
+
+// 列の上から2つが同じ値なら合体（連鎖あり）
+function mergeTile(c) {
+  const s = stacks[c];
+  let changed = true;
+  while (changed && s.length >= 2) {
+    changed = false;
+    if (s[s.length - 1] === s[s.length - 2]) {
+      s.pop();
+      s[s.length - 1] *= 2;
+      changed = true;
+    }
+  }
 }
 
 function calcScore() {
-  let s = 0;
-  board.forEach(row => row.forEach(v => s += v));
-  return s;
-}
-
-function slideRow(row) {
-  const a = row.filter(v => v);
-  const res = [];
-  let i = 0;
-  while (i < a.length) {
-    if (i+1 < a.length && a[i] === a[i+1]) { res.push(a[i]*2); i+=2; }
-    else { res.push(a[i]); i++; }
-  }
-  while (res.length < 4) res.push(0);
-  return res;
-}
-
-function move(dir) {
-  if (!gameActive) return;
-  const prev = board.map(r => [...r]);
-
-  if (dir === 'left') {
-    board = board.map(r => slideRow(r));
-  } else if (dir === 'right') {
-    board = board.map(r => slideRow([...r].reverse()).reverse());
-  } else if (dir === 'up') {
-    for (let c=0;c<4;c++) {
-      const s = slideRow([board[0][c],board[1][c],board[2][c],board[3][c]]);
-      s.forEach((v,r) => board[r][c]=v);
-    }
-  } else {
-    for (let c=0;c<4;c++) {
-      const s = slideRow([board[3][c],board[2][c],board[1][c],board[0][c]]);
-      s.forEach((v,r) => board[3-r][c]=v);
-    }
-  }
-
-  let changed = false;
-  for (let r=0;r<4;r++) for (let c=0;c<4;c++) if (board[r][c]!==prev[r][c]) changed=true;
-  if (changed) { addTile(); render(); }
+  let total = 0;
+  stacks.forEach(s => s.forEach(v => total += v));
+  return total;
 }
 
 // ===== 描画 =====
+function tileHtml(val, extraClass) {
+  const e = EVO[val] || { name: '?', cls: 't2048' };
+  const el = document.createElement('div');
+  el.className = `tile ${e.cls}${extraClass ? ' ' + extraClass : ''}`;
+  el.innerHTML = `<span class="tn">${e.name}</span><span class="tv">${val}</span>`;
+  return el;
+}
+
 function render() {
-  const g = document.getElementById('gameGrid');
-  g.innerHTML = '';
-  board.forEach(row => {
-    row.forEach(v => {
-      const el = document.createElement('div');
-      if (!v) {
-        el.className = 'cell';
-      } else {
-        const e = EVO[v] || { name: String(v), cls: 't4096', sz: 'xs' };
-        el.className = ['tile', e.cls, e.sz || ''].join(' ').trim();
-        el.textContent = e.name;
-      }
-      g.appendChild(el);
-    });
+  // 列ヘッダー更新
+  document.querySelectorAll('.col-hd').forEach((h, c) => {
+    h.className = 'col-hd' +
+      (c === curCol ? ' active' : '') +
+      (!canDrop(c) ? ' full' : '');
   });
+
+  // グリッド再描画
+  const grid = document.getElementById('gameGrid');
+  grid.innerHTML = '';
+  for (let row = 0; row < ROWS; row++) {
+    for (let c = 0; c < COLS; c++) {
+      // 表示行0=画面上=スタックの高い位置、表示行ROWS-1=画面下=スタック底
+      const stackIdx = ROWS - 1 - row;
+      const val = stacks[c][stackIdx] || 0;
+      // ドロップ予告位置（現在タイルを薄く表示する行）
+      const dropRow = ROWS - 1 - stacks[c].length;
+      const isPreview = (c === curCol && row === dropRow && stacks[c].length < ROWS);
+
+      let el;
+      if (isPreview) {
+        el = tileHtml(curTile, 'drop-prev');
+      } else if (val) {
+        el = tileHtml(val, null);
+      } else {
+        el = document.createElement('div');
+        el.className = 'cell' +
+          (c === curCol ? ' col-active' : '') +
+          (!canDrop(c) ? ' col-full' : '');
+      }
+      el.addEventListener('click', () => selectAndDrop(c));
+      grid.appendChild(el);
+    }
+  }
+
+  // スコア
   document.getElementById('scoreVal').textContent = calcScore().toLocaleString();
+
+  // プレビュー更新
+  setPreview('curTileEl', curTile);
+  setPreview('nxtTileEl', nxtTile);
+}
+
+function setPreview(id, val) {
+  const e = EVO[val] || { name: '?', cls: 't2048' };
+  const el = document.getElementById(id);
+  el.className = `preview-tile ${e.cls}`;
+  el.innerHTML = `<span class="tn">${e.name}</span><span class="tv">${val}</span>`;
 }
 
 // ===== タイマー =====
 function tickTimer() {
   const bar = document.getElementById('timerBar');
-  const tv = document.getElementById('timerVal');
+  const tv  = document.getElementById('timerVal');
   tv.textContent = timeLeft;
-  bar.style.width = (timeLeft/60*100) + '%';
-  if (timeLeft <= 10) {
-    bar.style.background = '#e53935';
-    tv.className = 'info-val danger';
-  } else if (timeLeft <= 20) {
-    bar.style.background = '#f0a500';
-    tv.className = 'info-val warn';
-  } else {
-    bar.style.background = '#4CAF50';
-    tv.className = 'info-val';
-  }
+  bar.style.width = (timeLeft / 60 * 100) + '%';
+  if (timeLeft <= 10)      { bar.style.background = '#e53935'; tv.className = 'info-val danger'; }
+  else if (timeLeft <= 20) { bar.style.background = '#f0a500'; tv.className = 'info-val warn'; }
+  else                     { bar.style.background = '#4CAF50'; tv.className = 'info-val'; }
 }
 
 // ===== ゲームフロー =====
@@ -470,7 +414,7 @@ function startGame() {
   localStorage.setItem('lmf2048n', playerName);
 
   show('gameScreen');
-  newBoard();
+  initGame();
   render();
   gameActive = true;
   timeLeft = 60;
@@ -487,7 +431,6 @@ function endGame() {
   gameActive = false;
   const score = calcScore();
   document.getElementById('endScore').textContent = score.toLocaleString();
-
   const best = Number(localStorage.getItem('lmf2048best') || 0);
   const noteEl = document.getElementById('bestNote');
   if (score > best) {
@@ -496,7 +439,6 @@ function endGame() {
   } else {
     noteEl.textContent = best ? `自己ベスト：${best.toLocaleString()}` : '';
   }
-
   show('endScreen');
   saveScore(playerName, score);
 }
@@ -507,29 +449,33 @@ function showStart() {
 }
 
 function show(id) {
-  ['startScreen','gameScreen','endScreen'].forEach(s => {
-    document.getElementById(s).style.display = s===id ? 'block' : 'none';
+  ['startScreen', 'gameScreen', 'endScreen'].forEach(s => {
+    document.getElementById(s).style.display = s === id ? 'block' : 'none';
   });
 }
 
-// ===== キー操作 =====
+// ===== キーボード =====
 document.addEventListener('keydown', e => {
-  const m = {ArrowLeft:'left',ArrowRight:'right',ArrowUp:'up',ArrowDown:'down'};
-  if (m[e.key]) { e.preventDefault(); move(m[e.key]); }
+  if (!gameActive) return;
+  if      (e.key === 'ArrowLeft')  { e.preventDefault(); moveLeft(); }
+  else if (e.key === 'ArrowRight') { e.preventDefault(); moveRight(); }
+  else if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); drop(); }
 });
 
-// ===== Firebase =====
+// ===== Firebase ランキング =====
 async function saveScore(name, score) {
   const msg = document.getElementById('submitMsg');
   msg.textContent = 'スコアを送信中...';
   try {
     await db.collection('game2048').add({
-      name, score,
+      name,
+      score,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     msg.textContent = 'スコアを登録しました！';
   } catch(e) {
-    msg.textContent = '送信に失敗しました';
+    console.error('Firestore write error:', e);
+    msg.textContent = `送信に失敗しました（${e.code || e.message}）`;
   }
   loadRanking('rankingResult', score, name);
 }
@@ -538,12 +484,13 @@ async function loadRanking(containerId, myScore, myName) {
   const el = document.getElementById(containerId);
   el.innerHTML = '<div style="color:#888;font-size:13px;padding:8px 0;">読み込み中...</div>';
   try {
-    const snap = await db.collection('game2048').orderBy('score','desc').limit(10).get();
+    const snap = await db.collection('game2048').orderBy('score', 'desc').limit(10).get();
     const rows = [];
     snap.forEach(d => rows.push(d.data()));
-    el.innerHTML = buildRankTable(rows, myScore, myName, true);
+    el.innerHTML = buildRankTable(rows, myScore, myName);
   } catch(e) {
-    el.innerHTML = '<div style="color:#888;font-size:13px;">ランキングを読み込めませんでした</div>';
+    console.error('Firestore read error:', e);
+    el.innerHTML = `<div style="color:#888;font-size:13px;">ランキングを読み込めませんでした（${e.code || e.message}）</div>`;
   }
 }
 
@@ -551,23 +498,25 @@ async function loadPreRanking() {
   const el = document.getElementById('preRanking');
   el.innerHTML = '';
   try {
-    const snap = await db.collection('game2048').orderBy('score','desc').limit(10).get();
+    const snap = await db.collection('game2048').orderBy('score', 'desc').limit(10).get();
     if (snap.empty) return;
     const rows = [];
     snap.forEach(d => rows.push(d.data()));
-    el.innerHTML = buildRankTable(rows, null, null, false);
-  } catch(e) {}
+    el.innerHTML = buildRankTable(rows, null, null);
+  } catch(e) {
+    console.error('Pre-ranking load error:', e);
+  }
 }
 
-function buildRankTable(rows, myScore, myName, showTitle) {
-  const medals = ['🥇','🥈','🥉'];
-  let html = showTitle ? '<div class="rank-sec-title">🏆 ランキング TOP10</div>' : '<div class="rank-sec-title">🏆 ランキング</div>';
+function buildRankTable(rows, myScore, myName) {
+  const medals = ['🥇', '🥈', '🥉'];
+  let html = '<div class="rank-sec-title">🏆 ランキング TOP10</div>';
   html += '<table class="rank-table"><thead><tr><th>順位</th><th>名前</th><th>スコア</th></tr></thead><tbody>';
   let marked = false;
   rows.forEach((d, i) => {
-    const isMe = showTitle && !marked && d.name === myName && d.score === myScore;
+    const isMe = myName && !marked && d.name === myName && d.score === myScore;
     if (isMe) marked = true;
-    html += `<tr${isMe?' class="me"':''}><td>${medals[i]||i+1}</td><td>${esc(d.name)}</td><td>${d.score.toLocaleString()}</td></tr>`;
+    html += `<tr${isMe ? ' class="me"' : ''}><td>${medals[i] || i + 1}</td><td>${esc(d.name)}</td><td>${d.score.toLocaleString()}</td></tr>`;
   });
   html += '</tbody></table>';
   return html;
@@ -577,24 +526,26 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
-// ===== 初期化 =====
+// ===== 初期化・スワイプ =====
 window.addEventListener('load', () => {
   const saved = localStorage.getItem('lmf2048n');
   if (saved) document.getElementById('nameInput').value = saved;
   loadPreRanking();
 
-  const gw = document.getElementById('gridWrap');
-  gw.addEventListener('touchstart', e => {
-    touchX = e.touches[0].clientX;
-    touchY = e.touches[0].clientY;
-  }, {passive:true});
-  gw.addEventListener('touchend', e => {
-    const dx = e.changedTouches[0].clientX - touchX;
-    const dy = e.changedTouches[0].clientY - touchY;
-    if (Math.abs(dx) < 15 && Math.abs(dy) < 15) return;
-    if (Math.abs(dx) > Math.abs(dy)) move(dx > 0 ? 'right' : 'left');
-    else move(dy > 0 ? 'down' : 'up');
-  }, {passive:true});
+  const gb = document.getElementById('gridBoard');
+  gb.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  gb.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dy) > Math.abs(dx) && dy > 30) { drop(); }
+    else if (Math.abs(dx) > 30) {
+      if (dx < 0) moveLeft();
+      else moveRight();
+    }
+  }, { passive: true });
 });
 </script>
 </body>
