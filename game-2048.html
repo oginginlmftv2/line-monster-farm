@@ -113,7 +113,16 @@
     .end-card { background: #fff; border-radius: 12px; padding: 24px 20px; box-shadow: 0 2px 12px rgba(0,0,0,.1); text-align: center; }
     .end-score { font-size: 54px; font-weight: bold; color: #f0a500; line-height: 1; margin: 6px 0 2px; }
     .best-note { font-size: 13px; color: #f0a500; font-weight: bold; min-height: 18px; }
-    .submit-msg { font-size: 13px; color: #888; margin: 8px 0 4px; }
+    .rank-announce { font-size: 20px; font-weight: bold; color: #f0a500; margin: 6px 0 2px; min-height: 28px; }
+    .submit-msg { font-size: 13px; color: #888; margin: 4px 0; }
+    .x-share-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 22px; background: #000; color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: bold;
+      cursor: pointer; text-decoration: none; margin-top: 10px;
+      transition: background .15s;
+    }
+    .x-share-btn:hover { background: #333; }
     .retry-btn { display: inline-block; padding: 12px 36px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; font-family: inherit; margin-top: 16px; transition: background .15s; }
     .retry-btn:hover { background: #d4920a; }
     .rank-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 12px 0 4px; }
@@ -224,8 +233,10 @@
     <div style="font-size:13px;color:#888;margin-top:6px;">最終スコア</div>
     <div class="end-score" id="endScore">0</div>
     <div class="best-note" id="bestNote"></div>
+    <div class="rank-announce" id="rankAnnounce"></div>
     <div class="submit-msg" id="submitMsg"></div>
     <div id="rankingResult"></div>
+    <div id="shareArea"></div>
     <button class="retry-btn" onclick="showStart()">もう一度遊ぶ</button>
   </div>
 </div>
@@ -526,6 +537,12 @@ function endGame() {
   } else {
     noteEl.textContent = best ? `自己ベスト：${best.toLocaleString()}` : '';
   }
+  // 前回の表示をリセット
+  document.getElementById('rankAnnounce').textContent = '';
+  document.getElementById('rankAnnounce').style.fontSize = '20px';
+  document.getElementById('shareArea').innerHTML = '';
+  document.getElementById('rankingResult').innerHTML = '';
+
   show('endScreen');
   saveScore(playerName, score);
 }
@@ -600,11 +617,49 @@ async function fetchWeeklyRows() {
   return rows.slice(0, 10);
 }
 
+// 順位を返す（TOP10外はnull）
+function findMyRank(rows, myScore, myName) {
+  for (let i = 0; i < rows.length; i++) {
+    if (rows[i].name === myName && rows[i].score === myScore) return i + 1;
+  }
+  return null;
+}
+
+// Xシェア用テキスト
+function buildShareUrl(score, rank) {
+  const rankText = rank ? `今週${rank}位` : 'TOP10入りを目指して';
+  const text = `モンスタードロップで${rankText}！\nスコア：${score.toLocaleString()}\n#LINEモンスターファーム\nhttps://line-monster-farm-tetteikouryaku.com/game-2048.html`;
+  return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+}
+
 async function loadRanking(containerId, myScore, myName) {
   const el = document.getElementById(containerId);
   el.innerHTML = '<div style="color:#888;font-size:13px;padding:8px 0;">読み込み中...</div>';
   try {
     const rows = await fetchWeeklyRows();
+    const rank = myName ? findMyRank(rows, myScore, myName) : null;
+
+    // 順位表示
+    const announceEl = document.getElementById('rankAnnounce');
+    if (announceEl && myName) {
+      if (rank) {
+        const medals = ['🥇','🥈','🥉'];
+        const medal = medals[rank-1] ? medals[rank-1] + ' ' : '';
+        announceEl.textContent = `${medal}あなたは今週${rank}位です！`;
+        announceEl.style.color = rank <= 3 ? '#f0a500' : '#555';
+      } else {
+        announceEl.textContent = 'TOP10まであと一歩！';
+        announceEl.style.color = '#888';
+        announceEl.style.fontSize = '15px';
+      }
+    }
+
+    // Xシェアボタン
+    const shareArea = document.getElementById('shareArea');
+    if (shareArea && myName) {
+      shareArea.innerHTML = `<a href="${buildShareUrl(myScore, rank)}" target="_blank" rel="noopener" class="x-share-btn">𝕏 結果をポストする</a>`;
+    }
+
     el.innerHTML = buildRankTable(rows, myScore, myName);
   } catch(e) {
     console.error('Firestore read error:', e);
