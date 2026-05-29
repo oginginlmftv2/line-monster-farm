@@ -549,6 +549,28 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'ArrowDown' || e.key === ' ' || e.key === 'Enter') { e.preventDefault(); drop(); }
 });
 
+// ===== 週キー =====
+function getWeekKey() {
+  const now = new Date();
+  // ISO週番号（月曜始まり）を計算
+  const d = new Date(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()));
+  const day = d.getUTCDay() || 7; // 日曜=7に変換
+  d.setUTCDate(d.getUTCDate() + 4 - day); // 木曜に移動
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return `${d.getUTCFullYear()}-W${String(weekNo).padStart(2, '0')}`;
+}
+
+// 今週の月曜・日曜の日付文字列
+function getWeekRange() {
+  const now = new Date();
+  const day = now.getDay() || 7; // 日曜=7
+  const mon = new Date(now); mon.setDate(now.getDate() - day + 1); mon.setHours(0,0,0,0);
+  const sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+  const fmt = d => `${d.getMonth()+1}/${d.getDate()}`;
+  return `${fmt(mon)}(月)〜${fmt(sun)}(日)`;
+}
+
 // ===== Firebase ランキング =====
 async function saveScore(name, score) {
   const msg = document.getElementById('submitMsg');
@@ -557,6 +579,7 @@ async function saveScore(name, score) {
     await db.collection('game2048').add({
       name,
       score,
+      weekKey: getWeekKey(),
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     msg.textContent = 'スコアを登録しました！';
@@ -567,13 +590,21 @@ async function saveScore(name, score) {
   loadRanking('rankingResult', score, name);
 }
 
+async function fetchWeeklyRows() {
+  const snap = await db.collection('game2048')
+    .where('weekKey', '==', getWeekKey())
+    .get();
+  const rows = [];
+  snap.forEach(d => rows.push(d.data()));
+  rows.sort((a, b) => b.score - a.score);
+  return rows.slice(0, 10);
+}
+
 async function loadRanking(containerId, myScore, myName) {
   const el = document.getElementById(containerId);
   el.innerHTML = '<div style="color:#888;font-size:13px;padding:8px 0;">読み込み中...</div>';
   try {
-    const snap = await db.collection('game2048').orderBy('score', 'desc').limit(10).get();
-    const rows = [];
-    snap.forEach(d => rows.push(d.data()));
+    const rows = await fetchWeeklyRows();
     el.innerHTML = buildRankTable(rows, myScore, myName);
   } catch(e) {
     console.error('Firestore read error:', e);
@@ -585,10 +616,8 @@ async function loadPreRanking() {
   const el = document.getElementById('preRanking');
   el.innerHTML = '';
   try {
-    const snap = await db.collection('game2048').orderBy('score', 'desc').limit(10).get();
-    if (snap.empty) return;
-    const rows = [];
-    snap.forEach(d => rows.push(d.data()));
+    const rows = await fetchWeeklyRows();
+    if (!rows.length) return;
     el.innerHTML = buildRankTable(rows, null, null);
   } catch(e) {
     console.error('Pre-ranking load error:', e);
@@ -597,7 +626,13 @@ async function loadPreRanking() {
 
 function buildRankTable(rows, myScore, myName) {
   const medals = ['🥇', '🥈', '🥉'];
-  let html = '<div class="rank-sec-title">🏆 ランキング TOP10</div>';
+  const range = getWeekRange();
+  let html = `<div class="rank-sec-title">🏆 今週のランキング TOP10</div>`;
+  html += `<div style="font-size:11px;color:#888;margin-bottom:6px;">${range}　毎週月曜リセット</div>`;
+  if (!rows.length) {
+    html += '<div style="color:#aaa;font-size:13px;padding:8px 0;">まだ記録がありません。一番乗りを目指そう！</div>';
+    return html;
+  }
   html += '<table class="rank-table"><thead><tr><th>順位</th><th>名前</th><th>スコア</th></tr></thead><tbody>';
   let marked = false;
   rows.forEach((d, i) => {
