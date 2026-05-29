@@ -162,6 +162,7 @@
       <input type="text" id="nameInput" class="name-input" placeholder="ニックネーム（最大12文字）" maxlength="12">
       <button class="start-btn" onclick="startGame()">スタート！</button>
     </div>
+    <div id="nameError" style="color:#e53935;font-size:12px;margin-top:-8px;margin-bottom:8px;display:none;"></div>
     <div class="pre-ranking" id="preRanking"></div>
   </div>
 
@@ -240,6 +241,27 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+
+// ===== NGワードフィルター =====
+const NG_WORDS = [
+  // 性的・下ネタ
+  'うんこ','うんち','ちんこ','ちんぽ','まんこ','おっぱい','おちんちん','きんたま','せっくす','エロ','えろ',
+  'ちんちん','ぽこちん','ちくび','おなに','オナニー','フェラ','セックス','エッチ','えっち','やりまん',
+  'チンコ','チンポ','マンコ','チンチン','オッパイ','エロい','えろい','ヌード','レイプ','強姦','性器',
+  'ペニス','ヴァギナ','バギナ','アナル','肛門','精液','射精','絶頂','オーガズム','売春','風俗',
+  // 差別・侮辱
+  'バカ','ばか','馬鹿','クズ','くず','死ね','しね','ころす','殺す','氏ね','クソ','くそ','糞',
+  'アホ','あほ','チョン','きちく','鬼畜','ゴミ','ごみ','屑','消えろ','きえろ','最低','さいてい',
+  'きもい','キモい','キモイ','うざい','ウザい','ウザイ','氏ろ','しろや','カス','かす',
+  // 英語系
+  'fuck','shit','bitch','asshole','dick','cock','pussy','nigger','faggot','cunt','bastard',
+];
+
+// NGワードチェック（部分一致・大文字小文字無視）
+function hasNgWord(name) {
+  const lower = name.toLowerCase();
+  return NG_WORDS.some(w => lower.includes(w.toLowerCase()));
+}
 
 // ===== 進化チェーン =====
 const EVO = {
@@ -408,9 +430,28 @@ function tickTimer() {
 // ===== ゲームフロー =====
 function startGame() {
   const inp = document.getElementById('nameInput');
+  const errEl = document.getElementById('nameError');
   playerName = inp.value.trim();
-  if (!playerName) { inp.classList.add('err'); inp.focus(); return; }
+
+  // 空チェック
+  if (!playerName) {
+    inp.classList.add('err');
+    errEl.textContent = 'ニックネームを入力してください';
+    errEl.style.display = 'block';
+    inp.focus();
+    return;
+  }
+  // NGワードチェック
+  if (hasNgWord(playerName)) {
+    inp.classList.add('err');
+    errEl.textContent = 'その名前は使用できません';
+    errEl.style.display = 'block';
+    inp.focus();
+    return;
+  }
+
   inp.classList.remove('err');
+  errEl.style.display = 'none';
   localStorage.setItem('lmf2048n', playerName);
 
   show('gameScreen');
