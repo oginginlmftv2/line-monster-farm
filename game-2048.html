@@ -311,7 +311,7 @@ function canDrop(c) {
 function drop() {
   if (!gameActive || !canDrop(curCol)) return;
   stacks[curCol].push(curTile);
-  mergeTile(curCol);
+  resolveAllMerges();
   curTile = nxtTile;
   nxtTile = genTile();
   render();
@@ -337,16 +337,59 @@ function moveRight() {
 }
 
 // 列の上から2つが同じ値なら合体（連鎖あり）
-function mergeTile(c) {
+// 縦マージ（1列、上2つが同値なら合体・連鎖）
+function mergeVertical(c) {
   const s = stacks[c];
-  let changed = true;
-  while (changed && s.length >= 2) {
-    changed = false;
-    if (s[s.length - 1] === s[s.length - 2]) {
-      s.pop();
-      s[s.length - 1] *= 2;
-      changed = true;
+  let changed = false;
+  while (s.length >= 2 && s[s.length - 1] === s[s.length - 2]) {
+    s.pop();
+    s[s.length - 1] *= 2;
+    changed = true;
+  }
+  return changed;
+}
+
+// 横マージ（全行を1回スキャン、変化があればtrue）
+function mergeHorizontalOnce() {
+  const maxH = Math.max(...stacks.map(s => s.length), 0);
+  for (let h = 0; h < maxH; h++) {
+    for (let c = 0; c < COLS; c++) {
+      const val = stacks[c][h];
+      if (!val) continue;
+      const L = c > 0 ? (stacks[c - 1][h] || 0) : 0;
+      const R = c < COLS - 1 ? (stacks[c + 1][h] || 0) : 0;
+
+      if (L === val && R === val) {
+        // 両隣が同じ → 2段階進化（×4）
+        stacks[c][h] = val * 4;
+        stacks[c - 1].splice(h, 1);
+        stacks[c + 1].splice(h, 1);
+        return true;
+      }
+      if (L === val) {
+        stacks[c][h] = val * 2;
+        stacks[c - 1].splice(h, 1);
+        return true;
+      }
+      if (R === val) {
+        stacks[c][h] = val * 2;
+        stacks[c + 1].splice(h, 1);
+        return true;
+      }
     }
+  }
+  return false;
+}
+
+// 縦・横マージを変化がなくなるまで繰り返す
+function resolveAllMerges() {
+  let changed = true;
+  while (changed) {
+    changed = false;
+    for (let c = 0; c < COLS; c++) {
+      if (mergeVertical(c)) changed = true;
+    }
+    if (mergeHorizontalOnce()) changed = true;
   }
 }
 
