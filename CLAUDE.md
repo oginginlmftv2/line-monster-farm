@@ -15,12 +15,12 @@
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | ヤマト（新） |
-| monsters-data.js 末尾インデックス | **337**（配列の要素数338、0始まりなので末尾=337） |
-| index.html のリンク | `monsters/monster.html?id=337`（ヤマト） |
-| ピックアップカード | ニシキ（新） |
-| カードID | `a13i-MR-nishiki` |
-| index.html のリンク | `cards/card.html#a13i-MR-nishiki` |
+| ピックアップモンスター | メタビー（新）・シュシュポップ3（新） |
+| monsters-data.js 末尾インデックス | **339**（配列の要素数340、0始まりなので末尾=339） |
+| index.html のリンク | `monsters/monster.html?id=338`（メタビー）・`monsters/monster.html?id=339`（シュシュポップ3） |
+| ピックアップカード | メタビー（新）・イッキ（新） |
+| カードID | `c25j-SSR-metabee`（SSR）／`c24j-MR-ikki`（MR） |
+| index.html のリンク | `cards/card.html#c25j-SSR-metabee`（メタビー） |
 
 ---
 

@@ -340,4 +340,6 @@ const monstersData = [
   { name: 'ティターニア', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167750_0.jpg', mon: '魔族', mainMon: 'ピクシー', subMon: 'ロード種' },
   { name: 'ウルズ', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167751_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'ライガー' },
   { name: 'ヤマト', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__3399682.jpg', mon: '魔族', mainMon: 'ナーガ', subMon: 'レアモン' },
+  { name: 'メタビー', aura: '黄', limited: false, limitedLabel: '', gwImg: null, localImg: '31269.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
+  { name: 'シュシュポップ3', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__111239186_0.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'レアモン' },
 ];
