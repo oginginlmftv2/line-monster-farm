@@ -208,7 +208,7 @@ function buildGrid(assignments) {
   });
   sortedMonsters.forEach((m) => {
     const idx = m.idx;
-    const validLocalImg = (m.localImg && m.localImg.startsWith('S_')) ? m.localImg : null;
+    const validLocalImg = m.localImg ? m.localImg : null;
     const localFile = validLocalImg || (assignments && assignments[m.name]) || null;
     const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
 

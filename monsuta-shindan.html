@@ -495,7 +495,7 @@ function showResult() {
 
     // モンスター画像
     const imgWrap = document.getElementById('monster-img-wrap');
-    const validLocalImg = (monster.localImg && monster.localImg.startsWith('S_')) ? monster.localImg : null;
+    const validLocalImg = monster.localImg ? monster.localImg : null;
     const localFile = validLocalImg || (assignments && assignments[monster.name]) || null;
     if (localFile) {
       imgWrap.innerHTML = `<img src="monster/${localFile}" alt="${monster.name}" onerror="this.style.display='none'">`;
