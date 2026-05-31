@@ -1,4 +1,5 @@
 const cardsData = {
+  'c26j-SSR-ikki':               { name: 'イッキ',              rarity: 'SSR', oura: '黄', type: '友人',       mon: null,   ext: 'jpg' },
   'c25j-SSR-metabee':           { name: 'メタビー',            rarity: 'SSR', oura: '黄', type: '丈夫さ',     mon: '無機', ext: 'jpg' },
   'c24j-MR-ikki':               { name: 'イッキ',              rarity: 'MR',  oura: '黄', type: '友人',       mon: null,   ext: 'jpg' },
   'a13i-MR-nishiki':          { name: 'ニシキ',              rarity: 'MR',  oura: '赤', type: 'テクニック', mon: '魔族', ext: 'jpg', event2: '超逆上' },

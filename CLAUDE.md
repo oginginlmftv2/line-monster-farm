@@ -19,7 +19,7 @@
 | monsters-data.js 末尾インデックス | **339**（配列の要素数340、0始まりなので末尾=339） |
 | index.html のリンク | `monsters/monster.html?id=338`（メタビー）・`monsters/monster.html?id=339`（シュシュポップ3） |
 | ピックアップカード | メタビー（新）・イッキ（新） |
-| カードID | `c25j-SSR-metabee`（SSR）／`c24j-MR-ikki`（MR） |
+| カードID | `c26j-SSR-ikki`（SSR）／`c25j-SSR-metabee`（SSR）／`c24j-MR-ikki`（MR） |
 | index.html のリンク | `cards/card.html#c25j-SSR-metabee`（メタビー） |
 
 ---
