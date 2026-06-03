@@ -146,6 +146,68 @@
       font-size: 16px;
     }
 
+    /* アシスト効果セクション */
+    .assist-effects-section {
+      background: #fff;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      padding: 20px 24px;
+      margin-top: 20px;
+    }
+    .assist-effects-header {
+      font-size: 17px;
+      font-weight: bold;
+      color: #1a1a2e;
+      border-left: 5px solid #f0a500;
+      padding-left: 12px;
+      margin-bottom: 14px;
+    }
+    .assist-effect-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .assist-effect-table th {
+      background: #f5f5f5;
+      color: #888;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    .assist-effect-table th:last-child { text-align: center; width: 56px; }
+    .assist-effect-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #f0f0f0;
+      vertical-align: top;
+    }
+    .assist-effect-table tr:last-child td { border-bottom: none; }
+    .assist-effect-name {
+      font-weight: bold;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+    .assist-effect-desc {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+    }
+    .totsujou-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
+      text-align: center;
+    }
+    .totsujou-無凸 { background: #f0f0f0; color: #888; }
+    .totsujou-1凸 { background: #e3f2fd; color: #1565c0; }
+    .totsujou-2凸 { background: #e8f5e9; color: #2e7d32; }
+    .totsujou-3凸 { background: #fff3e0; color: #e65100; }
+    .totsujou-4凸 { background: #fce4ec; color: #c62828; }
+    .assist-effects-empty { color: #bbb; font-style: italic; font-size: 14px; }
+
     /* おすすめ編成セクション */
     .formation-section {
       background: #fff;
@@ -717,7 +779,14 @@
         <div class="abilities-grid" id="abilitiesGrid"></div>
       </div>
 
+      <!-- アシスト効果セクション -->
+      <div class="assist-effects-section">
+        <div class="assist-effects-header">アシスト効果</div>
+        <div id="assistEffectsBody"><div class="assist-effects-empty">読込中...</div></div>
+      </div>
+
       <!-- 評価解説 -->
+
       <div class="explanation-section">
         <div class="explanation-header">
           <span class="explanation-title">評価解説</span>
@@ -782,6 +851,7 @@
     loadFormations();
     loadExplanation();
     loadAbilities();
+    loadAssistEffects();
   }
 
   async function loadAbilities() {
@@ -799,6 +869,38 @@
       section.style.display = '';
     } catch (e) {
       console.warn('能力画像読み込みエラー:', e);
+    }
+  }
+
+  async function loadAssistEffects() {
+    const el = document.getElementById('assistEffectsBody');
+    if (!el) return;
+    try {
+      const doc = await db.collection('cards').doc(id).get();
+      const effects = doc.exists ? (doc.data().assistEffects || []) : [];
+      if (effects.length === 0) {
+        el.innerHTML = '<div class="assist-effects-empty">（未登録）</div>';
+        return;
+      }
+      el.innerHTML = `
+        <table class="assist-effect-table">
+          <tr><th>効果</th><th>凸</th></tr>
+          ${effects.map(e => `
+            <tr>
+              <td>
+                <div class="assist-effect-name">${escapeHtml(e.name)}</div>
+                <div class="assist-effect-desc">${escapeHtml(e.desc)}</div>
+              </td>
+              <td style="text-align:center;">
+                <span class="totsujou-badge totsujou-${escapeHtml(e.totsujou)}">${escapeHtml(e.totsujou)}</span>
+              </td>
+            </tr>
+          `).join('')}
+        </table>
+      `;
+    } catch (e) {
+      console.warn('アシスト効果読み込みエラー:', e);
+      el.innerHTML = '<div class="assist-effects-empty">（読み込みエラー）</div>';
     }
   }
 

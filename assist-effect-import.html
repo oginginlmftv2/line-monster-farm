@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>アシスト効果 一括インポート | 管理</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f2f5; padding: 20px; }
+    .box { background: #fff; border-radius: 12px; padding: 24px; max-width: 700px; margin: 0 auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    h1 { font-size: 20px; color: #1a1a2e; margin-bottom: 8px; }
+    p { font-size: 14px; color: #666; margin-bottom: 20px; }
+    .pw-row { display: flex; gap: 10px; margin-bottom: 20px; }
+    .pw-row input { flex: 1; padding: 8px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 14px; }
+    .pw-row input:focus { outline: none; border-color: #f0a500; }
+    .btn { padding: 10px 24px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; }
+    .btn:hover { background: #d4920a; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-danger { background: #e53e3e; }
+    .btn-danger:hover { background: #c53030; }
+    #log { background: #1a1a2e; color: #a8e6a3; border-radius: 8px; padding: 16px; font-size: 12px; font-family: monospace; height: 300px; overflow-y: auto; white-space: pre-wrap; }
+    .stats { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .stat { background: #f5f5f5; border-radius: 8px; padding: 12px 20px; text-align: center; }
+    .stat-num { font-size: 28px; font-weight: bold; color: #f0a500; }
+    .stat-label { font-size: 12px; color: #888; }
+  </style>
+</head>
+<body>
+<div class="box">
+  <h1>🚀 アシスト効果 一括インポート</h1>
+  <p>GameWithから取得した74枚分のアシスト効果データをFirestoreに一括保存します。<br>
+  ※既存データは上書きされます。実行前にパスワードを入力してください。</p>
+
+  <div class="pw-row">
+    <input type="password" id="pwInput" placeholder="パスワードを入力" />
+    <button class="btn" onclick="startImport()">インポート開始</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="statTotal">0</div><div class="stat-label">総カード数</div></div>
+    <div class="stat"><div class="stat-num" id="statDone">0</div><div class="stat-label">完了</div></div>
+    <div class="stat"><div class="stat-num" id="statError">0</div><div class="stat-label">エラー</div></div>
+  </div>
+
+  <div id="log">ログがここに表示されます...</div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="assist-effect-data.js"></script>
+
+<script>
+const EDIT_PASSWORD = 'mf2024';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+const logEl = document.getElementById('log');
+let done = 0, errors = 0;
+
+function log(msg) {
+  logEl.textContent += msg + '\n';
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+async function startImport() {
+  const pw = document.getElementById('pwInput').value;
+  if (pw !== EDIT_PASSWORD) { alert('パスワードが違います'); return; }
+
+  const cardIds = Object.keys(ASSIST_EFFECT_DATA);
+  document.getElementById('statTotal').textContent = cardIds.length;
+  done = 0; errors = 0;
+  logEl.textContent = '';
+  log(`開始: ${cardIds.length}枚のデータをFirestoreに保存します\n`);
+
+  document.querySelector('.btn').disabled = true;
+
+  for (const cardId of cardIds) {
+    const effects = ASSIST_EFFECT_DATA[cardId];
+    try {
+      await db.collection('cards').doc(cardId).set({ assistEffects: effects }, { merge: true });
+      done++;
+      document.getElementById('statDone').textContent = done;
+      log(`✅ ${cardId} (${effects.length}件)`);
+    } catch(e) {
+      errors++;
+      document.getElementById('statError').textContent = errors;
+      log(`❌ ${cardId}: ${e.message}`);
+    }
+    // レート制限回避のため少し待機
+    await new Promise(r => setTimeout(r, 100));
+  }
+
+  log(`\n完了！ 成功: ${done}件, エラー: ${errors}件`);
+  document.querySelector('.btn').disabled = false;
+}
+</script>
+</body>
+</html>

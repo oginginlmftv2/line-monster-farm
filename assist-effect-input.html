@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>アシスト効果入力 | 管理</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body { background: #f0f2f5; }
+
+    #pwScreen {
+      display: flex; align-items: center; justify-content: center; min-height: 80vh;
+    }
+    .pw-box {
+      background: #fff; border-radius: 14px; padding: 40px 36px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12); text-align: center; width: 320px;
+    }
+    .pw-box h2 { font-size: 20px; margin-bottom: 20px; color: #1a1a2e; }
+    .pw-box input {
+      width: 100%; padding: 10px 14px; border: 2px solid #ddd;
+      border-radius: 8px; font-size: 15px; margin-bottom: 14px; box-sizing: border-box;
+    }
+    .pw-box input:focus { outline: none; border-color: #f0a500; }
+    .pw-box button {
+      width: 100%; padding: 11px; background: #f0a500; color: #fff;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer;
+    }
+    .pw-error { color: #e53e3e; font-size: 13px; margin-top: 8px; }
+
+    #mainScreen { display: none; }
+
+    .match-container { max-width: 1400px; margin: 24px auto; padding: 0 16px; }
+
+    .status-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px; background: #fff; border-radius: 10px;
+      padding: 12px 20px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .progress-text { font-size: 16px; font-weight: bold; color: #1a1a2e; }
+    .progress-text span { color: #f0a500; }
+    .save-indicator { font-size: 13px; color: #aaa; min-width: 80px; text-align: right; }
+    .save-indicator.saving { color: #3182ce; font-weight: bold; }
+    .save-indicator.saved  { color: #38a169; font-weight: bold; }
+
+    .panels {
+      display: grid; grid-template-columns: 340px 1fr; gap: 16px; align-items: start;
+    }
+    @media (max-width: 800px) { .panels { grid-template-columns: 1fr; } }
+
+    .panel { background: #fff; border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); overflow: hidden; }
+    .panel-header {
+      background: #1a1a2e; color: #fff; padding: 12px 18px;
+      font-size: 15px; font-weight: bold; display: flex; align-items: center; justify-content: space-between;
+    }
+    .panel-header small { font-size: 11px; color: #ccc; font-weight: normal; }
+    .panel-body { height: 80vh; overflow-y: auto; padding: 8px; }
+    .panel-search { padding: 8px 10px; border-bottom: 1px solid #eee; }
+    .panel-search input {
+      width: 100%; padding: 6px 10px; border: 1px solid #ddd;
+      border-radius: 6px; font-size: 13px; box-sizing: border-box;
+    }
+    .panel-search input:focus { outline: none; border-color: #f0a500; }
+
+    /* カードリスト */
+    .card-row {
+      display: flex; align-items: center; gap: 10px; padding: 7px 10px;
+      border-radius: 8px; cursor: pointer; transition: background 0.15s;
+      border: 2px solid transparent;
+    }
+    .card-row:hover { background: #f7f7f7; }
+    .card-row.selected { background: #fff3cd; border-color: #f0a500; }
+    .card-row.has-data { border-left: 3px solid #38a169; }
+    .card-row-img {
+      width: 44px; height: 44px; object-fit: cover; border-radius: 6px;
+      background: #eee; flex-shrink: 0;
+    }
+    .card-row-info { flex: 1; min-width: 0; }
+    .card-row-name { font-size: 13px; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .card-row-sub { font-size: 11px; color: #888; display: flex; align-items: center; gap: 5px; margin-top: 2px; }
+    .rarity-badge-sm { font-size: 9px; font-weight: bold; padding: 1px 5px; border-radius: 3px; color: #fff; }
+    .rb-MR  { background: #9333ea; }
+    .rb-SSR { background: #f59e0b; }
+    .rb-SSS { background: #ef4444; }
+    .data-count {
+      font-size: 11px; font-weight: bold; color: #38a169;
+      background: #e8f5e9; padding: 2px 7px; border-radius: 10px; flex-shrink: 0;
+    }
+    .no-data-mark {
+      font-size: 11px; color: #ccc; flex-shrink: 0;
+    }
+
+    /* 右パネル：入力エリア */
+    .input-panel-body { padding: 20px; }
+    .selected-card-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+      padding-bottom: 16px; border-bottom: 1px solid #eee;
+    }
+    .selected-card-img {
+      width: 60px; height: 60px; object-fit: cover; border-radius: 8px; background: #eee;
+    }
+    .selected-card-name { font-size: 18px; font-weight: bold; color: #1a1a2e; }
+    .selected-card-sub { font-size: 13px; color: #888; margin-top: 4px; }
+    .no-card-selected {
+      color: #bbb; font-size: 15px; text-align: center; padding: 60px 0;
+    }
+
+    .paste-area-label {
+      font-size: 13px; font-weight: bold; color: #555; margin-bottom: 8px;
+    }
+    .paste-hint {
+      font-size: 12px; color: #aaa; margin-bottom: 8px; line-height: 1.6;
+    }
+    .paste-textarea {
+      width: 100%; min-height: 200px; padding: 12px; border: 2px solid #ddd;
+      border-radius: 8px; font-size: 13px; font-family: inherit; box-sizing: border-box;
+      resize: vertical; line-height: 1.6;
+    }
+    .paste-textarea:focus { outline: none; border-color: #f0a500; }
+
+    .btn-parse {
+      margin-top: 10px; padding: 9px 20px; background: #1a1a2e; color: #fff;
+      border: none; border-radius: 8px; font-size: 14px; font-weight: bold;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-parse:hover { background: #f0a500; }
+
+    /* プレビューテーブル */
+    .preview-section { margin-top: 20px; }
+    .preview-title {
+      font-size: 13px; font-weight: bold; color: #555; margin-bottom: 10px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .effect-table {
+      width: 100%; border-collapse: collapse; font-size: 13px; margin-bottom: 14px;
+    }
+    .effect-table th {
+      background: #f5f5f5; color: #888; font-size: 12px; font-weight: bold;
+      padding: 8px 10px; text-align: left;
+    }
+    .effect-table th:last-child { text-align: center; width: 56px; }
+    .effect-table td { padding: 8px 10px; border-bottom: 1px solid #f0f0f0; vertical-align: top; }
+    .effect-table tr:last-child td { border-bottom: none; }
+    .effect-name { font-weight: bold; color: #1a1a2e; }
+    .effect-desc { font-size: 12px; color: #666; margin-top: 3px; line-height: 1.5; }
+    .totsujou-badge {
+      display: inline-block; font-size: 11px; font-weight: bold;
+      padding: 2px 8px; border-radius: 10px; white-space: nowrap;
+    }
+    .totsujou-無凸 { background: #f0f0f0; color: #888; }
+    .totsujou-1凸 { background: #e3f2fd; color: #1565c0; }
+    .totsujou-2凸 { background: #e8f5e9; color: #2e7d32; }
+    .totsujou-3凸 { background: #fff3e0; color: #e65100; }
+    .totsujou-4凸 { background: #fce4ec; color: #c62828; }
+
+    .btn-save {
+      display: block; width: 100%; padding: 11px; background: #f0a500; color: #fff;
+      border: none; border-radius: 8px; font-size: 15px; font-weight: bold;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-save:hover { background: #d4920a; }
+    .btn-save:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-clear {
+      padding: 6px 14px; background: none; border: 1px solid #ddd;
+      border-radius: 6px; font-size: 12px; color: #999; cursor: pointer;
+    }
+    .btn-clear:hover { border-color: #e53e3e; color: #e53e3e; }
+
+    .parse-error { color: #e53e3e; font-size: 13px; margin-top: 8px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="index.html">トップ</a>
+      <a href="assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<!-- パスワード画面 -->
+<div id="pwScreen">
+  <div class="pw-box">
+    <h2>管理者ログイン</h2>
+    <input type="password" id="pwInput" placeholder="パスワードを入力" />
+    <button onclick="checkPassword()">ログイン</button>
+    <div class="pw-error" id="pwError"></div>
+  </div>
+</div>
+
+<!-- メイン画面 -->
+<div id="mainScreen">
+  <div class="match-container">
+
+    <div class="status-bar">
+      <div class="progress-text">
+        <span id="registeredCount">0</span> / <span id="totalCount">0</span> カード登録済み
+      </div>
+      <div class="save-indicator" id="saveIndicator">-</div>
+    </div>
+
+    <div class="panels">
+
+      <!-- 左パネル：カード一覧 -->
+      <div class="panel">
+        <div class="panel-header">
+          アシストカード一覧
+          <small>クリックして選択</small>
+        </div>
+        <div class="panel-search">
+          <input type="text" id="cardSearch" placeholder="カード名で絞り込み..." oninput="filterCards(this.value)" />
+        </div>
+        <div class="panel-body" id="cardList"></div>
+      </div>
+
+      <!-- 右パネル：入力エリア -->
+      <div class="panel">
+        <div class="panel-header">アシスト効果入力</div>
+        <div class="input-panel-body" id="inputPanelBody">
+          <div class="no-card-selected">← 左からカードを選択してください</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script src="cards/cards-data.js"></script>
+
+<script>
+const EDIT_PASSWORD = 'mf2024';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// cardId → effects配列 のキャッシュ
+let allEffects = {};
+let selectedCardId = null;
+let parsedEffects = null;
+
+function checkPassword() {
+  if (document.getElementById('pwInput').value === EDIT_PASSWORD) {
+    document.getElementById('pwScreen').style.display = 'none';
+    document.getElementById('mainScreen').style.display = 'block';
+    initApp();
+  } else {
+    document.getElementById('pwError').textContent = 'パスワードが違います';
+  }
+}
+document.getElementById('pwInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPassword();
+});
+
+async function initApp() {
+  // 全カードのアシスト効果を一括取得
+  try {
+    const snap = await db.collection('assistEffects').get();
+    snap.forEach(doc => { allEffects[doc.id] = doc.data().effects || []; });
+  } catch(e) {
+    console.warn('読み込みエラー:', e);
+  }
+  buildCardList();
+  updateProgress();
+}
+
+/* ================================================================
+   カードリスト
+================================================================ */
+function buildCardList() {
+  const container = document.getElementById('cardList');
+  container.innerHTML = '';
+  Object.entries(cardsData).forEach(([cid, c]) => {
+    const row = document.createElement('div');
+    row.className = 'card-row';
+    row.id = `crow-${cid}`;
+    row.dataset.cid = cid;
+    row.dataset.name = c.name;
+    row.addEventListener('click', () => selectCard(cid));
+    container.appendChild(row);
+    refreshCardRow(cid);
+  });
+}
+
+function refreshCardRow(cid) {
+  const row = document.getElementById(`crow-${cid}`);
+  if (!row) return;
+  const c = cardsData[cid];
+  const effects = allEffects[cid] || [];
+  const badge = effects.length > 0
+    ? `<span class="data-count">${effects.length}件</span>`
+    : `<span class="no-data-mark">未登録</span>`;
+  row.innerHTML = `
+    <img class="card-row-img" src="assist-cards/${cid}.${c.ext}" alt="${c.name}" onerror="this.style.opacity='0.3'">
+    <div class="card-row-info">
+      <div class="card-row-name">${c.name}</div>
+      <div class="card-row-sub">
+        <span class="rarity-badge-sm rb-${c.rarity}">${c.rarity}</span>
+        ${c.type} ${c.oura}
+      </div>
+    </div>
+    ${badge}
+  `;
+  row.classList.toggle('selected', cid === selectedCardId);
+  row.classList.toggle('has-data', effects.length > 0);
+}
+
+function selectCard(cid) {
+  selectedCardId = cid;
+  parsedEffects = null;
+  document.querySelectorAll('.card-row').forEach(r => r.classList.remove('selected'));
+  const row = document.getElementById(`crow-${cid}`);
+  if (row) { row.classList.add('selected'); row.scrollIntoView({ block: 'nearest' }); }
+  renderInputPanel(cid);
+}
+
+function filterCards(query) {
+  const q = query.trim().toLowerCase();
+  document.querySelectorAll('.card-row').forEach(row => {
+    row.style.display = (!q || (row.dataset.name || '').toLowerCase().includes(q)) ? '' : 'none';
+  });
+}
+
+function updateProgress() {
+  document.getElementById('registeredCount').textContent = Object.keys(allEffects).length;
+  document.getElementById('totalCount').textContent = Object.keys(cardsData).length;
+}
+
+/* ================================================================
+   右パネル：入力
+================================================================ */
+function renderInputPanel(cid) {
+  const c = cardsData[cid];
+  const existing = allEffects[cid] || [];
+  const existingText = existing.map(e => `【${e.name}】\n${e.desc}\t${e.totsujou}`).join('\n');
+
+  document.getElementById('inputPanelBody').innerHTML = `
+    <div class="selected-card-header">
+      <img class="selected-card-img" src="assist-cards/${cid}.${c.ext}" alt="${c.name}" onerror="this.style.opacity='0.3'">
+      <div>
+        <div class="selected-card-name">${c.name}</div>
+        <div class="selected-card-sub">${c.rarity} / ${c.type} / ${c.oura}</div>
+      </div>
+    </div>
+
+    <div class="paste-area-label">アシスト効果テキストを貼り付け</div>
+    <div class="paste-hint">
+      GameWithからコピーした以下の形式に対応しています：<br>
+      【効果名】<br>
+      説明文　凸状態（タブ区切り）
+    </div>
+    <textarea class="paste-textarea" id="pasteArea" placeholder="【モン類上限解放+60】&#10;育成対象とモン類が一致したとき、すべての基礎ステータスを上限アップ	無凸&#10;...">${existingText}</textarea>
+    <div class="parse-error" id="parseError"></div>
+    <button class="btn-parse" onclick="parseAndPreview()">解析してプレビュー</button>
+
+    <div class="preview-section" id="previewSection" style="display:none;">
+      <div class="preview-title">
+        <span>プレビュー</span>
+        <button class="btn-clear" onclick="clearPreview()">クリア</button>
+      </div>
+      <table class="effect-table" id="previewTable">
+        <tr><th>効果名 / 説明</th><th>凸</th></tr>
+      </table>
+      <button class="btn-save" id="btnSave" onclick="saveEffects()">Firestoreに保存する</button>
+    </div>
+  `;
+
+  // 既存データがあればすぐプレビュー表示
+  if (existing.length > 0) {
+    parsedEffects = existing;
+    showPreview(existing);
+  }
+}
+
+/* ================================================================
+   パース
+================================================================ */
+function parseEffectText(raw) {
+  const lines = raw.split('\n').map(l => l.trimEnd()).filter(l => l.trim() !== '');
+  const effects = [];
+  let i = 0;
+  while (i < lines.length) {
+    const line = lines[i].trim();
+    // 【効果名】行
+    if (line.startsWith('【') && line.includes('】')) {
+      const name = line.replace(/^【/, '').replace(/】.*$/, '').trim();
+      i++;
+      if (i < lines.length) {
+        const nextLine = lines[i];
+        // タブで区切って説明文と凸状態を分離
+        const parts = nextLine.split('\t');
+        const desc = (parts[0] || '').trim();
+        const totsujou = (parts[1] || '無凸').trim();
+        if (name && desc) {
+          effects.push({ name, desc, totsujou });
+        }
+      }
+    }
+    i++;
+  }
+  return effects;
+}
+
+function parseAndPreview() {
+  const raw = document.getElementById('pasteArea').value;
+  const errEl = document.getElementById('parseError');
+  errEl.textContent = '';
+
+  const effects = parseEffectText(raw);
+  if (effects.length === 0) {
+    errEl.textContent = '解析できませんでした。形式を確認してください。';
+    return;
+  }
+  parsedEffects = effects;
+  showPreview(effects);
+}
+
+function showPreview(effects) {
+  const section = document.getElementById('previewSection');
+  const table = document.getElementById('previewTable');
+  if (!section || !table) return;
+  section.style.display = '';
+  table.innerHTML = `
+    <tr><th>効果名 / 説明</th><th>凸</th></tr>
+    ${effects.map(e => `
+      <tr>
+        <td>
+          <div class="effect-name">【${escHtml(e.name)}】</div>
+          <div class="effect-desc">${escHtml(e.desc)}</div>
+        </td>
+        <td style="text-align:center;">
+          <span class="totsujou-badge totsujou-${escHtml(e.totsujou)}">${escHtml(e.totsujou)}</span>
+        </td>
+      </tr>
+    `).join('')}
+  `;
+}
+
+function clearPreview() {
+  parsedEffects = null;
+  document.getElementById('previewSection').style.display = 'none';
+  document.getElementById('pasteArea').value = '';
+}
+
+/* ================================================================
+   保存
+================================================================ */
+async function saveEffects() {
+  if (!selectedCardId || !parsedEffects) return;
+  const btn = document.getElementById('btnSave');
+  const ind = document.getElementById('saveIndicator');
+  btn.disabled = true;
+  btn.textContent = '保存中...';
+  ind.textContent = '保存中...';
+  ind.className = 'save-indicator saving';
+
+  try {
+    await db.collection('assistEffects').doc(selectedCardId).set({ effects: parsedEffects });
+    allEffects[selectedCardId] = parsedEffects;
+    refreshCardRow(selectedCardId);
+    updateProgress();
+    ind.textContent = '保存済み';
+    ind.className = 'save-indicator saved';
+    setTimeout(() => { ind.textContent = '-'; ind.className = 'save-indicator'; }, 2000);
+    btn.textContent = '✅ 保存しました';
+    setTimeout(() => { btn.textContent = 'Firestoreに保存する'; btn.disabled = false; }, 1500);
+  } catch(e) {
+    alert('保存エラー: ' + e.message);
+    btn.textContent = 'Firestoreに保存する';
+    btn.disabled = false;
+    ind.textContent = 'エラー';
+    ind.className = 'save-indicator';
+  }
+}
+
+function escHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+
+</body>
+</html>
