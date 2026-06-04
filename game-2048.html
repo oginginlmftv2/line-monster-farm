@@ -130,6 +130,13 @@
     .rank-table td { padding: 8px 6px; border-bottom: 1px solid #eee; }
     .rank-table tr.me { background: #fff8e1; font-weight: bold; }
     .rank-sec-title { font-size: 15px; font-weight: bold; margin: 16px 0 4px; }
+    .alltime-sec-title { font-size: 15px; font-weight: bold; margin: 24px 0 4px; color: #b8860b; }
+    .alltime-table { width: 100%; border-collapse: collapse; font-size: 14px; margin: 8px 0 4px; }
+    .alltime-table th { background: #4a3800; color: #f0d060; padding: 8px 6px; font-size: 13px; }
+    .alltime-table td { padding: 8px 6px; border-bottom: 1px solid #f5e9c0; }
+    .alltime-table tbody tr:nth-child(odd) { background: #fffbf0; }
+    .alltime-table tbody tr:nth-child(even) { background: #fff8e1; }
+    .alltime-divider { border: none; border-top: 2px solid #f0e0a0; margin: 20px 0 0; }
   </style>
 </head>
 <body>
@@ -617,6 +624,29 @@ async function fetchWeeklyRows() {
   return rows.slice(0, 10);
 }
 
+async function fetchAllTimeRows() {
+  const snap = await db.collection('game2048').get();
+  const rows = [];
+  snap.forEach(d => rows.push(d.data()));
+  rows.sort((a, b) => b.score - a.score);
+  return rows.slice(0, 10);
+}
+
+function buildAllTimeTable(rows) {
+  const medals = ['🥇', '🥈', '🥉'];
+  let html = `<hr class="alltime-divider"><div class="alltime-sec-title">👑 歴代チャンピオン TOP10</div>`;
+  if (!rows.length) {
+    html += '<div style="color:#aaa;font-size:13px;padding:8px 0;">まだ記録がありません。</div>';
+    return html;
+  }
+  html += '<table class="alltime-table"><thead><tr><th>順位</th><th>名前</th><th>スコア</th></tr></thead><tbody>';
+  rows.forEach((d, i) => {
+    html += `<tr><td>${medals[i] || i + 1}</td><td>${esc(d.name)}</td><td>${d.score.toLocaleString()}</td></tr>`;
+  });
+  html += '</tbody></table>';
+  return html;
+}
+
 // 順位を返す（TOP10外はnull）
 function findMyRank(rows, myScore, myName) {
   for (let i = 0; i < rows.length; i++) {
@@ -660,7 +690,8 @@ async function loadRanking(containerId, myScore, myName) {
       shareArea.innerHTML = `<a href="${buildShareUrl(myScore, rank)}" target="_blank" rel="noopener" class="x-share-btn">𝕏 結果をポストする</a>`;
     }
 
-    el.innerHTML = buildRankTable(rows, myScore, myName);
+    const allTimeRows = await fetchAllTimeRows();
+    el.innerHTML = buildRankTable(rows, myScore, myName) + buildAllTimeTable(allTimeRows);
   } catch(e) {
     console.error('Firestore read error:', e);
     el.innerHTML = `<div style="color:#888;font-size:13px;">ランキングを読み込めませんでした（${e.code || e.message}）</div>`;
@@ -671,9 +702,11 @@ async function loadPreRanking() {
   const el = document.getElementById('preRanking');
   el.innerHTML = '';
   try {
-    const rows = await fetchWeeklyRows();
-    if (!rows.length) return;
-    el.innerHTML = buildRankTable(rows, null, null);
+    const [weeklyRows, allTimeRows] = await Promise.all([fetchWeeklyRows(), fetchAllTimeRows()]);
+    let html = '';
+    if (weeklyRows.length) html += buildRankTable(weeklyRows, null, null);
+    html += buildAllTimeTable(allTimeRows);
+    el.innerHTML = html;
   } catch(e) {
     console.error('Pre-ranking load error:', e);
   }
