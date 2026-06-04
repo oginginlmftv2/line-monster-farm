@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="S__94175247.jpg">
+  <link rel="apple-touch-icon" href="S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>モンスターダッシュ | LINEモンスターファーム徹底攻略</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .runner-wrap { max-width: 500px; margin: 0 auto; padding: 12px 12px 40px; }
+    .runner-title { text-align: center; font-size: 22px; font-weight: bold; color: #1a1a2e; margin-bottom: 14px; }
+    .runner-title span { color: #f0a500; }
+
+    /* キャラ選択 */
+    .select-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.1); margin-bottom: 16px; }
+    .select-label { font-size: 13px; font-weight: bold; color: #555; margin-bottom: 10px; }
+    .char-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+    .char-btn {
+      border: 2px solid #ddd; border-radius: 10px; background: #fafafa;
+      padding: 6px 3px; cursor: pointer; text-align: center; transition: all .15s;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+    }
+    .char-btn:hover { border-color: #f0a500; background: #fff8e8; }
+    .char-btn.selected { border-color: #f0a500; background: #fff3cc; box-shadow: 0 0 0 2px #f0a50055; }
+    .char-btn.selected-gross { border-color: #7b1fa2; background: #f3e5f5; box-shadow: 0 0 0 2px #7b1fa255; }
+    .char-img-wrap {
+      width: 52px; height: 52px; border-radius: 8px; overflow: hidden;
+      background: transparent; display: flex; align-items: center; justify-content: center;
+    }
+    .char-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    .char-name { font-size: 10px; font-weight: bold; color: #333; line-height: 1.2; }
+    .char-desc { font-size: 9px; color: #999; line-height: 1.3; text-align: center; }
+    .gross-badge { font-size: 9px; background: #7b1fa2; color: #fff; border-radius: 3px; padding: 1px 4px; display:inline-block; margin-bottom:2px; }
+    .takayuki-badge { font-size: 9px; background: #e53935; color: #fff; border-radius: 3px; padding: 1px 4px; display:inline-block; margin-bottom:2px; }
+    .stat-bar-row { display: flex; align-items: center; gap: 3px; width:100%; }
+    .stat-bar-label { font-size: 8px; color: #999; width: 18px; flex-shrink:0; }
+    .stat-bar-bg { flex: 1; height: 4px; background: #ddd; border-radius: 2px; overflow: hidden; }
+    .stat-bar-fill { height: 100%; border-radius: 2px; }
+    .fill-spd { background: #42a5f5; }
+    .fill-jmp { background: #66bb6a; }
+    .fill-inv { background: #ffa726; }
+
+    .name-area { display: flex; gap: 8px; margin-top: 12px; }
+    .name-input { flex: 1; padding: 10px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 15px; font-family: inherit; }
+    .name-input:focus { outline: none; border-color: #f0a500; }
+    .name-input.err { border-color: #e53935; }
+    .start-btn { padding: 10px 18px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; font-family: inherit; white-space: nowrap; }
+    .start-btn:hover { background: #d4920a; }
+
+    /* ゲーム画面 */
+    #gameScreen { display: none; }
+    .game-hd { display: flex; gap: 6px; margin-bottom: 8px; }
+    .info-box { flex: 1; background: #1a1a2e; border-radius: 8px; padding: 7px 8px; text-align: center; }
+    .info-label { font-size: 10px; color: #aaa; }
+    .info-val { font-size: 20px; font-weight: bold; color: #f0a500; line-height: 1.2; }
+    #canvas { display: block; width: 100%; border-radius: 10px; touch-action: none; cursor: pointer; }
+    .ctrl-row { display: flex; gap: 8px; margin-top: 8px; justify-content: center; }
+    .ctrl-btn { padding: 12px 20px; background: #1a1a2e; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: inherit; }
+    .ctrl-btn:hover { background: #374060; }
+    .jump-btn { background: #f0a500; padding: 12px 36px; font-size: 16px; font-weight: bold; }
+    .jump-btn:hover { background: #d4920a; }
+
+    /* リザルト */
+    #resultScreen { display: none; }
+    .result-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 2px 12px rgba(0,0,0,.1); }
+    .result-title { text-align: center; font-size: 20px; font-weight: bold; color: #e53935; margin-bottom: 4px; }
+    .result-score-wrap { text-align: center; margin: 10px 0; }
+    .result-score-raw { font-size: 16px; color: #aaa; }
+    .result-score { font-size: 42px; font-weight: bold; color: #f0a500; line-height: 1.1; }
+    .result-score small { font-size: 16px; color: #888; }
+    .result-penalty { font-size: 13px; color: #e53935; font-weight: bold; margin-top: 4px; }
+    .result-char { text-align:center; font-size:13px; color:#888; margin-bottom:8px; }
+    .submit-row { display: flex; gap: 8px; margin-top: 14px; }
+    .submit-btn { flex: 1; padding: 11px; background: #f0a500; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; font-family: inherit; }
+    .submit-btn:hover { background: #d4920a; }
+    .retry-btn { padding: 11px 16px; background: #1a1a2e; color: #fff; border: none; border-radius: 8px; font-size: 14px; cursor: pointer; font-family: inherit; }
+    .retry-btn:hover { background: #374060; }
+    #submitMsg { font-size: 13px; color: #555; margin-top: 8px; text-align: center; min-height: 18px; }
+
+    /* ランキング */
+    .ranking-card { background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 2px 12px rgba(0,0,0,.1); margin-top: 16px; }
+    .ranking-title { font-size: 14px; font-weight: bold; color: #1a1a2e; margin-bottom: 10px; }
+    .week-label { font-size: 12px; color: #888; font-weight: normal; }
+    .rank-row { display: flex; align-items: center; gap: 8px; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
+    .rank-row:last-child { border-bottom: none; }
+    .rank-num { width: 28px; font-weight: bold; color: #aaa; text-align: center; flex-shrink: 0; }
+    .rank-num.r1 { color: #f0a500; font-size: 16px; }
+    .rank-num.r2 { color: #90a4ae; font-size: 15px; }
+    .rank-num.r3 { color: #a1887f; font-size: 14px; }
+    .rank-name { flex: 1; color: #333; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rank-name.highlight { color: #f0a500; font-weight: bold; }
+    .rank-char { font-size: 11px; color: #999; flex-shrink: 0; }
+    .rank-score { font-weight: bold; color: #1a1a2e; flex-shrink: 0; }
+    .no-data { text-align: center; color: #aaa; font-size: 13px; padding: 12px 0; }
+
+    .rules-card { background: #fff; border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 12px rgba(0,0,0,.1); margin-bottom: 12px; font-size: 12px; color: #555; line-height: 1.9; }
+    .rules-card b { color: #1a1a2e; }
+  </style>
+</head>
+<body>
+<div id="header-placeholder"></div>
+<script>
+  fetch('../header.html').then(r=>r.text()).then(h=>{
+    document.getElementById('header-placeholder').outerHTML=h;
+  }).catch(()=>{
+    fetch('header.html').then(r=>r.text()).then(h=>{
+      document.getElementById('header-placeholder').outerHTML=h;
+    });
+  });
+</script>
+
+<div class="runner-wrap">
+  <div class="runner-title">🏃 <span>モンスターダッシュ</span></div>
+
+  <!-- スタート画面 -->
+  <div id="startScreen">
+    <div class="rules-card">
+      <b>遊び方</b><br>
+      画面タップ or スペースキーで<b>ジャンプ</b>！<br>
+      障害物を避けてできるだけ長く走り続けろ！<br>
+      🪙 コインを取るとスコアが……変わる。キャラによって。<br>
+      時間が経つほどスピードアップ。
+    </div>
+    <div class="select-card">
+      <div class="select-label">キャラを選んでください</div>
+      <div class="char-grid" id="charGrid"></div>
+      <div class="name-area">
+        <input class="name-input" id="playerName" type="text" maxlength="12" placeholder="ニックネーム（必須）">
+        <button class="start-btn" onclick="startGame()">スタート！</button>
+      </div>
+    </div>
+    <div class="ranking-card">
+      <div class="ranking-title">🏆 今週のランキング <span class="week-label" id="preWeekLabel"></span></div>
+      <div id="preRankBody"><div class="no-data">読み込み中…</div></div>
+    </div>
+  </div>
+
+  <!-- ゲーム画面 -->
+  <div id="gameScreen">
+    <div class="game-hd">
+      <div class="info-box"><div class="info-label">スコア</div><div class="info-val" id="scoreVal">0</div></div>
+      <div class="info-box"><div class="info-label">コイン</div><div class="info-val" id="coinVal">0</div></div>
+      <div class="info-box"><div class="info-label">最高記録</div><div class="info-val" id="bestVal">0</div></div>
+    </div>
+    <canvas id="canvas" width="500" height="220"></canvas>
+    <div class="ctrl-row">
+      <button class="ctrl-btn" onclick="pauseGame()">⏸</button>
+      <button class="ctrl-btn jump-btn" id="jumpBtn">ジャンプ！</button>
+      <button class="ctrl-btn" onclick="quitGame()">やめる</button>
+    </div>
+  </div>
+
+  <!-- リザルト画面 -->
+  <div id="resultScreen">
+    <div class="result-card">
+      <div class="result-title">💀 GAME OVER</div>
+      <div class="result-char" id="resultCharName"></div>
+      <div class="result-score-wrap">
+        <div class="result-score-raw" id="resultScoreRaw"></div>
+        <div class="result-score" id="finalScore"></div>
+        <div class="result-penalty" id="resultPenalty"></div>
+      </div>
+      <div class="submit-row">
+        <button class="submit-btn" onclick="submitScore()">ランキングに登録</button>
+        <button class="retry-btn" onclick="retryGame()">もう一回</button>
+      </div>
+      <div id="submitMsg"></div>
+      <button class="retry-btn" style="width:100%;margin-top:8px;" onclick="backToSelect()">キャラ変更・トップへ</button>
+    </div>
+    <div class="ranking-card">
+      <div class="ranking-title">🏆 今週のランキング <span class="week-label" id="resultWeekLabel"></span></div>
+      <div id="resultRankBody"><div class="no-data">読み込み中…</div></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
+  authDomain: "line-monster-farm.firebaseapp.com",
+  projectId: "line-monster-farm",
+  storageBucket: "line-monster-farm.firebasestorage.app",
+  messagingSenderId: "952838892758",
+  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
+});
+const db = firebase.firestore();
+
+// =============================================
+//  キャラクターデータ
+// =============================================
+// speed     : 走行速度倍率 (基準3)
+// jumpPow   : ジャンプ力 (基準3)
+// gravity   : 重力 (基準0.55、大きいほど落下が早い)
+// invFrames : 無敵フレーム数
+// size      : 描画サイズ(px)
+// coinBonus : コイン取得時スコア変化(+正/-負)
+// scoreMult : 最終スコア倍率
+const CHARS = [
+  {
+    id:'bururu',   name:'ブルール',   img:'monster-runner/buru-ru.png',
+    speed:1.5,  jumpPow:4.2,  gravity:0.55, invFrames:15, size:36,
+    coinBonus:-400, scoreMult:1,
+    desc:'ジャンプだけ得意。足は遅い。',
+    color:'#90caf9', gross:false,
+  },
+  {
+    id:'hidarikiki', name:'ひだりきき', img:'monster-runner/hidarikiki.png',
+    speed:4.0,  jumpPow:1.4,  gravity:0.9,  invFrames:8,  size:32,
+    coinBonus:-400, scoreMult:1,
+    desc:'速いがジャンプがほぼできない。',
+    color:'#ef9a9a', gross:false,
+  },
+  {
+    id:'meri',     name:'メーリ',     img:'monster-runner/me-ri.png',
+    speed:1.8,  jumpPow:3.8,  gravity:0.22, invFrames:20, size:34,
+    coinBonus:-400, scoreMult:1,
+    desc:'ふわっと高く飛ぶが全然降りてこない。',
+    color:'#ce93d8', gross:false,
+  },
+  {
+    id:'takayuki', name:'たかゆき',   img:'monster-runner/takayuki.png',
+    speed:3.0,  jumpPow:3.0,  gravity:0.55, invFrames:20, size:32,
+    coinBonus:-400, scoreMult:0.02,
+    desc:'全部ふつう。でもスコアが1/50になる。',
+    color:'#ffcc80', gross:false,
+  },
+  {
+    id:'minnna',   name:'みんな',     img:'monster-runner/minnna.png',
+    speed:4.8,  jumpPow:3.8,  gravity:0.55, invFrames:55, size:44,
+    coinBonus:800, scoreMult:1,
+    maxJumps:4,
+    desc:'見た目だけが問題。性能は最強。',
+    color:'#ffccbc', gross:true,
+  },
+];
+
+// 画像プリロード
+CHARS.forEach(c => {
+  c._img = new Image();
+  c._img.src = c.img;
+});
+
+// =============================================
+//  キャラ選択UI
+// =============================================
+let selectedCharId = CHARS[0].id;
+
+function buildCharGrid() {
+  const grid = document.getElementById('charGrid');
+  grid.innerHTML = '';
+  CHARS.forEach(c => {
+    const sel = c.id === selectedCharId;
+    const btn = document.createElement('button');
+    btn.className = 'char-btn' + (sel ? (c.gross ? ' selected-gross' : ' selected') : '');
+    btn.onclick = () => { selectedCharId = c.id; buildCharGrid(); };
+    const spdW  = Math.min(c.speed / 5 * 100, 100);
+    const jmpW  = Math.min(c.jumpPow / 6 * 100, 100);
+    const invW  = Math.min(c.invFrames / 60 * 100, 100);
+    btn.innerHTML = `
+      <div class="char-img-wrap"><img src="${c.img}" alt="${c.name}"></div>
+      <div class="char-name">${c.name}</div>
+      <div style="width:100%;padding:0 2px;">
+        <div class="stat-bar-row"><div class="stat-bar-label">速</div><div class="stat-bar-bg"><div class="stat-bar-fill fill-spd" style="width:${spdW}%"></div></div></div>
+        <div class="stat-bar-row"><div class="stat-bar-label">跳</div><div class="stat-bar-bg"><div class="stat-bar-fill fill-jmp" style="width:${jmpW}%"></div></div></div>
+        <div class="stat-bar-row"><div class="stat-bar-label">無</div><div class="stat-bar-bg"><div class="stat-bar-fill fill-inv" style="width:${invW}%"></div></div></div>
+      </div>
+      <div class="char-desc">${c.desc}</div>
+    `;
+    grid.appendChild(btn);
+  });
+}
+buildCharGrid();
+
+// =============================================
+//  ゲーム本体
+// =============================================
+const canvas = document.getElementById('canvas');
+const ctx    = canvas.getContext('2d');
+const W = 500, H = 220;
+canvas.width = W; canvas.height = H;
+
+const GROUND_Y  = H - 36;  // 地面上面Y
+const PLAYER_X  = 70;      // プレイヤーの固定X
+
+let animId, gameState = 'idle';
+let frame, score, coinCount, bestScore;
+let char, player, obstacles, coins, particles;
+let nextObsIn, nextCoinIn;
+let bgX = 0; // 背景スクロールオフセット
+
+bestScore = parseInt(localStorage.getItem('runnerBest2') || '0');
+
+// スクロールオフセット（モジュロなしで増やし続ける・描画側でだけ余りをとる）
+let bgFar = 0, bgNear = 0, bgGround = 0;
+
+function getBaseSpeed() {
+  // 時間経過でスピードアップ（最大2.5倍）
+  return char.speed * Math.min(1 + frame / (60 * 20), 3.5);
+}
+
+function initPlayer() {
+  player = {
+    x: PLAYER_X,
+    y: GROUND_Y,
+    vy: 0,
+    onGround: true,
+    jumpsLeft: char.doubleJump ? 2 : 1,
+    invTimer: 0,
+    dead: false,
+  };
+}
+
+// ===== スポーン =====
+function spawnObstacle() {
+  const spd = getBaseSpeed();
+  const roll = Math.random();
+  if (roll < 0.45) {
+    // 岩（地面）
+    const h = 22 + Math.random() * 20;
+    obstacles.push({ type:'rock', x:W+30, y:GROUND_Y - h, w:22, h, spd });
+  } else if (roll < 0.72) {
+    // トゲ（地面）
+    const w = 20 + Math.random() * 28;
+    obstacles.push({ type:'spike', x:W+30, y:GROUND_Y - 18, w, h:18, spd });
+  } else {
+    // 空中の敵
+    const birdY = GROUND_Y - 70 - Math.random() * 35;
+    obstacles.push({ type:'bird', x:W+30, y:birdY, w:30, h:22, spd, t:0 });
+  }
+}
+
+function spawnCoin() {
+  const spd = getBaseSpeed() * 0.9;
+  const isHigh = Math.random() < 0.4;
+  const y = isHigh ? GROUND_Y - 70 - Math.random()*20 : GROUND_Y - 28;
+  coins.push({ x:W+20, y, spd, collected:false, anim:0 });
+}
+
+// ===== パーティクル =====
+function addParticles(x, y, color, n) {
+  for (let i = 0; i < n; i++) {
+    particles.push({
+      x, y,
+      vx: (Math.random()-0.5)*4,
+      vy: -(Math.random()*3+1),
+      life: 30, maxLife: 30,
+      color,
+    });
+  }
+}
+
+// ===== フローティングテキスト =====
+let floatTexts = [];
+function addFloatText(x, y, text, color) {
+  floatTexts.push({ x, y, text, color, life: 45, maxLife: 45 });
+}
+
+// ===== メインループ =====
+function update() {
+  if (gameState !== 'running') return;
+  frame++;
+  const spd = getBaseSpeed();
+
+  // スコア（距離ベース）
+  score = Math.floor(frame * spd / 60 * 8);
+
+  // 背景オフセット更新（モジュロなし・ずっと増やし続ける）
+  bgFar    += spd * 0.10;
+  bgNear   += spd * 0.50;
+  bgGround += spd;
+
+  // プレイヤー物理
+  const grav = char.gravity;
+  player.vy += grav;
+  player.y  += player.vy;
+  if (player.y >= GROUND_Y) {
+    player.y = GROUND_Y;
+    player.vy = 0;
+    player.onGround = true;
+    player.jumpsLeft = char.maxJumps || 1;
+  } else {
+    player.onGround = false;
+  }
+  if (player.invTimer > 0) player.invTimer--;
+
+  // 障害物スポーン
+  nextObsIn--;
+  if (nextObsIn <= 0) {
+    spawnObstacle();
+    nextObsIn = Math.max(28, Math.floor((70 + Math.random()*50) / spd * 3));
+  }
+
+  // コインスポーン
+  nextCoinIn--;
+  if (nextCoinIn <= 0) {
+    spawnCoin();
+    nextCoinIn = Math.max(50, Math.floor((80 + Math.random()*60) / spd * 3));
+  }
+
+  // プレイヤー当たり判定サイズ
+  const PW = char.size, PH = char.size;
+  const px1 = player.x - PW/2 + 5, px2 = player.x + PW/2 - 5;
+  const py1 = player.y - PH + 4,   py2 = player.y - 4;
+
+  // 障害物処理
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    const o = obstacles[i];
+    o.x -= o.spd;
+    if (o.type === 'bird') o.t += 0.08;
+    if (o.x + o.w < 0) { obstacles.splice(i, 1); continue; }
+
+    if (player.invTimer === 0) {
+      const oy = o.type === 'bird' ? o.y + Math.sin(o.t)*12 : o.y;
+      if (px2 > o.x+3 && px1 < o.x+o.w-3 && py2 > oy+3 && py1 < oy+o.h-3) {
+        addParticles(player.x, player.y - PH/2, '#e53935', 12);
+        gameOver();
+        return;
+      }
+    }
+  }
+
+  // コイン処理
+  for (let i = coins.length - 1; i >= 0; i--) {
+    const c = coins[i];
+    c.x -= c.spd;
+    if (c.collected) { c.anim++; if (c.anim > 20) coins.splice(i, 1); continue; }
+    if (c.x + 14 < 0) { coins.splice(i, 1); continue; }
+    // 取得判定
+    if (px2 > c.x-8 && px1 < c.x+22 && py2 > c.y-8 && py1 < c.y+18) {
+      c.collected = true;
+      coinCount++;
+      const bonus = char.coinBonus;
+      score = Math.max(0, score + bonus);
+      const txt = bonus >= 0 ? `+${bonus}` : `${bonus}`;
+      const col = bonus >= 0 ? '#f0a500' : '#e53935';
+      addFloatText(c.x, c.y - 10, txt, col);
+      addParticles(c.x+8, c.y+8, '#f0a500', 6);
+    }
+  }
+
+  // パーティクル
+  for (let i = particles.length - 1; i >= 0; i--) {
+    const p = particles[i];
+    p.x += p.vx; p.y += p.vy; p.vy += 0.15;
+    p.life--;
+    if (p.life <= 0) particles.splice(i, 1);
+  }
+
+  // フローティングテキスト
+  for (let i = floatTexts.length - 1; i >= 0; i--) {
+    floatTexts[i].y -= 0.8;
+    floatTexts[i].life--;
+    if (floatTexts[i].life <= 0) floatTexts.splice(i, 1);
+  }
+
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('coinVal').textContent  = coinCount;
+  document.getElementById('bestVal').textContent  = Math.max(score, bestScore);
+
+  draw();
+  animId = requestAnimationFrame(update);
+}
+
+// =============================================
+//  描画
+// =============================================
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // 空グラデ
+  const sky = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
+  sky.addColorStop(0, '#87CEEB');
+  sky.addColorStop(1, '#d0ecf8');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, W, H);
+
+  // 遠景：山
+  drawMountains();
+
+  // 地面
+  drawGround();
+
+  // コイン
+  coins.forEach(c => drawCoin(c));
+
+  // 障害物
+  obstacles.forEach(o => drawObstacle(o));
+
+  // プレイヤー
+  drawPlayer();
+
+  // パーティクル
+  particles.forEach(p => {
+    ctx.globalAlpha = p.life / p.maxLife;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3, 0, Math.PI*2);
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+
+  // フローティングテキスト
+  floatTexts.forEach(ft => {
+    ctx.globalAlpha = ft.life / ft.maxLife;
+    ctx.font = 'bold 14px sans-serif';
+    ctx.fillStyle = ft.color;
+    ctx.textAlign = 'center';
+    ctx.fillText(ft.text, ft.x, ft.y);
+  });
+  ctx.globalAlpha = 1;
+
+  // ポーズ表示
+  if (gameState === 'paused') {
+    ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 28px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('⏸ PAUSE', W/2, H/2);
+    ctx.textBaseline = 'alphabetic';
+  }
+
+  ctx.textAlign = 'left';
+}
+
+function drawTiled(offset, period, drawFn) {
+  // offset を period で割った余りだけ左にずらして描画開始
+  const start = -(offset % period);
+  for (let x = start; x < W + period; x += period) {
+    drawFn(x);
+  }
+}
+
+function drawMountains() {
+  // 遠景：山
+  drawTiled(bgFar, 110, mx => {
+    ctx.fillStyle = '#b0bec5';
+    ctx.beginPath();
+    ctx.moveTo(mx,       GROUND_Y);
+    ctx.lineTo(mx + 55,  GROUND_Y - 68);
+    ctx.lineTo(mx + 110, GROUND_Y);
+    ctx.fill();
+    ctx.fillStyle = '#eceff1';
+    ctx.beginPath();
+    ctx.moveTo(mx + 41,  GROUND_Y - 48);
+    ctx.lineTo(mx + 55,  GROUND_Y - 68);
+    ctx.lineTo(mx + 69,  GROUND_Y - 48);
+    ctx.fill();
+  });
+
+  // 近景：木
+  drawTiled(bgNear, 55, tx => {
+    ctx.fillStyle = '#4e342e';
+    ctx.fillRect(tx + 10, GROUND_Y - 34, 5, 34);
+    ctx.fillStyle = '#388e3c';
+    ctx.beginPath();
+    ctx.arc(tx + 12, GROUND_Y - 40, 14, 0, Math.PI*2);
+    ctx.fill();
+  });
+}
+
+function drawGround() {
+  // 地面本体
+  ctx.fillStyle = '#8d6e63';
+  ctx.fillRect(0, GROUND_Y, W, H - GROUND_Y);
+  // 草
+  ctx.fillStyle = '#4caf50';
+  ctx.fillRect(0, GROUND_Y, W, 7);
+  // タイル模様
+  ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+  ctx.lineWidth = 1;
+  const tileBase = -(bgGround % 40);
+  for (let x = tileBase; x < W; x += 40) {
+    ctx.beginPath();
+    ctx.moveTo(x, GROUND_Y + 7);
+    ctx.lineTo(x, H);
+    ctx.stroke();
+  }
+}
+
+function drawObstacle(o) {
+  if (o.type === 'rock') {
+    ctx.fillStyle = '#607d8b';
+    roundRect(o.x, o.y, o.w, o.h, 5);
+    ctx.fill();
+    ctx.fillStyle = '#90a4ae';
+    ctx.beginPath();
+    ctx.ellipse(o.x + o.w*0.35, o.y + o.h*0.3, o.w*0.18, o.h*0.15, -0.3, 0, Math.PI*2);
+    ctx.fill();
+  } else if (o.type === 'spike') {
+    const n = Math.max(2, Math.ceil(o.w / 10));
+    const sw = o.w / n;
+    for (let i = 0; i < n; i++) {
+      ctx.fillStyle = i%2===0 ? '#e53935' : '#c62828';
+      ctx.beginPath();
+      ctx.moveTo(o.x + i*sw,       o.y + o.h);
+      ctx.lineTo(o.x + i*sw + sw/2, o.y);
+      ctx.lineTo(o.x + i*sw + sw,   o.y + o.h);
+      ctx.fill();
+    }
+  } else {
+    // コウモリ敵
+    const by = o.y + Math.sin(o.t)*12;
+    ctx.fillStyle = '#4a148c';
+    ctx.beginPath();
+    ctx.ellipse(o.x+o.w/2, by+o.h/2, o.w/2, o.h/2.2, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#7b1fa2';
+    // 左翼
+    ctx.beginPath();
+    ctx.moveTo(o.x+o.w/2, by+5);
+    ctx.bezierCurveTo(o.x+o.w/2-6, by-10, o.x-8, by-5, o.x-2, by+12);
+    ctx.closePath(); ctx.fill();
+    // 右翼
+    ctx.beginPath();
+    ctx.moveTo(o.x+o.w/2, by+5);
+    ctx.bezierCurveTo(o.x+o.w/2+6, by-10, o.x+o.w+8, by-5, o.x+o.w+2, by+12);
+    ctx.closePath(); ctx.fill();
+    // 目
+    ctx.fillStyle = '#ffeb3b';
+    ctx.beginPath(); ctx.arc(o.x+o.w/2-5, by+7, 3, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(o.x+o.w/2+5, by+7, 3, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(o.x+o.w/2-5, by+7, 1.5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(o.x+o.w/2+5, by+7, 1.5, 0, Math.PI*2); ctx.fill();
+  }
+}
+
+function drawCoin(c) {
+  if (c.collected) {
+    ctx.globalAlpha = Math.max(0, 1 - c.anim/20);
+    ctx.font = '16px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🪙', c.x+8, c.y+2 - c.anim*1.5);
+    ctx.globalAlpha = 1;
+    return;
+  }
+  // コイン（黄色い円）
+  const bob = Math.sin(Date.now()/300 + c.x) * 3;
+  ctx.fillStyle = '#f0a500';
+  ctx.strokeStyle = '#e65100';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(c.x+8, c.y + bob, 10, 0, Math.PI*2);
+  ctx.fill(); ctx.stroke();
+  ctx.fillStyle = '#fff176';
+  ctx.font = 'bold 10px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('¥', c.x+8, c.y + bob);
+  ctx.textBaseline = 'alphabetic';
+}
+
+function drawPlayer() {
+  const PW = char.size, PH = char.size;
+  const px = player.x - PW/2;
+  const py = player.y - PH;
+
+  // 走行ぼかし（速いキャラのみ）
+  if (char.speed >= 3.5 && player.onGround) {
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.beginPath();
+    ctx.ellipse(px - 8, player.y - PH/2, PW/3, PH/4, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // 影
+  ctx.fillStyle = 'rgba(0,0,0,0.15)';
+  ctx.beginPath();
+  ctx.ellipse(player.x, GROUND_Y + 4, PW/2 * 0.8, 5, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  const blink = player.invTimer > 0 && Math.floor(player.invTimer/4)%2===0;
+  if (!blink) {
+    if (char._img && char._img.complete && char._img.naturalWidth > 0) {
+      // ジャンプ中は少し傾ける
+      if (!player.onGround) {
+        ctx.save();
+        ctx.translate(player.x, player.y - PH/2);
+        ctx.rotate(player.vy * 0.025);
+        ctx.drawImage(char._img, -PW/2, -PH/2, PW, PH);
+        ctx.restore();
+      } else {
+        ctx.drawImage(char._img, px, py, PW, PH);
+      }
+    } else {
+      ctx.fillStyle = char.color;
+      ctx.beginPath();
+      ctx.ellipse(player.x, player.y - PH/2, PW/2, PH/2, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x+r, y);
+  ctx.lineTo(x+w-r, y); ctx.arcTo(x+w, y, x+w, y+r, r);
+  ctx.lineTo(x+w, y+h-r); ctx.arcTo(x+w, y+h, x+w-r, y+h, r);
+  ctx.lineTo(x+r, y+h); ctx.arcTo(x, y+h, x, y+h-r, r);
+  ctx.lineTo(x, y+r); ctx.arcTo(x, y, x+r, y, r);
+  ctx.closePath();
+}
+
+// =============================================
+//  ジャンプ
+// =============================================
+function doJump() {
+  if (gameState !== 'running') return;
+  if (player.jumpsLeft > 0) {
+    player.vy = -(9 + char.jumpPow * 1.1);
+    player.jumpsLeft--;
+    player.onGround = false;
+    addParticles(player.x, player.y, '#fff', 4);
+  }
+}
+
+// =============================================
+//  ゲーム制御
+// =============================================
+function startGame() {
+  const nameEl = document.getElementById('playerName');
+  if (!nameEl.value.trim()) { nameEl.classList.add('err'); nameEl.focus(); return; }
+  nameEl.classList.remove('err');
+
+  char = CHARS.find(c => c.id === selectedCharId);
+  frame = 0; score = 0; coinCount = 0;
+  obstacles = []; coins = []; particles = []; floatTexts = [];
+  nextObsIn = 90; nextCoinIn = 70;
+  bgFar = 0; bgNear = 0; bgGround = 0;
+  initPlayer();
+
+  document.getElementById('startScreen').style.display  = 'none';
+  document.getElementById('resultScreen').style.display = 'none';
+  document.getElementById('gameScreen').style.display   = 'block';
+  gameState = 'running';
+  cancelAnimationFrame(animId);
+  update();
+}
+
+function retryGame()    { document.getElementById('resultScreen').style.display='none'; startGame(); }
+function backToSelect() { document.getElementById('resultScreen').style.display='none'; document.getElementById('startScreen').style.display='block'; loadPreRanking(); }
+function quitGame()     { gameState='idle'; cancelAnimationFrame(animId); document.getElementById('gameScreen').style.display='none'; document.getElementById('startScreen').style.display='block'; loadPreRanking(); }
+function pauseGame()    { if(gameState==='running'){gameState='paused';cancelAnimationFrame(animId);draw();}else if(gameState==='paused'){gameState='running';update();} }
+
+function gameOver() {
+  gameState = 'dead';
+  cancelAnimationFrame(animId);
+
+  // たかゆきペナルティ
+  const rawScore = score;
+  const finalScore = Math.floor(rawScore * char.scoreMult);
+
+  if (finalScore > bestScore) {
+    bestScore = finalScore;
+    localStorage.setItem('runnerBest2', bestScore);
+  }
+
+  document.getElementById('resultCharName').textContent = char.name + 'で挑戦 / コイン ' + coinCount + '枚';
+
+  const rawEl     = document.getElementById('resultScoreRaw');
+  const finalEl   = document.getElementById('finalScore');
+  const penaltyEl = document.getElementById('resultPenalty');
+
+  if (char.id === 'takayuki') {
+    rawEl.textContent     = `走行スコア：${rawScore}`;
+    finalEl.innerHTML     = `${finalScore}<small>pt</small>`;
+    penaltyEl.textContent = `（÷50のペナルティ適用）`;
+  } else {
+    rawEl.textContent     = '';
+    finalEl.innerHTML     = `${finalScore}<small>pt</small>`;
+    penaltyEl.textContent = '';
+  }
+
+  document.getElementById('submitMsg').textContent       = '';
+  document.getElementById('gameScreen').style.display    = 'none';
+  document.getElementById('resultScreen').style.display  = 'block';
+  document.getElementById('resultWeekLabel').textContent = getWeekRange();
+
+  loadRanking('resultRankBody', finalScore, document.getElementById('playerName').value.trim());
+}
+
+// =============================================
+//  入力
+// =============================================
+canvas.addEventListener('click',      doJump);
+canvas.addEventListener('touchstart', e=>{ e.preventDefault(); doJump(); }, {passive:false});
+document.getElementById('jumpBtn').addEventListener('click', doJump);
+document.addEventListener('keydown', e=>{
+  if (e.code==='Space'||e.code==='ArrowUp'){ e.preventDefault(); doJump(); }
+  if (e.code==='KeyP') pauseGame();
+});
+
+// =============================================
+//  Firebase ランキング
+// =============================================
+function getWeekKey() {
+  const now=new Date();
+  const d=new Date(Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()));
+  const day=d.getUTCDay()||7; d.setUTCDate(d.getUTCDate()+4-day);
+  const ys=new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const wn=Math.ceil((((d-ys)/86400000)+1)/7);
+  return `${d.getUTCFullYear()}-W${String(wn).padStart(2,'0')}`;
+}
+function getWeekRange() {
+  const now=new Date(); const day=now.getDay()||7;
+  const mon=new Date(now); mon.setDate(now.getDate()-day+1); mon.setHours(0,0,0,0);
+  const sun=new Date(mon); sun.setDate(mon.getDate()+6);
+  const fmt=d=>`${d.getMonth()+1}/${d.getDate()}`;
+  return `${fmt(mon)}(月)〜${fmt(sun)}(日)`;
+}
+
+async function loadRanking(targetId, myScore, myName) {
+  const el = document.getElementById(targetId);
+  try {
+    const snap = await db.collection('gameRunner').where('weekKey','==',getWeekKey()).get();
+    const rows = []; snap.forEach(d=>rows.push(d.data()));
+    rows.sort((a,b)=>b.score-a.score);
+    const top = rows.slice(0,10);
+    if (!top.length) { el.innerHTML='<div class="no-data">まだ記録なし</div>'; return; }
+    el.innerHTML = top.map((r,i)=>{
+      const isMe  = myScore!==undefined && r.score===myScore && r.name===myName;
+      const medal = i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
+      const nc    = i===0?'r1':i===1?'r2':i===2?'r3':'';
+      return `<div class="rank-row">
+        <div class="rank-num ${nc}">${medal}</div>
+        <div class="rank-name ${isMe?'highlight':''}">${esc(r.name)}</div>
+        <div class="rank-char">${esc(r.charName||'')}</div>
+        <div class="rank-score">${r.score}pt</div>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML='<div class="no-data">読み込みエラー</div>'; }
+}
+
+async function submitScore() {
+  const msg  = document.getElementById('submitMsg');
+  const name = document.getElementById('playerName').value.trim();
+  if (!name) { msg.textContent='名前が入力されていません'; return; }
+  const rawScore   = score;
+  const finalScore = Math.floor(rawScore * char.scoreMult);
+  msg.textContent  = '登録中…';
+  try {
+    await db.collection('gameRunner').add({
+      name, charId:char.id, charName:char.name,
+      score: finalScore,
+      weekKey: getWeekKey(),
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    msg.textContent = '登録しました！';
+    loadRanking('resultRankBody', finalScore, name);
+  } catch(e) { msg.textContent=`送信失敗（${e.code||e.message}）`; }
+}
+
+function loadPreRanking() {
+  document.getElementById('preWeekLabel').textContent = getWeekRange();
+  loadRanking('preRankBody');
+}
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+loadPreRanking();
+</script>
+
+<div id="footer-placeholder"></div>
+<script>
+  fetch('../footer.html').then(r=>r.text()).then(h=>{
+    document.getElementById('footer-placeholder').outerHTML=h;
+  }).catch(()=>{
+    fetch('footer.html').then(r=>r.text()).then(h=>{
+      document.getElementById('footer-placeholder').outerHTML=h;
+    });
+  });
+</script>
+</body>
+</html>
