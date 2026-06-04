@@ -625,7 +625,7 @@ async function fetchWeeklyRows() {
 }
 
 async function fetchAllTimeRows() {
-  const snap = await db.collection('game2048').get();
+  const snap = await db.collection('game2048').orderBy('score', 'desc').limit(50).get();
   const rows = [];
   snap.forEach(d => rows.push(d.data()));
   rows.sort((a, b) => b.score - a.score);
