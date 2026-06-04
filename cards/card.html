@@ -661,6 +661,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script src="cards-data.js"></script>
+<script src="../assist-effect-data.js"></script>
 <script>
   // ★ パスワードはここを変更してください ★
   const EDIT_PASSWORD = 'mf2024';
@@ -831,6 +832,7 @@
     // Firestoreからデータを読み込んで表示
     loadCardData();
     loadComments();
+    loadAssistEffects();
   }
 
   // ---- Firestoreデータ読み込み ----
@@ -851,7 +853,6 @@
     loadFormations();
     loadExplanation();
     loadAbilities();
-    loadAssistEffects();
   }
 
   async function loadAbilities() {
@@ -872,36 +873,30 @@
     }
   }
 
-  async function loadAssistEffects() {
+  function loadAssistEffects() {
     const el = document.getElementById('assistEffectsBody');
     if (!el) return;
-    try {
-      const doc = await db.collection('cards').doc(id).get();
-      const effects = doc.exists ? (doc.data().assistEffects || []) : [];
-      if (effects.length === 0) {
-        el.innerHTML = '<div class="assist-effects-empty">（未登録）</div>';
-        return;
-      }
-      el.innerHTML = `
-        <table class="assist-effect-table">
-          <tr><th>効果</th><th>凸</th></tr>
-          ${effects.map(e => `
-            <tr>
-              <td>
-                <div class="assist-effect-name">${escapeHtml(e.name)}</div>
-                <div class="assist-effect-desc">${escapeHtml(e.desc)}</div>
-              </td>
-              <td style="text-align:center;">
-                <span class="totsujou-badge totsujou-${escapeHtml(e.totsujou)}">${escapeHtml(e.totsujou)}</span>
-              </td>
-            </tr>
-          `).join('')}
-        </table>
-      `;
-    } catch (e) {
-      console.warn('アシスト効果読み込みエラー:', e);
-      el.innerHTML = '<div class="assist-effects-empty">（読み込みエラー）</div>';
+    const effects = (typeof ASSIST_EFFECT_DATA !== 'undefined' && ASSIST_EFFECT_DATA[id]) ? ASSIST_EFFECT_DATA[id] : [];
+    if (effects.length === 0) {
+      el.innerHTML = '<div class="assist-effects-empty">（未登録）</div>';
+      return;
     }
+    el.innerHTML = `
+      <table class="assist-effect-table">
+        <tr><th>効果</th><th>凸</th></tr>
+        ${effects.map(e => `
+          <tr>
+            <td>
+              <div class="assist-effect-name">${escapeHtml(e.name)}</div>
+              <div class="assist-effect-desc">${escapeHtml(e.desc)}</div>
+            </td>
+            <td style="text-align:center;">
+              <span class="totsujou-badge totsujou-${escapeHtml(e.totsujou)}">${escapeHtml(e.totsujou)}</span>
+            </td>
+          </tr>
+        `).join('')}
+      </table>
+    `;
   }
 
   // ---- 評価ロジック ----
