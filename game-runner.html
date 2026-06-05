@@ -101,13 +101,7 @@
 <body>
 <div id="header-placeholder"></div>
 <script>
-  fetch('../header.html').then(r=>r.text()).then(h=>{
-    document.getElementById('header-placeholder').outerHTML=h;
-  }).catch(()=>{
-    fetch('header.html').then(r=>r.text()).then(h=>{
-      document.getElementById('header-placeholder').outerHTML=h;
-    });
-  });
+  fetch('header.html').then(r=>{ if(r.ok) return r.text(); }).then(h=>{ if(h) document.getElementById('header-placeholder').outerHTML=h; });
 </script>
 
 <div class="runner-wrap">
@@ -1073,13 +1067,7 @@ loadPreRanking();
 
 <div id="footer-placeholder"></div>
 <script>
-  fetch('../footer.html').then(r=>r.text()).then(h=>{
-    document.getElementById('footer-placeholder').outerHTML=h;
-  }).catch(()=>{
-    fetch('footer.html').then(r=>r.text()).then(h=>{
-      document.getElementById('footer-placeholder').outerHTML=h;
-    });
-  });
+  fetch('footer.html').then(r=>{ if(r.ok) return r.text(); }).then(h=>{ if(h) document.getElementById('footer-placeholder').outerHTML=h; });
 </script>
 </body>
 </html>
