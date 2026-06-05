@@ -304,12 +304,10 @@
       <a href="monsuta-shindan.html" class="menu-link">
         <span class="icon">🔮</span> モンスター占い
       </a>
-      <a href="game-runner.html" class="menu-link">
-        <span class="icon">🏃</span> ミニゲーム①モンスターダッシュ
-      </a>
-      <a href="game-2048.html" class="menu-link">
-        <span class="icon">🎮</span> ミニゲーム②モンスター進化2048
-      </a>
+      <div class="menu-link ikusei-toggle-btn" onclick="toggleMiniGame(this)">
+        <span class="icon">🎮</span> ミニゲーム
+        <span class="ikusei-chevron" id="minigame-chevron">▼</span>
+      </div>
     </div>
 
     <!-- ランキングサブメニュー -->
@@ -321,6 +319,20 @@
         </a>
         <a href="ability-ranking.html" class="submenu-link">
           <span class="submenu-icon">⚔️</span> 能力ランキング
+          <span class="submenu-arrow">›</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ミニゲームサブメニュー -->
+    <div class="ikusei-submenu" id="minigame-submenu">
+      <div class="submenu-list">
+        <a href="game-runner.html" class="submenu-link">
+          <span class="submenu-icon">🏃</span> モンスターダッシュ
+          <span class="submenu-arrow">›</span>
+        </a>
+        <a href="game-2048.html" class="submenu-link">
+          <span class="submenu-icon">🔢</span> モンスター進化2048
           <span class="submenu-arrow">›</span>
         </a>
       </div>
@@ -529,6 +541,18 @@
 function toggleRanking(btn) {
   const menu = document.getElementById('ranking-submenu');
   const chevron = document.getElementById('ranking-chevron');
+  const isOpen = menu.classList.contains('open');
+  if (isOpen) {
+    menu.classList.remove('open');
+    chevron.classList.remove('open');
+  } else {
+    menu.classList.add('open');
+    chevron.classList.add('open');
+  }
+}
+function toggleMiniGame(btn) {
+  const menu = document.getElementById('minigame-submenu');
+  const chevron = document.getElementById('minigame-chevron');
   const isOpen = menu.classList.contains('open');
   if (isOpen) {
     menu.classList.remove('open');
