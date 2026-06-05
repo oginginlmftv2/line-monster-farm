@@ -733,13 +733,20 @@ document.querySelectorAll('.card').forEach(card => {
 });
 
 // Firestoreから全カードのスコアを一括取得して更新
+const _CS_KEY = 'lmf_cardScores_v1';
+const _CS_TTL = 3600000; // 1時間
+function _getCSCache() {
+  try { const r = localStorage.getItem(_CS_KEY); if (!r) return null; const {data,ts} = JSON.parse(r); if (Date.now()-ts > _CS_TTL) { localStorage.removeItem(_CS_KEY); return null; } return data; } catch { return null; }
+}
 (async () => {
   try {
-    const snapshot = await db.collection('cards').get();
-    const allScores = {};
-    snapshot.forEach(doc => {
-      allScores[doc.id] = doc.data();
-    });
+    let allScores = _getCSCache();
+    if (!allScores) {
+      const snapshot = await db.collection('cards').get();
+      allScores = {};
+      snapshot.forEach(doc => { allScores[doc.id] = doc.data(); });
+      try { localStorage.setItem(_CS_KEY, JSON.stringify({data: allScores, ts: Date.now()})); } catch {}
+    }
 
     document.querySelectorAll('.card').forEach(card => {
       const href = card.getAttribute('href');

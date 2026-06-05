@@ -573,11 +573,26 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
 // =============================================
 // Firestore データ読み込み
 // =============================================
+const _MD_TTL = 3600000; // 1時間
+function _getMDCache(key) {
+  try { const r = localStorage.getItem(key); if (!r) return null; const {data,ts} = JSON.parse(r); if (Date.now()-ts > _MD_TTL) { localStorage.removeItem(key); return null; } return data; } catch { return null; }
+}
+function _setMDCache(key, data) {
+  try { localStorage.setItem(key, JSON.stringify({data, ts: Date.now()})); } catch {}
+}
+
 async function loadMonsterData() {
+  const cacheKey = 'lmf_monster_' + docId + '_v1';
   try {
-    const doc = await db.collection('monsters').doc(docId).get();
-    if (doc.exists) {
-      const d = doc.data();
+    let d = _getMDCache(cacheKey);
+    if (!d) {
+      const doc = await db.collection('monsters').doc(docId).get();
+      if (doc.exists) {
+        d = doc.data();
+        _setMDCache(cacheKey, d);
+      }
+    }
+    if (d) {
       pageData.explanation = d.explanation || monstersData[idx]?.explanation || '';
       pageData.formations  = d.formations  || [];
     } else {
@@ -629,6 +644,7 @@ async function saveExpl() {
   try {
     await db.collection('monsters').doc(docId).set({ explanation: text }, { merge: true });
     pageData.explanation = text;
+    localStorage.removeItem('lmf_monster_' + docId + '_v1');
   } catch(e) {
     alert('保存に失敗しました: ' + e.message);
     btn.textContent = '💾 保存'; btn.disabled = false; return;
@@ -800,6 +816,7 @@ async function saveFormations() {
   try {
     await db.collection('monsters').doc(docId).set({ formations: data }, { merge: true });
     pageData.formations = data;
+    localStorage.removeItem('lmf_monster_' + docId + '_v1');
   } catch(e) {
     alert('保存に失敗しました: ' + e.message);
     btn.textContent = '💾 保存'; btn.disabled = false; return;

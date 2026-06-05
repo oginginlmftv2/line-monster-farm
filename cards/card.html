@@ -835,17 +835,30 @@
     loadAssistEffects();
   }
 
+  // ---- キャッシュ ----
+  const _CARD_TTL = 3600000; // 1時間
+  const _ABILITY_TTL = 86400000; // 24時間（能力割り当ては頻繁に変わらない）
+  function _getCache(key) {
+    try { const r = localStorage.getItem(key); if (!r) return null; const {data,ts,ttl} = JSON.parse(r); if (Date.now()-ts > ttl) { localStorage.removeItem(key); return null; } return data; } catch { return null; }
+  }
+  function _setCache(key, data, ttl) {
+    try { localStorage.setItem(key, JSON.stringify({data, ts: Date.now(), ttl})); } catch {}
+  }
+
   // ---- Firestoreデータ読み込み ----
 
   async function loadCardData() {
+    const cacheKey = 'lmf_card_' + id + '_v1';
     try {
-      const doc = await db.collection('cards').doc(id).get();
-      if (doc.exists) {
-        const data = doc.data();
-        cardData.ratings   = data.ratings   || null;
-        cardData.formations = data.formations || [];
-        cardData.explanation = data.explanation || '';
+      let d = _getCache(cacheKey);
+      if (!d) {
+        const doc = await db.collection('cards').doc(id).get();
+        d = doc.exists ? doc.data() : {};
+        _setCache(cacheKey, d, _CARD_TTL);
       }
+      cardData.ratings   = d.ratings   || null;
+      cardData.formations = d.formations || [];
+      cardData.explanation = d.explanation || '';
     } catch (e) {
       console.error('データ読み込みエラー:', e);
     }
@@ -856,10 +869,15 @@
   }
 
   async function loadAbilities() {
+    const cacheKey = 'lmf_cardAbilities_v1';
     try {
-      const doc = await db.collection('cardAbilities').doc('assignments').get();
-      if (!doc.exists) return;
-      const data = doc.data() || {};
+      let data = _getCache(cacheKey);
+      if (!data) {
+        const doc = await db.collection('cardAbilities').doc('assignments').get();
+        if (!doc.exists) return;
+        data = doc.data() || {};
+        _setCache(cacheKey, data, _ABILITY_TTL);
+      }
       const files = data[id];
       if (!files || files.length === 0) return;
       const grid = document.getElementById('abilitiesGrid');
@@ -1010,6 +1028,8 @@
     try {
       await db.collection('cards').doc(id).set({ ratings: r }, { merge: true });
       cardData.ratings = r;
+      localStorage.removeItem('lmf_card_' + id + '_v1');
+      localStorage.removeItem('lmf_cardScores_v1');
     } catch (e) {
       alert('保存に失敗しました: ' + e.message);
       btn.textContent = '💾 保存';
@@ -1198,6 +1218,7 @@
     try {
       await db.collection('cards').doc(id).set({ formations: data }, { merge: true });
       cardData.formations = data;
+      localStorage.removeItem('lmf_card_' + id + '_v1');
     } catch (e) {
       alert('保存に失敗しました: ' + e.message);
       btn.textContent = '💾 保存';
@@ -1346,6 +1367,7 @@
     try {
       await db.collection('cards').doc(id).set({ explanation: text }, { merge: true });
       cardData.explanation = text;
+      localStorage.removeItem('lmf_card_' + id + '_v1');
     } catch (e) {
       alert('保存に失敗しました: ' + e.message);
       btn.textContent = '💾 保存';

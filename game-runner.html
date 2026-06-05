@@ -202,37 +202,37 @@ const CHARS = [
   {
     id:'bururu',   name:'ブルール',   img:'monster-runner/buru-ru.png',
     speed:1.5,  jumpPow:4.2,  gravity:0.55, invFrames:15, size:36,
-    coinBonus:-400, scoreMult:1,
-    desc:'ジャンプだけ得意。足は遅い。',
+    coinBonus:-100, scoreMult:1,
+    desc:'青くてかわいい。',
     color:'#90caf9', gross:false,
   },
   {
     id:'hidarikiki', name:'ひだりきき', img:'monster-runner/hidarikiki.png',
     speed:4.0,  jumpPow:1.4,  gravity:0.9,  invFrames:8,  size:32,
-    coinBonus:-400, scoreMult:1,
-    desc:'速いがジャンプがほぼできない。',
+    coinBonus:-100, scoreMult:1,
+    desc:'赤くて元気そう。',
     color:'#ef9a9a', gross:false,
   },
   {
     id:'meri',     name:'メーリ',     img:'monster-runner/me-ri.png',
     speed:1.8,  jumpPow:3.8,  gravity:0.22, invFrames:20, size:34,
-    coinBonus:-400, scoreMult:1,
-    desc:'ふわっと高く飛ぶが全然降りてこない。',
+    coinBonus:-100, scoreMult:1,
+    desc:'もふもふしてる。',
     color:'#ce93d8', gross:false,
   },
   {
     id:'takayuki', name:'たかゆき',   img:'monster-runner/takayuki.png',
     speed:3.0,  jumpPow:3.0,  gravity:0.55, invFrames:20, size:32,
-    coinBonus:-400, scoreMult:0.02,
-    desc:'全部ふつう。でもスコアが1/50になる。',
+    coinBonus:-100, scoreMult:0.02,
+    desc:'オレンジでかっこいい。',
     color:'#ffcc80', gross:false,
   },
   {
     id:'minnna',   name:'みんな',     img:'monster-runner/minnna.png',
-    speed:4.8,  jumpPow:3.8,  gravity:0.55, invFrames:55, size:44,
+    speed:1.5,  jumpPow:1.5,  gravity:0.55, invFrames:55, size:44,
     coinBonus:800, scoreMult:1,
     maxJumps:4,
-    desc:'見た目だけが問題。性能は最強。',
+    desc:'みんなのイメージキャラクター。',
     color:'#ffccbc', gross:true,
   },
 ];
@@ -286,7 +286,11 @@ const GROUND_Y  = H - 36;  // 地面上面Y
 const PLAYER_X  = 70;      // プレイヤーの固定X
 
 let animId, gameState = 'idle';
-let frame, score, coinCount, bestScore;
+let frame, distScore, coinBonus, coinCount, bestScore;
+// score = distScore + coinBonus で表示する
+let starTimer = 0;   // 無敵スター残りフレーム
+let stars = [];      // スターアイテム
+let nextStarIn = 0;  // 次のスタースポーンまでのフレーム
 let char, player, obstacles, coins, particles;
 let nextObsIn, nextCoinIn;
 let bgX = 0; // 背景スクロールオフセット
@@ -297,8 +301,8 @@ bestScore = parseInt(localStorage.getItem('runnerBest2') || '0');
 let bgFar = 0, bgNear = 0, bgGround = 0;
 
 function getBaseSpeed() {
-  // 時間経過でスピードアップ（最大2.5倍）
-  return char.speed * Math.min(1 + frame / (60 * 20), 3.5);
+  const base = char.speed * Math.min(1 + frame / (60 * 20), 3.5);
+  return starTimer > 0 ? base * 5 : base;
 }
 
 function initPlayer() {
@@ -314,21 +318,26 @@ function initPlayer() {
 }
 
 // ===== スポーン =====
+const STOMP_SCORE = 300; // 踏んだ時のスコアボーナス
+
 function spawnObstacle() {
   const spd = getBaseSpeed();
   const roll = Math.random();
-  if (roll < 0.45) {
-    // 岩（地面）
+  if (roll < 0.30) {
+    // 岩（地面・踏めない）
     const h = 22 + Math.random() * 20;
-    obstacles.push({ type:'rock', x:W+30, y:GROUND_Y - h, w:22, h, spd });
-  } else if (roll < 0.72) {
-    // トゲ（地面）
+    obstacles.push({ type:'rock', x:W+30, y:GROUND_Y - h, w:22, h, spd, stompable:false });
+  } else if (roll < 0.52) {
+    // トゲ（地面・踏めない）
     const w = 20 + Math.random() * 28;
-    obstacles.push({ type:'spike', x:W+30, y:GROUND_Y - 18, w, h:18, spd });
+    obstacles.push({ type:'spike', x:W+30, y:GROUND_Y - 18, w, h:18, spd, stompable:false });
+  } else if (roll < 0.76) {
+    // 空中の敵（踏める）
+    const birdY = GROUND_Y - 75 - Math.random() * 35;
+    obstacles.push({ type:'bird', x:W+30, y:birdY, w:30, h:22, spd, t:0, stompable:true, stomped:false });
   } else {
-    // 空中の敵
-    const birdY = GROUND_Y - 70 - Math.random() * 35;
-    obstacles.push({ type:'bird', x:W+30, y:birdY, w:30, h:22, spd, t:0 });
+    // 地上を歩く敵（踏める）
+    obstacles.push({ type:'walker', x:W+30, y:GROUND_Y - 28, w:28, h:28, spd, t:0, stompable:true, stomped:false });
   }
 }
 
@@ -337,6 +346,12 @@ function spawnCoin() {
   const isHigh = Math.random() < 0.4;
   const y = isHigh ? GROUND_Y - 70 - Math.random()*20 : GROUND_Y - 28;
   coins.push({ x:W+20, y, spd, collected:false, anim:0 });
+}
+
+function spawnStar() {
+  const spd = getBaseSpeed() * 0.85;
+  const y = GROUND_Y - 35 - Math.random() * 40;
+  stars.push({ x:W+20, y, spd, collected:false, anim:0, t:0 });
 }
 
 // ===== パーティクル =====
@@ -365,7 +380,7 @@ function update() {
   const spd = getBaseSpeed();
 
   // スコア（距離ベース）
-  score = Math.floor(frame * spd / 60 * 8);
+  distScore = Math.floor(frame * spd / 60 * 8);
 
   // 背景オフセット更新（モジュロなし・ずっと増やし続ける）
   bgFar    += spd * 0.10;
@@ -400,24 +415,76 @@ function update() {
     nextCoinIn = Math.max(50, Math.floor((80 + Math.random()*60) / spd * 3));
   }
 
-  // プレイヤー当たり判定サイズ
+  // スタースポーン（約15〜25秒に1回）
+  nextStarIn--;
+  if (nextStarIn <= 0) {
+    spawnStar();
+    nextStarIn = Math.floor((900 + Math.random()*600));
+  }
+
+  // スタータイマー
+  if (starTimer > 0) starTimer--;
+
+  // プレイヤー当たり判定サイズ（スター処理より前に宣言）
   const PW = char.size, PH = char.size;
   const px1 = player.x - PW/2 + 5, px2 = player.x + PW/2 - 5;
   const py1 = player.y - PH + 4,   py2 = player.y - 4;
+
+  // スターアイテム処理
+  for (let i = stars.length - 1; i >= 0; i--) {
+    const s = stars[i];
+    s.x -= s.spd; s.t += 0.08;
+    if (s.collected) { s.anim++; if (s.anim > 20) stars.splice(i, 1); continue; }
+    if (s.x + 16 < 0) { stars.splice(i, 1); continue; }
+    // 取得判定
+    if (px2 > s.x-8 && px1 < s.x+24 && py2 > s.y-8 && py1 < s.y+24) {
+      s.collected = true;
+      const dur = char.id === 'minnna' ? 300 : 120; // 5秒 or 2秒
+      starTimer = dur;
+      player.invTimer = dur + 60; // 速度が戻った後さらに1秒無敵
+      addFloatText(s.x+8, s.y-10, '⭐無敵！', '#f0a500');
+      addParticles(s.x+8, s.y+8, '#ffeb3b', 16);
+    }
+  }
 
   // 障害物処理
   for (let i = obstacles.length - 1; i >= 0; i--) {
     const o = obstacles[i];
     o.x -= o.spd;
-    if (o.type === 'bird') o.t += 0.08;
+    if (o.type === 'bird' || o.type === 'walker') o.t += 0.1;
+    if (o.stomped) { o.stompAnim = (o.stompAnim||0) + 1; if (o.stompAnim > 25) obstacles.splice(i, 1); continue; }
     if (o.x + o.w < 0) { obstacles.splice(i, 1); continue; }
 
-    if (player.invTimer === 0) {
-      const oy = o.type === 'bird' ? o.y + Math.sin(o.t)*12 : o.y;
-      if (px2 > o.x+3 && px1 < o.x+o.w-3 && py2 > oy+3 && py1 < oy+o.h-3) {
-        addParticles(player.x, player.y - PH/2, '#e53935', 12);
-        gameOver();
-        return;
+    const oy = o.type === 'bird' ? o.y + Math.sin(o.t)*12 : o.y;
+    const xOver = px2 > o.x+3 && px1 < o.x+o.w-3;
+    const yOver = py2 > oy+3 && py1 < oy+o.h-3;
+
+    if (xOver && yOver) {
+      if (starTimer > 0 && o.stompable) {
+        // ===== スター無敵中→触れるだけで倒す =====
+        o.stomped = true;
+        o.stompAnim = 0;
+        coinBonus += STOMP_SCORE;
+        addFloatText(o.x + o.w/2, oy - 10, `+${STOMP_SCORE}`, '#f0a500');
+        addParticles(o.x + o.w/2, oy + o.h/2, '#ffeb3b', 10);
+      } else if (starTimer > 0 && !o.stompable) {
+        // 岩・トゲはスター中もスルー（何もしない）
+      } else if (player.invTimer === 0) {
+        if (o.stompable && player.vy > 0 && py2 < oy + o.h * 0.65) {
+          // ===== 踏んだ！ =====
+          o.stomped = true;
+          o.stompAnim = 0;
+          player.vy = -(6 + char.jumpPow * 0.6);
+          player.jumpsLeft = char.maxJumps || 1;
+          coinBonus += STOMP_SCORE;
+          addFloatText(o.x + o.w/2, oy - 10, `+${STOMP_SCORE}`, '#f0a500');
+          addParticles(o.x + o.w/2, oy + o.h/2, '#ffeb3b', 10);
+        } else {
+          // ===== 正面衝突→死亡 =====
+          addParticles(player.x, player.y - PH/2, '#e53935', 12);
+          gameOver();
+          return;
+        }
       }
     }
   }
@@ -433,7 +500,7 @@ function update() {
       c.collected = true;
       coinCount++;
       const bonus = char.coinBonus;
-      score = Math.max(0, score + bonus);
+      coinBonus = Math.max(-distScore, coinBonus + bonus);
       const txt = bonus >= 0 ? `+${bonus}` : `${bonus}`;
       const col = bonus >= 0 ? '#f0a500' : '#e53935';
       addFloatText(c.x, c.y - 10, txt, col);
@@ -456,9 +523,9 @@ function update() {
     if (floatTexts[i].life <= 0) floatTexts.splice(i, 1);
   }
 
-  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('scoreVal').textContent = Math.max(0, distScore + coinBonus);
   document.getElementById('coinVal').textContent  = coinCount;
-  document.getElementById('bestVal').textContent  = Math.max(score, bestScore);
+  document.getElementById('bestVal').textContent  = Math.max(Math.max(0, distScore + coinBonus), bestScore);
 
   draw();
   animId = requestAnimationFrame(update);
@@ -485,6 +552,9 @@ function draw() {
 
   // コイン
   coins.forEach(c => drawCoin(c));
+
+  // スターアイテム
+  stars.forEach(s => drawStar(s));
 
   // 障害物
   obstacles.forEach(o => drawObstacle(o));
@@ -602,8 +672,58 @@ function drawObstacle(o) {
       ctx.lineTo(o.x + i*sw + sw,   o.y + o.h);
       ctx.fill();
     }
+  } else if (o.type === 'walker') {
+    // 地上を歩く敵
+    if (o.stomped) {
+      // 踏まれたつぶれアニメ
+      ctx.globalAlpha = Math.max(0, 1 - (o.stompAnim||0)/25);
+      ctx.fillStyle = '#e65100';
+      ctx.beginPath();
+      ctx.ellipse(o.x+o.w/2, o.y+o.h, o.w/2+4, 5, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      return;
+    }
+    const cx = o.x + o.w/2, cy = o.y;
+    // 体
+    ctx.fillStyle = '#e65100';
+    ctx.beginPath();
+    ctx.ellipse(cx, cy + o.h*0.45, o.w/2, o.h*0.45, 0, 0, Math.PI*2);
+    ctx.fill();
+    // 頭
+    ctx.fillStyle = '#ff7043';
+    ctx.beginPath();
+    ctx.arc(cx, cy + 8, 11, 0, Math.PI*2);
+    ctx.fill();
+    // 目
+    ctx.fillStyle = '#fff';
+    ctx.beginPath(); ctx.arc(cx-4, cy+6, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx+4, cy+6, 3.5, 0, Math.PI*2); ctx.fill();
+    ctx.fillStyle = '#000';
+    ctx.beginPath(); ctx.arc(cx-3.5, cy+6, 2, 0, Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx+4.5, cy+6, 2, 0, Math.PI*2); ctx.fill();
+    // 怒りマーク
+    ctx.strokeStyle = '#fff';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx-7, cy+2); ctx.lineTo(cx-3, cy+4); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx+7, cy+2); ctx.lineTo(cx+3, cy+4); ctx.stroke();
+    // 足（歩きアニメ）
+    const legSwing = Math.sin(o.t * 8) * 6;
+    ctx.strokeStyle = '#bf360c'; ctx.lineWidth = 3; ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(cx-6, cy+o.h*0.8); ctx.lineTo(cx-6+legSwing, cy+o.h); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx+6, cy+o.h*0.8); ctx.lineTo(cx+6-legSwing, cy+o.h); ctx.stroke();
+    ctx.lineCap = 'butt';
   } else {
     // コウモリ敵
+    if (o.stomped) {
+      ctx.globalAlpha = Math.max(0, 1 - (o.stompAnim||0)/25);
+      ctx.fillStyle = '#4a148c';
+      ctx.beginPath();
+      ctx.ellipse(o.x+o.w/2, o.y+o.h/2, o.w/2+4, 4, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      return;
+    }
     const by = o.y + Math.sin(o.t)*12;
     ctx.fillStyle = '#4a148c';
     ctx.beginPath();
@@ -628,6 +748,51 @@ function drawObstacle(o) {
     ctx.beginPath(); ctx.arc(o.x+o.w/2-5, by+7, 1.5, 0, Math.PI*2); ctx.fill();
     ctx.beginPath(); ctx.arc(o.x+o.w/2+5, by+7, 1.5, 0, Math.PI*2); ctx.fill();
   }
+}
+
+function drawStar(s) {
+  if (s.collected) {
+    ctx.globalAlpha = Math.max(0, 1 - s.anim/20);
+    ctx.font = '22px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('⭐', s.x+8, s.y - s.anim*2);
+    ctx.globalAlpha = 1;
+    return;
+  }
+  const bob = Math.sin(Date.now()/200 + s.x) * 4;
+  const cx = s.x + 12, cy = s.y + bob;
+  const r1 = 13, r2 = 6, pts = 5;
+  // 光るオーラ
+  ctx.save();
+  ctx.globalAlpha = 0.3 + Math.sin(Date.now()/150)*0.2;
+  ctx.fillStyle = '#fff176';
+  ctx.beginPath();
+  ctx.arc(cx, cy, r1+4, 0, Math.PI*2);
+  ctx.fill();
+  ctx.restore();
+  // 星形
+  ctx.fillStyle = '#ffd600';
+  ctx.strokeStyle = '#ff6f00';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  for (let i = 0; i < pts * 2; i++) {
+    const angle = (i * Math.PI / pts) - Math.PI/2;
+    const r = i % 2 === 0 ? r1 : r2;
+    i === 0 ? ctx.moveTo(cx + r*Math.cos(angle), cy + r*Math.sin(angle))
+            : ctx.lineTo(cx + r*Math.cos(angle), cy + r*Math.sin(angle));
+  }
+  ctx.closePath();
+  ctx.fill();
+  ctx.stroke();
+  // 目
+  ctx.fillStyle = '#000';
+  ctx.beginPath(); ctx.arc(cx-3.5, cy-1, 2, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(cx+3.5, cy-1, 2, 0, Math.PI*2); ctx.fill();
+  // 笑顔
+  ctx.strokeStyle = '#000'; ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(cx, cy+1, 4, 0.1, Math.PI-0.1);
+  ctx.stroke();
 }
 
 function drawCoin(c) {
@@ -666,6 +831,18 @@ function drawPlayer() {
     ctx.beginPath();
     ctx.ellipse(px - 8, player.y - PH/2, PW/3, PH/4, 0, 0, Math.PI*2);
     ctx.fill();
+  }
+
+  // スター無敵中オーラ（虹色）
+  if (starTimer > 0) {
+    const hue = (Date.now() / 8) % 360;
+    ctx.save();
+    ctx.globalAlpha = 0.55 + Math.sin(Date.now()/100)*0.2;
+    ctx.fillStyle = `hsl(${hue},100%,60%)`;
+    ctx.beginPath();
+    ctx.ellipse(player.x, player.y - PH/2, PW/2 + 7, PH/2 + 7, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
   }
 
   // 影
@@ -728,7 +905,8 @@ function startGame() {
   nameEl.classList.remove('err');
 
   char = CHARS.find(c => c.id === selectedCharId);
-  frame = 0; score = 0; coinCount = 0;
+  frame = 0; distScore = 0; coinBonus = 0; coinCount = 0;
+  starTimer = 0; stars = []; nextStarIn = Math.floor(900 + Math.random()*600);
   obstacles = []; coins = []; particles = []; floatTexts = [];
   nextObsIn = 90; nextCoinIn = 70;
   bgFar = 0; bgNear = 0; bgGround = 0;
@@ -752,7 +930,7 @@ function gameOver() {
   cancelAnimationFrame(animId);
 
   // たかゆきペナルティ
-  const rawScore = score;
+  const rawScore = Math.max(0, distScore + coinBonus);
   const finalScore = Math.floor(rawScore * char.scoreMult);
 
   if (finalScore > bestScore) {
@@ -814,10 +992,37 @@ function getWeekRange() {
   return `${fmt(mon)}(月)〜${fmt(sun)}(日)`;
 }
 
+let rankingCache = null; // Firestore読み込みをキャッシュ
+let rankingCacheKey = '';
+
+const _GR_TTL = 600000; // 10分
+function _grGetCache(key) {
+  try { const r = localStorage.getItem(key); if (!r) return null; const {data,ts} = JSON.parse(r); if (Date.now()-ts > _GR_TTL) { localStorage.removeItem(key); return null; } return data; } catch { return null; }
+}
+function _grSetCache(key, data) {
+  try { localStorage.setItem(key, JSON.stringify({data, ts: Date.now()})); } catch {}
+}
+
 async function loadRanking(targetId, myScore, myName) {
   const el = document.getElementById(targetId);
   try {
-    const snap = await db.collection('gameRunner').where('weekKey','==',getWeekKey()).get();
+    const wk = getWeekKey();
+    const lsKey = 'lmf_runner_weekly_' + wk;
+    // メモリキャッシュ → localStorageキャッシュ → Firestore の順で取得
+    if (!rankingCache || rankingCacheKey !== wk) {
+      const lsCached = _grGetCache(lsKey);
+      if (lsCached) {
+        rankingCache = lsCached;
+        rankingCacheKey = wk;
+      } else {
+        const snap = await db.collection('gameRunner').where('weekKey','==',wk).get();
+        rankingCache = [];
+        snap.forEach(d => rankingCache.push(d.data()));
+        rankingCacheKey = wk;
+        _grSetCache(lsKey, rankingCache);
+      }
+    }
+    const snap = { forEach: cb => rankingCache.forEach(d => cb({ data: () => d })) };
     const rows = []; snap.forEach(d=>rows.push(d.data()));
     rows.sort((a,b)=>b.score-a.score);
     const top = rows.slice(0,10);
@@ -840,7 +1045,7 @@ async function submitScore() {
   const msg  = document.getElementById('submitMsg');
   const name = document.getElementById('playerName').value.trim();
   if (!name) { msg.textContent='名前が入力されていません'; return; }
-  const rawScore   = score;
+  const rawScore   = Math.max(0, distScore + coinBonus);
   const finalScore = Math.floor(rawScore * char.scoreMult);
   msg.textContent  = '登録中…';
   try {
@@ -851,6 +1056,8 @@ async function submitScore() {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     msg.textContent = '登録しました！';
+    rankingCache = null; // メモリキャッシュリセット
+    localStorage.removeItem('lmf_runner_weekly_' + getWeekKey()); // localStorageキャッシュもリセット
     loadRanking('resultRankBody', finalScore, name);
   } catch(e) { msg.textContent=`送信失敗（${e.code||e.message}）`; }
 }

@@ -279,10 +279,35 @@ function applyFilter() {
   });
 }
 
+/* ---- キャッシュ ---- */
+const MI_CACHE_KEY = 'lmf_monsterImages_v1';
+const MI_CACHE_TTL = 86400000; // 24時間
+function getMICache() {
+  try {
+    const raw = localStorage.getItem(MI_CACHE_KEY);
+    if (!raw) return null;
+    const { data, ts } = JSON.parse(raw);
+    if (Date.now() - ts > MI_CACHE_TTL) { localStorage.removeItem(MI_CACHE_KEY); return null; }
+    return data;
+  } catch { return null; }
+}
+function setMICache(data) {
+  try { localStorage.setItem(MI_CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
+}
+
 /* ---- 起動 ---- */
-db.collection('monsterImages').doc('assignments').get()
-  .then(doc => buildGrid(doc.exists ? doc.data() : {}))
-  .catch(() => buildGrid({}));
+const cachedMI = getMICache();
+if (cachedMI) {
+  buildGrid(cachedMI);
+} else {
+  db.collection('monsterImages').doc('assignments').get()
+    .then(doc => {
+      const data = doc.exists ? doc.data() : {};
+      setMICache(data);
+      buildGrid(data);
+    })
+    .catch(() => buildGrid({}));
+}
 </script>
 
 </body>

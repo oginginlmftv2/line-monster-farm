@@ -607,6 +607,9 @@ async function saveScore(name, score) {
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     });
     msg.textContent = 'スコアを登録しました！';
+    // スコア登録後はキャッシュを無効化して最新ランキングを取得
+    localStorage.removeItem('lmf_2048_weekly_' + getWeekKey());
+    localStorage.removeItem('lmf_2048_alltime_v1');
   } catch(e) {
     console.error('Firestore write error:', e);
     msg.textContent = `送信に失敗しました（${e.code || e.message}）`;
@@ -614,22 +617,41 @@ async function saveScore(name, score) {
   loadRanking('rankingResult', score, name);
 }
 
+const _2048_TTL_WEEK = 600000;  // 10分
+const _2048_TTL_ALL  = 3600000; // 1時間
+function _2048getCache(key, ttl) {
+  try { const r = localStorage.getItem(key); if (!r) return null; const {data,ts} = JSON.parse(r); if (Date.now()-ts > ttl) { localStorage.removeItem(key); return null; } return data; } catch { return null; }
+}
+function _2048setCache(key, data) {
+  try { localStorage.setItem(key, JSON.stringify({data, ts: Date.now()})); } catch {}
+}
+
 async function fetchWeeklyRows() {
+  const cacheKey = 'lmf_2048_weekly_' + getWeekKey();
+  const cached = _2048getCache(cacheKey, _2048_TTL_WEEK);
+  if (cached) return cached;
   const snap = await db.collection('game2048')
     .where('weekKey', '==', getWeekKey())
     .get();
   const rows = [];
   snap.forEach(d => rows.push(d.data()));
   rows.sort((a, b) => b.score - a.score);
-  return rows.slice(0, 10);
+  const result = rows.slice(0, 10);
+  _2048setCache(cacheKey, result);
+  return result;
 }
 
 async function fetchAllTimeRows() {
+  const cacheKey = 'lmf_2048_alltime_v1';
+  const cached = _2048getCache(cacheKey, _2048_TTL_ALL);
+  if (cached) return cached;
   const snap = await db.collection('game2048').orderBy('score', 'desc').limit(50).get();
   const rows = [];
   snap.forEach(d => rows.push(d.data()));
   rows.sort((a, b) => b.score - a.score);
-  return rows.slice(0, 10);
+  const result = rows.slice(0, 10);
+  _2048setCache(cacheKey, result);
+  return result;
 }
 
 function buildAllTimeTable(rows) {

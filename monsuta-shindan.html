@@ -288,9 +288,19 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 let assignments = {};
-db.collection('monsterImages').doc('assignments').get()
-  .then(doc => { if (doc.exists) assignments = doc.data(); })
-  .catch(() => {});
+const _MI_KEY = 'lmf_monsterImages_v1';
+const _MI_TTL = 86400000;
+function _getMICache() {
+  try { const r = localStorage.getItem(_MI_KEY); if (!r) return null; const {data,ts} = JSON.parse(r); if (Date.now()-ts > _MI_TTL) { localStorage.removeItem(_MI_KEY); return null; } return data; } catch { return null; }
+}
+const _cachedMI = _getMICache();
+if (_cachedMI) {
+  assignments = _cachedMI;
+} else {
+  db.collection('monsterImages').doc('assignments').get()
+    .then(doc => { if (doc.exists) { assignments = doc.data(); try { localStorage.setItem(_MI_KEY, JSON.stringify({data: assignments, ts: Date.now()})); } catch {} } })
+    .catch(() => {});
+}
 
 /* ===== 質問データ (labelOffset: 選択肢ラベルのASCIIオフセット) ===== */
 const questions = [
