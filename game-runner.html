@@ -54,7 +54,7 @@
     .info-box { flex: 1; background: #1a1a2e; border-radius: 8px; padding: 7px 8px; text-align: center; }
     .info-label { font-size: 10px; color: #aaa; }
     .info-val { font-size: 20px; font-weight: bold; color: #f0a500; line-height: 1.2; }
-    #canvas { display: block; width: 100%; border-radius: 10px; touch-action: none; cursor: pointer; }
+    #canvas { display: block; width: 100%; border-radius: 10px; touch-action: manipulation; cursor: pointer; }
     .ctrl-row { display: flex; gap: 8px; margin-top: 8px; justify-content: center; }
     .ctrl-btn { padding: 12px 20px; background: #1a1a2e; color: #fff; border: none; border-radius: 8px; font-size: 15px; cursor: pointer; font-family: inherit; }
     .ctrl-btn:hover { background: #374060; }
@@ -373,8 +373,8 @@ function update() {
   frame++;
   const spd = getBaseSpeed();
 
-  // スコア（距離ベース）
-  distScore = Math.floor(frame * spd / 60 * 8);
+  // スコア（毎フレーム加算・速度変化しても下がらない）
+  distScore += spd / 60 * 8;
 
   // 背景オフセット更新（モジュロなし・ずっと増やし続ける）
   bgFar    += spd * 0.10;
@@ -517,9 +517,9 @@ function update() {
     if (floatTexts[i].life <= 0) floatTexts.splice(i, 1);
   }
 
-  document.getElementById('scoreVal').textContent = Math.max(0, distScore + coinBonus);
+  document.getElementById('scoreVal').textContent = Math.max(0, Math.floor(distScore) + coinBonus);
   document.getElementById('coinVal').textContent  = coinCount;
-  document.getElementById('bestVal').textContent  = Math.max(Math.max(0, distScore + coinBonus), bestScore);
+  document.getElementById('bestVal').textContent  = Math.max(Math.max(0, Math.floor(distScore) + coinBonus), bestScore);
 
   draw();
   animId = requestAnimationFrame(update);
@@ -924,7 +924,7 @@ function gameOver() {
   cancelAnimationFrame(animId);
 
   // たかゆきペナルティ
-  const rawScore = Math.max(0, distScore + coinBonus);
+  const rawScore = Math.max(0, Math.floor(distScore) + coinBonus);
   const finalScore = Math.floor(rawScore * char.scoreMult);
 
   if (finalScore > bestScore) {
@@ -1039,7 +1039,7 @@ async function submitScore() {
   const msg  = document.getElementById('submitMsg');
   const name = document.getElementById('playerName').value.trim();
   if (!name) { msg.textContent='名前が入力されていません'; return; }
-  const rawScore   = Math.max(0, distScore + coinBonus);
+  const rawScore   = Math.max(0, Math.floor(distScore) + coinBonus);
   const finalScore = Math.floor(rawScore * char.scoreMult);
   msg.textContent  = '登録中…';
   try {
