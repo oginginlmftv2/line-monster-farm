@@ -298,7 +298,7 @@ bestScore = parseInt(localStorage.getItem('runnerBest2') || '0');
 let bgFar = 0, bgNear = 0, bgGround = 0;
 
 function getBaseSpeed() {
-  const base = char.speed * Math.min(1 + frame / (60 * 20), 3.5);
+  const base = char.speed * Math.min(1 + frame / (60 * 7), 3.5);
   return starTimer > 0 ? base * 5 : base;
 }
 
