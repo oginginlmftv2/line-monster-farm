@@ -105,6 +105,9 @@
 </script>
 
 <div class="runner-wrap">
+  <div style="text-align:center; margin-bottom:8px;">
+    <a href="index.html" style="font-size:13px; color:#f0a500; text-decoration:none;">← トップページに戻る</a>
+  </div>
   <div class="runner-title">🏃 <span>モンスターダッシュ</span></div>
 
   <!-- スタート画面 -->
@@ -281,7 +284,7 @@ const PLAYER_X  = 70;      // プレイヤーの固定X
 
 let animId, gameState = 'idle';
 let frame, distScore, coinBonus, coinCount, bestScore;
-// score = distScore + coinBonus で表示する
+let displayScore = 0; // 表示用スコア（絶対下がらない）
 let starTimer = 0;   // 無敵スター残りフレーム
 let stars = [];      // スターアイテム
 let nextStarIn = 0;  // 次のスタースポーンまでのフレーム
@@ -517,7 +520,9 @@ function update() {
     if (floatTexts[i].life <= 0) floatTexts.splice(i, 1);
   }
 
-  document.getElementById('scoreVal').textContent = Math.max(0, Math.floor(distScore) + coinBonus);
+  const calcScore = Math.max(0, Math.floor(distScore) + coinBonus);
+  displayScore = Math.max(displayScore, calcScore); // 絶対下がらない
+  document.getElementById('scoreVal').textContent = displayScore;
   document.getElementById('coinVal').textContent  = coinCount;
   document.getElementById('bestVal').textContent  = Math.max(Math.max(0, Math.floor(distScore) + coinBonus), bestScore);
 
@@ -899,7 +904,7 @@ function startGame() {
   nameEl.classList.remove('err');
 
   char = CHARS.find(c => c.id === selectedCharId);
-  frame = 0; distScore = 0; coinBonus = 0; coinCount = 0;
+  frame = 0; distScore = 0; coinBonus = 0; coinCount = 0; displayScore = 0;
   starTimer = 0; stars = []; nextStarIn = Math.floor(900 + Math.random()*600);
   obstacles = []; coins = []; particles = []; floatTexts = [];
   nextObsIn = 90; nextCoinIn = 70;
@@ -924,7 +929,7 @@ function gameOver() {
   cancelAnimationFrame(animId);
 
   // たかゆきペナルティ
-  const rawScore = Math.max(0, Math.floor(distScore) + coinBonus);
+  const rawScore = displayScore;
   const finalScore = Math.floor(rawScore * char.scoreMult);
 
   if (finalScore > bestScore) {
