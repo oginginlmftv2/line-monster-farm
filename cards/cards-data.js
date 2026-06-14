@@ -1,4 +1,6 @@
 const cardsData = {
+  'c28j-SSR-rokusho':             { name: 'ロクショウ',          rarity: 'SSR', oura: '白', type: 'ちから',     mon: '無機', ext: 'jpg' },
+  'c27j-MR-godemperor':           { name: 'ゴッドエンペラー',    rarity: 'MR',  oura: '黒', type: 'ブリーダー', mon: '獣',   ext: 'jpg' },
   'c26j-SSR-ikki':               { name: 'イッキ',              rarity: 'SSR', oura: '黄', type: '友人',       mon: null,   ext: 'jpg' },
   'c25j-SSR-metabee':           { name: 'メタビー',            rarity: 'SSR', oura: '黄', type: '丈夫さ',     mon: '無機', ext: 'jpg' },
   'c24j-MR-ikki':               { name: 'イッキ',              rarity: 'MR',  oura: '黄', type: '友人',       mon: null,   ext: 'jpg' },

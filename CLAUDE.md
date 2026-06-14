@@ -15,12 +15,12 @@
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | メタビー（新）・シュシュポップ3（新） |
-| monsters-data.js 末尾インデックス | **339**（配列の要素数340、0始まりなので末尾=339） |
-| index.html のリンク | `monsters/monster.html?id=338`（メタビー）・`monsters/monster.html?id=339`（シュシュポップ3） |
-| ピックアップカード | メタビー（新）・イッキ（新） |
-| カードID | `c26j-SSR-ikki`（SSR）／`c25j-SSR-metabee`（SSR）／`c24j-MR-ikki`（MR） |
-| index.html のリンク | `cards/card.html#c25j-SSR-metabee`（メタビー） |
+| ピックアップモンスター | ゴッドエンペラー（新）・ロクショウ（新） |
+| monsters-data.js 末尾インデックス | **341**（配列の要素数342、0始まりなので末尾=341） |
+| index.html のリンク | `monsters/monster.html?id=340`（ゴッドエンペラー）・`monsters/monster.html?id=341`（ロクショウ） |
+| ピックアップカード | ゴッドエンペラー（新）・ロクショウ（新） |
+| カードID | `c28j-SSR-rokusho`（SSR）／`c27j-MR-godemperor`（MR） |
+| index.html のリンク | `cards/card.html#c27j-MR-godemperor`（ゴッドエンペラー）・`cards/card.html#c28j-SSR-rokusho`（ロクショウ） |
 
 ---
 
