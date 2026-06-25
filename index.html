@@ -136,6 +136,7 @@
     const td2 = 'padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;';
     const a   = (href,text) => `<a href="${href}" style="color:#f0a500;text-decoration:none;">${text}</a>`;
     const rows = [
+['2026.06.25', a('index.html','アドセンス審査対策：ツール系・掲示板ページをメニューから除去・リダイレクト化')],
 ['2026.06.17', a('diary.html','プレイ日記更新（メダロットコラボカード＆モンスターの使用感まとめ）')],
 ['2026.06.14', a('assist.html','ガチャ更新：ゴッドエンペラー（MR）・ロクショウ（SSR）追加')+' / '+a('monsters.html','新モンスター：ゴッドエンペラー・ロクショウ追加')],
 ['2026.06.05', a('game-2048.html','ミニゲーム2048：ランキング読み取り処理を最適化')],
@@ -260,13 +261,6 @@
       <a href="assist.html" class="menu-link">
         <span class="icon">🃏</span> アシストカード一覧
       </a>
-      <a href="assist-card-search.html" class="menu-link">
-        <span class="icon">🔍</span> アシストカード検索
-      </a>
-      <div class="menu-link ikusei-toggle-btn" onclick="toggleRanking(this)">
-        <span class="icon">🏆</span> ランキング
-        <span class="ikusei-chevron" id="ranking-chevron">▼</span>
-      </div>
       <div class="menu-link ikusei-toggle-btn" onclick="toggleIkusei(this)">
         <span class="icon">📈</span> 育成方法
         <span class="ikusei-chevron" id="ikusei-chevron">▼</span>
@@ -277,16 +271,6 @@
       <a href="reroll.html" class="menu-link">
         <span class="icon">🎲</span> リセマラランキング
       </a>
-      <a href="npc-regen.html" class="menu-link">
-        <span class="icon">👥</span> フレンド再生NPC一覧
-      </a>
-      <a href="friend.html" class="menu-link">
-        <span class="icon">🤝</span> フレンド募集板
-      </a>
-      <div class="menu-link ikusei-toggle-btn" onclick="toggleAisyou(this)">
-        <span class="icon">🔍</span> 相性検索
-        <span class="ikusei-chevron" id="aisyou-chevron">▼</span>
-      </div>
       <a href="ability-db.html" class="menu-link">
         <span class="icon">🔎</span> 能力検索
       </a>
@@ -296,48 +280,11 @@
       <a href="abilitypoint/" class="menu-link">
         <span class="icon">⚡</span> 能力pt最適化
       </a>
-      <a href="bbs.html" class="menu-link">
-        <span class="icon">💬</span> 質問・攻略・雑談掲示板
-      </a>
       <a href="diary.html" class="menu-link">
         <span class="icon">📝</span> 管理人のプレイ日記
       </a>
-      <a href="monsuta-shindan.html" class="menu-link">
-        <span class="icon">🔮</span> モンスター占い
-      </a>
-      <div class="menu-link ikusei-toggle-btn" onclick="toggleMiniGame(this)">
-        <span class="icon">🎮</span> ミニゲーム
-        <span class="ikusei-chevron" id="minigame-chevron">▼</span>
-      </div>
     </div>
 
-    <!-- ランキングサブメニュー -->
-    <div class="ikusei-submenu" id="ranking-submenu">
-      <div class="submenu-list">
-        <a href="assist-ranking.html" class="submenu-link">
-          <span class="submenu-icon">🏆</span> アシストカードランキング
-          <span class="submenu-arrow">›</span>
-        </a>
-        <a href="ability-ranking.html" class="submenu-link">
-          <span class="submenu-icon">⚔️</span> 能力ランキング
-          <span class="submenu-arrow">›</span>
-        </a>
-      </div>
-    </div>
-
-    <!-- ミニゲームサブメニュー -->
-    <div class="ikusei-submenu" id="minigame-submenu">
-      <div class="submenu-list">
-        <a href="game-runner.html" class="submenu-link">
-          <span class="submenu-icon">🏃</span> モンスターダッシュ
-          <span class="submenu-arrow">›</span>
-        </a>
-        <a href="game-2048.html" class="submenu-link">
-          <span class="submenu-icon">🔢</span> モンスター進化2048
-          <span class="submenu-arrow">›</span>
-        </a>
-      </div>
-    </div>
 
     <!-- 初心者サブメニュー -->
     <div class="ikusei-submenu" id="beginner-submenu">
@@ -353,23 +300,6 @@
       </div>
     </div>
 
-    <!-- 相性検索サブメニュー -->
-    <div class="ikusei-submenu" id="aisyou-submenu">
-      <div class="submenu-list">
-        <a href="aisyoukennsaku.html" class="submenu-link">
-          <span class="submenu-icon">🔍</span> 初心者相性検索
-          <span class="submenu-arrow">›</span>
-        </a>
-        <a href="hoken-kennsaku.html" class="submenu-link">
-          <span class="submenu-icon">🧩</span> もっと相性検索
-          <span class="submenu-arrow">›</span>
-        </a>
-        <a href="tyrant-kennsaku.html" class="submenu-link">
-          <span class="submenu-icon">👑</span> タイラントツール
-          <span class="submenu-arrow">›</span>
-        </a>
-      </div>
-    </div>
 
     <!-- 育成サブメニュー -->
     <div class="ikusei-submenu" id="ikusei-submenu">
@@ -523,9 +453,6 @@
         <div style="font-size:11px;color:#999;padding:0 0 8px;">93票</div>
       </a>
 
-    </div>
-    <div style="text-align:right;margin-top:12px;">
-      <a href="assist-ranking.html" style="font-size:13px;color:#f0a500;font-weight:bold;text-decoration:none;">全ランキングを見る →</a>
     </div>
   </div>
 
