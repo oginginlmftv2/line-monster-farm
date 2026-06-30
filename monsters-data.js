@@ -344,4 +344,6 @@ const monstersData = [
   { name: 'シュシュポップ3', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__111239186_0.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'レアモン' },
   { name: 'ゴッドエンペラー', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__72482839_0.jpg', mon: '獣', mainMon: 'ケンタウロス', subMon: 'レアモン' },
   { name: 'ロクショウ', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__72482840_0.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
+  { name: 'フウマ', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'huuma.jpg', mon: '創造', mainMon: 'ザン', subMon: 'ロード種' },
+  { name: 'スコール', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'suko-ru.jpg', mon: '獣', mainMon: 'ライガー', subMon: 'ユグドラシル' },
 ];

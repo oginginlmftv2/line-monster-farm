@@ -89,12 +89,12 @@ Geminiに以下を貼り付けてYouTube URLを添えて送る。出力の「？
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | ゴッドエンペラー（新）・ロクショウ（新） |
-| monsters-data.js 末尾インデックス | **341**（配列の要素数342、0始まりなので末尾=341） |
-| index.html のリンク | `monsters/monster.html?id=340`（ゴッドエンペラー）・`monsters/monster.html?id=341`（ロクショウ） |
-| ピックアップカード | ゴッドエンペラー（新）・ロクショウ（新） |
-| カードID | `c28j-SSR-rokusho`（SSR）／`c27j-MR-godemperor`（MR） |
-| index.html のリンク | `cards/card.html#c27j-MR-godemperor`（ゴッドエンペラー）・`cards/card.html#c28j-SSR-rokusho`（ロクショウ） |
+| ピックアップモンスター | フウマ（新）・スコール（新） |
+| monsters-data.js 末尾インデックス | **343**（配列の要素数344、0始まりなので末尾=343） |
+| index.html のリンク | `monsters/monster.html?id=342`（フウマ）・`monsters/monster.html?id=343`（スコール） |
+| ピックアップカード | ルピナス（新）・エイル（新） |
+| カードID | `d24k-SSR-rupinasu`（SSR）／`d23k-MR-eiru`（MR） |
+| index.html のリンク | `cards/card.html#d24k-SSR-rupinasu`（ルピナス）・`cards/card.html#d23k-MR-eiru`（エイル） |
 
 ---
 
