@@ -6,21 +6,25 @@
   <link rel="apple-touch-icon" href="S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>管理人のプレイ日記 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="LINEモンスターファーム徹底攻略の管理人ぎんによるプレイ日記。モンスターグランプリ・ロードオブマスターズなど各コンテンツの結果や感想を記録しています。">
+  <meta name="description" content="LINEモンスターファーム徹底攻略の管理人ぎんによるプレイ日記一覧。モンスターグランプリ・ロードオブマスターズなど各コンテンツの結果や感想、育成方法の連載記事を記録しています。">
   <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/diary.html">
   <link rel="stylesheet" href="style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
   <style>
-    .diary-entry {
+    .diary-list-entry {
+      display: block;
       background: #fff;
       border-radius: 12px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.07);
-      margin-bottom: 28px;
-      overflow: hidden;
+      margin-bottom: 16px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.15s;
     }
-    .diary-entry-header {
-      padding: 18px 20px 14px;
-      border-bottom: 1px solid #f0f0f0;
+    .diary-list-entry:hover {
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateY(-1px);
     }
     .diary-meta {
       display: flex;
@@ -44,132 +48,26 @@
       color: #b8860b;
       border: 1px solid #f0d080;
     }
-    .diary-tag.tag-lomas {
-      background: #e8eaf6;
-      color: #3949ab;
-      border-color: #c5cae9;
-    }
-    .diary-tag.tag-gurasura {
-      background: #fde8e8;
-      color: #c0392b;
-      border-color: #f5c6c6;
-    }
-    .diary-tag.tag-solo {
-      background: #e8f5e9;
-      color: #2e7d32;
-      border-color: #c8e6c9;
-    }
+    .diary-tag.tag-lomas { background: #e8eaf6; color: #3949ab; border-color: #c5cae9; }
+    .diary-tag.tag-gurasura { background: #fde8e8; color: #c0392b; border-color: #f5c6c6; }
+    .diary-tag.tag-solo { background: #e8f5e9; color: #2e7d32; border-color: #c8e6c9; }
     .diary-title {
-      font-size: 18px;
+      font-size: 17px;
       font-weight: bold;
       color: #1a1a2e;
       line-height: 1.4;
+      margin-bottom: 6px;
     }
-    .diary-entry-body {
-      padding: 18px 20px 20px;
+    .diary-excerpt {
+      font-size: 14px;
+      line-height: 1.7;
+      color: #666;
+      margin: 0 0 8px;
     }
-    .diary-section {
-      margin-bottom: 20px;
-    }
-    .diary-section:last-child { margin-bottom: 0; }
-    .diary-section-title {
-      font-size: 15px;
+    .diary-more {
+      font-size: 13px;
       font-weight: bold;
-      color: #333;
-      border-left: 4px solid #f0a500;
-      padding: 4px 10px;
-      background: #fffbf0;
-      border-radius: 0 6px 6px 0;
-      margin-bottom: 10px;
-    }
-    .diary-p {
-      font-size: 14px;
-      line-height: 1.9;
-      color: #444;
-      margin: 0 0 10px;
-    }
-    .diary-p:last-child { margin-bottom: 0; }
-    .diary-img-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-      gap: 8px;
-      margin: 12px 0;
-    }
-    .diary-img-grid img {
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      display: block;
-    }
-    .diary-img-single {
-      margin: 12px 0;
-    }
-    .diary-img-single img {
-      max-width: 360px;
-      width: 100%;
-      border-radius: 8px;
-      border: 1px solid #eee;
-      display: block;
-    }
-    .result-box {
-      background: #f9f9f9;
-      border: 1px solid #eee;
-      border-radius: 10px;
-      padding: 14px 16px;
-      margin: 10px 0;
-      font-size: 14px;
-      color: #333;
-      line-height: 1.8;
-    }
-    .result-box strong { color: #1a1a2e; }
-    .result-highlight {
-      font-size: 22px;
-      font-weight: 900;
       color: #f0a500;
-    }
-    .point-box {
-      background: #fff8e1;
-      border-left: 4px solid #f0a500;
-      border-radius: 0 8px 8px 0;
-      padding: 12px 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #555;
-      margin: 10px 0;
-    }
-    .info-box {
-      background: #e8f5e9;
-      border-left: 4px solid #388e3c;
-      border-radius: 0 8px 8px 0;
-      padding: 12px 14px;
-      font-size: 13px;
-      line-height: 1.7;
-      color: #555;
-      margin: 10px 0;
-    }
-    .diary-nav {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 24px;
-      flex-wrap: wrap;
-    }
-    .diary-nav-btn {
-      font-size: 13px;
-      font-weight: bold;
-      padding: 6px 14px;
-      border-radius: 20px;
-      border: 1px solid #eee;
-      background: #f9f9f9;
-      color: #555;
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .diary-nav-btn:hover,
-    .diary-nav-btn.active {
-      background: #fff3cd;
-      border-color: #f0a500;
-      color: #b8860b;
     }
   </style>
 </head>
@@ -189,538 +87,158 @@
 <div class="container">
   <a href="index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
   <h1 class="page-title">📝 管理人のプレイ日記</h1>
-  <p style="font-size:13px;color:#999;margin:-8px 0 24px;">管理人ぎんの日々のプレイ記録</p>
+  <p style="font-size:13px;color:#999;margin:-8px 0 24px;">管理人ぎんの日々のプレイ記録。総合力育成の連載記事や大会結果・新カードの使用感などを、記事ごとに1本ずつ更新しています。</p>
 
-  <!-- ===== 記事15 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年6月17日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">メダロットコラボカード＆モンスターの使用感まとめ</div>
+  <a class="diary-list-entry" href="diary/medarot-korabo-matome.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年6月17日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <p class="diary-p">メダロットコラボで実装されたMRゴッドエンペラー・SSRロクショウを実際に使ってみた感想と、メダロットコラボモンスター（メタビー・シュシュポップ3・ゴッドエンペラー・ロクショウ）の環境入り状況について書いていきます。</p>
-        <p class="diary-p">まずアシストカードの方ですが、MRゴッドエンペラーは同じモン類獣MRのヴィトニルと比べても遜色のないトレ性能の高さで、完凸して使っているプレイヤーからは絶賛の声が上がっています。SSRロクショウも数回使っただけで今までの白SSRカードとの違いを体感できるレベルで強いという評価です。元々白SSRカードは2周年以降かなり数が増えていて、どれも弱くはないんですが、SSRロクショウは頭一つ抜けている印象を受けます。ただアシストカードがバトルにどこまで影響するかは、ローマス出場が来月以降になるのでまだ未知数です。</p>
-        <p class="diary-p">モンスター本体については、メタビーとシュシュポップ3が今月のローマスに多数出場していましたが、頂上決戦にはメダロットコラボ系の姿はありませんでした。決して弱いわけではなくて、今はモン類獣と幻霊がずば抜けて強い環境なので、無機のメタビー・シュシュポップ3にはきつい部分があったというのが実情だと思います。実際、シュシュポップ3と同じ黒無機のニャハトは今月の頂上決戦に出場しているので、巡り合わせの運に左右される部分も大きいです。</p>
-        <p class="diary-p">来月はMRゴッドエンペラーのカードをフルに活用したキュービ種や、モンスターのゴッドエンペラー自体も環境の前線に出てくると思っています。月末に来る次のスタフェスでの夏実装カード次第ではありますが、モン類獣が1ヶ月で急に弱くなる未来はちょっと見えないので、今ゴッドエンペラーにリソースを割くのはカードもモンスターも正解だと思います。モンスターのロクショウは、カード云々の前にロクショウ自体の技能力がかなり強く優遇されているので、ニャー血統の中でも少し異質な存在になっています。白オーラ自体は今は冬の時代ではあるものの、モン類無機の恩恵とSSRロクショウの能力でどこまで環境に食い込めるか期待しています。上位ランカーにもメダロット愛が強い人は結構いるので、はちゃめちゃに強いロクショウが出てくる可能性も十分あると思います。</p>
-        <p class="diary-p">最後に育成編成の話も少し。総合力育成なら☆3ゴッドエンペラーは黒オーラ・モン類獣なので、MRゴッドエンペラー、MRヴィトニル、MRフレリア（SSRフレリアでも可）、SSRチャックル、MRセレネ、MRデミウルゴスあたりが強いです。セレネとデミウルゴスをダラスとSSRホリィに変えるなど、組み合わせを変えるのもいいと思います。これを全部完凸で揃えられるなら総合力60000（MS）も遠い夢の話ではありません。</p>
-        <p class="diary-p">☆3ロクショウは白オーラ・モン類無機なので、SSRロクショウ、MRステラ、MRナデシコ、MRリッピー、MRギフトン、MRエスエルあたりが良さそうです。MRを一枚抜いて師匠を入れるのもありで、むしろこのMRを全部自前で用意できる人はほぼいないレベルなので、モン類が一致していない師匠でも積極的に採用していきましょう。ステラがいないことが多いと思うので、その場合はSSRコルトでも全然問題ないです。SSR白皇でもいいですが、トレ集合率がなくなって試行回数が増えてしまう点には注意してください。</p>
-        <p class="diary-p">とはいえ正直なところ、ここまで書いた編成を組める人は最上位でもほとんどいないので、自分の手持ちにある汎用性の高いカードに置き換えても全然問題ありません。特に3周年以降に実装されたSSR（カルキノス・チャックル・ノルン）は軒並みトレ性能も汎用性も高いので、ゲットできたら積極的に凸を上げていくのがおすすめです。みんなも自由にモンスターを育成していきましょう。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">メダロットコラボカード＆モンスターの使用感まとめ</div>
+    <p class="diary-excerpt">メダロットコラボで実装されたMRゴッドエンペラー・SSRロクショウを実際に使ってみた感想と、コラボモンスターの環境入り状況・おすすめ育成編成をまとめました。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事14 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月28日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">最強のトレーニングとは</div>
+  <a class="diary-list-entry" href="diary/saikyo-no-training.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月28日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <img src="diary-img/ikuseitopic1.jpg" alt="最強のトレーニングとは" style="width:100%;border-radius:8px;margin-bottom:14px;">
-        <p class="diary-p">絶好調チャンス×ピーク×5人ひかり×大成功で3ステ349（大成功時のカンスト値）上がるトレーニングが起こることがあります。稀にしか起きないですが最高に気持ちいい瞬間ですね。</p>
-        <p class="diary-p">ただ逆に考えると一番低いステのところもカンストするということは、一番高いところのステは受け入れがたいほど無駄になってしまっているということでもあります。</p>
-        <p class="diary-p">上昇したステータスの2倍くらい無駄になってしまったと考えると今後はトレ数値上限突破のアシスト能力の価値が上がっていくかもしれませんね。</p>
-        <p class="diary-p">逆に考えるとアシストカードはそこまで強くなくても強力なトレーニングは起こせるということでもあります。完凸MRを何枚も用意しないと最上位の総合力やトレーニングはまねできないと思っていませんか？実際は完凸MRなんて全然ないのに10位以内に入ってるプレイヤーもいますし、むしろ全部完凸で遊んでいるランカーなんて本当に片手で数えられるくらいしかいません。誰でもめちゃつよトレーニングは起こせます。ただ試行回数は必要になってくるのであきらめずに挑戦し続けましょう。</p>
-        <p class="diary-p">そのためにもう一つ重要なことがリソースを偏らせることです。ここで言うリソースとはガチャを引くためのダイヤやMRアシストカードの凸を上げるための極意の書・真です。ある程度モン類やオーラをしぼって、このモンスターや血統や色と共に歩んでいくという決断が出来ると、課金をしなくとも最上位勢と並ぶことができます。そうやって遊んでいる無課金のトップランカーが結構多いイメージがあります。逆に複数のモン類やオーラを追いかけてしまうと強化が中途半端になり育成の伸びに刺激を感じにくくなります。無課金でも上にいきたいという人はリソースを愛すべきor強いモンスターの強化にしぼっていくといいと思います。</p>
-        <p class="diary-p">ただやっぱり1050近くステータスが上がった時の爽快感と5000近く総合力が上がった時のインパクトがやみつきになりますね。管理人は意志が弱くリソースを絞り切れずにハチャメチャにつぎ込んでいるのでみなさんはまねしないようにしましょう。そうです。反面教師として記事を書いているのです。みなさんも最強トレを目指して育成しまくりましょう。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">最強のトレーニングとは</div>
+    <p class="diary-excerpt">絶好調チャンス×ピーク×5人ひかり×大成功で起こる最強トレーニングの話と、無課金でも上位を狙えるリソースの絞り方について。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事13 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月26日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法⑦</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-7.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月26日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies75.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies76.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies77.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies78.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">ミドル期が終わったときはこんな感じでした。ステータス変換も特に取れそうなやつがなかったのでスルー。プロ期もチャレンジを確認して進めていきます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies79.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies80.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">初心者でもこのくらいのトレーニングがきます。こういうトレーニングを何回呼び込めるかで総合力がかなり変わってきますね。ちなみにこのトレーニングは大成功をしてトレ数値+40％になっています。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies81.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies82.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies83.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies84.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies85.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">プロ期ラスト10ターンは四大大会ウィナーズ杯に出てから休養→修行しています。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies86.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">育成画面右上のターン数のあたりをタップするとNPCの親密度を確認することができます。NPC親密度は50を超えているとプロ期ラスト3ターン目始まりに全ステ+5＆体力24or能力ポイントのイベント発生、プロ期ラスト2ターン始まりに全ステ+10のイベントが発生します。(後者は発生条件諸説あり)</p>
-        <p class="diary-p">さらに最後の3連戦の1回戦スルー権を獲得します。またNPC親密度が90を超えると最後の3連戦の準決勝スルー権とベリーグッドエンディングが確定します。ベリーグッドエンディングは通常のエンディング(グッドエンディング)より全ステ+12になります。</p>
-        <p class="diary-p">こんな感じでNPC親密度を上げる恩恵は結構強いのでタイミング的に50や90を狙えそうだなと思ったときはNPC親密度を上げにいくのもかなり有効です。今回はプロ期ラスト7ターン時点で親密度77なので最終的に90以上にしてベリーグッドエンディングを狙っていきたいと思います。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies87.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies88.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">チャレンジを消化しプロ期ラスト4ターンに四大大会ワールドモンスターズ杯に出て四大大会制覇したつもりになります。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies89.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies90.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">そしてNPC親密度イベント後、プロ期終わりの総当たり戦で敗北しましたが些細なことです。ただ総当たり戦は非常に評判がよくないという噂を耳にした時代もありました。振り返れば泡沫の記憶の影に佇む埃のようで、改善してほしいなという思いが浮かんでは消え夕暮れの眩しさに目を細める野良猫を横目にひび割れた手鏡をかき集めたものです。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies91.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies92.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">プロ期が終わってこんな感じです。NPC親密度も90を超えてベリーグッドエンディングが確定したのはいい感じです。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies93.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies94.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies95.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies96.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies97.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">また英雄は持っていないので最後の3連戦の決勝に勝ち、能力ポイントを割り振って育成完了です。能力ポイントどれをとったらいいかわからない人は<a href="abilitypoint/index.html" style="color:#f0a500;font-weight:bold;">能力ポイント最適化ツール</a>を使ってみてください。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies98.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies99.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies100.jpg" alt="初心者向け総合力育成⑦">
-          <img src="diary-img/newbies/newbies101.jpg" alt="初心者向け総合力育成⑦">
-        </div>
-        <p class="diary-p">こんな感じで育成完了になります。ぜひ参考にしてみてください。でも四大大会は出たほうが強くなると思います。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法⑦</div>
+    <p class="diary-excerpt">連載⑦。プロ期のNPC親密度稼ぎとベリーグッドエンディング狙い、能力ポイント振り分けまで育成完了の流れを解説します。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事12 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月22日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法⑥</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-6.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月22日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies38.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies39.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies41.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">このメロだかネロだかの方は序盤で踏めた場合ホッカイイラブを選んでおそれ度を上げるのに役立てたいところなんですが、今回はモンスターダービーに負けてしまったので左上を選んで体力の上限を上げます。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies42.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">陣営選択はバトルコンテンツを楽しめるようになるまでは右側の師匠がおすすめです。シンプルに一番トレーニング性能が高いからです。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies43.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies44.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">各期の終わりにあるステータス変換は、ステータスがあふれることが確実な場合以外は～の根源1だけ交換するようにしましょう。交換に使うステータス1あたりの総合力換算が一番高いです。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies45.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ミドル期最初の選択肢は左上の体力40回復以外が弱すぎるので、ジュニア期ラストには体力を40以上減らした状態にできるのが理想です。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies46.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies47.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ミドル期もチャレンジがあるので確認しておきましょう。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies48.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies49.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies50.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">このメロだかネロだかの方は、ノラモンと出会える「ノラモン注意報」を手動で起こすことができるのでいいタイミングで呼びたいですね。今回はすでに注意報が来ているので修行のチケットをもらいにいきます。修行のチケットがもらえる確率は体感35％くらいです。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies51.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies52.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies53.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ノラモン注意報中は技習得率がかなり上がるので、超修行を駆使して一気に技を覚えましょう。ちなみにノラモン遭遇判定は1個目に選んだ技だけあって、2個目に選んだ技にはありません。1個目を覚えられず2個目だけを覚えてしまった場合はノラモン注意報が消えちゃうので注意しましょう。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies54.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies55.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies56.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ピークが始まりました。ミドル期ラスト10ターンは本来四大大会のグレイテスト4に出たいところですが賞金が足りないのであきらめてトレーニングします。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies57.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies58.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies59.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies60.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies61.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ガロエジュースで体力管理をしつつトレーニングしていきます。ピーク中はあまりにも弱いトレーニングしかない場合をのぞいて基本はトレーニングを優先します。めちゃくちゃ強いトレの場合は四大大会を無視することもあります。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies63.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies64.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies65.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">総合力を上げる要素の一つに人気度があります。人気度確保とプロ期あたりから四大大会に出るためにこのあたりで大会に出ておきます。トレーニングが強かったら気にせずトレーニングをふみます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies66.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies67.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies68.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">モーマンタイ博士は右上「力をつけたい！」が全ステータス20とトレーニング得意◎、右中断「たくさん技を習得したい！」が体力30と修行得意◎、下段がライフ5アップ、その他は覚えなくていいので実質3つとなってます。成功率は体感で上から25％、70％、100％くらいです。余計なことをしてほしくない場合は「願いごとはない」を選んでライフ5だけもらいましょう。</p>
-        <p class="diary-p">失敗時のデメリットは力をつけたいが全ステ-5となまけ癖（トレ失敗率+5％）、たくさん技を習得したいは体力-30とうつ気味（忠誠度が増減しなくなる）です。</p>
-        <p class="diary-p">今回はたくさん技を習得したいを選んで体力回復を狙いましたが失敗してしまいました。ちなみにうつ気味は通常の遊びで直すことができるので診療所にいかずに治すことができます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies69.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies70.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies71.jpg" alt="初心者向け総合力育成⑥">
-          <img src="diary-img/newbies/newbies72.jpg" alt="初心者向け総合力育成⑥">
-        </div>
-        <p class="diary-p">ではミドル期も終盤、チャレンジを完走して総合力を上げていきましょう。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法⑥</div>
+    <p class="diary-excerpt">連載⑥。ミドル期のステータス変換の考え方と、ノラモン注意報を活用した技習得のコツを解説します。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事11 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月21日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法⑤</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-5.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月21日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies20.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies21.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies22.jpg" alt="初心者向け総合力育成⑤">
-        </div>
-        <p class="diary-p">ジュニア期ラスト10ターンに～賞の大会に出ましょう。慣れるまではどれでもいいです。</p>
-        <p class="diary-p">勝ち目なしと出ても意外と勝ってきてくれたりするので気にせず挑みましょう負けましたね。</p>
-        <p class="diary-p">そういうときもあります。砂時計でリベンジしてやりました。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies23.jpg" alt="初心者向け総合力育成⑤">
-        </div>
-        <p class="diary-p">大会後チャレンジを全部まとめて達成した報酬がもらえます。報酬は師匠のレアリティや凸の数によってそこそこ変わります。今回は無凸SSRのフレリアなのでこんなものですね。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies24.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies25.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies26.jpg" alt="初心者向け総合力育成⑤">
-        </div>
-        <p class="diary-p">さらに師匠は修行後に確率で体力回復と能力ポイントくれるので編成するだけ得ですね。</p>
-        <p class="diary-p">さてここからの戦いは厳しくなってくるのでランク4技と「俺は喰らうものだ」を取っておきます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies27.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies28.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies29.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies30.jpg" alt="初心者向け総合力育成⑤">
-        </div>
-        <p class="diary-p">ラスト4ターンのモンスターダービーまでトレーニングで鍛えていきます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies31.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies32.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies33.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies34.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies35.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies36.jpg" alt="初心者向け総合力育成⑤">
-          <img src="diary-img/newbies/newbies37.jpg" alt="初心者向け総合力育成⑤">
-        </div>
-        <p class="diary-p">えー激闘の末砂時計を使い切り敗退してしまいました。そういうときもあります。</p>
-        <p class="diary-p">モンスターダービーに敗退してしまうと最初の四大大会であるグレイテスト4へ挑戦するための賞金が足りなくなる可能性が上がります。</p>
-        <p class="diary-p">ここでもういいやとあきらめてしまうのも一つの選択です。ちなみにこのモンダビ4タテ現象はベテランでもたまにおきます。</p>
-        <p class="diary-p">今回はこのまま四大大会に出ないミドル期の立ち回りをしていきたいと思います。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法⑤</div>
+    <p class="diary-excerpt">連載⑤。ジュニア期の大会立ち回りと、モンスターダービーで敗退してしまった時の切り替え方について。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事10 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月20日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法④</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-4.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月20日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies11.jpg" alt="初心者向け総合力育成④">
-          <img src="diary-img/newbies/newbies12.jpg" alt="初心者向け総合力育成④">
-          <img src="diary-img/newbies/newbies13.jpg" alt="初心者向け総合力育成④">
-        </div>
-        <p class="diary-p">ジュニア期からは師匠のチャレンジを意識していきたいところなんですが、今回は師匠の初回イベント（トレで師匠をふむと確率で発生）を起こしてなかったんで急いで師匠をふみにいきます。</p>
-        <p class="diary-p">イベント後にアイテムアイコンの隣にチャレンジアイコンが出てきます。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies14.jpg" alt="初心者向け総合力育成④">
-          <img src="diary-img/newbies/newbies15.jpg" alt="初心者向け総合力育成④">
-          <img src="diary-img/newbies/newbies16.jpg" alt="初心者向け総合力育成④">
-        </div>
-        <p class="diary-p">チャレンジは何種類かある中からランダムで選ばれます。それぞれのチャレンジをクリアすると報酬がもらえますが、報酬内容が気に食わないときは各期で1回ずつチャレンジ内容＆報酬の再抽選ができます。</p>
-        <p class="diary-p">再抽選を選んで報酬がさらに悪くなるなんてこともあるあるですね。</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies18.jpg" alt="初心者向け総合力育成④">
-          <img src="diary-img/newbies/newbies19.jpg" alt="初心者向け総合力育成④">
-        </div>
-        <p class="diary-p">チャレンジ内容の中でも、アイテム使用と能力取得でいいやつは任意のタイミングで達成できるので、すべてのチャレンジを達成での報酬の体力回復を好きな時に次のターンに持ってこられるので体力管理が楽になります。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法④</div>
+    <p class="diary-excerpt">連載④。師匠のチャレンジ攻略と、報酬に納得がいかない時の再抽選の使いどころを解説します。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事9 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月19日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法③</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-3.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月19日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies5.jpg" alt="初心者向け総合力育成③">
-          <img src="diary-img/newbies/newbies6.jpg" alt="初心者向け総合力育成③">
-          <img src="diary-img/newbies/newbies7.jpg" alt="初心者向け総合力育成③">
-          <img src="diary-img/newbies/newbies8.jpg" alt="初心者向け総合力育成③">
-        </div>
-        <p class="diary-p">出発したら最初は総合力が1000くらいですね。まずはブリーダーライセンスを即使用すること。これだけで上振れです。</p>
-        <p class="diary-p">人によっては2回に1回くらい使うのを忘れるとかなんとか。</p>
-        <p class="diary-p">いよいよターンの消化の仕方ですが、デビュー期は人数が多いトレーニングをひたすら選びましょう。失敗率が出てきたら遊びや休養を入れるのもありです。</p>
-        <p class="diary-p">そしてデビュー戦にいきます。初心者でもデビュー戦はほぼ負けません。</p>
-        <p class="diary-p">負けたら日頃の行いが悪いです。ゴミ拾いをしましょう。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies9.jpg" alt="初心者向け総合力育成③">
-        </div>
-        <p class="diary-p">大会の後のエサは、序盤はおそれ度が上がるものにしましょう。（インテリセット、パワフルセット、ビタミンもどき）</p>
-        <p class="diary-p">スパルタ寄りの育成にするとトレ性能が上がるのでミドル期のラスト4ターンくらいまで超スパルタを目指しておそれ度を上げていきます。</p>
-        <p class="diary-p">おそれ度はトレーニングをしているだけでも上がっていくので特に意識しなくてもきびしい寄りになっていきます。</p>
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies10.jpg" alt="初心者向け総合力育成③">
-        </div>
-        <p class="diary-p">アシストカードのイベント選択肢は、</p>
-        <p class="diary-p">トレーニングを踏んだ時に発動する番号つきのイベント→2回目で左が超状態変化か適性を1段階アップ</p>
-        <p class="diary-p">月の前半に勝手に起きるイベント→左で体力10回復</p>
-        <p class="diary-p">画像は勝手に起きるほうのイベントです。基本は左を選んで体力回復を選びましょう。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法③</div>
+    <p class="diary-excerpt">連載③。序盤のエサ選びとおそれ度の上げ方、アシストカードのイベント選択肢について解説します。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事8 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月16日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法②</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-2.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月16日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-grid">
-          <img src="diary-img/newbies/newbies2.jpg" alt="初心者向け総合力育成②">
-          <img src="diary-img/newbies/newbies3.jpg" alt="初心者向け総合力育成②">
-          <img src="diary-img/newbies/newbies4.jpg" alt="初心者向け総合力育成②">
-        </div>
-        <p class="diary-p">編成はこんな感じです。リセマラでMRリムルを引き、もう10連でもう1枚引いたので1凸になっていますが、この編成の核はレンタルのリッピーなので気にしないでください。</p>
-        <p class="diary-p">Rのカードを入れているのは、MRリッピーのモン類共鳴の効果を上げるためです。モン類のMRを入れているときはできるだけ同じモン類のアシストカードを編成するといいでしょう。</p>
-        <p class="diary-p">持ち込みアイテムはガロエジュースとブリーダーライセンスです。慣れるまでは基本はどの育成もこの2つで大丈夫です。</p>
-        <p class="diary-p">この2つに文句をつけてくるおじさんの体臭はきついので信用しないようにしましょう。</p>
-        <p class="diary-p">それでは出発しましょう。</p>
-        <p class="diary-p">育成は伝授から始まります。秘伝が揃ってくるまではこのくらいがいいところですが、秘伝が強くなってきたら全ステータス200前後あるいはそれ以上上がった状態からスタートできるようになります。</p>
-        <p class="diary-p">秘伝はとても大事ですね。秘伝について詳しく知りたい場合は<a href="ikusei/hiden.html" style="color:#f0a500;font-weight:bold;">秘伝一覧</a>や<a href="ikusei/hiden-kouka.html" style="color:#f0a500;font-weight:bold;">秘伝周回完全ガイド</a>のページも見てみてください。</p>
-        <p class="diary-p">今回は以上です。次回からは最後に全部繋げることを考えて最初の挨拶もさよならの握手も省略したいと思います。あ、最初の挨拶はもうしてませんでしたね。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法②</div>
+    <p class="diary-excerpt">連載②。編成の考え方とモン類共鳴のポイント、持ち込みアイテムの選び方を解説します。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事7 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月15日</span>
-        <span class="diary-tag tag-solo">⭐ 育成日記</span>
-      </div>
-      <div class="diary-title">初心者向け総合力育成方法①</div>
+  <a class="diary-list-entry" href="diary/sogo-ikusei-1.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月15日</span>
+      <span class="diary-tag tag-solo">⭐ 育成日記</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-img-single">
-          <img src="diary-img/newbies/newbies1.jpg" alt="初心者向け総合力育成①">
-        </div>
-        <p class="diary-p">今日からログイン5日目のアカウントを使って総合力育成の日記を書いていこうと思います。</p>
-        <p class="diary-p">リセマラしたアカウントではありますが、初心者の方でも真似しやすいと思うので参考にしてもらえたら嬉しいです。</p>
-        <p class="diary-p">ただ攻略サイトに載せる前提でスクショを撮ってたら画像が101枚になってしまいました。<br>そんな記事はスクロールしていくだけで日が暮れてしまうのでデアゴスティーニみたいにちょっとずつ日記にしていきます。<br>最後まで書ききったら総合力育成のページに激長攻略記事としてまとめるつもりです。</p>
-        <p class="diary-p">では早速育成のほうに進んでいきましょう。<br>今回は最初にゲットしたモノリス×ゲルのアイスキャンディを育成していきます。<br>継承の伝授元(秘伝親)は前に育成した同じアイスキャンディにしたいと思います。<br>なぜなら他に選択肢がないからです。</p>
-        <p class="diary-p">秘伝親が育成モンスターと同じだと相性値が下がってしまうので、本当は別のモンスターを伝授元に使いたいですが、始めたばかりだと仕方ないので同じモンスターでも気にせず親にしていきましょう。</p>
-        <p class="diary-p">レンタルで強い親を借りれば結構すぐ強くなれるので、強いフレンドを見つけてレンタルしてみてください。</p>
-        <p class="diary-p">創刊号はここまでです。また次回をお楽しみに。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">初心者向け総合力育成方法①</div>
+    <p class="diary-excerpt">ログイン5日目のリセマラアカウントを使い、初心者でも真似しやすい総合力育成の進め方を連載していきます。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事6 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年5月4日</span>
-        <span class="diary-tag">🏆 モングラ</span>
-      </div>
-      <div class="diary-title">モンスターグランプリ総合1位達成！！</div>
+  <a class="diary-list-entry" href="diary/mongura-sougou-1i.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年5月4日</span>
+      <span class="diary-tag">🏆 モングラ</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-section-title">🏆 モンスターグランプリ 総合1位</div>
-        <div class="diary-img-grid">
-          <img src="diary-img/mongura2.jpg" alt="モンスターグランプリ総合1位">
-          <img src="diary-img/mongura3.jpg" alt="モンスターグランプリ総合1位">
-        </div>
-        <p class="diary-p">ちょっと遅くなりましたが2026年4月のモンスターグランプリで総合1位をとることができたことを報告します！</p>
-        <p class="diary-p">モンスターグランプリが実装されてから2年、2位は何度かとったことはありましたが総合1位はとったことがなかったのでいつかは1位をとってみたいとずっと思っていましたとれました。</p>
-        <p class="diary-p">総合力育成は他のコンテンツの育成とちょっと毛色が違うので難しいところもありますが最後まで走り切れてよかったです。<br>近いうちに総合力育成の記事もいくつかあげる予定なのでお待ちください！</p>
-        <p class="diary-p">モンスターグランプリで総合1位をとったことで現在実装されているすべてのコンテンツでの1位を達成しました！</p>
-        <p class="diary-p">だいたいのことは配信でも答えられると思うのでぜひ遊びに来てください！約束ですよ。約束しましたね。</p>
-        <p class="diary-p">あとLINEモンスターファーム徹底攻略(当サイト)にこんな機能がほしいという声があれば実装しますので色んな意見もお待ちしてます！</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">モンスターグランプリ総合1位達成！！</div>
+    <p class="diary-excerpt">2026年4月のモンスターグランプリで総合1位を達成した報告と、実装済み全コンテンツ制覇までの振り返り。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事5 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年4月27日</span>
-        <span class="diary-tag">🎉 配信記念</span>
-      </div>
-      <div class="diary-title">配信開始から3年！！</div>
+  <a class="diary-list-entry" href="diary/haishin-3nen.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年4月27日</span>
+      <span class="diary-tag">🎉 配信記念</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <p class="diary-p">配信3周年記念配信お疲れ様でした！たくさんの人にお祝いしてもらえてめちゃくちゃ嬉しかったです！</p>
-        <p class="diary-p">無事モングラ更新は出来ずマスモンは全売却して5体のモンスターをルーレットで星10にしました！</p>
-        <div class="diary-img-grid">
-          <img src="diary-img/3nen1.jpg" alt="ヨコヅナ 星10">
-          <img src="diary-img/3nen2.jpg" alt="ジャングラー 星10">
-          <img src="diary-img/3ne3.jpg" alt="ウサギソウ 星10">
-          <img src="diary-img/3nen4.jpg" alt="レッドアーマー 星10">
-          <img src="diary-img/3nen5.jpg" alt="ヨロイモッチー 星10">
-        </div>
-        <p class="diary-p">4周年目も配信頑張るぞ💪<br>来月コラボないのかな！</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">配信開始から3年！！</div>
+    <p class="diary-excerpt">配信3周年記念のお礼と、マスターモンスター売却で5体を星10にしたルーレット結果の報告です。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事4 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年4月23日</span>
-        <span class="diary-tag tag-gurasura">🏟️ グラスラ</span>
-      </div>
-      <div class="diary-title">超連戦でダメージカンスト！</div>
+  <a class="diary-list-entry" href="diary/gurasura-damage-kanst.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年4月23日</span>
+      <span class="diary-tag tag-gurasura">🏟️ グラスラ</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-section-title">🏟️ グランドスラム 超連戦</div>
-        <div class="diary-img-single">
-          <img src="diary-img/gurasura1.jpg" alt="グランドスラム超連戦 ダメージカンスト">
-        </div>
-        <p class="diary-p">超連戦でもダメージがカンストしました！火力能力もりもりにしたら、序盤のフォイル（丈夫さ30%アップの能力）が1つあるだけでも高火力が出るようになりました！</p>
-        <p class="diary-p">決戦だと上位勢は30万以上ダメージが出てるので、極級だけでもダメージ上限撤廃しないかなあと思うなどする。</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">超連戦でダメージカンスト！</div>
+    <p class="diary-excerpt">グランドスラム超連戦でダメージがカンストした際の火力構成と、ダメージ上限についての所感です。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事3 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年4月18日</span>
-        <span class="diary-tag tag-lomas">👑 ローマス</span>
-      </div>
-      <div class="diary-title">頂上決戦 ベスト8で終幕</div>
+  <a class="diary-list-entry" href="diary/romasu-best8.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年4月18日</span>
+      <span class="diary-tag tag-lomas">👑 ローマス</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-section-title">👑 ロードオブマスターズ 頂上決戦 結果</div>
-        <div class="diary-img-single">
-          <img src="diary-img/romasu3.jpg" alt="頂上決戦 ベスト8">
-        </div>
-        <p class="diary-p">頂上決戦は1回戦突破してベスト8でした！<br>投票してくださった方、応援してくださった方ありがとうございました！</p>
-        <p class="diary-p">惜しくもベスト4に届かずというところで、投票してくださった方には本当に申し訳がないという気持ちと、投票を決めたのは結局自分なんだからさ…ね？という気持ちでいっぱいです。</p>
-        <p class="diary-p">優勝したタロぴっぴさんおめでとうございます！<br>来月も頂上決戦目指して頑張るぞ！！</p>
-      </div>
-    </div>
-  </div>
+    <div class="diary-title">頂上決戦 ベスト8で終幕</div>
+    <p class="diary-excerpt">ロードオブマスターズ頂上決戦はベスト8という結果に。応援してくださった方への感謝と振り返りです。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
-  <!-- ===== 記事2 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年4月16日</span>
-        <span class="diary-tag tag-lomas">👑 ローマス</span>
-      </div>
-      <div class="diary-title">久しぶりの頂上決戦出場</div>
+  <a class="diary-list-entry" href="diary/romasu-hisashiburi-shutsujou.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年4月16日</span>
+      <span class="diary-tag tag-lomas">👑 ローマス</span>
     </div>
-    <div class="diary-entry-body">
-      <div class="diary-section">
-        <div class="diary-section-title">👑 ロードオブマスターズ</div>
-        <div class="diary-img-single">
-          <img src="diary-img/romasu2.jpg" alt="頂上決戦出場">
-        </div>
-        <p class="diary-p">久しぶりの頂上決戦出場！いい結果で帰ってきてくれますように！<br>このモンスターはロードオブマスターズの記事をかなり意識して育成したからよかったら見てください！</p>
-        <p class="diary-p">
-          <a href="ikusei/lord-of-masters.html" style="color:#f0a500;font-weight:bold;">📖 ロードオブマスターズ攻略記事はこちら</a>
-        </p>
-      </div>
+    <div class="diary-title">久しぶりの頂上決戦出場</div>
+    <p class="diary-excerpt">久しぶりにロードオブマスターズ頂上決戦に出場した際の記録。育成のこだわりポイントも紹介しています。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
+
+  <a class="diary-list-entry" href="diary/mongura-romasu-2026-04-zenhan.html">
+    <div class="diary-meta">
+      <span class="diary-date">2026年4月15日</span>
+      <span class="diary-tag">🏆 モングラ</span>
+      <span class="diary-tag tag-lomas">👑 ローマス</span>
     </div>
-  </div>
-
-  <!-- ===== 記事1 ===== -->
-  <div class="diary-entry">
-    <div class="diary-entry-header">
-      <div class="diary-meta">
-        <span class="diary-date">2026年4月15日</span>
-        <span class="diary-tag">🏆 モングラ</span>
-        <span class="diary-tag tag-lomas">👑 ローマス</span>
-      </div>
-      <div class="diary-title">2026年4月 モングラ前半結果・ローマス状況報告</div>
-    </div>
-    <div class="diary-entry-body">
-
-      <!-- モングラ -->
-      <div class="diary-section">
-        <div class="diary-section-title">🏆 モンスターグランプリ 前半結果</div>
-        <div class="diary-img-single">
-          <img src="diary-img/mongura1.jpg" alt="モングラ前半ランキング結果">
-        </div>
-        <p class="diary-p">前半は各項目全部2位で総合も2位。後半はアシストカードの揃ってない無機類がテーマだが大丈夫。腎臓は2つもある。</p>
-      </div>
-
-      <!-- ローマス -->
-      <div class="diary-section">
-        <div class="diary-section-title">👑 ロードオブマスターズ</div>
-        <div class="diary-img-single">
-          <img src="diary-img/romasu1.jpg" alt="ローマス ランキング">
-        </div>
-        <p class="diary-p">賞金ランキングは7位でフィニッシュ。1～16位の人は17～32位の誰かと初戦で当たるので誰と当たってもこわいけど頑張ってほしい。</p>
-      </div>
-
-    </div>
-  </div>
+    <div class="diary-title">2026年4月 モングラ前半結果・ローマス状況報告</div>
+    <p class="diary-excerpt">モンスターグランプリ前半は総合2位、ロードオブマスターズは賞金ランキング7位でフィニッシュした状況報告です。</p>
+    <span class="diary-more">続きを読む →</span>
+  </a>
 
 </div>
 
