@@ -89,12 +89,12 @@ Geminiに以下を貼り付けてYouTube URLを添えて送る。出力の「？
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | フウマ（新）・スコール（新） |
-| monsters-data.js 末尾インデックス | **343**（配列の要素数344、0始まりなので末尾=343） |
-| index.html のリンク | `monsters/monster.html?id=342`（フウマ）・`monsters/monster.html?id=343`（スコール） |
-| ピックアップカード | ルピナス（新）・エイル（新） |
-| カードID | `d24k-SSR-rupinasu`（SSR）／`d23k-MR-eiru`（MR） |
-| index.html のリンク | `cards/card.html#d24k-SSR-rupinasu`（ルピナス）・`cards/card.html#d23k-MR-eiru`（エイル） |
+| ピックアップモンスター | エクスマキナ（新） |
+| monsters-data.js 末尾インデックス | **344**（配列の要素数345、0始まりなので末尾=344） |
+| index.html のリンク | `monsters/monster.html?id=344`（エクスマキナ） |
+| ピックアップカード | テオス（新） |
+| カードID | `c20k-MR-teosu`（MR） |
+| index.html のリンク | `cards/card.html#c20k-MR-teosu`（テオス） |
 
 ---
 

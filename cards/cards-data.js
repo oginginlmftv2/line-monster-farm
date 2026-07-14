@@ -1,4 +1,5 @@
 const cardsData = {
+  'c20k-MR-teosu':              { name: 'テオス',              rarity: 'MR',  oura: '黄', type: 'アサルト',   mon: '創造', ext: 'jpg', event2: '調査中' },
   'd24k-SSR-rupinasu':          { name: 'ルピナス',            rarity: 'SSR', oura: '緑', type: '回避',     mon: '獣',   ext: 'jpg', event2: '調査中' },
   'd23k-MR-eiru':               { name: 'エイル',              rarity: 'MR',  oura: '緑', type: '師匠',     mon: '創造', ext: 'jpg' },
   'c28j-SSR-rokusho':             { name: 'ロクショウ',          rarity: 'SSR', oura: '白', type: 'ちから',     mon: '無機', ext: 'jpg', event2: '森林' },

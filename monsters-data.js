@@ -346,4 +346,5 @@ const monstersData = [
   { name: 'ロクショウ', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__72482840_0.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
   { name: 'フウマ', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'huuma.jpg', mon: '創造', mainMon: 'ザン', subMon: 'ロード種' },
   { name: 'スコール', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'suko-ru.jpg', mon: '獣', mainMon: 'ライガー', subMon: 'ユグドラシル' },
+  { name: 'エクスマキナ', aura: '黄', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__30269443.jpg', mon: '創造', mainMon: 'ガリ', subMon: 'ヘンガー' },
 ];
