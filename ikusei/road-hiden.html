@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ロード秘伝 完全ガイド（仕組み・パッケージ・星の上げ方） | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームのロード秘伝を完全解説。基本ルール・発動の仕組みと確率・ひらめきシステム・星数の上げ方・パッケージ（仕込み）のやり方まで、確定情報と検証情報を区別してまとめました。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/road-hiden.html">
+  <link rel="stylesheet" href="../style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc { background:#fffbf0; border:1px solid #f0a500; border-radius:8px; padding:16px 20px; margin-bottom:24px; }
+    .toc-title { font-weight:bold; font-size:14px; margin-bottom:8px; color:#f0a500; }
+    .toc ol { padding-left:20px; }
+    .toc li { font-size:13px; margin-bottom:4px; }
+    .toc a { color:#333; text-decoration:none; }
+    .toc a:hover { color:#f0a500; }
+    .info-box { background:#f0f8ff; border-left:4px solid #3b82f6; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .warn-box { background:#fff8e1; border-left:4px solid #f0a500; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .point-box { background:#f0fff4; border-left:4px solid #22c55e; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .h2 { font-size:17px; font-weight:bold; border-left:5px solid #f0a500; padding-left:10px; margin:26px 0 12px; color:#1a1a2e; }
+    .h3 { font-size:15px; font-weight:bold; margin:18px 0 8px; color:#1a1a2e; }
+    .data-table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; }
+    .data-table th { background:#1a1a2e; color:#fff; padding:8px 12px; text-align:center; }
+    .data-table td { padding:8px 12px; border-bottom:1px solid #eee; text-align:center; }
+    .data-table tr:nth-child(even) td { background:#f9f9f9; }
+    .hc { background:#f9f9f9; border:1px solid #eee; border-radius:8px; padding:12px 16px; margin:8px 0; }
+    .hc-title { font-weight:bold; font-size:14px; margin-bottom:6px; display:flex; align-items:center; flex-wrap:wrap; gap:4px; }
+    .hc p { margin:0; font-size:13px; line-height:1.7; }
+    p { font-size:14px; line-height:1.8; margin-bottom:8px; }
+    ul, ol { font-size:13px; line-height:1.8; padding-left:18px; }
+    li { margin-bottom:2px; }
+    .color-dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
+    .badge { display:inline-block; font-size:10px; font-weight:bold; padding:2px 8px; border-radius:10px; margin-left:5px; vertical-align:middle; color:#fff; }
+    .badge-kakutei { background:#22c55e; }
+    .badge-kensyou { background:#3b82f6; }
+    .badge-suisoku { background:#f0a500; }
+    .flow-step { border:1px solid #eee; border-radius:8px; padding:10px 14px; margin-bottom:6px; background:#fafafa; }
+    .flow-step b { color:#f0a500; }
+    .flow-arrow { text-align:center; color:#f0a500; font-size:18px; margin:2px 0; }
+    .vs-table { width:100%; border-collapse:collapse; font-size:13px; margin:10px 0; text-align:center; }
+    .vs-table th { padding:8px; }
+    .vs-table td { padding:8px; border:1px solid #eee; }
+    .vs-table .father { background:#e8f1fb; }
+    .vs-table .mother { background:#fbe8f1; }
+    .tag-list { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
+    .tag-out { background:#fee; border:1px solid #fcc; color:#c33; font-size:12px; padding:3px 10px; border-radius:4px; }
+    .gen-box { border:1px solid #dbeafe; background:#f8fbff; border-radius:8px; padding:10px 14px; margin-bottom:6px; font-size:13px; }
+    .gen-box b { color:#1a1a2e; }
+    .pill { display:inline-block; font-size:11px; font-weight:bold; padding:2px 8px; border-radius:10px; margin-right:4px; }
+    .pill-new { background:#dbeafe; color:#1d4ed8; }
+    .pill-old { background:#eee; color:#888; }
+    .quick-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin:14px 0; }
+    .quick-card { border:1px solid #eee; border-radius:8px; overflow:hidden; background:#fff; }
+    .quick-card-head { background:#1a1a2e; color:#fff; font-size:13px; font-weight:bold; padding:8px 12px; }
+    .quick-card-body { padding:10px 12px; }
+    .quick-card-body ul { margin:0; padding-left:16px; font-size:12.5px; line-height:1.7; }
+    .quick-card-concl { background:#fff8e6; border-top:1px solid #f0e0b0; color:#8a5a00; font-size:12px; font-weight:bold; padding:7px 12px; line-height:1.6; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="../index.html">トップ</a>
+      <a href="../monsters.html">モンスター一覧</a>
+      <a href="../assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">⚔️ ロード秘伝 完全ガイド</h1>
+
+  <div class="info-box">
+    ロード秘伝は「秘伝周回 完全ガイド」の一部としても触れています → <a href="hiden.html#road-detail" style="color:#f0a500;font-weight:bold;">秘伝周回 完全ガイドに戻る</a><br>
+    このページではロード秘伝だけを掘り下げて、仕組み・星の上げ方・パッケージ（仕込み）のやり方まで詳しく解説します。
+  </div>
+
+  <div class="warn-box">
+    ロード秘伝は仕様が複雑で、公式に明かされていない数値が多いシステムです。本記事では情報の確度を区別して記載しています。<br>
+    <span class="badge badge-kakutei">確定</span> ゲーム内ヘルプ記載、または検証で確実な情報
+    <span class="badge badge-kensyou">検証済み</span> 筆者が試行を重ねて確認した情報
+    <span class="badge badge-suisoku">推測</span> 個人調べの推定値。誤差の可能性あり
+  </div>
+
+  <div class="h2" style="margin-top:6px;">🔍 3秒でわかるロード秘伝 早見表</div>
+  <div class="quick-grid">
+    <div class="quick-card">
+      <div class="quick-card-head">基本編：ロード秘伝とは</div>
+      <div class="quick-card-body"><ul>
+        <li>本命は「ひらめき」。デッキ5枚の枠を超えて、編成外のカード能力まで持ち込める仕組み</li>
+        <li>仕込める能力数に上限なし。オーラ色は赤・青・緑・黄・黒・白</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：デッキ5枚の枠を超えて能力を持ち込める</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">発動編：片ラインのみ発動</div>
+      <div class="quick-card-body"><ul>
+        <li>父ライン・母ラインのうち合計星数が高い方の3枠だけが発動。負けた方は完全にゼロ</li>
+        <li>相性「王冠」なら3枠確定発動。1発動につき能力Pt+50</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：星は勝たせたい片ラインに集約する</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">ひらめき編：本命システム</div>
+      <div class="quick-card-body"><ul>
+        <li>出現するのは勝ったラインの親マスモン1体のみ。合計星数×オーラ色一致で出現率が決まる</li>
+        <li>ひらめきLvはLv1で取得可能、Lv5で最大40%オフ</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：紫電球（ロード秘伝のひらめき）が来たら最優先で取る</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">入手・星上げ編</div>
+      <div class="quick-card-body"><ul>
+        <li>初回入手はロードモンスター（ガチャ）か血統書（月1枚）。星数は継承されず毎回再抽選</li>
+        <li>能力70〜80個＋総合力25000以上で星4〜6の抽選に乗る</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：継承されるのは色だけ。星は毎回の育成の質で決まる</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">実演編：パッケージの威力</div>
+      <div class="quick-card-body"><ul>
+        <li>前の育成で仕込んだ能力は、次の育成で編成していなくてもひらめきで取得できる</li>
+        <li>デッキ5枚を超えて、世代を重ねるほどいくつでも仕込める</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：仕込む編成と使う編成は別でいい</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">パッケージ編：仕込みの計画</div>
+      <div class="quick-card-body"><ul>
+        <li>パッケージ＝ひらめきで取りたい能力をあらかじめ仕込むこと</li>
+        <li>仕込む数の目安はオーラ色一致で6〜9、不一致で3〜6</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：パッケージは「計画」が9割</div>
+    </div>
+    <div class="quick-card">
+      <div class="quick-card-head">ひらめき対象外図鑑</div>
+      <div class="quick-card-body"><ul>
+        <li>レンタルアシカ・ノラモン・ボスモン・モン類レベル・状態変化・殿堂・固有・英雄能力の8種は仕込めない</li>
+      </ul></div>
+      <div class="quick-card-concl">結論：対象は自前アシカ能力とEXトレボーナスのみ</div>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#about">① ロード秘伝とは</a></li>
+      <li><a href="#get">② ロード秘伝を取得する方法</a></li>
+      <li><a href="#star">③ ロード秘伝の星数を上げる方法</a></li>
+      <li><a href="#package">④ パッケージの方法（仕込み）</a></li>
+      <li><a href="#matome">①〜④のまとめ</a></li>
+    </ol>
+  </div>
+
+  <!-- ① ロード秘伝とは -->
+  <div class="section" id="about">
+    <div class="section-title">① ロード秘伝とは</div>
+
+    <div class="h3">ひとことで言うと</div>
+    <p>「祖先から受け継ぐ、オーラ色ごとの特別な秘伝」です。</p>
+    <p>ロード秘伝の本命は「ひらめき」。育成中にロード秘伝を持つマスモンがトレーニングに出現し、仕込んでおいた能力を安く取得できるようになる――これがロード秘伝を育てる最大の目的です。</p>
+    <p>育成に持ち込める自前のアシストカードは5枚だけですが、ロード秘伝に能力をパッケージしておけば、今回の育成でそのカードを編成していなくても、ひらめきでその能力を取得できます。しかも、仕込める能力の数に上限はありません。世代を重ねて段階を踏めば、5個と言わずいくつでも組み込んでいけます（ただし仕込みすぎにはデメリットもあります。④で解説）。</p>
+    <div class="point-box">
+      つまりロード秘伝とは「デッキ5枚の枠を超えて、編成外のカード能力まで持ち込める」仕組み。これが最大の価値です。伝授時の能力Ptや「先導」はあくまでオマケ。「ひらめきのために星と血統を積み上げるシステム」と捉えてください。
+    </div>
+
+    <div class="h3">基本ルール <span class="badge badge-kakutei">確定</span></div>
+    <ul>
+      <li>ロード秘伝は1モンスターにつき1個</li>
+      <li>育成構成は6体（父・父祖父・父祖母／母・母祖父・母祖母）</li>
+      <li>レアリティ（星数）は1〜6</li>
+      <li>オーラ色は赤・青・緑・黄・黒・白（他ゲームでいう「属性」にあたります）</li>
+    </ul>
+
+    <div class="h3">オーラ色の実装状況</div>
+    <ul>
+      <li>ロードモンスターは赤・青・緑の3体が実装済み</li>
+      <li>ただし血統書の実装から2ヶ月経過しているため、実際はどのオーラ色も存在します（血統書は育てたモンスターのオーラ色が確定で付くため）</li>
+    </ul>
+
+    <div class="h3">ロード秘伝の名称一覧</div>
+    <table class="data-table">
+      <thead><tr><th>オーラ色</th><th>名称</th></tr></thead>
+      <tbody>
+        <tr><td><span class="color-dot" style="background:#e74c3c;"></span>赤</td><td>紅華の先導者</td></tr>
+        <tr><td><span class="color-dot" style="background:#3b82f6;"></span>青</td><td>蒼空の先導者</td></tr>
+        <tr><td><span class="color-dot" style="background:#22c55e;"></span>緑</td><td>深翠の先導者</td></tr>
+        <tr><td><span class="color-dot" style="background:#f0a500;"></span>黄</td><td>陽光の先導者</td></tr>
+        <tr><td><span class="color-dot" style="background:#f5f5dc;border:1px solid #ccc;"></span>白</td><td>晧白の先導者</td></tr>
+        <tr><td><span class="color-dot" style="background:#333;"></span>黒</td><td>漆黒の先導者</td></tr>
+      </tbody>
+    </table>
+
+    <div class="h3">画面での見分け方</div>
+    <p>秘伝一覧の中で「赤い枠」の秘伝がロード秘伝です。星の表示枠は3つですが、色で1〜6を表しています。</p>
+    <table class="data-table">
+      <thead><tr><th>星数</th><th>表示</th><th>読み方</th></tr></thead>
+      <tbody>
+        <tr><td>星1</td><td>★☆☆</td><td>金1</td></tr>
+        <tr><td>星2</td><td>★★☆</td><td>金2</td></tr>
+        <tr><td>星3</td><td>★★★</td><td>金3</td></tr>
+        <tr><td>星4</td><td>★★★</td><td>ピンク1＋金2</td></tr>
+        <tr><td>星5</td><td>★★★</td><td>ピンク2＋金1</td></tr>
+        <tr><td>星6</td><td>★★★</td><td>ピンク3</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">例：「ピンク1＋金2」の表示なら星4です。</p>
+
+    <div class="h3">ロード秘伝の4つの効果 <span class="badge badge-kakutei">確定</span></div>
+    <ol>
+      <li>ロード秘伝を持つマスモンが稀にトレーニングに出現＝ひらめき（育成中）</li>
+      <li>能力Ptを獲得する（伝授時）</li>
+      <li>専用のようす「先導」を確率で獲得（伝授時）</li>
+      <li>ロード秘伝をさらに次世代へ受け継がせる（伝授時）</li>
+    </ol>
+    <p>本命は1。2と3は伝授時のボーナス、4は資産化の仕組みです。</p>
+
+    <div class="h3">発動の仕組み</div>
+    <div class="flow-step">❶ <b>相性値の決定</b>：6体すべての秘伝を参照 → 相性ランク（王冠・☆・◎・○・△・×）が決まる</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step">❷ <b>系統勝負</b>：父ライン3体 vs 母ライン3体の「合計星数」を比較。高い方が発動権を獲得（同数の場合は下記※）</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step">❸ <b>発動判定</b>：勝った系統の3枠が、それぞれ独立で抽選</div>
+    <div class="flow-arrow">▼</div>
+    <div class="flow-step">❹ <b>効果発生</b>：発動した分だけ能力Pt・先導・ひらめきが乗る</div>
+
+    <div class="warn-box">
+      ※合計星数が同じ場合の挙動 <span class="badge badge-suisoku">推測・未確定</span><br>
+      星数による発動優先は絶対ですが、同数だった場合にどちらが選ばれるかは確定情報がありません。育成モンスターのオーラ色とロード秘伝のオーラ色の一致数が関係している可能性があります（一致オーラ色が多いラインほど選ばれる確率が上がる、など）。確実を期すなら、同数を避けて星数に差をつけるのが安全です。
+    </div>
+
+    <p><strong>【誤解ポイント1】発動するのは片系統だけ</strong><br>6体いても、発動するのは勝った系統の3枠のみ。負けた系統は完全にゼロです。</p>
+    <table class="vs-table">
+      <tr><th class="father">父ライン</th><th></th><th class="mother">母ライン</th></tr>
+      <tr><td class="father">父親</td><td rowspan="3" style="font-weight:bold;color:#e74c3c;">VS</td><td class="mother">母親</td></tr>
+      <tr><td class="father">父祖父</td><td class="mother">母祖父</td></tr>
+      <tr><td class="father">父祖母</td><td class="mother">母祖母</td></tr>
+    </table>
+    <p style="font-size:12px;color:#999;text-align:center;">合計星数が高いラインの3枠のみ発動。負けたラインは3枠まるごと発動しない</p>
+    <p>ロード秘伝は「片親のみ発動」という特殊な仕組みです。通常の秘伝は両親を採用するのが基本なので、ここだけ挙動が違います。</p>
+
+    <p><strong>【誤解ポイント2】逆親は無意味ではない</strong><br>負けた系統（逆親）は発動しませんが、相性値は6体すべての秘伝で決まります。逆親は相性を通じて発動率に貢献する、捨て枠ではない存在です。</p>
+
+    <div class="h3">発動確率 <span class="badge badge-suisoku">推測・個人調べ</span></div>
+    <table class="data-table">
+      <thead><tr><th>×</th><th>△</th><th>○</th><th>◎</th><th>☆</th><th>王冠</th></tr></thead>
+      <tbody>
+        <tr><td>不明</td><td>不明</td><td>約40%</td><td>約60%</td><td>約80%</td><td>100%（確定）</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">→ 右に行くほど発動しやすい（☆〜○は推測値。発動判定は3枠それぞれ独立）</p>
+    <p>相性「王冠」を組めれば3枠確定発動。ここが編成の目標地点です。</p>
+
+    <div class="h3">伝授時のボーナス：能力Ptと先導</div>
+    <ul>
+      <li>能力Pt：1発動につき+50固定（相性補正なし）。最大150Pt</li>
+      <li>先導：1発動につき約10%で付与（<span class="badge badge-kensyou">検証済み：試行100回程度</span>）。最大約30%。効果は育成中の能力Pt付与20%アップ（重複なし） <span class="badge badge-kakutei">確定</span></li>
+    </ul>
+    <p>どちらも発動数に比例するだけのシンプルなボーナスです。先導は抽選なので「引けたらラッキー」程度の位置づけで構いません。</p>
+
+    <div class="h3">【本命】ひらめき：マスモン出現システム</div>
+    <p>ロード秘伝の真価はここです。</p>
+    <p><strong>出現ロジック <span class="badge badge-kakutei">確定</span></strong></p>
+    <ul>
+      <li>出現するのは合計星数が多い方の系統のマスモン1体のみ</li>
+      <li>両方の伝授モンスターにロード秘伝を持たせても、片方しか出ません</li>
+      <li>自分で育てたマスモンのみ。レンタルでは発生しません</li>
+      <li>出現するのは必ず「親部分」のマスモン（祖父母のマスモンは出ない）</li>
+    </ul>
+
+    <p><strong>ひらめき確率 <span class="badge badge-suisoku">推測・個人調べ</span></strong><br>勝った系統3体（親＋祖父＋祖母）の合計星数で計算します。</p>
+    <ul>
+      <li>オーラ色不一致：星1つにつき約1%</li>
+      <li>オーラ色一致：星1つにつき約1.5%</li>
+    </ul>
+    <p>合計星数の最大は星6×3体＝18。</p>
+    <table class="data-table">
+      <thead><tr><th>合計星数</th><th>オーラ色不一致</th><th>オーラ色一致</th></tr></thead>
+      <tbody>
+        <tr><td>6</td><td>約6%</td><td>約9%</td></tr>
+        <tr><td>12</td><td>約12%</td><td>約18%</td></tr>
+        <tr><td>18（最大）</td><td>約18%</td><td>約27%</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">※1ターンごとに抽選</p>
+
+    <p><strong>オーラ色一致条件</strong><br>以下が揃うと出現率がアップします。</p>
+    <ul>
+      <li>ロード秘伝のオーラ色</li>
+      <li>親モンスターのオーラ色</li>
+      <li>育成モンスターのオーラ色</li>
+    </ul>
+    <p>星を積む意味は二重にあります。系統勝負に勝つためであり、同時にそのまま出現率になるからです。星を片系統に集中させれば両方が伸び、分散させれば両方が死にます。</p>
+
+    <div class="h3">ひらめきLvとは <span class="badge badge-kakutei">確定</span></div>
+    <p>出現したマスモンと一緒にトレーニングすると、そのマスモンが習得した能力から抽選でひらめきLvを獲得します。ひらめきLvは「能力を安く取得できるようになる」システムです。</p>
+    <table class="data-table">
+      <thead><tr><th>ひらめきLv</th><th>効果</th></tr></thead>
+      <tbody>
+        <tr><td>Lv1</td><td>割引0%（その能力が取得可能になる）</td></tr>
+        <tr><td>Lv2</td><td>10%オフ</td></tr>
+        <tr><td>Lv3</td><td>20%オフ</td></tr>
+        <tr><td>Lv4</td><td>30%オフ</td></tr>
+        <tr><td>Lv5</td><td>40%オフ（最大）</td></tr>
+      </tbody>
+    </table>
+    <p>つまりLv1で能力が取得リストに載り、Lvが上がるごとに10%ずつ安くなり、Lv5で最大40%オフ。どの能力をひらめかせるかを事前に仕込むのが④で解説する「パッケージ」です。</p>
+
+    <div class="h3">ひらめきの見分け方：電球マーク</div>
+    <p>ひらめきが来ているトレーニングには電球マークが付きます。ただし通常のひらめきとロード秘伝のひらめきは見た目が違います。</p>
+    <ul>
+      <li>通常のひらめき　　　　　→ 電球マーク</li>
+      <li>ロード秘伝のひらめき　→ ビカビカ光る紫の電球（通称「紫電球」）</li>
+    </ul>
+  </div>
+
+  <!-- ② 取得方法 -->
+  <div class="section" id="get">
+    <div class="section-title">② ロード秘伝を取得する方法</div>
+
+    <div class="h3">初回入手の2ルート</div>
+    <div class="hc">
+      <div class="hc-title">ルート1：ロードモンスターを育てる</div>
+      <p>ロードモンスターはガチャで入手。現在実装されているのは赤・青・緑の3体。育成すると、そのロードモンスターのオーラ色のロード秘伝が付きます。</p>
+    </div>
+    <div class="hc">
+      <div class="hc-title">ルート2：ロード血統書を使う</div>
+      <p>持ち込みアイテム。入手先は毎月月末付近に開催される「ソロモンクエスト」の報酬で月1枚。血統書を使えば、ロード秘伝の付与自体は確定です。ただし星数は③のルールに従います。</p>
+    </div>
+    <div class="point-box">
+      <strong>★ 無課金でも始められる</strong><br>
+      ロードモンスターはガチャ限ですが、血統書があればロード秘伝は付けられます。ガチャを引かなくても運用可能です。ただし血統書は月1枚＝年12枚。極めて貴重なので使いどころは慎重に。
+    </div>
+
+    <div class="h3">オーラ色の決まり方</div>
+    <table class="data-table">
+      <thead><tr><th>入手ルート</th><th>付くオーラ色</th></tr></thead>
+      <tbody>
+        <tr><td>血統書使用</td><td>育てたモンスターのオーラ色（確定）</td></tr>
+        <tr><td>ロードモンスター育成</td><td>ロードモンスターのオーラ色</td></tr>
+      </tbody>
+    </table>
+    <p><strong>祖先による「引っ張り」</strong><br>親・祖父母がロード秘伝を持っている場合、そのオーラ色に引っ張られます。複数のオーラ色が混在する場合、星数が高いオーラ色ほど付く確率が高い <span class="badge badge-suisoku">推測</span>。</p>
+    <div class="point-box">
+      <strong>★ 血統書の真価</strong><br>血統書は育てたモンスターのオーラ色が確定で付きます。つまり引っ張りに悩まされず、狙ったオーラ色を確実に取れる唯一の手段。新しいオーラ色を開拓したいときこそ血統書の出番です。
+    </div>
+
+    <div class="h3">継承：一度付けば血統として残る</div>
+    <p>ロード秘伝が付いたモンスターを親・祖父母に配置すれば、ロード秘伝を受け継げます。これが資産化の仕組みです。</p>
+    <div class="gen-box"><b>【初回】</b> 血統書 or ロードモンスターでロード秘伝が付いたモンスターが誕生</div>
+    <div class="flow-arrow">▼</div>
+    <div class="gen-box"><b>【継承】</b> そのモンスターを親・祖父母に配置 → 次世代へ受け継がれる</div>
+    <div class="flow-arrow">▼</div>
+    <div class="gen-box"><b>【蓄積】</b> 片ラインに星を集約 → 合計星数と相性を上げる</div>
+    <div class="flow-arrow">▼</div>
+    <div class="gen-box"><b>【運用】</b> ひらめき出現率アップ＋能力Pt＋先導</div>
+  </div>
+
+  <!-- ③ 星数を上げる方法 -->
+  <div class="section" id="star">
+    <div class="section-title">③ ロード秘伝の星数を上げる方法</div>
+
+    <div class="warn-box">
+      <strong>【最重要】星数は継承されない</strong><br>
+      ロード秘伝の「継承」で受け継がれるのは秘伝そのもの（オーラ色）だけ。星数は毎回リセットされ、育成のたびに再抽選されます。
+      <ul style="margin-top:6px;">
+        <li>祖先が星6でも、育成が雑なら星1が付く</li>
+        <li>祖先が星1でも、しっかり育てれば星6が付く</li>
+      </ul>
+    </div>
+    <div class="point-box">
+      <strong>★ よくある勘違い</strong><br>「星6の親を使えば星6が生まれる」→なりません。毎回の育成の質がそのまま星数になります。
+    </div>
+
+    <div class="h3">星数の決定ルール <span class="pill pill-new">個人調べ・信頼性高</span></div>
+    <p>主に2つの要素で決まります。</p>
+    <p><strong>要素1：育成中に覚えた能力数</strong></p>
+    <table class="data-table">
+      <thead><tr><th>育成中に覚えた能力数</th><th>付く星数</th></tr></thead>
+      <tbody>
+        <tr><td>70〜80以上</td><td>4〜6がランダム</td></tr>
+        <tr><td>それ以下</td><td>0〜3がランダム（0＝付かない）</td></tr>
+      </tbody>
+    </table>
+    <p><strong>要素2：総合力</strong><br>能力数の条件を満たしても、総合力が低すぎると付かない・星数が下がる場合があります。目安は25000以上 <span class="badge badge-suisoku">推測値。ラインは不確か</span>。</p>
+
+    <div class="h3">星上げに裏技はない</div>
+    <p>星数を上げる方法は「能力数70〜80以上を積み、総合力25000以上を出す育成をする」――これだけです。専用の強化アイテムなどはありません。育成の腕がそのまま星になります。</p>
+
+    <div class="h3">能力数を稼ぐ鍵：期末の能力変換</div>
+    <ul>
+      <li>ステータスを専用能力に変換する機能</li>
+      <li>育成中に3回、固定のタイミングで発生するイベント</li>
+      <li>ここで取得した能力も能力数にカウントされる</li>
+    </ul>
+    <p><strong>実数の目安</strong></p>
+    <ul>
+      <li>1回で約5個取得可能</li>
+      <li>3期末合計で約15個程度稼げる</li>
+    </ul>
+    <p>星6ライン（70〜80）を目指すうえで、この15個は極めて大きい。トレーニングだけで到達するのは困難です。</p>
+    <p><strong>変換のポイント</strong></p>
+    <ul>
+      <li>能力は何でもいい（星数判定は「質」ではなく「数」を見ている）</li>
+      <li>ただし、ようすや適性を上げるものは能力数にカウントされない → 星数狙いなら避ける</li>
+      <li>変換で取れる能力は総合還元率も高めなので、変換しても総合力はあまり落ちない → 能力数と総合力のトレードオフはほぼ気にしなくていい</li>
+    </ul>
+    <div class="point-box">
+      <strong>★ 結論</strong><br>星数狙いなら、3回の能力変換すべてで「能力（ようす・適性以外）を数優先で取る」が基本方針。
+    </div>
+  </div>
+
+  <!-- ④ パッケージ -->
+  <div class="section" id="package">
+    <div class="section-title">④ パッケージの方法（仕込み）</div>
+
+    <div class="h3">パッケージとは</div>
+    <p>プレイヤー間で使われる用語で、「ひらめきで取得できる能力を、あらかじめマスモンに仕込んでおくこと」を指します。</p>
+    <p>ひらめきLvの対象は「出現したマスモンが習得している能力」から抽選されます。つまり――狙った能力だけを持つマスモンを事前に作っておけば、ひらめきで欲しい能力を引ける確率を操作できる。これがパッケージの発想です。前の世代で仕込み、次の世代で回収する――世代をまたいだ仕込みになります。</p>
+    <div class="gen-box"><b>前の育成</b>：自前のアシストカードで狙いの能力を習得させた、ロード秘伝持ちマスモンを作る（＝パッケージ作成）</div>
+    <div class="flow-arrow">▼</div>
+    <div class="gen-box"><b>今回の育成</b>：そのマスモンを伝授に配置 → トレーニングに出現 → 一緒にトレーニングして狙いの能力のひらめきLvを獲得（最大40%オフ）</div>
+
+    <div class="h3">パッケージの前に：「計画」を立てる</div>
+    <p>ロード秘伝・パッケージにおいて一番大事なのは「計画」です。パッケージは世代をまたぐ仕込み。行き当たりばったりで始めると、要らない能力を仕込んだマスモンができあがり、育成1周がまるごと無駄になります。着手前に、次の3つを必ず決めてください。</p>
+    <ul>
+      <li><strong>計画①：最終型の編成を決める</strong> — 最終的にどんなモンスターを作りたいのか。目指す完成形のデッキ・能力構成を先に固めます。ここが決まらないと②も③も決まりません。</li>
+      <li><strong>計画②：何の能力をパッケージするか決める</strong> — 最終型に必要な能力のうち、「本番のデッキに入らないカードの能力」がパッケージ候補です（ひらめき対象外の能力は仕込めない点に注意。後述）。</li>
+      <li><strong>計画③：パッケージの数を確認する</strong></li>
+    </ul>
+    <table class="data-table">
+      <thead><tr><th>条件</th><th>仕込む数の目安</th></tr></thead>
+      <tbody>
+        <tr><td>オーラ色一致</td><td>6〜多くて9程度</td></tr>
+        <tr><td>オーラ色不一致</td><td>3〜多くて6程度</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">※これはシステム上の上限ではなく、あくまで目安の数値です。根拠は次の「ひらめき回数の期待値」にあります。</p>
+
+    <div class="h3">ひらめき回数の期待値</div>
+    <p>育成のターン構成は以下の通りです。</p>
+    <table class="data-table">
+      <thead><tr><th>フェーズ</th><th>ターン数</th></tr></thead>
+      <tbody>
+        <tr><td>デビュー期</td><td>5ターン</td></tr>
+        <tr><td>ジュニア期</td><td>12ターン（強制大会1を除くと実質11）</td></tr>
+        <tr><td>ミドル期</td><td>12ターン（同上、実質11）</td></tr>
+        <tr><td>プロ期</td><td>12ターン（同上、実質11）</td></tr>
+        <tr><td>英雄杯</td><td>1ターン</td></tr>
+        <tr><td>ILF</td><td>3〜最大5ターン</td></tr>
+        <tr><td>合計</td><td>実質最大44ターン</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">※各フェーズの最後には大会があります。ただし、ターン数の中に強制大会が含まれるのはジュニア期・ミドル期・プロ期のみです。</p>
+    <p>この44ターンを基準に、星数とオーラ色の一致／不一致で育成1周あたり何回ひらめきが来るかの理論値を出すと、こうなります。</p>
+    <table class="data-table">
+      <thead><tr><th>条件</th><th>1ターンあたり</th><th>44ターン期待回数</th></tr></thead>
+      <tbody>
+        <tr><td>星12・不一致</td><td>約12%</td><td>約5.3回</td></tr>
+        <tr><td>星12・一致</td><td>約18%</td><td>約7.9回</td></tr>
+        <tr><td>星15・不一致</td><td>約15%</td><td>約6.6回</td></tr>
+        <tr><td>星15・一致</td><td>約22.5%</td><td>約9.9回</td></tr>
+        <tr><td>星18・不一致（参考）</td><td>約18%</td><td>約7.9回</td></tr>
+        <tr><td>星18・一致（参考）</td><td>約27%</td><td>約11.9回</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:12px;color:#999;">※確率は個人調べの推定値ベースの理論値です。※実質最大44ターンすべてで抽選された場合の最大値。ILFのターン数などにより、これより少なくなる場合があります。</p>
+    <p>この期待回数と、計画③の目安は対応しています。</p>
+    <ul>
+      <li>不一致なら1周で約5〜7回 → 仕込みは3〜6個程度</li>
+      <li>一致なら1周で約8〜10回 → 仕込みは6〜9個程度</li>
+    </ul>
+    <p>つまり「仕込んだ能力それぞれに、ひらめきが1回ずつ行き渡るかどうか」が数を決める目安です。期待回数より多く仕込めば引けない能力が出ますし、少なすぎれば貴重なひらめき枠を持て余します。</p>
+
+    <div class="h3">応用：編成に組む能力もパッケージに入れるべきか</div>
+    <p>計画②では「本番のデッキに入らないカードの能力」をパッケージ候補としました。一方で、あえて「編成に組むカードの能力」をパッケージに入れる選択肢もあります。</p>
+    <div class="hc">
+      <div class="hc-title">メリット1：ひらめきを節約できる</div>
+      <p>編成アシカのイベントでその能力を取れれば、その能力にひらめきを使う必要がなくなり、必要なひらめき回数を1回減らせます。浮いたひらめきは、残りの仕込み能力に回ります。</p>
+    </div>
+    <div class="hc">
+      <div class="hc-title">メリット2：金能力を確実に付けられる</div>
+      <p>アシカのイベントでの能力取得は、白能力（下位）と金能力（上位）のどちらが出るかランダムです。つまりイベント頼みだと、白を引いて終わる可能性がある。しかしパッケージに入れておけば、イベントで白を引いてもひらめき経由で金を付けられます。確実に金を付けたい能力は、編成するカードの能力であってもパッケージに入れる価値があります。</p>
+    </div>
+    <div class="hc">
+      <div class="hc-title">デメリット：貴重な1枠を消費する</div>
+      <p>仕込み数の目安は一致で6〜9、不一致で3〜6程度。その範囲の中で編成カードの能力に1枠使うということは、編成外の能力を1つ削るということです。</p>
+    </div>
+    <p><strong>判断の目安</strong>：「その能力は白でも妥協できるか、金でなければ駄目か」が分かれ目。</p>
+    <ul>
+      <li>金必須の重要能力 → 編成していてもパッケージに入れる</li>
+      <li>白でも妥協できる能力 → 枠は編成外の能力に回す</li>
+    </ul>
+
+    <div class="h3">パッケージは何世代もかけて完成させる</div>
+    <p>パッケージは前の世代で仕込んで次の世代で回収する仕組みですが、実際には1世代分の仕込みで完成することは稀です。1回の育成で編成できるアシカには限りがあります。多くの能力を積みたい場合や、金能力など理想の形で積みたい場合、1回の育成では収まらないケースがほとんど。そのためパッケージは、何世代にもわたって少しずつ育てていくのが基本になります。</p>
+    <p>ただし、ここが重要な点ですが――一度付けた能力は、次の世代からは編成しなくてもロードのひらめきで付けることができます。</p>
+    <div class="gen-box"><b>1世代目</b>　A・B　アシカA・Bの能力を仕込む</div>
+    <div class="gen-box"><b>2世代目</b>　A・B・C・D　A・Bはひらめきで回収、空いた枠でC・Dを仕込む</div>
+    <div class="gen-box"><b>3世代目</b>　A・B・C・D・E…　A〜Dを回収しつつ、さらに追加</div>
+    <p style="font-size:12px;color:#999;">薄色＝ひらめきで回収（編成枠を使わない）　濃色＝新規に編成して仕込む</p>
+    <p>前の世代の成果は、次の世代の編成枠を圧迫せずに引き継がれていきます。だから1回ごとの育成が無駄になることは少なく、世代を重ねるほどパッケージは着実に充実していきます。</p>
+
+    <div class="h3">パッケージ内容の確認方法</div>
+    <p>伝授モンスター選択画面で、秘伝一覧の左上にあるモンスターアイコンを押すと詳細画面が開きます。「能力」タブで、そのマスモンに何がパッケージされているかを確認できます。</p>
+
+    <div class="h3">ひらめき対象になる能力／ならない能力 <span class="badge badge-kakutei">確定</span></div>
+    <p><strong>対象になるもの</strong><br>主にアシストカード能力とEXトレーニングのボーナスから獲得できる能力。</p>
+    <p><strong>対象外のもの</strong><br>以下の8種類は、マスモンが持っていてもひらめき対象になりません。パッケージを組む際は、これらを「仕込んだつもり」にならないよう注意してください。</p>
+    <div class="tag-list">
+      <span class="tag-out">レンタルアシカ能力</span>
+      <span class="tag-out">ノラモン能力</span>
+      <span class="tag-out">ボスモン能力</span>
+      <span class="tag-out">モン類レベル能力</span>
+      <span class="tag-out">状態変化能力</span>
+      <span class="tag-out">殿堂能力</span>
+      <span class="tag-out">固有能力</span>
+      <span class="tag-out">英雄能力</span>
+    </div>
+    <p style="font-size:13px;">対象は自前アシカ能力＋EXトレボーナスのみ。この8種は仕込めないので注意。</p>
+    <div class="warn-box">
+      <strong>★ 注意</strong><br>フレンドレンタルしたアシストカードで習得した能力（カード能力・ひらめき能力）は、ひらめきLvの習得対象外です。ただし「育成中に編成している自身のアシストカード」や「トレーニングに出現する伝授モンスター」から習得可能な能力であれば、そちらからは習得可能。<br>
+      → パッケージは自前のアシストカードで作るのが大原則。
+    </div>
+
+    <div class="h3">仕込む数の考え方</div>
+    <p>ここがパッケージ設計の核心です。</p>
+    <p><strong>前提</strong></p>
+    <ul>
+      <li>育成は実質最大44ターン</li>
+      <li>ひらめきは1ターンごとに抽選（出現率は③の合計星数次第）</li>
+      <li>ひらめきLvは出現したマスモンの習得能力から「抽選」</li>
+    </ul>
+    <p><strong>ジレンマ</strong></p>
+    <div class="hc">
+      <div class="hc-title">仕込む能力を増やす（多パッケージ）</div>
+      <p>→ 強い個体になるが、抽選が散らばり狙いの能力を引きにくい<br>→ さらに、ひらめきが来たら優先して取らないと厳しいが、そのために弱いトレーニングを踏まされる場合がある</p>
+    </div>
+    <div class="hc">
+      <div class="hc-title">仕込む能力を絞る（少数パッケージ）</div>
+      <p>→ 狙いの能力を引きやすいが、個体としての強みは減る</p>
+    </div>
+    <div class="point-box">
+      <strong>結論</strong><br>「引きたい能力の数」と「弱トレを踏むリスク」の兼ね合いで仕込む数を決める。正解の数は育成目的によって変わりますが、「とにかく全部盛り」は抽選が薄まり弱トレ強要も増えるため悪手になりやすい、と覚えておいてください。
+    </div>
+  </div>
+
+  <!-- まとめ -->
+  <div class="section" id="matome">
+    <div class="section-title">①〜④のまとめ</div>
+    <ul>
+      <li>ロード秘伝の本命は「ひらめき」。星と血統を積み上げてマスモンを出現させ、仕込んだ能力を安く取るシステム</li>
+      <li>発動は片系統3枠のみ。発動率は相性で決まる（王冠なら100%）。相性は6体全員で決まるので逆親も無駄にならない</li>
+      <li>伝授時ボーナスは能力Pt（1発動+50固定、最大150）と先導（1発動約10%、効果は能力Pt付与+20%）</li>
+      <li>ひらめき出現率は勝った系統の合計星数×約1〜1.5%／ターン</li>
+      <li>ひらめきLvはLv1で取得可能（割引0%）、Lv5で最大40%オフ</li>
+      <li>初回入手は「ロードモンスター（ガチャ）」か「血統書（月1枚）」。血統書はオーラ色が確定で付く唯一の手段</li>
+      <li>星数は継承されない。能力数70〜80以上＋総合力25000以上で星4〜6</li>
+      <li>期末の能力変換3回で約15個稼げる。ここが星上げの生命線</li>
+      <li>パッケージ＝ひらめかせたい能力をマスモンに仕込むこと。一番大事なのは「計画」。最終型の編成→仕込む能力→数の順で決める。数の目安はオーラ色一致で6〜9、不一致で3〜6</li>
+    </ul>
+  </div>
+
+  <div style="font-size:12px;color:#aaa;margin-top:8px;margin-bottom:32px;">
+    ※本記事は非公式ファンサイトの攻略情報です。体感・検証ベースの情報を含みます。<br>
+    ※ゲームのアップデートにより内容が変わる場合があります。
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="../privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+</body>
+</html>
