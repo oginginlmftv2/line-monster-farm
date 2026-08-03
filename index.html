@@ -136,6 +136,7 @@
     const td2 = 'padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;';
     const a   = (href,text) => `<a href="${href}" style="color:#f0a500;text-decoration:none;">${text}</a>`;
     const rows = [
+['2026.08.03', a('assist.html','ガチャ更新：セラフィナ（MR）・モノダス（SSR）追加')+' / '+a('monsters.html','新モンスター：ミカエル・ジハンキ追加')],
 ['2026.07.20', a('ikusei/road-hiden.html','ロード秘伝 完全ガイドを追加（仕組み・星の上げ方・パッケージの組み方）')],
 ['2026.07.14', a('assist.html','ガチャ更新：テオス（MR）追加')+' / '+a('monsters.html','新モンスター：エクスマキナ追加')],
 ['2026.07.01', a('assist.html','ガチャ更新：ルピナス（SSR）・エイル（MR）追加')+' / '+a('monsters.html','新モンスター：フウマ・スコール追加')],
@@ -340,10 +341,15 @@
   <div class="section">
     <div class="section-title">モンスター一覧（ピックアップ）</div>
     <div class="card-grid">
-      <a href="monsters/monster.html?id=344" class="card">
-        <img class="card-img" src="monster/S__30269443.jpg" alt="エクスマキナ">
-        <div class="name">エクスマキナ</div>
-        <div class="pickup-desc">・主血統ガリ×副血統ヘンガー<br>・原作にはいなかったがデザインは<br>　相変わらずすばらしい<br>・技登録もランク3,4,5とめちゃくちゃ<br>　恵まれているためガリ推しは必ず<br>　ゲットしたい<br>・クロノトリックがあまりにも強い<br>・強くなるための環境が整ってきた</div>
+      <a href="monsters/monster.html?id=345" class="card">
+        <img class="card-img" src="monster/S__22323203_0.jpg" alt="ミカエル">
+        <div class="name">ミカエル</div>
+        <div class="pickup-desc">・アーク種族初となる赤オーラの<br>　モンスター<br>・ランク5登録技は弱くはないが<br>　ぶっ壊れでもない、ただし<br>　30秒間は強い<br>・オリジナル技は最近の中では<br>　弱すぎてかわいそう<br>・血統全体が強いのでバランス<br>　調整かもしれない<br>・零距離のランク5技はディアブロ<br>　秘伝周回時に創造推しには<br>　うれしいポイント</div>
+      </a>
+      <a href="monsters/monster.html?id=346" class="card">
+        <img class="card-img" src="monster/S__22323204_0.jpg" alt="ジハンキ">
+        <div class="name">ジハンキ</div>
+        <div class="pickup-desc">・モノリス種のレアモン<br>　（サブ種族）モンスター<br>・ランク5登録技は弱くはないが<br>　神秘の付与が欲しかったところ<br>・オリジナル技には神秘付与が<br>　あるのでモノリス種の希望の星</div>
       </a>
     </div>
   </div>
@@ -352,11 +358,17 @@
   <div class="section">
     <div class="section-title">アシストカード一覧（ピックアップ）</div>
     <div class="card-grid">
-      <a href="cards/card.html#c20k-MR-teosu" class="card">
-        <img class="card-img" src="assist-cards/c20k-MR-teosu.jpg" alt="テオス">
-        <div class="name">テオス</div>
+      <a href="cards/card.html#g1-MR-serafina" class="card">
+        <img class="card-img" src="assist-cards/g1-MR-serafina.jpg" alt="セラフィナ">
+        <div class="name">セラフィナ</div>
         <span class="rarity rarity-MR">MR</span>
-        <div class="pickup-desc">・創造のモン類ブリーダー継承2枚目<br>・申し分ない最強格のトレ性能<br>・トレ効果18の忠誠度45で鍛錬は強い<br>・創造のトレーニングはこの1枚で<br>　世界が変わるはず<br>・エムロードとかしこさが被っている<br>　ことがちょっともったいない<br>・フォームは距離ごとの技数が3じゃないと<br>　恩恵をフルで受けられないのが<br>　ちょっと厳しいけど性能はまぁまぁまぁ<br>・アディションはオーラ技3つは<br>　さすがに全員クリアできるので<br>　創造の中での汎用性は◎<br>・どちらもぶっ壊れではないがまぁまぁまぁ</div>
+        <div class="pickup-desc">・赤オーラのオーラブリーダー<br>　継承2枚目<br>・赤版ダラスと言っていいくらい<br>　性能が似ている<br>・真価を発揮するハードルが高く<br>　人によって評価が分かれるカード<br>・当サイトは誰が使っても<br>　わかりやすく強いカードを<br>　高評価としているため評価は低め<br>・最近の環境だと赤獣には<br>　結構な強化パーツ（2026.08現在）</div>
+      </a>
+      <a href="cards/card.html#g2-SSR-monodasu" class="card">
+        <img class="card-img" src="assist-cards/g2-SSR-monodasu.jpg" alt="モノダス">
+        <div class="name">モノダス</div>
+        <span class="rarity rarity-SSR">SSR</span>
+        <div class="pickup-desc">・一見色物に見えるが性能は<br>　申し分ない<br>・最近のSSRらしく初心者の環境を<br>　変えるトレ性能の高さを持つ<br>・モノダスアボイドのバトル環境<br>　への影響がやばい<br>・前半硬い赤獣の後半1発目を<br>　完全回避はバランス崩壊レベル<br>・黒モノリスも同じ理由で<br>　最前線への切符を手にした<br>・赤かモノリスで勝ちたい人は<br>　絶対に原本を確保したい</div>
       </a>
     </div>
   </div>
