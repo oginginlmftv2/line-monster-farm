@@ -349,4 +349,5 @@ const monstersData = [
   { name: 'エクスマキナ', aura: '黄', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__30269443.jpg', mon: '創造', mainMon: 'ガリ', subMon: 'ヘンガー' },
   { name: 'ミカエル', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__22323203_0.jpg', mon: '幻霊', mainMon: 'アーク', subMon: 'ヒノトリ' },
   { name: 'ジハンキ', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__22323204_0.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'レアモン' },
+  { name: 'カッパマキ', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__3637252_0.jpg', mon: '幻霊', mainMon: 'モッチー', subMon: 'カワズモー' },
 ];

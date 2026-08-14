@@ -89,12 +89,12 @@ Geminiに以下を貼り付けてYouTube URLを添えて送る。出力の「？
 
 | 項目 | 値 |
 |---|---|
-| ピックアップモンスター | ミカエル・ジハンキ（新） |
-| monsters-data.js 末尾インデックス | **346**（配列の要素数347、0始まりなので末尾=346） |
-| index.html のリンク | `monsters/monster.html?id=345`（ミカエル）/ `?id=346`（ジハンキ） |
-| ピックアップカード | セラフィナ（MR・新）・モノダス（SSR・新） |
-| カードID | `g1-MR-serafina`（MR）/ `g2-SSR-monodasu`（SSR） |
-| index.html のリンク | `cards/card.html#g1-MR-serafina` / `#g2-SSR-monodasu` |
+| ピックアップモンスター | カッパマキ（新） |
+| monsters-data.js 末尾インデックス | **347**（配列の要素数348、0始まりなので末尾=347） |
+| index.html のリンク | `monsters/monster.html?id=347`（カッパマキ） |
+| ピックアップカード | ジンゴロウ（MR・新） |
+| カードID | `g3-MR-jingorou`（MR） |
+| index.html のリンク | `cards/card.html#g3-MR-jingorou` |
 
 ---
 

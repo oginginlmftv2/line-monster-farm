@@ -1,6 +1,7 @@
 const cardsData = {
   'g1-MR-serafina':             { name: 'セラフィナ',          rarity: 'MR',  oura: '赤', type: 'ガード',     mon: '幻霊', ext: 'jpg', event2: '調査中' },
   'g2-SSR-monodasu':            { name: 'モノダス',            rarity: 'SSR', oura: '赤', type: 'かしこさ',   mon: '無機', ext: 'jpg', event2: '調査中' },
+  'g3-MR-jingorou':             { name: 'ジンゴロウ',          rarity: 'MR',  oura: '緑', type: 'ジャッジ',   mon: '幻霊', ext: 'jpg', event2: '調査中' },
   'c20k-MR-teosu':              { name: 'テオス',              rarity: 'MR',  oura: '黄', type: 'アサルト',   mon: '創造', ext: 'jpg', dist: '零距離' },
   'd24k-SSR-rupinasu':          { name: 'ルピナス',            rarity: 'SSR', oura: '緑', type: '回避',     mon: '獣',   ext: 'jpg', event2: '調査中' },
   'd23k-MR-eiru':               { name: 'エイル',              rarity: 'MR',  oura: '緑', type: '師匠',     mon: '創造', ext: 'jpg' },
