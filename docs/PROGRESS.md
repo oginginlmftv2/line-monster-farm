@@ -65,9 +65,9 @@ service cloud.firestore {
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
 | P3-1 | robots/sitemap矛盾解消 | Claude Code | `fix/p3-1-robots-sitemap` | **完了** | 2026-08-18 | 検証済み。sitemap 38→37件。CIが緑になった |
-| P3-2 | noindex漏れ2件の修正 | Codex | fix/p3-2-noindex-stubs | 未着手 | | |
-| P3-3 | canonical欠落6件の補完 | Codex | fix/p3-3-canonical | 未着手 | | |
-| P3-4 | tools/ img/site/ への移動 | Codex | `chore/p3-4-move-tools` | 未着手 | | **★`google59378bd79752d094.html` を動かさないこと**（Search Console所有権） |
+| P3-2 | noindex漏れ2件の修正 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | |
+| P3-3 | canonical欠落6件の補完 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | |
+| P3-4 | tools/ img/site/ への移動 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | S__94175247.jpg / S__94371850.jpg は参照多数のため今回は移動せず |
 | P3-5 | 薄い日記11本の統合 | Claude | content/p3-5-diary-merge | 未着手 | | |
 | P3-6 | 重複記事の統合・役割分担 | Claude | content/p3-6-dedupe-guides | 未着手 | | |
 
@@ -92,7 +92,7 @@ service cloud.firestore {
 |---|---|---|---|---|---|---|
 | P5-1 | build-spec.md の作成 | Claude | `chore/p5-1-build-spec` | **完了** | 2026-08-18 | 検証済み。生成ページ数134→97。血統の必要導入文字数を式で定義 |
 | P5-2 | HTMLテンプレート | Codex | `feat/p5-3-build-script` | **完了** | 2026-08-18 | **P5-3に統合。**テンプレートエンジンを使わないため別ファイル化しない |
-| P5-3 | build.js 実装 | Codex | `feat/p5-3-build-script` | **レビュー待ち** | | 段階5まで完了。詳細57件＋sitemap生成。生成物とsitemapは未コミット（公開はP6-1） |
+| P5-3 | build.js 実装 | Codex | `feat/p5-3-build-script` | **完了** | 2026-08-18 | 検証済み。詳細57件・sitemap94URL・空編成の除去も正確 |
 | P5-4 | Actions→gh-pages デプロイ | Codex | feat/p5-4-deploy-actions | 未着手 | | |
 
 ## P6 ページ生成
