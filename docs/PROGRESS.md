@@ -100,8 +100,8 @@ service cloud.firestore {
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
 | P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | 未着手 | | ゲート条件は docs/build-spec.md 3-1 |
-| P6-2 | 血統34本＋モン種6本の導入文を執筆 | Claude | `content/p6-2-taxonomy-intro` | 未着手 | | 合計11,200字。必要字数は血統ごとに異なる（docs/build-spec.md 3-2） |
-| P6-3 | 集約ページ40件の生成 | Codex | feat/p6-3-taxonomy-pages | 未着手 | | |
+| P6-2 | モン種6本の導入文を執筆 | 人 | – | 未着手 | | **血統34本は作らない方針に変更。**運営者本人が2,400字を執筆 |
+| P6-3 | モン種6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | 未着手 | | 血統グループを含む。docs/build-spec.md 5-3 |
 | P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | 未着手 | | |
 | P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | 未着手 | | |
 
