@@ -47,7 +47,7 @@ service cloud.firestore {
 |---|---|---|---|---|---|---|
 | P1-1 | ルール文書の配置 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 検証済み。配布物とバイト単位で一致 |
 | P1-2 | verify.js＋Actions＋ロック | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | lock hash=4036c84b2ffff6a7 で一致。初回CIは既知FAILで赤 |
-| P1-3 | モン種・血統slug確定 | 人 | – | **一部完了** | | **獣=kemono で確定。**残りは血統34種のslug確認のみ |
+| P1-3 | モン種・血統slug確定 | 人 | `chore/p1-3-slug-policy` | **完了** | 2026-08-18 | 検証済み。獣=kemono。血統34種も確定 |
 | P1-4 | monster-ids.json 生成 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 348件・新規38件・ID重複0 |
 | P1-5 | 新規38体をシートに反映 | 人 | – | 未着手 | | |
 
@@ -55,9 +55,9 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P2-1 | Firestoreエクスポータ作成 | Codex | chore/p2-1-firestore-exporter | 未着手 | | |
-| P2-2 | monsters-editorial.json 生成 | Codex | chore/p2-2-monsters-editorial | 未着手 | | ★配列順変更前に実行 |
-| P2-3 | cards-editorial.json 生成 | Codex | chore/p2-3-cards-editorial | 未着手 | | |
+| P2-1 | Firestoreエクスポータ作成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | 既定はドライラン。--write で生成 |
+| P2-2 | monsters-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | |
+| P2-3 | cards-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | |
 | P2-4 | 字数分布→ゲート閾値決定 | Claude | chore/p2-4-gate-threshold | 未着手 | | |
 
 ## P3 クリーンアップ（独立・並行可）
@@ -80,7 +80,7 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P4-1 | `monsterImages/assignments`（332件）をJSONへエクスポート | Codex | `chore/p4-1-image-assignments` | 未着手 | | P2-1のエクスポータに含めてよい |
+| P4-1 | monsterImages/assignments のエクスポート | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | P2-1のエクスポータに含めた |
 | P4-2 | 332件をIDでリネームし `img/monster/<ID>.jpg` へ配置 | Codex | `chore/p4-2-image-rename` | 未着手 | | |
 | P4-3 | 割り当ての無い16体を個別に対応 | 人 | – | 未着手 | | 348−332。P6をブロックしない |
 
