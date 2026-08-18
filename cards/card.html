@@ -815,16 +815,12 @@
           <div class="comment-empty">読込中...</div>
         </div>
         <div class="comment-form-area">
-          <h4>コメントを投稿する</h4>
-          <div class="comment-input-row">
-            <label>名前（省略可）</label>
-            <input class="comment-text-input" id="comment-name" type="text" placeholder="名無しトレーナー" maxlength="30">
+          <h4>コメントの投稿について</h4>
+          <div class="comment-empty">
+            コメントの新規投稿は現在一時停止しています。<br>
+            サイトの改修が完了するまでお待ちください。<br>
+            既に投稿されたコメントはそのまま表示しています。
           </div>
-          <div class="comment-input-row">
-            <label>コメント <span style="color:#e53e3e">*</span></label>
-            <textarea class="comment-text-input" id="comment-body" placeholder="このカードについて自由にコメントしてください" maxlength="500"></textarea>
-          </div>
-          <button class="comment-submit-btn2" id="comment-submit-btn" onclick="submitComment()">投稿する</button>
         </div>
       </div>
     `;
@@ -1271,7 +1267,7 @@
       const snap = await db.collection('cards').doc(id)
         .collection('comments').orderBy('createdAt', 'asc').get();
       if (snap.empty) {
-        listEl.innerHTML = '<div class="comment-empty">まだコメントがありません。最初のコメントを投稿してみましょう！</div>';
+        listEl.innerHTML = '<div class="comment-empty">まだコメントがありません。</div>';
         return;
       }
       listEl.innerHTML = snap.docs.map(d => {
@@ -1293,6 +1289,9 @@
   }
 
   async function submitComment() {
+    alert('コメントの投稿は現在一時停止しています。');
+    return;
+
     const nameEl = document.getElementById('comment-name');
     const bodyEl = document.getElementById('comment-body');
     const btn = document.getElementById('comment-submit-btn');

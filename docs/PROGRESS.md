@@ -1,6 +1,6 @@
 # 進捗
 
-最終更新: 2026-08-18（P3-1 レビュー待ち。P1-1/P1-2/P1-4 完了）
+最終更新: 2026-08-18（P0-4 レビュー待ち。P3-1 完了）
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -14,7 +14,7 @@
 | P0-1 | Firestoreルールの確認 | 人 | – | **完了** | 2026-08-16 | **12コレクション全てが `allow read, write: if true`。期限付きルールではない** |
 | P0-2 | Firestoreバックアップ取得 | 人 | – | **完了** | 2026-08-16 | ブラウザから全12コレクションをJSONダンプ。monsters93(コメント76) / cards90(コメント35) / assistEffects74 / bbs_posts62 / game2048 784 / gameRunner97 / friends8 / monsterImages1 / cardAbilities1 / abilityVotes2 / reports1 / tips0 |
 | P0-3 | Search Console 基準値の記録 | 人 | – | **保留** | | プロパティ確認直後で「データを処理しています」表示。**2026-08-19以降に再確認**。P1以降をブロックしない |
-| **P0-4** | **コメント機能の停止表示を追加** | Claude Code | `chore/p0-4-comment-notice` | 未着手 | | 🔴本番影響。P0-5の前提 |
+| P0-4 | コメント機能の停止表示 | Claude Code | `fix/p0-4-comment-suspend` | **レビュー待ち** | | 🔴本番影響。P0-5の前提 |
 | **P0-5** | **Firestoreルールの封鎖（write全面禁止）** | 人 | – | 未着手 | | 🔴本番影響。**P0-4完了後に実施** |
 
 ### P0-1 の確認結果（記録）
@@ -64,7 +64,7 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P3-1 | robots/sitemap矛盾解消 | Claude Code | `fix/p3-1-robots-sitemap` | **レビュー待ち** | | CIが初めて緑になる |
+| P3-1 | robots/sitemap矛盾解消 | Claude Code | `fix/p3-1-robots-sitemap` | **完了** | 2026-08-18 | 検証済み。sitemap 38→37件。CIが緑になった |
 | P3-2 | noindex漏れ2件の修正 | Codex | fix/p3-2-noindex-stubs | 未着手 | | |
 | P3-3 | canonical欠落6件の補完 | Codex | fix/p3-3-canonical | 未着手 | | |
 | P3-4 | tools/ img/site/ への移動 | Codex | `chore/p3-4-move-tools` | 未着手 | | **★`google59378bd79752d094.html` を動かさないこと**（Search Console所有権） |
