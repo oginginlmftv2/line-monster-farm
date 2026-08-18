@@ -1,0 +1,2178 @@
+{
+ "source": "あつ杯アプリDB / monsters tab (gid=1144848704)",
+ "exportedAt": "2026-08-16",
+ "note": "sortOrder は確定値。変更しないこと。subBlood の ロード は ロード種 に正規化済み。",
+ "count": 310,
+ "monsters": [
+  {
+   "sheetId": "m0001",
+   "name": "ピクシー",
+   "mainBlood": "ピクシー",
+   "subBlood": "ピクシー",
+   "sortOrder": 101
+  },
+  {
+   "sheetId": "m0002",
+   "name": "ダイナ",
+   "mainBlood": "ピクシー",
+   "subBlood": "ドラゴン",
+   "sortOrder": 102
+  },
+  {
+   "sheetId": "m0003",
+   "name": "ユニコ",
+   "mainBlood": "ピクシー",
+   "subBlood": "ケンタウロス",
+   "sortOrder": 103
+  },
+  {
+   "sheetId": "m0004",
+   "name": "ミント",
+   "mainBlood": "ピクシー",
+   "subBlood": "ライガー",
+   "sortOrder": 109
+  },
+  {
+   "sheetId": "m0005",
+   "name": "エンジェル",
+   "mainBlood": "ピクシー",
+   "subBlood": "ガリ",
+   "sortOrder": 111
+  },
+  {
+   "sheetId": "m0006",
+   "name": "スエコ",
+   "mainBlood": "ピクシー",
+   "subBlood": "スエゾー",
+   "sortOrder": 115
+  },
+  {
+   "sheetId": "m0007",
+   "name": "リリム",
+   "mainBlood": "ピクシー",
+   "subBlood": "ジョーカー",
+   "sortOrder": 117
+  },
+  {
+   "sheetId": "m0008",
+   "name": "マーキュリー",
+   "mainBlood": "ピクシー",
+   "subBlood": "ウンディーネ",
+   "sortOrder": 120
+  },
+  {
+   "sheetId": "m0009",
+   "name": "リーフ",
+   "mainBlood": "ピクシー",
+   "subBlood": "プラント",
+   "sortOrder": 121
+  },
+  {
+   "sheetId": "m0010",
+   "name": "ナハトファルター",
+   "mainBlood": "ピクシー",
+   "subBlood": "ワーム",
+   "sortOrder": 123
+  },
+  {
+   "sheetId": "m0011",
+   "name": "ラベンダーキール",
+   "mainBlood": "ピクシー",
+   "subBlood": "ナーガ",
+   "sortOrder": 124
+  },
+  {
+   "sheetId": "m0012",
+   "name": "レイリー",
+   "mainBlood": "ピクシー",
+   "subBlood": "カワズモー",
+   "sortOrder": 125
+  },
+  {
+   "sheetId": "m0013",
+   "name": "カチョウフウゲツ",
+   "mainBlood": "ピクシー",
+   "subBlood": "キュービ",
+   "sortOrder": 126
+  },
+  {
+   "sheetId": "m0014",
+   "name": "ミリム・リゾート",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 150
+  },
+  {
+   "sheetId": "m0015",
+   "name": "シラヌイ",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 151
+  },
+  {
+   "sheetId": "m0016",
+   "name": "ミリム",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 152
+  },
+  {
+   "sheetId": "m0017",
+   "name": "ピクシーオリジン",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 153
+  },
+  {
+   "sheetId": "m0018",
+   "name": "ウィッチ",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 154
+  },
+  {
+   "sheetId": "m0019",
+   "name": "ミーア",
+   "mainBlood": "ピクシー",
+   "subBlood": "レアモン",
+   "sortOrder": 155
+  },
+  {
+   "sheetId": "m0020",
+   "name": "グレイスウィッチ",
+   "mainBlood": "ピクシー",
+   "subBlood": "ノーブル",
+   "sortOrder": 180
+  },
+  {
+   "sheetId": "m0021",
+   "name": "ティターニア",
+   "mainBlood": "ピクシー",
+   "subBlood": "ロード種",
+   "sortOrder": 190
+  },
+  {
+   "sheetId": "m0022",
+   "name": "アテナ",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ピクシー",
+   "sortOrder": 201
+  },
+  {
+   "sheetId": "m0023",
+   "name": "ドラゴン",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ドラゴン",
+   "sortOrder": 202
+  },
+  {
+   "sheetId": "m0024",
+   "name": "テクノドラゴン",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ヘンガー",
+   "sortOrder": 204
+  },
+  {
+   "sheetId": "m0025",
+   "name": "ジハード",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ゴーレム",
+   "sortOrder": 205
+  },
+  {
+   "sheetId": "m0026",
+   "name": "クラスター",
+   "mainBlood": "ドラゴン",
+   "subBlood": "アローヘッド",
+   "sortOrder": 208
+  },
+  {
+   "sheetId": "m0027",
+   "name": "クレバス",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ライガー",
+   "sortOrder": 209
+  },
+  {
+   "sheetId": "m0028",
+   "name": "ディアボロス",
+   "mainBlood": "ドラゴン",
+   "subBlood": "ジョーカー",
+   "sortOrder": 217
+  },
+  {
+   "sheetId": "m0029",
+   "name": "ラグナロックス",
+   "mainBlood": "ドラゴン",
+   "subBlood": "モノリス",
+   "sortOrder": 222
+  },
+  {
+   "sheetId": "m0030",
+   "name": "ギドラス",
+   "mainBlood": "ドラゴン",
+   "subBlood": "メタルナー",
+   "sortOrder": 227
+  },
+  {
+   "sheetId": "m0031",
+   "name": "ボルシャック",
+   "mainBlood": "ドラゴン",
+   "subBlood": "レアモン",
+   "sortOrder": 250
+  },
+  {
+   "sheetId": "m0032",
+   "name": "ムー",
+   "mainBlood": "ドラゴン",
+   "subBlood": "レアモン",
+   "sortOrder": 251
+  },
+  {
+   "sheetId": "m0033",
+   "name": "ヴェルドラ",
+   "mainBlood": "ドラゴン",
+   "subBlood": "レアモン",
+   "sortOrder": 252
+  },
+  {
+   "sheetId": "m0034",
+   "name": "紅蓮弐式",
+   "mainBlood": "ドラゴン",
+   "subBlood": "レアモン",
+   "sortOrder": 253
+  },
+  {
+   "sheetId": "m0035",
+   "name": "紅蓮可翔式",
+   "mainBlood": "ドラゴン",
+   "subBlood": "レアモン",
+   "sortOrder": 254
+  },
+  {
+   "sheetId": "m0036",
+   "name": "サバット",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ドラゴン",
+   "sortOrder": 302
+  },
+  {
+   "sheetId": "m0037",
+   "name": "ケンタウロス",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ケンタウロス",
+   "sortOrder": 303
+  },
+  {
+   "sheetId": "m0038",
+   "name": "デュランダル",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ヘンガー",
+   "sortOrder": 304
+  },
+  {
+   "sheetId": "m0039",
+   "name": "イースター",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ゴーレム",
+   "sortOrder": 305
+  },
+  {
+   "sheetId": "m0040",
+   "name": "アンタレス",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "アローヘッド",
+   "sortOrder": 308
+  },
+  {
+   "sheetId": "m0041",
+   "name": "シリウス",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ライガー",
+   "sortOrder": 309
+  },
+  {
+   "sheetId": "m0042",
+   "name": "デルピエロ",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "ジョーカー",
+   "sortOrder": 317
+  },
+  {
+   "sheetId": "m0043",
+   "name": "ヤブサメ",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "レアモン",
+   "sortOrder": 350
+  },
+  {
+   "sheetId": "m0044",
+   "name": "オーディーン",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "レアモン",
+   "sortOrder": 351
+  },
+  {
+   "sheetId": "m0045",
+   "name": "スナイプ",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "レアモン",
+   "sortOrder": 352
+  },
+  {
+   "sheetId": "m0046",
+   "name": "ゴッドエンペラー",
+   "mainBlood": "ケンタウロス",
+   "subBlood": "レアモン",
+   "sortOrder": 353
+  },
+  {
+   "sheetId": "m0047",
+   "name": "ガーラント",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ドラゴン",
+   "sortOrder": 402
+  },
+  {
+   "sheetId": "m0048",
+   "name": "ヘンガー",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ヘンガー",
+   "sortOrder": 404
+  },
+  {
+   "sheetId": "m0049",
+   "name": "ガイアー",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ゴーレム",
+   "sortOrder": 405
+  },
+  {
+   "sheetId": "m0050",
+   "name": "オメガレックス",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ディノ",
+   "sortOrder": 406
+  },
+  {
+   "sheetId": "m0051",
+   "name": "ライカンスロイド",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ライガー",
+   "sortOrder": 409
+  },
+  {
+   "sheetId": "m0052",
+   "name": "エンドブリンガー",
+   "mainBlood": "ヘンガー",
+   "subBlood": "ジョーカー",
+   "sortOrder": 417
+  },
+  {
+   "sheetId": "m0053",
+   "name": "ダークヘンガー",
+   "mainBlood": "ヘンガー",
+   "subBlood": "モノリス",
+   "sortOrder": 422
+  },
+  {
+   "sheetId": "m0054",
+   "name": "アルカディアス",
+   "mainBlood": "ヘンガー",
+   "subBlood": "レアモン",
+   "sortOrder": 450
+  },
+  {
+   "sheetId": "m0055",
+   "name": "ランスロット・A",
+   "mainBlood": "ヘンガー",
+   "subBlood": "レアモン",
+   "sortOrder": 451
+  },
+  {
+   "sheetId": "m0056",
+   "name": "ランスロット",
+   "mainBlood": "ヘンガー",
+   "subBlood": "レアモン",
+   "sortOrder": 452
+  },
+  {
+   "sheetId": "m0057",
+   "name": "タイラント",
+   "mainBlood": "ゴーレム",
+   "subBlood": "ドラゴン",
+   "sortOrder": 502
+  },
+  {
+   "sheetId": "m0058",
+   "name": "ゴーレム",
+   "mainBlood": "ゴーレム",
+   "subBlood": "ゴーレム",
+   "sortOrder": 505
+  },
+  {
+   "sheetId": "m0059",
+   "name": "ダゴン",
+   "mainBlood": "ゴーレム",
+   "subBlood": "アローヘッド",
+   "sortOrder": 508
+  },
+  {
+   "sheetId": "m0060",
+   "name": "アメンホテプ",
+   "mainBlood": "ゴーレム",
+   "subBlood": "ガリ",
+   "sortOrder": 511
+  },
+  {
+   "sheetId": "m0061",
+   "name": "アンゴルモア",
+   "mainBlood": "ゴーレム",
+   "subBlood": "ジョーカー",
+   "sortOrder": 517
+  },
+  {
+   "sheetId": "m0062",
+   "name": "エコロガーデアン",
+   "mainBlood": "ゴーレム",
+   "subBlood": "プラント",
+   "sortOrder": 521
+  },
+  {
+   "sheetId": "m0063",
+   "name": "マーブルガイ",
+   "mainBlood": "ゴーレム",
+   "subBlood": "ナーガ",
+   "sortOrder": 524
+  },
+  {
+   "sheetId": "m0064",
+   "name": "フロッグロック",
+   "mainBlood": "ゴーレム",
+   "subBlood": "カワズモー",
+   "sortOrder": 525
+  },
+  {
+   "sheetId": "m0065",
+   "name": "シュタイン",
+   "mainBlood": "ゴーレム",
+   "subBlood": "レアモン",
+   "sortOrder": 550
+  },
+  {
+   "sheetId": "m0066",
+   "name": "巨人(エレン)",
+   "mainBlood": "ゴーレム",
+   "subBlood": "レアモン",
+   "sortOrder": 551
+  },
+  {
+   "sheetId": "m0067",
+   "name": "サンドゴーレム",
+   "mainBlood": "ゴーレム",
+   "subBlood": "レアモン",
+   "sortOrder": 552
+  },
+  {
+   "sheetId": "m0068",
+   "name": "ニューボトル",
+   "mainBlood": "ゴーレム",
+   "subBlood": "レアモン",
+   "sortOrder": 553
+  },
+  {
+   "sheetId": "m0069",
+   "name": "シュシュポッポ",
+   "mainBlood": "ゴーレム",
+   "subBlood": "レアモン",
+   "sortOrder": 554
+  },
+  {
+   "sheetId": "m0070",
+   "name": "ベビードラゴン",
+   "mainBlood": "ディノ",
+   "subBlood": "ドラゴン",
+   "sortOrder": 602
+  },
+  {
+   "sheetId": "m0071",
+   "name": "ディノテクノ",
+   "mainBlood": "ディノ",
+   "subBlood": "ヘンガー",
+   "sortOrder": 604
+  },
+  {
+   "sheetId": "m0072",
+   "name": "ディノ",
+   "mainBlood": "ディノ",
+   "subBlood": "ディノ",
+   "sortOrder": 606
+  },
+  {
+   "sheetId": "m0073",
+   "name": "クラブディノ",
+   "mainBlood": "ディノ",
+   "subBlood": "アローヘッド",
+   "sortOrder": 608
+  },
+  {
+   "sheetId": "m0074",
+   "name": "メテオライト",
+   "mainBlood": "ディノ",
+   "subBlood": "ジョーカー",
+   "sortOrder": 617
+  },
+  {
+   "sheetId": "m0075",
+   "name": "アロハノサウルス",
+   "mainBlood": "ディノ",
+   "subBlood": "プラント",
+   "sortOrder": 621
+  },
+  {
+   "sheetId": "m0076",
+   "name": "ブラックディノ",
+   "mainBlood": "ディノ",
+   "subBlood": "モノリス",
+   "sortOrder": 622
+  },
+  {
+   "sheetId": "m0077",
+   "name": "カッチュウサウル",
+   "mainBlood": "ディノ",
+   "subBlood": "ワーム",
+   "sortOrder": 623
+  },
+  {
+   "sheetId": "m0078",
+   "name": "ティラノパープル",
+   "mainBlood": "ディノ",
+   "subBlood": "ナーガ",
+   "sortOrder": 624
+  },
+  {
+   "sheetId": "m0079",
+   "name": "ルドルファス",
+   "mainBlood": "ディノ",
+   "subBlood": "レアモン",
+   "sortOrder": 650
+  },
+  {
+   "sheetId": "m0080",
+   "name": "レジーナ",
+   "mainBlood": "デュラハン",
+   "subBlood": "ピクシー",
+   "sortOrder": 701
+  },
+  {
+   "sheetId": "m0081",
+   "name": "ベスビオス",
+   "mainBlood": "デュラハン",
+   "subBlood": "ドラゴン",
+   "sortOrder": 702
+  },
+  {
+   "sheetId": "m0082",
+   "name": "デュラハン",
+   "mainBlood": "デュラハン",
+   "subBlood": "デュラハン",
+   "sortOrder": 707
+  },
+  {
+   "sheetId": "m0083",
+   "name": "グレイシア",
+   "mainBlood": "デュラハン",
+   "subBlood": "ライガー",
+   "sortOrder": 709
+  },
+  {
+   "sheetId": "m0084",
+   "name": "タクティクス",
+   "mainBlood": "デュラハン",
+   "subBlood": "レアモン",
+   "sortOrder": 750
+  },
+  {
+   "sheetId": "m0085",
+   "name": "麻倉葉",
+   "mainBlood": "デュラハン",
+   "subBlood": "レアモン",
+   "sortOrder": 751
+  },
+  {
+   "sheetId": "m0086",
+   "name": "麻倉葉(武装)",
+   "mainBlood": "デュラハン",
+   "subBlood": "レアモン",
+   "sortOrder": 752
+  },
+  {
+   "sheetId": "m0087",
+   "name": "ショーグン",
+   "mainBlood": "デュラハン",
+   "subBlood": "レアモン",
+   "sortOrder": 753
+  },
+  {
+   "sheetId": "m0088",
+   "name": "コクシムソウ",
+   "mainBlood": "デュラハン",
+   "subBlood": "レアモン",
+   "sortOrder": 754
+  },
+  {
+   "sheetId": "m0089",
+   "name": "レマクラスト",
+   "mainBlood": "アローヘッド",
+   "subBlood": "ヘンガー",
+   "sortOrder": 804
+  },
+  {
+   "sheetId": "m0090",
+   "name": "プライヤロックス",
+   "mainBlood": "アローヘッド",
+   "subBlood": "ゴーレム",
+   "sortOrder": 805
+  },
+  {
+   "sheetId": "m0091",
+   "name": "アローヘッド",
+   "mainBlood": "アローヘッド",
+   "subBlood": "アローヘッド",
+   "sortOrder": 808
+  },
+  {
+   "sheetId": "m0092",
+   "name": "マスタードアロー",
+   "mainBlood": "アローヘッド",
+   "subBlood": "スエゾー",
+   "sortOrder": 815
+  },
+  {
+   "sheetId": "m0093",
+   "name": "セルケト",
+   "mainBlood": "アローヘッド",
+   "subBlood": "ジョーカー",
+   "sortOrder": 817
+  },
+  {
+   "sheetId": "m0094",
+   "name": "アクアマリン",
+   "mainBlood": "アローヘッド",
+   "subBlood": "ウンディーネ",
+   "sortOrder": 820
+  },
+  {
+   "sheetId": "m0095",
+   "name": "ヒュプノス",
+   "mainBlood": "アローヘッド",
+   "subBlood": "レアモン",
+   "sortOrder": 850
+  },
+  {
+   "sheetId": "m0096",
+   "name": "スピナー",
+   "mainBlood": "アローヘッド",
+   "subBlood": "レアモン",
+   "sortOrder": 851
+  },
+  {
+   "sheetId": "m0097",
+   "name": "スモーピオン",
+   "mainBlood": "アローヘッド",
+   "subBlood": "レアモン",
+   "sortOrder": 852
+  },
+  {
+   "sheetId": "m0098",
+   "name": "デトナレックス",
+   "mainBlood": "ライガー",
+   "subBlood": "ディノ",
+   "sortOrder": 906
+  },
+  {
+   "sheetId": "m0099",
+   "name": "ライガー",
+   "mainBlood": "ライガー",
+   "subBlood": "ライガー",
+   "sortOrder": 909
+  },
+  {
+   "sheetId": "m0100",
+   "name": "ハムライガー",
+   "mainBlood": "ライガー",
+   "subBlood": "ハム",
+   "sortOrder": 910
+  },
+  {
+   "sheetId": "m0101",
+   "name": "バロン",
+   "mainBlood": "ライガー",
+   "subBlood": "ガリ",
+   "sortOrder": 911
+  },
+  {
+   "sheetId": "m0102",
+   "name": "アクアストライク",
+   "mainBlood": "ライガー",
+   "subBlood": "ゲル",
+   "sortOrder": 919
+  },
+  {
+   "sheetId": "m0103",
+   "name": "エコノキックス",
+   "mainBlood": "ライガー",
+   "subBlood": "プラント",
+   "sortOrder": 921
+  },
+  {
+   "sheetId": "m0104",
+   "name": "ヤクトハウンド",
+   "mainBlood": "ライガー",
+   "subBlood": "ワーム",
+   "sortOrder": 923
+  },
+  {
+   "sheetId": "m0105",
+   "name": "ケルベロス",
+   "mainBlood": "ライガー",
+   "subBlood": "ナーガ",
+   "sortOrder": 924
+  },
+  {
+   "sheetId": "m0106",
+   "name": "スコール",
+   "mainBlood": "ライガー",
+   "subBlood": "ユグドラシル",
+   "sortOrder": 928
+  },
+  {
+   "sheetId": "m0107",
+   "name": "ヤシャガミ",
+   "mainBlood": "ライガー",
+   "subBlood": "キジン",
+   "sortOrder": 930
+  },
+  {
+   "sheetId": "m0108",
+   "name": "ボルメテウス",
+   "mainBlood": "ライガー",
+   "subBlood": "レアモン",
+   "sortOrder": 950
+  },
+  {
+   "sheetId": "m0109",
+   "name": "メカお父さん",
+   "mainBlood": "ライガー",
+   "subBlood": "レアモン",
+   "sortOrder": 951
+  },
+  {
+   "sheetId": "m0110",
+   "name": "ヴァナルガンド",
+   "mainBlood": "ライガー",
+   "subBlood": "ロード種",
+   "sortOrder": 990
+  },
+  {
+   "sheetId": "m0111",
+   "name": "ヴァージアハピ",
+   "mainBlood": "ハム",
+   "subBlood": "ピクシー",
+   "sortOrder": 1001
+  },
+  {
+   "sheetId": "m0112",
+   "name": "ウロコウサギ",
+   "mainBlood": "ハム",
+   "subBlood": "ディノ",
+   "sortOrder": 1006
+  },
+  {
+   "sheetId": "m0113",
+   "name": "ハム",
+   "mainBlood": "ハム",
+   "subBlood": "ハム",
+   "sortOrder": 1010
+  },
+  {
+   "sheetId": "m0114",
+   "name": "ハムオウジ",
+   "mainBlood": "ハム",
+   "subBlood": "ガリ",
+   "sortOrder": 1011
+  },
+  {
+   "sheetId": "m0115",
+   "name": "クロスフォーアイ",
+   "mainBlood": "ハム",
+   "subBlood": "スエゾー",
+   "sortOrder": 1015
+  },
+  {
+   "sheetId": "m0116",
+   "name": "ブルーフレア",
+   "mainBlood": "ハム",
+   "subBlood": "ゲル",
+   "sortOrder": 1019
+  },
+  {
+   "sheetId": "m0117",
+   "name": "ハムリーフ",
+   "mainBlood": "ハム",
+   "subBlood": "プラント",
+   "sortOrder": 1021
+  },
+  {
+   "sheetId": "m0118",
+   "name": "ダークハム",
+   "mainBlood": "ハム",
+   "subBlood": "モノリス",
+   "sortOrder": 1022
+  },
+  {
+   "sheetId": "m0119",
+   "name": "トルクレンチ",
+   "mainBlood": "ハム",
+   "subBlood": "ワーム",
+   "sortOrder": 1023
+  },
+  {
+   "sheetId": "m0120",
+   "name": "マミー",
+   "mainBlood": "ハム",
+   "subBlood": "レアモン",
+   "sortOrder": 1050
+  },
+  {
+   "sheetId": "m0121",
+   "name": "サンタ",
+   "mainBlood": "ハム",
+   "subBlood": "レアモン",
+   "sortOrder": 1051
+  },
+  {
+   "sheetId": "m0122",
+   "name": "ハムクロース",
+   "mainBlood": "ハム",
+   "subBlood": "ノーブル",
+   "sortOrder": 1080
+  },
+  {
+   "sheetId": "m0123",
+   "name": "ピクセル",
+   "mainBlood": "ガリ",
+   "subBlood": "ピクシー",
+   "sortOrder": 1101
+  },
+  {
+   "sheetId": "m0124",
+   "name": "エクスマキナ",
+   "mainBlood": "ガリ",
+   "subBlood": "ヘンガー",
+   "sortOrder": 1104
+  },
+  {
+   "sheetId": "m0125",
+   "name": "レクサス",
+   "mainBlood": "ガリ",
+   "subBlood": "ディノ",
+   "sortOrder": 1106
+  },
+  {
+   "sheetId": "m0126",
+   "name": "ガリオン",
+   "mainBlood": "ガリ",
+   "subBlood": "ハム",
+   "sortOrder": 1110
+  },
+  {
+   "sheetId": "m0127",
+   "name": "ガリ",
+   "mainBlood": "ガリ",
+   "subBlood": "ガリ",
+   "sortOrder": 1111
+  },
+  {
+   "sheetId": "m0128",
+   "name": "ヒトツメオウジ",
+   "mainBlood": "ガリ",
+   "subBlood": "スエゾー",
+   "sortOrder": 1115
+  },
+  {
+   "sheetId": "m0129",
+   "name": "アクアリウス",
+   "mainBlood": "ガリ",
+   "subBlood": "ゲル",
+   "sortOrder": 1119
+  },
+  {
+   "sheetId": "m0130",
+   "name": "カラフルマスク",
+   "mainBlood": "ガリ",
+   "subBlood": "プラント",
+   "sortOrder": 1121
+  },
+  {
+   "sheetId": "m0131",
+   "name": "シオンカメン",
+   "mainBlood": "ガリ",
+   "subBlood": "ナーガ",
+   "sortOrder": 1124
+  },
+  {
+   "sheetId": "m0132",
+   "name": "オシリス",
+   "mainBlood": "ガリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1150
+  },
+  {
+   "sheetId": "m0133",
+   "name": "ハオ",
+   "mainBlood": "ガリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1151
+  },
+  {
+   "sheetId": "m0134",
+   "name": "ハレハレ",
+   "mainBlood": "ガリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1152
+  },
+  {
+   "sheetId": "m0135",
+   "name": "ピンクグジラ",
+   "mainBlood": "グジラ",
+   "subBlood": "ピクシー",
+   "sortOrder": 1201
+  },
+  {
+   "sheetId": "m0136",
+   "name": "コイノボリ",
+   "mainBlood": "グジラ",
+   "subBlood": "ドラゴン",
+   "sortOrder": 1202
+  },
+  {
+   "sheetId": "m0137",
+   "name": "レッドアーマー",
+   "mainBlood": "グジラ",
+   "subBlood": "アローヘッド",
+   "sortOrder": 1208
+  },
+  {
+   "sheetId": "m0138",
+   "name": "グジコーン",
+   "mainBlood": "グジラ",
+   "subBlood": "ライガー",
+   "sortOrder": 1209
+  },
+  {
+   "sheetId": "m0139",
+   "name": "グジラ",
+   "mainBlood": "グジラ",
+   "subBlood": "グジラ",
+   "sortOrder": 1212
+  },
+  {
+   "sheetId": "m0140",
+   "name": "グジラキング",
+   "mainBlood": "グジラ",
+   "subBlood": "レアモン",
+   "sortOrder": 1250
+  },
+  {
+   "sheetId": "m0141",
+   "name": "グジラウス",
+   "mainBlood": "グジラ",
+   "subBlood": "レアモン",
+   "sortOrder": 1251
+  },
+  {
+   "sheetId": "m0142",
+   "name": "ママニャー",
+   "mainBlood": "ニャー",
+   "subBlood": "ピクシー",
+   "sortOrder": 1301
+  },
+  {
+   "sheetId": "m0143",
+   "name": "ワン",
+   "mainBlood": "ニャー",
+   "subBlood": "ライガー",
+   "sortOrder": 1309
+  },
+  {
+   "sheetId": "m0144",
+   "name": "ミミニャー",
+   "mainBlood": "ニャー",
+   "subBlood": "ハム",
+   "sortOrder": 1310
+  },
+  {
+   "sheetId": "m0145",
+   "name": "ニャー",
+   "mainBlood": "ニャー",
+   "subBlood": "ニャー",
+   "sortOrder": 1313
+  },
+  {
+   "sheetId": "m0146",
+   "name": "イナリ",
+   "mainBlood": "ニャー",
+   "subBlood": "キュービ",
+   "sortOrder": 1326
+  },
+  {
+   "sheetId": "m0147",
+   "name": "ニャースター",
+   "mainBlood": "ニャー",
+   "subBlood": "レアモン",
+   "sortOrder": 1350
+  },
+  {
+   "sheetId": "m0148",
+   "name": "メリーベア",
+   "mainBlood": "ニャー",
+   "subBlood": "レアモン",
+   "sortOrder": 1351
+  },
+  {
+   "sheetId": "m0149",
+   "name": "メタビー",
+   "mainBlood": "ニャー",
+   "subBlood": "レアモン",
+   "sortOrder": 1352
+  },
+  {
+   "sheetId": "m0150",
+   "name": "ロクショウ",
+   "mainBlood": "ニャー",
+   "subBlood": "レアモン",
+   "sortOrder": 1353
+  },
+  {
+   "sheetId": "m0151",
+   "name": "ニャハト",
+   "mainBlood": "ニャー",
+   "subBlood": "ノーブル",
+   "sortOrder": 1380
+  },
+  {
+   "sheetId": "m0152",
+   "name": "ワイバーン・炎",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "ドラゴン",
+   "sortOrder": 1402
+  },
+  {
+   "sheetId": "m0153",
+   "name": "ラプタ",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "ヘンガー",
+   "sortOrder": 1404
+  },
+  {
+   "sheetId": "m0154",
+   "name": "ヒノトリ",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "ヒノトリ",
+   "sortOrder": 1414
+  },
+  {
+   "sheetId": "m0155",
+   "name": "アオサギビ",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "ウンディーネ",
+   "sortOrder": 1420
+  },
+  {
+   "sheetId": "m0156",
+   "name": "フレスベルグ",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "イルミネ",
+   "sortOrder": 1432
+  },
+  {
+   "sheetId": "m0157",
+   "name": "ブリザード",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1450
+  },
+  {
+   "sheetId": "m0158",
+   "name": "ビンチョー",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1451
+  },
+  {
+   "sheetId": "m0159",
+   "name": "フェニックス",
+   "mainBlood": "ヒノトリ",
+   "subBlood": "レアモン",
+   "sortOrder": 1452
+  },
+  {
+   "sheetId": "m0160",
+   "name": "ピンキー",
+   "mainBlood": "スエゾー",
+   "subBlood": "ピクシー",
+   "sortOrder": 1501
+  },
+  {
+   "sheetId": "m0161",
+   "name": "イワゾー",
+   "mainBlood": "スエゾー",
+   "subBlood": "ゴーレム",
+   "sortOrder": 1505
+  },
+  {
+   "sheetId": "m0162",
+   "name": "メロンボ",
+   "mainBlood": "スエゾー",
+   "subBlood": "ディノ",
+   "sortOrder": 1506
+  },
+  {
+   "sheetId": "m0163",
+   "name": "ツノマル",
+   "mainBlood": "スエゾー",
+   "subBlood": "ライガー",
+   "sortOrder": 1509
+  },
+  {
+   "sheetId": "m0164",
+   "name": "ヒガンバナ",
+   "mainBlood": "スエゾー",
+   "subBlood": "ヒノトリ",
+   "sortOrder": 1514
+  },
+  {
+   "sheetId": "m0165",
+   "name": "スエゾー",
+   "mainBlood": "スエゾー",
+   "subBlood": "スエゾー",
+   "sortOrder": 1515
+  },
+  {
+   "sheetId": "m0166",
+   "name": "プラムラー",
+   "mainBlood": "スエゾー",
+   "subBlood": "プラント",
+   "sortOrder": 1521
+  },
+  {
+   "sheetId": "m0167",
+   "name": "ムシメ",
+   "mainBlood": "スエゾー",
+   "subBlood": "ワーム",
+   "sortOrder": 1523
+  },
+  {
+   "sheetId": "m0168",
+   "name": "キンゾー",
+   "mainBlood": "スエゾー",
+   "subBlood": "レアモン",
+   "sortOrder": 1550
+  },
+  {
+   "sheetId": "m0169",
+   "name": "パーシバル",
+   "mainBlood": "スエゾー",
+   "subBlood": "レアモン",
+   "sortOrder": 1551
+  },
+  {
+   "sheetId": "m0170",
+   "name": "シロゾー",
+   "mainBlood": "スエゾー",
+   "subBlood": "レアモン",
+   "sortOrder": 1552
+  },
+  {
+   "sheetId": "m0171",
+   "name": "ミタラシ",
+   "mainBlood": "モッチー",
+   "subBlood": "ドラゴン",
+   "sortOrder": 1602
+  },
+  {
+   "sheetId": "m0172",
+   "name": "モチモチエイト",
+   "mainBlood": "モッチー",
+   "subBlood": "ヘンガー",
+   "sortOrder": 1604
+  },
+  {
+   "sheetId": "m0173",
+   "name": "ヨロイモッチー",
+   "mainBlood": "モッチー",
+   "subBlood": "デュラハン",
+   "sortOrder": 1607
+  },
+  {
+   "sheetId": "m0174",
+   "name": "ペンギンダマシ",
+   "mainBlood": "モッチー",
+   "subBlood": "ライガー",
+   "sortOrder": 1609
+  },
+  {
+   "sheetId": "m0175",
+   "name": "モッチー",
+   "mainBlood": "モッチー",
+   "subBlood": "モッチー",
+   "sortOrder": 1616
+  },
+  {
+   "sheetId": "m0176",
+   "name": "ゼラチン",
+   "mainBlood": "モッチー",
+   "subBlood": "ゲル",
+   "sortOrder": 1619
+  },
+  {
+   "sheetId": "m0177",
+   "name": "サッピルッチ",
+   "mainBlood": "モッチー",
+   "subBlood": "レアモン",
+   "sortOrder": 1650
+  },
+  {
+   "sheetId": "m0178",
+   "name": "ジェントル",
+   "mainBlood": "モッチー",
+   "subBlood": "レアモン",
+   "sortOrder": 1651
+  },
+  {
+   "sheetId": "m0179",
+   "name": "団長モッチー",
+   "mainBlood": "モッチー",
+   "subBlood": "レアモン",
+   "sortOrder": 1652
+  },
+  {
+   "sheetId": "m0180",
+   "name": "調査兵モッチー",
+   "mainBlood": "モッチー",
+   "subBlood": "レアモン",
+   "sortOrder": 1653
+  },
+  {
+   "sheetId": "m0181",
+   "name": "サクラモッチーニ",
+   "mainBlood": "モッチー",
+   "subBlood": "レアモン",
+   "sortOrder": 1654
+  },
+  {
+   "sheetId": "m0182",
+   "name": "フレアデス",
+   "mainBlood": "ジョーカー",
+   "subBlood": "ドラゴン",
+   "sortOrder": 1702
+  },
+  {
+   "sheetId": "m0183",
+   "name": "ラー",
+   "mainBlood": "ジョーカー",
+   "subBlood": "ガリ",
+   "sortOrder": 1711
+  },
+  {
+   "sheetId": "m0184",
+   "name": "サクラチル",
+   "mainBlood": "ジョーカー",
+   "subBlood": "モッチー",
+   "sortOrder": 1716
+  },
+  {
+   "sheetId": "m0185",
+   "name": "ジョーカー",
+   "mainBlood": "ジョーカー",
+   "subBlood": "ジョーカー",
+   "sortOrder": 1717
+  },
+  {
+   "sheetId": "m0186",
+   "name": "アインズ・マスク",
+   "mainBlood": "ジョーカー",
+   "subBlood": "レアモン",
+   "sortOrder": 1750
+  },
+  {
+   "sheetId": "m0187",
+   "name": "アインズ",
+   "mainBlood": "ジョーカー",
+   "subBlood": "レアモン",
+   "sortOrder": 1751
+  },
+  {
+   "sheetId": "m0188",
+   "name": "バロム",
+   "mainBlood": "ジョーカー",
+   "subBlood": "レアモン",
+   "sortOrder": 1752
+  },
+  {
+   "sheetId": "m0189",
+   "name": "スプラッター",
+   "mainBlood": "ジョーカー",
+   "subBlood": "レアモン",
+   "sortOrder": 1753
+  },
+  {
+   "sheetId": "m0190",
+   "name": "ガウェイン",
+   "mainBlood": "ジョーカー",
+   "subBlood": "レアモン",
+   "sortOrder": 1754
+  },
+  {
+   "sheetId": "m0191",
+   "name": "アモン",
+   "mainBlood": "ネンドロ",
+   "subBlood": "ケンタウロス",
+   "sortOrder": 1803
+  },
+  {
+   "sheetId": "m0192",
+   "name": "フラッペ",
+   "mainBlood": "ネンドロ",
+   "subBlood": "ライガー",
+   "sortOrder": 1809
+  },
+  {
+   "sheetId": "m0193",
+   "name": "ドクドク",
+   "mainBlood": "ネンドロ",
+   "subBlood": "ジョーカー",
+   "sortOrder": 1817
+  },
+  {
+   "sheetId": "m0194",
+   "name": "ネンドロ",
+   "mainBlood": "ネンドロ",
+   "subBlood": "ネンドロ",
+   "sortOrder": 1818
+  },
+  {
+   "sheetId": "m0195",
+   "name": "アクアクレイ",
+   "mainBlood": "ネンドロ",
+   "subBlood": "ゲル",
+   "sortOrder": 1819
+  },
+  {
+   "sheetId": "m0196",
+   "name": "スイカクレイ",
+   "mainBlood": "ネンドロ",
+   "subBlood": "カワズモー",
+   "sortOrder": 1825
+  },
+  {
+   "sheetId": "m0197",
+   "name": "リムル・グラサン",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1850
+  },
+  {
+   "sheetId": "m0198",
+   "name": "リムル・リゾート",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1851
+  },
+  {
+   "sheetId": "m0199",
+   "name": "リムル",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1852
+  },
+  {
+   "sheetId": "m0200",
+   "name": "リムル(仮面)",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1853
+  },
+  {
+   "sheetId": "m0201",
+   "name": "ムネンド",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1854
+  },
+  {
+   "sheetId": "m0202",
+   "name": "ジャック",
+   "mainBlood": "ネンドロ",
+   "subBlood": "レアモン",
+   "sortOrder": 1855
+  },
+  {
+   "sheetId": "m0203",
+   "name": "イシガキゲル",
+   "mainBlood": "ゲル",
+   "subBlood": "ゴーレム",
+   "sortOrder": 1905
+  },
+  {
+   "sheetId": "m0204",
+   "name": "ウロコゲル",
+   "mainBlood": "ゲル",
+   "subBlood": "ディノ",
+   "sortOrder": 1906
+  },
+  {
+   "sheetId": "m0205",
+   "name": "ネンドマン",
+   "mainBlood": "ゲル",
+   "subBlood": "ハム",
+   "sortOrder": 1910
+  },
+  {
+   "sheetId": "m0206",
+   "name": "ゲルキゾク",
+   "mainBlood": "ゲル",
+   "subBlood": "ガリ",
+   "sortOrder": 1911
+  },
+  {
+   "sheetId": "m0207",
+   "name": "メダマゼリー",
+   "mainBlood": "ゲル",
+   "subBlood": "スエゾー",
+   "sortOrder": 1915
+  },
+  {
+   "sheetId": "m0208",
+   "name": "ゲル",
+   "mainBlood": "ゲル",
+   "subBlood": "ゲル",
+   "sortOrder": 1919
+  },
+  {
+   "sheetId": "m0209",
+   "name": "マグマグミ",
+   "mainBlood": "ゲル",
+   "subBlood": "モノリス",
+   "sortOrder": 1922
+  },
+  {
+   "sheetId": "m0210",
+   "name": "カンテンムシ",
+   "mainBlood": "ゲル",
+   "subBlood": "ワーム",
+   "sortOrder": 1923
+  },
+  {
+   "sheetId": "m0211",
+   "name": "パー・プリン",
+   "mainBlood": "ゲル",
+   "subBlood": "ナーガ",
+   "sortOrder": 1924
+  },
+  {
+   "sheetId": "m0212",
+   "name": "エスカノール・夜",
+   "mainBlood": "ゲル",
+   "subBlood": "レアモン",
+   "sortOrder": 1950
+  },
+  {
+   "sheetId": "m0213",
+   "name": "エスカノール",
+   "mainBlood": "ゲル",
+   "subBlood": "レアモン",
+   "sortOrder": 1951
+  },
+  {
+   "sheetId": "m0214",
+   "name": "カガミモチ",
+   "mainBlood": "ゲル",
+   "subBlood": "レアモン",
+   "sortOrder": 1952
+  },
+  {
+   "sheetId": "m0215",
+   "name": "メタルゲル",
+   "mainBlood": "ゲル",
+   "subBlood": "レアモン",
+   "sortOrder": 1953
+  },
+  {
+   "sheetId": "m0216",
+   "name": "メロウ",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "ピクシー",
+   "sortOrder": 2001
+  },
+  {
+   "sheetId": "m0217",
+   "name": "セイレーン",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "ジョーカー",
+   "sortOrder": 2017
+  },
+  {
+   "sheetId": "m0218",
+   "name": "マドレーナ",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "ネンドロ",
+   "sortOrder": 2018
+  },
+  {
+   "sheetId": "m0219",
+   "name": "ウンディーネ",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "ウンディーネ",
+   "sortOrder": 2020
+  },
+  {
+   "sheetId": "m0220",
+   "name": "ラブカ",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "レアモン",
+   "sortOrder": 2050
+  },
+  {
+   "sheetId": "m0221",
+   "name": "アルベド",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "レアモン",
+   "sortOrder": 2051
+  },
+  {
+   "sheetId": "m0222",
+   "name": "ウェディング",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "レアモン",
+   "sortOrder": 2052
+  },
+  {
+   "sheetId": "m0223",
+   "name": "オケアノス",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "レアモン",
+   "sortOrder": 2053
+  },
+  {
+   "sheetId": "m0224",
+   "name": "スネグーラチカ",
+   "mainBlood": "ウンディーネ",
+   "subBlood": "レアモン",
+   "sortOrder": 2054
+  },
+  {
+   "sheetId": "m0225",
+   "name": "ベニヒメソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ピクシー",
+   "sortOrder": 2101
+  },
+  {
+   "sheetId": "m0226",
+   "name": "ガンセキソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ゴーレム",
+   "sortOrder": 2105
+  },
+  {
+   "sheetId": "m0227",
+   "name": "ウロコクサ",
+   "mainBlood": "プラント",
+   "subBlood": "ディノ",
+   "sortOrder": 2106
+  },
+  {
+   "sheetId": "m0228",
+   "name": "ウサギソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ハム",
+   "sortOrder": 2110
+  },
+  {
+   "sheetId": "m0229",
+   "name": "キンプンソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ガリ",
+   "sortOrder": 2111
+  },
+  {
+   "sheetId": "m0230",
+   "name": "ヒネクレソウ",
+   "mainBlood": "プラント",
+   "subBlood": "スエゾー",
+   "sortOrder": 2115
+  },
+  {
+   "sheetId": "m0231",
+   "name": "オボロゲソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ゲル",
+   "sortOrder": 2119
+  },
+  {
+   "sheetId": "m0232",
+   "name": "プラント",
+   "mainBlood": "プラント",
+   "subBlood": "プラント",
+   "sortOrder": 2121
+  },
+  {
+   "sheetId": "m0233",
+   "name": "ウスバカゲソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ワーム",
+   "sortOrder": 2123
+  },
+  {
+   "sheetId": "m0234",
+   "name": "ジャアクソウ",
+   "mainBlood": "プラント",
+   "subBlood": "ナーガ",
+   "sortOrder": 2124
+  },
+  {
+   "sheetId": "m0235",
+   "name": "ミツボシソウ",
+   "mainBlood": "プラント",
+   "subBlood": "レアモン",
+   "sortOrder": 2150
+  },
+  {
+   "sheetId": "m0236",
+   "name": "ドレッドハーブ",
+   "mainBlood": "プラント",
+   "subBlood": "レアモン",
+   "sortOrder": 2151
+  },
+  {
+   "sheetId": "m0237",
+   "name": "ジュラスウォール",
+   "mainBlood": "モノリス",
+   "subBlood": "ディノ",
+   "sortOrder": 2206
+  },
+  {
+   "sheetId": "m0238",
+   "name": "ブルースポンジ",
+   "mainBlood": "モノリス",
+   "subBlood": "ライガー",
+   "sortOrder": 2209
+  },
+  {
+   "sheetId": "m0239",
+   "name": "ワイルドブロック",
+   "mainBlood": "モノリス",
+   "subBlood": "ハム",
+   "sortOrder": 2210
+  },
+  {
+   "sheetId": "m0240",
+   "name": "バロックス",
+   "mainBlood": "モノリス",
+   "subBlood": "ガリ",
+   "sortOrder": 2211
+  },
+  {
+   "sheetId": "m0241",
+   "name": "スタイルフォーム",
+   "mainBlood": "モノリス",
+   "subBlood": "スエゾー",
+   "sortOrder": 2215
+  },
+  {
+   "sheetId": "m0242",
+   "name": "アイスキャンディ",
+   "mainBlood": "モノリス",
+   "subBlood": "ゲル",
+   "sortOrder": 2219
+  },
+  {
+   "sheetId": "m0243",
+   "name": "ワカクサケンザイ",
+   "mainBlood": "モノリス",
+   "subBlood": "プラント",
+   "sortOrder": 2221
+  },
+  {
+   "sheetId": "m0244",
+   "name": "モノリス",
+   "mainBlood": "モノリス",
+   "subBlood": "モノリス",
+   "sortOrder": 2222
+  },
+  {
+   "sheetId": "m0245",
+   "name": "アスファール",
+   "mainBlood": "モノリス",
+   "subBlood": "ナーガ",
+   "sortOrder": 2224
+  },
+  {
+   "sheetId": "m0246",
+   "name": "スターギフト",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2250
+  },
+  {
+   "sheetId": "m0247",
+   "name": "D・Mデッキ",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2251
+  },
+  {
+   "sheetId": "m0248",
+   "name": "ウォール・マリア",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2252
+  },
+  {
+   "sheetId": "m0249",
+   "name": "ホシゾラ",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2253
+  },
+  {
+   "sheetId": "m0250",
+   "name": "ネンガジョウ",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2254
+  },
+  {
+   "sheetId": "m0251",
+   "name": "ラクガキモノ",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2255
+  },
+  {
+   "sheetId": "m0252",
+   "name": "ジハンキ",
+   "mainBlood": "モノリス",
+   "subBlood": "レアモン",
+   "sortOrder": 2256
+  },
+  {
+   "sheetId": "m0253",
+   "name": "イワムシ",
+   "mainBlood": "ワーム",
+   "subBlood": "ゴーレム",
+   "sortOrder": 2305
+  },
+  {
+   "sheetId": "m0254",
+   "name": "トカゲムシ",
+   "mainBlood": "ワーム",
+   "subBlood": "ディノ",
+   "sortOrder": 2306
+  },
+  {
+   "sheetId": "m0255",
+   "name": "ブルードリル",
+   "mainBlood": "ワーム",
+   "subBlood": "ライガー",
+   "sortOrder": 2309
+  },
+  {
+   "sheetId": "m0256",
+   "name": "コロネ",
+   "mainBlood": "ワーム",
+   "subBlood": "ハム",
+   "sortOrder": 2310
+  },
+  {
+   "sheetId": "m0257",
+   "name": "カメンワーム",
+   "mainBlood": "ワーム",
+   "subBlood": "ガリ",
+   "sortOrder": 2311
+  },
+  {
+   "sheetId": "m0258",
+   "name": "ザザムワーム",
+   "mainBlood": "ワーム",
+   "subBlood": "スエゾー",
+   "sortOrder": 2315
+  },
+  {
+   "sheetId": "m0259",
+   "name": "ハナシャクトリ",
+   "mainBlood": "ワーム",
+   "subBlood": "プラント",
+   "sortOrder": 2321
+  },
+  {
+   "sheetId": "m0260",
+   "name": "クロザザム",
+   "mainBlood": "ワーム",
+   "subBlood": "モノリス",
+   "sortOrder": 2322
+  },
+  {
+   "sheetId": "m0261",
+   "name": "ワーム",
+   "mainBlood": "ワーム",
+   "subBlood": "ワーム",
+   "sortOrder": 2323
+  },
+  {
+   "sheetId": "m0262",
+   "name": "ムラサキチュウ",
+   "mainBlood": "ワーム",
+   "subBlood": "ナーガ",
+   "sortOrder": 2324
+  },
+  {
+   "sheetId": "m0263",
+   "name": "スカラベ",
+   "mainBlood": "ワーム",
+   "subBlood": "レアモン",
+   "sortOrder": 2350
+  },
+  {
+   "sheetId": "m0264",
+   "name": "エクスプレス",
+   "mainBlood": "ワーム",
+   "subBlood": "レアモン",
+   "sortOrder": 2351
+  },
+  {
+   "sheetId": "m0265",
+   "name": "トライデント",
+   "mainBlood": "ナーガ",
+   "subBlood": "ゴーレム",
+   "sortOrder": 2405
+  },
+  {
+   "sheetId": "m0266",
+   "name": "ストライクリパー",
+   "mainBlood": "ナーガ",
+   "subBlood": "ライガー",
+   "sortOrder": 2409
+  },
+  {
+   "sheetId": "m0267",
+   "name": "エッジホッグ",
+   "mainBlood": "ナーガ",
+   "subBlood": "ハム",
+   "sortOrder": 2410
+  },
+  {
+   "sheetId": "m0268",
+   "name": "バズラ",
+   "mainBlood": "ナーガ",
+   "subBlood": "ガリ",
+   "sortOrder": 2411
+  },
+  {
+   "sheetId": "m0269",
+   "name": "サイクロップス",
+   "mainBlood": "ナーガ",
+   "subBlood": "スエゾー",
+   "sortOrder": 2415
+  },
+  {
+   "sheetId": "m0270",
+   "name": "アクアシザーズ",
+   "mainBlood": "ナーガ",
+   "subBlood": "ゲル",
+   "sortOrder": 2419
+  },
+  {
+   "sheetId": "m0271",
+   "name": "ジャングラー",
+   "mainBlood": "ナーガ",
+   "subBlood": "プラント",
+   "sortOrder": 2421
+  },
+  {
+   "sheetId": "m0272",
+   "name": "レッドアイ",
+   "mainBlood": "ナーガ",
+   "subBlood": "モノリス",
+   "sortOrder": 2422
+  },
+  {
+   "sheetId": "m0273",
+   "name": "テロルシザーズ",
+   "mainBlood": "ナーガ",
+   "subBlood": "ワーム",
+   "sortOrder": 2423
+  },
+  {
+   "sheetId": "m0274",
+   "name": "ナーガ",
+   "mainBlood": "ナーガ",
+   "subBlood": "ナーガ",
+   "sortOrder": 2424
+  },
+  {
+   "sheetId": "m0275",
+   "name": "ニャルラトホテプ",
+   "mainBlood": "ナーガ",
+   "subBlood": "レアモン",
+   "sortOrder": 2450
+  },
+  {
+   "sheetId": "m0276",
+   "name": "ジョカ",
+   "mainBlood": "ナーガ",
+   "subBlood": "レアモン",
+   "sortOrder": 2451
+  },
+  {
+   "sheetId": "m0277",
+   "name": "リヴァイアサン",
+   "mainBlood": "ナーガ",
+   "subBlood": "レアモン",
+   "sortOrder": 2452
+  },
+  {
+   "sheetId": "m0278",
+   "name": "ヤマト",
+   "mainBlood": "ナーガ",
+   "subBlood": "レアモン",
+   "sortOrder": 2453
+  },
+  {
+   "sheetId": "m0279",
+   "name": "マグフロッグ",
+   "mainBlood": "カワズモー",
+   "subBlood": "ドラゴン",
+   "sortOrder": 2502
+  },
+  {
+   "sheetId": "m0280",
+   "name": "メカエル",
+   "mainBlood": "カワズモー",
+   "subBlood": "ヘンガー",
+   "sortOrder": 2504
+  },
+  {
+   "sheetId": "m0281",
+   "name": "ハムノフジ",
+   "mainBlood": "カワズモー",
+   "subBlood": "ハム",
+   "sortOrder": 2510
+  },
+  {
+   "sheetId": "m0282",
+   "name": "サクラガエル",
+   "mainBlood": "カワズモー",
+   "subBlood": "モッチー",
+   "sortOrder": 2516
+  },
+  {
+   "sheetId": "m0283",
+   "name": "クサズモー",
+   "mainBlood": "カワズモー",
+   "subBlood": "プラント",
+   "sortOrder": 2521
+  },
+  {
+   "sheetId": "m0284",
+   "name": "カワズモー",
+   "mainBlood": "カワズモー",
+   "subBlood": "カワズモー",
+   "sortOrder": 2525
+  },
+  {
+   "sheetId": "m0285",
+   "name": "イチゴエル",
+   "mainBlood": "カワズモー",
+   "subBlood": "ユグドラシル",
+   "sortOrder": 2528
+  },
+  {
+   "sheetId": "m0286",
+   "name": "ナリキロッグ",
+   "mainBlood": "カワズモー",
+   "subBlood": "ゴースト",
+   "sortOrder": 2531
+  },
+  {
+   "sheetId": "m0287",
+   "name": "ヨコヅナ",
+   "mainBlood": "カワズモー",
+   "subBlood": "レアモン",
+   "sortOrder": 2550
+  },
+  {
+   "sheetId": "m0288",
+   "name": "アラクネ",
+   "mainBlood": "キュービ",
+   "subBlood": "アローヘッド",
+   "sortOrder": 2608
+  },
+  {
+   "sheetId": "m0289",
+   "name": "セイラン",
+   "mainBlood": "キュービ",
+   "subBlood": "ライガー",
+   "sortOrder": 2609
+  },
+  {
+   "sheetId": "m0290",
+   "name": "アマテラス",
+   "mainBlood": "キュービ",
+   "subBlood": "ヒノトリ",
+   "sortOrder": 2614
+  },
+  {
+   "sheetId": "m0291",
+   "name": "ハスタ",
+   "mainBlood": "キュービ",
+   "subBlood": "ウンディーネ",
+   "sortOrder": 2620
+  },
+  {
+   "sheetId": "m0292",
+   "name": "キュービ",
+   "mainBlood": "キュービ",
+   "subBlood": "キュービ",
+   "sortOrder": 2626
+  },
+  {
+   "sheetId": "m0293",
+   "name": "エンキドゥ",
+   "mainBlood": "キュービ",
+   "subBlood": "ユグドラシル",
+   "sortOrder": 2628
+  },
+  {
+   "sheetId": "m0294",
+   "name": "オロチ",
+   "mainBlood": "キュービ",
+   "subBlood": "シンリュウ",
+   "sortOrder": 2629
+  },
+  {
+   "sheetId": "m0295",
+   "name": "シュナ・リゾート",
+   "mainBlood": "キュービ",
+   "subBlood": "レアモン",
+   "sortOrder": 2650
+  },
+  {
+   "sheetId": "m0296",
+   "name": "オリヒメ",
+   "mainBlood": "キュービ",
+   "subBlood": "レアモン",
+   "sortOrder": 2651
+  },
+  {
+   "sheetId": "m0297",
+   "name": "恐山アンナ",
+   "mainBlood": "キュービ",
+   "subBlood": "レアモン",
+   "sortOrder": 2652
+  },
+  {
+   "sheetId": "m0298",
+   "name": "ハクタク・妖",
+   "mainBlood": "キュービ",
+   "subBlood": "レアモン",
+   "sortOrder": 2653
+  },
+  {
+   "sheetId": "m0299",
+   "name": "メデューサ",
+   "mainBlood": "キュービ",
+   "subBlood": "レアモン",
+   "sortOrder": 2654
+  },
+  {
+   "sheetId": "m0300",
+   "name": "タマモノマエ",
+   "mainBlood": "キュービ",
+   "subBlood": "ロード種",
+   "sortOrder": 2690
+  },
+  {
+   "sheetId": "m0301",
+   "name": "ラブラブセイジン",
+   "mainBlood": "メタルナー",
+   "subBlood": "ピクシー",
+   "sortOrder": 2701
+  },
+  {
+   "sheetId": "m0302",
+   "name": "メタゾール",
+   "mainBlood": "メタルナー",
+   "subBlood": "スエゾー",
+   "sortOrder": 2715
+  },
+  {
+   "sheetId": "m0303",
+   "name": "ステルナー",
+   "mainBlood": "メタルナー",
+   "subBlood": "プラント",
+   "sortOrder": 2721
+  },
+  {
+   "sheetId": "m0304",
+   "name": "メタルナー",
+   "mainBlood": "メタルナー",
+   "subBlood": "メタルナー",
+   "sortOrder": 2727
+  },
+  {
+   "sheetId": "m0305",
+   "name": "プレゼンター",
+   "mainBlood": "メタルナー",
+   "subBlood": "レアモン",
+   "sortOrder": 2750
+  },
+  {
+   "sheetId": "m0306",
+   "name": "ウルズ",
+   "mainBlood": "ユグドラシル",
+   "subBlood": "ライガー",
+   "sortOrder": 2809
+  },
+  {
+   "sheetId": "m0307",
+   "name": "パッチニャーコ",
+   "mainBlood": "ユグドラシル",
+   "subBlood": "ニャー",
+   "sortOrder": 2813
+  },
+  {
+   "sheetId": "m0308",
+   "name": "グレモリ",
+   "mainBlood": "ユグドラシル",
+   "subBlood": "ワーム",
+   "sortOrder": 2823
+  },
+  {
+   "sheetId": "m0309",
+   "name": "ワンフォー",
+   "mainBlood": "ユグドラシル",
+   "subBlood": "メタルナー",
+   "sortOrder": 2827
+  },
+  {
+   "sheetId": "m0310",
+   "name": "ユグドラシル",
+   "mainBlood": "ユグドラシル",
+   "subBlood": "ユグドラシル",
+   "sortOrder": 2828
+  }
+ ]
+}

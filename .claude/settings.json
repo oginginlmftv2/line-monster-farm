@@ -2,6 +2,22 @@
   "permissions": {
     "allow": [
       "PowerShell(*)"
+    ],
+    "deny": [
+      "Read(./assist-card-data.js)",
+      "Read(./lMfDB_abilities.json)",
+      "Read(./lmfdb_abilities_data.json)",
+      "Read(./lMfdb-index-20-23.html)",
+      "Read(./assist-effect-data.js)",
+      "Read(./script.js)",
+      "Read(./assist-abilities/**)",
+      "Read(./diary-img/**)",
+      "Read(./ikusei-img/**)",
+      "Read(./hiden-monsters/**)",
+      "Read(./profile-img/**)",
+      "Read(./aptitude-images/**)",
+      "Read(./monster-runner/**)",
+      "Read(./_work/**)"
     ]
   }
 }
