@@ -55,10 +55,10 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P2-1 | Firestoreエクスポータ作成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | 既定はドライラン。--write で生成 |
-| P2-2 | monsters-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | |
-| P2-3 | cards-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | |
-| P2-4 | 字数分布→ゲート閾値決定 | Claude | chore/p2-4-gate-threshold | 未着手 | | |
+| P2-1 | Firestoreエクスポータ作成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 検証済み。読み取り専用（GET 1箇所のみ） |
+| P2-2 | monsters-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 93件・65,642字。ID/名前/arrayIndex 全件整合。内容の意味的整合も目視確認済み |
+| P2-3 | cards-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 90件（解説あり85件）。assistEffects 混入0件 |
+| P2-4 | 生成ゲートの閾値決定 | Claude | `chore/p5-1-build-spec` | **完了** | 2026-08-18 | **解説+編成の合計500字以上 → 57件**。docs/build-spec.md 3-1 に記録 |
 
 ## P3 クリーンアップ（独立・並行可）
 
@@ -80,9 +80,9 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P4-1 | monsterImages/assignments のエクスポート | Claude Code | `chore/p2-firestore-export` | **レビュー待ち** | | P2-1のエクスポータに含めた |
+| P4-1 | monsterImages/assignments のエクスポート | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 332件。名前ベース変換（monsters.html:216 と同じ設計）。曖昧0件 |
 | P4-2 | 332件をIDでリネームし `img/monster/<ID>.jpg` へ配置 | Codex | `chore/p4-2-image-rename` | 未着手 | | |
-| P4-3 | 割り当ての無い16体を個別に対応 | 人 | – | 未着手 | | 348−332。P6をブロックしない |
+| P4-3 | 割り当ての無いモンスターの対応 | 人 | – | 未着手 | | **実際に画像が無いのはメリオダス1体のみ**（gwImg で表示中）。詳細ページ57体は全件が自前画像で解決 |
 
 `match_monsters.py` は**不要になった可能性が高い。** P4-1で332件の中身を見てから判断する。
 
@@ -90,7 +90,7 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P5-1 | build-spec.md 作成（設計のみ） | Claude | chore/p5-1-build-spec | 未着手 | | ★最重要。ここに投資 |
+| P5-1 | build-spec.md の作成 | Claude | `chore/p5-1-build-spec` | **レビュー待ち** | | 生成ページ数を134→97に修正。血統の必要導入文字数を式で定義 |
 | P5-2 | HTMLテンプレート初版 | Claude | feat/p5-2-templates | 未着手 | | |
 | P5-3 | build.js 実装 | Codex | feat/p5-3-build-script | 未着手 | | |
 | P5-4 | Actions→gh-pages デプロイ | Codex | feat/p5-4-deploy-actions | 未着手 | | |
@@ -99,7 +99,7 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P6-1 | 詳細93件の生成 | Codex | feat/p6-1-monster-detail-pages | 未着手 | | |
+| P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | 未着手 | | ゲート条件は docs/build-spec.md 3-1 |
 | P6-2 | 導入文40本の執筆 | Claude | content/p6-2-taxonomy-intro | 未着手 | | ★品質の分かれ目 |
 | P6-3 | 集約ページ40件の生成 | Codex | feat/p6-3-taxonomy-pages | 未着手 | | |
 | P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | 未着手 | | |
