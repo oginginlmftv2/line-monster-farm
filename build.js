@@ -366,7 +366,7 @@ function renderDetail(entry, context) {
       <div class="card">
         <table>
           <tbody>
-            <tr><th>モン種</th><td>${escapeHtml(monster.mon)}</td></tr>
+            <tr><th>モン類</th><td>${escapeHtml(monster.mon)}</td></tr>
             <tr><th>主血統</th><td>${escapeHtml(monster.blood)}</td></tr>
             <tr><th>副血統</th><td>${escapeHtml(monster.subBlood)}</td></tr>
             <tr><th>オーラ</th><td>${escapeHtml(runtime ? runtime.aura : monster.aura)}</td></tr>${limitedRow}
@@ -484,7 +484,7 @@ function logBuild(inputs, gates, outputCounts, context, brokenLinks) {
   console.log(`  monster-ids        ${inputs.monsters.length}件`);
   console.log(`  monsters-editorial  ${inputs.editorial.length}件`);
   console.log(`  monster-images     ${Object.keys(inputs.images).length}件`);
-  console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン種${taxonomyCounts.monTypes}件`);
+  console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン類${taxonomyCounts.monTypes}件`);
   console.log('');
   console.log('=== ゲート判定 ===');
   console.log(`  詳細ページ  生成 ${eligible.length}件 / 除外 ${excluded.length}件`);
@@ -492,7 +492,7 @@ function logBuild(inputs, gates, outputCounts, context, brokenLinks) {
     console.log(`    ${entry.id} ${entry.name}: 解説${entry.explanationLength}字 / 編成${entry.formationsLength}字 / 合計${entry.totalLength}字`);
   }
   console.log(`  血統ページ  生成 0件 / 除外 ${bloodCount}件（taxonomy.json が無いため）`);
-  console.log(`  モン種ページ 生成 0件 / 除外 ${monTypeCount}件（taxonomy.json が無いため）`);
+  console.log(`  モン類ページ 生成 0件 / 除外 ${monTypeCount}件（taxonomy.json が無いため）`);
   console.log('');
   console.log('=== 出力 ===');
   console.log(`  新規 ${outputCounts.new}件 / 更新 ${outputCounts.updated}件 / 変更なし ${outputCounts.unchanged}件`);
