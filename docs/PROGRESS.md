@@ -90,9 +90,9 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P5-1 | build-spec.md の作成 | Claude | `chore/p5-1-build-spec` | **レビュー待ち** | | 生成ページ数を134→97に修正。血統の必要導入文字数を式で定義 |
-| P5-2 | HTMLテンプレート初版 | Claude | feat/p5-2-templates | 未着手 | | |
-| P5-3 | build.js 実装 | Codex | feat/p5-3-build-script | 未着手 | | |
+| P5-1 | build-spec.md の作成 | Claude | `chore/p5-1-build-spec` | **完了** | 2026-08-18 | 検証済み。生成ページ数134→97。血統の必要導入文字数を式で定義 |
+| P5-2 | HTMLテンプレート | Codex | `feat/p5-3-build-script` | **完了** | 2026-08-18 | **P5-3に統合。**テンプレートエンジンを使わないため別ファイル化しない |
+| P5-3 | build.js 実装 | Codex | `feat/p5-3-build-script` | **レビュー待ち** | | 段階5まで完了。詳細57件＋sitemap生成。生成物とsitemapは未コミット（公開はP6-1） |
 | P5-4 | Actions→gh-pages デプロイ | Codex | feat/p5-4-deploy-actions | 未着手 | | |
 
 ## P6 ページ生成
@@ -100,7 +100,7 @@ service cloud.firestore {
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
 | P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | 未着手 | | ゲート条件は docs/build-spec.md 3-1 |
-| P6-2 | 導入文40本の執筆 | Claude | content/p6-2-taxonomy-intro | 未着手 | | ★品質の分かれ目 |
+| P6-2 | 血統34本＋モン種6本の導入文を執筆 | Claude | `content/p6-2-taxonomy-intro` | 未着手 | | 合計11,200字。必要字数は血統ごとに異なる（docs/build-spec.md 3-2） |
 | P6-3 | 集約ページ40件の生成 | Codex | feat/p6-3-taxonomy-pages | 未着手 | | |
 | P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | 未着手 | | |
 | P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | 未着手 | | |
