@@ -1,6 +1,6 @@
 # 進捗
 
-最終更新: 2026-08-18（P0-3 保留。P1-1/P1-2 を1ブランチに統合）
+最終更新: 2026-08-18（P3-1 レビュー待ち。P1-1/P1-2/P1-4 完了）
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -45,10 +45,10 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P1-1 | ルール文書の配置 | Claude Code | `chore/p1-agent-rules` | 未着手 | | **P1-2と同一ブランチに統合**（同じ担当・同じレビュー観点） |
-| P1-2 | verify.js＋Actions＋ロック | Claude Code | `chore/p1-agent-rules` | 未着手 | | **初回CIは P3-1 の既知FAILで赤になる。想定内** |
+| P1-1 | ルール文書の配置 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 検証済み。配布物とバイト単位で一致 |
+| P1-2 | verify.js＋Actions＋ロック | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | lock hash=4036c84b2ffff6a7 で一致。初回CIは既知FAILで赤 |
 | P1-3 | モン種・血統slug確定 | 人 | – | **一部完了** | | **獣=kemono で確定。**残りは血統34種のslug確認のみ |
-| P1-4 | monster-ids.json 生成 | Codex | chore/p1-4-monster-ids | 未着手 | | |
+| P1-4 | monster-ids.json 生成 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 348件・新規38件・ID重複0 |
 | P1-5 | 新規38体をシートに反映 | 人 | – | 未着手 | | |
 
 ## P2 データ移行
@@ -64,7 +64,7 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P3-1 | robots/sitemap矛盾解消 | Codex | fix/p3-1-robots-sitemap | 未着手 | | verify.js が既に検出済み |
+| P3-1 | robots/sitemap矛盾解消 | Claude Code | `fix/p3-1-robots-sitemap` | **レビュー待ち** | | CIが初めて緑になる |
 | P3-2 | noindex漏れ2件の修正 | Codex | fix/p3-2-noindex-stubs | 未着手 | | |
 | P3-3 | canonical欠落6件の補完 | Codex | fix/p3-3-canonical | 未着手 | | |
 | P3-4 | tools/ img/site/ への移動 | Codex | `chore/p3-4-move-tools` | 未着手 | | **★`google59378bd79752d094.html` を動かさないこと**（Search Console所有権） |
