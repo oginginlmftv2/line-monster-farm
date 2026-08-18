@@ -69,7 +69,7 @@ service cloud.firestore {
 | P3-3 | canonical欠落6件の補完 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | |
 | P3-4 | tools/ img/site/ への移動 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | S__94175247.jpg / S__94371850.jpg は参照多数のため今回は移動せず |
 | P3-5 | 薄い日記13本のインデックス除外 | Codex | `chore/p3-5-thin-diary` | **完了** | 2026-08-19 | sogo-ikusei 1〜7はikusei/sogo.htmlと88〜98%重複していたためcanonicalを集約。戦績6本は独自内容のため統合せずnoindex,follow。ファイル削除・URL変更なし。sitemap 37→24。 |
-| P3-6 | 重複記事の統合・役割分担 | Claude | content/p3-6-dedupe-guides | 未着手 | | |
+| P3-6 | 重複記事の統合・役割分担 | Claude | — | **完了（統合不要と判断）** | 2026-08-19 | ikusei/sogo.html（4,815字）と ikusei/sogo-ikusei.html（2,587字）の本文一致率は14%。役割が分かれており重複ではないため、統合・canonical・noindex いずれも不要。両方インデックス維持。 |
 
 ## P4 画像整理
 
