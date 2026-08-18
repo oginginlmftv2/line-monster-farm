@@ -49,7 +49,7 @@ const SPECIAL_MAX = { 'レアモン': 79, 'ノーブル': 89, 'ロード種': 99
 
 // URL用ローマ字。★は読みの確認が必要なもの
 const MON_SLUG = {
-  '魔族': 'mazoku', '獣': 'kemono', '幻霊': 'genrei',
+  '魔族': 'mazoku', '獣族': 'kemono', '幻霊': 'genrei',
   '無機': 'muki', '怪物': 'kaibutsu', '創造': 'souzou',
 };
 const BLOOD_SLUG = {
@@ -95,7 +95,7 @@ for (const m of monstersData) {
   if (!BLOOD_NO[m.mainMon]) errs.push(`主血統が未定義: ${m.mainMon} (${m.name})`);
   const sub = norm(m.subMon);
   if (!BLOOD_NO[sub] && !SPECIAL_SUB[sub]) errs.push(`副血統が未定義: ${sub} (${m.name})`);
-  if (!MON_SLUG[m.mon]) errs.push(`モン種が未定義: ${m.mon} (${m.name})`);
+  if (!MON_SLUG[m.mon]) errs.push(`モン類が未定義: ${m.mon} (${m.name})`);
 }
 if (errs.length) { errs.forEach(e => console.error('ERROR ' + e)); process.exit(1); }
 

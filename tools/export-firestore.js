@@ -240,7 +240,7 @@ async function main() {
   const byIdx = [...withExp].sort((x, y) => x.arrayIndex - y.arrayIndex);
   pick(byIdx[0]);                                   // arrayIndex 最小
   pick(byIdx[byIdx.length - 1]);                    // arrayIndex 最大
-  for (const mon of ['魔族', '獣', '幻霊', '無機', '怪物', '創造']) {
+  for (const mon of ['魔族', '獣族', '幻霊', '無機', '怪物', '創造']) {
     pick(withExp.find(r => r.mon === mon && !picked.some(p => p.id === r.id)));
   }
   for (const r of [...withExp].sort((x, y) => x.id.localeCompare(y.id))) {

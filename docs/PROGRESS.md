@@ -47,7 +47,7 @@ service cloud.firestore {
 |---|---|---|---|---|---|---|
 | P1-1 | ルール文書の配置 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 検証済み。配布物とバイト単位で一致 |
 | P1-2 | verify.js＋Actions＋ロック | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | lock hash=4036c84b2ffff6a7 で一致。初回CIは既知FAILで赤 |
-| P1-3 | モン種・血統slug確定 | 人 | `chore/p1-3-slug-policy` | **完了** | 2026-08-18 | 検証済み。獣=kemono。血統34種も確定 |
+| P1-3 | モン類・血統slug確定 | 人 | `chore/p1-3-slug-policy` | **完了** | 2026-08-18 | 検証済み。獣族=kemono。血統34種も確定 |
 | P1-4 | monster-ids.json 生成 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 348件・新規38件・ID重複0 |
 | P1-5 | 新規38体をシートに反映 | 人 | – | 未着手 | | |
 
@@ -100,8 +100,8 @@ service cloud.firestore {
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
 | P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | 未着手 | | ゲート条件は docs/build-spec.md 3-1 |
-| P6-2 | モン種6本の導入文を執筆 | 人 | – | 未着手 | | **血統34本は作らない方針に変更。**運営者本人が2,400字を執筆 |
-| P6-3 | モン種6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | 未着手 | | 血統グループを含む。docs/build-spec.md 5-3 |
+| P6-2 | モン類6本の導入文を執筆 | 人 | – | 未着手 | | **血統34本は作らない方針に変更。**運営者本人が2,400字を執筆 |
+| P6-3 | モン類6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | 未着手 | | 血統グループを含む。docs/build-spec.md 5-3 |
 | P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | 未着手 | | |
 | P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | 未着手 | | |
 
@@ -136,7 +136,7 @@ service cloud.firestore {
 
 | # | 内容 | 状態 |
 |---|---|---|
-| 1 | `獣` のローマ字 | **決定: `kemono`**（2026-08-16） |
+| 1 | `獣族` のローマ字 | **決定: `kemono`**（2026-08-16） |
 | 2 | 血統34種のslug | **決定: 34件すべて確定**（2026-08-18） |
 | 3 | レアモンの新規採番順（現在gwImg昇順） | 未決 |
 | 4 | Firestoreのセキュリティルールの現状 | **対応済: 書き込み全面禁止**（2026-08-18） |
