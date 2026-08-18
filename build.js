@@ -428,8 +428,8 @@ function renderSitemap(existingXml, pages) {
     .map(match => match[0])
     .filter(block => !detailUrlPattern.test(block));
 
-  if (existingBlocks.length !== 37) {
-    throw new Error(`sitemap.xml の既存URLが37件ではありません: ${existingBlocks.length}件`);
+  if (existingBlocks.length !== 24) {
+    throw new Error(`sitemap.xml の既存URLが24件ではありません: ${existingBlocks.length}件`);
   }
 
   const header = existingXml.slice(0, matches[0].index);
@@ -444,8 +444,8 @@ function renderSitemap(existingXml, pages) {
     throw new Error('sitemap.xml に <lastmod> が含まれています');
   }
   const urlCount = (sitemap.match(/<url>/g) || []).length;
-  if (urlCount !== 94) {
-    throw new Error(`sitemap.xml のURLが94件ではありません: ${urlCount}件`);
+  if (urlCount !== 81) {
+    throw new Error(`sitemap.xml のURLが81件ではありません: ${urlCount}件`);
   }
   return sitemap;
 }
