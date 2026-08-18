@@ -1,0 +1,8 @@
+{
+  "name": "line-monster-farm",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "verify": "node scripts/verify.js"
+  }
+}
