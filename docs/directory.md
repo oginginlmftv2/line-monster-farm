@@ -28,6 +28,8 @@
 
 **`獣` = `kemono` で確定（2026-08-16）。** 血統34種のslugは `generate-ids.js` の `BLOOD_SLUG` が正。
 
+血統34種のslugは `docs/monster-id.md` の「slug命名方針」節で確定済み（2026-08-18）。変更禁止。
+
 ## 画像
 
 ```
