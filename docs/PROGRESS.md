@@ -99,11 +99,11 @@ service cloud.firestore {
 
 | ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
 |---|---|---|---|---|---|---|
-| P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | 未着手 | | ゲート条件は docs/build-spec.md 3-1 |
-| P6-2 | モン類6本の導入文を執筆 | 人 | – | 未着手 | | **血統34本は作らない方針に変更。**運営者本人が2,400字を執筆 |
-| P6-3 | モン類6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | 未着手 | | 血統グループを含む。docs/build-spec.md 5-3 |
+| P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | **完了** | 2026-08-19 | 57件生成。ゲート（解説＋編成500字以上）通過分。公開は別途 |
+| P6-2 | モン類6本の導入文を執筆 | 人 | – | **完了** | 2026-08-19 | 6モン類ぶんを運営者が執筆。src/data/taxonomy.json に格納。計3,815字 |
+| P6-3 | モン類6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | **完了** | 2026-08-19 | 6件生成。血統グループ＋カード内抜粋。monster-type.css を新規追加 |
 | P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | 未着手 | | |
-| P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | 未着手 | | |
+| P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | **完了** | 2026-08-19 | build.js の renderSitemap() で実装済み。既存24＋生成63＝87URL |
 
 ## P7 カード活用
 

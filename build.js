@@ -144,11 +144,11 @@ function formatExplanation(text) {
 
 function descriptionFrom(text) {
   const normalized = String(text || '').replace(/\s+/g, ' ').trim();
-  if (normalized.length <= 120) return normalized;
-  const candidate = normalized.slice(0, 120);
-  const sentenceEnd = candidate.indexOf('。', 79);
-  if (sentenceEnd !== -1) return candidate.slice(0, sentenceEnd + 1);
-  return normalized.slice(0, 100);
+  if (normalized.length <= 140) return normalized;
+  const candidate = normalized.slice(0, 140);
+  const sentenceEnd = candidate.lastIndexOf('。');
+  if (sentenceEnd >= 40) return candidate.slice(0, sentenceEnd + 1);
+  return candidate.slice(0, 100) + '…';
 }
 
 function visibleChars(html) {
@@ -698,9 +698,9 @@ function validatePages(pages) {
     }
   }
 
-  const invalidDescriptions = pages.filter(page => page.description.length < 80 || page.description.length > 120);
+  const invalidDescriptions = pages.filter(page => page.description.length < 40 || page.description.length > 140);
   if (invalidDescriptions.length) {
-    throw new Error(`meta description が80〜120字ではありません: ${invalidDescriptions.map(page => page.path).join(', ')}`);
+    throw new Error(`meta description が40〜140字ではありません: ${invalidDescriptions.map(page => page.path).join(', ')}`);
   }
 }
 
