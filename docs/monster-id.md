@@ -137,7 +137,6 @@ monsters.html（ルート直下・既存）        モンスター一覧（348�
 具体例:
 
 ```
-/monsters/
 /monsters/mazoku/                       魔族 81体 / 6血統
 /monsters/mazoku/pixie/                 ピクシー血統 21体
 /monsters/mazoku/pixie/0101.html        ピクシー
