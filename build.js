@@ -960,8 +960,9 @@ function renderSitemap(existingXml, pages) {
     throw new Error('sitemap.xml に <lastmod> が含まれています');
   }
   const urlCount = (sitemap.match(/<url>/g) || []).length;
-  if (urlCount !== 79) {
-    throw new Error(`sitemap.xml のURLが79件ではありません: ${urlCount}件`);
+  const expectedUrlCount = existingBlocks.length + pages.length;
+  if (urlCount !== expectedUrlCount) {
+    throw new Error(`sitemap.xml のURLが${expectedUrlCount}件ではありません: ${urlCount}件`);
   }
   return sitemap;
 }
