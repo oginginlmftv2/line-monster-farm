@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/monster.html">
   <meta name="robots" content="noindex,nofollow">
+  <script src="redirect-map.js"></script>
+  <script>
+  (function () {
+    var id = new URLSearchParams(location.search).get('id');
+    var map = window.LMF_REDIRECT_MAP || {};
+    var dest = (id !== null && Object.prototype.hasOwnProperty.call(map, id))
+      ? map[id]
+      : '../monsters.html';
+    location.replace(dest);
+  })();
+  </script>
   <title>モンスター詳細 | LINEモンスターファーム徹底攻略</title>
   <link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>

@@ -49,8 +49,8 @@ const SPECIAL_MAX = { 'レアモン': 79, 'ノーブル': 89, 'ロード種': 99
 
 // URL用ローマ字。★は読みの確認が必要なもの
 const MON_SLUG = {
-  '魔族': 'mazoku', '獣族': 'kemono', '幻霊': 'genrei',
-  '無機': 'muki', '怪物': 'kaibutsu', '創造': 'souzou',
+  '創造': 'souzou', '幻霊': 'genrei', '魔族': 'mazoku',
+  '獣族': 'kemono', '怪物': 'kaibutsu', '無機': 'muki',
 };
 const BLOOD_SLUG = {
   'ピクシー': 'pixie', 'ドラゴン': 'dragon', 'ケンタウロス': 'centaur',

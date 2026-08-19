@@ -79,8 +79,8 @@ sitemap.xml                                        再生成
 
 ### 2-3. 既存ファイルとの共存
 
-`monsters/monster.html`（旧詳細ページ）は robots.txt でブロックされたまま残す。
-削除も変更もしない。生成物と同じディレクトリに同居する。
+`monsters/monster.html`（旧詳細ページ）は `noindex,nofollow` のまま残し、
+旧 `?id=<arrayIndex>` から新URLへ転送する。削除せず、生成物と同じディレクトリに同居する。
 
 ### 2-4. 生成物の扱い
 
@@ -187,11 +187,11 @@ noindex のページは sitemap に載せず、**AdSenseスクリプトも出力
 }
 ```
 
-- キーは `generate-ids.js` の `MON_SLUG` の値（`kemono` `kaibutsu` `muki` `souzou` `genrei` `mazoku`）
+- キーは `generate-ids.js` の `MON_SLUG` の値（`souzou` `genrei` `mazoku` `kemono` `kaibutsu` `muki`）
 - `subheading` は `null` を取りうる（「実装なし。…」のように小見出しが無い項目）。
   `null` の場合は小見出しを出力せず、本文だけを出す
 - **`sections` と `items` の配列順が出力順**。ビルド側で並べ替えないこと
-- 現時点の字数: 獣族869 / 無機664 / 幻霊604 / 創造592 / 魔族569 / 怪物517
+- 現時点の字数: 創造592 / 幻霊604 / 魔族569 / 獣族869 / 怪物517 / 無機664
 - **見出し文言は `taxonomy.json` の `heading` が正**。変更したい場合はJSONを直すだけでよく、`build.js` の修正は不要
 
 ### 3-4. ゲートで落ちた場合の扱い
@@ -250,6 +250,20 @@ noindex のページは sitemap に載せず、**AdSenseスクリプトも出力
 ---
 
 ## 5. ページ構成
+
+### モン類の表示順（公式順・確定）
+
+    創造 → 幻霊 → 魔族 → 獣族 → 怪物 → 無機
+    souzou → genrei → mazoku → kemono → kaibutsu → muki
+
+ゲーム公式の並びに合わせた（2026-08-19 確定）。
+実装上の正は `build.js` の `MON_ORDER`。表示順が関わる箇所はすべてこれを使う。
+`monster-ids.json` の出現順や `taxonomy.json` のキー順に依存しないこと。
+
+手書きページ（`index.html` / `monsters.html`）のモン類の並びも、この順に揃える。
+
+**血統の順序（`BLOOD_ORDER` 34件）はモンスターIDの根拠であり、絶対に並べ替えない。**
+今回統一したのはモン類の表示順のみ。
 
 ### 5-1. 共通要素（全生成ページ）
 
@@ -361,12 +375,12 @@ h1: <モン類>のモンスター
 
 | モン類 | slug | 所属 | 血統 | インデックス対象 | 解説字数 |
 |---|---|---:|---:|---:|---:|
+| 創造 | `souzou` | 37 | 5 | 5 | 592 |
+| 幻霊 | `genrei` | 60 | 6 | 10 | 604 |
 | 魔族 | `mazoku` | 81 | 6 | 11 | 569 |
 | 獣族 | `kemono` | 66 | 6 | 11 | 869 |
-| 幻霊 | `genrei` | 60 | 6 | 10 | 604 |
-| 無機 | `muki` | 55 | 5 | 5 | 664 |
 | 怪物 | `kaibutsu` | 49 | 6 | 7 | 517 |
-| 創造 | `souzou` | 37 | 5 | 5 | 592 |
+| 無機 | `muki` | 55 | 5 | 5 | 664 |
 
 解説字数に加えて、モンスターカード（所属数×約20字）と解説抜粋（インデックス対象数×約100字）が
 乗るため、いずれも本文量800字ゲートに対して十分な余裕がある。
@@ -390,9 +404,43 @@ h1: <モン類>のモンスター
 - `<lastmod>` は入れない（決定的な出力にするため）
 - `<priority>`: 詳細 0.7 / モン類 0.6
 
+### 5-5. monsters.html（一覧ページ）
+
+`monsters.html` は手書きページだが、カード部分だけを `build.js` が生成する。
+
+```html
+<!-- BUILD:MONSTER-CARDS:START -->
+<!-- BUILD:MONSTER-CARDS:END -->
+```
+
+このマーカー間のみを書き換える。マーカーが無ければビルドを停止する
+（黙って上書きしない）。head・導入文・フィルタ・フッターは手書きのまま。
+
+並び順は静的化前のJSと同一：gwImg が null のものが先頭（arrayIndex 降順）、
+続いて gwImg の降順。**この順序を変更しないこと。**
+
+Firestore からの画像取得と localStorage キャッシュは静的化により廃止した。
+画像は `resolveImage()` が解決する。
+
+### 5-6. monsters/redirect-map.js（旧URLの誘導）
+
+旧URL `monsters/monster.html?id=<arrayIndex>` を新URLへ転送するための対応表。
+`build.js` が全348件を arrayIndex 昇順で出力する。
+
+`monsters/monster.html` は head でこれを読み、`location.replace()` で転送する。
+未知のIDは `../monsters.html` へ送る。**ファイル自体は削除しない**（URL維持のため）。
+
+`scripts/verify.js` セクション9（9-5 / 9-6）が、旧URLへのリンク残存と
+転送先の実在を検査する。
+
 ---
 
 ## 6. インターフェース
+
+追加生成物:
+
+- `monsters.html` の `BUILD:MONSTER-CARDS` マーカー間
+- `monsters/redirect-map.js`
 
 ```js
 // build.js のエントリポイント
@@ -406,6 +454,8 @@ visibleChars(html)      // 3-1 の可視文字数を実測
 renderDetail(monster)   // 本文を組み立て、実測後にheadを付けたHTMLを返す
 renderMonType(mon)      // モン類ページ（血統グループを含む）
 renderSitemap(pages)    // sitemap.xml
+renderMonsterIndex()    // monsters.html のカード部分
+renderRedirectMap()     // 旧URLの arrayIndex → 新URL 対応表
 writeIfChanged(path, html)  // 内容が同じならファイルを書かない（差分を汚さない）
 ```
 
@@ -505,8 +555,8 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 
 ## 11. 変更してはならないもの
 
-- `monsters.html`（ルート）— P6-4 で別途対応する。このビルドでは触らない
-- `monsters/monster.html` — 旧詳細ページ。robots.txtでブロック中のまま残す
+- `monsters.html`（ルート）— `BUILD:MONSTER-CARDS` マーカー外は変更しない
+- `monsters/monster.html` — 旧詳細ページ。head の転送スクリプト以外は変更しない
 - `monsters-data.js` の配列順
 - `src/data/*.json` — 入力であり、ビルドが書き換えてはならない
 - `style.css` — 既存定義は変更しない。`page-breadcrumb` の追記のみ可
