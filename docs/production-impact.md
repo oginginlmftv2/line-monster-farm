@@ -217,3 +217,17 @@ P4-1に着手する前に、このドキュメントの中身を確認するこ�
 既に大半が割り当て済みなら、**93体のマッチング作業はほとんど不要**かもしれない。
 
 確認方法: Firebaseコンソール → Firestore Database → `monsterImages` → `assignments`
+
+## robots.txt の Disallow について
+
+**`noindex` を持つページを `Disallow` してはいけない。**
+
+Disallow されているとクローラーがページを取得できず、`noindex` を認識できない。
+結果としてインデックスから削除されず、逆効果になる。
+過去に `monsters/monster.html` の344件がこの状態で残り続けた。
+
+検索結果から消したいURLは「クロールを許可して noindex を読ませる」。
+`scripts/verify.js` のセクション5が矛盾を検出する。
+
+Disallow を使ってよいのは、noindex を置けない対象
+（画像ディレクトリ、生成物ではない大きなデータファイルなど）に限る。
