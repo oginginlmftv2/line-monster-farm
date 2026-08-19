@@ -1,0 +1,258 @@
+/* モンスター詳細ページ専用。monsters/monster.html の表示用スタイルを移植。 */
+
+.monster-detail-page .detail-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.monster-detail-page .detail-img-wrap {
+  background: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  position: relative;
+}
+
+.monster-detail-page .detail-img {
+  max-width: 200px;
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
+
+.monster-detail-page .detail-limited-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #e11d48, #f59e0b);
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.monster-detail-page .detail-body {
+  padding: 20px 24px 24px;
+}
+
+.monster-detail-page .detail-name {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.monster-detail-page .detail-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.monster-detail-page .aura-badge-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: #f5f5f5;
+}
+
+.monster-detail-page .aura-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.monster-detail-page .aura-赤 .aura-dot {
+  background: #e53e3e;
+}
+
+.monster-detail-page .aura-青 .aura-dot {
+  background: #3182ce;
+}
+
+.monster-detail-page .aura-黄 .aura-dot {
+  background: #d69e2e;
+}
+
+.monster-detail-page .aura-黒 .aura-dot {
+  background: #4a4a4a;
+}
+
+.monster-detail-page .aura-白 .aura-dot {
+  background: #a0aec0;
+  border: 1px solid #ccc;
+}
+
+.monster-detail-page .aura-緑 .aura-dot {
+  background: #38a169;
+}
+
+.monster-detail-page .mon-badge {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: #1a1a2e;
+  color: #f0a500;
+}
+
+.monster-detail-page .limited-badge-inline {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#e11d48,#f59e0b);
+  color: #fff;
+}
+
+.monster-detail-page .bloodline-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.monster-detail-page .bloodline-item {
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.monster-detail-page .bloodline-label {
+  color: #bbb;
+  font-size: 11px;
+}
+
+.monster-detail-page .bloodline-value {
+  font-weight: bold;
+  color: #555;
+}
+
+.monster-detail-page .section-box {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  padding: 22px 24px;
+  margin-bottom: 16px;
+}
+
+.monster-detail-page .section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.monster-detail-page .section-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: bold;
+  color: #1a1a2e;
+  border-left: 5px solid #f0a500;
+  padding-left: 12px;
+}
+
+.monster-detail-page .expl-body {
+  font-size: 14px;
+  line-height: 1.8;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.monster-detail-page .formation-item {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.monster-detail-page .formation-item-name {
+  font-size: 14px;
+  font-weight: bold;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.monster-detail-page .formation-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.monster-detail-page .formation-deck-cards {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.monster-detail-page .f-card {
+  text-align: center;
+  width: 74px;
+}
+
+.monster-detail-page .f-card img {
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 8px;
+  display: block;
+  transition: transform 0.2s;
+}
+
+.monster-detail-page .f-card-placeholder {
+  width: 74px;
+  height: 74px;
+  background: #f0f0f0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ccc;
+  font-size: 22px;
+}
+
+.monster-detail-page .f-card-name {
+  font-size: 10px;
+  color: #666;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+
+.monster-detail-page .rental-sep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  align-self: center;
+  gap: 3px;
+}
+
+.monster-detail-page .rental-sep-line {
+  width: 2px;
+  height: 36px;
+  background: linear-gradient(to bottom, #f0a500, #ff6b35);
+  border-radius: 2px;
+}
+
+.monster-detail-page .rental-sep-label {
+  font-size: 9px;
+  font-weight: bold;
+  color: #f0a500;
+  writing-mode: vertical-rl;
+  letter-spacing: 1px;
+}
