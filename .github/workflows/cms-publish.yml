@@ -1,0 +1,99 @@
+name: CMS publish
+
+on:
+  push:
+    branches:
+      - cms/publish
+
+concurrency:
+  group: cms-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-verify-publish:
+    name: Build, verify, and publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check publish token
+        env:
+          CMS_PUBLISH_TOKEN: ${{ secrets.CMS_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "$CMS_PUBLISH_TOKEN" ]; then
+            echo "Repository secret CMS_PUBLISH_TOKEN is not configured."
+            exit 1
+          fi
+
+      - name: Check out cms/publish
+        uses: actions/checkout@v4
+        with:
+          ref: cms/publish
+          fetch-depth: 0
+          token: ${{ secrets.CMS_PUBLISH_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Confirm current main is the publish base
+        run: |
+          git fetch origin main --no-tags
+          source_parent="$(git rev-parse HEAD^)"
+          current_main="$(git rev-parse origin/main)"
+          if [ "$source_parent" != "$current_main" ]; then
+            echo "cms/publish is not based on the current main branch."
+            echo "Publish again from the CMS after the current run ends."
+            exit 1
+          fi
+
+      - name: Generate monster IDs
+        run: node generate-ids.js
+
+      - name: Build public files
+        run: node build.js
+
+      - name: Verify repository rules
+        run: node scripts/verify.js
+
+      - name: Confirm generated-file scope
+        shell: bash
+        run: |
+          unexpected=0
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              monsters/*|monsters.html|sitemap.xml|src/data/monster-ids.json|src/data/id-availability.json|src/data/page-baseline.json|src/data/cms-seed.json)
+                ;;
+              *)
+                echo "Unexpected generated change: $file"
+                unexpected=1
+                ;;
+            esac
+          done < <({ git diff --name-only; git ls-files --others --exclude-standard; } | sort -u)
+          if [ "$unexpected" -ne 0 ]; then
+            exit 1
+          fi
+
+      - name: Commit generated files and publish main
+        shell: bash
+        run: |
+          source_sha="$(git rev-parse HEAD)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Build CMS publish ${source_sha:0:7}"
+          fi
+          published_sha="$(git rev-parse HEAD)"
+          {
+            echo "## CMS publish completed"
+            echo
+            echo "- Source: \`${source_sha}\`"
+            echo "- Main: \`${published_sha}\`"
+          } >> "$GITHUB_STEP_SUMMARY"
+          git push origin HEAD:main
