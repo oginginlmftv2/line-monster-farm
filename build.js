@@ -412,20 +412,18 @@ function renderByline(entry) {
   const author = authorUrl
     ? `<a href="${escapeHtml(authorUrl)}">${escapeHtml(String(entry.author).trim())}</a>`
     : escapeHtml(String(entry.author).trim());
-  const authorTitle = String(entry.authorTitle || '').trim();
   const contributors = Array.isArray(entry.contributors)
     ? entry.contributors.map(name => String(name || '').trim()).filter(Boolean)
     : [];
   const createdAt = formatJapaneseDate(entry.createdAt);
   const updatedAt = formatJapaneseDate(entry.updatedAt);
-  const titleText = authorTitle ? `（${escapeHtml(authorTitle)}）` : '';
   const contributorText = contributors.length
     ? `（加筆：${contributors.map(escapeHtml).join('・')}）`
     : '';
   const dateText = updatedAt
     ? ` ／ ${createdAt ? `${createdAt} 公開・` : ''}${updatedAt} 更新`
     : '';
-  return `<p class="byline">文責：${author}${titleText}${contributorText}${dateText}</p>`;
+  return `<p class="byline">著者：${author}${contributorText}${dateText}</p>`;
 }
 
 function articleJson(monster, entry) {
