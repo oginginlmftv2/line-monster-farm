@@ -8,6 +8,11 @@
   margin-bottom: 16px;
 }
 
+.monster-detail-page .page-title {
+  margin-bottom: 36px;
+  font-size: 22px;
+}
+
 .monster-detail-page .detail-img-wrap {
   background: #f0f0f0;
   display: flex;
@@ -255,4 +260,11 @@
   color: #f0a500;
   writing-mode: vertical-rl;
   letter-spacing: 1px;
+}
+
+@media (max-width: 640px) {
+  .monster-detail-page .page-title {
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
 }

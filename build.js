@@ -165,7 +165,20 @@ function gateDetails(editorial) {
   return editorial.map(entry => {
     const formationsLength = formationsTextLength(entry.formations);
     const totalLength = entry.explanationLength + formationsLength;
-    return { ...entry, formationsLength, totalLength, eligible: totalLength >= 500 };
+    return { ...entry, formationsLength, totalLength, indexable: totalLength >= 500 };
+  });
+}
+
+function createDetailEntries(inputs) {
+  const editorialById = new Map(inputs.editorial.map(entry => [entry.id, entry]));
+  return inputs.monsters.map(monster => {
+    return editorialById.get(monster.id) || {
+      id: monster.id,
+      name: monster.name,
+      explanation: '',
+      explanationLength: 0,
+      formations: [],
+    };
   });
 }
 
@@ -216,11 +229,10 @@ function gateMonTypes(inputs) {
   });
 }
 
-function createBuildContext(inputs, eligibleEntries, eligibleMonTypes) {
-  const eligibleIds = new Set(eligibleEntries.map(entry => entry.id));
+function createBuildContext(inputs, eligibleMonTypes) {
   const eligibleMonSlugs = new Set(eligibleMonTypes.map(monType => monType.slug));
   const generatedPaths = new Set([
-    ...eligibleEntries.map(entry => inputs.monsterById.get(entry.id).url.replace(/^\//, '')),
+    ...inputs.monsters.map(monster => monster.url.replace(/^\//, '')),
     ...eligibleMonTypes.map(monType => `monsters/${monType.slug}/index.html`),
   ]);
   const skippedEmptyFormations = inputs.editorial.flatMap(entry => {
@@ -235,7 +247,6 @@ function createBuildContext(inputs, eligibleEntries, eligibleMonTypes) {
   });
   return {
     ...inputs,
-    eligibleIds,
     eligibleMonSlugs,
     eligibleMonTypes,
     editorialById: new Map(inputs.editorial.map(entry => [entry.id, entry])),
@@ -389,11 +400,8 @@ function renderRelatedCard(monster, context) {
             <div class="card-name">${escapeHtml(monster.name)}</div>
             <div>${escapeHtml(monster.aura)}オーラ / ${escapeHtml(monster.subBlood)}</div>
           </div>`;
-  if (context.eligibleIds.has(monster.id)) {
-    addLink(context, monster.url.replace(/^\//, ''));
-    return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
-  }
-  return `        <div class="card">${content}\n        </div>`;
+  addLink(context, monster.url.replace(/^\//, ''));
+  return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
 }
 
 function renderDetail(entry, context) {
@@ -427,11 +435,26 @@ function renderDetail(entry, context) {
     ${nonEmptyFormations.map(formation => renderFormation(formation, context)).join('\n    ')}
   </div>`
     : '';
+  const explanation = String(entry.explanation || '').trim()
+    ? `
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">評価解説</h2>
+    </div>
+    <div class="expl-body">${formatExplanation(entry.explanation)}</div>
+  </div>`
+    : '';
   const related = relatedMonsters(monster, context);
   const limitedLabel = runtime && runtime.limited
     ? runtime.limitedLabel || '限定'
     : '';
   const aura = runtime ? runtime.aura : monster.aura;
+  const robotsMeta = entry.indexable
+    ? ''
+    : '\n  <meta name="robots" content="noindex,follow">';
+  const adsense = entry.indexable
+    ? '\n  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>'
+    : '';
 
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
 <!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
@@ -443,12 +466,11 @@ function renderDetail(entry, context) {
   <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
   <link rel="canonical" href="${canonical}">
   <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>
   <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
-  <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">${adsense}
 </head>
 <body class="monster-detail-page">
 
@@ -464,7 +486,7 @@ function renderDetail(entry, context) {
 </header>
 
 <main class="container">
-  <p>${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(monster.name)}</p>
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(monster.name)}</p>
   <h1 class="page-title">${escapeHtml(monster.name)}</h1>
 
   <div class="detail-card">
@@ -486,12 +508,7 @@ function renderDetail(entry, context) {
     </div>
   </div>
 
-  <div class="section-box">
-    <div class="section-header">
-      <h2 class="section-title">評価解説</h2>
-    </div>
-    <div class="expl-body">${formatExplanation(entry.explanation)}</div>
-  </div>${formations}
+${explanation}${formations}
 
   <div class="section-box">
     <div class="section-header">
@@ -526,7 +543,7 @@ function renderMonTypeCard(monster, context) {
   const runtime = context.runtimeById.get(monster.id);
   const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX);
   const editorial = context.editorialById.get(monster.id);
-  const hasEditorial = context.eligibleIds.has(monster.id);
+  const hasEditorial = Boolean(editorial && String(editorial.explanation || '').trim());
   const excerpt = hasEditorial
     ? `\n            <p class="mon-type-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
     : '';
@@ -539,13 +556,10 @@ function renderMonTypeCard(monster, context) {
             <div class="card-name">${escapeHtml(monster.name)}</div>
             <div class="mon-type-card-meta">${escapeHtml(runtime ? runtime.aura : monster.aura)}オーラ / 副血統: ${escapeHtml(monster.subBlood)}${limited}</div>${excerpt}
           </div>`;
-  if (hasEditorial) {
-    addLink(context, monster.url.replace(/^\//, ''));
-    return `        <a class="card mon-type-card mon-type-card--editorial" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
+  addLink(context, monster.url.replace(/^\//, ''));
+  const editorialClass = hasEditorial ? ' mon-type-card--editorial' : '';
+  return `        <a class="card mon-type-card${editorialClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
         </a>`;
-  }
-  return `        <div class="card mon-type-card mon-type-card--compact">${content}
-        </div>`;
 }
 
 function groupMonTypeMonsters(monsters) {
@@ -580,8 +594,14 @@ function renderMonType(monType, context) {
 ${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escapeHtml(item.subheading)}</h3>\n`}    <p>${escapeHtml(item.body)}</p>`).join('\n')}
   </section>`).join('');
   const bloodGroups = groups.map(group => {
-    const editorialMembers = group.members.filter(monster => context.eligibleIds.has(monster.id));
-    const compactMembers = group.members.filter(monster => !context.eligibleIds.has(monster.id));
+    const editorialMembers = group.members.filter(monster => {
+      const editorial = context.editorialById.get(monster.id);
+      return editorial && String(editorial.explanation || '').trim();
+    });
+    const compactMembers = group.members.filter(monster => {
+      const editorial = context.editorialById.get(monster.id);
+      return !editorial || !String(editorial.explanation || '').trim();
+    });
     const editorialGrid = editorialMembers.length
       ? `
     <div class="card-grid mon-type-grid mon-type-grid--editorial">
@@ -636,7 +656,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 </header>
 
 <main class="container">
-  <p class="mon-type-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monType.name)}</p>
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monType.name)}</p>
   <h1 class="page-title">${escapeHtml(monType.name)}のモンスター</h1>
 ${editorialSections}
 
@@ -707,19 +727,25 @@ function renderSitemap(existingXml, pages) {
 }
 
 function validatePages(pages) {
-  const thin = pages.filter(page => page.contentCharacters < 800);
+  const indexablePages = pages.filter(page => page.indexable);
+  const thin = indexablePages.filter(page => page.contentCharacters < 800);
   if (thin.length) {
     throw new Error(`本文量800字未満のページ: ${thin.map(page => `${page.path} (${page.contentCharacters}字)`).join(', ')}`);
   }
 
-  for (const field of ['title', 'description', 'canonical']) {
+  for (const field of ['title', 'canonical']) {
     const values = pages.map(page => page[field]);
     if (new Set(values).size !== values.length) {
       throw new Error(`${field} がユニークではありません`);
     }
   }
 
-  const invalidDescriptions = pages.filter(page => page.description.length < 40 || page.description.length > 140);
+  const descriptions = indexablePages.map(page => page.description);
+  if (new Set(descriptions).size !== descriptions.length) {
+    throw new Error('description がユニークではありません');
+  }
+
+  const invalidDescriptions = indexablePages.filter(page => page.description.length < 40 || page.description.length > 140);
   if (invalidDescriptions.length) {
     throw new Error(`meta description が40〜140字ではありません: ${invalidDescriptions.map(page => page.path).join(', ')}`);
   }
@@ -731,8 +757,8 @@ function linkExists(target, generatedPaths) {
 
 function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLinks) {
   const taxonomyCounts = countTaxonomyEntries(inputs.taxonomy);
-  const excluded = gates.filter(entry => !entry.eligible);
-  const eligible = gates.filter(entry => entry.eligible);
+  const noindex = gates.filter(entry => !entry.indexable);
+  const indexable = gates.filter(entry => entry.indexable);
   const excludedMonTypes = monTypeGates.filter(monType => !monType.eligible);
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
 
@@ -743,10 +769,7 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン類${taxonomyCounts.monTypes}件`);
   console.log('');
   console.log('=== ゲート判定 ===');
-  console.log(`  詳細ページ  生成 ${eligible.length}件 / 除外 ${excluded.length}件`);
-  for (const entry of excluded) {
-    console.log(`    ${entry.id} ${entry.name}: 解説${entry.explanationLength}字 / 編成${entry.formationsLength}字 / 合計${entry.totalLength}字`);
-  }
+  console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);
   console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件 / 除外 ${excludedMonTypes.length}件`);
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
@@ -772,12 +795,13 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
 
 function main() {
   const inputs = loadInputs();
-  const gates = gateDetails(inputs.editorial);
-  const eligible = gates.filter(entry => entry.eligible);
+  const detailEntries = createDetailEntries(inputs);
+  const gates = gateDetails(detailEntries);
+  const indexable = gates.filter(entry => entry.indexable);
   const monTypeGates = gateMonTypes(inputs);
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
-  const context = createBuildContext(inputs, eligible, eligibleMonTypes);
-  const detailPages = eligible.map(entry => {
+  const context = createBuildContext(inputs, eligibleMonTypes);
+  const detailPages = gates.map(entry => {
     const monster = inputs.monsterById.get(entry.id);
     const html = renderDetail(entry, context);
     const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
@@ -788,6 +812,7 @@ function main() {
       description: descriptionFrom(entry.explanation),
       canonical: `${SITE_URL}${monster.url}`,
       priority: '0.7',
+      indexable: entry.indexable,
       contentCharacters: contentChars(html),
     };
   });
@@ -802,13 +827,21 @@ function main() {
       description: descriptionFrom(monType.entry.sections[0].items[0].body),
       canonical: `${SITE_URL}/monsters/${monType.slug}/`,
       priority: '0.6',
+      indexable: true,
       contentCharacters: contentChars(html),
     };
   });
   const pages = detailPages.concat(monTypePages);
 
   validatePages(pages);
-  const sitemap = renderSitemap(inputs.sitemap, pages);
+  const detailPageById = new Map(detailPages.map(page => {
+    return [path.basename(page.path, '.html'), page];
+  }));
+  const sitemapPages = inputs.editorial
+    .map(entry => detailPageById.get(entry.id))
+    .filter(page => page && page.indexable)
+    .concat(monTypePages);
+  const sitemap = renderSitemap(inputs.sitemap, sitemapPages);
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
