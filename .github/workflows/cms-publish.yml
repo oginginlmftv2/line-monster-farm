@@ -54,6 +54,9 @@ jobs:
       - name: Generate monster IDs
         run: node generate-ids.js
 
+      - name: Verify CMS predicted IDs
+        run: node scripts/verify-cms-ids.js
+
       - name: Build public files
         run: node build.js
 
