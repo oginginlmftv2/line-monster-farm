@@ -9,6 +9,9 @@ const ROOT_PREFIX = '../../../';
 const MON_TYPE_ROOT_PREFIX = '../../';
 const DRY_RUN = process.argv.includes('--dry');
 
+// モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
+const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
+
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
 }
@@ -35,6 +38,7 @@ function loadInputs() {
     'src/data/monster-images.json',
     'monsters-data.js',
     'cards/cards-data.js',
+    'monsters.html',
     'sitemap.xml',
   ];
   const missing = required.filter(file => !fs.existsSync(path.join(REPO, file)));
@@ -175,14 +179,12 @@ function gateMonTypes(inputs) {
   const taxonomyMonTypes = inputs.taxonomy && inputs.taxonomy.monTypes
     ? inputs.taxonomy.monTypes
     : {};
-  const monTypes = new Map();
-  for (const monster of inputs.monsters) {
-    if (!monTypes.has(monster.monSlug)) {
-      monTypes.set(monster.monSlug, monster.mon);
-    }
-  }
+  const monTypeNames = new Map(
+    inputs.monsters.map(monster => [monster.monSlug, monster.mon])
+  );
 
-  return [...monTypes].map(([slug, name]) => {
+  return MON_ORDER.map(slug => {
+    const name = monTypeNames.get(slug) || slug;
     const entry = taxonomyMonTypes[slug];
     const reasons = [];
     if (!entry) {
@@ -258,6 +260,73 @@ function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
     return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${runtime.gwImg}.png`;
   }
   return null;
+}
+
+function renderMonsterCards(context) {
+  const sortedMonsters = context.monsters
+    .map(monster => ({
+      monster,
+      runtime: context.runtimeById.get(monster.id),
+    }))
+    .sort((a, b) => {
+      const av = a.runtime && a.runtime.gwImg != null ? a.runtime.gwImg : Infinity;
+      const bv = b.runtime && b.runtime.gwImg != null ? b.runtime.gwImg : Infinity;
+      if (av === Infinity && bv === Infinity) {
+        return b.monster.arrayIndex - a.monster.arrayIndex;
+      }
+      return bv - av;
+    });
+
+  return sortedMonsters.map(({ monster, runtime }) => {
+    const image = resolveImage(monster.id, context, '');
+    const aura = runtime ? runtime.aura : monster.aura;
+    const mon = runtime && runtime.mon ? runtime.mon : monster.mon;
+    const limited = runtime ? !!runtime.limited : !!monster.limited;
+    const href = monster.url.replace(/^\//, '');
+    return `    <a class="monster-card" href="${escapeHtml(href)}"
+       data-aura="${escapeHtml(aura)}" data-limited="${limited ? '1' : '0'}" data-mon="${escapeHtml(mon)}"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}" loading="lazy">` : ''}${limited ? '\n        <span class="badge-limited">限定</span>' : ''}
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${escapeHtml(aura)}</div>
+        <div class="monster-name">${escapeHtml(monster.name)}</div>
+      </div>
+    </a>`;
+  }).join('\n');
+}
+
+function renderMonsterIndex(source, context) {
+  const startMarker = '    <!-- BUILD:MONSTER-CARDS:START -->';
+  const endMarker = '    <!-- BUILD:MONSTER-CARDS:END -->';
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error('monsters.html のモンスターカード生成マーカーが見つかりません');
+  }
+  if (source.indexOf(startMarker, start + startMarker.length) !== -1
+      || source.indexOf(endMarker, end + endMarker.length) !== -1) {
+    throw new Error('monsters.html のモンスターカード生成マーカーが重複しています');
+  }
+  const cards = renderMonsterCards(context);
+  return source.slice(0, start + startMarker.length)
+    + `\n${cards}\n`
+    + source.slice(end);
+}
+
+function renderRedirectMap(monsters) {
+  const entries = [...monsters]
+    .sort((a, b) => a.arrayIndex - b.arrayIndex)
+    .map(monster => {
+      const destination = monster.url.replace(/^\/monsters\//, '');
+      return `  ${JSON.stringify(String(monster.arrayIndex))}: ${JSON.stringify(destination)}`;
+    });
+  return `/* このファイルは build.js が自動生成しています。直接編集しないでください。 */
+window.LMF_REDIRECT_MAP = {
+${entries.join(',\n')}
+};
+`;
 }
 
 function addLink(context, target) {
@@ -768,7 +837,7 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   for (const entry of nearThreshold) {
     console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${800 - entry.contentCharacters}字）`);
   }
-  console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件 / 除外 ${excludedMonTypes.length}件`);
+  console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件（${eligibleMonTypes.map(monType => monType.name).join(' → ')}） / 除外 ${excludedMonTypes.length}件`);
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
   }
@@ -797,6 +866,11 @@ function main() {
   const monTypeGates = gateMonTypes(inputs);
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
   const context = createBuildContext(inputs, eligibleMonTypes);
+  const monsterIndex = renderMonsterIndex(
+    fs.readFileSync(path.join(REPO, 'monsters.html'), 'utf8'),
+    context
+  );
+  const redirectMap = renderRedirectMap(inputs.monsters);
   const detailPages = detailEntries.map(entry => {
     const monster = inputs.monsterById.get(entry.id);
     const rendered = renderDetail(entry, context);
@@ -841,18 +915,24 @@ function main() {
   const sitemapPages = inputs.editorial
     .map(entry => detailPageById.get(entry.id))
     .filter(page => page && page.indexable)
-    .concat(monTypePages);
+    .concat([...monTypePages].sort((a, b) => {
+      // sitemap.xml は表示順ではないため、既存の決定的なURL順を維持する。
+      return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
+        - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
+    }));
   const sitemap = renderSitemap(inputs.sitemap, sitemapPages);
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
   }
 
-  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 1 };
+  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 3 };
   for (const page of pages) {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
+  outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
+  outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }
 

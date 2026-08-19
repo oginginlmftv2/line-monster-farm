@@ -144,7 +144,7 @@
   <h1 class="page-title">モンスター一覧</h1>
 
   <p style="font-size:14px;color:#555;line-height:1.8;margin:-4px 0 18px;">
-    LINEモンスターファームに登場する全342種類のモンスターを、オーラ色（赤・青・黄・黒・白・緑）とモン類（獣族・創造・魔族・幻霊・怪物・無機）で絞り込んで一覧表示できます。新モンスターはガチャ実装のたびに当サイトで継続的に追加しており、直近ではメダロットコラボの「ゴッドエンペラー」「ロクショウ」を追加しました。育成方針を決める際は、まず狙っているオーラ・モン類でここから絞り込んで、対象モンスターの傾向を把握するのがおすすめです。各モンスターの詳細な育成編成は<a href="beginner.html" style="color:#f0a500;">初心者向けガイド</a>や<a href="diary.html" style="color:#f0a500;">プレイ日記</a>でも個別に解説しています。
+    LINEモンスターファームに登場する全348種類のモンスターを、オーラ色（赤・青・黄・黒・白・緑）とモン類（創造・幻霊・魔族・獣族・怪物・無機）で絞り込んで一覧表示できます。新モンスターはガチャ実装のたびに当サイトで継続的に追加しており、直近ではメダロットコラボの「ゴッドエンペラー」「ロクショウ」を追加しました。育成方針を決める際は、まず狙っているオーラ・モン類でここから絞り込んで、対象モンスターの傾向を把握するのがおすすめです。各モンスターの詳細な育成編成は<a href="beginner.html" style="color:#f0a500;">初心者向けガイド</a>や<a href="diary.html" style="color:#f0a500;">プレイ日記</a>でも個別に解説しています。
   </p>
 
   <div class="filter-bar" id="filterBar">
@@ -160,16 +160,3964 @@
 
   <div class="filter-bar" id="monFilterBar" style="margin-top:8px;">
     <button class="filter-btn active" data-mon="all">すべて</button>
-    <button class="filter-btn" data-mon="獣族">獣族</button>
     <button class="filter-btn" data-mon="創造">創造</button>
-    <button class="filter-btn" data-mon="魔族">魔族</button>
     <button class="filter-btn" data-mon="幻霊">幻霊</button>
+    <button class="filter-btn" data-mon="魔族">魔族</button>
+    <button class="filter-btn" data-mon="獣族">獣族</button>
     <button class="filter-btn" data-mon="怪物">怪物</button>
     <button class="filter-btn" data-mon="無機">無機</button>
   </div>
 
+  <p style="margin:12px 0 0;font-size:13px;color:#666;">
+    モン類ごとの解説と血統別の一覧はこちら：
+    <a href="monsters/souzou/">創造</a>・<a href="monsters/genrei/">幻霊</a>・<a href="monsters/mazoku/">魔族</a>・<a href="monsters/kemono/">獣族</a>・<a href="monsters/kaibutsu/">怪物</a>・<a href="monsters/muki/">無機</a>
+  </p>
+
   <div class="monster-grid" id="monsterGrid">
-    <!-- JS で生成 -->
+    <!-- BUILD:MONSTER-CARDS:START -->
+    <a class="monster-card" href="monsters/genrei/mocchi/1625.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__3637252_0.jpg" alt="カッパマキ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">カッパマキ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2256.html"
+       data-aura="赤" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__22323204_0.jpg" alt="ジハンキ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ジハンキ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3314.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__22323203_0.jpg" alt="ミカエル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ミカエル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1104.html"
+       data-aura="黄" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__30269443.jpg" alt="エクスマキナ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">エクスマキナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0928.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/suko-ru.jpg" alt="スコール" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スコール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/zan/3490.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/huuma.jpg" alt="フウマ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">フウマ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1353.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__72482840_0.jpg" alt="ロクショウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ロクショウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0353.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__72482839_0.jpg" alt="ゴッドエンペラー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ゴッドエンペラー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3251.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__111239186_0.jpg" alt="シュシュポップ3" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">シュシュポップ3</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1352.html"
+       data-aura="黄" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/31269.jpg" alt="メタビー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メタビー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2453.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__3399682.jpg" alt="ヤマト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ヤマト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2809.html"
+       data-aura="青" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__107167751_0.jpg" alt="ウルズ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ウルズ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0190.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__107167750_0.jpg" alt="ティターニア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ティターニア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1380.html"
+       data-aura="黒" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__107036676.jpg" alt="ニャハト" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ニャハト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0554.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__71286791_0.jpg" alt="シュシュポッポ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">シュシュポッポ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2224.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__94371854.jpg" alt="アスファール" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">アスファール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1922.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__67829767_0.jpg" alt="マグマグミ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">マグマグミ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2050.html"
+       data-aura="黒" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__67829768_0.jpg" alt="ラブカ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ラブカ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/zan/3408.html"
+       data-aura="赤" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208594_0.jpg" alt="レツ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">レツ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0990.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208592_0.jpg" alt="ヴァナルガンド" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ヴァナルガンド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2502.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200817_0.jpg" alt="マグフロッグ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">マグフロッグ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/zan/3406.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200439_0.jpg" alt="シン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">シン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1450.html"
+       data-aura="青" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200762_0.jpg" alt="ブリザード" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ブリザード</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2690.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200818_0.jpg" alt="タマモノマエ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">タマモノマエ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/zan/3434.html"
+       data-aura="黒" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200400_0.jpg" alt="ザン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ザン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3380.html"
+       data-aura="黒" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93265968.jpg" alt="ディアブロ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ディアブロ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3052.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200402_0.jpg" alt="シオン・リゾート" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">シオン・リゾート</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0150.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208581_0.jpg" alt="ミリム・リゾート" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ミリム・リゾート</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1850.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200630_0.jpg" alt="リムル・グラサン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">リムル・グラサン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2650.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200816_0.jpg" alt="シュナ・リゾート" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">シュナ・リゾート</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1851.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200631_0.jpg" alt="リムル・リゾート" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">リムル・リゾート</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0227.html"
+       data-aura="白" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200500_0.jpg" alt="ギドラス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ギドラス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0350.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200575_0.jpg" alt="ヤブサメ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ヤブサメ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0750.html"
+       data-aura="黒" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200404_0.jpg" alt="タクティクス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">タクティクス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0151.html"
+       data-aura="白" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200506_0.jpg" alt="シラヌイ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">シラヌイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1080.html"
+       data-aura="緑" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200388_0.jpg" alt="ハムクロース" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ハムクロース</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2250.html"
+       data-aura="黄" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200753_0.jpg" alt="スターギフト" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スターギフト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0650.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200750_0.jpg" alt="ルドルファス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ルドルファス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/metalner/2750.html"
+       data-aura="黄" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200752_0.jpg" alt="プレゼンター" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">プレゼンター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3350.html"
+       data-aura="黄" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200751_0.jpg" alt="ハニエル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ハニエル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2852.html"
+       data-aura="黒" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200401_0.jpg" alt="モモン&amp;ハムスケ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">モモン&amp;ハムスケ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3250.html"
+       data-aura="赤" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208582_0.jpg" alt="シャルティア" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">シャルティア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2321.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200387_0.jpg" alt="ハナシャクトリ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ハナシャクトリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1750.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200703_0.jpg" alt="アインズ・マスク" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">アインズ・マスク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2051.html"
+       data-aura="白" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200510_0.jpg" alt="アルベド" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">アルベド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1751.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200406_0.jpg" alt="アインズ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">アインズ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0180.html"
+       data-aura="白" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200505_0.jpg" alt="グレイスウィッチ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">グレイスウィッチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/ghost/3150.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200456_0.jpg" alt="スプーキー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スプーキー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0550.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200542_0.jpg" alt="シュタイン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">シュタイン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0850.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200535_0.jpg" alt="ヒュプノス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ヒュプノス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3051.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200389_0.jpg" alt="フラン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">フラン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3317.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200403_0.jpg" alt="イブリース" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イブリース</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2952.html"
+       data-aura="青" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200758_0.jpg" alt="セイリュウ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">セイリュウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3321.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200423_0.jpg" alt="ドライアド" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ドライアド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1650.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200627_0.jpg" alt="サッピルッチ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">サッピルッチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3209.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200626_0.jpg" alt="セリアン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">セリアン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/arc/3333.html"
+       data-aura="青" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200624_0.jpg" alt="アーク" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アーク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1752.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200405_0.jpg" alt="バロム" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">バロム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0950.html"
+       data-aura="白" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200475_0.jpg" alt="ボルメテウス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ボルメテウス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2251.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200554_0.jpg" alt="D・Mデッキ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">D・Mデッキ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0450.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200471_0.jpg" alt="アルカディアス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">アルカディアス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0250.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208579_0.jpg" alt="ボルシャック" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ボルシャック</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2450.html"
+       data-aura="黄" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200747_0.jpg" alt="ニャルラトホテプ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ニャルラトホテプ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2531.html"
+       data-aura="黄" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200746_0.jpg" alt="ナリキロッグ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ナリキロッグ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0120.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200622_0.jpg" alt="マーキュリー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">マーキュリー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2651.html"
+       data-aura="黄" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200748_0.jpg" alt="オリヒメ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">オリヒメ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1150.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200461_0.jpg" alt="オシリス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">オシリス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1651.html"
+       data-aura="黒" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200399_0.jpg" alt="ジェントル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ジェントル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2350.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200460_0.jpg" alt="スカラベ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スカラベ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2851.html"
+       data-aura="緑" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200393_0.jpg" alt="メルホイップ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">メルホイップ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2052.html"
+       data-aura="白" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200503_0.jpg" alt="ウェディング" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ウェディング</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1151.html"
+       data-aura="赤" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93208580_0.jpg" alt="ハオ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ハオ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0751.html"
+       data-aura="緑" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200422_0.jpg" alt="麻倉葉" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">麻倉葉</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2652.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200812_0.jpg" alt="恐山アンナ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">恐山アンナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0752.html"
+       data-aura="緑" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200390_0.jpg" alt="麻倉葉(武装)" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">麻倉葉(武装)</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1550.html"
+       data-aura="黄" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200745_0.jpg" alt="キンゾー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">キンゾー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2001.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200811_0.jpg" alt="メロウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">メロウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1250.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200508_0.jpg" alt="グジラキング" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">グジラキング</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1001.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200810_0.jpg" alt="ヴァージアハピ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ヴァージアハピ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2111.html"
+       data-aura="白" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200558_0.jpg" alt="キンプンソウ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">キンプンソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3213.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200544_0.jpg" alt="ドリーミィ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ドリーミィ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1350.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200564_0.jpg" alt="ニャースター" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ニャースター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0251.html"
+       data-aura="黒" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200407_0.jpg" alt="ムー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ムー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/ghost/3117.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200723_0.jpg" alt="トリックン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">トリックン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/ghost/3113.html"
+       data-aura="白" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200545_0.jpg" alt="チシャ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">チシャ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3219.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200625_0.jpg" alt="ジェリーヌ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ジェリーヌ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1432.html"
+       data-aura="黒" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200709_0.jpg" alt="フレスベルグ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">フレスベルグ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1451.html"
+       data-aura="黒" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200704_0.jpg" alt="ビンチョー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ビンチョー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/ghost/3131.html"
+       data-aura="黄" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200744_0.jpg" alt="ゴースト" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ゴースト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/illumine/3232.html"
+       data-aura="黒" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200724_0.jpg" alt="イルミネ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イルミネ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2850.html"
+       data-aura="緑" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200391_0.jpg" alt="キング" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">キング</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2951.html"
+       data-aura="黄" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_257.png" alt="メリオダス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メリオダス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1950.html"
+       data-aura="黄" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200741_0.jpg" alt="エスカノール・夜" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">エスカノール・夜</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1551.html"
+       data-aura="黄" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200742_0.jpg" alt="パーシバル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">パーシバル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1951.html"
+       data-aura="黄" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200743_0.jpg" alt="エスカノール" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">エスカノール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2950.html"
+       data-aura="黄" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200740_0.jpg" alt="メリオダス・魔神" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メリオダス・魔神</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0409.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200623_0.jpg" alt="ライカンスロイド" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ライカンスロイド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1952.html"
+       data-aura="白" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200559_0.jpg" alt="カガミモチ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">カガミモチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2629.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200620_0.jpg" alt="オロチ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">オロチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2451.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200621_0.jpg" alt="ジョカ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ジョカ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/metalner/2701.html"
+       data-aura="赤" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200808_0.jpg" alt="ラブラブセイジン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ラブラブセイジン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1351.html"
+       data-aura="赤" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200807_0.jpg" alt="メリーベア" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">メリーベア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2150.html"
+       data-aura="緑" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200451_0.jpg" alt="ミツボシソウ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ミツボシソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1251.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200814_0.jpg" alt="グジラウス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">グジラウス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0551.html"
+       data-aura="緑" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200396_0.jpg" alt="巨人(エレン)" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">巨人(エレン)</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2252.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200555_0.jpg" alt="ウォール・マリア" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ウォール・マリア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1652.html"
+       data-aura="緑" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200491_0.jpg" alt="団長モッチー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">団長モッチー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1653.html"
+       data-aura="緑" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200446_0.jpg" alt="調査兵モッチー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">調査兵モッチー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3050.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200395_0.jpg" alt="女型の巨人" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">女型の巨人</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1753.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200737_0.jpg" alt="スプラッター" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スプラッター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0923.html"
+       data-aura="黄" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200736_0.jpg" alt="ヤクトハウンド" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヤクトハウンド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0753.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200734_0.jpg" alt="ショーグン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ショーグン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1050.html"
+       data-aura="黄" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200735_0.jpg" alt="マミー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">マミー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/metalner/2721.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200434_0.jpg" alt="ステルナー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ステルナー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1452.html"
+       data-aura="白" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200511_0.jpg" alt="フェニックス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">フェニックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0552.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200572_0.jpg" alt="サンドゴーレム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">サンドゴーレム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1552.html"
+       data-aura="白" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200563_0.jpg" alt="シロゾー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">シロゾー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/metalner/2715.html"
+       data-aura="黄" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200733_0.jpg" alt="メタゾール" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メタゾール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2827.html"
+       data-aura="白" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200546_0.jpg" alt="ワンフォー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ワンフォー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/metalner/2727.html"
+       data-aura="白" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200548_0.jpg" alt="メタルナー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">メタルナー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0152.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200806_0.jpg" alt="ミリム" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ミリム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1852.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200616_0.jpg" alt="リムル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">リムル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0252.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200615_0.jpg" alt="ヴェルドラ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ヴェルドラ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1853.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200618_0.jpg" alt="リムル(仮面)" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">リムル(仮面)</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2253.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200619_0.jpg" alt="ホシゾラ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ホシゾラ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0209.html"
+       data-aura="青" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200614_0.jpg" alt="クレバス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">クレバス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2920.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200613_0.jpg" alt="ネプチューン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ネプチューン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2053.html"
+       data-aura="青" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200612_0.jpg" alt="オケアノス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">オケアノス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0701.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200809_0.jpg" alt="レジーナ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">レジーナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0851.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200813_0.jpg" alt="スピナー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">スピナー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0308.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200803_0.jpg" alt="アンタレス" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">アンタレス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3016.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200802_0.jpg" alt="ハナヨリダンゴ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ハナヨリダンゴ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1607.html"
+       data-aura="白" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200561_0.jpg" alt="ヨロイモッチー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ヨロイモッチー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0351.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200684_0.jpg" alt="オーディーン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">オーディーン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0624.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200700_0.jpg" alt="ティラノパープル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ティラノパープル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1953.html"
+       data-aura="黒" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200701_0.jpg" alt="メタルゲル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">メタルゲル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0417.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200682_0.jpg" alt="エンドブリンガー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">エンドブリンガー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1711.html"
+       data-aura="白" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200560_0.jpg" alt="ラー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ラー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0930.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200732_0.jpg" alt="ヤシャガミ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヤシャガミ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1854.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200398_0.jpg" alt="ムネンド" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ムネンド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0852.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200730_0.jpg" alt="スモーピオン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スモーピオン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3024.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200726_0.jpg" alt="ラミア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ラミア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0604.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200729_0.jpg" alt="ディノテクノ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ディノテクノ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kijin/3030.html"
+       data-aura="黄" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200731_0.jpg" alt="キジン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">キジン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2928.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200417_0.jpg" alt="ティアマト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ティアマト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0352.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200392_0.jpg" alt="スナイプ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スナイプ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0702.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200801_0.jpg" alt="ベスビオス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ベスビオス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0153.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200799_0.jpg" alt="ピクシーオリジン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ピクシーオリジン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2528.html"
+       data-aura="緑" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200428_0.jpg" alt="イチゴエル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">イチゴエル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0754.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200457_0.jpg" alt="コクシムソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">コクシムソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0125.html"
+       data-aura="緑" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200394_0.jpg" alt="レイリー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">レイリー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1152.html"
+       data-aura="白" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200464_0.jpg" alt="ハレハレ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ハレハレ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2813.html"
+       data-aura="白" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200547_0.jpg" alt="パッチニャーコ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">パッチニャーコ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2823.html"
+       data-aura="黄" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200678_0.jpg" alt="グレモリ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">グレモリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0709.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200611_0.jpg" alt="グレイシア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">グレイシア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2628.html"
+       data-aura="緑" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200450_0.jpg" alt="エンキドゥ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">エンキドゥ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2653.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200549_0.jpg" alt="ハクタク・妖" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ハクタク・妖</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dullahan/0707.html"
+       data-aura="白" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200570_0.jpg" alt="デュラハン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">デュラハン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/yggdrasil/2828.html"
+       data-aura="緑" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200454_0.jpg" alt="ユグドラシル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ユグドラシル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2351.html"
+       data-aura="青" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200610_0.jpg" alt="エクスプレス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">エクスプレス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1201.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200797_0.jpg" alt="ピンクグジラ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ピンクグジラ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2101.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200796_0.jpg" alt="ベニヒメソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ベニヒメソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2914.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200805_0.jpg" alt="セキリュウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">セキリュウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0553.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200609_0.jpg" alt="ニューボトル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ニューボトル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2254.html"
+       data-aura="赤" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200795_0.jpg" alt="ネンガジョウ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ネンガジョウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2614.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200800_0.jpg" alt="アマテラス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">アマテラス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2906.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200438_0.jpg" alt="ウロボロス・恐" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ウロボロス・恐</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/shinryu/2929.html"
+       data-aura="青" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200604_0.jpg" alt="シンリュウ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">シンリュウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1051.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200794_0.jpg" alt="サンタ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">サンタ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2054.html"
+       data-aura="緑" data-limited="1" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200537_0.jpg" alt="スネグーラチカ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スネグーラチカ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0451.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200465_0.jpg" alt="ランスロット・A" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ランスロット・A</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0452.html"
+       data-aura="白" data-limited="1" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200574_0.jpg" alt="ランスロット" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ランスロット</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0253.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200791_0.jpg" alt="紅蓮弐式" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">紅蓮弐式</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0254.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200792_0.jpg" alt="紅蓮可翔式" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">紅蓮可翔式</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1754.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200707_0.jpg" alt="ガウェイン" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ガウェイン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2411.html"
+       data-aura="白" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200552_0.jpg" alt="バズラ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">バズラ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2421.html"
+       data-aura="緑" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200427_0.jpg" alt="ジャングラー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ジャングラー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0817.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200691_0.jpg" alt="セルケト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">セルケト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0217.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200410_0.jpg" alt="ディアボロス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ディアボロス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1404.html"
+       data-aura="黄" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200728_0.jpg" alt="ラプタ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ラプタ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1855.html"
+       data-aura="黄" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200676_0.jpg" alt="ジャック" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ジャック</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2654.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200414_0.jpg" alt="メデューサ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">メデューサ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0154.html"
+       data-aura="黄" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200674_0.jpg" alt="ウィッチ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ウィッチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1514.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200798_0.jpg" alt="ヒガンバナ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ヒガンバナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1420.html"
+       data-aura="青" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200608_0.jpg" alt="アオサギビ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アオサギビ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1702.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200788_0.jpg" alt="フレアデス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">フレアデス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0102.html"
+       data-aura="赤" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200786_0.jpg" alt="ダイナ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ダイナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1402.html"
+       data-aura="赤" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200785_0.jpg" alt="ワイバーン・炎" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ワイバーン・炎</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2017.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200722_0.jpg" alt="セイレーン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">セイレーン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/hinotori/1414.html"
+       data-aura="赤" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200787_0.jpg" alt="ヒノトリ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ヒノトリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2255.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200720_0.jpg" alt="ラクガキモノ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ラクガキモノ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1011.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200567_0.jpg" alt="ハムオウジ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ハムオウジ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1115.html"
+       data-aura="黄" data-limited="1" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200670_0.jpg" alt="ヒトツメオウジ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヒトツメオウジ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1825.html"
+       data-aura="緑" data-limited="1" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200453_0.jpg" alt="スイカクレイ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">スイカクレイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0123.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200671_0.jpg" alt="ナハトファルター" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ナハトファルター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2151.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200677_0.jpg" alt="ドレッドハーブ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ドレッドハーブ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2608.html"
+       data-aura="赤" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200784_0.jpg" alt="アラクネ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">アラクネ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1924.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200710_0.jpg" alt="パー・プリン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">パー・プリン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2620.html"
+       data-aura="青" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200605_0.jpg" alt="ハスタ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ハスタ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1654.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200783_0.jpg" alt="サクラモッチーニ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">サクラモッチーニ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1326.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200576_0.jpg" alt="イナリ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">イナリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0304.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200669_0.jpg" alt="デュランダル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">デュランダル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2309.html"
+       data-aura="青" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200603_0.jpg" alt="ブルードリル" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ブルードリル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0406.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200448_0.jpg" alt="オメガレックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">オメガレックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2550.html"
+       data-aura="黄" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200666_0.jpg" alt="ヨコヅナ" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヨコヅナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1716.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200780_0.jpg" alt="サクラチル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">サクラチル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1202.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200790_0.jpg" alt="コイノボリ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">コイノボリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/joker/1717.html"
+       data-aura="黒" data-limited="1" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200409_0.jpg" alt="ジョーカー" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ジョーカー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0525.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200429_0.jpg" alt="フロッグロック" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">フロッグロック</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0126.html"
+       data-aura="白" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200467_0.jpg" alt="カチョウフウゲツ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">カチョウフウゲツ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0951.html"
+       data-aura="白" data-limited="1" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200568_0.jpg" alt="メカお父さん" loading="lazy">
+        <span class="badge-limited">限定</span>
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">メカお父さん</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2452.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200607_0.jpg" alt="リヴァイアサン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">リヴァイアサン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0204.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200675_0.jpg" alt="テクノドラゴン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">テクノドラゴン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2626.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200550_0.jpg" alt="キュービ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">キュービ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/kyubi/2609.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200596_0.jpg" alt="セイラン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">セイラン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2516.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200781_0.jpg" alt="サクラガエル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">サクラガエル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2504.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200642_0.jpg" alt="メカエル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メカエル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2521.html"
+       data-aura="緑" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200411_0.jpg" alt="クサズモー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">クサズモー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2525.html"
+       data-aura="緑" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200444_0.jpg" alt="カワズモー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">カワズモー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/kawazumo/2510.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200647_0.jpg" alt="ハムノフジ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ハムノフジ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2409.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200587_0.jpg" alt="ストライクリパー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ストライクリパー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2405.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200717_0.jpg" alt="トライデント" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">トライデント</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2410.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200648_0.jpg" alt="エッジホッグ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">エッジホッグ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2415.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200660_0.jpg" alt="サイクロップス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">サイクロップス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2422.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200714_0.jpg" alt="レッドアイ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">レッドアイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2419.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200601_0.jpg" alt="アクアシザーズ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アクアシザーズ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2424.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200725_0.jpg" alt="ナーガ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ナーガ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/naga/2423.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200646_0.jpg" alt="テロルシザーズ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">テロルシザーズ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2310.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200641_0.jpg" alt="コロネ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">コロネ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2324.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200718_0.jpg" alt="ムラサキチュウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ムラサキチュウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2322.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200719_0.jpg" alt="クロザザム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">クロザザム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2311.html"
+       data-aura="白" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200553_0.jpg" alt="カメンワーム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">カメンワーム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2306.html"
+       data-aura="緑" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200443_0.jpg" alt="トカゲムシ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">トカゲムシ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2305.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200715_0.jpg" alt="イワムシ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イワムシ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2315.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200645_0.jpg" alt="ザザムワーム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ザザムワーム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/worm/2323.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200662_0.jpg" alt="ワーム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ワーム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2221.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200459_0.jpg" alt="ワカクサケンザイ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ワカクサケンザイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2211.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200557_0.jpg" alt="バロックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">バロックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2219.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200582_0.jpg" alt="アイスキャンディ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アイスキャンディ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2209.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200590_0.jpg" alt="ブルースポンジ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ブルースポンジ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2210.html"
+       data-aura="黄" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200673_0.jpg" alt="ワイルドブロック" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ワイルドブロック</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2206.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200426_0.jpg" alt="ジュラスウォール" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ジュラスウォール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2222.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200712_0.jpg" alt="モノリス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">モノリス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/monolith/2215.html"
+       data-aura="黄" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200644_0.jpg" alt="スタイルフォーム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スタイルフォーム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2119.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200592_0.jpg" alt="オボロゲソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">オボロゲソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2106.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200421_0.jpg" alt="ウロコクサ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ウロコクサ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2105.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200721_0.jpg" alt="ガンセキソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ガンセキソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2110.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200667_0.jpg" alt="ウサギソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ウサギソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2121.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200445_0.jpg" alt="プラント" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">プラント</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2123.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200657_0.jpg" alt="ウスバカゲソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ウスバカゲソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2124.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200713_0.jpg" alt="ジャアクソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ジャアクソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/plant/2115.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200654_0.jpg" alt="ヒネクレソウ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヒネクレソウ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2018.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200635_0.jpg" alt="マドレーナ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">マドレーナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/undine/2020.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200602_0.jpg" alt="ウンディーネ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ウンディーネ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1923.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200649_0.jpg" alt="カンテンムシ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">カンテンムシ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1915.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200636_0.jpg" alt="メダマゼリー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">メダマゼリー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1910.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200653_0.jpg" alt="ネンドマン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ネンドマン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1911.html"
+       data-aura="白" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200556_0.jpg" alt="ゲルキゾク" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ゲルキゾク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1906.html"
+       data-aura="緑" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200536_0.jpg" alt="ウロコゲル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ウロコゲル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1905.html"
+       data-aura="黒" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200702_0.jpg" alt="イシガキゲル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イシガキゲル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/gel/1919.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200578_0.jpg" alt="ゲル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ゲル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1817.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200708_0.jpg" alt="ドクドク" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ドクドク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1819.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200580_0.jpg" alt="アクアクレイ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アクアクレイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1803.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200530_0.jpg" alt="アモン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">アモン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1809.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200591_0.jpg" alt="フラッペ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">フラッペ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/nendoro/1818.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200640_0.jpg" alt="ネンドロ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ネンドロ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1521.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200522_0.jpg" alt="プラムラー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">プラムラー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1506.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200526_0.jpg" alt="メロンボ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">メロンボ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1523.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200643_0.jpg" alt="ムシメ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ムシメ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1509.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200583_0.jpg" alt="ツノマル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ツノマル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1505.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200711_0.jpg" alt="イワゾー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イワゾー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1501.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200772_0.jpg" alt="ピンキー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ピンキー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/suezo/1515.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200634_0.jpg" alt="スエゾー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スエゾー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1310.html"
+       data-aura="黄" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200665_0.jpg" alt="ミミニャー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ミミニャー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1301.html"
+       data-aura="赤" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200765_0.jpg" alt="ママニャー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ママニャー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1309.html"
+       data-aura="青" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200598_0.jpg" alt="ワン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ワン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/nyaa/1313.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200565_0.jpg" alt="ニャー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ニャー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1208.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200774_0.jpg" alt="レッドアーマー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">レッドアーマー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1209.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200599_0.jpg" alt="グジコーン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">グジコーン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/gujira/1212.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200593_0.jpg" alt="グジラ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">グジラ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1121.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200520_0.jpg" alt="カラフルマスク" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">カラフルマスク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1119.html"
+       data-aura="青" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200600_0.jpg" alt="アクアリウス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アクアリウス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1106.html"
+       data-aura="緑" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200523_0.jpg" alt="レクサス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">レクサス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1110.html"
+       data-aura="黄" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200637_0.jpg" alt="ガリオン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ガリオン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1124.html"
+       data-aura="黒" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200706_0.jpg" alt="シオンカメン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">シオンカメン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1101.html"
+       data-aura="赤" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200769_0.jpg" alt="ピクセル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ピクセル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/souzou/gali/1111.html"
+       data-aura="白" data-limited="0" data-mon="創造"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200566_0.jpg" alt="ガリ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">ガリ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1023.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200668_0.jpg" alt="トルクレンチ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">トルクレンチ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1021.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200514_0.jpg" alt="ハムリーフ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ハムリーフ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1015.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200663_0.jpg" alt="クロスフォーアイ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">クロスフォーアイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1006.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200521_0.jpg" alt="ウロコウサギ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ウロコウサギ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1019.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200589_0.jpg" alt="ブルーフレア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ブルーフレア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1022.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200690_0.jpg" alt="ダークハム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ダークハム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/hamu/1010.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200659_0.jpg" alt="ハム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ハム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0911.html"
+       data-aura="白" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200569_0.jpg" alt="バロン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">バロン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0910.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200652_0.jpg" alt="ハムライガー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ハムライガー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0906.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200515_0.jpg" alt="デトナレックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">デトナレックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0924.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200697_0.jpg" alt="ケルベロス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ケルベロス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0921.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200516_0.jpg" alt="エコノキックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">エコノキックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0919.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200586_0.jpg" alt="アクアストライク" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アクアストライク</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/liger/0909.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200579_0.jpg" alt="ライガー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ライガー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0815.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200664_0.jpg" alt="マスタードアロー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">マスタードアロー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0820.html"
+       data-aura="青" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200594_0.jpg" alt="アクアマリン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">アクアマリン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0805.html"
+       data-aura="黒" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200698_0.jpg" alt="プライヤロックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">プライヤロックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0804.html"
+       data-aura="黄" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200655_0.jpg" alt="レマクラスト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">レマクラスト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kaibutsu/arrowhead/0808.html"
+       data-aura="赤" data-limited="0" data-mon="怪物"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200768_0.jpg" alt="アローヘッド" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">アローヘッド</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0621.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200539_0.jpg" alt="アロハノサウルス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">アロハノサウルス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0622.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200695_0.jpg" alt="ブラックディノ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ブラックディノ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0623.html"
+       data-aura="黄" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200638_0.jpg" alt="カッチュウサウル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">カッチュウサウル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0617.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200699_0.jpg" alt="メテオライト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">メテオライト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0608.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200777_0.jpg" alt="クラブディノ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">クラブディノ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0606.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200543_0.jpg" alt="ディノ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ディノ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/dino/0602.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200789_0.jpg" alt="ベビードラゴン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ベビードラゴン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0502.html"
+       data-aura="赤" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200766_0.jpg" alt="タイラント" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">タイラント</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0517.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200692_0.jpg" alt="アンゴルモア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">アンゴルモア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0524.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200696_0.jpg" alt="マーブルガイ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">マーブルガイ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0511.html"
+       data-aura="白" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200571_0.jpg" alt="アメンホテプ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">アメンホテプ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0521.html"
+       data-aura="緑" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200538_0.jpg" alt="エコロガーデアン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">エコロガーデアン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0508.html"
+       data-aura="赤" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200775_0.jpg" alt="ダゴン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ダゴン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/golem/0505.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200693_0.jpg" alt="ゴーレム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ゴーレム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0402.html"
+       data-aura="赤" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200778_0.jpg" alt="ガーラント" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ガーラント</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0422.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200679_0.jpg" alt="ダークヘンガー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ダークヘンガー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0404.html"
+       data-aura="黄" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200658_0.jpg" alt="ヘンガー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ヘンガー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/muki/henger/0405.html"
+       data-aura="黒" data-limited="0" data-mon="無機"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200685_0.jpg" alt="ガイアー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ガイアー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0317.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200687_0.jpg" alt="デルピエロ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">デルピエロ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0309.html"
+       data-aura="青" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200597_0.jpg" alt="シリウス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">シリウス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0305.html"
+       data-aura="黒" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200686_0.jpg" alt="イースター" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">イースター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0302.html"
+       data-aura="赤" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200764_0.jpg" alt="サバット" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">サバット</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/kemono/centaur/0303.html"
+       data-aura="緑" data-limited="0" data-mon="獣族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200532_0.jpg" alt="ケンタウロス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ケンタウロス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0222.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200688_0.jpg" alt="ラグナロックス" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ラグナロックス</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0205.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200680_0.jpg" alt="ジハード" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ジハード</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0208.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200767_0.jpg" alt="クラスター" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">クラスター</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0201.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200770_0.jpg" alt="アテナ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">アテナ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/dragon/0202.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200779_0.jpg" alt="ドラゴン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ドラゴン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0121.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200525_0.jpg" alt="リーフ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">リーフ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0117.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200689_0.jpg" alt="リリム" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">リリム</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0115.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200651_0.jpg" alt="スエコ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">スエコ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0109.html"
+       data-aura="青" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200581_0.jpg" alt="ミント" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ミント</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0111.html"
+       data-aura="白" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200577_0.jpg" alt="エンジェル" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-白"><span class="aura-dot"></span>白</div>
+        <div class="monster-name">エンジェル</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0155.html"
+       data-aura="黄" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200633_0.jpg" alt="ミーア" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">ミーア</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0103.html"
+       data-aura="緑" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200533_0.jpg" alt="ユニコ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-緑"><span class="aura-dot"></span>緑</div>
+        <div class="monster-name">ユニコ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0124.html"
+       data-aura="黒" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200681_0.jpg" alt="ラベンダーキール" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黒"><span class="aura-dot"></span>黒</div>
+        <div class="monster-name">ラベンダーキール</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/mazoku/pixie/0101.html"
+       data-aura="赤" data-limited="0" data-mon="魔族"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200773_0.jpg" alt="ピクシー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ピクシー</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1602.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200776_0.jpg" alt="ミタラシ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">ミタラシ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1619.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200585_0.jpg" alt="ゼラチン" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ゼラチン</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1604.html"
+       data-aura="黄" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200656_0.jpg" alt="モチモチエイト" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-黄"><span class="aura-dot"></span>黄</div>
+        <div class="monster-name">モチモチエイト</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1609.html"
+       data-aura="青" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200588_0.jpg" alt="ペンギンダマシ" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-青"><span class="aura-dot"></span>青</div>
+        <div class="monster-name">ペンギンダマシ</div>
+      </div>
+    </a>
+    <a class="monster-card" href="monsters/genrei/mocchi/1616.html"
+       data-aura="赤" data-limited="0" data-mon="幻霊"
+       style="text-decoration:none;color:inherit;display:block;">
+      <div class="monster-img-wrap">
+        <img src="monster/S__93200763_0.jpg" alt="モッチー" loading="lazy">
+      </div>
+      <div class="monster-info">
+        <div class="aura-badge aura-赤"><span class="aura-dot"></span>赤</div>
+        <div class="monster-name">モッチー</div>
+      </div>
+    </a>
+    <!-- BUILD:MONSTER-CARDS:END -->
   </div>
 </div>
 
@@ -178,71 +4126,7 @@
   ／ <a href="privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
 </footer>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-<script src="monsters-data.js"></script>
-
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
-  authDomain: "line-monster-farm.firebaseapp.com",
-  projectId: "line-monster-farm",
-  storageBucket: "line-monster-farm.firebasestorage.app",
-  messagingSenderId: "952838892758",
-  appId: "1:952838892758:web:3ef72e64bd567aefa22d77"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-/* ---- GameWith 画像 URL ---- */
-function gwUrl(gwImg) {
-  return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${gwImg}.png`;
-}
-
-/* ---- グリッド描画 ---- */
-function buildGrid(assignments) {
-  const grid = document.getElementById('monsterGrid');
-  grid.innerHTML = '';
-
-  const sortedMonsters = monstersData.map((m, idx) => ({ ...m, idx })).sort((a, b) => {
-    const av = a.gwImg ?? Infinity, bv = b.gwImg ?? Infinity;
-    if (av === Infinity && bv === Infinity) return b.idx - a.idx;
-    return bv - av;
-  });
-  sortedMonsters.forEach((m) => {
-    const idx = m.idx;
-    const validLocalImg = m.localImg ? m.localImg : null;
-    const localFile = validLocalImg || (assignments && assignments[m.name]) || null;
-    const imgSrc = localFile ? `monster/${localFile}` : gwUrl(m.gwImg);
-
-    const card = document.createElement('a');
-    card.className = 'monster-card';
-    card.href = `monsters/monster.html?id=${idx}`;
-    card.dataset.aura = m.aura;
-    card.dataset.limited = m.limited ? '1' : '0';
-    card.dataset.mon = m.mon || '';
-    card.style.textDecoration = 'none';
-    card.style.color = 'inherit';
-    card.style.display = 'block';
-
-    card.innerHTML = `
-      <div class="monster-img-wrap">
-        <img src="${imgSrc}" alt="${m.name}"
-             onerror="this.onerror=null;${m.gwImg ? `this.src='${gwUrl(m.gwImg)}'` : ''}">
-        ${m.limited ? `<span class="badge-limited">限定</span>` : ''}
-      </div>
-      <div class="monster-info">
-        <div class="aura-badge aura-${m.aura}">
-          <span class="aura-dot"></span>${m.aura}
-        </div>
-        <div class="monster-name">${m.name}</div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
-}
-
 /* ---- フィルター ---- */
 let currentFilter = 'all';
 let currentMon = 'all';
@@ -283,35 +4167,6 @@ function applyFilter() {
   });
 }
 
-/* ---- キャッシュ ---- */
-const MI_CACHE_KEY = 'lmf_monsterImages_v1';
-const MI_CACHE_TTL = 86400000; // 24時間
-function getMICache() {
-  try {
-    const raw = localStorage.getItem(MI_CACHE_KEY);
-    if (!raw) return null;
-    const { data, ts } = JSON.parse(raw);
-    if (Date.now() - ts > MI_CACHE_TTL) { localStorage.removeItem(MI_CACHE_KEY); return null; }
-    return data;
-  } catch { return null; }
-}
-function setMICache(data) {
-  try { localStorage.setItem(MI_CACHE_KEY, JSON.stringify({ data, ts: Date.now() })); } catch {}
-}
-
-/* ---- 起動 ---- */
-const cachedMI = getMICache();
-if (cachedMI) {
-  buildGrid(cachedMI);
-} else {
-  db.collection('monsterImages').doc('assignments').get()
-    .then(doc => {
-      const data = doc.exists ? doc.data() : {};
-      setMICache(data);
-      buildGrid(data);
-    })
-    .catch(() => buildGrid({}));
-}
 </script>
 
 </body>

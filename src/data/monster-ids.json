@@ -37,12 +37,12 @@
   "ザン"
  ],
  "monSlug": {
+  "創造": "souzou",
+  "幻霊": "genrei",
   "魔族": "mazoku",
   "獣族": "kemono",
-  "幻霊": "genrei",
-  "無機": "muki",
   "怪物": "kaibutsu",
-  "創造": "souzou"
+  "無機": "muki"
  },
  "bloodSlug": {
   "ピクシー": "pixie",
