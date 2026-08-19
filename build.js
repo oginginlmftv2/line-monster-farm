@@ -8,6 +8,7 @@ const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
 const ROOT_PREFIX = '../../../';
 const MON_TYPE_ROOT_PREFIX = '../../';
 const DRY_RUN = process.argv.includes('--dry');
+const INDEXABLE_THRESHOLD = 800;
 
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
@@ -88,6 +89,7 @@ function loadInputs() {
   const monsterById = new Map(monsters.map(monster => [monster.id, monster]));
 
   return {
+    idsJson,
     monsters,
     editorial,
     images,
@@ -380,6 +382,81 @@ function breadcrumbJson(monster, context) {
   });
 }
 
+function hasAuthoredExplanation(entry) {
+  return Boolean(String(entry.author || '').trim() && String(entry.explanation || '').trim());
+}
+
+function formatJapaneseDate(value) {
+  const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return '';
+  return `${match[1]}年${Number(match[2])}月${Number(match[3])}日`;
+}
+
+function relativeAuthorUrl(authorUrl) {
+  const value = String(authorUrl || '').trim();
+  if (!value) return '';
+  if (/^https?:\/\//.test(value)) return value;
+  return `${ROOT_PREFIX}${value.replace(/^\//, '')}`;
+}
+
+function absoluteAuthorUrl(authorUrl) {
+  const value = String(authorUrl || '').trim();
+  if (!value) return '';
+  if (/^https?:\/\//.test(value)) return value;
+  return `${SITE_URL}/${value.replace(/^\//, '')}`;
+}
+
+function renderByline(entry) {
+  if (!hasAuthoredExplanation(entry)) return '';
+  const authorUrl = relativeAuthorUrl(entry.authorUrl);
+  const author = authorUrl
+    ? `<a href="${escapeHtml(authorUrl)}">${escapeHtml(String(entry.author).trim())}</a>`
+    : escapeHtml(String(entry.author).trim());
+  const contributors = Array.isArray(entry.contributors)
+    ? entry.contributors.map(name => String(name || '').trim()).filter(Boolean)
+    : [];
+  const createdAt = formatJapaneseDate(entry.createdAt);
+  const updatedAt = formatJapaneseDate(entry.updatedAt);
+  const contributorText = contributors.length
+    ? `（加筆：${contributors.map(escapeHtml).join('・')}）`
+    : '';
+  const dateText = updatedAt
+    ? ` ／ ${createdAt ? `${createdAt} 公開・` : ''}${updatedAt} 更新`
+    : '';
+  return `<p class="byline">著者：${author}${contributorText}${dateText}</p>`;
+}
+
+function articleJson(monster, entry) {
+  if (!hasAuthoredExplanation(entry)) return '';
+  const author = {
+    '@type': 'Person',
+    name: String(entry.author).trim(),
+  };
+  const authorUrl = absoluteAuthorUrl(entry.authorUrl);
+  if (authorUrl) author.url = authorUrl;
+
+  const article = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: `${monster.name}（${monster.blood}・${monster.mon}）`,
+    author,
+  };
+  const contributors = Array.isArray(entry.contributors)
+    ? entry.contributors.map(name => String(name || '').trim()).filter(Boolean)
+    : [];
+  if (contributors.length) {
+    article.contributor = contributors.map(name => ({ '@type': 'Person', name }));
+  }
+  if (entry.createdAt) article.datePublished = entry.createdAt;
+  if (entry.updatedAt) article.dateModified = entry.updatedAt;
+  article.publisher = {
+    '@type': 'Organization',
+    name: 'LINEモンスターファーム徹底攻略',
+  };
+  article.mainEntityOfPage = `${SITE_URL}${monster.url}`;
+  return JSON.stringify(article).replace(/</g, '\\u003c');
+}
+
 function monTypeBreadcrumbJson(monType) {
   return JSON.stringify({
     '@context': 'https://schema.org',
@@ -485,6 +562,8 @@ function renderDetail(entry, context) {
   const nonEmptyFormations = (entry.formations || []).filter(formation => {
     return !isEmptyFormation(formation);
   });
+  const byline = renderByline(entry);
+  const article = articleJson(monster, entry);
   const formations = nonEmptyFormations.length
     ? `
   <div class="section-box">
@@ -500,7 +579,8 @@ function renderDetail(entry, context) {
     <div class="section-header">
       <h2 class="section-title">評価解説</h2>
     </div>
-    <div class="expl-body">${formatExplanation(entry.explanation)}</div>
+    <div class="expl-body">${formatExplanation(entry.explanation)}</div>${byline ? `
+    ${byline}` : ''}
   </div>`
     : '';
   const related = relatedMonsters(monster, context);
@@ -573,7 +653,7 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 </body>
 `;
   const contentCharacters = visibleChars(body);
-  const indexable = contentCharacters >= 800;
+  const indexable = contentCharacters >= INDEXABLE_THRESHOLD;
   const robotsMeta = indexable
     ? ''
     : '\n  <meta name="robots" content="noindex,follow">';
@@ -592,7 +672,8 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
   <link rel="canonical" href="${canonical}">
-  <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>
+  <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>${article ? `
+  <script type="application/ld+json">${article}</script>` : ''}
   <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
   <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">${adsense}
 </head>
@@ -756,6 +837,45 @@ function writeIfChanged(relativePath, html) {
   return 'updated';
 }
 
+function createIdAvailability(idsJson) {
+  const bloodOrder = idsJson.bloodOrder.map((name, index) => ({
+    code: String(index + 1).padStart(2, '0'),
+    name,
+    slug: idsJson.bloodSlug[name],
+  }));
+  const specialEntries = Object.entries(idsJson.specialSub);
+  const specialSub = Object.fromEntries(specialEntries.map(([name, from], index) => {
+    const next = specialEntries[index + 1];
+    return [name, { from, to: next ? next[1] - 1 : 99 }];
+  }));
+  const taken = [...idsJson.monsters]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .map(monster => ({ id: monster.id, name: monster.name }));
+  return {
+    note: 'build.js が生成。ID採番の正は generate-ids.js。このファイルは予測用の参照データ',
+    bloodOrder,
+    specialSub,
+    taken,
+    count: idsJson.count,
+  };
+}
+
+function createPageBaseline(detailPages) {
+  const pages = [...detailPages]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .map(page => ({
+      id: page.id,
+      baseline: page.baselineCharacters,
+      current: page.contentCharacters,
+      indexable: page.indexable,
+    }));
+  return {
+    note: 'build.js が生成。baseline = 解説と編成を除いたページの可視文字数',
+    threshold: INDEXABLE_THRESHOLD,
+    pages,
+  };
+}
+
 function renderSitemap(existingXml, pages) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
@@ -788,7 +908,7 @@ function renderSitemap(existingXml, pages) {
 
 function validatePages(pages) {
   const indexablePages = pages.filter(page => page.indexable);
-  const thin = indexablePages.filter(page => page.contentCharacters < 800);
+  const thin = indexablePages.filter(page => page.contentCharacters < INDEXABLE_THRESHOLD);
   if (thin.length) {
     throw new Error(`本文量800字未満のページ: ${thin.map(page => `${page.path} (${page.contentCharacters}字)`).join(', ')}`);
   }
@@ -831,11 +951,11 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   console.log('=== ゲート判定 ===');
   console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);
   const nearThreshold = noindex
-    .filter(entry => entry.contentCharacters >= 700 && entry.contentCharacters <= 799)
+    .filter(entry => entry.contentCharacters >= 700 && entry.contentCharacters < INDEXABLE_THRESHOLD)
     .sort((a, b) => a.contentCharacters - b.contentCharacters || Number(a.id) - Number(b.id));
   console.log(`  昇格まであと少し（可視700〜799字）: ${nearThreshold.length}件`);
   for (const entry of nearThreshold) {
-    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${800 - entry.contentCharacters}字）`);
+    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${INDEXABLE_THRESHOLD - entry.contentCharacters}字）`);
   }
   console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件（${eligibleMonTypes.map(monType => monType.name).join(' → ')}） / 除外 ${excludedMonTypes.length}件`);
   for (const monType of excludedMonTypes) {
@@ -874,6 +994,7 @@ function main() {
   const detailPages = detailEntries.map(entry => {
     const monster = inputs.monsterById.get(entry.id);
     const rendered = renderDetail(entry, context);
+    const bare = renderDetail({ ...entry, explanation: '', formations: [] }, context);
     const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
     return {
       id: monster.id,
@@ -886,6 +1007,7 @@ function main() {
       priority: '0.7',
       indexable: rendered.indexable,
       contentCharacters: rendered.contentCharacters,
+      baselineCharacters: bare.contentCharacters,
     };
   });
   context.indexableDetailIds = new Set(
@@ -907,6 +1029,8 @@ function main() {
     };
   });
   const pages = detailPages.concat(monTypePages);
+  const idAvailability = createIdAvailability(inputs.idsJson);
+  const pageBaseline = createPageBaseline(detailPages);
 
   validatePages(pages);
   const detailPageById = new Map(detailPages.map(page => {
@@ -926,13 +1050,21 @@ function main() {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
   }
 
-  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 3 };
+  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 5 };
   for (const page of pages) {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
   outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
   outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
+  outputCounts[writeIfChanged(
+    'src/data/id-availability.json',
+    JSON.stringify(idAvailability, null, 2) + '\n'
+  )]++;
+  outputCounts[writeIfChanged(
+    'src/data/page-baseline.json',
+    JSON.stringify(pageBaseline, null, 2) + '\n'
+  )]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }
 

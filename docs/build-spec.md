@@ -433,6 +433,27 @@ Firestore からの画像取得と localStorage キャッシュは静的化に�
 `scripts/verify.js` セクション9（9-5 / 9-6）が、旧URLへのリンク残存と
 転送先の実在を検査する。
 
+### 5-7. CMS向けの出力
+
+`src/data/id-availability.json`
+  ID予測のための参照データ。**採番の正は `generate-ids.js`**。
+  管理画面はこのファイルを読んでIDを予測し、ビルドが検算する。
+
+`src/data/page-baseline.json`
+  `baseline` は解説・編成を除いたページの可視文字数。
+  管理画面が「あと◯字でインデックス対象」を表示するために使う。
+  判定そのものは `build.js` が行い、UIでは再計算しない。
+
+`taken` と `pages` は**配列**にする。4桁IDをオブジェクトのキーにすると、
+JavaScriptが整数キー（1625）を先に列挙するため順序が保証されないため。
+
+### 5-8. 著者情報
+
+`monsters-editorial.json` に `author` があり解説が空でない場合のみ、
+バイラインと `Article` 構造化データを出力する。
+著者名は `members` シートのニックネーム。**メールアドレスは出力しない。**
+`contributors` は加筆した人。`createdAt` が無い場合は公開日を出さない。
+
 ---
 
 ## 6. インターフェース
@@ -441,6 +462,8 @@ Firestore からの画像取得と localStorage キャッシュは静的化に�
 
 - `monsters.html` の `BUILD:MONSTER-CARDS` マーカー間
 - `monsters/redirect-map.js`
+- `src/data/id-availability.json`
+- `src/data/page-baseline.json`
 
 ```js
 // build.js のエントリポイント
