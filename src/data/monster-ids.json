@@ -102,7 +102,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 6,
-   "localImg": null,
+   "localImg": "S__93200773_0.jpg",
    "url": "/monsters/mazoku/pixie/0101.html",
    "image": "img/monster/0101.jpg"
   },
@@ -121,7 +121,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 162,
-   "localImg": null,
+   "localImg": "S__93200786_0.jpg",
    "url": "/monsters/mazoku/pixie/0102.html",
    "image": "img/monster/0102.jpg"
   },
@@ -140,7 +140,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 8,
-   "localImg": null,
+   "localImg": "S__93200533_0.jpg",
    "url": "/monsters/mazoku/pixie/0103.html",
    "image": "img/monster/0103.jpg"
   },
@@ -159,7 +159,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 11,
-   "localImg": null,
+   "localImg": "S__93200581_0.jpg",
    "url": "/monsters/mazoku/pixie/0109.html",
    "image": "img/monster/0109.jpg"
   },
@@ -178,7 +178,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 10,
-   "localImg": null,
+   "localImg": "S__93200577_0.jpg",
    "url": "/monsters/mazoku/pixie/0111.html",
    "image": "img/monster/0111.jpg"
   },
@@ -197,7 +197,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 12,
-   "localImg": null,
+   "localImg": "S__93200651_0.jpg",
    "url": "/monsters/mazoku/pixie/0115.html",
    "image": "img/monster/0115.jpg"
   },
@@ -216,7 +216,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 13,
-   "localImg": null,
+   "localImg": "S__93200689_0.jpg",
    "url": "/monsters/mazoku/pixie/0117.html",
    "image": "img/monster/0117.jpg"
   },
@@ -235,7 +235,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 284,
-   "localImg": null,
+   "localImg": "S__93200622_0.jpg",
    "url": "/monsters/mazoku/pixie/0120.html",
    "image": "img/monster/0120.jpg"
   },
@@ -254,7 +254,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 14,
-   "localImg": null,
+   "localImg": "S__93200525_0.jpg",
    "url": "/monsters/mazoku/pixie/0121.html",
    "image": "img/monster/0121.jpg"
   },
@@ -273,7 +273,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 154,
-   "localImg": null,
+   "localImg": "S__93200671_0.jpg",
    "url": "/monsters/mazoku/pixie/0123.html",
    "image": "img/monster/0123.jpg"
   },
@@ -292,7 +292,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 7,
-   "localImg": null,
+   "localImg": "S__93200681_0.jpg",
    "url": "/monsters/mazoku/pixie/0124.html",
    "image": "img/monster/0124.jpg"
   },
@@ -311,7 +311,7 @@
    "limited": true,
    "limitedLabel": "春限定",
    "gwImg": 198,
-   "localImg": null,
+   "localImg": "S__93200394_0.jpg",
    "url": "/monsters/mazoku/pixie/0125.html",
    "image": "img/monster/0125.jpg"
   },
@@ -330,7 +330,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 139,
-   "localImg": null,
+   "localImg": "S__93200467_0.jpg",
    "url": "/monsters/mazoku/pixie/0126.html",
    "image": "img/monster/0126.jpg"
   },
@@ -349,7 +349,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 321,
-   "localImg": null,
+   "localImg": "S__93208581_0.jpg",
    "url": "/monsters/mazoku/pixie/0150.html",
    "image": "img/monster/0150.jpg"
   },
@@ -368,7 +368,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 314,
-   "localImg": null,
+   "localImg": "S__93200506_0.jpg",
    "url": "/monsters/mazoku/pixie/0151.html",
    "image": "img/monster/0151.jpg"
   },
@@ -387,7 +387,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 228,
-   "localImg": null,
+   "localImg": "S__93200806_0.jpg",
    "url": "/monsters/mazoku/pixie/0152.html",
    "image": "img/monster/0152.jpg"
   },
@@ -406,7 +406,7 @@
    "limited": true,
    "limitedLabel": "エイプリルフールイベント限定",
    "gwImg": 201,
-   "localImg": null,
+   "localImg": "S__93200799_0.jpg",
    "url": "/monsters/mazoku/pixie/0153.html",
    "image": "img/monster/0153.jpg"
   },
@@ -425,7 +425,7 @@
    "limited": true,
    "limitedLabel": "秋限定",
    "gwImg": 166,
-   "localImg": null,
+   "localImg": "S__93200674_0.jpg",
    "url": "/monsters/mazoku/pixie/0154.html",
    "image": "img/monster/0154.jpg"
   },
@@ -444,7 +444,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 9,
-   "localImg": null,
+   "localImg": "S__93200633_0.jpg",
    "url": "/monsters/mazoku/pixie/0155.html",
    "image": "img/monster/0155.jpg"
   },
@@ -463,7 +463,7 @@
    "limited": true,
    "limitedLabel": "ハロウィン限定",
    "gwImg": 302,
-   "localImg": null,
+   "localImg": "S__93200505_0.jpg",
    "url": "/monsters/mazoku/pixie/0180.html",
    "image": "img/monster/0180.jpg"
   },
@@ -501,7 +501,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 16,
-   "localImg": null,
+   "localImg": "S__93200770_0.jpg",
    "url": "/monsters/mazoku/dragon/0201.html",
    "image": "img/monster/0201.jpg"
   },
@@ -520,7 +520,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 15,
-   "localImg": null,
+   "localImg": "S__93200779_0.jpg",
    "url": "/monsters/mazoku/dragon/0202.html",
    "image": "img/monster/0202.jpg"
   },
@@ -539,7 +539,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 136,
-   "localImg": null,
+   "localImg": "S__93200675_0.jpg",
    "url": "/monsters/mazoku/dragon/0204.html",
    "image": "img/monster/0204.jpg"
   },
@@ -558,7 +558,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 18,
-   "localImg": null,
+   "localImg": "S__93200680_0.jpg",
    "url": "/monsters/mazoku/dragon/0205.html",
    "image": "img/monster/0205.jpg"
   },
@@ -577,7 +577,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 17,
-   "localImg": null,
+   "localImg": "S__93200767_0.jpg",
    "url": "/monsters/mazoku/dragon/0208.html",
    "image": "img/monster/0208.jpg"
   },
@@ -596,7 +596,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 223,
-   "localImg": null,
+   "localImg": "S__93200614_0.jpg",
    "url": "/monsters/mazoku/dragon/0209.html",
    "image": "img/monster/0209.jpg"
   },
@@ -615,7 +615,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 170,
-   "localImg": null,
+   "localImg": "S__93200410_0.jpg",
    "url": "/monsters/mazoku/dragon/0217.html",
    "image": "img/monster/0217.jpg"
   },
@@ -634,7 +634,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 19,
-   "localImg": null,
+   "localImg": "S__93200688_0.jpg",
    "url": "/monsters/mazoku/dragon/0222.html",
    "image": "img/monster/0222.jpg"
   },
@@ -653,7 +653,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 317,
-   "localImg": null,
+   "localImg": "S__93200500_0.jpg",
    "url": "/monsters/mazoku/dragon/0227.html",
    "image": "img/monster/0227.jpg"
   },
@@ -672,7 +672,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 287,
-   "localImg": null,
+   "localImg": "S__93208579_0.jpg",
    "url": "/monsters/mazoku/dragon/0250.html",
    "image": "img/monster/0250.jpg"
   },
@@ -691,7 +691,7 @@
    "limited": true,
    "limitedLabel": "超神殿祭限定",
    "gwImg": 266,
-   "localImg": null,
+   "localImg": "S__93200407_0.jpg",
    "url": "/monsters/mazoku/dragon/0251.html",
    "image": "img/monster/0251.jpg"
   },
@@ -710,7 +710,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 226,
-   "localImg": null,
+   "localImg": "S__93200615_0.jpg",
    "url": "/monsters/mazoku/dragon/0252.html",
    "image": "img/monster/0252.jpg"
   },
@@ -729,7 +729,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 176,
-   "localImg": null,
+   "localImg": "S__93200791_0.jpg",
    "url": "/monsters/mazoku/dragon/0253.html",
    "image": "img/monster/0253.jpg"
   },
@@ -748,7 +748,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 175,
-   "localImg": null,
+   "localImg": "S__93200792_0.jpg",
    "url": "/monsters/mazoku/dragon/0254.html",
    "image": "img/monster/0254.jpg"
   },
@@ -767,7 +767,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 21,
-   "localImg": null,
+   "localImg": "S__93200764_0.jpg",
    "url": "/monsters/kemono/centaur/0302.html",
    "image": "img/monster/0302.jpg"
   },
@@ -786,7 +786,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 20,
-   "localImg": null,
+   "localImg": "S__93200532_0.jpg",
    "url": "/monsters/kemono/centaur/0303.html",
    "image": "img/monster/0303.jpg"
   },
@@ -805,7 +805,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 147,
-   "localImg": null,
+   "localImg": "S__93200669_0.jpg",
    "url": "/monsters/kemono/centaur/0304.html",
    "image": "img/monster/0304.jpg"
   },
@@ -824,7 +824,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 22,
-   "localImg": null,
+   "localImg": "S__93200686_0.jpg",
    "url": "/monsters/kemono/centaur/0305.html",
    "image": "img/monster/0305.jpg"
   },
@@ -843,7 +843,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 218,
-   "localImg": null,
+   "localImg": "S__93200803_0.jpg",
    "url": "/monsters/kemono/centaur/0308.html",
    "image": "img/monster/0308.jpg"
   },
@@ -862,7 +862,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 23,
-   "localImg": null,
+   "localImg": "S__93200597_0.jpg",
    "url": "/monsters/kemono/centaur/0309.html",
    "image": "img/monster/0309.jpg"
   },
@@ -881,7 +881,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 24,
-   "localImg": null,
+   "localImg": "S__93200687_0.jpg",
    "url": "/monsters/kemono/centaur/0317.html",
    "image": "img/monster/0317.jpg"
   },
@@ -900,7 +900,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 316,
-   "localImg": null,
+   "localImg": "S__93200575_0.jpg",
    "url": "/monsters/kemono/centaur/0350.html",
    "image": "img/monster/0350.jpg"
   },
@@ -919,7 +919,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 215,
-   "localImg": null,
+   "localImg": "S__93200684_0.jpg",
    "url": "/monsters/kemono/centaur/0351.html",
    "image": "img/monster/0351.jpg"
   },
@@ -938,7 +938,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 203,
-   "localImg": null,
+   "localImg": "S__93200392_0.jpg",
    "url": "/monsters/kemono/centaur/0352.html",
    "image": "img/monster/0352.jpg"
   },
@@ -976,7 +976,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 28,
-   "localImg": null,
+   "localImg": "S__93200778_0.jpg",
    "url": "/monsters/muki/henger/0402.html",
    "image": "img/monster/0402.jpg"
   },
@@ -995,7 +995,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 26,
-   "localImg": null,
+   "localImg": "S__93200658_0.jpg",
    "url": "/monsters/muki/henger/0404.html",
    "image": "img/monster/0404.jpg"
   },
@@ -1014,7 +1014,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 25,
-   "localImg": null,
+   "localImg": "S__93200685_0.jpg",
    "url": "/monsters/muki/henger/0405.html",
    "image": "img/monster/0405.jpg"
   },
@@ -1033,7 +1033,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 145,
-   "localImg": null,
+   "localImg": "S__93200448_0.jpg",
    "url": "/monsters/muki/henger/0406.html",
    "image": "img/monster/0406.jpg"
   },
@@ -1052,7 +1052,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 252,
-   "localImg": null,
+   "localImg": "S__93200623_0.jpg",
    "url": "/monsters/muki/henger/0409.html",
    "image": "img/monster/0409.jpg"
   },
@@ -1071,7 +1071,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 212,
-   "localImg": null,
+   "localImg": "S__93200682_0.jpg",
    "url": "/monsters/muki/henger/0417.html",
    "image": "img/monster/0417.jpg"
   },
@@ -1090,7 +1090,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 27,
-   "localImg": null,
+   "localImg": "S__93200679_0.jpg",
    "url": "/monsters/muki/henger/0422.html",
    "image": "img/monster/0422.jpg"
   },
@@ -1109,7 +1109,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 288,
-   "localImg": null,
+   "localImg": "S__93200471_0.jpg",
    "url": "/monsters/muki/henger/0450.html",
    "image": "img/monster/0450.jpg"
   },
@@ -1128,7 +1128,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 178,
-   "localImg": null,
+   "localImg": "S__93200465_0.jpg",
    "url": "/monsters/muki/henger/0451.html",
    "image": "img/monster/0451.jpg"
   },
@@ -1147,7 +1147,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 177,
-   "localImg": null,
+   "localImg": "S__93200574_0.jpg",
    "url": "/monsters/muki/henger/0452.html",
    "image": "img/monster/0452.jpg"
   },
@@ -1166,7 +1166,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 35,
-   "localImg": null,
+   "localImg": "S__93200766_0.jpg",
    "url": "/monsters/muki/golem/0502.html",
    "image": "img/monster/0502.jpg"
   },
@@ -1185,7 +1185,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 29,
-   "localImg": null,
+   "localImg": "S__93200693_0.jpg",
    "url": "/monsters/muki/golem/0505.html",
    "image": "img/monster/0505.jpg"
   },
@@ -1204,7 +1204,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 30,
-   "localImg": null,
+   "localImg": "S__93200775_0.jpg",
    "url": "/monsters/muki/golem/0508.html",
    "image": "img/monster/0508.jpg"
   },
@@ -1223,7 +1223,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 32,
-   "localImg": null,
+   "localImg": "S__93200571_0.jpg",
    "url": "/monsters/muki/golem/0511.html",
    "image": "img/monster/0511.jpg"
   },
@@ -1242,7 +1242,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 34,
-   "localImg": null,
+   "localImg": "S__93200692_0.jpg",
    "url": "/monsters/muki/golem/0517.html",
    "image": "img/monster/0517.jpg"
   },
@@ -1261,7 +1261,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 31,
-   "localImg": null,
+   "localImg": "S__93200538_0.jpg",
    "url": "/monsters/muki/golem/0521.html",
    "image": "img/monster/0521.jpg"
   },
@@ -1280,7 +1280,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 33,
-   "localImg": null,
+   "localImg": "S__93200696_0.jpg",
    "url": "/monsters/muki/golem/0524.html",
    "image": "img/monster/0524.jpg"
   },
@@ -1299,7 +1299,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 140,
-   "localImg": null,
+   "localImg": "S__93200429_0.jpg",
    "url": "/monsters/muki/golem/0525.html",
    "image": "img/monster/0525.jpg"
   },
@@ -1318,7 +1318,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 300,
-   "localImg": null,
+   "localImg": "S__93200542_0.jpg",
    "url": "/monsters/muki/golem/0550.html",
    "image": "img/monster/0550.jpg"
   },
@@ -1337,7 +1337,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 244,
-   "localImg": null,
+   "localImg": "S__93200396_0.jpg",
    "url": "/monsters/muki/golem/0551.html",
    "image": "img/monster/0551.jpg"
   },
@@ -1356,7 +1356,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 233,
-   "localImg": null,
+   "localImg": "S__93200572_0.jpg",
    "url": "/monsters/muki/golem/0552.html",
    "image": "img/monster/0552.jpg"
   },
@@ -1375,7 +1375,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 185,
-   "localImg": null,
+   "localImg": "S__93200609_0.jpg",
    "url": "/monsters/muki/golem/0553.html",
    "image": "img/monster/0553.jpg"
   },
@@ -1413,7 +1413,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 36,
-   "localImg": null,
+   "localImg": "S__93200789_0.jpg",
    "url": "/monsters/kemono/dino/0602.html",
    "image": "img/monster/0602.jpg"
   },
@@ -1432,7 +1432,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 206,
-   "localImg": null,
+   "localImg": "S__93200729_0.jpg",
    "url": "/monsters/kemono/dino/0604.html",
    "image": "img/monster/0604.jpg"
   },
@@ -1451,7 +1451,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 37,
-   "localImg": null,
+   "localImg": "S__93200543_0.jpg",
    "url": "/monsters/kemono/dino/0606.html",
    "image": "img/monster/0606.jpg"
   },
@@ -1470,7 +1470,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 38,
-   "localImg": null,
+   "localImg": "S__93200777_0.jpg",
    "url": "/monsters/kemono/dino/0608.html",
    "image": "img/monster/0608.jpg"
   },
@@ -1489,7 +1489,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 39,
-   "localImg": null,
+   "localImg": "S__93200699_0.jpg",
    "url": "/monsters/kemono/dino/0617.html",
    "image": "img/monster/0617.jpg"
   },
@@ -1508,7 +1508,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 42,
-   "localImg": null,
+   "localImg": "S__93200539_0.jpg",
    "url": "/monsters/kemono/dino/0621.html",
    "image": "img/monster/0621.jpg"
   },
@@ -1527,7 +1527,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 41,
-   "localImg": null,
+   "localImg": "S__93200695_0.jpg",
    "url": "/monsters/kemono/dino/0622.html",
    "image": "img/monster/0622.jpg"
   },
@@ -1546,7 +1546,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 40,
-   "localImg": null,
+   "localImg": "S__93200638_0.jpg",
    "url": "/monsters/kemono/dino/0623.html",
    "image": "img/monster/0623.jpg"
   },
@@ -1565,7 +1565,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 214,
-   "localImg": null,
+   "localImg": "S__93200700_0.jpg",
    "url": "/monsters/kemono/dino/0624.html",
    "image": "img/monster/0624.jpg"
   },
@@ -1584,7 +1584,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 311,
-   "localImg": null,
+   "localImg": "S__93200750_0.jpg",
    "url": "/monsters/kemono/dino/0650.html",
    "image": "img/monster/0650.jpg"
   },
@@ -1603,7 +1603,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 220,
-   "localImg": null,
+   "localImg": "S__93200809_0.jpg",
    "url": "/monsters/mazoku/dullahan/0701.html",
    "image": "img/monster/0701.jpg"
   },
@@ -1622,7 +1622,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 202,
-   "localImg": null,
+   "localImg": "S__93200801_0.jpg",
    "url": "/monsters/mazoku/dullahan/0702.html",
    "image": "img/monster/0702.jpg"
   },
@@ -1641,7 +1641,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 191,
-   "localImg": null,
+   "localImg": "S__93200570_0.jpg",
    "url": "/monsters/mazoku/dullahan/0707.html",
    "image": "img/monster/0707.jpg"
   },
@@ -1660,7 +1660,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 194,
-   "localImg": null,
+   "localImg": "S__93200611_0.jpg",
    "url": "/monsters/mazoku/dullahan/0709.html",
    "image": "img/monster/0709.jpg"
   },
@@ -1679,7 +1679,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス",
    "gwImg": 315,
-   "localImg": null,
+   "localImg": "S__93200404_0.jpg",
    "url": "/monsters/mazoku/dullahan/0750.html",
    "image": "img/monster/0750.jpg"
   },
@@ -1698,7 +1698,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 276,
-   "localImg": null,
+   "localImg": "S__93200422_0.jpg",
    "url": "/monsters/mazoku/dullahan/0751.html",
    "image": "img/monster/0751.jpg"
   },
@@ -1717,7 +1717,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 274,
-   "localImg": null,
+   "localImg": "S__93200390_0.jpg",
    "url": "/monsters/mazoku/dullahan/0752.html",
    "image": "img/monster/0752.jpg"
   },
@@ -1736,7 +1736,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 237,
-   "localImg": null,
+   "localImg": "S__93200734_0.jpg",
    "url": "/monsters/mazoku/dullahan/0753.html",
    "image": "img/monster/0753.jpg"
   },
@@ -1755,7 +1755,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 199,
-   "localImg": null,
+   "localImg": "S__93200457_0.jpg",
    "url": "/monsters/mazoku/dullahan/0754.html",
    "image": "img/monster/0754.jpg"
   },
@@ -1774,7 +1774,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 44,
-   "localImg": null,
+   "localImg": "S__93200655_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0804.html",
    "image": "img/monster/0804.jpg"
   },
@@ -1793,7 +1793,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 45,
-   "localImg": null,
+   "localImg": "S__93200698_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0805.html",
    "image": "img/monster/0805.jpg"
   },
@@ -1812,7 +1812,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 43,
-   "localImg": null,
+   "localImg": "S__93200768_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0808.html",
    "image": "img/monster/0808.jpg"
   },
@@ -1831,7 +1831,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 47,
-   "localImg": null,
+   "localImg": "S__93200664_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0815.html",
    "image": "img/monster/0815.jpg"
   },
@@ -1850,7 +1850,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 171,
-   "localImg": null,
+   "localImg": "S__93200691_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0817.html",
    "image": "img/monster/0817.jpg"
   },
@@ -1869,7 +1869,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 46,
-   "localImg": null,
+   "localImg": "S__93200594_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0820.html",
    "image": "img/monster/0820.jpg"
   },
@@ -1888,7 +1888,7 @@
    "limited": true,
    "limitedLabel": "秋限定",
    "gwImg": 299,
-   "localImg": null,
+   "localImg": "S__93200535_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0850.html",
    "image": "img/monster/0850.jpg"
   },
@@ -1907,7 +1907,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 219,
-   "localImg": null,
+   "localImg": "S__93200813_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0851.html",
    "image": "img/monster/0851.jpg"
   },
@@ -1926,7 +1926,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 208,
-   "localImg": null,
+   "localImg": "S__93200730_0.jpg",
    "url": "/monsters/kaibutsu/arrowhead/0852.html",
    "image": "img/monster/0852.jpg"
   },
@@ -1945,7 +1945,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 52,
-   "localImg": null,
+   "localImg": "S__93200515_0.jpg",
    "url": "/monsters/kemono/liger/0906.html",
    "image": "img/monster/0906.jpg"
   },
@@ -1964,7 +1964,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 48,
-   "localImg": null,
+   "localImg": "S__93200579_0.jpg",
    "url": "/monsters/kemono/liger/0909.html",
    "image": "img/monster/0909.jpg"
   },
@@ -1983,7 +1983,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 53,
-   "localImg": null,
+   "localImg": "S__93200652_0.jpg",
    "url": "/monsters/kemono/liger/0910.html",
    "image": "img/monster/0910.jpg"
   },
@@ -2002,7 +2002,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 54,
-   "localImg": null,
+   "localImg": "S__93200569_0.jpg",
    "url": "/monsters/kemono/liger/0911.html",
    "image": "img/monster/0911.jpg"
   },
@@ -2021,7 +2021,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 49,
-   "localImg": null,
+   "localImg": "S__93200586_0.jpg",
    "url": "/monsters/kemono/liger/0919.html",
    "image": "img/monster/0919.jpg"
   },
@@ -2040,7 +2040,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 50,
-   "localImg": null,
+   "localImg": "S__93200516_0.jpg",
    "url": "/monsters/kemono/liger/0921.html",
    "image": "img/monster/0921.jpg"
   },
@@ -2059,7 +2059,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 238,
-   "localImg": null,
+   "localImg": "S__93200736_0.jpg",
    "url": "/monsters/kemono/liger/0923.html",
    "image": "img/monster/0923.jpg"
   },
@@ -2078,7 +2078,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 51,
-   "localImg": null,
+   "localImg": "S__93200697_0.jpg",
    "url": "/monsters/kemono/liger/0924.html",
    "image": "img/monster/0924.jpg"
   },
@@ -2116,7 +2116,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 210,
-   "localImg": null,
+   "localImg": "S__93200732_0.jpg",
    "url": "/monsters/kemono/liger/0930.html",
    "image": "img/monster/0930.jpg"
   },
@@ -2135,7 +2135,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 290,
-   "localImg": null,
+   "localImg": "S__93200475_0.jpg",
    "url": "/monsters/kemono/liger/0950.html",
    "image": "img/monster/0950.jpg"
   },
@@ -2154,7 +2154,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 138,
-   "localImg": null,
+   "localImg": "S__93200568_0.jpg",
    "url": "/monsters/kemono/liger/0951.html",
    "image": "img/monster/0951.jpg"
   },
@@ -2173,7 +2173,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 329,
-   "localImg": null,
+   "localImg": "S__93208592_0.jpg",
    "url": "/monsters/kemono/liger/0990.html",
    "image": "img/monster/0990.jpg"
   },
@@ -2192,7 +2192,7 @@
    "limited": true,
    "limitedLabel": "エイプリルフールイベント限定",
    "gwImg": 270,
-   "localImg": null,
+   "localImg": "S__93200810_0.jpg",
    "url": "/monsters/kemono/hamu/1001.html",
    "image": "img/monster/1001.jpg"
   },
@@ -2211,7 +2211,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 58,
-   "localImg": null,
+   "localImg": "S__93200521_0.jpg",
    "url": "/monsters/kemono/hamu/1006.html",
    "image": "img/monster/1006.jpg"
   },
@@ -2230,7 +2230,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 55,
-   "localImg": null,
+   "localImg": "S__93200659_0.jpg",
    "url": "/monsters/kemono/hamu/1010.html",
    "image": "img/monster/1010.jpg"
   },
@@ -2249,7 +2249,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 157,
-   "localImg": null,
+   "localImg": "S__93200567_0.jpg",
    "url": "/monsters/kemono/hamu/1011.html",
    "image": "img/monster/1011.jpg"
   },
@@ -2268,7 +2268,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 59,
-   "localImg": null,
+   "localImg": "S__93200663_0.jpg",
    "url": "/monsters/kemono/hamu/1015.html",
    "image": "img/monster/1015.jpg"
   },
@@ -2287,7 +2287,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 57,
-   "localImg": null,
+   "localImg": "S__93200589_0.jpg",
    "url": "/monsters/kemono/hamu/1019.html",
    "image": "img/monster/1019.jpg"
   },
@@ -2306,7 +2306,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 60,
-   "localImg": null,
+   "localImg": "S__93200514_0.jpg",
    "url": "/monsters/kemono/hamu/1021.html",
    "image": "img/monster/1021.jpg"
   },
@@ -2325,7 +2325,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 56,
-   "localImg": null,
+   "localImg": "S__93200690_0.jpg",
    "url": "/monsters/kemono/hamu/1022.html",
    "image": "img/monster/1022.jpg"
   },
@@ -2344,7 +2344,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 61,
-   "localImg": null,
+   "localImg": "S__93200668_0.jpg",
    "url": "/monsters/kemono/hamu/1023.html",
    "image": "img/monster/1023.jpg"
   },
@@ -2363,7 +2363,7 @@
    "limited": true,
    "limitedLabel": "秋限定",
    "gwImg": 236,
-   "localImg": null,
+   "localImg": "S__93200735_0.jpg",
    "url": "/monsters/kemono/hamu/1050.html",
    "image": "img/monster/1050.jpg"
   },
@@ -2382,7 +2382,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 180,
-   "localImg": null,
+   "localImg": "S__93200794_0.jpg",
    "url": "/monsters/kemono/hamu/1051.html",
    "image": "img/monster/1051.jpg"
   },
@@ -2401,7 +2401,7 @@
    "limited": true,
    "limitedLabel": "クリスマス限定",
    "gwImg": 313,
-   "localImg": null,
+   "localImg": "S__93200388_0.jpg",
    "url": "/monsters/kemono/hamu/1080.html",
    "image": "img/monster/1080.jpg"
   },
@@ -2420,7 +2420,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 63,
-   "localImg": null,
+   "localImg": "S__93200769_0.jpg",
    "url": "/monsters/souzou/gali/1101.html",
    "image": "img/monster/1101.jpg"
   },
@@ -2458,7 +2458,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 66,
-   "localImg": null,
+   "localImg": "S__93200523_0.jpg",
    "url": "/monsters/souzou/gali/1106.html",
    "image": "img/monster/1106.jpg"
   },
@@ -2477,7 +2477,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 65,
-   "localImg": null,
+   "localImg": "S__93200637_0.jpg",
    "url": "/monsters/souzou/gali/1110.html",
    "image": "img/monster/1110.jpg"
   },
@@ -2496,7 +2496,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 62,
-   "localImg": null,
+   "localImg": "S__93200566_0.jpg",
    "url": "/monsters/souzou/gali/1111.html",
    "image": "img/monster/1111.jpg"
   },
@@ -2515,7 +2515,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 156,
-   "localImg": null,
+   "localImg": "S__93200670_0.jpg",
    "url": "/monsters/souzou/gali/1115.html",
    "image": "img/monster/1115.jpg"
   },
@@ -2534,7 +2534,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 67,
-   "localImg": null,
+   "localImg": "S__93200600_0.jpg",
    "url": "/monsters/souzou/gali/1119.html",
    "image": "img/monster/1119.jpg"
   },
@@ -2553,7 +2553,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 68,
-   "localImg": null,
+   "localImg": "S__93200520_0.jpg",
    "url": "/monsters/souzou/gali/1121.html",
    "image": "img/monster/1121.jpg"
   },
@@ -2572,7 +2572,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 64,
-   "localImg": null,
+   "localImg": "S__93200706_0.jpg",
    "url": "/monsters/souzou/gali/1124.html",
    "image": "img/monster/1124.jpg"
   },
@@ -2591,7 +2591,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 282,
-   "localImg": null,
+   "localImg": "S__93200461_0.jpg",
    "url": "/monsters/souzou/gali/1150.html",
    "image": "img/monster/1150.jpg"
   },
@@ -2629,7 +2629,7 @@
    "limited": true,
    "limitedLabel": "春限定",
    "gwImg": 197,
-   "localImg": null,
+   "localImg": "S__93200464_0.jpg",
    "url": "/monsters/souzou/gali/1152.html",
    "image": "img/monster/1152.jpg"
   },
@@ -2648,7 +2648,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 188,
-   "localImg": null,
+   "localImg": "S__93200797_0.jpg",
    "url": "/monsters/kemono/gujira/1201.html",
    "image": "img/monster/1201.jpg"
   },
@@ -2667,7 +2667,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 142,
-   "localImg": null,
+   "localImg": "S__93200790_0.jpg",
    "url": "/monsters/kemono/gujira/1202.html",
    "image": "img/monster/1202.jpg"
   },
@@ -2686,7 +2686,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 71,
-   "localImg": null,
+   "localImg": "S__93200774_0.jpg",
    "url": "/monsters/kemono/gujira/1208.html",
    "image": "img/monster/1208.jpg"
   },
@@ -2705,7 +2705,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 70,
-   "localImg": null,
+   "localImg": "S__93200599_0.jpg",
    "url": "/monsters/kemono/gujira/1209.html",
    "image": "img/monster/1209.jpg"
   },
@@ -2724,7 +2724,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 69,
-   "localImg": null,
+   "localImg": "S__93200593_0.jpg",
    "url": "/monsters/kemono/gujira/1212.html",
    "image": "img/monster/1212.jpg"
   },
@@ -2743,7 +2743,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 271,
-   "localImg": null,
+   "localImg": "S__93200508_0.jpg",
    "url": "/monsters/kemono/gujira/1250.html",
    "image": "img/monster/1250.jpg"
   },
@@ -2762,7 +2762,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 245,
-   "localImg": null,
+   "localImg": "S__93200814_0.jpg",
    "url": "/monsters/kemono/gujira/1251.html",
    "image": "img/monster/1251.jpg"
   },
@@ -2781,7 +2781,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 74,
-   "localImg": null,
+   "localImg": "S__93200765_0.jpg",
    "url": "/monsters/muki/nyaa/1301.html",
    "image": "img/monster/1301.jpg"
   },
@@ -2800,7 +2800,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 73,
-   "localImg": null,
+   "localImg": "S__93200598_0.jpg",
    "url": "/monsters/muki/nyaa/1309.html",
    "image": "img/monster/1309.jpg"
   },
@@ -2819,7 +2819,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 75,
-   "localImg": null,
+   "localImg": "S__93200665_0.jpg",
    "url": "/monsters/muki/nyaa/1310.html",
    "image": "img/monster/1310.jpg"
   },
@@ -2838,7 +2838,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 72,
-   "localImg": null,
+   "localImg": "S__93200565_0.jpg",
    "url": "/monsters/muki/nyaa/1313.html",
    "image": "img/monster/1313.jpg"
   },
@@ -2857,7 +2857,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 148,
-   "localImg": null,
+   "localImg": "S__93200576_0.jpg",
    "url": "/monsters/muki/nyaa/1326.html",
    "image": "img/monster/1326.jpg"
   },
@@ -2876,7 +2876,7 @@
    "limited": true,
    "limitedLabel": "春限定",
    "gwImg": 267,
-   "localImg": null,
+   "localImg": "S__93200564_0.jpg",
    "url": "/monsters/muki/nyaa/1350.html",
    "image": "img/monster/1350.jpg"
   },
@@ -2895,7 +2895,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 247,
-   "localImg": null,
+   "localImg": "S__93200807_0.jpg",
    "url": "/monsters/muki/nyaa/1351.html",
    "image": "img/monster/1351.jpg"
   },
@@ -2971,7 +2971,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 161,
-   "localImg": null,
+   "localImg": "S__93200785_0.jpg",
    "url": "/monsters/souzou/hinotori/1402.html",
    "image": "img/monster/1402.jpg"
   },
@@ -2990,7 +2990,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 169,
-   "localImg": null,
+   "localImg": "S__93200728_0.jpg",
    "url": "/monsters/souzou/hinotori/1404.html",
    "image": "img/monster/1404.jpg"
   },
@@ -3009,7 +3009,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 159,
-   "localImg": null,
+   "localImg": "S__93200787_0.jpg",
    "url": "/monsters/souzou/hinotori/1414.html",
    "image": "img/monster/1414.jpg"
   },
@@ -3028,7 +3028,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 164,
-   "localImg": null,
+   "localImg": "S__93200608_0.jpg",
    "url": "/monsters/souzou/hinotori/1420.html",
    "image": "img/monster/1420.jpg"
   },
@@ -3047,7 +3047,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 262,
-   "localImg": null,
+   "localImg": "S__93200709_0.jpg",
    "url": "/monsters/souzou/hinotori/1432.html",
    "image": "img/monster/1432.jpg"
   },
@@ -3066,7 +3066,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 326,
-   "localImg": null,
+   "localImg": "S__93200762_0.jpg",
    "url": "/monsters/souzou/hinotori/1450.html",
    "image": "img/monster/1450.jpg"
   },
@@ -3085,7 +3085,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 261,
-   "localImg": null,
+   "localImg": "S__93200704_0.jpg",
    "url": "/monsters/souzou/hinotori/1451.html",
    "image": "img/monster/1451.jpg"
   },
@@ -3104,7 +3104,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 234,
-   "localImg": null,
+   "localImg": "S__93200511_0.jpg",
    "url": "/monsters/souzou/hinotori/1452.html",
    "image": "img/monster/1452.jpg"
   },
@@ -3123,7 +3123,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 77,
-   "localImg": null,
+   "localImg": "S__93200772_0.jpg",
    "url": "/monsters/mazoku/suezo/1501.html",
    "image": "img/monster/1501.jpg"
   },
@@ -3142,7 +3142,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 78,
-   "localImg": null,
+   "localImg": "S__93200711_0.jpg",
    "url": "/monsters/mazoku/suezo/1505.html",
    "image": "img/monster/1505.jpg"
   },
@@ -3161,7 +3161,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 81,
-   "localImg": null,
+   "localImg": "S__93200526_0.jpg",
    "url": "/monsters/mazoku/suezo/1506.html",
    "image": "img/monster/1506.jpg"
   },
@@ -3180,7 +3180,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 79,
-   "localImg": null,
+   "localImg": "S__93200583_0.jpg",
    "url": "/monsters/mazoku/suezo/1509.html",
    "image": "img/monster/1509.jpg"
   },
@@ -3199,7 +3199,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 165,
-   "localImg": null,
+   "localImg": "S__93200798_0.jpg",
    "url": "/monsters/mazoku/suezo/1514.html",
    "image": "img/monster/1514.jpg"
   },
@@ -3218,7 +3218,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 76,
-   "localImg": null,
+   "localImg": "S__93200634_0.jpg",
    "url": "/monsters/mazoku/suezo/1515.html",
    "image": "img/monster/1515.jpg"
   },
@@ -3237,7 +3237,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 82,
-   "localImg": null,
+   "localImg": "S__93200522_0.jpg",
    "url": "/monsters/mazoku/suezo/1521.html",
    "image": "img/monster/1521.jpg"
   },
@@ -3256,7 +3256,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 80,
-   "localImg": null,
+   "localImg": "S__93200643_0.jpg",
    "url": "/monsters/mazoku/suezo/1523.html",
    "image": "img/monster/1523.jpg"
   },
@@ -3275,7 +3275,7 @@
    "limited": true,
    "limitedLabel": "GW限定",
    "gwImg": 273,
-   "localImg": null,
+   "localImg": "S__93200745_0.jpg",
    "url": "/monsters/mazoku/suezo/1550.html",
    "image": "img/monster/1550.jpg"
   },
@@ -3294,7 +3294,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 255,
-   "localImg": null,
+   "localImg": "S__93200742_0.jpg",
    "url": "/monsters/mazoku/suezo/1551.html",
    "image": "img/monster/1551.jpg"
   },
@@ -3313,7 +3313,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 232,
-   "localImg": null,
+   "localImg": "S__93200563_0.jpg",
    "url": "/monsters/mazoku/suezo/1552.html",
    "image": "img/monster/1552.jpg"
   },
@@ -3332,7 +3332,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 5,
-   "localImg": null,
+   "localImg": "S__93200776_0.jpg",
    "url": "/monsters/genrei/mocchi/1602.html",
    "image": "img/monster/1602.jpg"
   },
@@ -3351,7 +3351,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 3,
-   "localImg": null,
+   "localImg": "S__93200656_0.jpg",
    "url": "/monsters/genrei/mocchi/1604.html",
    "image": "img/monster/1604.jpg"
   },
@@ -3370,7 +3370,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 216,
-   "localImg": null,
+   "localImg": "S__93200561_0.jpg",
    "url": "/monsters/genrei/mocchi/1607.html",
    "image": "img/monster/1607.jpg"
   },
@@ -3389,7 +3389,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 2,
-   "localImg": null,
+   "localImg": "S__93200588_0.jpg",
    "url": "/monsters/genrei/mocchi/1609.html",
    "image": "img/monster/1609.jpg"
   },
@@ -3408,7 +3408,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 1,
-   "localImg": null,
+   "localImg": "S__93200763_0.jpg",
    "url": "/monsters/genrei/mocchi/1616.html",
    "image": "img/monster/1616.jpg"
   },
@@ -3427,7 +3427,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 4,
-   "localImg": null,
+   "localImg": "S__93200585_0.jpg",
    "url": "/monsters/genrei/mocchi/1619.html",
    "image": "img/monster/1619.jpg"
   },
@@ -3465,7 +3465,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 294,
-   "localImg": null,
+   "localImg": "S__93200627_0.jpg",
    "url": "/monsters/genrei/mocchi/1650.html",
    "image": "img/monster/1650.jpg"
   },
@@ -3484,7 +3484,7 @@
    "limited": true,
    "limitedLabel": "お楽しみガチャ限定",
    "gwImg": 281,
-   "localImg": null,
+   "localImg": "S__93200399_0.jpg",
    "url": "/monsters/genrei/mocchi/1651.html",
    "image": "img/monster/1651.jpg"
   },
@@ -3503,7 +3503,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 242,
-   "localImg": null,
+   "localImg": "S__93200491_0.jpg",
    "url": "/monsters/genrei/mocchi/1652.html",
    "image": "img/monster/1652.jpg"
   },
@@ -3522,7 +3522,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 241,
-   "localImg": null,
+   "localImg": "S__93200446_0.jpg",
    "url": "/monsters/genrei/mocchi/1653.html",
    "image": "img/monster/1653.jpg"
   },
@@ -3541,7 +3541,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 149,
-   "localImg": null,
+   "localImg": "S__93200783_0.jpg",
    "url": "/monsters/genrei/mocchi/1654.html",
    "image": "img/monster/1654.jpg"
   },
@@ -3560,7 +3560,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 163,
-   "localImg": null,
+   "localImg": "S__93200788_0.jpg",
    "url": "/monsters/kaibutsu/joker/1702.html",
    "image": "img/monster/1702.jpg"
   },
@@ -3579,7 +3579,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 211,
-   "localImg": null,
+   "localImg": "S__93200560_0.jpg",
    "url": "/monsters/kaibutsu/joker/1711.html",
    "image": "img/monster/1711.jpg"
   },
@@ -3598,7 +3598,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 143,
-   "localImg": null,
+   "localImg": "S__93200780_0.jpg",
    "url": "/monsters/kaibutsu/joker/1716.html",
    "image": "img/monster/1716.jpg"
   },
@@ -3617,7 +3617,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 141,
-   "localImg": null,
+   "localImg": "S__93200409_0.jpg",
    "url": "/monsters/kaibutsu/joker/1717.html",
    "image": "img/monster/1717.jpg"
   },
@@ -3636,7 +3636,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 305,
-   "localImg": null,
+   "localImg": "S__93200703_0.jpg",
    "url": "/monsters/kaibutsu/joker/1750.html",
    "image": "img/monster/1750.jpg"
   },
@@ -3655,7 +3655,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 303,
-   "localImg": null,
+   "localImg": "S__93200406_0.jpg",
    "url": "/monsters/kaibutsu/joker/1751.html",
    "image": "img/monster/1751.jpg"
   },
@@ -3674,7 +3674,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 291,
-   "localImg": null,
+   "localImg": "S__93200405_0.jpg",
    "url": "/monsters/kaibutsu/joker/1752.html",
    "image": "img/monster/1752.jpg"
   },
@@ -3693,7 +3693,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 239,
-   "localImg": null,
+   "localImg": "S__93200737_0.jpg",
    "url": "/monsters/kaibutsu/joker/1753.html",
    "image": "img/monster/1753.jpg"
   },
@@ -3712,7 +3712,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 174,
-   "localImg": null,
+   "localImg": "S__93200707_0.jpg",
    "url": "/monsters/kaibutsu/joker/1754.html",
    "image": "img/monster/1754.jpg"
   },
@@ -3731,7 +3731,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 85,
-   "localImg": null,
+   "localImg": "S__93200530_0.jpg",
    "url": "/monsters/mazoku/nendoro/1803.html",
    "image": "img/monster/1803.jpg"
   },
@@ -3750,7 +3750,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 84,
-   "localImg": null,
+   "localImg": "S__93200591_0.jpg",
    "url": "/monsters/mazoku/nendoro/1809.html",
    "image": "img/monster/1809.jpg"
   },
@@ -3769,7 +3769,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 87,
-   "localImg": null,
+   "localImg": "S__93200708_0.jpg",
    "url": "/monsters/mazoku/nendoro/1817.html",
    "image": "img/monster/1817.jpg"
   },
@@ -3788,7 +3788,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 83,
-   "localImg": null,
+   "localImg": "S__93200640_0.jpg",
    "url": "/monsters/mazoku/nendoro/1818.html",
    "image": "img/monster/1818.jpg"
   },
@@ -3807,7 +3807,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 86,
-   "localImg": null,
+   "localImg": "S__93200580_0.jpg",
    "url": "/monsters/mazoku/nendoro/1819.html",
    "image": "img/monster/1819.jpg"
   },
@@ -3826,7 +3826,7 @@
    "limited": true,
    "limitedLabel": "夏限定",
    "gwImg": 155,
-   "localImg": null,
+   "localImg": "S__93200453_0.jpg",
    "url": "/monsters/mazoku/nendoro/1825.html",
    "image": "img/monster/1825.jpg"
   },
@@ -3845,7 +3845,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 320,
-   "localImg": null,
+   "localImg": "S__93200630_0.jpg",
    "url": "/monsters/mazoku/nendoro/1850.html",
    "image": "img/monster/1850.jpg"
   },
@@ -3864,7 +3864,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 318,
-   "localImg": null,
+   "localImg": "S__93200631_0.jpg",
    "url": "/monsters/mazoku/nendoro/1851.html",
    "image": "img/monster/1851.jpg"
   },
@@ -3883,7 +3883,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 227,
-   "localImg": null,
+   "localImg": "S__93200616_0.jpg",
    "url": "/monsters/mazoku/nendoro/1852.html",
    "image": "img/monster/1852.jpg"
   },
@@ -3902,7 +3902,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 225,
-   "localImg": null,
+   "localImg": "S__93200618_0.jpg",
    "url": "/monsters/mazoku/nendoro/1853.html",
    "image": "img/monster/1853.jpg"
   },
@@ -3921,7 +3921,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 209,
-   "localImg": null,
+   "localImg": "S__93200398_0.jpg",
    "url": "/monsters/mazoku/nendoro/1854.html",
    "image": "img/monster/1854.jpg"
   },
@@ -3940,7 +3940,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 168,
-   "localImg": null,
+   "localImg": "S__93200676_0.jpg",
    "url": "/monsters/mazoku/nendoro/1855.html",
    "image": "img/monster/1855.jpg"
   },
@@ -3959,7 +3959,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 89,
-   "localImg": null,
+   "localImg": "S__93200702_0.jpg",
    "url": "/monsters/genrei/gel/1905.html",
    "image": "img/monster/1905.jpg"
   },
@@ -3978,7 +3978,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 90,
-   "localImg": null,
+   "localImg": "S__93200536_0.jpg",
    "url": "/monsters/genrei/gel/1906.html",
    "image": "img/monster/1906.jpg"
   },
@@ -3997,7 +3997,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 92,
-   "localImg": null,
+   "localImg": "S__93200653_0.jpg",
    "url": "/monsters/genrei/gel/1910.html",
    "image": "img/monster/1910.jpg"
   },
@@ -4016,7 +4016,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 91,
-   "localImg": null,
+   "localImg": "S__93200556_0.jpg",
    "url": "/monsters/genrei/gel/1911.html",
    "image": "img/monster/1911.jpg"
   },
@@ -4035,7 +4035,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 93,
-   "localImg": null,
+   "localImg": "S__93200636_0.jpg",
    "url": "/monsters/genrei/gel/1915.html",
    "image": "img/monster/1915.jpg"
   },
@@ -4054,7 +4054,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 88,
-   "localImg": null,
+   "localImg": "S__93200578_0.jpg",
    "url": "/monsters/genrei/gel/1919.html",
    "image": "img/monster/1919.jpg"
   },
@@ -4073,7 +4073,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 332,
-   "localImg": null,
+   "localImg": "S__67829767_0.jpg",
    "url": "/monsters/genrei/gel/1922.html",
    "image": "img/monster/1922.jpg"
   },
@@ -4092,7 +4092,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 94,
-   "localImg": null,
+   "localImg": "S__93200649_0.jpg",
    "url": "/monsters/genrei/gel/1923.html",
    "image": "img/monster/1923.jpg"
   },
@@ -4111,7 +4111,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 151,
-   "localImg": null,
+   "localImg": "S__93200710_0.jpg",
    "url": "/monsters/genrei/gel/1924.html",
    "image": "img/monster/1924.jpg"
   },
@@ -4130,7 +4130,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 256,
-   "localImg": null,
+   "localImg": "S__93200741_0.jpg",
    "url": "/monsters/genrei/gel/1950.html",
    "image": "img/monster/1950.jpg"
   },
@@ -4149,7 +4149,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 254,
-   "localImg": null,
+   "localImg": "S__93200743_0.jpg",
    "url": "/monsters/genrei/gel/1951.html",
    "image": "img/monster/1951.jpg"
   },
@@ -4168,7 +4168,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 251,
-   "localImg": null,
+   "localImg": "S__93200559_0.jpg",
    "url": "/monsters/genrei/gel/1952.html",
    "image": "img/monster/1952.jpg"
   },
@@ -4187,7 +4187,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 213,
-   "localImg": null,
+   "localImg": "S__93200701_0.jpg",
    "url": "/monsters/genrei/gel/1953.html",
    "image": "img/monster/1953.jpg"
   },
@@ -4206,7 +4206,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 272,
-   "localImg": null,
+   "localImg": "S__93200811_0.jpg",
    "url": "/monsters/genrei/undine/2001.html",
    "image": "img/monster/2001.jpg"
   },
@@ -4225,7 +4225,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 160,
-   "localImg": null,
+   "localImg": "S__93200722_0.jpg",
    "url": "/monsters/genrei/undine/2017.html",
    "image": "img/monster/2017.jpg"
   },
@@ -4244,7 +4244,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 96,
-   "localImg": null,
+   "localImg": "S__93200635_0.jpg",
    "url": "/monsters/genrei/undine/2018.html",
    "image": "img/monster/2018.jpg"
   },
@@ -4263,7 +4263,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 95,
-   "localImg": null,
+   "localImg": "S__93200602_0.jpg",
    "url": "/monsters/genrei/undine/2020.html",
    "image": "img/monster/2020.jpg"
   },
@@ -4282,7 +4282,7 @@
    "limited": true,
    "limitedLabel": "春限定",
    "gwImg": 331,
-   "localImg": null,
+   "localImg": "S__67829768_0.jpg",
    "url": "/monsters/genrei/undine/2050.html",
    "image": "img/monster/2050.jpg"
   },
@@ -4301,7 +4301,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 304,
-   "localImg": null,
+   "localImg": "S__93200510_0.jpg",
    "url": "/monsters/genrei/undine/2051.html",
    "image": "img/monster/2051.jpg"
   },
@@ -4320,7 +4320,7 @@
    "limited": true,
    "limitedLabel": "夏限定",
    "gwImg": 278,
-   "localImg": null,
+   "localImg": "S__93200503_0.jpg",
    "url": "/monsters/genrei/undine/2052.html",
    "image": "img/monster/2052.jpg"
   },
@@ -4339,7 +4339,7 @@
    "limited": true,
    "limitedLabel": "夏限定",
    "gwImg": 221,
-   "localImg": null,
+   "localImg": "S__93200612_0.jpg",
    "url": "/monsters/genrei/undine/2053.html",
    "image": "img/monster/2053.jpg"
   },
@@ -4358,7 +4358,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 179,
-   "localImg": null,
+   "localImg": "S__93200537_0.jpg",
    "url": "/monsters/genrei/undine/2054.html",
    "image": "img/monster/2054.jpg"
   },
@@ -4377,7 +4377,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 187,
-   "localImg": null,
+   "localImg": "S__93200796_0.jpg",
    "url": "/monsters/genrei/plant/2101.html",
    "image": "img/monster/2101.jpg"
   },
@@ -4396,7 +4396,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 102,
-   "localImg": null,
+   "localImg": "S__93200721_0.jpg",
    "url": "/monsters/genrei/plant/2105.html",
    "image": "img/monster/2105.jpg"
   },
@@ -4415,7 +4415,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 103,
-   "localImg": null,
+   "localImg": "S__93200421_0.jpg",
    "url": "/monsters/genrei/plant/2106.html",
    "image": "img/monster/2106.jpg"
   },
@@ -4434,7 +4434,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 101,
-   "localImg": null,
+   "localImg": "S__93200667_0.jpg",
    "url": "/monsters/genrei/plant/2110.html",
    "image": "img/monster/2110.jpg"
   },
@@ -4453,7 +4453,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 269,
-   "localImg": null,
+   "localImg": "S__93200558_0.jpg",
    "url": "/monsters/genrei/plant/2111.html",
    "image": "img/monster/2111.jpg"
   },
@@ -4472,7 +4472,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 97,
-   "localImg": null,
+   "localImg": "S__93200654_0.jpg",
    "url": "/monsters/genrei/plant/2115.html",
    "image": "img/monster/2115.jpg"
   },
@@ -4491,7 +4491,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 104,
-   "localImg": null,
+   "localImg": "S__93200592_0.jpg",
    "url": "/monsters/genrei/plant/2119.html",
    "image": "img/monster/2119.jpg"
   },
@@ -4510,7 +4510,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 100,
-   "localImg": null,
+   "localImg": "S__93200445_0.jpg",
    "url": "/monsters/genrei/plant/2121.html",
    "image": "img/monster/2121.jpg"
   },
@@ -4529,7 +4529,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 99,
-   "localImg": null,
+   "localImg": "S__93200657_0.jpg",
    "url": "/monsters/genrei/plant/2123.html",
    "image": "img/monster/2123.jpg"
   },
@@ -4548,7 +4548,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 98,
-   "localImg": null,
+   "localImg": "S__93200713_0.jpg",
    "url": "/monsters/genrei/plant/2124.html",
    "image": "img/monster/2124.jpg"
   },
@@ -4567,7 +4567,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 246,
-   "localImg": null,
+   "localImg": "S__93200451_0.jpg",
    "url": "/monsters/genrei/plant/2150.html",
    "image": "img/monster/2150.jpg"
   },
@@ -4586,7 +4586,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 153,
-   "localImg": null,
+   "localImg": "S__93200677_0.jpg",
    "url": "/monsters/genrei/plant/2151.html",
    "image": "img/monster/2151.jpg"
   },
@@ -4605,7 +4605,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 107,
-   "localImg": null,
+   "localImg": "S__93200426_0.jpg",
    "url": "/monsters/muki/monolith/2206.html",
    "image": "img/monster/2206.jpg"
   },
@@ -4624,7 +4624,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 109,
-   "localImg": null,
+   "localImg": "S__93200590_0.jpg",
    "url": "/monsters/muki/monolith/2209.html",
    "image": "img/monster/2209.jpg"
   },
@@ -4643,7 +4643,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 108,
-   "localImg": null,
+   "localImg": "S__93200673_0.jpg",
    "url": "/monsters/muki/monolith/2210.html",
    "image": "img/monster/2210.jpg"
   },
@@ -4662,7 +4662,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 111,
-   "localImg": null,
+   "localImg": "S__93200557_0.jpg",
    "url": "/monsters/muki/monolith/2211.html",
    "image": "img/monster/2211.jpg"
   },
@@ -4681,7 +4681,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 105,
-   "localImg": null,
+   "localImg": "S__93200644_0.jpg",
    "url": "/monsters/muki/monolith/2215.html",
    "image": "img/monster/2215.jpg"
   },
@@ -4700,7 +4700,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 110,
-   "localImg": null,
+   "localImg": "S__93200582_0.jpg",
    "url": "/monsters/muki/monolith/2219.html",
    "image": "img/monster/2219.jpg"
   },
@@ -4719,7 +4719,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 112,
-   "localImg": null,
+   "localImg": "S__93200459_0.jpg",
    "url": "/monsters/muki/monolith/2221.html",
    "image": "img/monster/2221.jpg"
   },
@@ -4738,7 +4738,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 106,
-   "localImg": null,
+   "localImg": "S__93200712_0.jpg",
    "url": "/monsters/muki/monolith/2222.html",
    "image": "img/monster/2222.jpg"
   },
@@ -4776,7 +4776,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 312,
-   "localImg": null,
+   "localImg": "S__93200753_0.jpg",
    "url": "/monsters/muki/monolith/2250.html",
    "image": "img/monster/2250.jpg"
   },
@@ -4795,7 +4795,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 289,
-   "localImg": null,
+   "localImg": "S__93200554_0.jpg",
    "url": "/monsters/muki/monolith/2251.html",
    "image": "img/monster/2251.jpg"
   },
@@ -4814,7 +4814,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 243,
-   "localImg": null,
+   "localImg": "S__93200555_0.jpg",
    "url": "/monsters/muki/monolith/2252.html",
    "image": "img/monster/2252.jpg"
   },
@@ -4833,7 +4833,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 224,
-   "localImg": null,
+   "localImg": "S__93200619_0.jpg",
    "url": "/monsters/muki/monolith/2253.html",
    "image": "img/monster/2253.jpg"
   },
@@ -4852,7 +4852,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 184,
-   "localImg": null,
+   "localImg": "S__93200795_0.jpg",
    "url": "/monsters/muki/monolith/2254.html",
    "image": "img/monster/2254.jpg"
   },
@@ -4871,7 +4871,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 158,
-   "localImg": null,
+   "localImg": "S__93200720_0.jpg",
    "url": "/monsters/muki/monolith/2255.html",
    "image": "img/monster/2255.jpg"
   },
@@ -4909,7 +4909,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 115,
-   "localImg": null,
+   "localImg": "S__93200715_0.jpg",
    "url": "/monsters/kaibutsu/worm/2305.html",
    "image": "img/monster/2305.jpg"
   },
@@ -4928,7 +4928,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 116,
-   "localImg": null,
+   "localImg": "S__93200443_0.jpg",
    "url": "/monsters/kaibutsu/worm/2306.html",
    "image": "img/monster/2306.jpg"
   },
@@ -4947,7 +4947,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 146,
-   "localImg": null,
+   "localImg": "S__93200603_0.jpg",
    "url": "/monsters/kaibutsu/worm/2309.html",
    "image": "img/monster/2309.jpg"
   },
@@ -4966,7 +4966,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 120,
-   "localImg": null,
+   "localImg": "S__93200641_0.jpg",
    "url": "/monsters/kaibutsu/worm/2310.html",
    "image": "img/monster/2310.jpg"
   },
@@ -4985,7 +4985,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 117,
-   "localImg": null,
+   "localImg": "S__93200553_0.jpg",
    "url": "/monsters/kaibutsu/worm/2311.html",
    "image": "img/monster/2311.jpg"
   },
@@ -5004,7 +5004,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 114,
-   "localImg": null,
+   "localImg": "S__93200645_0.jpg",
    "url": "/monsters/kaibutsu/worm/2315.html",
    "image": "img/monster/2315.jpg"
   },
@@ -5023,7 +5023,7 @@
    "limited": true,
    "limitedLabel": "お楽しみガチャ限定",
    "gwImg": 306,
-   "localImg": null,
+   "localImg": "S__93200387_0.jpg",
    "url": "/monsters/kaibutsu/worm/2321.html",
    "image": "img/monster/2321.jpg"
   },
@@ -5042,7 +5042,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 118,
-   "localImg": null,
+   "localImg": "S__93200719_0.jpg",
    "url": "/monsters/kaibutsu/worm/2322.html",
    "image": "img/monster/2322.jpg"
   },
@@ -5061,7 +5061,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 113,
-   "localImg": null,
+   "localImg": "S__93200662_0.jpg",
    "url": "/monsters/kaibutsu/worm/2323.html",
    "image": "img/monster/2323.jpg"
   },
@@ -5080,7 +5080,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 119,
-   "localImg": null,
+   "localImg": "S__93200718_0.jpg",
    "url": "/monsters/kaibutsu/worm/2324.html",
    "image": "img/monster/2324.jpg"
   },
@@ -5099,7 +5099,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 280,
-   "localImg": null,
+   "localImg": "S__93200460_0.jpg",
    "url": "/monsters/kaibutsu/worm/2350.html",
    "image": "img/monster/2350.jpg"
   },
@@ -5118,7 +5118,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 189,
-   "localImg": null,
+   "localImg": "S__93200610_0.jpg",
    "url": "/monsters/kaibutsu/worm/2351.html",
    "image": "img/monster/2351.jpg"
   },
@@ -5137,7 +5137,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 127,
-   "localImg": null,
+   "localImg": "S__93200717_0.jpg",
    "url": "/monsters/mazoku/naga/2405.html",
    "image": "img/monster/2405.jpg"
   },
@@ -5156,7 +5156,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 128,
-   "localImg": null,
+   "localImg": "S__93200587_0.jpg",
    "url": "/monsters/mazoku/naga/2409.html",
    "image": "img/monster/2409.jpg"
   },
@@ -5175,7 +5175,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 126,
-   "localImg": null,
+   "localImg": "S__93200648_0.jpg",
    "url": "/monsters/mazoku/naga/2410.html",
    "image": "img/monster/2410.jpg"
   },
@@ -5194,7 +5194,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 173,
-   "localImg": null,
+   "localImg": "S__93200552_0.jpg",
    "url": "/monsters/mazoku/naga/2411.html",
    "image": "img/monster/2411.jpg"
   },
@@ -5213,7 +5213,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 125,
-   "localImg": null,
+   "localImg": "S__93200660_0.jpg",
    "url": "/monsters/mazoku/naga/2415.html",
    "image": "img/monster/2415.jpg"
   },
@@ -5232,7 +5232,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 123,
-   "localImg": null,
+   "localImg": "S__93200601_0.jpg",
    "url": "/monsters/mazoku/naga/2419.html",
    "image": "img/monster/2419.jpg"
   },
@@ -5251,7 +5251,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 172,
-   "localImg": null,
+   "localImg": "S__93200427_0.jpg",
    "url": "/monsters/mazoku/naga/2421.html",
    "image": "img/monster/2421.jpg"
   },
@@ -5270,7 +5270,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 124,
-   "localImg": null,
+   "localImg": "S__93200714_0.jpg",
    "url": "/monsters/mazoku/naga/2422.html",
    "image": "img/monster/2422.jpg"
   },
@@ -5289,7 +5289,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 121,
-   "localImg": null,
+   "localImg": "S__93200646_0.jpg",
    "url": "/monsters/mazoku/naga/2423.html",
    "image": "img/monster/2423.jpg"
   },
@@ -5308,7 +5308,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 122,
-   "localImg": null,
+   "localImg": "S__93200725_0.jpg",
    "url": "/monsters/mazoku/naga/2424.html",
    "image": "img/monster/2424.jpg"
   },
@@ -5327,7 +5327,7 @@
    "limited": true,
    "limitedLabel": "超神殿祭限定",
    "gwImg": 286,
-   "localImg": null,
+   "localImg": "S__93200747_0.jpg",
    "url": "/monsters/mazoku/naga/2450.html",
    "image": "img/monster/2450.jpg"
   },
@@ -5346,7 +5346,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 249,
-   "localImg": null,
+   "localImg": "S__93200621_0.jpg",
    "url": "/monsters/mazoku/naga/2451.html",
    "image": "img/monster/2451.jpg"
   },
@@ -5365,7 +5365,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 137,
-   "localImg": null,
+   "localImg": "S__93200607_0.jpg",
    "url": "/monsters/mazoku/naga/2452.html",
    "image": "img/monster/2452.jpg"
   },
@@ -5403,7 +5403,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 328,
-   "localImg": null,
+   "localImg": "S__93200817_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2502.html",
    "image": "img/monster/2502.jpg"
   },
@@ -5422,7 +5422,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 132,
-   "localImg": null,
+   "localImg": "S__93200642_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2504.html",
    "image": "img/monster/2504.jpg"
   },
@@ -5441,7 +5441,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 129,
-   "localImg": null,
+   "localImg": "S__93200647_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2510.html",
    "image": "img/monster/2510.jpg"
   },
@@ -5460,7 +5460,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 133,
-   "localImg": null,
+   "localImg": "S__93200781_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2516.html",
    "image": "img/monster/2516.jpg"
   },
@@ -5479,7 +5479,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 131,
-   "localImg": null,
+   "localImg": "S__93200411_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2521.html",
    "image": "img/monster/2521.jpg"
   },
@@ -5498,7 +5498,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 130,
-   "localImg": null,
+   "localImg": "S__93200444_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2525.html",
    "image": "img/monster/2525.jpg"
   },
@@ -5517,7 +5517,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 200,
-   "localImg": null,
+   "localImg": "S__93200428_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2528.html",
    "image": "img/monster/2528.jpg"
   },
@@ -5536,7 +5536,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 285,
-   "localImg": null,
+   "localImg": "S__93200746_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2531.html",
    "image": "img/monster/2531.jpg"
   },
@@ -5555,7 +5555,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 144,
-   "localImg": null,
+   "localImg": "S__93200666_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2550.html",
    "image": "img/monster/2550.jpg"
   },
@@ -5574,7 +5574,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 152,
-   "localImg": null,
+   "localImg": "S__93200784_0.jpg",
    "url": "/monsters/kemono/kyubi/2608.html",
    "image": "img/monster/2608.jpg"
   },
@@ -5593,7 +5593,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 134,
-   "localImg": null,
+   "localImg": "S__93200596_0.jpg",
    "url": "/monsters/kemono/kyubi/2609.html",
    "image": "img/monster/2609.jpg"
   },
@@ -5612,7 +5612,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 183,
-   "localImg": null,
+   "localImg": "S__93200800_0.jpg",
    "url": "/monsters/kemono/kyubi/2614.html",
    "image": "img/monster/2614.jpg"
   },
@@ -5631,7 +5631,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 150,
-   "localImg": null,
+   "localImg": "S__93200605_0.jpg",
    "url": "/monsters/kemono/kyubi/2620.html",
    "image": "img/monster/2620.jpg"
   },
@@ -5650,7 +5650,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 135,
-   "localImg": null,
+   "localImg": "S__93200550_0.jpg",
    "url": "/monsters/kemono/kyubi/2626.html",
    "image": "img/monster/2626.jpg"
   },
@@ -5669,7 +5669,7 @@
    "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": 193,
-   "localImg": null,
+   "localImg": "S__93200450_0.jpg",
    "url": "/monsters/kemono/kyubi/2628.html",
    "image": "img/monster/2628.jpg"
   },
@@ -5688,7 +5688,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 250,
-   "localImg": null,
+   "localImg": "S__93200620_0.jpg",
    "url": "/monsters/kemono/kyubi/2629.html",
    "image": "img/monster/2629.jpg"
   },
@@ -5707,7 +5707,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 319,
-   "localImg": null,
+   "localImg": "S__93200816_0.jpg",
    "url": "/monsters/kemono/kyubi/2650.html",
    "image": "img/monster/2650.jpg"
   },
@@ -5726,7 +5726,7 @@
    "limited": true,
    "limitedLabel": "夏限定",
    "gwImg": 283,
-   "localImg": null,
+   "localImg": "S__93200748_0.jpg",
    "url": "/monsters/kemono/kyubi/2651.html",
    "image": "img/monster/2651.jpg"
   },
@@ -5745,7 +5745,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 275,
-   "localImg": null,
+   "localImg": "S__93200812_0.jpg",
    "url": "/monsters/kemono/kyubi/2652.html",
    "image": "img/monster/2652.jpg"
   },
@@ -5764,7 +5764,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 192,
-   "localImg": null,
+   "localImg": "S__93200549_0.jpg",
    "url": "/monsters/kemono/kyubi/2653.html",
    "image": "img/monster/2653.jpg"
   },
@@ -5783,7 +5783,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 167,
-   "localImg": null,
+   "localImg": "S__93200414_0.jpg",
    "url": "/monsters/kemono/kyubi/2654.html",
    "image": "img/monster/2654.jpg"
   },
@@ -5802,7 +5802,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 325,
-   "localImg": null,
+   "localImg": "S__93200818_0.jpg",
    "url": "/monsters/kemono/kyubi/2690.html",
    "image": "img/monster/2690.jpg"
   },
@@ -5821,7 +5821,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 248,
-   "localImg": null,
+   "localImg": "S__93200808_0.jpg",
    "url": "/monsters/souzou/metalner/2701.html",
    "image": "img/monster/2701.jpg"
   },
@@ -5840,7 +5840,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 231,
-   "localImg": null,
+   "localImg": "S__93200733_0.jpg",
    "url": "/monsters/souzou/metalner/2715.html",
    "image": "img/monster/2715.jpg"
   },
@@ -5859,7 +5859,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 235,
-   "localImg": null,
+   "localImg": "S__93200434_0.jpg",
    "url": "/monsters/souzou/metalner/2721.html",
    "image": "img/monster/2721.jpg"
   },
@@ -5878,7 +5878,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 229,
-   "localImg": null,
+   "localImg": "S__93200548_0.jpg",
    "url": "/monsters/souzou/metalner/2727.html",
    "image": "img/monster/2727.jpg"
   },
@@ -5897,7 +5897,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 310,
-   "localImg": null,
+   "localImg": "S__93200752_0.jpg",
    "url": "/monsters/souzou/metalner/2750.html",
    "image": "img/monster/2750.jpg"
   },
@@ -5935,7 +5935,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 196,
-   "localImg": null,
+   "localImg": "S__93200547_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2813.html",
    "image": "img/monster/2813.jpg"
   },
@@ -5954,7 +5954,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 195,
-   "localImg": null,
+   "localImg": "S__93200678_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2823.html",
    "image": "img/monster/2823.jpg"
   },
@@ -5973,7 +5973,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 230,
-   "localImg": null,
+   "localImg": "S__93200546_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2827.html",
    "image": "img/monster/2827.jpg"
   },
@@ -5992,7 +5992,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 190,
-   "localImg": null,
+   "localImg": "S__93200454_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2828.html",
    "image": "img/monster/2828.jpg"
   },
@@ -6011,7 +6011,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 258,
-   "localImg": null,
+   "localImg": "S__93200391_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2850.html",
    "image": "img/monster/2850.jpg"
   },
@@ -6030,7 +6030,7 @@
    "limited": true,
    "limitedLabel": "夏限定",
    "gwImg": 279,
-   "localImg": null,
+   "localImg": "S__93200393_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2851.html",
    "image": "img/monster/2851.jpg"
   },
@@ -6049,7 +6049,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 308,
-   "localImg": null,
+   "localImg": "S__93200401_0.jpg",
    "url": "/monsters/souzou/yggdrasil/2852.html",
    "image": "img/monster/2852.jpg"
   },
@@ -6068,7 +6068,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 182,
-   "localImg": null,
+   "localImg": "S__93200438_0.jpg",
    "url": "/monsters/genrei/shinryu/2906.html",
    "image": "img/monster/2906.jpg"
   },
@@ -6087,7 +6087,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 186,
-   "localImg": null,
+   "localImg": "S__93200805_0.jpg",
    "url": "/monsters/genrei/shinryu/2914.html",
    "image": "img/monster/2914.jpg"
   },
@@ -6106,7 +6106,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 222,
-   "localImg": null,
+   "localImg": "S__93200613_0.jpg",
    "url": "/monsters/genrei/shinryu/2920.html",
    "image": "img/monster/2920.jpg"
   },
@@ -6125,7 +6125,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 204,
-   "localImg": null,
+   "localImg": "S__93200417_0.jpg",
    "url": "/monsters/genrei/shinryu/2928.html",
    "image": "img/monster/2928.jpg"
   },
@@ -6144,7 +6144,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 181,
-   "localImg": null,
+   "localImg": "S__93200604_0.jpg",
    "url": "/monsters/genrei/shinryu/2929.html",
    "image": "img/monster/2929.jpg"
   },
@@ -6163,7 +6163,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 253,
-   "localImg": null,
+   "localImg": "S__93200740_0.jpg",
    "url": "/monsters/genrei/shinryu/2950.html",
    "image": "img/monster/2950.jpg"
   },
@@ -6201,7 +6201,7 @@
    "limited": true,
    "limitedLabel": "超神殿祭限定",
    "gwImg": 296,
-   "localImg": null,
+   "localImg": "S__93200758_0.jpg",
    "url": "/monsters/genrei/shinryu/2952.html",
    "image": "img/monster/2952.jpg"
   },
@@ -6220,7 +6220,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 217,
-   "localImg": null,
+   "localImg": "S__93200802_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3016.html",
    "image": "img/monster/3016.jpg"
   },
@@ -6239,7 +6239,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 207,
-   "localImg": null,
+   "localImg": "S__93200726_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3024.html",
    "image": "img/monster/3024.jpg"
   },
@@ -6258,7 +6258,7 @@
    "limited": true,
    "limitedLabel": "超スタフェス限定",
    "gwImg": 205,
-   "localImg": null,
+   "localImg": "S__93200731_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3030.html",
    "image": "img/monster/3030.jpg"
   },
@@ -6277,7 +6277,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 240,
-   "localImg": null,
+   "localImg": "S__93200395_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3050.html",
    "image": "img/monster/3050.jpg"
   },
@@ -6296,7 +6296,7 @@
    "limited": true,
    "limitedLabel": "秋限定",
    "gwImg": 298,
-   "localImg": null,
+   "localImg": "S__93200389_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3051.html",
    "image": "img/monster/3051.jpg"
   },
@@ -6315,7 +6315,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 322,
-   "localImg": null,
+   "localImg": "S__93200402_0.jpg",
    "url": "/monsters/kaibutsu/kijin/3052.html",
    "image": "img/monster/3052.jpg"
   },
@@ -6334,7 +6334,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 264,
-   "localImg": null,
+   "localImg": "S__93200545_0.jpg",
    "url": "/monsters/kaibutsu/ghost/3113.html",
    "image": "img/monster/3113.jpg"
   },
@@ -6353,7 +6353,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 265,
-   "localImg": null,
+   "localImg": "S__93200723_0.jpg",
    "url": "/monsters/kaibutsu/ghost/3117.html",
    "image": "img/monster/3117.jpg"
   },
@@ -6372,7 +6372,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 260,
-   "localImg": null,
+   "localImg": "S__93200744_0.jpg",
    "url": "/monsters/kaibutsu/ghost/3131.html",
    "image": "img/monster/3131.jpg"
   },
@@ -6391,7 +6391,7 @@
    "limited": true,
    "limitedLabel": "秋限定",
    "gwImg": 301,
-   "localImg": null,
+   "localImg": "S__93200456_0.jpg",
    "url": "/monsters/kaibutsu/ghost/3150.html",
    "image": "img/monster/3150.jpg"
   },
@@ -6410,7 +6410,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 293,
-   "localImg": null,
+   "localImg": "S__93200626_0.jpg",
    "url": "/monsters/muki/illumine/3209.html",
    "image": "img/monster/3209.jpg"
   },
@@ -6429,7 +6429,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 268,
-   "localImg": null,
+   "localImg": "S__93200544_0.jpg",
    "url": "/monsters/muki/illumine/3213.html",
    "image": "img/monster/3213.jpg"
   },
@@ -6448,7 +6448,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 263,
-   "localImg": null,
+   "localImg": "S__93200625_0.jpg",
    "url": "/monsters/muki/illumine/3219.html",
    "image": "img/monster/3219.jpg"
   },
@@ -6467,7 +6467,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 259,
-   "localImg": null,
+   "localImg": "S__93200724_0.jpg",
    "url": "/monsters/muki/illumine/3232.html",
    "image": "img/monster/3232.jpg"
   },
@@ -6486,7 +6486,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 307,
-   "localImg": null,
+   "localImg": "S__93208582_0.jpg",
    "url": "/monsters/muki/illumine/3250.html",
    "image": "img/monster/3250.jpg"
   },
@@ -6524,7 +6524,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": null,
-   "localImg": "S__22323203_0.jpg",
+   "localImg": "3314.jpg",
    "url": "/monsters/genrei/arc/3314.html",
    "image": "img/monster/3314.jpg"
   },
@@ -6543,7 +6543,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 297,
-   "localImg": null,
+   "localImg": "S__93200403_0.jpg",
    "url": "/monsters/genrei/arc/3317.html",
    "image": "img/monster/3317.jpg"
   },
@@ -6562,7 +6562,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 295,
-   "localImg": null,
+   "localImg": "S__93200423_0.jpg",
    "url": "/monsters/genrei/arc/3321.html",
    "image": "img/monster/3321.jpg"
   },
@@ -6581,7 +6581,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 292,
-   "localImg": null,
+   "localImg": "S__93200624_0.jpg",
    "url": "/monsters/genrei/arc/3333.html",
    "image": "img/monster/3333.jpg"
   },
@@ -6600,7 +6600,7 @@
    "limited": true,
    "limitedLabel": "冬限定",
    "gwImg": 309,
-   "localImg": null,
+   "localImg": "S__93200751_0.jpg",
    "url": "/monsters/genrei/arc/3350.html",
    "image": "img/monster/3350.jpg"
   },
@@ -6619,7 +6619,7 @@
    "limited": true,
    "limitedLabel": "コラボ限定",
    "gwImg": 323,
-   "localImg": null,
+   "localImg": "S__93265968.jpg",
    "url": "/monsters/genrei/arc/3380.html",
    "image": "img/monster/3380.jpg"
   },
@@ -6638,7 +6638,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 327,
-   "localImg": null,
+   "localImg": "S__93200439_0.jpg",
    "url": "/monsters/souzou/zan/3406.html",
    "image": "img/monster/3406.jpg"
   },
@@ -6657,7 +6657,7 @@
    "limited": false,
    "limitedLabel": "",
    "gwImg": 330,
-   "localImg": null,
+   "localImg": "S__93208594_0.jpg",
    "url": "/monsters/souzou/zan/3408.html",
    "image": "img/monster/3408.jpg"
   },
@@ -6676,7 +6676,7 @@
    "limited": true,
    "limitedLabel": "周年限定",
    "gwImg": 324,
-   "localImg": null,
+   "localImg": "S__93200400_0.jpg",
    "url": "/monsters/souzou/zan/3434.html",
    "image": "img/monster/3434.jpg"
   },
