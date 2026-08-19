@@ -540,3 +540,16 @@ td img {
   transition: background 0.2s;
 }
 .comment-submit-btn:hover { background: #d4920a; }
+
+.page-breadcrumb {
+  margin-bottom: 24px;
+  color: #666;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .page-breadcrumb {
+    margin-bottom: 20px;
+    font-size: 11px;
+  }
+}

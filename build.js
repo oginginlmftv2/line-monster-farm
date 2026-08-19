@@ -6,6 +6,7 @@ const path = require('path');
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
 const ROOT_PREFIX = '../../../';
+const MON_TYPE_ROOT_PREFIX = '../../';
 const DRY_RUN = process.argv.includes('--dry');
 
 function readJson(relativePath) {
@@ -103,11 +104,6 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
-function formationsTextLength(formations) {
-  if (!formations) return 0;
-  return JSON.stringify(formations).replace(/["{}\[\],:]/g, '').length;
-}
-
 function formatExplanation(text) {
   const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
   const blocks = [];
@@ -127,7 +123,7 @@ function formatExplanation(text) {
         index++;
       }
       if (bulletLines.length >= 2) {
-        blocks.push(`<ul>\n${bulletLines.map(item => `          <li>${escapeHtml(item)}</li>`).join('\n')}\n        </ul>`);
+        blocks.push(`<ul>${bulletLines.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`);
       } else {
         blocks.push(`<p>${escapeHtml(line)}</p>`);
       }
@@ -138,37 +134,96 @@ function formatExplanation(text) {
     index++;
   }
 
-  return blocks.join('\n        ');
+  return blocks.join('');
 }
 
 function descriptionFrom(text) {
   const normalized = String(text || '').replace(/\s+/g, ' ').trim();
-  if (normalized.length <= 120) return normalized;
-  const candidate = normalized.slice(0, 120);
-  const sentenceEnd = candidate.indexOf('。', 79);
-  if (sentenceEnd !== -1) return candidate.slice(0, sentenceEnd + 1);
-  return normalized.slice(0, 100);
+  if (normalized.length <= 140) return normalized;
+  const candidate = normalized.slice(0, 140);
+  const sentenceEnd = candidate.lastIndexOf('。');
+  if (sentenceEnd >= 40) return candidate.slice(0, sentenceEnd + 1);
+  return candidate.slice(0, 100) + '…';
 }
 
 function visibleChars(html) {
-  let body = html.replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '');
-  return body.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim().length;
+  const withoutInvisible = html
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
+  const body = withoutInvisible.match(/<body[\s\S]*?<\/body>/i);
+  return (body ? body[0] : withoutInvisible)
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, '')
+    .length;
 }
 
-function gateDetails(editorial) {
-  return editorial.map(entry => {
-    const formationsLength = formationsTextLength(entry.formations);
-    const totalLength = entry.explanationLength + formationsLength;
-    return { ...entry, formationsLength, totalLength, eligible: totalLength >= 500 };
+function createDetailEntries(inputs) {
+  const editorialById = new Map(inputs.editorial.map(entry => [entry.id, entry]));
+  return inputs.monsters.map(monster => {
+    return editorialById.get(monster.id) || {
+      id: monster.id,
+      name: monster.name,
+      explanation: '',
+      explanationLength: 0,
+      formations: [],
+    };
   });
 }
 
-function createBuildContext(inputs, eligibleEntries) {
-  const eligibleIds = new Set(eligibleEntries.map(entry => entry.id));
-  const generatedPaths = new Set(
-    eligibleEntries.map(entry => inputs.monsterById.get(entry.id).url.replace(/^\//, ''))
-  );
+function gateMonTypes(inputs) {
+  const taxonomyMonTypes = inputs.taxonomy && inputs.taxonomy.monTypes
+    ? inputs.taxonomy.monTypes
+    : {};
+  const monTypes = new Map();
+  for (const monster of inputs.monsters) {
+    if (!monTypes.has(monster.monSlug)) {
+      monTypes.set(monster.monSlug, monster.mon);
+    }
+  }
+
+  return [...monTypes].map(([slug, name]) => {
+    const entry = taxonomyMonTypes[slug];
+    const reasons = [];
+    if (!entry) {
+      reasons.push('taxonomy.json にデータがありません');
+      return { slug, name, entry: null, totalLength: 0, reasons, eligible: false };
+    }
+
+    const sections = Array.isArray(entry.sections) ? entry.sections : [];
+    if (sections.length !== 3) {
+      reasons.push(`sections が${sections.length}件。3件必要`);
+    }
+    sections.forEach((section, index) => {
+      const items = Array.isArray(section.items) ? section.items : [];
+      if (!items.length) reasons.push(`section ${index + 1} の items が0件。1件以上必要`);
+    });
+    const totalLength = sections.reduce((sectionTotal, section) => {
+      const items = Array.isArray(section.items) ? section.items : [];
+      return sectionTotal + items.reduce((itemTotal, item) => {
+        return itemTotal + String(item.subheading || '').length + String(item.body || '').length;
+      }, 0);
+    }, 0);
+    if (totalLength < 400) {
+      reasons.push(`合計${totalLength}字。400字必要。${400 - totalLength}字不足`);
+    }
+    return {
+      slug,
+      name: entry.name || name,
+      entry,
+      totalLength,
+      reasons,
+      eligible: reasons.length === 0,
+    };
+  });
+}
+
+function createBuildContext(inputs, eligibleMonTypes) {
+  const eligibleMonSlugs = new Set(eligibleMonTypes.map(monType => monType.slug));
+  const generatedPaths = new Set([
+    ...inputs.monsters.map(monster => monster.url.replace(/^\//, '')),
+    ...eligibleMonTypes.map(monType => `monsters/${monType.slug}/index.html`),
+  ]);
   const skippedEmptyFormations = inputs.editorial.flatMap(entry => {
     const monster = inputs.monsterById.get(entry.id);
     return (entry.formations || [])
@@ -181,7 +236,10 @@ function createBuildContext(inputs, eligibleEntries) {
   });
   return {
     ...inputs,
-    eligibleIds,
+    eligibleMonSlugs,
+    eligibleMonTypes,
+    editorialById: new Map(inputs.editorial.map(entry => [entry.id, entry])),
+    indexableDetailIds: new Set(),
     generatedPaths,
     fallbackImages: new Map(),
     missingCardIds: new Set(),
@@ -190,10 +248,10 @@ function createBuildContext(inputs, eligibleEntries) {
   };
 }
 
-function resolveImage(id, context) {
+function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
   const runtime = context.runtimeById.get(id);
-  if (runtime && runtime.localImg) return `${ROOT_PREFIX}monster/${runtime.localImg}`;
-  if (context.images[id]) return `${ROOT_PREFIX}monster/${context.images[id]}`;
+  if (runtime && runtime.localImg) return `${rootPrefix}monster/${runtime.localImg}`;
+  if (context.images[id]) return `${rootPrefix}monster/${context.images[id]}`;
   if (runtime && runtime.gwImg) {
     const monster = context.monsterById.get(id);
     context.fallbackImages.set(id, monster ? monster.name : id);
@@ -206,9 +264,9 @@ function addLink(context, target) {
   context.linkTargets.push(target);
 }
 
-function rootLink(context, file, label) {
+function rootLink(context, file, label, rootPrefix = ROOT_PREFIX) {
   addLink(context, file);
-  return `<a href="${ROOT_PREFIX}${file}">${escapeHtml(label)}</a>`;
+  return `<a href="${rootPrefix}${file}">${escapeHtml(label)}</a>`;
 }
 
 function detailLink(context, monster, label) {
@@ -217,7 +275,43 @@ function detailLink(context, monster, label) {
   return `<a href="${monster.id}.html">${escapeHtml(label)}</a>`;
 }
 
-function breadcrumbJson(monster) {
+function breadcrumbJson(monster, context) {
+  const itemListElement = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'LINEモンスターファーム徹底攻略',
+      item: `${SITE_URL}/`,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'モンスター一覧',
+      item: `${SITE_URL}/monsters.html`,
+    },
+  ];
+  if (context.eligibleMonSlugs.has(monster.monSlug)) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: monster.mon,
+      item: `${SITE_URL}/monsters/${monster.monSlug}/`,
+    });
+  }
+  itemListElement.push({
+    '@type': 'ListItem',
+    position: itemListElement.length + 1,
+    name: monster.name,
+    item: `${SITE_URL}${monster.url}`,
+  });
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  });
+}
+
+function monTypeBreadcrumbJson(monType) {
   return JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -237,33 +331,42 @@ function breadcrumbJson(monster) {
       {
         '@type': 'ListItem',
         position: 3,
-        name: monster.name,
-        item: `${SITE_URL}${monster.url}`,
+        name: monType.name,
+        item: `${SITE_URL}/monsters/${monType.slug}/`,
       },
     ],
   });
 }
 
+function renderFormationCard(id, context) {
+  const card = id ? context.cardsData[id] : null;
+  if (!card) {
+    if (id) context.missingCardIds.add(id);
+    return `<div class="f-card"><div class="f-card-placeholder">？</div><div class="f-card-name">${escapeHtml(id || '未設定')}</div></div>`;
+  }
+  return `<div class="f-card">
+            <img src="${ROOT_PREFIX}assist-cards/${escapeHtml(id)}.${escapeHtml(card.ext)}" alt="${escapeHtml(card.name)}">
+            <div class="f-card-name">${escapeHtml(card.name)}</div>
+          </div>`;
+}
+
 function renderFormation(formation, context) {
-  const cardName = id => {
-    const card = context.cardsData[id];
-    if (!card) {
-      context.missingCardIds.add(id);
-      return id;
-    }
-    return card.name;
-  };
-  const rows = (formation.cards || []).map((id, index) => `
-            <tr><th>カード${index + 1}</th><td>${escapeHtml(cardName(id))}</td></tr>`).join('');
-  const rental = formation.rental
-    ? `\n            <tr><th>レンタル</th><td>${escapeHtml(cardName(formation.rental))}</td></tr>`
-    : '';
-  return `
-        <h3>${escapeHtml(formation.title || 'おすすめ編成')}</h3>
-        <table>
-          <tbody>${rows}${rental}
-          </tbody>
-        </table>`;
+  const cards = Array.from({ length: 5 }, (_, index) => {
+    return (formation.cards || [])[index] || '';
+  });
+  return `<div class="formation-item">
+        <div class="formation-item-name">${escapeHtml(formation.title || 'おすすめ編成')}</div>
+        <div class="formation-row">
+          <div class="formation-deck-cards">
+            ${cards.map(id => renderFormationCard(id, context)).join('\n            ')}
+          </div>
+          <div class="rental-sep">
+            <div class="rental-sep-line"></div>
+            <div class="rental-sep-label">レンタル</div>
+          </div>
+          ${renderFormationCard(formation.rental || '', context)}
+        </div>
+      </div>`;
 }
 
 function isEmptyFormation(formation) {
@@ -287,11 +390,8 @@ function renderRelatedCard(monster, context) {
             <div class="card-name">${escapeHtml(monster.name)}</div>
             <div>${escapeHtml(monster.aura)}オーラ / ${escapeHtml(monster.subBlood)}</div>
           </div>`;
-  if (context.eligibleIds.has(monster.id)) {
-    addLink(context, monster.url.replace(/^\//, ''));
-    return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
-  }
-  return `        <div class="card">${content}\n        </div>`;
+  addLink(context, monster.url.replace(/^\//, ''));
+  return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
 }
 
 function renderDetail(entry, context) {
@@ -303,6 +403,12 @@ function renderDetail(entry, context) {
   const image = resolveImage(monster.id, context);
   const breadcrumbTop = rootLink(context, 'index.html', 'トップ');
   const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
+  const breadcrumbMonType = context.eligibleMonSlugs.has(monster.monSlug)
+    ? (() => {
+      addLink(context, `monsters/${monster.monSlug}/index.html`);
+      return `<a href="../../index.html">${escapeHtml(monster.mon)}</a>`;
+    })()
+    : escapeHtml(monster.mon);
   const navTop = rootLink(context, 'index.html', 'トップ');
   const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧');
@@ -312,32 +418,28 @@ function renderDetail(entry, context) {
   });
   const formations = nonEmptyFormations.length
     ? `
-    <section class="section">
-      <h2 class="section-title">おすすめ編成</h2>${nonEmptyFormations.map(formation => renderFormation(formation, context)).join('\n')}
-    </section>`
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">おすすめ編成</h2>
+    </div>
+    ${nonEmptyFormations.map(formation => renderFormation(formation, context)).join('\n    ')}
+  </div>`
+    : '';
+  const explanation = String(entry.explanation || '').trim()
+    ? `
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">評価解説</h2>
+    </div>
+    <div class="expl-body">${formatExplanation(entry.explanation)}</div>
+  </div>`
     : '';
   const related = relatedMonsters(monster, context);
-  const limitedRow = runtime && runtime.limitedLabel
-    ? `\n              <tr><th>限定</th><td>${escapeHtml(runtime.limitedLabel)}</td></tr>`
+  const limitedLabel = runtime && runtime.limited
+    ? runtime.limitedLabel || '限定'
     : '';
-
-  return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
-<!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">
-  <link rel="canonical" href="${canonical}">
-  <script type="application/ld+json">${breadcrumbJson(monster)}</script>
-  <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
-</head>
-<body>
+  const aura = runtime ? runtime.aura : monster.aura;
+  const body = `<body class="monster-detail-page">
 
 <header>
   <div class="header-inner">
@@ -351,47 +453,212 @@ function renderDetail(entry, context) {
 </header>
 
 <main class="container">
-  <p>${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monster.name)}</p>
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(monster.name)}</p>
   <h1 class="page-title">${escapeHtml(monster.name)}</h1>
 
-  <section class="section">
-    <h2 class="section-title">基本情報</h2>
-    <div class="card-grid">
-      <div class="card">${image ? `
-        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
-        <div class="card-info">
-          <div class="card-name">${escapeHtml(monster.name)}</div>
-        </div>
+  <div class="detail-card">
+    <div class="detail-img-wrap">${image ? `
+      <img class="detail-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}${limitedLabel ? `
+      <span class="detail-limited-badge">${escapeHtml(limitedLabel)}</span>` : ''}
+    </div>
+    <div class="detail-body">
+      <div class="detail-name">${escapeHtml(monster.name)}</div>
+      <div class="detail-badges">
+        <span class="aura-badge-lg aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${escapeHtml(aura)}オーラ</span>
+        <span class="mon-badge">${escapeHtml(monster.mon)}</span>${limitedLabel ? `
+        <span class="limited-badge-inline">${escapeHtml(limitedLabel)}</span>` : ''}
       </div>
-      <div class="card">
-        <table>
-          <tbody>
-            <tr><th>モン類</th><td>${escapeHtml(monster.mon)}</td></tr>
-            <tr><th>主血統</th><td>${escapeHtml(monster.blood)}</td></tr>
-            <tr><th>副血統</th><td>${escapeHtml(monster.subBlood)}</td></tr>
-            <tr><th>オーラ</th><td>${escapeHtml(runtime ? runtime.aura : monster.aura)}</td></tr>${limitedRow}
-          </tbody>
-        </table>
+      <div class="bloodline-row">
+        <div class="bloodline-item"><span class="bloodline-label">主血統</span><span class="bloodline-value">${escapeHtml(monster.blood)}</span></div>
+        <div class="bloodline-item"><span class="bloodline-label">副血統</span><span class="bloodline-value">${escapeHtml(monster.subBlood)}</span></div>
       </div>
     </div>
-  </section>
+  </div>
 
-  <section class="section">
-    <h2 class="section-title">運営者による解説</h2>
-    ${formatExplanation(entry.explanation)}
-  </section>${formations}
+${explanation}${formations}
 
-  <section class="section">
-    <h2 class="section-title">同じ血統のモンスター</h2>
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">同じ血統のモンスター</h2>
+    </div>
     <div class="card-grid">
 ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
     </div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">関連リンク</h2>
+    </div>
+    <div class="menu-grid">
+      <a class="menu-link" href="${ROOT_PREFIX}monsters.html"><span class="icon">👾</span>モンスター一覧</a>
+    </div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ ${privacy}
+</footer>
+
+</body>
+`;
+  const contentCharacters = visibleChars(body);
+  const indexable = contentCharacters >= 800;
+  const robotsMeta = indexable
+    ? ''
+    : '\n  <meta name="robots" content="noindex,follow">';
+  const adsense = indexable
+    ? '\n  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>'
+    : '';
+  const html = `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
+  <link rel="canonical" href="${canonical}">
+  <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>
+  <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
+  <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">${adsense}
+</head>
+${body}</html>
+`;
+  return { html, indexable, contentCharacters };
+}
+
+function renderMonTypeCard(monster, context) {
+  const runtime = context.runtimeById.get(monster.id);
+  const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX);
+  const editorial = context.editorialById.get(monster.id);
+  const isIndexable = context.indexableDetailIds.has(monster.id);
+  const excerpt = isIndexable
+    ? `\n            <p class="mon-type-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
+    : '';
+  const limited = runtime && runtime.limitedLabel
+    ? ` / ${escapeHtml(runtime.limitedLabel)}`
+    : '';
+  const content = `${image ? `
+          <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
+          <div class="card-info">
+            <div class="card-name">${escapeHtml(monster.name)}</div>
+            <div class="mon-type-card-meta">${escapeHtml(runtime ? runtime.aura : monster.aura)}オーラ / 副血統: ${escapeHtml(monster.subBlood)}${limited}</div>${excerpt}
+          </div>`;
+  addLink(context, monster.url.replace(/^\//, ''));
+  const displayClass = isIndexable ? ' mon-type-card--editorial' : ' mon-type-card--compact';
+  return `        <a class="card mon-type-card${displayClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
+        </a>`;
+}
+
+function groupMonTypeMonsters(monsters) {
+  const groups = new Map();
+  for (const monster of monsters) {
+    if (!groups.has(monster.blood)) groups.set(monster.blood, []);
+    groups.get(monster.blood).push(monster);
+  }
+  return [...groups.entries()].map(([blood, members]) => {
+    members.sort((a, b) => Number(a.id) - Number(b.id));
+    return { blood, members, firstId: Number(members[0].id) };
+  }).sort((a, b) => b.members.length - a.members.length || a.firstId - b.firstId);
+}
+
+function renderMonType(monType, context) {
+  const monsters = context.monsters
+    .filter(monster => monster.monSlug === monType.slug)
+    .sort((a, b) => Number(a.id) - Number(b.id));
+  const groups = groupMonTypeMonsters(monsters);
+  const title = `${monType.name}のモンスター一覧（${monsters.length}体・${groups.length}血統）| LINEモンスターファーム徹底攻略`;
+  const description = descriptionFrom(monType.entry.sections[0].items[0].body);
+  const canonical = `${SITE_URL}/monsters/${monType.slug}/`;
+  const breadcrumbTop = rootLink(context, 'index.html', 'トップ', MON_TYPE_ROOT_PREFIX);
+  const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
+  const navTop = rootLink(context, 'index.html', 'トップ', MON_TYPE_ROOT_PREFIX);
+  const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
+  const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧', MON_TYPE_ROOT_PREFIX);
+  const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー', MON_TYPE_ROOT_PREFIX);
+  const editorialSections = monType.entry.sections.map(section => `
+  <section class="section">
+    <h2 class="section-title">${escapeHtml(section.heading)}</h2>
+${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escapeHtml(item.subheading)}</h3>\n`}    <p>${escapeHtml(item.body)}</p>`).join('\n')}
+  </section>`).join('');
+  const bloodGroups = groups.map(group => {
+    const editorialMembers = group.members.filter(monster => {
+      return context.indexableDetailIds.has(monster.id);
+    });
+    const compactMembers = group.members.filter(monster => {
+      return !context.indexableDetailIds.has(monster.id);
+    });
+    const editorialGrid = editorialMembers.length
+      ? `
+    <div class="card-grid mon-type-grid mon-type-grid--editorial">
+${editorialMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
+    </div>`
+      : '';
+    const compactGrid = compactMembers.length
+      ? `
+    <div class="card-grid mon-type-grid mon-type-grid--compact">
+${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
+    </div>`
+      : '';
+    return `
+    <div class="mon-type-blood-group">
+      <h3 class="mon-type-blood-title">${escapeHtml(group.blood)}（${group.members.length}体）</h3>${editorialGrid}${compactGrid}
+    </div>`;
+  }).join('');
+  const otherMonTypes = context.eligibleMonTypes.filter(other => other.slug !== monType.slug);
+  const otherLinks = otherMonTypes.map(other => {
+    addLink(context, `monsters/${other.slug}/index.html`);
+    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html">${escapeHtml(other.name)}のモンスター</a>`;
+  }).join('\n');
+
+  return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
+  <link rel="apple-touch-icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">
+  <link rel="canonical" href="${canonical}">
+  <script type="application/ld+json">${monTypeBreadcrumbJson(monType)}</script>
+  <link rel="stylesheet" href="${MON_TYPE_ROOT_PREFIX}style.css">
+  <link rel="stylesheet" href="${MON_TYPE_ROOT_PREFIX}monster-type.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="mon-type-page">
+
+<header>
+  <div class="header-inner">
+    <a href="${MON_TYPE_ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      ${navTop}
+      ${navMonsters}
+      ${navAssist}
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monType.name)}</p>
+  <h1 class="page-title">${escapeHtml(monType.name)}のモンスター</h1>
+${editorialSections}
+
+  <section class="section">
+    <h2 class="section-title">血統別モンスター</h2>${bloodGroups}
   </section>
 
   <section class="section">
-    <h2 class="section-title">関連リンク</h2>
+    <h2 class="section-title">他のモン類</h2>
     <div class="menu-grid">
-      <a class="menu-link" href="${ROOT_PREFIX}monsters.html"><span class="icon">👾</span>モンスター一覧</a>
+${otherLinks}
     </div>
   </section>
 </main>
@@ -423,49 +690,55 @@ function writeIfChanged(relativePath, html) {
 function renderSitemap(existingXml, pages) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
-  const detailUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/monsters\/[^/]+\/[^/]+\/\d{4}\.html<\/loc>/;
+  const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)<\/loc>/;
   const existingBlocks = matches
     .map(match => match[0])
-    .filter(block => !detailUrlPattern.test(block));
+    .filter(block => !generatedUrlPattern.test(block));
 
   if (existingBlocks.length !== 24) {
     throw new Error(`sitemap.xml の既存URLが24件ではありません: ${existingBlocks.length}件`);
   }
 
   const header = existingXml.slice(0, matches[0].index);
-  const detailBlocks = pages.map(page => `  <url>
+  const generatedBlocks = pages.map(page => `  <url>
     <loc>${page.canonical}</loc>
-    <priority>0.7</priority>
+    <priority>${page.priority}</priority>
   </url>
 `).join('');
-  const sitemap = `${header}${existingBlocks.join('')}${detailBlocks}</urlset>\n`;
+  const sitemap = `${header}${existingBlocks.join('')}${generatedBlocks}</urlset>\n`;
 
   if (/<lastmod>/.test(sitemap)) {
     throw new Error('sitemap.xml に <lastmod> が含まれています');
   }
   const urlCount = (sitemap.match(/<url>/g) || []).length;
-  if (urlCount !== 81) {
-    throw new Error(`sitemap.xml のURLが81件ではありません: ${urlCount}件`);
+  if (urlCount !== 79) {
+    throw new Error(`sitemap.xml のURLが79件ではありません: ${urlCount}件`);
   }
   return sitemap;
 }
 
 function validatePages(pages) {
-  const thin = pages.filter(page => page.visibleCharacters < 800);
+  const indexablePages = pages.filter(page => page.indexable);
+  const thin = indexablePages.filter(page => page.contentCharacters < 800);
   if (thin.length) {
-    throw new Error(`可視800字未満のページ: ${thin.map(page => `${page.path} (${page.visibleCharacters}字)`).join(', ')}`);
+    throw new Error(`本文量800字未満のページ: ${thin.map(page => `${page.path} (${page.contentCharacters}字)`).join(', ')}`);
   }
 
-  for (const field of ['title', 'description', 'canonical']) {
+  for (const field of ['title', 'canonical']) {
     const values = pages.map(page => page[field]);
     if (new Set(values).size !== values.length) {
       throw new Error(`${field} がユニークではありません`);
     }
   }
 
-  const invalidDescriptions = pages.filter(page => page.description.length < 80 || page.description.length > 120);
+  const descriptions = indexablePages.map(page => page.description);
+  if (new Set(descriptions).size !== descriptions.length) {
+    throw new Error('description がユニークではありません');
+  }
+
+  const invalidDescriptions = indexablePages.filter(page => page.description.length < 40 || page.description.length > 140);
   if (invalidDescriptions.length) {
-    throw new Error(`meta description が80〜120字ではありません: ${invalidDescriptions.map(page => page.path).join(', ')}`);
+    throw new Error(`meta description が40〜140字ではありません: ${invalidDescriptions.map(page => page.path).join(', ')}`);
   }
 }
 
@@ -473,12 +746,12 @@ function linkExists(target, generatedPaths) {
   return generatedPaths.has(target) || fs.existsSync(path.join(REPO, target));
 }
 
-function logBuild(inputs, gates, outputCounts, context, brokenLinks) {
+function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLinks) {
   const taxonomyCounts = countTaxonomyEntries(inputs.taxonomy);
-  const excluded = gates.filter(entry => !entry.eligible);
-  const eligible = gates.filter(entry => entry.eligible);
-  const bloodCount = new Set(inputs.monsters.map(monster => monster.blood)).size;
-  const monTypeCount = new Set(inputs.monsters.map(monster => monster.mon)).size;
+  const noindex = gates.filter(entry => !entry.indexable);
+  const indexable = gates.filter(entry => entry.indexable);
+  const excludedMonTypes = monTypeGates.filter(monType => !monType.eligible);
+  const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
 
   console.log('=== 入力 ===');
   console.log(`  monster-ids        ${inputs.monsters.length}件`);
@@ -487,19 +760,27 @@ function logBuild(inputs, gates, outputCounts, context, brokenLinks) {
   console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン類${taxonomyCounts.monTypes}件`);
   console.log('');
   console.log('=== ゲート判定 ===');
-  console.log(`  詳細ページ  生成 ${eligible.length}件 / 除外 ${excluded.length}件`);
-  for (const entry of excluded) {
-    console.log(`    ${entry.id} ${entry.name}: 解説${entry.explanationLength}字 / 編成${entry.formationsLength}字 / 合計${entry.totalLength}字`);
+  console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);
+  const nearThreshold = noindex
+    .filter(entry => entry.contentCharacters >= 700 && entry.contentCharacters <= 799)
+    .sort((a, b) => a.contentCharacters - b.contentCharacters || Number(a.id) - Number(b.id));
+  console.log(`  昇格まであと少し（可視700〜799字）: ${nearThreshold.length}件`);
+  for (const entry of nearThreshold) {
+    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${800 - entry.contentCharacters}字）`);
   }
-  console.log(`  血統ページ  生成 0件 / 除外 ${bloodCount}件（taxonomy.json が無いため）`);
-  console.log(`  モン類ページ 生成 0件 / 除外 ${monTypeCount}件（taxonomy.json が無いため）`);
+  console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件 / 除外 ${excludedMonTypes.length}件`);
+  for (const monType of excludedMonTypes) {
+    console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
+  }
   console.log('');
   console.log('=== 出力 ===');
   console.log(`  新規 ${outputCounts.new}件 / 更新 ${outputCounts.updated}件 / 変更なし ${outputCounts.unchanged}件`);
   console.log(`  合計 ${outputCounts.total} ページ`);
   console.log('');
   console.log('=== 警告 ===');
-  console.log('  taxonomy.json が無いため、詳細ページのみ生成し、集約ページをスキップしました');
+  if (!inputs.taxonomy) {
+    console.log('  taxonomy.json が無いため、詳細ページのみ生成し、モン類ページをスキップしました');
+  }
   for (const formation of context.skippedEmptyFormations) {
     console.log(`  空の編成をスキップ: ${formation.id} ${formation.name} ${formation.title}`);
   }
@@ -512,25 +793,56 @@ function logBuild(inputs, gates, outputCounts, context, brokenLinks) {
 
 function main() {
   const inputs = loadInputs();
-  const gates = gateDetails(inputs.editorial);
-  const eligible = gates.filter(entry => entry.eligible);
-  const context = createBuildContext(inputs, eligible);
-  const pages = eligible.map(entry => {
+  const detailEntries = createDetailEntries(inputs);
+  const monTypeGates = gateMonTypes(inputs);
+  const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
+  const context = createBuildContext(inputs, eligibleMonTypes);
+  const detailPages = detailEntries.map(entry => {
     const monster = inputs.monsterById.get(entry.id);
-    const html = renderDetail(entry, context);
+    const rendered = renderDetail(entry, context);
     const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
     return {
+      id: monster.id,
+      name: monster.name,
       path: monster.url.replace(/^\//, ''),
-      html,
+      html: rendered.html,
       title,
       description: descriptionFrom(entry.explanation),
       canonical: `${SITE_URL}${monster.url}`,
-      visibleCharacters: visibleChars(html),
+      priority: '0.7',
+      indexable: rendered.indexable,
+      contentCharacters: rendered.contentCharacters,
     };
   });
+  context.indexableDetailIds = new Set(
+    detailPages.filter(page => page.indexable).map(page => page.id)
+  );
+  const monTypePages = eligibleMonTypes.map(monType => {
+    const html = renderMonType(monType, context);
+    const monsters = inputs.monsters.filter(monster => monster.monSlug === monType.slug);
+    const bloodCount = new Set(monsters.map(monster => monster.blood)).size;
+    return {
+      path: `monsters/${monType.slug}/index.html`,
+      html,
+      title: `${monType.name}のモンスター一覧（${monsters.length}体・${bloodCount}血統）| LINEモンスターファーム徹底攻略`,
+      description: descriptionFrom(monType.entry.sections[0].items[0].body),
+      canonical: `${SITE_URL}/monsters/${monType.slug}/`,
+      priority: '0.6',
+      indexable: true,
+      contentCharacters: visibleChars(html),
+    };
+  });
+  const pages = detailPages.concat(monTypePages);
 
   validatePages(pages);
-  const sitemap = renderSitemap(inputs.sitemap, pages);
+  const detailPageById = new Map(detailPages.map(page => {
+    return [path.basename(page.path, '.html'), page];
+  }));
+  const sitemapPages = inputs.editorial
+    .map(entry => detailPageById.get(entry.id))
+    .filter(page => page && page.indexable)
+    .concat(monTypePages);
+  const sitemap = renderSitemap(inputs.sitemap, sitemapPages);
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
@@ -541,7 +853,7 @@ function main() {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
-  logBuild(inputs, gates, outputCounts, context, brokenLinks);
+  logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }
 
 try {

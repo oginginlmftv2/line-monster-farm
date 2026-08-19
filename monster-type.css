@@ -1,0 +1,190 @@
+/* モン類ページ専用。全体へ展開するときは用途別ブロック単位で移植する。 */
+
+/* ページ全体の文字サイズと縦方向の余白 */
+.mon-type-page main {
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.mon-type-page .page-title {
+  margin-bottom: 36px;
+  font-size: 22px;
+}
+
+.mon-type-page .section-title {
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+.mon-type-page .section > h3 {
+  margin: 30px 0 14px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.mon-type-page .section > h3:first-of-type {
+  margin-top: 8px;
+}
+
+/* 血統グループ */
+.mon-type-page .mon-type-blood-group + .mon-type-blood-group {
+  margin-top: 46px;
+}
+
+.mon-type-page .mon-type-blood-title {
+  margin: 32px 0 20px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.mon-type-page .mon-type-grid {
+  align-items: stretch;
+}
+
+.mon-type-page .mon-type-grid + .mon-type-grid {
+  margin-top: 16px;
+}
+
+/* 解説あり: PC 2列 */
+.mon-type-page .mon-type-grid--editorial {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mon-type-page .mon-type-card--editorial {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  min-height: 150px;
+  text-align: left;
+}
+
+.mon-type-page .mon-type-card--editorial .card-img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  object-fit: cover;
+}
+
+.mon-type-page .mon-type-card--editorial .card-info {
+  padding: 14px;
+  text-align: left;
+}
+
+.mon-type-page .mon-type-card--editorial .card-name {
+  font-size: 13px;
+}
+
+.mon-type-page .mon-type-card--editorial .mon-type-card-meta {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.mon-type-page .mon-type-card-excerpt {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+/* 解説なし: PC 8列の小型カード */
+.mon-type-page .mon-type-grid--compact {
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mon-type-page .mon-type-grid--compact .mon-type-card {
+  border-radius: 7px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+}
+
+.mon-type-page .mon-type-grid--compact .mon-type-card .card-img {
+  width: 100%;
+  max-height: none;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.mon-type-page .mon-type-grid--compact .mon-type-card .card-info {
+  padding: 6px 4px;
+}
+
+.mon-type-page .mon-type-grid--compact .mon-type-card .card-name {
+  margin-bottom: 3px;
+  font-size: 11px;
+  line-height: 1.3;
+}
+
+.mon-type-page .mon-type-grid--compact .mon-type-card .mon-type-card-meta {
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* SP: 解説あり1列、解説なし3列 */
+@media (max-width: 640px) {
+  .mon-type-page main {
+    font-size: 13px;
+  }
+
+  .mon-type-page .page-title {
+    margin-bottom: 30px;
+    font-size: 18px;
+  }
+
+  .mon-type-page .section-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+  }
+
+  .mon-type-page .section > h3 {
+    margin: 26px 0 12px;
+    font-size: 14px;
+  }
+
+  .mon-type-page .mon-type-blood-group + .mon-type-blood-group {
+    margin-top: 38px;
+  }
+
+  .mon-type-page .mon-type-blood-title {
+    margin: 28px 0 16px;
+    font-size: 14px;
+  }
+
+  .mon-type-page .mon-type-grid--editorial {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .mon-type-page .mon-type-card--editorial {
+    grid-template-columns: 92px minmax(0, 1fr);
+    min-height: 128px;
+  }
+
+  .mon-type-page .mon-type-card--editorial .card-info {
+    padding: 10px;
+  }
+
+  .mon-type-page .mon-type-card-excerpt {
+    margin-top: 7px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .mon-type-page .mon-type-grid--compact {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .mon-type-page .mon-type-grid--compact .mon-type-card .card-info {
+    padding: 5px 3px;
+  }
+
+  .mon-type-page .mon-type-grid--compact .mon-type-card .card-name {
+    font-size: 10px;
+  }
+
+  .mon-type-page .mon-type-grid--compact .mon-type-card .mon-type-card-meta {
+    font-size: 9px;
+  }
+}
