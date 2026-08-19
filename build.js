@@ -104,11 +104,6 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
-function formationsTextLength(formations) {
-  if (!formations) return 0;
-  return JSON.stringify(formations).replace(/["{}\[\],:]/g, '').length;
-}
-
 function formatExplanation(text) {
   const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
   const blocks = [];
@@ -151,22 +146,16 @@ function descriptionFrom(text) {
   return candidate.slice(0, 100) + '…';
 }
 
-function contentChars(html) {
-  const body = html.replace(/<script[\s\S]*?<\/script>/gi, '')
-    .replace(/<style[\s\S]*?<\/style>/gi, '');
-  const imageAltText = [...body.matchAll(/<img\b[^>]*\balt=(["'])(.*?)\1/gi)]
-    .map(match => match[2])
-    .join(' ');
-  const visibleText = body.replace(/<[^>]+>/g, ' ');
-  return `${visibleText} ${imageAltText}`.replace(/\s+/g, ' ').trim().length;
-}
-
-function gateDetails(editorial) {
-  return editorial.map(entry => {
-    const formationsLength = formationsTextLength(entry.formations);
-    const totalLength = entry.explanationLength + formationsLength;
-    return { ...entry, formationsLength, totalLength, indexable: totalLength >= 500 };
-  });
+function visibleChars(html) {
+  const withoutInvisible = html
+    .replace(/<script[\s\S]*?<\/script>/gi, '')
+    .replace(/<style[\s\S]*?<\/style>/gi, '')
+    .replace(/<!--[\s\S]*?-->/g, '');
+  const body = withoutInvisible.match(/<body[\s\S]*?<\/body>/i);
+  return (body ? body[0] : withoutInvisible)
+    .replace(/<[^>]+>/g, '')
+    .replace(/\s+/g, '')
+    .length;
 }
 
 function createDetailEntries(inputs) {
@@ -250,6 +239,7 @@ function createBuildContext(inputs, eligibleMonTypes) {
     eligibleMonSlugs,
     eligibleMonTypes,
     editorialById: new Map(inputs.editorial.map(entry => [entry.id, entry])),
+    indexableDetailIds: new Set(),
     generatedPaths,
     fallbackImages: new Map(),
     missingCardIds: new Set(),
@@ -449,30 +439,7 @@ function renderDetail(entry, context) {
     ? runtime.limitedLabel || '限定'
     : '';
   const aura = runtime ? runtime.aura : monster.aura;
-  const robotsMeta = entry.indexable
-    ? ''
-    : '\n  <meta name="robots" content="noindex,follow">';
-  const adsense = entry.indexable
-    ? '\n  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>'
-    : '';
-
-  return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
-<!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
-  <link rel="canonical" href="${canonical}">
-  <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>
-  <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
-  <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">${adsense}
-</head>
-<body class="monster-detail-page">
+  const body = `<body class="monster-detail-page">
 
 <header>
   <div class="header-inner">
@@ -535,16 +502,42 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 </footer>
 
 </body>
-</html>
 `;
+  const contentCharacters = visibleChars(body);
+  const indexable = contentCharacters >= 800;
+  const robotsMeta = indexable
+    ? ''
+    : '\n  <meta name="robots" content="noindex,follow">';
+  const adsense = indexable
+    ? '\n  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>'
+    : '';
+  const html = `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monsters-editorial.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
+  <link rel="canonical" href="${canonical}">
+  <script type="application/ld+json">${breadcrumbJson(monster, context)}</script>
+  <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
+  <link rel="stylesheet" href="${ROOT_PREFIX}monster-detail.css">${adsense}
+</head>
+${body}</html>
+`;
+  return { html, indexable, contentCharacters };
 }
 
 function renderMonTypeCard(monster, context) {
   const runtime = context.runtimeById.get(monster.id);
   const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX);
   const editorial = context.editorialById.get(monster.id);
-  const hasEditorial = Boolean(editorial && String(editorial.explanation || '').trim());
-  const excerpt = hasEditorial
+  const isIndexable = context.indexableDetailIds.has(monster.id);
+  const excerpt = isIndexable
     ? `\n            <p class="mon-type-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
     : '';
   const limited = runtime && runtime.limitedLabel
@@ -557,8 +550,8 @@ function renderMonTypeCard(monster, context) {
             <div class="mon-type-card-meta">${escapeHtml(runtime ? runtime.aura : monster.aura)}オーラ / 副血統: ${escapeHtml(monster.subBlood)}${limited}</div>${excerpt}
           </div>`;
   addLink(context, monster.url.replace(/^\//, ''));
-  const editorialClass = hasEditorial ? ' mon-type-card--editorial' : '';
-  return `        <a class="card mon-type-card${editorialClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
+  const displayClass = isIndexable ? ' mon-type-card--editorial' : ' mon-type-card--compact';
+  return `        <a class="card mon-type-card${displayClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
         </a>`;
 }
 
@@ -595,12 +588,10 @@ ${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escape
   </section>`).join('');
   const bloodGroups = groups.map(group => {
     const editorialMembers = group.members.filter(monster => {
-      const editorial = context.editorialById.get(monster.id);
-      return editorial && String(editorial.explanation || '').trim();
+      return context.indexableDetailIds.has(monster.id);
     });
     const compactMembers = group.members.filter(monster => {
-      const editorial = context.editorialById.get(monster.id);
-      return !editorial || !String(editorial.explanation || '').trim();
+      return !context.indexableDetailIds.has(monster.id);
     });
     const editorialGrid = editorialMembers.length
       ? `
@@ -720,8 +711,8 @@ function renderSitemap(existingXml, pages) {
     throw new Error('sitemap.xml に <lastmod> が含まれています');
   }
   const urlCount = (sitemap.match(/<url>/g) || []).length;
-  if (urlCount !== 87) {
-    throw new Error(`sitemap.xml のURLが87件ではありません: ${urlCount}件`);
+  if (urlCount !== 79) {
+    throw new Error(`sitemap.xml のURLが79件ではありません: ${urlCount}件`);
   }
   return sitemap;
 }
@@ -770,6 +761,13 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   console.log('');
   console.log('=== ゲート判定 ===');
   console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);
+  const nearThreshold = noindex
+    .filter(entry => entry.contentCharacters >= 700 && entry.contentCharacters <= 799)
+    .sort((a, b) => a.contentCharacters - b.contentCharacters || Number(a.id) - Number(b.id));
+  console.log(`  昇格まであと少し（可視700〜799字）: ${nearThreshold.length}件`);
+  for (const entry of nearThreshold) {
+    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${800 - entry.contentCharacters}字）`);
+  }
   console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件 / 除外 ${excludedMonTypes.length}件`);
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
@@ -796,26 +794,29 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
 function main() {
   const inputs = loadInputs();
   const detailEntries = createDetailEntries(inputs);
-  const gates = gateDetails(detailEntries);
-  const indexable = gates.filter(entry => entry.indexable);
   const monTypeGates = gateMonTypes(inputs);
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
   const context = createBuildContext(inputs, eligibleMonTypes);
-  const detailPages = gates.map(entry => {
+  const detailPages = detailEntries.map(entry => {
     const monster = inputs.monsterById.get(entry.id);
-    const html = renderDetail(entry, context);
+    const rendered = renderDetail(entry, context);
     const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
     return {
+      id: monster.id,
+      name: monster.name,
       path: monster.url.replace(/^\//, ''),
-      html,
+      html: rendered.html,
       title,
       description: descriptionFrom(entry.explanation),
       canonical: `${SITE_URL}${monster.url}`,
       priority: '0.7',
-      indexable: entry.indexable,
-      contentCharacters: contentChars(html),
+      indexable: rendered.indexable,
+      contentCharacters: rendered.contentCharacters,
     };
   });
+  context.indexableDetailIds = new Set(
+    detailPages.filter(page => page.indexable).map(page => page.id)
+  );
   const monTypePages = eligibleMonTypes.map(monType => {
     const html = renderMonType(monType, context);
     const monsters = inputs.monsters.filter(monster => monster.monSlug === monType.slug);
@@ -828,7 +829,7 @@ function main() {
       canonical: `${SITE_URL}/monsters/${monType.slug}/`,
       priority: '0.6',
       indexable: true,
-      contentCharacters: contentChars(html),
+      contentCharacters: visibleChars(html),
     };
   });
   const pages = detailPages.concat(monTypePages);
@@ -852,7 +853,7 @@ function main() {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
-  logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLinks);
+  logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }
 
 try {
