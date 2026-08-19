@@ -254,14 +254,30 @@ function createBuildContext(inputs, eligibleMonTypes) {
 
 function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
   const runtime = context.runtimeById.get(id);
-  if (runtime && runtime.localImg) return `${rootPrefix}monster/${runtime.localImg}`;
-  if (context.images[id]) return `${rootPrefix}monster/${context.images[id]}`;
+  if (runtime && runtime.localImg) {
+    return {
+      url: `${rootPrefix}monster/${runtime.localImg}`,
+      filename: path.basename(runtime.localImg),
+      source: 'localImg',
+    };
+  }
+  if (context.images[id]) {
+    return {
+      url: `${rootPrefix}monster/${context.images[id]}`,
+      filename: path.basename(context.images[id]),
+      source: 'assignments',
+    };
+  }
   if (runtime && runtime.gwImg) {
     const monster = context.monsterById.get(id);
     context.fallbackImages.set(id, monster ? monster.name : id);
-    return `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${runtime.gwImg}.png`;
+    return {
+      url: `https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_${runtime.gwImg}.png`,
+      filename: null,
+      source: 'gamewith',
+    };
   }
-  return null;
+  return { url: null, filename: null, source: null };
 }
 
 function renderMonsterCards(context) {
@@ -280,7 +296,7 @@ function renderMonsterCards(context) {
     });
 
   return sortedMonsters.map(({ monster, runtime }) => {
-    const image = resolveImage(monster.id, context, '');
+    const image = resolveImage(monster.id, context, '').url;
     const aura = runtime ? runtime.aura : monster.aura;
     const mon = runtime && runtime.mon ? runtime.mon : monster.mon;
     const limited = runtime ? !!runtime.limited : !!monster.limited;
@@ -530,7 +546,7 @@ function relatedMonsters(monster, context) {
 }
 
 function renderRelatedCard(monster, context) {
-  const image = resolveImage(monster.id, context);
+  const image = resolveImage(monster.id, context).url;
   const content = `${image ? `\n          <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
           <div class="card-info">
             <div class="card-name">${escapeHtml(monster.name)}</div>
@@ -546,7 +562,7 @@ function renderDetail(entry, context) {
   const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
   const description = descriptionFrom(entry.explanation);
   const canonical = `${SITE_URL}${monster.url}`;
-  const image = resolveImage(monster.id, context);
+  const image = resolveImage(monster.id, context).url;
   const breadcrumbTop = rootLink(context, 'index.html', 'トップ');
   const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
   const breadcrumbMonType = context.eligibleMonSlugs.has(monster.monSlug)
@@ -684,7 +700,7 @@ ${body}</html>
 
 function renderMonTypeCard(monster, context) {
   const runtime = context.runtimeById.get(monster.id);
-  const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX);
+  const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX).url;
   const editorial = context.editorialById.get(monster.id);
   const isIndexable = context.indexableDetailIds.has(monster.id);
   const excerpt = isIndexable
@@ -876,6 +892,50 @@ function createPageBaseline(detailPages) {
   };
 }
 
+function createCmsSeed(context, detailPages) {
+  const editorialById = new Map(context.editorial.map(entry => [entry.id, entry]));
+  const detailPageById = new Map(detailPages.map(page => [page.id, page]));
+  const monsters = [...context.monsters]
+    .sort((a, b) => a.id.localeCompare(b.id))
+    .map(monster => {
+      const runtime = context.runtimeById.get(monster.id);
+      const editorial = editorialById.get(monster.id) || {};
+      const detailPage = detailPageById.get(monster.id);
+      const image = resolveImage(monster.id, context, '');
+      return {
+        id: monster.id,
+        arrayIndex: monster.arrayIndex,
+        name: monster.name,
+        aura: monster.aura,
+        mon: monster.mon,
+        mainBlood: monster.blood,
+        subBlood: monster.subBlood,
+        limited: runtime ? !!runtime.limited : false,
+        limitedLabel: runtime && runtime.limitedLabel ? runtime.limitedLabel : '',
+        image: image.filename,
+        imageSource: image.source,
+        gwImg: runtime && runtime.gwImg != null ? runtime.gwImg : null,
+        url: monster.url,
+        explanation: editorial.explanation || '',
+        formations: Array.isArray(editorial.formations) ? editorial.formations : [],
+        author: editorial.author || '',
+        contributors: Array.isArray(editorial.contributors) ? editorial.contributors : [],
+        createdAt: editorial.createdAt || '',
+        updatedAt: editorial.updatedAt || '',
+        releasedAt: editorial.releasedAt || '',
+        baseline: detailPage.baselineCharacters,
+        current: detailPage.contentCharacters,
+        indexable: detailPage.indexable,
+      };
+    });
+  return {
+    note: 'build.js が生成。管理画面（GAS）の初期データ用。手で編集しない',
+    threshold: INDEXABLE_THRESHOLD,
+    count: monsters.length,
+    monsters,
+  };
+}
+
 function renderSitemap(existingXml, pages) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
@@ -1031,6 +1091,7 @@ function main() {
   const pages = detailPages.concat(monTypePages);
   const idAvailability = createIdAvailability(inputs.idsJson);
   const pageBaseline = createPageBaseline(detailPages);
+  const cmsSeed = createCmsSeed(context, detailPages);
 
   validatePages(pages);
   const detailPageById = new Map(detailPages.map(page => {
@@ -1050,7 +1111,7 @@ function main() {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
   }
 
-  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 5 };
+  const outputCounts = { new: 0, updated: 0, unchanged: 0, total: pages.length + 6 };
   for (const page of pages) {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
@@ -1064,6 +1125,10 @@ function main() {
   outputCounts[writeIfChanged(
     'src/data/page-baseline.json',
     JSON.stringify(pageBaseline, null, 2) + '\n'
+  )]++;
+  outputCounts[writeIfChanged(
+    'src/data/cms-seed.json',
+    JSON.stringify(cmsSeed, null, 2) + '\n'
   )]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }
