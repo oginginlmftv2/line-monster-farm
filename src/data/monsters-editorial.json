@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-19T17:10:45Z",
+  "exportedAt": "2026-08-20T03:20:43Z",
   "count": 93,
   "monsters": {
     "1080": {
@@ -66,9 +66,14 @@
       "id": "1352",
       "name": "メタビー",
       "arrayIndex": 338,
-      "explanation": "・メダロットコラボフェスモンスター\n・メダロットの主役\n・オリジナル技だけで強さが完結して\n　いるので始めたばかりの初心者でも\n　強くしやすい\n・技登録は4のメーマ\n・６月の主役であることは間違いない",
-      "explanationLength": 100,
-      "formations": []
+      "explanation": "・メダロットコラボフェスモンスター\n・メダロットの主役\n・オリジナル技だけで強さが完結しているので始めたばかりの初心者でも強くしやすい\n・技登録は4のメーマ\n・６月の主役であることは間違いない",
+      "explanationLength": 96,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-05-31"
     },
     "1380": {
       "id": "1380",
