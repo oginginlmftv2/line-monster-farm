@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 800,
-  "count": 348,
+  "count": 349,
   "monsters": [
     {
       "id": "0101",
@@ -4198,8 +4198,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 216,
-      "current": 216,
+      "baseline": 229,
+      "current": 229,
+      "indexable": false
+    },
+    {
+      "id": "1354",
+      "arrayIndex": 348,
+      "name": "モチビー",
+      "aura": "黄",
+      "mon": "無機",
+      "mainBlood": "ニャー",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "コラボ限定",
+      "image": "1354.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/muki/nyaa/1354.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 213,
+      "current": 213,
       "indexable": false
     },
     {

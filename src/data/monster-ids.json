@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 348,
+ "count": 349,
  "monsters": [
   {
    "id": "0101",
@@ -2936,6 +2936,25 @@
    "localImg": "S__72482840_0.jpg",
    "url": "/monsters/muki/nyaa/1353.html",
    "image": "img/monster/1353.jpg"
+  },
+  {
+   "id": "1354",
+   "sortOrder": 1354,
+   "isNew": true,
+   "name": "モチビー",
+   "arrayIndex": 348,
+   "mon": "無機",
+   "monSlug": "muki",
+   "blood": "ニャー",
+   "bloodSlug": "nyaa",
+   "subBlood": "レアモン",
+   "aura": "黄",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": "1354.jpg",
+   "url": "/monsters/muki/nyaa/1354.html",
+   "image": "img/monster/1354.jpg"
   },
   {
    "id": "1380",
