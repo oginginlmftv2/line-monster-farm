@@ -23,7 +23,7 @@ const monstersData = [
   { name: 'シラヌイ', aura: '白', limited: true, limitedLabel: '冬限定', gwImg: 314, localImg: 'S__93200506_0.jpg', mon: '魔族', mainMon: 'ピクシー', subMon: 'レアモン' },
   { name: 'ハムクロース', aura: '緑', limited: true, limitedLabel: 'クリスマス限定', gwImg: 313, localImg: 'S__93200388_0.jpg', mon: '獣族', mainMon: 'ハム', subMon: 'ノーブル' },
   { name: 'スターギフト', aura: '黄', limited: true, limitedLabel: '冬限定', gwImg: 312, localImg: 'S__93200753_0.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'レアモン' },
-  { name: 'ルドルファス', aura: '黄', limited: false, limitedLabel: '', gwImg: 311, localImg: 'S__93200750_0.jpg', mon: '獣族', mainMon: 'ディノ', subMon: 'レアモン' },
+  { name: 'ルドルファス', aura: '黄', limited: true, limitedLabel: 'イベント限定', gwImg: 311, localImg: 'S__93200750_0.jpg', mon: '獣族', mainMon: 'ディノ', subMon: 'レアモン' },
   { name: 'プレゼンター', aura: '黄', limited: true, limitedLabel: '冬限定', gwImg: 310, localImg: 'S__93200752_0.jpg', mon: '創造', mainMon: 'メタルナー', subMon: 'レアモン' },
   { name: 'ハニエル', aura: '黄', limited: true, limitedLabel: '冬限定', gwImg: 309, localImg: 'S__93200751_0.jpg', mon: '幻霊', mainMon: 'アーク', subMon: 'レアモン' },
   { name: 'モモン&ハムスケ', aura: '黒', limited: true, limitedLabel: 'コラボ限定', gwImg: 308, localImg: 'S__93200401_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'レアモン' },
