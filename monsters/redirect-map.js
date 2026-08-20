@@ -348,5 +348,7 @@ window.LMF_REDIRECT_MAP = {
   "345": "genrei/arc/3314.html",
   "346": "muki/monolith/2256.html",
   "347": "genrei/mocchi/1625.html",
-  "348": "muki/nyaa/1354.html"
+  "348": "muki/nyaa/1354.html",
+  "349": "genrei/undine/2016.html",
+  "350": "genrei/gel/1921.html"
 };

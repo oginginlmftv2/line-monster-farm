@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 800,
-  "count": 349,
+  "count": 351,
   "monsters": [
     {
       "id": "0101",
@@ -5783,8 +5783,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 215,
-      "current": 215,
+      "baseline": 216,
+      "current": 216,
       "indexable": false
     },
     {
@@ -5808,8 +5808,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 209,
-      "current": 209,
+      "baseline": 210,
+      "current": 210,
+      "indexable": false
+    },
+    {
+      "id": "1921",
+      "arrayIndex": 350,
+      "name": "エコスライム",
+      "aura": "緑",
+      "mon": "幻霊",
+      "mainBlood": "ゲル",
+      "subBlood": "プラント",
+      "limited": true,
+      "limitedLabel": "イベント限定",
+      "image": "1921.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/genrei/gel/1921.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 232,
+      "current": 232,
       "indexable": false
     },
     {
@@ -5858,8 +5883,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 221,
-      "current": 221,
+      "baseline": 227,
+      "current": 227,
       "indexable": false
     },
     {
@@ -6013,6 +6038,31 @@
       "indexable": false
     },
     {
+      "id": "2016",
+      "arrayIndex": 349,
+      "name": "ヤオビクニ",
+      "aura": "赤",
+      "mon": "幻霊",
+      "mainBlood": "ウンディーネ",
+      "subBlood": "モッチー",
+      "limited": true,
+      "limitedLabel": "イベント限定",
+      "image": "2016.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/genrei/undine/2016.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 222,
+      "current": 222,
+      "indexable": false
+    },
+    {
       "id": "2017",
       "arrayIndex": 172,
       "name": "セイレーン",
@@ -6033,8 +6083,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 213,
-      "current": 213,
+      "baseline": 227,
+      "current": 227,
       "indexable": false
     },
     {
@@ -6058,8 +6108,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 225,
-      "current": 225,
+      "baseline": 227,
+      "current": 227,
       "indexable": false
     },
     {

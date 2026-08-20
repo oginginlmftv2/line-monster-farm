@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 349,
+ "count": 351,
  "monsters": [
   {
    "id": "0101",
@@ -4078,6 +4078,25 @@
    "image": "img/monster/1919.jpg"
   },
   {
+   "id": "1921",
+   "sortOrder": 1921,
+   "isNew": true,
+   "name": "エコスライム",
+   "arrayIndex": 350,
+   "mon": "幻霊",
+   "monSlug": "genrei",
+   "blood": "ゲル",
+   "bloodSlug": "gel",
+   "subBlood": "プラント",
+   "aura": "緑",
+   "limited": true,
+   "limitedLabel": "イベント限定",
+   "gwImg": null,
+   "localImg": "1921.jpg",
+   "url": "/monsters/genrei/gel/1921.html",
+   "image": "img/monster/1921.jpg"
+  },
+  {
    "id": "1922",
    "sortOrder": 1922,
    "isNew": false,
@@ -4228,6 +4247,25 @@
    "localImg": "S__93200811_0.jpg",
    "url": "/monsters/genrei/undine/2001.html",
    "image": "img/monster/2001.jpg"
+  },
+  {
+   "id": "2016",
+   "sortOrder": 2016,
+   "isNew": true,
+   "name": "ヤオビクニ",
+   "arrayIndex": 349,
+   "mon": "幻霊",
+   "monSlug": "genrei",
+   "blood": "ウンディーネ",
+   "bloodSlug": "undine",
+   "subBlood": "モッチー",
+   "aura": "赤",
+   "limited": true,
+   "limitedLabel": "イベント限定",
+   "gwImg": null,
+   "localImg": "2016.jpg",
+   "url": "/monsters/genrei/undine/2016.html",
+   "image": "img/monster/2016.jpg"
   },
   {
    "id": "2017",
