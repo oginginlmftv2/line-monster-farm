@@ -472,9 +472,9 @@
     },
     {
       "id": "0650",
-      "baseline": 201,
-      "current": 768,
-      "indexable": false
+      "baseline": 213,
+      "current": 955,
+      "indexable": true
     },
     {
       "id": "0701",
@@ -731,7 +731,7 @@
     {
       "id": "1080",
       "baseline": 206,
-      "current": 952,
+      "current": 984,
       "indexable": true
     },
     {
@@ -1499,7 +1499,7 @@
     {
       "id": "2250",
       "baseline": 235,
-      "current": 1480,
+      "current": 1512,
       "indexable": true
     },
     {
