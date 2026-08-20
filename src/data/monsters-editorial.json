@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T05:48:05Z",
+  "exportedAt": "2026-08-20T05:56:26Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -89,7 +89,12 @@
       "arrayIndex": 334,
       "explanation": "・ニャー種のノーブルモンスター\n・現存のノーブルモンスター全てと相性が良く王冠相性を狙いやすいので、すでに1体でもノーブルモンスターを持っている人はほしい1体\n・本体の強さはまぁまぁまぁ",
       "explanationLength": 93,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-04-24"
     },
     "1625": {
       "id": "1625",
@@ -288,7 +293,12 @@
       "arrayIndex": 1,
       "explanation": "・ウンディーネのレアモン\n・ランク5登録技はアクアドーム\n・ガッツダウンが高めの技を多数持っているので幻霊強化の恩恵をかなり強く受けられるモンスター\n・環境の最前線に来る可能性は高い",
       "explanationLength": 91,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-03-31"
     },
     "2051": {
       "id": "2051",
@@ -347,7 +357,12 @@
       "arrayIndex": 332,
       "explanation": "・ドリルアタックが登録できる\n・ダメBの連撃レベル8で他も全てB以上とスペックは低くないが202604基準で考えると少し物足りなく感じてしまう\n・オーロラゲートで移動後の選択肢としてはかなり強化されたと言える\n・スターギフトの技登録まで出来ていればかなり戦えるようになった\n・無機の師匠が待たれる",
       "explanationLength": 148,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-03-31"
     },
     "2250": {
       "id": "2250",
@@ -469,9 +484,14 @@
       "id": "2453",
       "name": "ヤマト",
       "arrayIndex": 337,
-      "explanation": "・ナーガのレアモン\n・サブドラゴンっぽさはある\n・ランク5登録技は高火力だが\n　ダイスロールが前提となっている\n　のでダイスロールの能力つきの\n　強力な技がほしかったという印象\n・新血統能力もダイスロール関連なの\n　で今後に期待",
-      "explanationLength": 114,
-      "formations": []
+      "explanation": "・ナーガのレアモン\n・サブドラゴンっぽさはある\n・ランク5登録技は高火力だがダイスロールが前提となっているのでダイスロールの能力つきの強力な技がほしかったという印象\n・新血統能力もダイスロール関連なので今後に期待",
+      "explanationLength": 106,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-05-14"
     },
     "2502": {
       "id": "2502",
@@ -1233,9 +1253,14 @@
       "id": "0554",
       "name": "シュシュポッポ",
       "arrayIndex": 333,
-      "explanation": "・シュシュポッポー\n・ゴーレムのレアモンは何をしても\n　いいというわけではない(褒め言葉)\n・技の一つ一つがめちゃくちゃ優秀な\n　わけではないが、たくさん集まれば\n　とんでもない性能である可能性を\n　感じるので要検証",
-      "explanationLength": 108,
-      "formations": []
+      "explanation": "・シュシュポッポー\n・ゴーレムのレアモンは何をしてもいいというわけではない(褒め言葉)\n・技の一つ一つがめちゃくちゃ優秀なわけではないが、たくさん集まればとんでもない性能である可能性を感じるので要検証",
+      "explanationLength": 100,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-04-14"
     },
     "0602": {
       "id": "0602",

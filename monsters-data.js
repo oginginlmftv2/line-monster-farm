@@ -338,7 +338,7 @@ const monstersData = [
   { name: 'シュシュポッポ', aura: '黒', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__71286791_0.jpg', mon: '無機', mainMon: 'ゴーレム', subMon: 'レアモン' },
   { name: 'ニャハト', aura: '黒', limited: true, limitedLabel: 'GW限定', gwImg: null, localImg: 'S__107036676.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'ノーブル' },
   { name: 'ティターニア', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167750_0.jpg', mon: '魔族', mainMon: 'ピクシー', subMon: 'ロード種' },
-  { name: 'ウルズ', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__107167751_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'ライガー' },
+  { name: 'ウルズ', aura: '青', limited: true, limitedLabel: '超スタフェス限定', gwImg: null, localImg: 'S__107167751_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'ライガー' },
   { name: 'ヤマト', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__3399682.jpg', mon: '魔族', mainMon: 'ナーガ', subMon: 'レアモン' },
   { name: 'メタビー', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '31269.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
   { name: 'シュシュポップ3', aura: '黒', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: 'S__111239186_0.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'レアモン' },
