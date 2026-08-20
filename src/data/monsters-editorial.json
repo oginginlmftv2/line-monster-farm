@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T07:10:28Z",
+  "exportedAt": "2026-08-20T07:21:06Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -526,7 +526,11 @@
           "rental": "f24i-MR-megaranika",
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-07-15"
     },
     "2453": {
       "id": "2453",
@@ -572,7 +576,11 @@
             "c19h-MR-aufieru"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-06-30"
     },
     "2650": {
       "id": "2650",
@@ -616,7 +624,11 @@
             "c2h-SSR-meriodasu"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-06-30"
     },
     "2690": {
       "id": "2690",
@@ -1182,7 +1194,11 @@
             "b2h-SSR-sappirutti"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-06-30"
     },
     "0150": {
       "id": "0150",
