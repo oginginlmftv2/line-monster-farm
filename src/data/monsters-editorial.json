@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T06:59:11Z",
+  "exportedAt": "2026-08-20T07:10:28Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -245,7 +245,11 @@
           "title": "おすすめ編成①",
           "rental": "d14k-MR-sukeakurou"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-13"
     },
     "1754": {
       "id": "1754",
@@ -438,7 +442,11 @@
           "title": "おすすめ編成①",
           "rental": "c12l-MR-gifton"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-07-31"
     },
     "2309": {
       "id": "2309",
@@ -1312,7 +1320,11 @@
             "c23i-MR-naiara"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-07-31"
     },
     "0350": {
       "id": "0350",
@@ -1356,7 +1368,11 @@
           ],
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-07-31"
     },
     "0550": {
       "id": "0550",
@@ -1944,7 +1960,11 @@
             "e17g-MR-kyatoru"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-13"
     },
     "0990": {
       "id": "0990",
