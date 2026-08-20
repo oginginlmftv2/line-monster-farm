@@ -1886,13 +1886,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 198,
-      "current": 743,
+      "current": 778,
       "indexable": false
     },
     {
@@ -1923,14 +1923,14 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 213,
-      "current": 777,
-      "indexable": false
+      "current": 812,
+      "indexable": true
     },
     {
       "id": "0606",
@@ -1960,13 +1960,13 @@
           "rental": ""
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 223,
-      "current": 884,
+      "current": 919,
       "indexable": true
     },
     {
@@ -1997,13 +1997,13 @@
           "title": "おすすめ編成①"
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 230,
-      "current": 817,
+      "current": 852,
       "indexable": true
     },
     {
@@ -2034,13 +2034,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 231,
-      "current": 871,
+      "current": 906,
       "indexable": true
     },
     {
@@ -2071,13 +2071,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 240,
-      "current": 842,
+      "current": 877,
       "indexable": true
     },
     {
@@ -2108,13 +2108,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 237,
-      "current": 863,
+      "current": 898,
       "indexable": true
     },
     {
@@ -2147,7 +2147,7 @@
       ],
       "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "2026-08-19",
+      "createdAt": "2026-04-30",
       "updatedAt": "2026-08-19",
       "releasedAt": "",
       "baseline": 238,
@@ -2170,13 +2170,13 @@
       "url": "/monsters/kemono/dino/0624.html",
       "explanation": "・黒プシュケー交換モンスター！ディノの最強技「ひざげり」が技登録できるので、ディノで勝ちたければ必ず手に入れたい！ひざげりのないディノはただのトカゲ\n・地形/距離適性はディノ種で最も優秀\n・オーラ黒はホリィのひらめき能力｢FINBAの知見｣やルルーシュの能力｢生きろ！｣と大突進の能力相性がとても良い\n・チャックルの能力｢チャックルアボイド｣や師匠ルーカスの能力｢執事の心得・序｣を付ければさらに長生きできる\n・技を躱しながら大逆転のひざげりが決まるとそれはそれは気持ちいい～\n\n【全ディノ共通】\n■ 基本評価\n・MRフレリア・MRヴィトニルで育成すれば現環境(2026.4)ではそこそこ強い\n・秘伝次第ではローマス100位以内も狙えるモンスター\n■ 必須技\n・ひざげり・大突進は必須\n→ これがないとただのトカゲ\n■ 大突進の強み\n・効果「生存本能｣はガッツ回復速度、ディフェンス面の弱点を補える\n・序盤で撃てるかどうかが勝敗を大きく左右する\n※習得には中距離適性C以上必要なので注意しよう\n■ ひざげりの特徴\n・クリティカル時はトップクラスの火力\n・ノラモン能力（フォイル系）＋丈夫さアディションで最大9999ダメージも可能\n・シンプルなモーションからの高火力はブリーダーの“脳汁”を刺激します\n■ 弱点\n・連撃技が少なくダメカット系能力に弱い\n■ 最後に\n技を打たずに散歩することが大好きです。技を打ったらちゃんと褒めてあげましょう。",
       "formations": [],
-      "author": "",
+      "author": "ちゅんたろー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-04-30",
+      "updatedAt": "2026-04-30",
       "releasedAt": "",
       "baseline": 221,
-      "current": 802,
+      "current": 837,
       "indexable": true
     },
     {
