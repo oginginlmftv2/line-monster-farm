@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T03:32:52Z",
-  "count": 348,
+  "exportedAt": "2026-08-20T04:28:42Z",
+  "count": 349,
   "monsters": [
     {
       "id": "1922",
@@ -1742,6 +1742,11 @@
       "id": "1625",
       "name": "カッパマキ",
       "arrayIndex": 347
+    },
+    {
+      "id": "1354",
+      "name": "モチビー",
+      "arrayIndex": 348
     }
   ]
 }
