@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T05:56:26Z",
+  "exportedAt": "2026-08-20T06:11:23Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -257,7 +257,10 @@
           "rental": "f24i-MR-megaranika",
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20"
     },
     "1851": {
       "id": "1851",
@@ -277,7 +280,11 @@
             "b9-SSR-siena"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-01-31"
     },
     "1922": {
       "id": "1922",
@@ -285,7 +292,12 @@
       "arrayIndex": 0,
       "explanation": "・ゲル×モノリス\n・登録ランク5技はゲルコプターで性能はまあまあ\n・同時実装されたアシストカードと技調整も追い風になって、2026年４月の主人公候補筆頭\n・原作でのファンも多い\n・バトルはゲルコプター採用しないほうが強いらしい",
       "explanationLength": 113,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-03-31"
     },
     "2050": {
       "id": "2050",
@@ -539,7 +551,11 @@
             "a7-MR-syuna"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-01-31"
     },
     "2651": {
       "id": "2651",
@@ -601,7 +617,11 @@
           "title": "おすすめ編成3",
           "rental": "a24j-MR-vitoniru"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-28"
     },
     "2750": {
       "id": "2750",
@@ -754,7 +774,11 @@
             "f2k-SSR-shionresort"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-14"
     },
     "3150": {
       "id": "3150",
@@ -982,7 +1006,11 @@
             "b22h-MR-noa"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-19"
     },
     "3408": {
       "id": "3408",
@@ -990,7 +1018,12 @@
       "arrayIndex": 2,
       "explanation": "・202603周年神殿祭ガチャ\n・ザン2体目のガチャ追加\n・登録技のアクシズバレットは出血をメインで戦うなら絶対ほしいスペック\n・原作ファンはほしいはず",
       "explanationLength": 76,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-03-14"
     },
     "3434": {
       "id": "3434",
@@ -1032,7 +1065,11 @@
           ],
           "title": "おすすめ編成3"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-28"
     },
     "3490": {
       "id": "3490",
@@ -1085,7 +1122,11 @@
             "c23i-MR-naiara"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-14"
     },
     "0151": {
       "id": "0151",
@@ -1803,7 +1844,12 @@
       "arrayIndex": 3,
       "explanation": "・202603周年神殿祭ガチャ\n・2体目のロードモンスター\n・赤獣であることまで1体目のロードモンスタータマモノマエと同じ\n・ロードなので初期ステは高いが素質が0で技登録もない\n・ライガー好きな人、ロードを持ってない人は取りにいったらいいんじゃないかなと思います。",
       "explanationLength": 132,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-03-14"
     }
   }
 }
