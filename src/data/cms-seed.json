@@ -2146,12 +2146,14 @@
         }
       ],
       "author": "ちゅんたろー",
-      "contributors": [],
+      "contributors": [
+        "ソラシド"
+      ],
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-19",
       "releasedAt": "",
       "baseline": 238,
-      "current": 889,
+      "current": 898,
       "indexable": true
     },
     {
@@ -8844,8 +8846,8 @@
       "subBlood": "レアモン",
       "limited": true,
       "limitedLabel": "コラボ限定",
-      "image": null,
-      "imageSource": "gamewith",
+      "image": "2951.jpg",
+      "imageSource": "localImg",
       "gwImg": 257,
       "url": "/monsters/genrei/shinryu/2951.html",
       "explanation": "",
