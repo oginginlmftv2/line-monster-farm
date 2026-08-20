@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T06:11:23Z",
+  "exportedAt": "2026-08-20T06:21:11Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -511,7 +511,12 @@
       "arrayIndex": 4,
       "explanation": "・LINEモンスターファームで1番人気の血統カワズモー種のイベント配布モンスター\n・血統初のランク5技登録を持ってきた。えらい\n・登録技もめちゃくちゃハイスペックで怪物環境が整ったら十分最前線でやれる",
       "explanationLength": 100,
-      "formations": []
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-28"
     },
     "2531": {
       "id": "2531",
@@ -1146,7 +1151,11 @@
           ],
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31"
     },
     "0180": {
       "id": "0180",
@@ -1197,7 +1206,11 @@
           "rental": "e7-MR-sutera",
           "title": "おすすめ編成2"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-01-14"
     },
     "0250": {
       "id": "0250",
@@ -1248,7 +1261,11 @@
             "e17g-MR-kyatoru"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31"
     },
     "0450": {
       "id": "0450",
@@ -1555,7 +1572,11 @@
           "title": "おすすめ編成2",
           "rental": "f18k-MR-ainzu"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31"
     },
     "0751": {
       "id": "0751",
