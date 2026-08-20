@@ -346,7 +346,7 @@ const monstersData = [
   { name: 'ロクショウ', aura: '白', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: 'S__72482840_0.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
   { name: 'フウマ', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'huuma.jpg', mon: '創造', mainMon: 'ザン', subMon: 'ロード種' },
   { name: 'スコール', aura: '緑', limited: false, limitedLabel: '', gwImg: null, localImg: 'suko-ru.jpg', mon: '獣族', mainMon: 'ライガー', subMon: 'ユグドラシル' },
-  { name: 'エクスマキナ', aura: '黄', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__30269443.jpg', mon: '創造', mainMon: 'ガリ', subMon: 'ヘンガー' },
+  { name: 'エクスマキナ', aura: '黄', limited: true, limitedLabel: '超神殿際限定', gwImg: null, localImg: 'S__30269443.jpg', mon: '創造', mainMon: 'ガリ', subMon: 'ヘンガー' },
   { name: 'ミカエル', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: '3314.jpg', mon: '幻霊', mainMon: 'アーク', subMon: 'ヒノトリ' },
   { name: 'ジハンキ', aura: '赤', limited: false, limitedLabel: '', gwImg: null, localImg: 'S__22323204_0.jpg', mon: '無機', mainMon: 'モノリス', subMon: 'レアモン' },
   { name: 'カッパマキ', aura: '緑', limited: true, limitedLabel: '夏限定', gwImg: null, localImg: 'S__3637252_0.jpg', mon: '幻霊', mainMon: 'モッチー', subMon: 'カワズモー' },

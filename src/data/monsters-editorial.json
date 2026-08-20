@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T04:28:42Z",
+  "exportedAt": "2026-08-20T05:48:05Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -27,9 +27,17 @@
       "id": "1104",
       "name": "エクスマキナ",
       "arrayIndex": 344,
-      "explanation": "・主血統ガリ×副血統ヘンガー\n・原作にはいなかったがデザインは\n　相変わらずすばらしい\n・技登録もランク3,4,5とめちゃくちゃ\n　恵まれているためガリ推しは必ず\n　ゲットしたい\n・クロノトリックがあまりにも強い\n・強くなるための環境が整ってきた",
-      "explanationLength": 123,
-      "formations": []
+      "explanation": "・主血統ガリ×副血統ヘンガー\n・原作にはいなかったがデザインは相変わらずすばらしい\n・技登録もランク3,4,5とめちゃくちゃ恵まれているためガリ推しは必ずゲットしたい\n・クロノトリックがあまりにも強い\n・強くなるための環境が整ってきた",
+      "explanationLength": 117,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "contributors": [
+        "ソラシド"
+      ],
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-07-14"
     },
     "1150": {
       "id": "1150",
@@ -1010,9 +1018,14 @@
       "id": "3490",
       "name": "フウマ",
       "arrayIndex": 342,
-      "explanation": "・緑のザン\n・ロードモンスター\n・オリジナル技が有能すぎる\n・今からでも創造というかフウマに\n　全リソース割いてもいいレベル\n・かっこよくてつよい\n・出血と継続ダメージが別枠っぽくて想像以上に強い可能性あり\n・あとは耐久を上げられれば環境のトップ間違いなし",
-      "explanationLength": 128,
-      "formations": []
+      "explanation": "・緑のザン\n・ロードモンスター\n・オリジナル技が有能すぎる\n・今からでも創造というかフウマに全リソース割いてもいいレベル\n・かっこよくてつよい\n・出血と継続ダメージが別枠っぽくて想像以上に強い可能性あり\n・あとは耐久を上げられれば環境のトップ間違いなし",
+      "explanationLength": 126,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-06-30"
     },
     "0120": {
       "id": "0120",
@@ -1727,9 +1740,17 @@
       "id": "0928",
       "name": "スコール",
       "arrayIndex": 343,
-      "explanation": "・緑のライガー\n・ザンの陰にかくれているが\n　めちゃくちゃ強いランク5技登録を\n　もっている\n・今回のガチャは全部大当たり",
-      "explanationLength": 61,
-      "formations": []
+      "explanation": "・緑のライガー\n・ザンの陰にかくれているがめちゃくちゃ強いランク5技登録をもっている\n・今回のガチャは全部大当たり",
+      "explanationLength": 57,
+      "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "contributors": [
+        "ソラシド"
+      ],
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-06-30"
     },
     "0950": {
       "id": "0950",
