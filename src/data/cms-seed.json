@@ -1729,8 +1729,8 @@
       "mon": "無機",
       "mainBlood": "ゴーレム",
       "subBlood": "レアモン",
-      "limited": false,
-      "limitedLabel": "",
+      "limited": true,
+      "limitedLabel": "イベント限定",
       "image": "S__93200542_0.jpg",
       "imageSource": "localImg",
       "gwImg": 300,
@@ -1749,13 +1749,13 @@
           "title": "おすすめ編成①"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
-      "baseline": 230,
-      "current": 755,
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-30",
+      "baseline": 242,
+      "current": 799,
       "indexable": false
     },
     {
@@ -2738,13 +2738,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "ぎん",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-30",
       "baseline": 234,
-      "current": 531,
+      "current": 562,
       "indexable": false
     },
     {
@@ -4916,8 +4916,8 @@
       "mon": "幻霊",
       "mainBlood": "モッチー",
       "subBlood": "レアモン",
-      "limited": false,
-      "limitedLabel": "",
+      "limited": true,
+      "limitedLabel": "イベント限定",
       "image": "S__93200627_0.jpg",
       "imageSource": "localImg",
       "gwImg": 294,
@@ -4936,13 +4936,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
-      "baseline": 225,
-      "current": 897,
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31",
+      "baseline": 237,
+      "current": 941,
       "indexable": true
     },
     {
@@ -8891,13 +8891,13 @@
           "title": "おすすめ編成①"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-12",
       "baseline": 211,
-      "current": 1310,
+      "current": 1342,
       "indexable": true
     },
     {
@@ -9039,13 +9039,13 @@
           "title": "おすすめ編成2"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
       "releasedAt": "",
       "baseline": 208,
-      "current": 1100,
+      "current": 1132,
       "indexable": true
     },
     {
@@ -9188,13 +9188,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "スプーキー",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-10-15",
       "baseline": 201,
-      "current": 1414,
+      "current": 1448,
       "indexable": true
     },
     {
@@ -9236,13 +9236,13 @@
           "rental": "c12l-MR-gifton"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31",
       "baseline": 189,
-      "current": 1407,
+      "current": 1439,
       "indexable": true
     },
     {
@@ -9468,13 +9468,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-12",
       "baseline": 205,
-      "current": 1582,
+      "current": 1614,
       "indexable": true
     },
     {
@@ -9542,13 +9542,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31",
       "baseline": 223,
-      "current": 1929,
+      "current": 1961,
       "indexable": true
     },
     {
