@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T06:48:25Z",
+  "exportedAt": "2026-08-20T06:59:11Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -131,7 +131,11 @@
             "b22h-MR-noa"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31"
     },
     "1651": {
       "id": "1651",
@@ -760,7 +764,11 @@
           "rental": "b21i-MR-rimuru",
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-12"
     },
     "3051": {
       "id": "3051",
@@ -791,7 +799,10 @@
           "rental": "",
           "title": "おすすめ編成2"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20"
     },
     "3052": {
       "id": "3052",
@@ -835,7 +846,11 @@
             "d19h-MR-parumaa"
           ]
         }
-      ]
+      ],
+      "author": "スプーキー",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-10-15"
     },
     "3209": {
       "id": "3209",
@@ -866,7 +881,11 @@
           "title": "おすすめ編成2",
           "rental": "c12l-MR-gifton"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31"
     },
     "3250": {
       "id": "3250",
@@ -956,7 +975,11 @@
             "f16h-MR-iburiisu"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-12"
     },
     "3321": {
       "id": "3321",
@@ -996,7 +1019,11 @@
             "b7-MR-kurisu"
           ]
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-08-31"
     },
     "3350": {
       "id": "3350",
@@ -1349,7 +1376,11 @@
           "rental": "d18k-MR-furan",
           "title": "おすすめ編成①"
         }
-      ]
+      ],
+      "author": "レオナ",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-30"
     },
     "0554": {
       "id": "0554",
@@ -1821,7 +1852,12 @@
             "c19k-MR-ofurii"
           ]
         }
-      ]
+      ],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-09-30"
     },
     "0851": {
       "id": "0851",
