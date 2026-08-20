@@ -405,13 +405,13 @@
           "title": "おすすめ編成①"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31",
       "baseline": 233,
-      "current": 1134,
+      "current": 1166,
       "indexable": true
     },
     {
@@ -815,13 +815,13 @@
           "title": "おすすめ編成2"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-01-14",
       "baseline": 223,
-      "current": 849,
+      "current": 881,
       "indexable": true
     },
     {
@@ -1155,8 +1155,8 @@
       "mon": "獣族",
       "mainBlood": "ケンタウロス",
       "subBlood": "レアモン",
-      "limited": false,
-      "limitedLabel": "",
+      "limited": true,
+      "limitedLabel": "イベント限定",
       "image": "S__93200575_0.jpg",
       "imageSource": "localImg",
       "gwImg": 316,
@@ -1175,13 +1175,13 @@
           ]
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
-      "baseline": 222,
-      "current": 674,
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31",
+      "baseline": 234,
+      "current": 718,
       "indexable": false
     },
     {
@@ -2355,13 +2355,13 @@
           "rental": "f18k-MR-ainzu"
         }
       ],
-      "author": "",
+      "author": "レオナ",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-12-31",
       "baseline": 240,
-      "current": 1586,
+      "current": 1618,
       "indexable": true
     },
     {
@@ -6755,8 +6755,8 @@
       "mon": "無機",
       "mainBlood": "モノリス",
       "subBlood": "ナーガ",
-      "limited": false,
-      "limitedLabel": "",
+      "limited": true,
+      "limitedLabel": "イベント限定",
       "image": "S__94371854.jpg",
       "imageSource": "localImg",
       "gwImg": 333,
@@ -6768,8 +6768,8 @@
       "createdAt": "2026-08-20",
       "updatedAt": "2026-08-20",
       "releasedAt": "2026-03-31",
-      "baseline": 229,
-      "current": 403,
+      "baseline": 241,
+      "current": 415,
       "indexable": false
     },
     {
@@ -7641,21 +7641,21 @@
       "mon": "怪物",
       "mainBlood": "カワズモー",
       "subBlood": "ドラゴン",
-      "limited": false,
-      "limitedLabel": "",
+      "limited": true,
+      "limitedLabel": "イベント限定",
       "image": "S__93200817_0.jpg",
       "imageSource": "localImg",
       "gwImg": 328,
       "url": "/monsters/kaibutsu/kawazumo/2502.html",
       "explanation": "・LINEモンスターファームで1番人気の血統カワズモー種のイベント配布モンスター\n・血統初のランク5技登録を持ってきた。えらい\n・登録技もめちゃくちゃハイスペックで怪物環境が整ったら十分最前線でやれる",
       "formations": [],
-      "author": "",
+      "author": "ぎん",
       "contributors": [],
-      "createdAt": "",
-      "updatedAt": "",
-      "releasedAt": "",
-      "baseline": 196,
-      "current": 295,
+      "createdAt": "2026-08-20",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-02-28",
+      "baseline": 208,
+      "current": 338,
       "indexable": false
     },
     {
