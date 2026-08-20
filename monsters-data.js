@@ -77,7 +77,7 @@ const monstersData = [
   { name: 'ゴースト', aura: '黄', limited: true, limitedLabel: '周年限定', gwImg: 260, localImg: 'S__93200744_0.jpg', mon: '怪物', mainMon: 'ゴースト', subMon: 'ゴースト' },
   { name: 'イルミネ', aura: '黒', limited: true, limitedLabel: '周年限定', gwImg: 259, localImg: 'S__93200724_0.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'イルミネ' },
   { name: 'キング', aura: '緑', limited: true, limitedLabel: 'コラボ限定', gwImg: 258, localImg: 'S__93200391_0.jpg', mon: '創造', mainMon: 'ユグドラシル', subMon: 'レアモン' },
-  { name: 'メリオダス', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: 257, localImg: null, mon: '幻霊', mainMon: 'シンリュウ', subMon: 'レアモン' },
+  { name: 'メリオダス', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: 257, localImg: '2951.jpg', mon: '幻霊', mainMon: 'シンリュウ', subMon: 'レアモン' },
   { name: 'エスカノール・夜', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: 256, localImg: 'S__93200741_0.jpg', mon: '幻霊', mainMon: 'ゲル', subMon: 'レアモン' },
   { name: 'パーシバル', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: 255, localImg: 'S__93200742_0.jpg', mon: '魔族', mainMon: 'スエゾー', subMon: 'レアモン' },
   { name: 'エスカノール', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: 254, localImg: 'S__93200743_0.jpg', mon: '幻霊', mainMon: 'ゲル', subMon: 'レアモン' },

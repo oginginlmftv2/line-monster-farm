@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-20T08:28:13Z",
+  "exportedAt": "2026-08-20T09:01:15Z",
   "count": 94,
   "monsters": {
     "1080": {
@@ -1624,6 +1624,9 @@
         }
       ],
       "author": "ちゅんたろー",
+      "contributors": [
+        "ソラシド"
+      ],
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-19"
     },
