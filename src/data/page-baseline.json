@@ -479,25 +479,25 @@
     {
       "id": "0701",
       "baseline": 194,
-      "current": 722,
+      "current": 754,
       "indexable": false
     },
     {
       "id": "0702",
       "baseline": 210,
-      "current": 513,
+      "current": 545,
       "indexable": false
     },
     {
       "id": "0707",
       "baseline": 233,
-      "current": 686,
+      "current": 718,
       "indexable": false
     },
     {
       "id": "0709",
       "baseline": 224,
-      "current": 620,
+      "current": 652,
       "indexable": false
     },
     {
@@ -521,49 +521,49 @@
     {
       "id": "0753",
       "baseline": 211,
-      "current": 848,
+      "current": 880,
       "indexable": true
     },
     {
       "id": "0754",
       "baseline": 201,
-      "current": 741,
+      "current": 773,
       "indexable": false
     },
     {
       "id": "0804",
       "baseline": 206,
-      "current": 355,
+      "current": 387,
       "indexable": false
     },
     {
       "id": "0805",
       "baseline": 227,
-      "current": 340,
+      "current": 372,
       "indexable": false
     },
     {
       "id": "0808",
       "baseline": 237,
-      "current": 416,
+      "current": 448,
       "indexable": false
     },
     {
       "id": "0815",
       "baseline": 243,
-      "current": 356,
+      "current": 388,
       "indexable": false
     },
     {
       "id": "0817",
       "baseline": 232,
-      "current": 378,
+      "current": 410,
       "indexable": false
     },
     {
       "id": "0820",
       "baseline": 232,
-      "current": 377,
+      "current": 409,
       "indexable": false
     },
     {
@@ -575,13 +575,13 @@
     {
       "id": "0851",
       "baseline": 212,
-      "current": 343,
+      "current": 375,
       "indexable": false
     },
     {
       "id": "0852",
       "baseline": 199,
-      "current": 373,
+      "current": 405,
       "indexable": false
     },
     {
@@ -1553,13 +1553,13 @@
     {
       "id": "2309",
       "baseline": 230,
-      "current": 649,
+      "current": 686,
       "indexable": false
     },
     {
       "id": "2310",
       "baseline": 214,
-      "current": 451,
+      "current": 488,
       "indexable": false
     },
     {
@@ -1589,13 +1589,13 @@
     {
       "id": "2323",
       "baseline": 217,
-      "current": 531,
+      "current": 568,
       "indexable": false
     },
     {
       "id": "2324",
       "baseline": 224,
-      "current": 519,
+      "current": 556,
       "indexable": false
     },
     {
@@ -1607,7 +1607,7 @@
     {
       "id": "2351",
       "baseline": 197,
-      "current": 449,
+      "current": 486,
       "indexable": false
     },
     {
@@ -2063,7 +2063,7 @@
     {
       "id": "3321",
       "baseline": 218,
-      "current": 912,
+      "current": 944,
       "indexable": true
     },
     {
