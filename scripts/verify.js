@@ -322,10 +322,37 @@ head('8. 秘密情報');
     }
   };
   walk(REPO);
-  const KNOWN = 7;
-  if (hits.length > KNOWN) ng(`平文パスワードが増えている（既知${KNOWN} → 現在${hits.length}）: ${hits.join(', ')}`);
-  else if (hits.length) wn(`平文パスワードが ${hits.length} ファイルに存在（既知の問題。CMS実装時に撤去）`);
+  if (hits.length) ng(`平文パスワードが存在: ${hits.join(', ')}`);
   else ok('平文パスワードなし');
+
+  const formerClientWriteFiles = [
+    'ability-match.html',
+    'admin.html',
+    'assist-effect-import.html',
+    'assist-effect-input.html',
+    'cards/card.html',
+    'monster-match.html',
+    'monsters/monster.html',
+  ];
+  const clientWriteIssues = [];
+  for (const file of formerClientWriteFiles) {
+    const source = read(file);
+    if (/<input[^>]+type=["']password["']/i.test(source)
+        || /\bprompt\s*\([^)]*パスワード/i.test(source)) {
+      clientWriteIssues.push(`${file}: クライアント側認証UI`);
+    }
+    if (/\.(?:set|add|update)\s*\(\s*\{|\.delete\s*\(\s*\)/.test(source)) {
+      clientWriteIssues.push(`${file}: クライアント側write API`);
+    }
+    if (/onclick=["'][^"']*(?:startEdit|startExplEdit|startFormEdit|save|deleteComment|toggleAdmin|submitComment|startImport|scheduleSave)/i.test(source)) {
+      clientWriteIssues.push(`${file}: 書込・削除UI`);
+    }
+  }
+  if (clientWriteIssues.length) {
+    ng(`旧クライアント管理機能が残っている: ${clientWriteIssues.join(', ')}`);
+  } else {
+    ok('既知7ファイルにクライアント側認証・write API・書込削除UIなし');
+  }
 }
 
 // ---------------------------------------------------------------- 9

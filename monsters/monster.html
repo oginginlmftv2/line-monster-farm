@@ -481,8 +481,6 @@
 <script src="../cards/cards-data.js"></script>
 
 <script>
-const EDIT_PASSWORD = 'mf2024';
-
 const firebaseConfig = {
   apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
   authDomain: "line-monster-farm.firebaseapp.com",
@@ -540,7 +538,6 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
     <div class="section-box" id="expl-section">
       <div class="section-header">
         <span class="section-title">評価解説</span>
-        <button class="edit-btn" id="expl-edit-btn" onclick="startExplEdit()">✏️ 編集</button>
       </div>
       <div class="expl-body empty" id="expl-body">読込中...</div>
     </div>
@@ -549,7 +546,6 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
     <div class="section-box" id="form-section">
       <div class="section-header">
         <span class="section-title">おすすめ編成</span>
-        <button class="edit-btn" id="form-edit-btn" onclick="startFormEdit()">✏️ 編集</button>
       </div>
       <div id="formation-content"><div class="formation-empty">読込中...</div></div>
     </div>
@@ -558,7 +554,6 @@ if (isNaN(idx) || idx < 0 || idx >= monstersData.length) {
     <div class="section-box" id="comment-section">
       <div class="section-header">
         <span class="section-title">💬 コメント</span>
-        <button class="admin-toggle-btn" id="admin-toggle-btn" onclick="toggleAdmin()">🔒 管理</button>
       </div>
       <div class="comment-list" id="comment-list">
         <div class="comment-empty">読込中...</div>
@@ -615,8 +610,6 @@ async function loadMonsterData() {
 // =============================================
 // 評価解説
 // =============================================
-let explEditMode = false;
-
 function renderExplanation() {
   const el = document.getElementById('expl-body');
   if (!el) return;
@@ -629,57 +622,9 @@ function renderExplanation() {
   }
 }
 
-function startExplEdit() {
-  if (explEditMode) return;
-  const pw = prompt('編集パスワードを入力してください');
-  if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
-  explEditMode = true;
-  const btn = document.getElementById('expl-edit-btn');
-  btn.textContent = '💾 保存';
-  btn.classList.add('active');
-  btn.onclick = saveExpl;
-  const el = document.getElementById('expl-body');
-  el.classList.remove('empty');
-  el.innerHTML = `<textarea class="expl-textarea" id="expl-textarea" placeholder="評価解説を入力...">${pageData.explanation}</textarea>
-    <button class="save-btn" onclick="saveExpl()">💾 保存する</button>`;
-}
-
-async function saveExpl() {
-  const ta = document.getElementById('expl-textarea');
-  const text = ta ? ta.value.trim() : '';
-  const btn = document.getElementById('expl-edit-btn');
-  btn.textContent = '保存中...';
-  btn.disabled = true;
-  try {
-    await db.collection('monsters').doc(docId).set({ explanation: text }, { merge: true });
-    pageData.explanation = text;
-    localStorage.removeItem('lmf_monster_' + docId + '_v1');
-  } catch(e) {
-    alert('保存に失敗しました: ' + e.message);
-    btn.textContent = '💾 保存'; btn.disabled = false; return;
-  }
-  explEditMode = false;
-  btn.textContent = '✏️ 編集'; btn.classList.remove('active'); btn.disabled = false;
-  btn.onclick = startExplEdit;
-  renderExplanation();
-}
-
 // =============================================
 // おすすめ編成
 // =============================================
-let formEditMode = false;
-
-// アシストカードのルックアップ
-const cardLookup = {};
-const cardLabelOf = {};
-if (typeof cardsData !== 'undefined') {
-  Object.entries(cardsData).forEach(([cid, c]) => {
-    const label = `${c.name} (${c.rarity})`;
-    cardLookup[label] = cid;
-    cardLabelOf[cid] = label;
-  });
-}
-
 function escHtml(str) {
   return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -722,151 +667,9 @@ function renderFormations() {
   `).join('');
 }
 
-function startFormEdit() {
-  if (formEditMode) return;
-  const pw = prompt('編集パスワードを入力してください');
-  if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
-  formEditMode = true;
-  const btn = document.getElementById('form-edit-btn');
-  btn.textContent = '💾 保存';
-  btn.classList.add('active');
-  btn.onclick = saveFormations;
-  renderFormEdit(pageData.formations);
-}
-
-function renderFormEdit(formations) {
-  if (!formations || formations.length === 0) formations = [{ title: 'おすすめ編成①', cards: ['','','','',''], rental: '' }];
-  const el = document.getElementById('formation-content');
-  const datalistOpts = Object.keys(cardLookup).map(l => `<option value="${escHtml(l)}">`).join('');
-
-  const itemsHTML = formations.map((f, fi) => {
-    const cardsInputs = [0,1,2,3,4].map(ci => {
-      const val = (f.cards && f.cards[ci]) ? (cardLabelOf[f.cards[ci]] || f.cards[ci]) : '';
-      const prev = (f.cards && f.cards[ci] && cardsData && cardsData[f.cards[ci]])
-        ? `<img src="../assist-cards/${f.cards[ci]}.${cardsData[f.cards[ci]].ext}">` : '';
-      return `<div class="form-card-slot">
-        <div class="form-card-label">カード${ci+1}</div>
-        <input class="form-card-input" id="fc-${fi}-${ci}" list="card-dl" placeholder="カード名" value="${escHtml(val)}"
-          oninput="prevCard('fc-${fi}-${ci}','fp-${fi}-${ci}')">
-        <div class="form-card-preview" id="fp-${fi}-${ci}">${prev}</div>
-      </div>`;
-    }).join('');
-
-    const rval = f.rental ? (cardLabelOf[f.rental] || f.rental) : '';
-    const rprev = (f.rental && cardsData && cardsData[f.rental])
-      ? `<img src="../assist-cards/${f.rental}.${cardsData[f.rental].ext}">` : '';
-
-    return `<div class="form-formation-item" id="form-item-${fi}">
-      <div class="form-row">
-        <input class="form-title-input" id="form-title-${fi}" placeholder="編成名" value="${escHtml(f.title||'')}">
-        <button class="form-remove-btn" onclick="removeFormItem(${fi})">× 削除</button>
-      </div>
-      <div class="form-cards-grid">
-        ${cardsInputs}
-        <div class="form-card-slot rental-slot">
-          <div class="form-card-label">🔶 レンタル</div>
-          <input class="form-card-input" id="fr-${fi}" list="card-dl" placeholder="カード名" value="${escHtml(rval)}"
-            oninput="prevCard('fr-${fi}','frp-${fi}')">
-          <div class="form-card-preview" id="frp-${fi}">${rprev}</div>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-
-  el.innerHTML = `<datalist id="card-dl">${datalistOpts}</datalist>
-    ${itemsHTML}
-    <button class="form-add-btn" onclick="addFormItem()">＋ 編成を追加</button>`;
-}
-
-function prevCard(inputId, previewId) {
-  const input = document.getElementById(inputId);
-  const preview = document.getElementById(previewId);
-  if (!input || !preview) return;
-  const cid = cardLookup[input.value.trim()];
-  if (cid && cardsData && cardsData[cid]) {
-    preview.innerHTML = `<img src="../assist-cards/${cid}.${cardsData[cid].ext}">`;
-  } else {
-    preview.innerHTML = '';
-  }
-}
-
-function collectFormData() {
-  const result = [];
-  let fi = 0;
-  while (document.getElementById('form-item-' + fi)) {
-    const title = document.getElementById('form-title-' + fi)?.value.trim() || '';
-    const cards = [0,1,2,3,4].map(ci => {
-      const v = document.getElementById(`fc-${fi}-${ci}`)?.value.trim() || '';
-      return cardLookup[v] || '';
-    });
-    const rv = document.getElementById('fr-' + fi)?.value.trim() || '';
-    result.push({ title, cards, rental: cardLookup[rv] || '' });
-    fi++;
-  }
-  return result;
-}
-
-function addFormItem() {
-  const cur = collectFormData();
-  cur.push({ title: `おすすめ編成${cur.length+1}`, cards: ['','','','',''], rental: '' });
-  renderFormEdit(cur);
-}
-
-function removeFormItem(fi) {
-  const cur = collectFormData();
-  cur.splice(fi, 1);
-  renderFormEdit(cur);
-}
-
-async function saveFormations() {
-  const data = collectFormData();
-  const btn = document.getElementById('form-edit-btn');
-  btn.textContent = '保存中...'; btn.disabled = true;
-  try {
-    await db.collection('monsters').doc(docId).set({ formations: data }, { merge: true });
-    pageData.formations = data;
-    localStorage.removeItem('lmf_monster_' + docId + '_v1');
-  } catch(e) {
-    alert('保存に失敗しました: ' + e.message);
-    btn.textContent = '💾 保存'; btn.disabled = false; return;
-  }
-  formEditMode = false;
-  btn.textContent = '✏️ 編集'; btn.classList.remove('active'); btn.disabled = false;
-  btn.onclick = startFormEdit;
-  renderFormations();
-}
-
 // =============================================
 // コメント欄
 // =============================================
-let adminMode = false;
-
-function toggleAdmin() {
-  if (adminMode) {
-    adminMode = false;
-    const btn = document.getElementById('admin-toggle-btn');
-    if (btn) { btn.textContent = '🔒 管理'; btn.classList.remove('active'); }
-    loadComments();
-    return;
-  }
-  const pw = prompt('管理者パスワードを入力してください');
-  if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
-  adminMode = true;
-  const btn = document.getElementById('admin-toggle-btn');
-  if (btn) { btn.textContent = '🔓 管理中'; btn.classList.add('active'); }
-  loadComments();
-}
-
-async function deleteComment(commentDocId) {
-  if (!confirm('このコメントを削除しますか？')) return;
-  try {
-    await db.collection('monsters').doc(docId).collection('comments').doc(commentDocId).delete();
-    await loadComments();
-  } catch(e) {
-    alert('削除に失敗しました: ' + e.message);
-  }
-}
-
 async function loadComments() {
   const listEl = document.getElementById('comment-list');
   if (!listEl) return;
@@ -885,7 +688,6 @@ async function loadComments() {
         <div class="comment-meta">
           <span class="comment-name">👤 ${name}</span>
           <span class="comment-date">${date}</span>
-          ${adminMode ? `<button class="comment-delete-btn" onclick="deleteComment('${d.id}')">🗑️</button>` : ''}
         </div>
         <div class="comment-body">${escHtml(c.body)}</div>
       </div>`;
@@ -895,34 +697,6 @@ async function loadComments() {
   }
 }
 
-async function submitComment() {
-  alert('コメントの投稿は現在一時停止しています。');
-  return;
-
-  const nameEl = document.getElementById('comment-name');
-  const bodyEl = document.getElementById('comment-body');
-  const btn = document.getElementById('comment-submit-btn');
-  const body = bodyEl.value.trim();
-  if (!body) { alert('コメントを入力してください'); return; }
-  if (body.length > 500) { alert('コメントは500文字以内で入力してください'); return; }
-
-  btn.disabled = true;
-  btn.textContent = '投稿中...';
-  try {
-    await db.collection('monsters').doc(docId).collection('comments').add({
-      name: nameEl.value.trim() || '',
-      body: body,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
-    });
-    nameEl.value = '';
-    bodyEl.value = '';
-    await loadComments();
-  } catch(e) {
-    alert('投稿に失敗しました: ' + e.message);
-  }
-  btn.disabled = false;
-  btn.textContent = '投稿する';
-}
 </script>
 
 </body>

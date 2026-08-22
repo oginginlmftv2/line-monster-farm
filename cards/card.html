@@ -664,9 +664,6 @@
 <script src="cards-data.js"></script>
 <script src="../assist-effect-data.js"></script>
 <script>
-  // ★ パスワードはここを変更してください ★
-  const EDIT_PASSWORD = 'mf2024';
-
   const firebaseConfig = {
     apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
     authDomain: "line-monster-farm.firebaseapp.com",
@@ -743,7 +740,6 @@
           <div class="ratings-section">
             <div class="ratings-header">
               <span class="ratings-title">評価</span>
-              <button class="edit-btn" id="editBtn" onclick="startEdit()">✏️ 編集</button>
             </div>
             <table class="ratings-table" id="ratingsTable">
               <tr class="sogo-row">
@@ -792,7 +788,6 @@
       <div class="explanation-section">
         <div class="explanation-header">
           <span class="explanation-title">評価解説</span>
-          <button class="edit-btn" id="explEditBtn" onclick="startExplEdit()">✏️ 編集</button>
         </div>
         <div id="explanation-body" class="explanation-body empty">読込中...</div>
       </div>
@@ -801,7 +796,6 @@
       <div class="formation-section">
         <div class="formation-header">
           <span class="formation-title-label">おすすめ編成</span>
-          <button class="edit-btn" id="formEditBtn" onclick="startFormEdit()">✏️ 編集</button>
         </div>
         <div id="formation-content"><div class="formation-empty">読込中...</div></div>
       </div>
@@ -810,7 +804,6 @@
       <div class="comment-section">
         <div class="comment-section-header">
           <span class="comment-section-title">💬 コメント</span>
-          <button class="admin-toggle-btn" id="admin-toggle-btn" onclick="toggleAdmin()">🔒 管理</button>
         </div>
         <div class="comment-list" id="comment-list">
           <div class="comment-empty">読込中...</div>
@@ -957,91 +950,6 @@
     });
   }
 
-  let editMode = false;
-
-  function startEdit() {
-    if (editMode) return;
-    const pw = prompt('編集パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) {
-      if (pw !== null) alert('パスワードが違います');
-      return;
-    }
-    editMode = true;
-
-    const r = getRatings();
-    const btn = document.getElementById('editBtn');
-    btn.textContent = '💾 保存';
-    btn.classList.add('active');
-    btn.onclick = saveEdit;
-
-    document.getElementById('disp-sogo').innerHTML = scoreHTML(calcSogo(r));
-
-    SCORE_KEYS.forEach(k => {
-      const val = r[k] !== null ? r[k] : '';
-      document.getElementById('disp-' + k).innerHTML = `
-        <input class="score-input" id="input-${k}" type="number"
-          min="0" max="5" step="0.1" value="${val}" placeholder="-"
-          oninput="updateSogoPreview()">
-        <span class="score-max">/ 5.0</span>
-      `;
-    });
-  }
-
-  function updateSogoPreview() {
-    const temp = {};
-    SCORE_KEYS.forEach(k => {
-      const el = document.getElementById('input-' + k);
-      const v = el ? el.value.trim() : '';
-      temp[k] = v !== '' ? parseFloat(v) : null;
-    });
-    document.getElementById('disp-sogo').innerHTML = scoreHTML(calcSogo(temp));
-    document.getElementById('disp-itti').innerHTML = scoreHTML(calcItti(temp));
-  }
-
-  async function saveEdit() {
-    const r = {};
-    let hasError = false;
-    SCORE_KEYS.forEach(k => {
-      const el = document.getElementById('input-' + k);
-      const v = el ? el.value.trim() : '';
-      if (v === '') {
-        r[k] = null;
-      } else {
-        const num = parseFloat(v);
-        if (isNaN(num) || num < 0 || num > 5) {
-          alert(`「${LABELS[k]}」は 0〜5 の数値で入力してください`);
-          hasError = true;
-          return;
-        }
-        r[k] = Math.round(num * 10) / 10;
-      }
-    });
-    if (hasError) return;
-
-    const btn = document.getElementById('editBtn');
-    btn.textContent = '保存中...';
-    btn.disabled = true;
-
-    try {
-      await db.collection('cards').doc(id).set({ ratings: r }, { merge: true });
-      cardData.ratings = r;
-      localStorage.removeItem('lmf_card_' + id + '_v1');
-      localStorage.removeItem('lmf_cardScores_v1');
-    } catch (e) {
-      alert('保存に失敗しました: ' + e.message);
-      btn.textContent = '💾 保存';
-      btn.disabled = false;
-      return;
-    }
-
-    editMode = false;
-    btn.textContent = '✏️ 編集';
-    btn.classList.remove('active');
-    btn.disabled = false;
-    btn.onclick = startEdit;
-    loadAndDisplayRatings();
-  }
-
   // ---- ユーティリティ ----
 
   function escapeHtml(str) {
@@ -1049,16 +957,6 @@
   }
 
   // ---- おすすめ編成ロジック ----
-
-  const cardLookup = {};
-  const cardLabelOf = {};
-  Object.entries(cardsData).forEach(([cid, c]) => {
-    const label = `${c.name} (${c.rarity})`;
-    cardLookup[label] = cid;
-    cardLabelOf[cid] = label;
-  });
-
-  let formEditMode = false;
 
   function getFormations() {
     return cardData.formations || [];
@@ -1098,168 +996,7 @@
     `).join('');
   }
 
-  function startFormEdit() {
-    if (formEditMode) return;
-    const pw = prompt('編集パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) {
-      if (pw !== null) alert('パスワードが違います');
-      return;
-    }
-    formEditMode = true;
-    const btn = document.getElementById('formEditBtn');
-    btn.textContent = '💾 保存';
-    btn.classList.add('active');
-    btn.onclick = saveFormations;
-    renderFormEdit(getFormations());
-  }
-
-  function renderFormEdit(formations) {
-    if (formations.length === 0) formations = [{ title: 'おすすめ編成①', cards: ['','','','',''], rental: '' }];
-    const el = document.getElementById('formation-content');
-
-    const datalistOpts = Object.keys(cardLookup)
-      .map(label => `<option value="${escapeHtml(label)}">`)
-      .join('');
-
-    const itemsHTML = formations.map((f, fi) => {
-      const cardsInputs = [0,1,2,3,4].map(ci => {
-        const val = (f.cards && f.cards[ci]) ? cardLabelOf[f.cards[ci]] || f.cards[ci] : '';
-        const prevImg = (f.cards && f.cards[ci] && cardsData[f.cards[ci]])
-          ? `<img src="../assist-cards/${f.cards[ci]}.${cardsData[f.cards[ci]].ext}">` : '';
-        return `<div class="form-card-slot">
-          <div class="form-card-label">カード${ci+1}</div>
-          <input class="form-card-input" id="fc-${fi}-${ci}" list="card-datalist"
-            placeholder="カード名を入力" value="${escapeHtml(val)}"
-            oninput="previewFormCard('fc-${fi}-${ci}','fp-${fi}-${ci}')">
-          <div class="form-card-preview" id="fp-${fi}-${ci}">${prevImg}</div>
-        </div>`;
-      }).join('');
-
-      const rentalVal = f.rental ? (cardLabelOf[f.rental] || f.rental) : '';
-      const rentalPrev = (f.rental && cardsData[f.rental])
-        ? `<img src="../assist-cards/${f.rental}.${cardsData[f.rental].ext}">` : '';
-
-      return `<div class="form-formation-item" id="form-item-${fi}">
-        <div class="form-row">
-          <input class="form-title-input" id="form-title-${fi}" placeholder="編成名" value="${escapeHtml(f.title || '')}">
-          <button class="form-remove-btn" onclick="removeFormItem(${fi})">× 削除</button>
-        </div>
-        <div class="form-cards-grid">
-          ${cardsInputs}
-          <div class="form-card-slot rental-slot">
-            <div class="form-card-label">🔶 レンタル</div>
-            <input class="form-card-input" id="fr-${fi}" list="card-datalist"
-              placeholder="カード名を入力" value="${escapeHtml(rentalVal)}"
-              oninput="previewFormCard('fr-${fi}','frp-${fi}')">
-            <div class="form-card-preview" id="frp-${fi}">${rentalPrev}</div>
-          </div>
-        </div>
-      </div>`;
-    }).join('');
-
-    el.innerHTML = `
-      <datalist id="card-datalist">${datalistOpts}</datalist>
-      ${itemsHTML}
-      <button class="form-add-btn" onclick="addFormItem()">＋ 編成を追加</button>
-    `;
-  }
-
-  function previewFormCard(inputId, previewId) {
-    const input = document.getElementById(inputId);
-    const preview = document.getElementById(previewId);
-    if (!input || !preview) return;
-    const cid = cardLookup[input.value.trim()];
-    if (cid && cardsData[cid]) {
-      const c = cardsData[cid];
-      preview.innerHTML = `<img src="../assist-cards/${cid}.${c.ext}">`;
-    } else {
-      preview.innerHTML = '';
-    }
-  }
-
-  function collectFormData() {
-    const result = [];
-    let fi = 0;
-    while (document.getElementById('form-item-' + fi)) {
-      const title = document.getElementById('form-title-' + fi)?.value.trim() || '';
-      const cards = [0,1,2,3,4].map(ci => {
-        const val = document.getElementById(`fc-${fi}-${ci}`)?.value.trim() || '';
-        return cardLookup[val] || '';
-      });
-      const rentalVal = document.getElementById('fr-' + fi)?.value.trim() || '';
-      const rental = cardLookup[rentalVal] || '';
-      result.push({ title, cards, rental });
-      fi++;
-    }
-    return result;
-  }
-
-  function addFormItem() {
-    const current = collectFormData();
-    current.push({ title: `おすすめ編成${current.length + 1}`, cards: ['','','','',''], rental: '' });
-    renderFormEdit(current);
-  }
-
-  function removeFormItem(fi) {
-    const current = collectFormData();
-    current.splice(fi, 1);
-    renderFormEdit(current);
-  }
-
-  async function saveFormations() {
-    const data = collectFormData();
-    const btn = document.getElementById('formEditBtn');
-    btn.textContent = '保存中...';
-    btn.disabled = true;
-
-    try {
-      await db.collection('cards').doc(id).set({ formations: data }, { merge: true });
-      cardData.formations = data;
-      localStorage.removeItem('lmf_card_' + id + '_v1');
-    } catch (e) {
-      alert('保存に失敗しました: ' + e.message);
-      btn.textContent = '💾 保存';
-      btn.disabled = false;
-      return;
-    }
-
-    formEditMode = false;
-    btn.textContent = '✏️ 編集';
-    btn.classList.remove('active');
-    btn.disabled = false;
-    btn.onclick = startFormEdit;
-    loadFormations();
-  }
-
   // ---- コメント欄 ----
-
-  let adminMode = false;
-
-  function toggleAdmin() {
-    if (adminMode) {
-      adminMode = false;
-      const btn = document.getElementById('admin-toggle-btn');
-      if (btn) { btn.textContent = '🔒 管理'; btn.classList.remove('active'); }
-      loadComments();
-      return;
-    }
-    const pw = prompt('管理者パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) { if (pw !== null) alert('パスワードが違います'); return; }
-    adminMode = true;
-    const btn = document.getElementById('admin-toggle-btn');
-    if (btn) { btn.textContent = '🔓 管理中'; btn.classList.add('active'); }
-    loadComments();
-  }
-
-  async function deleteComment(commentDocId) {
-    if (!confirm('このコメントを削除しますか？')) return;
-    try {
-      await db.collection('cards').doc(id).collection('comments').doc(commentDocId).delete();
-      await loadComments();
-    } catch(e) {
-      alert('削除に失敗しました: ' + e.message);
-    }
-  }
 
   async function loadComments() {
     const listEl = document.getElementById('comment-list');
@@ -1279,7 +1016,6 @@
           <div class="comment-meta">
             <span class="comment-name-span">👤 ${name}</span>
             <span class="comment-date-span">${date}</span>
-            ${adminMode ? `<button class="comment-delete-btn" onclick="deleteComment('${d.id}')">🗑️</button>` : ''}
           </div>
           <div class="comment-body-text">${escapeHtml(c.body)}</div>
         </div>`;
@@ -1289,37 +1025,7 @@
     }
   }
 
-  async function submitComment() {
-    alert('コメントの投稿は現在一時停止しています。');
-    return;
-
-    const nameEl = document.getElementById('comment-name');
-    const bodyEl = document.getElementById('comment-body');
-    const btn = document.getElementById('comment-submit-btn');
-    const body = bodyEl.value.trim();
-    if (!body) { alert('コメントを入力してください'); return; }
-    if (body.length > 500) { alert('コメントは500文字以内で入力してください'); return; }
-    btn.disabled = true;
-    btn.textContent = '投稿中...';
-    try {
-      await db.collection('cards').doc(id).collection('comments').add({
-        name: nameEl.value.trim() || '',
-        body: body,
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      nameEl.value = '';
-      bodyEl.value = '';
-      await loadComments();
-    } catch(e) {
-      alert('投稿に失敗しました: ' + e.message);
-    }
-    btn.disabled = false;
-    btn.textContent = '投稿する';
-  }
-
   // ---- 評価解説ロジック ----
-
-  let explEditMode = false;
 
   function getExplanation() {
     return cardData.explanation || '';
@@ -1338,50 +1044,6 @@
     }
   }
 
-  function startExplEdit() {
-    if (explEditMode) return;
-    const pw = prompt('編集パスワードを入力してください');
-    if (pw !== EDIT_PASSWORD) {
-      if (pw !== null) alert('パスワードが違います');
-      return;
-    }
-    explEditMode = true;
-    const btn = document.getElementById('explEditBtn');
-    btn.textContent = '💾 保存';
-    btn.classList.add('active');
-    btn.onclick = saveExpl;
-
-    const current = getExplanation();
-    const el = document.getElementById('explanation-body');
-    el.classList.remove('empty');
-    el.innerHTML = `<textarea id="expl-textarea" class="expl-textarea" placeholder="評価解説を入力...">${current}</textarea>`;
-  }
-
-  async function saveExpl() {
-    const textarea = document.getElementById('expl-textarea');
-    const text = textarea ? textarea.value.trim() : '';
-    const btn = document.getElementById('explEditBtn');
-    btn.textContent = '保存中...';
-    btn.disabled = true;
-
-    try {
-      await db.collection('cards').doc(id).set({ explanation: text }, { merge: true });
-      cardData.explanation = text;
-      localStorage.removeItem('lmf_card_' + id + '_v1');
-    } catch (e) {
-      alert('保存に失敗しました: ' + e.message);
-      btn.textContent = '💾 保存';
-      btn.disabled = false;
-      return;
-    }
-
-    explEditMode = false;
-    btn.textContent = '✏️ 編集';
-    btn.classList.remove('active');
-    btn.disabled = false;
-    btn.onclick = startExplEdit;
-    loadExplanation();
-  }
 </script>
 
 </body>
