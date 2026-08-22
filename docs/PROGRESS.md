@@ -13,12 +13,13 @@
 |---|---|---|---|---|---|
 | P10-1 | 管理者の開発準備、文書同期、次回Claudeへの引き継ぎ | `chore/p10-1-admin-readiness` / `chore/p10-1-claude-handoff` | **保留** | ⚪ | 主要整備とPR経路確認済み。問題発生時だけ再開 |
 | P10-2 | 非公開影響の人工的な通し稽古 | – | **保留** | ⚪ | 実更新が無いため省略。後続の実作業で確認する |
-| P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **次の作業** | ⚪ | 読み取りと文書整理のみ。外部設定、公開物、CMS管理データは変更しない |
-| P11-2以降 | 監査で確定したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | 要判定 | 変更対象、依存関係、復旧方法ごとに分割する |
+| P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **レビュー待ち** | ⚪ | repo・GitHub・GASを読取監査。Firestoreと一部権限は管理者確認待ち |
+| P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **次の作業** | ⚪ | GASは読取比較だけ。同期・deployは別承認まで行わない |
+| P11-3以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`31764c5`（P10-1引き継ぎマージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`4651dec`（P11引き継ぎ訂正後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -79,17 +80,42 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 | Cloudflare Access＋Worker CMS | 廃止。GAS版ライ徹CMS C1〜C10へ置換 |
 | mainのブランチ保護をすぐ有効化 | CMSがmainへ直接pushするため、迂回確認まで実施しない |
 
+## P11-1監査結果
+
+確認できた事実:
+
+- GitHub Pagesは`main`の`/`を直接配信するlegacy buildで、状態は`built`
+- `main`のBranch protectionは0件、Repository Rulesetも0件
+- `CMS_PUBLISH_TOKEN`というRepository secretが1件ある。値は取得・表示していない
+- 最新のCMS run `32488717539`は`oginginlmftv2`による`cms/publish` pushで起動し、全step成功
+- Workflowは親main一致、ID生成・検算、build、verify、生成後差分を通してからmainへpushする
+- Workflowの生成後差分検査は、GAS元コミット`HEAD^..HEAD`の変更範囲を検査していない
+- 配列lockの先頭348体hashは現在も一致し、現在351体との差は末尾3体
+- 平文クライアントパスワードは既知7ファイル。静的HTMLのため認証として機能しない
+- Apps Scriptに管理者本人所有の「ライ徹CMS」があり、`コード.gs`と`index.html`を管理する
+- GAS側はrepoの`cms/gas/コード.gs`を正と宣言するが、最新repoに`cms/gas`は無い
+- GAS 2ファイルの手動画面検索では既知GitHub token接頭辞と`EDIT_PASSWORD`は0件
+- `node scripts/verify.js`はPASS 19 / FAIL 0 / WARN 2 / SKIP 1。既知WARN 2件以外の増加なし
+
+確認できなかった外部状態:
+
+- Firestoreの公開中rules本文と公開日時。現在のブラウザアカウントには対象projectの権限が無い
+- GitHub Actionsの既定Workflow permissionsとPR作成許可check。監査アカウントは`WRITE`で設定を閲覧できない
+- PATの値、種類、所有者、期限、実権限、GASとActionsで同一tokenを使っているか
+- GASのエディタ版と現在のdeployment版の一致、export・復旧手段
+
+詳細な根拠、危険性、本番影響、依存関係、復旧方法、完了条件とP11-2〜9は
+`docs/ライ徹_開発計画.md`のP11-1監査結果を正とする。
+
 ## 次の作業
 
-第2段階P11「CMSとセキュリティの仕上げ」を開始する。最初はP11-1の読み取り監査を行う。
+P11-2「GASソースの正とC10検査対象の復旧」だけを次に行う。
 
-- `docs/claude-next-session.md`のプロンプトを次回Claudeへ渡す
-- 最新mainから`chore/p11-1-cms-security-audit`を作る
-- CMS公開Workflow、検証スクリプト、権限境界、既知WARNを実物から確認する
-- GAS、GitHub、Firestoreの外部状態は、管理者が画面で確認できる項目とClaudeが確認できる項目に分ける
-- 秘密値を表示・記録せず、問題、依存関係、本番影響、復旧方法を整理する
-- P11-2以降を独立した実装単位へ分割し、各タスクのブランチ名と完了条件を提示する
-- 監査中は公開HTML、CMS管理データ、自動生成物、外部設定を変更しない
+- ブランチ: `chore/p11-2-gas-source-control`
+- Apps Script「ライ徹CMS」の2ファイルを読取exportし、repoとの差を秘密値なしで確認する
+- `cms/gas`を正にするかGAS exportを正にするかを、実物と現在のdeploymentから確定する
+- repoへ置く場合は実GASと一致させ、`scripts/verify.js`をSKIPではなくPASSにする
+- GASへの同期・保存・deploy、GitHub外部設定、公開物は管理者の別承認まで変更しない
 
 ## 第2段階への引き継ぎ
 
@@ -100,10 +126,16 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
 
 ## 管理者確認待ち
 
-- mainの現在のRules / Branch protection状態（読み取り確認だけ。変更しない）
-- GASプロジェクトのソース管理場所と、C10相当の秘密情報検査を実行できる範囲
-- `CMS_PUBLISH_TOKEN`の利用主体、最小権限、失効・再発行手順（値は共有しない）
-- Firestoreの現在のルールが書込全面禁止のままか（読み取り確認だけ）
+- Firebase Console → `Firestore Database` → `ルール`で、全pathのwrite禁止、必要なread許可、
+  公開日時を確認する。`公開`は押さず、rules全文と日時だけ共有する
+- GitHub `Settings` → `Actions` → `General` → `Workflow permissions`で現在の選択値と、
+  `Allow GitHub Actions to create and approve pull requests`のcheck状態を確認する。保存しない
+- GitHub個人設定の`Developer settings` → `Personal access tokens`で、値を開示せず、
+  該当tokenの種類、所有者、対象repo、権限、期限を確認する
+- Apps Script「ライ徹CMS」の`プロジェクト履歴`と`デプロイを管理`で、現在のdeployment版と
+  エディタ版、復旧可能な直前版を確認する。保存・再デプロイしない
+- GAS Script Propertiesの`GITHUB_TOKEN`とGitHub secret `CMS_PUBLISH_TOKEN`が同じtokenか、
+  値を比較・共有せず、token名・作成者の台帳で確認する
 - Search Consoleの最新状態とAdSense再申請の状況
 - P7のreroll刷新・カード記事を今後の優先タスクにするか
 
