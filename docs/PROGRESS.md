@@ -19,8 +19,9 @@
 | P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **完了** | 🟡🔴 | PR #27をmainへマージ（`4fd3282`）。次回の実CMS公開確認は運用時に行う |
 | P11-5 | Firestore実rules確認 | – | **完了** | ⚪ | 公開版rulesと公開日時を実画面で確認。保存・公開なし |
 | P11-6 | 公開クライアントの共有パスワード撤去 | `fix/p11-6-remove-client-password` | **完了** | 🔴 | PR #28をmainへマージ（`6dfb403`）。共有文字列・write UI 0件 |
-| P11-7 | 保護対応CMS PR経路のtest | `feat/p11-7-cms-protected-pr` | **進行中** | ⚪ | test Workflow実装済み。test用Ruleset・Secret・4シナリオの実機確認待ち |
-| P11-8以降 | token最小権限化とmain Ruleset | P11-1で提示 | 未着手 | 🟡🔴 | P11-7の実機証跡が揃うまで開始しない |
+| P11-7 | 保護対応CMS PR経路のtest | `feat/p11-7-cms-protected-pr` | **保留** | ⚪ | 外部設定を実施できるGitHub管理権限がないため保留。test Workflow実装済み |
+| P11-8以降 | token最小権限化とmain Ruleset | P11-1で提示 | **保留** | 🟡🔴 | P11-7の実機証跡が揃うまで開始しない |
+| P12-1 | リセマラ記事刷新 | `content/p12-1-reroll-refresh` | **進行中** | 🔴 | モンスター狙いを除外し、アシストカード、手順、天井比較、関連導線を改善 |
 
 ## 最新mainの監査値
 
@@ -178,15 +179,14 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-7「保護対応CMS PR経路のtest」の外部test準備と4シナリオ確認だけを次に行う。
+P12-1「リセマラ記事刷新」のローカル表示確認だけを次に行う。
 
-- ブランチ: `feat/p11-7-cms-protected-pr`
-- 本番影響: ⚪。対象は`cms/protected-test`だけで、main・Pages・GASを変更しない
-- 管理者がtest用branch、専用fine-grained token・Secret、test用Rulesetを画面で作成する
-- `direct-push-rejection` → `normal-pr` → `cms-pr` → `revert-pr`の順で実行する
-- PRのbase、Files changed、verify成功、merge・revertを確認する
-- 証跡確認後にtest branch、Ruleset、Secretを削除し、test tokenを失効する
-- P11-7が完了するまでP11-8の本番token変更とP11-9のmain Rulesetを開始しない
+- ブランチ: `content/p12-1-reroll-refresh`
+- 本番影響: 🔴。mainへマージするまで公開されない
+- `reroll.html`のPC幅・スマートフォン幅、内部リンク、カード画像を確認する
+- タイトル、URL、canonical、既存の更新日は変更しない
+- `index.html`の更新履歴は変更しない
+- P11-7〜9は外部設定を実施できる管理権限が用意されるまで保留する
 
 ## 第2段階への引き継ぎ
 
