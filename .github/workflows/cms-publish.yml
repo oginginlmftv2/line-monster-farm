@@ -31,7 +31,7 @@ jobs:
       - name: Check out cms/publish
         uses: actions/checkout@v4
         with:
-          ref: cms/publish
+          ref: ${{ github.sha }}
           fetch-depth: 0
           token: ${{ secrets.CMS_PUBLISH_TOKEN }}
 
@@ -40,16 +40,11 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Confirm current main is the publish base
+      - name: Verify CMS source commit
         run: |
           git fetch origin main --no-tags
-          source_parent="$(git rev-parse HEAD^)"
-          current_main="$(git rev-parse origin/main)"
-          if [ "$source_parent" != "$current_main" ]; then
-            echo "cms/publish is not based on the current main branch."
-            echo "Publish again from the CMS after the current run ends."
-            exit 1
-          fi
+          git show origin/main:scripts/verify-cms-source.js > "$RUNNER_TEMP/verify-cms-source.js"
+          node "$RUNNER_TEMP/verify-cms-source.js" source "$GITHUB_SHA" origin/main
 
       - name: Generate monster IDs
         run: node generate-ids.js
@@ -64,23 +59,7 @@ jobs:
         run: node scripts/verify.js
 
       - name: Confirm generated-file scope
-        shell: bash
-        run: |
-          unexpected=0
-          while IFS= read -r file; do
-            [ -z "$file" ] && continue
-            case "$file" in
-              monsters/*|monsters.html|sitemap.xml|src/data/monster-ids.json|src/data/id-availability.json|src/data/page-baseline.json|src/data/cms-seed.json)
-                ;;
-              *)
-                echo "Unexpected generated change: $file"
-                unexpected=1
-                ;;
-            esac
-          done < <({ git diff --name-only; git ls-files --others --exclude-standard; } | sort -u)
-          if [ "$unexpected" -ne 0 ]; then
-            exit 1
-          fi
+        run: node "$RUNNER_TEMP/verify-cms-source.js" generated
 
       - name: Commit generated files and publish main
         shell: bash
@@ -93,10 +72,10 @@ jobs:
             git commit -m "Build CMS publish ${source_sha:0:7}"
           fi
           published_sha="$(git rev-parse HEAD)"
+          git push origin HEAD:main
           {
             echo "## CMS publish completed"
             echo
             echo "- Source: \`${source_sha}\`"
             echo "- Main: \`${published_sha}\`"
           } >> "$GITHUB_STEP_SUMMARY"
-          git push origin HEAD:main

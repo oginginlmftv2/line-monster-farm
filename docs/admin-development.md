@@ -117,8 +117,9 @@ git diff
 文書だけの作業でもverifyは省略しない。buildを実行した場合、意図しない生成物が差分へ
 混ざっていないことも確認する。
 
-2026-08-22時点では、CMS末尾追加後の配列ロックと既知の平文パスワードについてWARNが出る。
-`FAIL 0`でもWARN全文をClaudeに説明させ、既知2件以外が増えていたら作業を止める。
+2026-08-22時点では、既知の平文パスワード7件についてWARNが1件出る。
+配列ロックは351体へ更新済みである。`FAIL 0`でもWARN全文をClaudeに説明させ、
+既知1件以外が増えていたら作業を止める。
 
 ## 6. レビュー後にcommit・push・PRを依頼する
 
@@ -173,6 +174,18 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 管理画面の「公開成功」とGitHub Actionsの`Verify CMS predicted IDs`成功を確認する。
 失敗した場合はmainが更新されない。シートA列、`BLOOD_ORDER`、予測IDを自己判断で直さず、
 「公開結果を確認」と`publish_log`の全文を共有する。
+
+CMS公開Workflowはbuild前に`Verify CMS source commit`を実行し、次を検査する。
+
+- GAS元コミットが単一親で、その親が実行時点のmainと一致する
+- 件名がGASの`CMS publish YYYY-MM-DD HH:mm:ss`形式である
+- 変更が`monsters-data.js`、CMS用JSON 2件、規則どおりの`monster/`画像だけである
+- CMS入力の削除、rename、規則外画像、許可外ファイルが無い
+
+build後は`Confirm generated-file scope`で生成差分を別に検査する。どちらかが失敗した場合、
+mainは更新されない。`GAS元コミットの親が現在のmainではありません`なら、実行中のWorkflowが
+終わってからGAS管理画面で最新mainを基にもう一度公開する。許可外変更、複数親、画像不一致なら
+再公開を繰り返さず、失敗stepと`publish_log`の全文を共有する。ゲートを無効化して通さない。
 
 ## 9. ブランチ保護を今は有効化しない
 
