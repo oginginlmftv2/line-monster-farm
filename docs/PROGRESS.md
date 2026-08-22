@@ -1,6 +1,6 @@
 # 進捗
 
-最終更新: 2026-08-22
+最終更新: 2026-08-23
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -16,13 +16,14 @@
 | P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **完了** | ⚪ | PR #24をmainへマージ（`449a7b2`）。外部確認待ちは未完了のまま分離 |
 | P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **完了** | ⚪ | PR #25をmainへマージ（`bfeb42d`）。GAS同期・deployは未実施 |
 | P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **完了** | ⚪ | PR #26をmainへマージ（`f864d76`）。351体lockへ更新 |
-| P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **レビュー待ち** | 🟡🔴 | ローカル・実履歴検証済み。PR Actionsと実CMS公開は未確認 |
-| P11-5 | Firestore実rules確認 | – | **次の作業** | ⚪ | 画面を読み取るだけ。保存・公開はしない |
-| P11-6以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | 🔴〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
+| P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **完了** | 🟡🔴 | PR #27をmainへマージ（`4fd3282`）。次回の実CMS公開確認は運用時に行う |
+| P11-5 | Firestore実rules確認 | – | **完了** | ⚪ | 公開版rulesと公開日時を実画面で確認。保存・公開なし |
+| P11-6 | 公開クライアントの共有パスワード撤去 | `fix/p11-6-remove-client-password` | **レビュー待ち** | 🔴 | 既知7 HTMLから認証・write UIを撤去。Firestore変更なし |
+| P11-7以降 | 保護対応CMS PR経路と外部設定 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`f864d76`（P11-3マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`4fd3282`（P11-4マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -142,12 +143,31 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 - build前に単一親、最新main親、GAS件名、入力範囲、画像形式をtrusted main版スクリプトで検査する
 - build後の生成差分は別modeで検査し、mainへのpush成功後だけ完了summaryを記録する
 - 合成10ケースと過去10回の実GAS元コミットはすべて期待どおりPASSまたは拒否、YAML構文もPASSした
-- PRブランチのGitHub Actionsと、マージ後最初の実CMS公開は未確認
+- PR #27のGitHub Actions成功後にmainへマージし、作業ブランチを削除した
+- マージ後最初の実CMS公開は未確認。次回の通常運用時にゲート通過を確認する
 - GAS、token、main、`cms/publish`、公開物、外部設定は変更していない
+
+## P11-5実施結果
+
+- Firebase Consoleの`line-monster-farm` → `Firestore` → `ルール`を読み取り確認した
+- 現在選択中の公開版（★）は画面表示で2026年8月18日 19:05
+- `match /{document=**}`に対し、`allow read: if true;`、`allow write: if false;`
+  であり、全pathのcreate・update・deleteは拒否される
+- rulesの編集・保存・公開、Firestoreデータ、リポジトリは変更していない
+
+## P11-6実施結果
+
+- 既知7 HTMLから`EDIT_PASSWORD`、パスワード入力・prompt、Firestoreのwrite・delete処理、
+  編集・削除UIを撤去した
+- 管理専用5ページはURLを維持した停止案内とし、カード詳細と旧モンスター詳細は
+  Firestoreの評価・解説・編成・既存コメントのread表示を維持した
+- `scripts/verify.js`は平文パスワードを既知WARNではなくFAILにし、既知7ファイルの
+  クライアント認証・write API・書込削除UIが0件であることを継続検査する
+- Firestore rules・データ、GAS、CMS管理データ、自動生成物、GitHub設定は変更していない
+- `node scripts/verify.js`はPASS 24 / FAIL 0 / WARN 0 / SKIP 0
 
 確認できなかった外部状態:
 
-- Firestoreの公開中rules本文と公開日時。現在のブラウザアカウントには対象projectの権限が無い
 - GitHub Actionsの既定Workflow permissionsとPR作成許可check。監査アカウントは`WRITE`で設定を閲覧できない
 - PATの値、種類、所有者、期限、実権限、GASとActionsで同一tokenを使っているか
 - GASのエディタ版と現在のdeployment版の一致、export・復旧手段
@@ -157,13 +177,13 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-5「Firestore実rules確認」だけを次に行う。
+P11-6「公開クライアントの共有パスワード撤去」の差分レビューだけを次に行う。
 
-- ブランチ: なし
-- 本番影響: ⚪。Firebase Consoleを読み取るだけで、rulesを編集・保存・公開しない
-- `Firestore Database` → `ルール`で公開中rules全文と公開日時を確認する
-- 必要なread許可と、全document pathのcreate/update/delete拒否を確認する
-- 権限が無ければ完了扱いにせず、画面文言をそのまま記録する
+- ブランチ: `fix/p11-6-remove-client-password`
+- 本番影響: 🔴。PRをmainへマージすると即公開
+- 既知7 HTML、`scripts/verify.js`、更新履歴、計画・進捗文書以外に差分がないことを確認する
+- カード詳細と旧モンスター詳細の公開read表示、管理専用5ページの停止案内をPC幅・スマートフォン幅で確認する
+- レビュー承認後にcommit・push・PRを行い、明示承認までmainへマージしない
 
 ## 第2段階への引き継ぎ
 
@@ -174,8 +194,6 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
 
 ## 管理者確認待ち
 
-- Firebase Console → `Firestore Database` → `ルール`で、全pathのwrite禁止、必要なread許可、
-  公開日時を確認する。`公開`は押さず、rules全文と日時だけ共有する
 - GitHub `Settings` → `Actions` → `General` → `Workflow permissions`で現在の選択値と、
   `Allow GitHub Actions to create and approve pull requests`のcheck状態を確認する。保存しない
 - GitHub個人設定の`Developer settings` → `Personal access tokens`で、値を開示せず、
@@ -191,8 +209,8 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
 
 - `repo-guard.lock.json`は351体へ正規再生成済み。今後の追加は旧prefix一致時だけWARN、
   並べ替え・削除・途中挿入はFAILする
-- `EDIT_PASSWORD = 'mf2024'`が7ファイルに残る。既知数から増えていないためWARNだが、
-  第2段階で機能、撤去範囲、公開影響、安全な移行先を決める
+- P11-6ブランチでは平文パスワード0件、既知7ファイルのクライアント認証・write API・
+  書込削除UI0件を検査し、既知WARNを解消した
 - GASトークン検査は`_cms/gas`の必須2ファイルへ復旧済み。欠落はFAIL、既知token形式0件はPASSする
 
 ## 差し戻し履歴
