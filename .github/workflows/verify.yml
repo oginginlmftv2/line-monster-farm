@@ -11,3 +11,4 @@ jobs:
         with:
           node-version: '20'
       - run: node scripts/verify.js
+      - run: node scripts/test-verify-cms-source.js

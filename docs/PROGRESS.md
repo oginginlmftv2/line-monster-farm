@@ -15,13 +15,14 @@
 | P10-2 | 非公開影響の人工的な通し稽古 | – | **保留** | ⚪ | 実更新が無いため省略。後続の実作業で確認する |
 | P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **完了** | ⚪ | PR #24をmainへマージ（`449a7b2`）。外部確認待ちは未完了のまま分離 |
 | P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **完了** | ⚪ | PR #25をmainへマージ（`bfeb42d`）。GAS同期・deployは未実施 |
-| P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **レビュー待ち** | ⚪ | 348体prefix一致を機械検査し、正規手順で351体lockを生成 |
-| P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **次の作業** | 🟡🔴 | 公開Workflowへ影響するため、管理者の明示承認まで開始しない |
-| P11-5以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
+| P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **完了** | ⚪ | PR #26をmainへマージ（`f864d76`）。351体lockへ更新 |
+| P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **レビュー待ち** | 🟡🔴 | ローカル・実履歴検証済み。PR Actionsと実CMS公開は未確認 |
+| P11-5 | Firestore実rules確認 | – | **次の作業** | ⚪ | 画面を読み取るだけ。保存・公開はしない |
+| P11-6以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | 🔴〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`bfeb42d`（P11-2マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`f864d76`（P11-3マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -135,6 +136,15 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
   残るWARNは既知の平文パスワード7件だけ
 - 公開HTML、CMS管理データ、GAS・GitHub・Firestore設定は変更していない
 
+## P11-4実施結果
+
+- 過去10回の実GAS元コミットと現在のGASソースから、正規入力allowlistを確定した
+- build前に単一親、最新main親、GAS件名、入力範囲、画像形式をtrusted main版スクリプトで検査する
+- build後の生成差分は別modeで検査し、mainへのpush成功後だけ完了summaryを記録する
+- 合成10ケースと過去10回の実GAS元コミットはすべて期待どおりPASSまたは拒否、YAML構文もPASSした
+- PRブランチのGitHub Actionsと、マージ後最初の実CMS公開は未確認
+- GAS、token、main、`cms/publish`、公開物、外部設定は変更していない
+
 確認できなかった外部状態:
 
 - Firestoreの公開中rules本文と公開日時。現在のブラウザアカウントには対象projectの権限が無い
@@ -147,13 +157,13 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-4「CMS元コミット・生成差分ゲート」を次の候補とする。
+P11-5「Firestore実rules確認」だけを次に行う。
 
-- ブランチ: `fix/p11-4-cms-publish-gates`
-- 本番影響: 🟡🔴。CMS公開Workflowを変更するため、管理者の明示承認まで開始しない
-- GASが作る元コミットの単一親・変更範囲と、build後の生成差分を別々に検査する
-- test用ブランチで許可差分の成功と、許可外・複数親・古いmain・ID不一致の失敗時停止を確認する
-- mainのブランチ保護、GAS、token、公開データは変更しない
+- ブランチ: なし
+- 本番影響: ⚪。Firebase Consoleを読み取るだけで、rulesを編集・保存・公開しない
+- `Firestore Database` → `ルール`で公開中rules全文と公開日時を確認する
+- 必要なread許可と、全document pathのcreate/update/delete拒否を確認する
+- 権限が無ければ完了扱いにせず、画面文言をそのまま記録する
 
 ## 第2段階への引き継ぎ
 
