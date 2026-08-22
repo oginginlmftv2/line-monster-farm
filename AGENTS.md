@@ -28,6 +28,7 @@
 | 全体計画・各段階の完了条件 | `docs/ライ徹_開発計画.md` |
 | 現在地・次の作業・引き継ぎ | `docs/PROGRESS.md` |
 | 管理者がClaudeへ依頼して開発・公開するとき | `docs/admin-development.md` |
+| 次回のClaude作業を開始するとき | `docs/claude-next-session.md` |
 | コンテンツ運用（ガチャ更新・日記追加） | `CLAUDE.md` |
 
 **索引にない作業を始める前に、関連する `docs/` が無いか確認すること。**
