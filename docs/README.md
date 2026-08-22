@@ -28,4 +28,5 @@
 | `ライ徹_開発計画.md` | 全体計画と各段階の完了条件 | 作成済 |
 | `PROGRESS.md` | 現在地・完了実績・次の作業・引き継ぎ | 作成済 |
 | `admin-development.md` | 管理者がClaudeへ依頼して開発・公開する手順 | 作成済 |
+| `claude-next-session.md` | 管理者が次回Claudeへ渡す開始用の引き継ぎ | 作成済 |
 | `build-spec.md` | ビルド仕様 | 作成済 |
