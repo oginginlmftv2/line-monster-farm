@@ -14,13 +14,14 @@
 | P10-1 | 管理者の開発準備、文書同期、次回Claudeへの引き継ぎ | `chore/p10-1-admin-readiness` / `chore/p10-1-claude-handoff` | **保留** | ⚪ | 主要整備とPR経路確認済み。問題発生時だけ再開 |
 | P10-2 | 非公開影響の人工的な通し稽古 | – | **保留** | ⚪ | 実更新が無いため省略。後続の実作業で確認する |
 | P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **完了** | ⚪ | PR #24をmainへマージ（`449a7b2`）。外部確認待ちは未完了のまま分離 |
-| P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **レビュー待ち** | ⚪ | エディタ版を読取export。GAS同期・deployは別承認まで行わない |
-| P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **次の作業** | ⚪ | 348体prefix一致を機械検査し、正規手順で351体lockを生成する |
-| P11-4以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
+| P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **完了** | ⚪ | PR #25をmainへマージ（`bfeb42d`）。GAS同期・deployは未実施 |
+| P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **レビュー待ち** | ⚪ | 348体prefix一致を機械検査し、正規手順で351体lockを生成 |
+| P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **次の作業** | 🟡🔴 | 公開Workflowへ影響するため、管理者の明示承認まで開始しない |
+| P11-5以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`449a7b2`（P11-1マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`bfeb42d`（P11-2マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -122,6 +123,18 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 - `コード.gs`先頭の旧予定パス`cms/gas/コード.gs`は完全一致のため残した。
   repoとGASを同時に直せる別承認の同期タスクまで変更しない
 
+## P11-3実施結果
+
+- 旧lockの348体hash `4036c84b2ffff6a7`と、現在351体の先頭348体hashが完全一致した
+- 差分は末尾の「モチビー」「ヤオビクニ」「エコスライム」3体だけで、既存順の変更は無かった
+- `scripts/verify.js`は、件数増加だけではWARNにせず、旧lock件数分のprefix hash一致を確認する。
+  prefix不一致、削除、並べ替えはFAILする
+- `node scripts/verify.js --lock`で手編集せず351体lockを生成した。
+  新hashは`5887530fe7c0d79f`、lock日は2026-08-22
+- `node scripts/verify.js`はPASS 22 / FAIL 0 / WARN 1 / SKIP 0。
+  残るWARNは既知の平文パスワード7件だけ
+- 公開HTML、CMS管理データ、GAS・GitHub・Firestore設定は変更していない
+
 確認できなかった外部状態:
 
 - Firestoreの公開中rules本文と公開日時。現在のブラウザアカウントには対象projectの権限が無い
@@ -134,12 +147,13 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-3「配列lockのappend検証と再生成」だけを次に行う。
+P11-4「CMS元コミット・生成差分ゲート」を次の候補とする。
 
-- ブランチ: `chore/p11-3-repo-guard-lock`
-- 348体lockの並びが現在351体の先頭と完全一致し、差が末尾3体の追加だけであることを機械検査する
-- `node scripts/verify.js --lock`の正規手順で`src/data/repo-guard.lock.json`を再生成する
-- `scripts/verify.js`に必要なappend検証を追加し、公開HTML、CMS管理データ、外部設定は変更しない
+- ブランチ: `fix/p11-4-cms-publish-gates`
+- 本番影響: 🟡🔴。CMS公開Workflowを変更するため、管理者の明示承認まで開始しない
+- GASが作る元コミットの単一親・変更範囲と、build後の生成差分を別々に検査する
+- test用ブランチで許可差分の成功と、許可外・複数親・古いmain・ID不一致の失敗時停止を確認する
+- mainのブランチ保護、GAS、token、公開データは変更しない
 
 ## 第2段階への引き継ぎ
 
@@ -165,8 +179,8 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
 
 ## 既知の検証WARN
 
-- `repo-guard.lock.json`は348体時点で、最新mainは351体。CMSによる末尾追加なのでverifyは
-  FAILにせずWARNにしている。ロック更新は自動生成物を変更する別タスクとして扱う
+- `repo-guard.lock.json`は351体へ正規再生成済み。今後の追加は旧prefix一致時だけWARN、
+  並べ替え・削除・途中挿入はFAILする
 - `EDIT_PASSWORD = 'mf2024'`が7ファイルに残る。既知数から増えていないためWARNだが、
   第2段階で機能、撤去範囲、公開影響、安全な移行先を決める
 - GASトークン検査は`_cms/gas`の必須2ファイルへ復旧済み。欠落はFAIL、既知token形式0件はPASSする
