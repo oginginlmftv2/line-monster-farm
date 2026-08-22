@@ -1,147 +1,116 @@
 # 進捗
 
-最終更新: 2026-08-19
+最終更新: 2026-08-22
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
-> **完了にするのは進捗管理チャットの判断。開発ツールの自己申告では完了にしない。**
-> 完了条件は `claude/ライ徹_開発計画.md` 第3章を参照。
+> 完了にするのは進捗管理チャットの判断。開発ツールの自己申告では完了にしない。
+> 全体計画と完了条件は`docs/ライ徹_開発計画.md`を参照。
 
-## P0 保全（最優先）
+## 現在地
 
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P0-1 | Firestoreルールの確認 | 人 | – | **完了** | 2026-08-16 | **12コレクション全てが `allow read, write: if true`。期限付きルールではない** |
-| P0-2 | Firestoreバックアップ取得 | 人 | – | **完了** | 2026-08-16 | ブラウザから全12コレクションをJSONダンプ。monsters93(コメント76) / cards90(コメント35) / assistEffects74 / bbs_posts62 / game2048 784 / gameRunner97 / friends8 / monsterImages1 / cardAbilities1 / abilityVotes2 / reports1 / tips0 |
-| P0-3 | Search Console 基準値の記録 | 人 | – | **保留** | | プロパティ確認直後で「データを処理しています」表示。**2026-08-19以降に再確認**。P1以降をブロックしない |
-| P0-4 | コメント機能の停止表示 | Claude Code | `fix/p0-4-comment-suspend` | **完了** | 2026-08-18 | 検証済み。4ファイル変更。loadComments/deleteComment/toggleAdmin は無傷 |
-| P0-5 | Firestoreルールの封鎖（write全面禁止） | 人 | – | **完了** | 2026-08-18 | 検証済み。読取5/5成功・書込5/5が permission-denied。再帰ワイルドカードが有効 |
+| ID | 作業 | ブランチ | 状態 | 本番影響 | 備考 |
+|---|---|---|---|---|---|
+| P10-1 | 管理者の開発準備再確認と計画・進捗文書の同期 | `chore/p10-1-admin-readiness` | **レビュー待ち** | ⚪ | 文書だけ。公開HTML、CMS管理データ、自動生成物は変更しない |
+| P10-2 | 管理者による非公開影響の通し稽古 | `chore/p10-2-admin-smoke-test` | 未着手 | ⚪ | 第2段階。管理者環境とGitHub画面を実機確認 |
+| P10-3 | 通常ページ更新の実地確認 | 未提示 | 未着手 | 🔴 | P10-2完了後、次に必要な小さい公開更新を選ぶ |
+| P10-4 | 公開経路の追加防御 | 未提示 | 保留 | 🟡🔴 | CMS迂回経路を確認するまでブランチ保護を有効化しない |
 
-### P0-1 の確認結果（記録）
+## 最新mainの監査値
 
-```
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /cards/{cardId=**}            { allow read, write: if true; }
-    match /monsterImages/{document=**}  { allow read, write: if true; }
-    match /cardAbilities/{document=**}  { allow read, write: if true; }
-    match /abilityVotes/{document=**}   { allow read, write: if true; }
-    match /monsters/{document=**}       { allow read, write: if true; }
-    match /tips/{document=**}           { allow read, write: if true; }
-    match /friends/{document=**}        { allow read, write: if true; }
-    match /reports/{document=**}        { allow read, write: if true; }
-    match /bbs_posts/{document=**}      { allow read, write: if true; }
-    match /game2048/{document=**}       { allow read, write: if true; }
-    match /assistEffects/{document=**}  { allow read, write: if true; }
-    match /gameRunner/{document=**}     { allow read, write: if true; }
-  }
-}
-```
+調査基準: `origin/main`の`a45ce13`（2026-08-21のCMS公開生成コミット）
 
-**65,658字の解説が第三者に書き換え・削除可能な状態。** P0-4→P0-5 で封鎖する。
+| 項目 | 値 | 根拠 |
+|---|---:|---|
+| モンスター | 351体 | `src/data/monster-ids.json`をNodeで集計 |
+| CMS予測ID | 351体 | `src/data/cms-id-predictions.json` |
+| ID検算 | PASS 351体 | `node scripts/verify-cms-ids.js` |
+| 生成詳細ページ | 351件 | ID一覧のURL実在をNodeで照合 |
+| index / noindex | 52 / 299 | 生成HTMLのrobots metaをNodeで集計 |
+| モン類ページ | 6件 | `monsters/<monSlug>/index.html` |
+| sitemap | 82URL | `<loc>`を集計。既存24 + 詳細52 + モン類6 |
+| 公開方式 | main直接配信 | `AGENTS.md`、`CLAUDE.md`、CMS Workflow |
 
-## P1 基盤整備
+件数はCMS公開で変わるため、次回も固定値を信じずスクリプトで集計する。
 
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P1-1 | ルール文書の配置 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 検証済み。配布物とバイト単位で一致 |
-| P1-2 | verify.js＋Actions＋ロック | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | lock hash=4036c84b2ffff6a7 で一致。初回CIは既知FAILで赤 |
-| P1-3 | モン類・血統slug確定 | 人 | `chore/p1-3-slug-policy` | **完了** | 2026-08-18 | 検証済み。獣族=kemono。血統34種も確定 |
-| P1-4 | monster-ids.json 生成 | Claude Code | `chore/p1-agent-rules` | **完了** | 2026-08-18 | 348件・新規38件・ID重複0 |
-| P1-5 | 新規38体をシートに反映 | 人 | – | 未着手 | | |
+## 完了実績
 
-## P2 データ移行
+### 保全・基盤・生成
 
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P2-1 | Firestoreエクスポータ作成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 検証済み。読み取り専用（GET 1箇所のみ） |
-| P2-2 | monsters-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 93件・65,642字。ID/名前/arrayIndex 全件整合。内容の意味的整合も目視確認済み |
-| P2-3 | cards-editorial.json 生成 | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 90件（解説あり85件）。assistEffects 混入0件 |
-| P2-4 | 生成ゲートの閾値決定 | Claude | `chore/p5-1-build-spec` | **完了** | 2026-08-18 | **解説+編成の合計500字以上 → 57件**。docs/build-spec.md 3-1 に記録 |
+- Firestoreのバックアップ取得と書き込み全面禁止
+- `AGENTS.md`、関連docs、`scripts/verify.js`、Actions検証の整備
+- 4桁モンスターID、モン類・血統slug、ID衝突検査
+- Firestoreの解説・編成・画像割当のID基準データ化
+- robots / sitemap / noindex / canonicalの整理
+- `build.js`、全モンスター詳細、6モン類、静的一覧、旧URL誘導、sitemap自動生成
+- スマートフォン表示を含むモンスター詳細・モン類・管理画面の最適化実績
 
-## P3 クリーンアップ（独立・並行可）
+旧件数と当初P0〜P9の対応は`docs/ライ徹_開発計画.md`第6章へ移した。
 
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P3-1 | robots/sitemap矛盾解消 | Claude Code | `fix/p3-1-robots-sitemap` | **完了** | 2026-08-18 | 検証済み。sitemap 38→37件。CIが緑になった |
-| – | robots.txt の Disallow を全削除 | Codex | `chore/robots-allow-crawl` | **完了** | 2026-08-19 | 24件すべてが noindex 済みで、Disallow が削除を妨げていた。verify.js セクション5に矛盾検出を追加 |
-| P3-2 | noindex漏れ2件の修正 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | |
-| P3-3 | canonical欠落6件の補完 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | |
-| P3-4 | tools/ img/site/ への移動 | Codex | `fix/p3-cleanup` | **レビュー待ち** | | S__94175247.jpg / S__94371850.jpg は参照多数のため今回は移動せず |
-| P3-5 | 薄い日記13本のインデックス除外 | Codex | `chore/p3-5-thin-diary` | **完了** | 2026-08-19 | sogo-ikusei 1〜7はikusei/sogo.htmlと88〜98%重複していたためcanonicalを集約。戦績6本は独自内容のため統合せずnoindex,follow。ファイル削除・URL変更なし。sitemap 37→24。 |
-| P3-6 | 重複記事の統合・役割分担 | Claude | — | **完了（統合不要と判断）** | 2026-08-19 | ikusei/sogo.html（4,815字）と ikusei/sogo-ikusei.html（2,587字）の本文一致率は14%。役割が分かれており重複ではないため、統合・canonical・noindex いずれも不要。両方インデックス維持。 |
+### GAS版ライ徹CMS C1〜C10
 
-## P4 画像整理
-
-> **★計画変更（ズレ区分C）** P0-2のバックアップで、Firestoreの `monsterImages/assignments` に
-> **332件の画像割り当てが既に保存されている**ことが判明した。
-> 当初「414枚の手作業マッチング」を想定していたが、**マッチングは実質完了済み**で、
-> 必要なのはエクスポートとリネームだけになった。
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P4-1 | monsterImages/assignments のエクスポート | Claude Code | `chore/p2-firestore-export` | **完了** | 2026-08-18 | 332件。名前ベース変換（monsters.html:216 と同じ設計）。曖昧0件 |
-| P4-2 | 332件をIDでリネームし `img/monster/<ID>.jpg` へ配置 | Codex | `chore/p4-2-image-rename` | 未着手 | | |
-| P4-3 | 割り当ての無いモンスターの対応 | 人 | – | 未着手 | | **実際に画像が無いのはメリオダス1体のみ**（gwImg で表示中）。詳細ページ57体は全件が自前画像で解決 |
-
-`match_monsters.py` は**不要になった可能性が高い。** P4-1で332件の中身を見てから判断する。
-
-## P5 ビルド基盤
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P5-1 | build-spec.md の作成 | Claude | `chore/p5-1-build-spec` | **完了** | 2026-08-18 | 検証済み。生成ページ数134→97。血統の必要導入文字数を式で定義 |
-| P5-2 | HTMLテンプレート | Codex | `feat/p5-3-build-script` | **完了** | 2026-08-18 | **P5-3に統合。**テンプレートエンジンを使わないため別ファイル化しない |
-| P5-3 | build.js 実装 | Codex | `feat/p5-3-build-script` | **完了** | 2026-08-18 | 検証済み。詳細57件・sitemap94URL・空編成の除去も正確 |
-| P5-4 | Actions→gh-pages デプロイ | Codex | feat/p5-4-deploy-actions | 未着手 | | |
-
-## P6 ページ生成
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P6-1 | 詳細57件の生成 | Codex | `feat/p6-1-monster-detail-pages` | **完了** | 2026-08-19 | 57件生成。ゲート（解説＋編成500字以上）通過分。公開は別途 |
-| P6-2 | モン類6本の導入文を執筆 | 人 | – | **完了** | 2026-08-19 | 6モン類ぶんを運営者が執筆。src/data/taxonomy.json に格納。計3,815字 |
-| P6-3 | モン類6件の集約ページ生成 | Codex | `feat/p6-3-montype-pages` | **完了** | 2026-08-19 | 6件生成。血統グループ＋カード内抜粋。monster-type.css を新規追加 |
-| P6-4 | monsters.html 刷新・旧URL誘導 | Codex | feat/p6-4-monster-index | **完了** | 2026-08-19 | monsters.htmlを静的化し旧URLを新URLへ転送。モン類の表示順を公式順（創造→幻霊→魔族→獣族→怪物→無機）に統一 |
-| P6-5 | sitemap.xml 自動生成 | Codex | feat/p6-5-sitemap | **完了** | 2026-08-19 | build.js の renderSitemap() で実装済み。既存24＋生成63＝87URL |
-
-## P7 カード活用
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P7-1 | reroll.html 刷新 | Claude | content/p7-1-reroll-ranking | 未着手 | | |
-| P7-2 | テーマ別まとめ2〜3本 | Claude | content/p7-2-card-articles | 未着手 | | |
-
-## P8 CMS
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P8-1 | admin/ 隔離 | Codex | chore/p8-1-admin-isolation | 未着手 | | |
-| P8-2 | Cloudflare Access 設定 | 人 | – | 未着手 | | |
-| P8-3 | 管理画面UI設計 | Claude | chore/p8-3-cms-spec | 未着手 | | |
-| P8-4 | Worker＋GitHub API | Codex | feat/p8-4-cms-worker | 未着手 | | |
-| P8-5 | mf2024 撤去 | Codex | fix/p8-5-remove-password | 未着手 | | verify.js「8.」がPASSになる |
-| P8-6 | 日記投稿機能 | Codex | feat/p8-6-diary-posting | 未着手 | | |
-
-## P9 再申請
-
-| ID | タスク | 担当 | ブランチ | 状態 | 完了日 | 備考 |
-|---|---|---|---|---|---|---|
-| P9-1 | インデックス反映の確認 | 人 | – | 未着手 | | ★これを待たずに申請しない |
-| P9-2 | AdSense再申請 | 人 | – | 未着手 | | |
-
----
-
-## 未決事項
-
-| # | 内容 | 状態 |
+| 実績 | 状態 | 根拠・備考 |
 |---|---|---|
-| 1 | `獣族` のローマ字 | **決定: `kemono`**（2026-08-16） |
-| 2 | 血統34種のslug | **決定: 34件すべて確定**（2026-08-18） |
-| 3 | レアモンの新規採番順（現在gwImg昇順） | 未決 |
-| 4 | Firestoreのセキュリティルールの現状 | **対応済: 書き込み全面禁止**（2026-08-18） |
-| 5 | AdSense 6回目の不合格通知の日付 | 未確認 |
+| C1〜C6 GAS管理画面、編集・画像・公開操作、スマホ最適化 | **完了・運用中** | GASソースはリポジトリ外。運用手順と公開成果物を確認 |
+| C7 CMS公開Workflow | **完了** | `cms/publish`からbuild・verify後にmainへpush |
+| C8 ID検算 | **完了** | 名前・4桁ID・arrayIndexを全件照合 |
+| C9 運用ルール | **完了** | `AGENTS.md`と`CLAUDE.md`へ反映 |
+| C10 GitHubトークン検出 | **完了** | `scripts/verify.js`の秘密情報検査 |
+| CMS公開の実運用 | **稼働中** | 2026-08-20〜21に複数回成功。最新はsource `2a9a9a4` → main `a45ce13` |
+
+現在の公開フロー:
+
+```text
+GAS → cms/publish → generate-ids.js → verify-cms-ids.js
+    → build.js → verify.js → 生成差分範囲確認 → main → 即公開
+```
+
+途中で失敗した場合はmainを更新しない。通常ページのPRとCMS公開はどちらも、開始前に
+最新mainを取り込むことが前提。
+
+## 当初計画からの変更
+
+| 旧案・旧状態 | 現在 |
+|---|---|
+| 348体、index 49〜50件などの固定件数 | CMSで増減するため動的集計。現在351体、index 52件 |
+| 詳細ページをゲート通過分だけ生成 | 全件生成し、800字未満を`noindex,follow` |
+| 332画像を`img/monster/`へ一括リネーム | GAS→Drive→`monster/<4桁ID>.<拡張子>`で管理 |
+| Actionsから`gh-pages`へ配信 | 未実施。GitHub Pagesはmain直接配信 |
+| Cloudflare Access＋Worker CMS | 廃止。GAS版ライ徹CMS C1〜C10へ置換 |
+| mainのブランチ保護をすぐ有効化 | CMSがmainへ直接pushするため、迂回確認まで実施しない |
+
+## 次の作業
+
+P10-2「管理者による非公開影響の通し稽古」を行う。
+
+- 管理者のWindows環境で`git --version`、`node --version`、Claude、GitHub権限を確認
+- `docs/admin-development.md`の動作確認日を1行だけ変更
+- 最新mainから`chore/p10-2-admin-smoke-test`を作る
+- `node build.js` → `node scripts/verify.js`でFAIL 0
+- Claudeの案内でcommit、push、PR作成、チェック確認、mainマージ、ブランチ削除まで行う
+- 公開HTML、CMS管理データ、自動生成物に差分が無いことを確認
+- 迷ったGitHub画面文言と解決方法をこの文書へ記録
+
+## 第2段階への引き継ぎ
+
+第1段階は手順と文書を整える作業で、管理者のWindows環境とGitHub権限はまだ実機確認していない。
+第2段階では文書1行の⚪変更だけを使い、`docs/admin-development.md`第10章どおりに
+開始確認からmainマージ後の後片付けまで通す。CMSや公開HTMLは触らず、ブランチ保護も変更しない。
+
+## 管理者確認待ち
+
+- 管理者のPCでGit、Node.js 20、Claudeが利用できるか
+- GitHubで対象リポジトリの`Actions`、`Pull requests`、push、merge権限があるか
+- mainの現在のRules / Branch protection状態（読み取り確認だけ。変更しない）
+- Search Consoleの最新状態とAdSense再申請の状況
+- P7のreroll刷新・カード記事を今後の優先タスクにするか
+
+## 既知の検証WARN
+
+- `repo-guard.lock.json`は348体時点で、最新mainは351体。CMSによる末尾追加なのでverifyは
+  FAILにせずWARNにしている。ロック更新は自動生成物を変更する別タスクとして扱う
+- `EDIT_PASSWORD = 'mf2024'`が7ファイルに残る。既知数から増えていないためWARNだが、
+  CMS C1〜C10とは別の保留課題として撤去範囲と公開影響を決める必要がある
 
 ## 差し戻し履歴
 

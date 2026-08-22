@@ -8,14 +8,16 @@
 - 2026-08-18 初版（P5-1）
 - 2026-08-18 改訂：**血統ページを生成しない方針に変更**（3-2）。
   モン類ページが血統ハブを兼ねる（5-3）。新規生成ページ数 97 → 63。
+- 2026-08-22 改訂：CMS運用後はモンスター件数を固定せず、入力件数へ動的に追従する仕様を明記。
+  同日の監査値は351体、index 52件、noindex 299件。
 仕様に書かれていない挙動を追加しないこと。判断が必要な箇所は実装せず報告すること。
 
 ---
 
 ## 0. 目的と絶対条件
 
-全348体のモンスター詳細を静的HTMLとして出力し、
-生成HTMLの可視文字数が800字以上の49件だけをインデックス対象にする。
+`monster-ids.json`に存在する全モンスターの詳細を静的HTMLとして出力し、
+生成HTMLの可視文字数が800字以上のページだけをインデックス対象にする。
 
 ### 絶対条件（違反したらビルドを失敗させる）
 
@@ -33,12 +35,12 @@
 
 | パス | 内容 | 件数 |
 |---|---|---|
-| `src/data/monster-ids.json` | ID・名前・血統・モン類・URL・画像パス | 348 |
-| `src/data/monsters-editorial.json` | 運営者解説・編成データ | 93 |
+| `src/data/monster-ids.json` | ID・名前・血統・モン類・URL・画像パス | 動的（2026-08-22: 351） |
+| `src/data/monsters-editorial.json` | 運営者解説・編成データ | 動的（2026-08-22: 94） |
 | `src/data/monster-images.json` | 名前由来の画像割り当て（ID変換済み） | 332 |
 | `src/data/cards-editorial.json` | カード解説（詳細ページでは未使用） | 90 |
 | `src/data/taxonomy.json` | 集約ページの導入文（**P6-2で作成。無ければ集約ページを生成しない**） | – |
-| `monsters-data.js` | オーラ・限定ラベル・gwImg・localImg | 348 |
+| `monsters-data.js` | オーラ・限定ラベル・gwImg・localImg | `monster-ids.json`と同数 |
 | `cards/cards-data.js` | カードID→カード名（編成表示に使用） | 91 |
 | `style.css` | 既存スタイル。共通の `page-breadcrumb` を定義 | – |
 
@@ -59,10 +61,10 @@
 
 ```
 monsters/<monSlug>/index.html                      モン類ページ    6件
-monsters/<monSlug>/<bloodSlug>/<id>.html           詳細ページ    348件
+monsters/<monSlug>/<bloodSlug>/<id>.html           詳細ページ    入力全件
 sitemap.xml                                        再生成
                                                    ─────────
-                                                   生成 354ページ
+                                                   HTMLは入力件数 + 6ページ
 ```
 
 **血統ページ（`monsters/<monSlug>/<bloodSlug>/index.html`）は生成しない。**
@@ -97,13 +99,13 @@ sitemap.xml                                        再生成
 
 ## 3. ゲート条件
 
-### 3-1. 詳細ページ（348件）
+### 3-1. 詳細ページ（入力全件）
 
-全348体のページを生成する。ゲートは**インデックスするかどうか**を決める。
+`monster-ids.json`にある全件のページを生成する。ゲートは**インデックスするかどうか**を決める。
 
 ```
-visibleChars(生成したHTML) >= 800  → インデックス対象（現在49件）
-未満                                → noindex,follow（現在299件）
+visibleChars(生成したHTML) >= 800  → インデックス対象（2026-08-22: 52件）
+未満                                → noindex,follow（2026-08-22: 299件）
 ```
 
 **ソース字数ではなく、レンダリング後の可視文字数を実測して判定する。**
@@ -220,7 +222,7 @@ noindex のページは sitemap に載せず、**AdSenseスクリプトも出力
 
 この順序は `monsters.html` の既存実装と同じ。変更しないこと。
 
-**インデックス対象の49体は、全件が 1 または 2 で解決する**ことを確認済み。
+**2026-08-22時点のインデックス対象52体は、全件が 1 または 2 で解決する**ことを確認済み。
 3 に落ちた場合はログに警告を出すこと（想定外のため）。
 
 ### 4-2. 編成データの表示
@@ -376,11 +378,11 @@ h1: <モン類>のモンスター
 | モン類 | slug | 所属 | 血統 | インデックス対象 | 解説字数 |
 |---|---|---:|---:|---:|---:|
 | 創造 | `souzou` | 37 | 5 | 5 | 592 |
-| 幻霊 | `genrei` | 60 | 6 | 10 | 604 |
+| 幻霊 | `genrei` | 62 | 6 | 10 | 604 |
 | 魔族 | `mazoku` | 81 | 6 | 11 | 569 |
-| 獣族 | `kemono` | 66 | 6 | 11 | 869 |
+| 獣族 | `kemono` | 66 | 6 | 14 | 869 |
 | 怪物 | `kaibutsu` | 49 | 6 | 7 | 517 |
-| 無機 | `muki` | 55 | 5 | 5 | 664 |
+| 無機 | `muki` | 56 | 5 | 5 | 664 |
 
 解説字数に加えて、モンスターカード（所属数×約20字）と解説抜粋（インデックス対象数×約100字）が
 乗るため、いずれも本文量800字ゲートに対して十分な余裕がある。
@@ -397,10 +399,10 @@ h1: <モン類>のモンスター
 
 ### 5-4. sitemap.xml の再生成
 
-- 生成した55ページ（詳細49 + モン類6）を追加する
+- index対象の詳細ページと生成済みモン類ページを追加する
 - **既存の24URLはそのまま維持**する（P3-1で整理済み。P3-5で薄い日記13本を除外）
-- noindex の詳細ページ299件は含めない
-- sitemap の合計は **既存24 + 詳細49 + モン類6 = 79件**
+- noindex の詳細ページは含めない
+- 2026-08-22の監査値は **既存24 + 詳細52 + モン類6 = 82件**
 - `<lastmod>` は入れない（決定的な出力にするため）
 - `<priority>`: 詳細 0.7 / モン類 0.6
 
@@ -425,7 +427,7 @@ Firestore からの画像取得と localStorage キャッシュは静的化に�
 ### 5-6. monsters/redirect-map.js（旧URLの誘導）
 
 旧URL `monsters/monster.html?id=<arrayIndex>` を新URLへ転送するための対応表。
-`build.js` が全348件を arrayIndex 昇順で出力する。
+`build.js` が入力全件を arrayIndex 昇順で出力する。
 
 `monsters/monster.html` は head でこれを読み、`location.replace()` で転送する。
 未知のIDは `../monsters.html` へ送る。**ファイル自体は削除しない**（URL維持のため）。
@@ -511,13 +513,13 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 
 ```
 === 入力 ===
-  monster-ids        348件
-  monsters-editorial  93件
+  monster-ids        <n>件
+  monsters-editorial <n>件
   monster-images     332件
   taxonomy           <血統n件 / モン類n件>
 
 === ゲート判定 ===
-  詳細ページ  生成 348件 / インデックス 49件 / noindex 299件
+  詳細ページ  生成 <n>件 / インデックス <n>件 / noindex <n>件
   昇格まであと少し（可視700〜799字）: n件
     <ID> <名前>  <可視文字数>字（あと<不足文字数>字）
   モン類ページ 生成 n件 / 除外 n件（不足字数つき）
@@ -558,7 +560,7 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 実装が正しいかは、以下で判定する。
 
 1. `npm run build` が成功する
-2. 生成ページ数が **詳細348 / モン類6**（taxonomy.json が6件揃っている場合）
+2. 詳細ページ数が`monster-ids.json`と一致し、モン類が6件（taxonomy.json が6件揃っている場合）
    モン類の導入文が一部しか無い場合は、揃っている分だけ生成されること
 3. `node scripts/verify.js` が FAIL 0。特に「6. 生成ページの品質」と
    「9. 生成ページのインデックス制御」が全PASS
@@ -573,15 +575,15 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 
 ```
 1. loadInputs と整合性チェックだけ実装し、ログを出して終了する
-2. 本文を先に組み立てて可視文字数を実測し、インデックス49 / noindex 299 を確認する
-3. renderDetail を実装し、詳細ページ348件を出力する
+2. 本文を先に組み立てて可視文字数を実測し、index / noindexの合計が入力件数と一致することを確認する
+3. renderDetail を実装し、入力全件の詳細ページを出力する
 4. 8章の本文量検算を入れ、インデックス対象が全件800字以上であることを確認する
 5. sitemap.xml の再生成を実装する
 6. taxonomy.json が用意できてから renderMonType を実装する（血統ページは作らない）
 ```
 
 **段階3が終わった時点で一度報告すること。**
-348件の詳細ページとインデックス制御が期待どおりかを確認してから、集約ページに進む。
+入力全件の詳細ページとインデックス制御が期待どおりかを確認してから、集約ページに進む。
 
 ---
 
@@ -590,7 +592,11 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 - `monsters.html`（ルート）— `BUILD:MONSTER-CARDS` マーカー外は変更しない
 - `monsters/monster.html` — 旧詳細ページ。head の転送スクリプト以外は変更しない
 - `monsters-data.js` の配列順
-- `src/data/*.json` — 入力であり、ビルドが書き換えてはならない
+- `src/data/monsters-editorial.json`、`src/data/cms-id-predictions.json`、
+  `src/data/taxonomy.json`などの管理入力 — `build.js`が書き換えてはならない
+- `src/data/id-availability.json`、`src/data/page-baseline.json`、
+  `src/data/cms-seed.json` — `build.js`の生成物。手で編集しない
+- `src/data/monster-ids.json` — `generate-ids.js`の生成物。手で編集しない
 - `style.css` — 既存定義は変更しない。`page-breadcrumb` の追記のみ可
 - `robots.txt` — sitemap.xml は再生成するが robots.txt は触らない
 - 血統ページを作らないこと（3-2）。仕様変更なしに追加しない

@@ -25,6 +25,9 @@
 | **本番に影響するか判断するとき** | **`docs/production-impact.md`** |
 | 休止中ファイル（読むな・消すな） | `docs/dormant-files.md` |
 | ビルド処理 | `docs/build-spec.md` |
+| 全体計画・各段階の完了条件 | `docs/ライ徹_開発計画.md` |
+| 現在地・次の作業・引き継ぎ | `docs/PROGRESS.md` |
+| 管理者がClaudeへ依頼して開発・公開するとき | `docs/admin-development.md` |
 | コンテンツ運用（ガチャ更新・日記追加） | `CLAUDE.md` |
 
 **索引にない作業を始める前に、関連する `docs/` が無いか確認すること。**
@@ -101,7 +104,7 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 - 「使われていなさそう」という自己判断でファイルを削除しない
 - 自動生成ファイルを手で編集しない。必要な生成物は `build.js` またはCMS公開Workflowに生成させる
 - 秘密情報をコードに書かない（現在 `EDIT_PASSWORD = 'mf2024'` が7ファイルに平文で存在。
-  これは既知の問題で、CMS実装時に撤去する。**新たに増やさないこと**）
+  これは既知の保留課題。別タスクで撤去するまで**新たに増やさないこと**）
 
 ### CMS管理対象（モンスター）
 
@@ -112,8 +115,12 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 - `cms/publish` はGAS専用ブランチ。手動push・マージ・通常作業への流用は禁止
 - 公開は「GAS → `cms/publish` → ID生成・ID検算・build・verify → `main`」の順。
   途中で失敗した場合は `main` を更新しない
+- CMS公開Workflowが`main`へ直接pushする現状では、CMS用の迂回設定または同等の公開経路を
+  実機で確認するまで`main`のブランチ保護を有効化しない
 - カード、日記、トップページなどCMS対象外の作業は従来どおり作業ブランチで行う。
   **着手前に最新の `main` を取り込むこと**。CMS公開は対象外ファイルを保持する
+- 管理者向けの環境確認、Claudeへの依頼、push・PR・マージの手順は
+  `docs/admin-development.md`を正とする
 - GitHub Pagesは現在 `main` を直接配信している。通常PRのマージもCMS公開も、`main` 更新＝本番公開
 
 ---
