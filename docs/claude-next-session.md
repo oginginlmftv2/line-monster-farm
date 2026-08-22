@@ -1,99 +1,66 @@
 # 次回Claude作業 引き継ぎ
 
-最終更新: 2026-08-22
+最終更新: 2026-08-23
 
 この文書の「管理者からClaudeへ渡す文面」を、そのまま次回のClaudeへ渡す。
 
 ## 管理者からClaudeへ渡す文面
 
 ```text
-LINEモンスターファーム徹底攻略サイトの改修計画
-「第2段階：CMSとセキュリティの仕上げ」を開始してください。
-対象は line-monster-farm リポジトリです。添付ファイルはありません。
-リポジトリ内の最新の実物と、管理者が確認できる実設定だけを根拠にしてください。
+line-monster-farm リポジトリでP12-3「アシストカードデータ監査と読取export」を行ってください。
 
-最初の作業はP11-1「CMS・セキュリティの現状監査と実施計画」です。
-作業ブランチは chore/p11-1-cms-security-audit、本番影響区分は⚪です。
-この監査では公開HTML、CMS管理データ、自動生成物、GitHub・GAS・Firestoreの設定を変更しません。
+作業ブランチ: chore/p12-3-assist-data-audit
+本番影響: ⚪
 
-最初に必ず次を行ってください。
-1. AGENTS.mdを最後まで読む
-2. docs/dormant-files.md、docs/branch-naming.md、docs/production-impact.md、
-   docs/ライ徹_開発計画.md、docs/PROGRESS.md、docs/admin-development.md、CLAUDE.mdの必要箇所を読む
-3. git status --shortを確認する
-4. 未保存変更があれば破棄・退避せず停止して報告する
-5. 問題がなければ git switch main → git pull --ff-only origin main を実行する
-6. 最新の実物を調査してから chore/p11-1-cms-security-audit を作成する
-7. 編集前に、変更予定ファイル一覧と本番影響区分を宣言する
+最初にAGENTS.mdを最後まで読み、docs/dormant-files.md、
+docs/assist-card-cms-progress.md、docs/PROGRESS.md、docs/ライ徹_開発計画.md、
+docs/build-spec.md、CLAUDE.mdの関連箇所を読んでください。
 
-次を、推測せず読み取りで監査してください。
+git status --shortを確認し、未保存変更があれば破棄・退避せず停止してください。
+問題がなければgit switch main、git pull --ff-only origin mainを行い、
+chore/p12-3-assist-data-auditを作成してください。
+編集前に変更予定ファイルと本番影響区分を宣言してください。
 
-・現在のGAS → cms/publish → ID生成・ID検算・build・verify → mainという公開経路
-・.github/workflows/cms-publish.ymlの権限、失敗時停止、main直接pushの条件
-・CMS_PUBLISH_TOKENの利用主体、必要な最小権限、失効・再発行手順
-  （Secretの値は表示、取得、記録しないこと）
-・scripts/verify.jsの秘密情報検査と、cms/gasがリポジトリに無いためSKIPになる現状
-・EDIT_PASSWORD = 'mf2024'が7ファイルに残る既知WARNについて、対象機能、撤去範囲、
-  本番影響、安全な移行方法。休止中ファイルは読まず、100KB超のファイルはスクリプトで扱うこと
-・348体時点のrepo-guard.lock.jsonと現在データの差、および自動生成物としての正規な更新方法
-・Firestoreルールが書込全面禁止のままか。管理者の画面確認が必要なら、画面文言に沿って案内すること
-・GitHubの現在のRules / Branch protection状態。読み取りだけ行い、保存しないこと
-・main保護とCMS公開を両立する正規の迂回主体またはPR経由案、テスト用ブランチでの検証方法、
-  失敗時の復旧方法。迂回経路を実機確認するまでmainのブランチ保護を有効化しないこと
-・GASソースの実際の管理場所と、リポジトリ外でもC10相当の検査を継続できる方法
+このタスクでは公開HTML、カードデータの値、画像、自動生成物、GAS、Sheets、Drive、
+Firestore rules・document、GitHub設定を変更しません。
 
-監査結果は、次の4区分に分けてください。
-1. リポジトリ内で実施する変更
-2. GAS側で管理者が実施する変更
-3. GitHub設定で管理者が実施する変更
-4. Firestoreで管理者が確認または実施する変更
+休止中ファイルを直接読まないでください。100KB超のファイルは内容を展開せず、
+Nodeスクリプトで件数、SHA-256、項目名、型、重複、参照関係、不一致だけを抽出してください。
 
-各項目について、確認できた根拠、現状、危険性、本番影響区分、依存関係、復旧方法、
-完了条件を示してください。Claudeから確認できない外部状態は完了扱いにせず、
-管理者が画面で確認する具体的な手順を示してください。
+次を推測せず監査してください。
 
-監査後はP11-2以降を、安全に独立して実施できる単位へ分割し、各タスクのID、ブランチ名、
-変更予定ファイル、外部設定の有無、本番影響区分、実施順、完了条件を提案してください。
-公開物や外部設定を実際に変更するタスクは、私の明示承認なしに開始しないでください。
+1. cards/cards-data.jsの現行cardId、基本属性、カード画像の一致
+2. src/data/cards-editorial.jsonとFirestore cards collectionの差
+3. assist-effect-data.jsのカード別効果件数、項目、未登録カード
+4. lMfDB_abilities.jsonと旧lmfdb_abilities_data.jsonの差、重複、source、tags
+5. 能力の表示名・rarityから現行cardIdへ対応できる件、候補、未解決
+6. Firestore cardAbilities/assignmentsとassist-abilities画像の対応、未参照・欠落
+7. 旧assistEffects collectionまたはcards.assistEffectsが残る場合の読取状態
 
-文書だけを更新する場合は、役割を重複させずdocs/ライ徹_開発計画.mdと
-docs/PROGRESS.mdを最新の根拠に同期してください。公開HTML、CMS管理データ、
-自動生成物は変更しないでください。
+Firestoreの値が必要な場合は読取exportだけを行い、保存・削除・rules変更をしないでください。
+Claudeから外部状態を確認できない場合は完了扱いにせず、管理者が画面で確認する手順を示してください。
 
-実装後は node scripts/verify.js を実行し、差分を確認してください。
-commit・push・PR作成・merge・リモートブランチ削除は、私から明示的に依頼するまで行わないでください。
+成果物には次を含めてください。
 
-最後にAGENTS.md第7章の形式で完了報告し、次も提示してください。
-・監査で確認できた事実と、確認できなかった外部状態
-・管理者が画面で確認する項目
-・P11-2以降の推奨実施順
-・docs/PROGRESS.mdへ記録した次の作業
+- 入力ファイルごとのSHA-256と件数
+- 現行91カードをcardId基準にした対応表
+- 自動確定、候補、未解決の区分と理由
+- P12-4カードDB、P12-5効果DB、P12-6能力DBが独立して変換できる入力一覧
+- 移行前バックアップと復旧方法
+- docs/assist-card-cms-progress.mdとdocs/PROGRESS.mdの同期
+
+node scripts/verify.jsでFAIL 0、git diff --check、差分確認を行ってください。
+commit・push・PR・mergeは、管理者が明示するまで行わないでください。
+
+最後はAGENTS.md第7章の形式で、確認できた事実、確認できなかった外部状態、
+管理者確認項目、次の作業1件を報告してください。
 ```
 
 ## 現在地
 
-- 第1段階は保留。ルール、管理境界、検証、PR・マージ手順は整備済み
-- P10-1では作業ブランチ、push、PR、Actions成功、mainマージ、リモートブランチ削除まで確認済み
-- 人工的な文書1行テストは保留し、後続の実作業で運用を確認する
-- 第2段階はP11「CMSとセキュリティの仕上げ」
-- 最初はP11-1の読み取り監査。稼働中CMSや外部設定を変更しない
-- GitHub Pagesはmain直接配信で、CMS Workflowもmainへ直接pushする
-
-## P11-1で扱う既知事項
-
-- verifyは、348体時点の配列ロックと平文パスワード7ファイルについてWARNを出す
-- GASトークン検査は`cms/gas`がリポジトリに無いためSKIPになる
-- `cms/publish`はGAS専用で、通常作業には使わない
-- mainのブランチ保護はCMSの迂回経路を実機確認するまで有効化しない
-- Firestoreは書込全面禁止が現在の前提であり、緩和しない
-- GAS本体はリポジトリ外のため、場所や内部実装を推測しない
-
-## P11-1の完了確認
-
-- リポジトリで確認できる事実と外部確認待ちを分離した
-- 秘密値を表示・記録していない
-- CMSを止めずに実施できる後続タスクへ分割した
-- 各後続タスクに本番影響、依存関係、復旧方法、完了条件がある
-- 公開HTML、CMS管理データ、自動生成物、外部設定を変更していない
-- `node scripts/verify.js`がFAIL 0
-- `docs/PROGRESS.md`に次の作業を1件だけ明記した
+- P12-1リセマラ記事刷新はPR #30でmain反映・Pages公開済み
+- P12-2でアシストカードの3DB、静的詳細、OCRレビュー、専用CMSを設計
+- P11-7〜9はGitHub管理権限待ちで保留。main Rulesetを先に有効化しない
+- AdSense再申請は更新利用規約への管理者同意待ちで保留
+- Firestoreはread許可・write全面禁止を維持し、P12-3では読取だけを行う
+- 詳細設計と実施順はdocs/assist-card-cms-progress.mdを正とする
