@@ -3,6 +3,10 @@
 作成日: 2026-08-16
 確定事項: ID体系 / URL階層 / 開発フローへの差し込み位置
 
+> 1章の348体・新規38体という件数と3章のP0〜P8は、ID体系を確定した当時の監査記録である。
+> 現在件数と現行計画は`docs/PROGRESS.md`、CMS運用は`CLAUDE.md`を参照する。
+> ID規則、確定済みID、slugは現在も有効で変更しない。
+
 ---
 
 ## 1. ID体系（確定・検証済み）
@@ -37,7 +41,8 @@
 
 ### 1-2. データによる検証結果
 
-Googleシート「あつ杯アプリDB」の `sortOrder` 310件と、リポジトリの `monsters-data.js` 348体を突合しました。
+2026-08-16時点で、Googleシート「あつ杯アプリDB」の `sortOrder` 310件と、
+リポジトリの `monsters-data.js` 348体を突合しました。
 
 | 検証項目 | 結果 |
 |---|---|
@@ -115,7 +120,7 @@ Googleシート「あつ杯アプリDB」の `sortOrder` 310件と、リポジ�
 
 ### 1-5. IDが解決する既存の問題
 
-現在 `monsters/monster.html?id=347` は**配列インデックス**を使っています。CLAUDE.md に「先頭や途中に追加すると全モンスターのIDがずれる。過去に2回この問題が起きている」とある通り、構造的な事故源です。
+当時の `monsters/monster.html?id=347` は**配列インデックス**を使っていました。先頭や途中に追加すると全モンスターのIDがずれ、過去に2回事故が起きた構造的な問題でした。
 
 血統ベースのIDは配列順に依存しないため、**この事故が原理的に起きなくなります。** 新モンスターをどこに挿入しても、既存のIDもURLも画像ファイル名も一切変わりません。
 
@@ -126,12 +131,12 @@ Googleシート「あつ杯アプリDB」の `sortOrder` 310件と、リポジ�
 ### 2-1. URL階層
 
 ```
-monsters.html（ルート直下・既存） モンスター一覧（348体）※新規生成はしない
+monsters.html（ルート直下・既存） モンスター一覧（カード部分をbuild.jsが生成）
 └ /monsters/<モン類>/ モン類一覧 6ページ
 └ /monsters/<モン類>/<血統>/ ※血統ページは作らない（ディレクトリのみ）
-└ .../<ID>.html モンスター詳細 57ページ（ゲート条件を満たすもののみ）
+└ .../<ID>.html モンスター詳細 全件（800字未満はnoindex,follow）
 ─────────────────
-新規生成 計63ページ
+生成数はCMS公開ごとにモンスター数へ自動追従
 ```
 
 具体例:
@@ -153,23 +158,24 @@ monsters.html（ルート直下・既存） モンスター一覧（348体）※
 |---|---|---:|---:|
 | 魔族 | `mazoku` | 81 | 6 |
 | 獣族 | `kemono` | 66 | 6 |
-| 幻霊 | `genrei` | 60 | 6 |
-| 無機 | `muki` | 55 | 5 |
+| 幻霊 | `genrei` | 62 | 6 |
+| 無機 | `muki` | 56 | 5 |
 | 怪物 | `kaibutsu` | 49 | 6 |
 | 創造 | `souzou` | 37 | 5 |
 
 **`獣族` = `kemono` で確定（2026-08-16）。**
 
-血統34種のslugは `generate-ids.js` の `BLOOD_SLUG` に定義済みです。英語名が定着しているものは英語（`pixie` `dragon` `golem` `worm` `ghost` `plant` `joker` `centaur` `dino` `naga` `arrowhead` `monolith` `metalner`）、それ以外はヘボン式（`mocchi` `suezo` `henger` `gali` `nendoro` `hamu` `nyaa` `kijin` `hinotori` `shinryu` `gujira` `kawazumo` `kyubi` `zan` `arc` `illumine` `undine` `dullahan` `yggdrasil` `liger` `gel`）としました。**ご確認のうえ確定させてください。**
+血統34種のslugは `generate-ids.js` の `BLOOD_SLUG` に定義済みです。英語名が定着しているものは英語（`pixie` `dragon` `golem` `worm` `ghost` `plant` `joker` `centaur` `dino` `naga` `arrowhead` `monolith` `metalner`）、それ以外はヘボン式（`mocchi` `suezo` `henger` `gali` `nendoro` `hamu` `nyaa` `kijin` `hinotori` `shinryu` `gujira` `kawazumo` `kyubi` `zan` `arc` `illumine` `undine` `dullahan` `yggdrasil` `liger` `gel`）で確定しています。
 
 ### 2-3. 画像のファイル名
 
 ```
-img/monster/0101.jpg        ピクシー
-img/monster/1625.jpg        カッパマキ
+monster/0101.jpg        ピクシー
+monster/1625.jpg        カッパマキ
 ```
 
-現在の `S__107036676.jpg` のような無意味な名前が、**IDと1対1で対応する名前**になります。マッチング作業の成果がそのままファイル名に固定されるので、二度と迷子になりません。
+現在はGAS管理画面からDrive経由で`monster/<4桁ID>.<拡張子>`へ配置する。
+リポジトリ側で直接リネーム・差し替えしない。
 
 ### 2-4. 血統ページは生成しない
 
@@ -183,14 +189,18 @@ img/monster/1625.jpg        カッパマキ
 | モンスター一覧 | 0（既存の monsters.html を使用） |
 | モン類一覧 | 6 |
 | 血統一覧 | 0（生成しない。docs/build-spec.md 3-2） |
-| モンスター詳細（ゲート通過分） | 57 |
-| **合計（新規生成）** | **63** |
+| モンスター詳細 | 入力全件（2026-08-22: 351） |
+| **合計HTML** | **入力件数 + モン類6** |
 
-既存37 ＋ 新規63で、sitemap掲載は **約100URL**（すべて実体あり）になります。
+sitemapには既存URL、index対象の詳細、モン類6件だけを載せる。
+2026-08-22の監査値は82URL（既存24 + 詳細52 + モン類6）。
 
 ---
 
-## 3. 開発フローへの差し込み
+## 3. 当初の開発フローへの差し込み（履歴）
+
+以下は2026-08-16時点の当初計画を残したもの。画像整理とCMSは現在のGAS版ライ徹CMSに
+置き換わっている。実行手順として使わない。
 
 ### 3-1. 改訂フロー
 
@@ -254,7 +264,7 @@ Firestoreの解説データは **`docId = String(配列インデックス)`** �
 |---|---|
 | `generate-ids.js` | ID生成スクリプト。検証・衝突検出込み |
 | `src/data/sheet-sortorder.json` | シート由来の確定ID 310件 |
-| `src/data/monster-ids.json` | 生成結果 348件（確定310＋新規38） |
+| `src/data/monster-ids.json` | 当時の生成結果348件（確定310＋新規38）。現在はCMS公開ごとに増減 |
 
 ```bash
 node generate-ids.js           # 生成
@@ -376,21 +386,10 @@ slugを変えてもIDは変わりません。slugが影響するのはURLだけ�
 
 ---
 
-## 暫定：配列インデックス運用（ID体系への移行までの措置）
+## 現行の登録・検算
 
-この運用は、Firestoreの解説データが配列インデックスをキーにしているために
-必要な暫定措置です。P2-2（Firestoreエクスポート）が完了し、
-データがID基準に移行した時点で不要になります。
-
-### monsters-data.js
-- **必ず配列の末尾に追加すること**
-- 先頭や途中に追加すると全モンスターのインデックス（id）がずれ、
-  monster.html・monster-match・ピックアップリンクなどが全て壊れる
-- 過去に2回この問題が起きている
-
-### 新モンスターのインデックス確認方法
-- monsters-data.js の `];` 直前の行が末尾要素
-- **インデックス = 配列の要素数 - 1**（要素数はファイル内の `name: '` の数を数えることで確認できる）
-- 追加後のインデックス = **現在の末尾インデックス + 1**
-- 現在の末尾インデックスは CLAUDE.md の「現在のピックアップ状態」テーブルで確認
-- ⚠️ ラインナンバーとインデックスは一致しない（コメント行・宣言行があるためずれる）ので必ず要素数で数えること
+- 新規モンスターはGAS版ライ徹CMSから登録する
+- GASが表示するIDは予測で、採番の正は`generate-ids.js`
+- CMS公開時に`scripts/verify-cms-ids.js`が名前・4桁ID・arrayIndexを全件照合する
+- ID不一致ではmainを更新しない
+- `monsters-data.js`、確定済みID、配列順をリポジトリ側で直接変更しない

@@ -5,12 +5,12 @@
 ## 生成ページのURL階層
 
 ```
-monsters.html（ルート直下・既存） モンスター一覧（348体）※新規生成はしない
+monsters.html（ルート直下・既存） モンスター一覧（カード部分をbuild.jsが生成）
 └ /monsters/<モン類>/ モン類一覧 6ページ
 └ /monsters/<モン類>/<血統>/ ※血統ページは作らない（ディレクトリのみ）
-└ .../<ID>.html モンスター詳細 57ページ（ゲート条件を満たすもののみ）
+└ .../<ID>.html モンスター詳細 全件（800字未満はnoindex,follow）
 ─────────────────
-新規生成 計63ページ
+生成数はCMS公開ごとにモンスター数へ自動追従
 ```
 
 > `monsters/index.html` は生成しない。一覧は既存の `monsters.html` が担う。
@@ -29,8 +29,8 @@ monsters.html（ルート直下・既存） モンスター一覧（348体）※
 |---|---|---:|
 | 魔族 | `mazoku` | 81 |
 | 獣族 | `kemono` | 66 |
-| 幻霊 | `genrei` | 60 |
-| 無機 | `muki` | 55 |
+| 幻霊 | `genrei` | 62 |
+| 無機 | `muki` | 56 |
 | 怪物 | `kaibutsu` | 49 |
 | 創造 | `souzou` | 37 |
 
@@ -41,24 +41,29 @@ monsters.html（ルート直下・既存） モンスター一覧（348体）※
 ## 画像
 
 ```
-img/monster/<ID>.jpg        例: img/monster/0101.jpg
+monster/<4桁ID>.<拡張子>        例: monster/0101.jpg
 ```
+
+新規・差し替え画像はGAS管理画面からDrive経由で配置する。
+リポジトリ側から直接差し替えない。
 
 ## リポジトリ構造
 
 ```
-src/                  ビルド入力。gh-pages に出さない
-  data/               monster-ids.json / sheet-sortorder.json / *-editorial.json
-  templates/
-  build.js
-admin/                管理画面。gh-pages に出さない
-tools/                開発用スクリプト。gh-pages に出さない
-docs/                 ルール文書。gh-pages に出さない
-scripts/verify.js     ルール検証
+build.js                       公開HTML・CMS参照データの生成
+src/data/                      ビルド入力とCMS公開の受け渡し
+monsters/                      生成されるモンスター詳細・モン類ページ
+monster/                       CMSがDrive経由で配置する4桁ID画像
+.github/workflows/cms-publish.yml  CMS公開の検算・ビルド・main反映
+scripts/verify.js              リポジトリルール検証
+scripts/verify-cms-ids.js      CMS予測IDとgenerate-ids.jsの照合
+docs/                          ルール・計画・運用文書
+tools/                         開発用スクリプト
 ```
 
-**デプロイは `main` 直接ではなく `gh-pages`。** これが `src/` `admin/` `tools/` を
-公開しない唯一の確実な方法（robots.txt は保護にならない）。
+**現在のGitHub Pagesは`main`を直接配信する。**
+そのため通常PRのmainへのマージとCMS公開Workflowのmainへのpushは、
+どちらも即時公開になる。`gh-pages`は未使用の予約ブランチ名である。
 
 ## ルート直下に置いたまま動かさないファイル
 

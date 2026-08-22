@@ -25,5 +25,7 @@
 | `directory.md` | ディレクトリ構造・URL設計 | 作成済 |
 | `branch-naming.md` | ブランチ命名規則 | 作成済 |
 | `production-impact.md` | 本番影響とマージ方針 | 作成済 |
-| `PROGRESS.md` | タスクの進捗（唯一の正） | 作成済 |
-| `build-spec.md` | ビルド仕様 | **未作成**（P4で作成） |
+| `ライ徹_開発計画.md` | 全体計画と各段階の完了条件 | 作成済 |
+| `PROGRESS.md` | 現在地・完了実績・次の作業・引き継ぎ | 作成済 |
+| `admin-development.md` | 管理者がClaudeへ依頼して開発・公開する手順 | 作成済 |
+| `build-spec.md` | ビルド仕様 | 作成済 |
