@@ -104,8 +104,8 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 - 既存の `style.css` のクラス名を使い、新しいCSSを追加しない
 - 「使われていなさそう」という自己判断でファイルを削除しない
 - 自動生成ファイルを手で編集しない。必要な生成物は `build.js` またはCMS公開Workflowに生成させる
-- 秘密情報をコードに書かない（現在 `EDIT_PASSWORD = 'mf2024'` が7ファイルに平文で存在。
-  これは既知の保留課題。別タスクで撤去するまで**新たに増やさないこと**）
+- 秘密情報をコードに書かない。P11-6で公開クライアントの平文パスワードは0件になった。
+  `scripts/verify.js`が再混入をFAILにする
 
 ### CMS管理対象（モンスター）
 
@@ -122,6 +122,8 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
   `src/data/cms-id-predictions.json` をリポジトリ側で直接編集しない。次のCMS公開で上書きされる
 - `monster/<4桁ID>.<拡張子>` はDrive経由で管理する。リポジトリ側で差し替えない
 - `cms/publish` はGAS専用ブランチ。手動push・マージ・通常作業への流用は禁止
+- `cms/protected-test`と`p11-7/*`はP11-7の保護経路test専用で、Pages配信・本番CMS公開に使わない。
+  main向けに変更せず、test完了後は管理者手順に従って削除する
 - 公開は「GAS → `cms/publish` → ID生成・ID検算・build・verify → `main`」の順。
   途中で失敗した場合は `main` を更新しない
 - CMS公開Workflowが`main`へ直接pushする現状では、CMS用の迂回設定または同等の公開経路を

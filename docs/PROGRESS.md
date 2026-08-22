@@ -18,12 +18,13 @@
 | P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **完了** | ⚪ | PR #26をmainへマージ（`f864d76`）。351体lockへ更新 |
 | P11-4 | CMS元コミット・生成差分ゲート | `fix/p11-4-cms-publish-gates` | **完了** | 🟡🔴 | PR #27をmainへマージ（`4fd3282`）。次回の実CMS公開確認は運用時に行う |
 | P11-5 | Firestore実rules確認 | – | **完了** | ⚪ | 公開版rulesと公開日時を実画面で確認。保存・公開なし |
-| P11-6 | 公開クライアントの共有パスワード撤去 | `fix/p11-6-remove-client-password` | **レビュー待ち** | 🔴 | 既知7 HTMLから認証・write UIを撤去。Firestore変更なし |
-| P11-7以降 | 保護対応CMS PR経路と外部設定 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
+| P11-6 | 公開クライアントの共有パスワード撤去 | `fix/p11-6-remove-client-password` | **完了** | 🔴 | PR #28をmainへマージ（`6dfb403`）。共有文字列・write UI 0件 |
+| P11-7 | 保護対応CMS PR経路のtest | `feat/p11-7-cms-protected-pr` | **進行中** | ⚪ | test Workflow実装済み。test用Ruleset・Secret・4シナリオの実機確認待ち |
+| P11-8以降 | token最小権限化とmain Ruleset | P11-1で提示 | 未着手 | 🟡🔴 | P11-7の実機証跡が揃うまで開始しない |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`4fd3282`（P11-4マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`6dfb403`（P11-6マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -177,13 +178,15 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-6「公開クライアントの共有パスワード撤去」の差分レビューだけを次に行う。
+P11-7「保護対応CMS PR経路のtest」の外部test準備と4シナリオ確認だけを次に行う。
 
-- ブランチ: `fix/p11-6-remove-client-password`
-- 本番影響: 🔴。PRをmainへマージすると即公開
-- 既知7 HTML、`scripts/verify.js`、更新履歴、計画・進捗文書以外に差分がないことを確認する
-- カード詳細と旧モンスター詳細の公開read表示、管理専用5ページの停止案内をPC幅・スマートフォン幅で確認する
-- レビュー承認後にcommit・push・PRを行い、明示承認までmainへマージしない
+- ブランチ: `feat/p11-7-cms-protected-pr`
+- 本番影響: ⚪。対象は`cms/protected-test`だけで、main・Pages・GASを変更しない
+- 管理者がtest用branch、専用fine-grained token・Secret、test用Rulesetを画面で作成する
+- `direct-push-rejection` → `normal-pr` → `cms-pr` → `revert-pr`の順で実行する
+- PRのbase、Files changed、verify成功、merge・revertを確認する
+- 証跡確認後にtest branch、Ruleset、Secretを削除し、test tokenを失効する
+- P11-7が完了するまでP11-8の本番token変更とP11-9のmain Rulesetを開始しない
 
 ## 第2段階への引き継ぎ
 

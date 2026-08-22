@@ -1,0 +1,163 @@
+name: CMS protected PR test
+
+on:
+  workflow_dispatch:
+    inputs:
+      scenario:
+        description: Test scenario
+        required: true
+        type: choice
+        options:
+          - normal-pr
+          - cms-pr
+          - direct-push-rejection
+          - revert-pr
+      merge_sha:
+        description: Merge commit to revert (revert-pr only)
+        required: false
+        type: string
+
+concurrency:
+  group: cms-protected-test
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pull-requests: read
+
+env:
+  TEST_BASE_BRANCH: cms/protected-test
+
+jobs:
+  protected-path-test:
+    name: Test protected CMS PR path
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check dedicated test token
+        env:
+          CMS_PROTECTED_TEST_TOKEN: ${{ secrets.CMS_PROTECTED_TEST_TOKEN }}
+        run: |
+          if [ -z "$CMS_PROTECTED_TEST_TOKEN" ]; then
+            echo "Repository secret CMS_PROTECTED_TEST_TOKEN is not configured."
+            exit 1
+          fi
+
+      - name: Check out protected test target
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TEST_BASE_BRANCH }}
+          fetch-depth: 0
+          token: ${{ secrets.CMS_PROTECTED_TEST_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Prepare isolated test branch
+        env:
+          SCENARIO: ${{ inputs.scenario }}
+        run: |
+          git fetch origin "$TEST_BASE_BRANCH:refs/remotes/origin/$TEST_BASE_BRANCH" --no-tags
+          test_branch="p11-7/${SCENARIO}-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git switch -c "$test_branch" "origin/$TEST_BASE_BRANCH"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "TEST_BRANCH=$test_branch" >> "$GITHUB_ENV"
+
+      - name: Confirm direct push is rejected
+        if: inputs.scenario == 'direct-push-rejection'
+        run: |
+          git commit --allow-empty -m "test: direct push must be rejected"
+          if git push origin "HEAD:$TEST_BASE_BRANCH" 2>push-error.txt; then
+            echo "Direct push unexpectedly succeeded. Disable the test ruleset and restore the test branch before continuing."
+            exit 1
+          fi
+          if ! grep -Eiq 'GH013|repository rule|pull request' push-error.txt; then
+            echo "Direct push failed, but the output did not prove that a repository rule rejected it."
+            cat push-error.txt
+            exit 1
+          fi
+          echo "PASS: direct push to $TEST_BASE_BRANCH was rejected."
+
+      - name: Prepare normal PR
+        if: inputs.scenario == 'normal-pr'
+        run: |
+          mkdir -p .p11-7-test
+          printf '%s\n' "normal PR run $GITHUB_RUN_ID" > ".p11-7-test/normal-pr-$GITHUB_RUN_ID.txt"
+          git add ".p11-7-test/normal-pr-$GITHUB_RUN_ID.txt"
+          git commit -m "test: P11-7 normal protected PR"
+          {
+            echo "PR_TITLE=P11-7 test: normal protected PR"
+            echo "PR_BODY=Test-only normal PR for cms/protected-test. Merge only after verify succeeds."
+          } >> "$GITHUB_ENV"
+
+      - name: Prepare and verify CMS PR
+        if: inputs.scenario == 'cms-pr'
+        run: |
+          node -e "const fs=require('fs');const p='src/data/monsters-editorial.json';const s=fs.readFileSync(p,'utf8');fs.writeFileSync(p,s.endsWith('\n\n')?s.slice(0,-1):s+'\n');"
+          git add src/data/monsters-editorial.json
+          git commit -m "CMS publish $(date -u '+%Y-%m-%d %H:%M:%S')"
+          source_sha="$(git rev-parse HEAD)"
+          node scripts/verify-cms-source.js source "$source_sha" "origin/$TEST_BASE_BRANCH"
+          node generate-ids.js
+          node scripts/verify-cms-ids.js
+          node build.js
+          node scripts/verify.js
+          node scripts/verify-cms-source.js generated
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Build CMS protected test ${source_sha:0:7}"
+          fi
+          {
+            echo "PR_TITLE=P11-7 test: CMS protected PR"
+            echo "PR_BODY=Test-only CMS PR for cms/protected-test. Source and generated scopes passed. Merge only after verify succeeds."
+          } >> "$GITHUB_ENV"
+
+      - name: Prepare revert PR
+        if: inputs.scenario == 'revert-pr'
+        env:
+          MERGE_SHA: ${{ inputs.merge_sha }}
+        run: |
+          if ! printf '%s' "$MERGE_SHA" | grep -Eq '^[0-9a-fA-F]{40}$'; then
+            echo "merge_sha must be a full 40-character commit SHA."
+            exit 1
+          fi
+          git fetch origin "$MERGE_SHA" --no-tags
+          if ! git merge-base --is-ancestor "$MERGE_SHA" "origin/$TEST_BASE_BRANCH"; then
+            echo "merge_sha is not contained in $TEST_BASE_BRANCH."
+            exit 1
+          fi
+          parent_count="$(git rev-list --parents -n 1 "$MERGE_SHA" | awk '{print NF-1}')"
+          if [ "$parent_count" -gt 1 ]; then
+            git revert --no-commit -m 1 "$MERGE_SHA"
+          else
+            git revert --no-commit "$MERGE_SHA"
+          fi
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "The selected merge produced no revert diff."
+            exit 1
+          fi
+          git commit -m "revert: P11-7 protected test merge"
+          {
+            echo "PR_TITLE=P11-7 test: revert protected merge"
+            echo "PR_BODY=Test-only revert PR for cms/protected-test. Merge only after verify succeeds."
+          } >> "$GITHUB_ENV"
+
+      - name: Push test branch and open PR
+        if: inputs.scenario != 'direct-push-rejection'
+        env:
+          GH_TOKEN: ${{ secrets.CMS_PROTECTED_TEST_TOKEN }}
+        run: |
+          git push origin "HEAD:refs/heads/$TEST_BRANCH"
+          pr_url="$(gh pr create +            --repo "$GITHUB_REPOSITORY" +            --base "$TEST_BASE_BRANCH" +            --head "$TEST_BRANCH" +            --title "$PR_TITLE" +            --body "$PR_BODY")"
+          {
+            echo "## Protected path test PR"
+            echo
+            echo "- Scenario: `${{ inputs.scenario }}`"
+            echo "- PR: $pr_url"
+            echo "- Target: `$TEST_BASE_BRANCH`"
+          } >> "$GITHUB_STEP_SUMMARY"

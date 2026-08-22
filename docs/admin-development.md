@@ -1,6 +1,6 @@
 # 管理者向け Claude 開発・公開手順
 
-最終更新: 2026-08-22
+最終更新: 2026-08-23
 
 この文書は、開発知識が少なくても、Claudeへ依頼して通常ページの変更を安全に
 作業ブランチ、検証、PR、mainへのマージまで進めるための手順である。
@@ -117,9 +117,9 @@ git diff
 文書だけの作業でもverifyは省略しない。buildを実行した場合、意図しない生成物が差分へ
 混ざっていないことも確認する。
 
-2026-08-22時点では、既知の平文パスワード7件についてWARNが1件出る。
-配列ロックは351体へ更新済みである。`FAIL 0`でもWARN全文をClaudeに説明させ、
-既知1件以外が増えていたら作業を止める。
+2026-08-23時点では、P11-6で公開クライアントの平文パスワードを撤去済みである。
+配列ロックは351体へ更新済みで、通常結果はWARN 0。`FAIL 0`でもWARNが出た場合は
+既知扱いにせず、全文を確認して作業を止める。
 
 ## 6. レビュー後にcommit・push・PRを依頼する
 
@@ -198,6 +198,64 @@ GitHubの`Settings` → `Branches`または`Rules`を閲覧しても、次が揃
 - テスト用ブランチでの公開成功
 - 失敗時の復旧方法
 - 通常PRとCMS公開の両方を通す確認項目
+
+### P11-7: test用branchだけでPR経路を確認する
+
+mainのRulesetを作る前に、`cms/protected-test`だけを対象に次を確認する。
+`.github/workflows/cms-protected-test.yml`は手動実行専用で、本番の
+`CMS_PUBLISH_TOKEN`、`cms/publish`、main、Pagesを更新しない。
+
+#### 事前設定
+
+1. P11-7のリポジトリ変更をmainへマージする
+2. GitHubの`Code` → branch選択 → `View all branches` → `New branch`で、
+   最新mainから`cms/protected-test`を作る
+3. GitHub右上のプロフィール → `Settings` → `Developer settings` →
+   `Personal access tokens` → `Fine-grained tokens` → `Generate new token`
+4. 対象repositoryは`line-monster-farm`だけ、Repository permissionsは
+   `Contents: Read and write`、`Pull requests: Read and write`、
+   `Metadata: Read-only`とし、短い有効期限を設定する
+5. 値を文書やチャットへ貼らず、repositoryの`Settings` →
+   `Secrets and variables` → `Actions` → `New repository secret`で、
+   名前`CMS_PROTECTED_TEST_TOKEN`として保存する
+6. `Settings` → `Rules` → `Rulesets` → `New ruleset` →
+   `New branch ruleset`を開く
+7. Ruleset名は`P11-7 protected test`、Enforcement statusは`Active`、
+   Bypass listは空、Target branchesは`Include by pattern`で
+   `cms/protected-test`だけにする
+8. `Require a pull request before merging`、`Require status checks to pass`
+   の`verify`、`Block force pushes`、`Restrict deletions`を選び、対象が
+   mainでないことを再確認して`Create`を押す
+
+`Actions` → `General`の`Workflow permissions`は読み取り確認だけ行う。
+このtestは専用PATを使うため、`Read and write permissions`や
+`Allow GitHub Actions to create and approve pull requests`へ変更しない。
+
+#### 実行順
+
+`Actions` → `CMS protected PR test` → `Run workflow`で、次を順に実行する。
+
+1. `direct-push-rejection`: runが成功し、summaryに直接push拒否のPASSが出る
+2. `normal-pr`: 作成されたPRのbaseが`cms/protected-test`で、
+   `verify`成功後に通常mergeできる
+3. `cms-pr`: 許可されたCMS入力、ID生成・検算、build、verify、生成差分検査が成功し、
+   base `cms/protected-test`のPRが作成される
+4. `revert-pr`: 直前にmergeしたPRの40文字merge SHAを`merge_sha`へ入力し、
+   revert PRの`verify`成功後にmergeできる
+
+PRは自動mergeしない。各PRの`Files changed`、base、Checksを管理者が確認してからmergeする。
+test branchのbuild済みtree確認をPages相当の試験とし、Pagesの配信元はmainから変更しない。
+
+#### 失敗時と後片付け
+
+- PR作成前の失敗ではtest targetは不変。作成済みPRを閉じ、`p11-7/*`branchを削除する
+- 直接pushが成功してrunがFAILした場合はRuleset設定不備。mainへ進まず、
+  Rulesetを`Disabled`にして`cms/protected-test`を最新mainから作り直す
+- merge後の問題は`revert-pr`で戻す。戻せなければtest Rulesetを無効化し、
+  test branchを削除して最新mainから再作成する
+- 全シナリオの証跡を記録後、`p11-7/*`、`cms/protected-test`、
+  `CMS_PROTECTED_TEST_TOKEN`、test Rulesetを削除し、fine-grained tokenを失効する
+- testが完了するまでmainのRuleset、本番token、GAS、Pages設定を変更しない
 
 ## 10. 第2段階のCMS・セキュリティ監査へ引き継ぐ
 
