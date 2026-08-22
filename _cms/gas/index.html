@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#fff; --line:#dfe3e8; --ink:#1f2328; --muted:#6b7280;
+    --accent:#2f6feb; --ok:#1a7f37; --warn:#9a6700; --ng:#b42318;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+       background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
+  header{background:#1f2328;color:#fff;padding:10px 16px;display:flex;align-items:center;gap:12px}
+  header h1{font-size:15px;margin:0;font-weight:600}
+  header .who{margin-left:auto;font-size:12px;color:#c9ced6}
+  header button{padding:5px 11px;border-color:#718096;background:#fff;color:#1f2328}
+  header .publish-state{font-size:11px;color:#c9ced6}
+  .wrap{display:flex;gap:12px;padding:12px;align-items:flex-start}
+  .col-list{flex:0 0 420px;max-width:420px}
+  .col-edit{flex:1;min-width:0}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px}
+  .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+  .filters input[type=text]{flex:1;min-width:120px}
+  input,select,textarea,button{font:inherit;color:inherit}
+  input[type=text],input[type=number],select,textarea{
+    width:100%;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:#fff}
+  textarea{resize:vertical}
+  button{padding:7px 14px;border:1px solid var(--line);border-radius:6px;background:#fff;cursor:pointer}
+  button.primary{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:600}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .list{max-height:calc(100vh - 190px);overflow:auto;border:1px solid var(--line);border-radius:6px}
+  .row{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid #eef0f3;
+       border-radius:0;padding:8px 10px;background:#fff}
+  .row:hover{background:#f0f5ff}
+  .row.sel{background:#e6efff}
+  .row .r1{display:flex;gap:8px;align-items:center}
+  .row .id{font-family:ui-monospace,monospace;color:var(--muted);font-size:12px}
+  .row .nm{font-weight:600}
+  .row .tag{font-size:11px;color:var(--muted);margin-left:auto}
+  .bar{height:5px;background:#e9ecf1;border-radius:3px;margin-top:5px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:var(--accent)}
+  .bar.done > i{background:var(--ok)}
+  .bar.near > i{background:var(--warn)}
+  .cnt{font-size:11px;color:var(--muted)}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .field{margin-bottom:10px}
+  .field > label{display:block;font-size:12px;color:var(--muted);margin-bottom:3px;font-weight:600}
+  .ro{background:#f1f2f4;color:#444}
+  .image-upload{display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap}
+  .image-upload input[type=file]{flex:1;min-width:240px}
+  .hint{font-size:12px;color:var(--muted)}
+  .warnbox{background:#fff8e6;border:1px solid #ffe0a3;color:#7a5300;border-radius:6px;
+           padding:8px 10px;font-size:12px;margin-bottom:10px}
+  .errbox{background:#fdecea;border:1px solid #f5c2c0;color:var(--ng);border-radius:6px;
+          padding:8px 10px;font-size:13px;margin-bottom:10px;white-space:pre-wrap}
+  .okbox{background:#e8f5ec;border:1px solid #b7e0c3;color:var(--ok);border-radius:6px;
+         padding:8px 10px;font-size:13px;margin-bottom:10px;white-space:pre-wrap}
+  .progress-big{font-size:13px;margin:6px 0 2px}
+  .progress-big b{font-size:18px}
+  .prediction{border:1px solid var(--line);background:#f8fafc;border-radius:6px;padding:12px;margin:10px 0}
+  .prediction b{font-family:ui-monospace,monospace;font-size:22px;color:var(--accent)}
+  .radios label{display:block;padding:5px 6px;border:1px solid var(--line);border-radius:6px;
+                margin-bottom:5px;cursor:pointer}
+  .radios label:hover{background:#f5f8ff}
+  .radios input{margin-right:6px}
+  .sticky{position:sticky;bottom:0;background:var(--panel);border-top:1px solid var(--line);
+          padding-top:10px;margin-top:12px;display:flex;gap:8px;align-items:center}
+  .muted{color:var(--muted)}
+  .split{display:flex;gap:12px;align-items:flex-start}
+  .split > div{flex:1;min-width:0}
+  h3{font-size:13px;margin:14px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line)}
+  .center{padding:40px;text-align:center;color:var(--muted)}
+  .mobile-back{display:none}
+  button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{
+    outline:3px solid rgba(47,111,235,.35);outline-offset:2px}
+
+  @media (pointer:coarse){
+    button{min-height:44px;touch-action:manipulation}
+    .row{min-height:64px;padding:10px 12px}
+    .radios label{min-height:44px;padding:10px}
+    .radios input{width:20px;height:20px;vertical-align:middle}
+  }
+
+  @media (max-width:860px){
+    body{font-size:14px;padding-bottom:env(safe-area-inset-bottom)}
+    button{min-height:44px;touch-action:manipulation}
+    header{
+      display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      grid-template-areas:
+        "title who"
+        "stats stats"
+        "publish publish-status"
+        "state state";
+      gap:8px;padding:10px max(12px,env(safe-area-inset-right)) 10px max(12px,env(safe-area-inset-left))
+    }
+    header h1{grid-area:title;align-self:center;font-size:16px}
+    header #who{grid-area:who;text-align:right;align-self:center}
+    header #stats{grid-area:stats;text-align:left}
+    header #btnPublish{grid-area:publish}
+    header #btnPublishStatus{grid-area:publish-status}
+    header #publishState{grid-area:state;min-height:18px}
+    header .who{margin-left:0;min-width:0;overflow-wrap:anywhere}
+    header button{width:100%;min-height:44px;padding:8px}
+
+    .wrap{display:block;padding:8px;min-height:0}
+    .panel{padding:12px;border-radius:8px}
+    .col-list{width:100%;max-width:none}
+    .mobile-back{
+      width:100%;margin:0 0 8px;padding:9px 12px;align-items:center;justify-content:flex-start;
+      background:#fff;border-color:var(--line);font-weight:600
+    }
+    body:not(.mobile-editing) .col-edit{display:none}
+    body.mobile-editing .col-list{display:none}
+    body.mobile-editing .mobile-back{display:flex}
+    body.mobile-editing .col-edit{display:block}
+
+    .col-list > div:first-child{margin-bottom:10px!important}
+    #btnNew{width:100%}
+    .filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+    .filters #q{grid-column:1/-1}
+    .filters #fSort{grid-column:1/-1}
+    .filters input,.filters select{width:100%!important;min-width:0}
+    .list{
+      max-height:calc(100vh - 332px);max-height:calc(100dvh - 332px);
+      min-height:280px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch
+    }
+    .row{min-height:68px;padding:10px 12px}
+    .row .r1{gap:6px;flex-wrap:wrap}
+    .row .tag{max-width:55%;text-align:right;white-space:normal}
+
+    input[type=text],input[type=number],select,textarea{font-size:16px;padding:9px 10px}
+    input[type=text],input[type=number],select{min-height:44px}
+    textarea{width:100%;min-height:120px}
+    #f_explanation{min-height:52vh}
+    .grid{grid-template-columns:1fr;gap:0}
+    .grid > [style*="grid-column"]{grid-column:auto!important}
+    .split{display:block}
+    .image-upload{display:block}
+    .image-upload input[type=file]{display:block;width:100%;min-width:0;min-height:44px;margin-bottom:8px;font-size:16px}
+    .image-upload button{width:100%}
+    .hint,.muted{overflow-wrap:anywhere}
+    .prediction{padding:10px}
+    .radios label{padding:11px 10px;margin-bottom:8px}
+    #ghostBox{padding-left:0!important}
+
+    .sticky{
+      z-index:20;margin:14px -12px -12px;padding:10px 12px calc(10px + env(safe-area-inset-bottom));
+      flex-wrap:wrap;box-shadow:0 -5px 14px rgba(31,35,40,.08)
+    }
+    .sticky button{flex:1 1 120px;min-height:48px}
+    .sticky .muted{flex:1 0 100%;font-size:11px;line-height:1.5}
+    .center{padding:28px 12px}
+  }
+
+  @media (max-width:380px){
+    header{grid-template-areas:"title who" "stats stats" "publish publish" "publish-status publish-status" "state state"}
+    .filters{grid-template-columns:1fr}
+    .filters #q,.filters #fSort{grid-column:auto}
+    .list{max-height:calc(100vh - 420px);max-height:calc(100dvh - 420px);min-height:220px}
+    .row .tag{max-width:100%;margin-left:0;text-align:left}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>ライ徹CMS</h1>
+  <button id="btnPublish" style="display:none" disabled>公開</button>
+  <button id="btnPublishStatus" style="display:none" disabled>公開結果を確認</button>
+  <span id="publishState" class="publish-state" aria-live="polite"></span>
+  <span id="stats" class="who"></span>
+  <span id="who" class="who"></span>
+</header>
+
+<div class="wrap">
+  <div class="col-list panel">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+      <button class="primary" id="btnNew" disabled>＋ 新規モンスター</button>
+    </div>
+    <div class="filters">
+      <input type="text" id="q" placeholder="名前・ID・血統で絞り込み">
+      <select id="fMon" style="width:110px"><option value="">モン類すべて</option></select>
+      <select id="fState" style="width:150px">
+        <option value="">状態すべて</option>
+        <option value="index">インデックス対象</option>
+        <option value="near">あと少し（700字〜）</option>
+        <option value="has">解説あり</option>
+        <option value="none">解説なし</option>
+      </select>
+      <select id="fSort" style="width:150px">
+        <option value="id">ID順</option>
+        <option value="charsDesc">字数が多い順</option>
+        <option value="charsAsc">字数が少ない順</option>
+        <option value="near">昇格に近い順</option>
+        <option value="newest">追加が新しい順</option>
+      </select>
+    </div>
+    <div class="list" id="list"><div class="center">読み込み中…</div></div>
+  </div>
+
+  <button type="button" class="mobile-back" id="btnBackToList">← 一覧へ戻る</button>
+  <div class="col-edit panel" id="edit">
+    <div class="center">左の一覧からモンスターを選んでください。</div>
+  </div>
+</div>
+
+<script>
+// ---------------------------------------------------------------- 状態
+var BOOT = null;        // api_bootstrap の結果
+var CUR = null;         // 編集中のモンスター（api_get の結果）
+var CUR_OVERHEAD = 0;   // 解説以外の分の字数
+var PENDING_IMAGE = null;
+var EDIT_BUSY = false;
+var NEW_PREDICTION = null;
+var NEW_PREDICT_SEQ = 0;
+var NEXT_EDIT_MESSAGE = '';
+var PUBLISH_BUSY = false;
+var PUBLISH_POLL_TIMER = null;
+
+// ★ コード.gs の countChars_() と同じ定義。片方だけ直さないこと。
+function countChars(text){ return String(text == null ? '' : text).replace(/\s+/g, '').length; }
+
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+function el(id){ return document.getElementById(id); }
+
+function isMobileLayout(){
+  return window.matchMedia && window.matchMedia('(max-width:860px)').matches;
+}
+
+function showMobileEdit(){
+  document.body.classList.add('mobile-editing');
+  if (isMobileLayout()) window.scrollTo(0, 0);
+}
+
+function showMobileList(){
+  document.body.classList.remove('mobile-editing');
+  if (isMobileLayout()) window.scrollTo(0, 0);
+}
+
+function options(list, selected, blank){
+  var out = blank ? '<option value="">' + esc(blank) + '</option>' : '';
+  (list || []).forEach(function(v){
+    out += '<option value="' + esc(v) + '"' + (v === selected ? ' selected' : '') + '>' + esc(v) + '</option>';
+  });
+  return out;
+}
+
+// ---------------------------------------------------------------- 起動
+function boot(){
+  google.script.run
+    .withSuccessHandler(function(data){
+      BOOT = data;
+      el('btnNew').disabled = false;
+      el('who').textContent = data.me.nickname + '（' + data.me.role + '）';
+      if (data.me.role === 'admin') {
+        el('btnPublish').style.display = '';
+        el('btnPublish').disabled = false;
+        el('btnPublishStatus').style.display = '';
+        el('btnPublishStatus').disabled = false;
+      }
+      el('fMon').innerHTML = '<option value="">モン類すべて</option>' + options(data.monList, '', null);
+      renderStats();
+      renderList();
+      if (!data.baselineLoaded || !data.bloodsLoaded) {
+        el('edit').innerHTML = '<div class="warnbox">GitHub から ' +
+          (!data.baselineLoaded ? 'page-baseline.json ' : '') +
+          (!data.bloodsLoaded ? 'id-availability.json ' : '') +
+          'を取得できませんでした。字数の目安や血統の選択肢が正しく出ないことがあります。' +
+          '時間をおいて画面を開き直してください。</div>' +
+          '<div class="center">左の一覧からモンスターを選んでください。</div>';
+      }
+    })
+    .withFailureHandler(function(e){
+      el('list').innerHTML = '<div class="errbox">' + esc(e.message) + '</div>';
+    })
+    .api_bootstrap();
+}
+
+function renderStats(){
+  var m = BOOT.monsters;
+  var idx = m.filter(function(x){ return x.indexable; }).length;
+  var has = m.filter(function(x){ return x.hasExplanation; }).length;
+  el('stats').textContent = m.length + '体 / 解説 ' + has + ' / インデックス ' + idx;
+}
+
+// ---------------------------------------------------------------- 一覧
+function filtered(){
+  var q = el('q').value.trim().toLowerCase();
+  var mon = el('fMon').value;
+  var state = el('fState').value;
+  var sort = el('fSort').value;
+  var th = BOOT.threshold;
+
+  var list = BOOT.monsters.filter(function(x){
+    if (mon && x.mon !== mon) return false;
+    if (state === 'index' && !x.indexable) return false;
+    if (state === 'near' && !(x.visibleChars >= 700 && x.visibleChars < th)) return false;
+    if (state === 'has' && !x.hasExplanation) return false;
+    if (state === 'none' && x.hasExplanation) return false;
+    if (q) {
+      var hay = (x.id + ' ' + x.name + ' ' + x.mainBlood + ' ' + x.subBlood + ' ' + x.mon).toLowerCase();
+      if (hay.indexOf(q) < 0) return false;
+    }
+    return true;
+  });
+
+  list.sort(function(a, b){
+    if (sort === 'charsDesc') return b.visibleChars - a.visibleChars;
+    if (sort === 'charsAsc') return a.visibleChars - b.visibleChars;
+    if (sort === 'newest') return b.arrayIndex - a.arrayIndex;
+    if (sort === 'near') {
+      var ra = a.indexable ? 1e9 : th - a.visibleChars;
+      var rb = b.indexable ? 1e9 : th - b.visibleChars;
+      return ra - rb;
+    }
+    return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
+  });
+  return list;
+}
+
+function barClass(chars){
+  if (chars >= BOOT.threshold) return 'bar done';
+  if (chars >= 700) return 'bar near';
+  return 'bar';
+}
+
+function renderList(){
+  var list = filtered();
+  if (!list.length) { el('list').innerHTML = '<div class="center">該当なし</div>'; return; }
+  var th = BOOT.threshold;
+  var html = list.map(function(x){
+    var pct = Math.min(100, Math.round(x.visibleChars / th * 100));
+    var tag = x.indexable ? '公開対象' : (th - x.visibleChars) + '字';
+    return '<button class="row' + (CUR && CUR.id === x.id ? ' sel' : '') +
+      '" data-id="' + esc(x.id) + '">' +
+      '<div class="r1"><span class="id">' + esc(x.id) + '</span>' +
+      '<span class="nm">' + esc(x.name) + '</span>' +
+      '<span class="tag">' + esc(x.mon) + ' / ' + tag + '</span></div>' +
+      '<div class="' + barClass(x.visibleChars) + '"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="cnt">' + x.visibleChars + ' / ' + th + '字' +
+      (x.author ? '　著者：' + esc(x.author) : '') + '</div>' +
+      '</button>';
+  }).join('');
+  el('list').innerHTML = html;
+  Array.prototype.forEach.call(el('list').querySelectorAll('.row'), function(b){
+    b.addEventListener('click', function(){ openMonster(b.getAttribute('data-id')); });
+  });
+}
+
+['q','fMon','fState','fSort'].forEach(function(id){
+  el(id).addEventListener('input', renderList);
+  el(id).addEventListener('change', renderList);
+});
+el('btnNew').addEventListener('click', renderNewForm);
+el('btnPublish').addEventListener('click', publishAll);
+el('btnPublishStatus').addEventListener('click', checkLatestPublish);
+el('btnBackToList').addEventListener('click', showMobileList);
+
+// ---------------------------------------------------------------- 公開（C6 + C7 / adminのみ）
+function publishAll(){
+  if (!BOOT || BOOT.me.role !== 'admin' || PUBLISH_BUSY) return;
+  var ok = confirm(
+    'シートの全データとDriveの参照画像を送信し、\n' +
+    '自動ビルド・検証に成功した場合だけ公開サイトを更新します。\n\n' +
+    '編集中で未保存の内容は含まれません。保存済みであることを確認しましたか？'
+  );
+  if (!ok) return;
+
+  PUBLISH_BUSY = true;
+  el('btnPublish').disabled = true;
+  el('publishState').textContent = '送信中…画面を閉じないでください';
+
+  google.script.run
+    .withSuccessHandler(function(result){
+      PUBLISH_BUSY = false;
+      el('btnPublish').disabled = false;
+      el('publishState').textContent = '検証開始待ち ' + result.shortSha;
+      alert('cms/publish への送信が完了しました。\n' +
+        'コミット: ' + result.shortSha + '\n' +
+        '対象: ' + result.fileCount + 'ファイル（画像' + result.imageCount + '件）\n\n' +
+        '続けて自動ビルド・検証を行います。画面は閉じても構いません。');
+      pollPublishStatus(result.sha, 0, true);
+    })
+    .withFailureHandler(function(e){
+      PUBLISH_BUSY = false;
+      el('btnPublish').disabled = false;
+      el('publishState').textContent = '送信失敗';
+      alert('送信に失敗しました。\n\n' + e.message);
+    })
+    .api_publish();
+}
+
+function pollPublishStatus(sha, attempt, notify){
+  if (PUBLISH_POLL_TIMER) {
+    clearTimeout(PUBLISH_POLL_TIMER);
+    PUBLISH_POLL_TIMER = null;
+  }
+  google.script.run
+    .withSuccessHandler(function(result){
+      showPublishStatus(result, notify);
+      if (result.state === 'queued' || result.state === 'in_progress') {
+        if (attempt < 36) {
+          PUBLISH_POLL_TIMER = setTimeout(function(){
+            pollPublishStatus(sha, attempt + 1, notify);
+          }, 8000);
+        } else {
+          el('publishState').textContent = '処理継続中 ' + result.shortSha +
+            '（後で「公開結果を確認」）';
+        }
+      }
+    })
+    .withFailureHandler(function(e){
+      el('publishState').textContent = '結果確認失敗';
+      if (notify) alert('公開結果を確認できませんでした。\n\n' + e.message);
+    })
+    .api_publishStatus(sha);
+}
+
+function checkLatestPublish(){
+  if (!BOOT || BOOT.me.role !== 'admin') return;
+  el('btnPublishStatus').disabled = true;
+  el('publishState').textContent = '結果確認中…';
+  google.script.run
+    .withSuccessHandler(function(result){
+      el('btnPublishStatus').disabled = false;
+      showPublishStatus(result, true);
+      if (result.state === 'queued' || result.state === 'in_progress') {
+        pollPublishStatus(result.sha, 0, true);
+      }
+    })
+    .withFailureHandler(function(e){
+      el('btnPublishStatus').disabled = false;
+      el('publishState').textContent = '結果確認失敗';
+      alert('公開結果を確認できませんでした。\n\n' + e.message);
+    })
+    .api_latestPublishStatus();
+}
+
+function showPublishStatus(result, notify){
+  if (result.state === 'none') {
+    el('publishState').textContent = result.message;
+    if (notify) alert(result.message);
+    return;
+  }
+  if (result.state === 'success') {
+    el('publishState').textContent = '公開成功 ' + result.shortSha;
+    if (notify) alert('公開に成功しました。\n\n' + result.message +
+      '\n\nGitHub Pagesへの反映には少し時間がかかる場合があります。');
+    return;
+  }
+  if (result.state === 'failure') {
+    el('publishState').textContent = '公開失敗 ' + result.shortSha;
+    if (notify) alert('自動ビルド・検証に失敗したため、mainと公開サイトは更新されていません。\n\n' +
+      result.message);
+    return;
+  }
+  el('publishState').textContent =
+    (result.state === 'queued' ? '検証開始待ち ' : 'ビルド・検証中 ') + result.shortSha;
+}
+
+// ---------------------------------------------------------------- 編集
+function openMonster(id){
+  showMobileEdit();
+  el('edit').innerHTML = '<div class="center">読み込み中…</div>';
+  google.script.run
+    .withSuccessHandler(function(m){
+      CUR = m;
+      CUR_OVERHEAD = m.overhead;
+      renderEdit();
+      renderList();
+      if (NEXT_EDIT_MESSAGE) {
+        show('ok', NEXT_EDIT_MESSAGE);
+        NEXT_EDIT_MESSAGE = '';
+      }
+    })
+    .withFailureHandler(function(e){
+      el('edit').innerHTML = '<div class="errbox">' + esc(e.message) + '</div>';
+    })
+    .api_get(id);
+}
+
+// ---------------------------------------------------------------- 新規登録（C5）
+function renderNewForm(){
+  showMobileEdit();
+  CUR = null;
+  PENDING_IMAGE = null;
+  NEW_PREDICTION = null;
+  NEW_PREDICT_SEQ++;
+  renderList();
+
+  if (!BOOT || !BOOT.bloodsLoaded) {
+    el('edit').innerHTML = '<div class="errbox">GitHubから id-availability.json を取得できないため、' +
+      '新規登録はできません。時間をおいて画面を開き直してください。</div>';
+    return;
+  }
+
+  var html = '<div id="msg" aria-live="polite"></div>';
+  html += '<h3>新規モンスター登録</h3>';
+  html += '<div class="warnbox">登録後の名前は管理画面から変更できません。' +
+    '名前は確定IDと公開URLの紐付けに使われるため、表記を必ず確認してください。</div>';
+  html += '<div class="grid">';
+  html += '<div class="field" style="grid-column:1/-1"><label>モンスター名</label>' +
+    '<input type="text" id="n_name" maxlength="60" placeholder="正式な名前を入力"></div>';
+  html += '<div class="field"><label>オーラ</label><select id="n_aura">' +
+    options(BOOT.auraList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>モン類</label><select id="n_mon">' +
+    options(BOOT.monList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>主血統</label><select id="n_mainBlood">' +
+    options(BOOT.mainBloodList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>副血統</label><select id="n_subBlood">' +
+    options(BOOT.subBloodList, '', '（選択）') + '</select></div>';
+  html += '</div>';
+  html += '<div class="prediction" id="newPrediction">主血統と副血統を選ぶと、予測IDを表示します。</div>';
+  html += '<div class="hint">IDは `id-availability.json` による予測です。' +
+    '採番の正は generate-ids.js、公開時の最終確定はC8のビルド検算です。</div>';
+  html += '<div class="sticky"><button class="primary" id="btnCreate" disabled>登録する</button>' +
+    '<button id="btnCancelNew">キャンセル</button>' +
+    '<span class="muted">新規行は draft で保存されます。サイトはまだ変わりません。</span></div>';
+
+  el('edit').innerHTML = html;
+  el('n_mainBlood').addEventListener('change', updateNewPrediction);
+  el('n_subBlood').addEventListener('change', updateNewPrediction);
+  el('btnCreate').addEventListener('click', createNewMonster);
+  el('btnCancelNew').addEventListener('click', function(){
+    el('edit').innerHTML = '<div class="center">左の一覧からモンスターを選んでください。</div>';
+    showMobileList();
+  });
+}
+
+function updateNewPrediction(){
+  var mainBlood = el('n_mainBlood').value;
+  var subBlood = el('n_subBlood').value;
+  var box = el('newPrediction');
+  var button = el('btnCreate');
+  var seq = ++NEW_PREDICT_SEQ;
+  NEW_PREDICTION = null;
+  button.disabled = true;
+
+  if (!mainBlood || !subBlood) {
+    box.textContent = '主血統と副血統を選ぶと、予測IDを表示します。';
+    return;
+  }
+
+  box.textContent = 'IDを予測中…';
+  google.script.run
+    .withSuccessHandler(function(result){
+      if (seq !== NEW_PREDICT_SEQ) return;
+      NEW_PREDICTION = {
+        id: result.id,
+        arrayIndex: result.arrayIndex,
+        mainBlood: mainBlood,
+        subBlood: subBlood
+      };
+      box.innerHTML = '予測ID：<b>' + esc(result.id) + '</b>　arrayIndex：' + esc(result.arrayIndex);
+      button.disabled = false;
+    })
+    .withFailureHandler(function(e){
+      if (seq !== NEW_PREDICT_SEQ) return;
+      box.innerHTML = '<span style="color:#b42318">' + esc(e.message) + '</span>';
+    })
+    .api_predictNewId({ mainBlood: mainBlood, subBlood: subBlood });
+}
+
+function createNewMonster(){
+  var name = el('n_name').value.trim();
+  var aura = el('n_aura').value;
+  var mon = el('n_mon').value;
+  var mainBlood = el('n_mainBlood').value;
+  var subBlood = el('n_subBlood').value;
+
+  if (!name || !aura || !mon || !mainBlood || !subBlood) {
+    show('err', '名前・オーラ・モン類・主血統・副血統をすべて入れてください。');
+    return;
+  }
+  if (!NEW_PREDICTION || NEW_PREDICTION.mainBlood !== mainBlood || NEW_PREDICTION.subBlood !== subBlood) {
+    show('err', 'ID予測が完了するまで待ってください。');
+    return;
+  }
+
+  var ok = confirm('「' + name + '」を新規登録します。\n' +
+    '予測ID: ' + NEW_PREDICTION.id + '\n' +
+    '血統: ' + mainBlood + ' / ' + subBlood + '\n\n' +
+    '登録後は管理画面から名前を変更できません。よろしいですか？');
+  if (!ok) return;
+
+  var button = el('btnCreate');
+  button.disabled = true;
+  show('ok', '新規登録中…');
+
+  google.script.run
+    .withSuccessHandler(function(result){
+      BOOT.monsters.push(result.monster);
+      renderStats();
+      renderList();
+      NEXT_EDIT_MESSAGE = result.monster.id + ' ' + result.monster.name +
+        ' を draft で登録しました。必要に応じて画像・実装日・解説を追加してください。';
+      openMonster(result.monster.id);
+    })
+    .withFailureHandler(function(e){
+      button.disabled = false;
+      show('err', e.message);
+      updateNewPrediction();
+    })
+    .api_createMonster({
+      name: name,
+      aura: aura,
+      mon: mon,
+      mainBlood: mainBlood,
+      subBlood: subBlood,
+      predictedId: NEW_PREDICTION.id
+    });
+}
+
+function renderEdit(){
+  var m = CUR;
+  var isFirst = !m.author;
+  var names = BOOT.memberNames.filter(function(n){ return n !== BOOT.me.nickname; });
+  PENDING_IMAGE = null;
+
+  var html = '';
+  html += '<div id="msg" aria-live="polite"></div>';
+
+  html += '<div class="split">';
+  html += '<div><div class="field"><label>名前（変更不可）</label>' +
+    '<input type="text" class="ro" value="' + esc(m.name) + '" readonly></div></div>';
+  html += '<div><div class="field"><label>ID / 公開URL</label>' +
+    '<input type="text" class="ro" value="' + esc(m.id) + '　' + esc(m.url) + '" readonly></div></div>';
+  html += '</div>';
+
+  html += '<div class="hint">名前を変えるとIDと公開URLが変わり、公開済みページが失われます。' +
+    'この画面からは変更できません。</div>';
+
+  html += '<h3>属性</h3>';
+  html += '<div class="grid">';
+  html += '<div class="field"><label>オーラ</label><select id="f_aura">' +
+    options(BOOT.auraList, m.aura, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>モン類</label><select id="f_mon">' +
+    options(BOOT.monList, m.mon, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>主血統</label><select id="f_mainBlood">' +
+    options(BOOT.mainBloodList, m.mainBlood, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>副血統</label><select id="f_subBlood">' +
+    options(BOOT.subBloodList, m.subBlood, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>実装日（YYYY-MM-DD / YYYY-MM・空でも可）</label>' +
+    '<input type="text" id="f_releasedAt" value="' + esc(m.releasedAt) + '" placeholder="2025-06-01"></div>';
+  html += '<div class="field"><label>限定</label>' +
+    '<label style="font-weight:400"><input type="checkbox" id="f_limited"' +
+    (m.limited ? ' checked' : '') + '> 限定モンスター</label>' +
+    '<input type="text" id="f_limitedLabel" value="' + esc(m.limitedLabel) +
+    '" placeholder="限定ラベル（任意）" style="margin-top:4px"></div>';
+  html += '<div class="field" style="grid-column:1/-1"><label>画像</label>' +
+    '<input type="text" id="f_imageCurrent" class="ro" value="' +
+    esc(m.image || '（未設定）') + '" readonly>' +
+    '<div class="image-upload"><input type="file" id="f_imageFile" ' +
+    'accept="image/jpeg,image/png,image/webp">' +
+    '<button type="button" id="btnUpload" disabled>画像をアップロード</button></div>' +
+    '<div class="hint" id="imageFileInfo">JPG・PNG・WebP / 2MB以下。' +
+    'Driveの「ライ徹_画像 / monster」に ' + esc(m.id) +
+    '.拡張子 で保存します。</div></div>';
+  html += '</div>';
+  html += '<div class="hint">血統を変えるとIDと公開URLが変わることがあります（確定IDのモンスターは変わりません）。' +
+    '保存前に確認が出ます。</div>';
+
+  html += '<h3>解説</h3>';
+  html += '<div class="progress-big" id="prog"></div>';
+  html += '<div class="bar" id="progbar"><i style="width:0%"></i></div>';
+  html += '<div class="hint" style="margin-bottom:6px">この数字は目安です。' +
+    '最終的な判定は公開後のビルドで確定します。</div>';
+  html += '<textarea id="f_explanation" rows="18">' + esc(m.explanation) + '</textarea>';
+
+  html += '<h3>編成（JSON・空でも可）</h3>';
+  html += '<textarea id="f_formations" rows="4" placeholder=\'[{"title":"おすすめ編成①","rental":"カードID","cards":["カードID", ...]}]\'>' +
+    esc(m.formations) + '</textarea>';
+
+  html += '<h3>著者情報</h3>';
+  html += '<div class="hint" style="margin-bottom:6px">現在：著者 <b>' +
+    esc(m.author || '（未設定）') + '</b>' +
+    (m.contributors ? '　加筆 ' + esc(m.contributors) : '') +
+    (m.createdAt ? '　公開 ' + esc(m.createdAt) : '') +
+    (m.updatedAt ? '　更新 ' + esc(m.updatedAt) : '') +
+    (m.lastEditor ? '　最終更新者 ' + esc(m.lastEditor) : '') + '</div>';
+
+  html += '<div class="radios">';
+  html += '<label><input type="radio" name="am" value="author"' + (isFirst ? ' checked' : '') +
+    '>著者として更新 — 著者を <b>' + esc(BOOT.me.nickname) + '</b> にする</label>';
+  html += '<label><input type="radio" name="am" value="ghost">代筆（著者は別の人） — 原稿を受け取って入力する場合</label>';
+  html += '<div id="ghostBox" style="display:none;padding:0 0 6px 22px">' +
+    '<div class="split"><div><select id="f_ghostSelect">' +
+    options(names, '', '（登録者から選ぶ）') + '</select></div>' +
+    '<div><input type="text" id="f_ghostName" placeholder="または名前を直接入力"></div></div>' +
+    '<div class="hint">登録者を選ぶとプロフィールへリンクされます。直接入力の場合は名前だけ表示されます。</div></div>';
+  html += '<label><input type="radio" name="am" value="contributor"' + (isFirst ? '' : ' checked') +
+    '>加筆として更新 — 著者はそのまま、加筆者に <b>' + esc(BOOT.me.nickname) + '</b> を足す</label>';
+  html += '<label><input type="radio" name="am" value="none">著者情報を更新しない — 誤字修正・整形など</label>';
+  html += '</div>';
+  html += '<div class="hint">どれを選んでも更新日と最終更新者は必ず更新されます。</div>';
+
+  html += '<div class="sticky">' +
+    '<button class="primary" id="btnSave">保存する</button>' +
+    '<button id="btnReload">読み込み直す</button>' +
+    '<span class="muted" id="saveHint">保存先はスプレッドシートです。サイトへの反映は「公開」（未実装）で行います。</span>' +
+    '</div>';
+
+  el('edit').innerHTML = html;
+
+  el('f_explanation').addEventListener('input', updateProgress);
+  el('f_imageFile').addEventListener('change', imageSelected);
+  el('btnUpload').addEventListener('click', uploadImage);
+  el('btnSave').addEventListener('click', save);
+  el('btnReload').addEventListener('click', function(){ openMonster(CUR.id); });
+  Array.prototype.forEach.call(document.getElementsByName('am'), function(r){
+    r.addEventListener('change', function(){
+      el('ghostBox').style.display = (authorMode() === 'ghost') ? 'block' : 'none';
+    });
+  });
+  el('f_ghostSelect').addEventListener('change', function(){
+    if (this.value) el('f_ghostName').value = this.value;
+  });
+
+  updateProgress();
+}
+
+function authorMode(){
+  var rs = document.getElementsByName('am');
+  for (var i = 0; i < rs.length; i++) if (rs[i].checked) return rs[i].value;
+  return 'none';
+}
+
+function updateProgress(){
+  var th = BOOT.threshold;
+  var chars = CUR_OVERHEAD + countChars(el('f_explanation').value);
+  var pct = Math.min(100, Math.round(chars / th * 100));
+  var bar = el('progbar');
+  bar.className = barClass(chars);
+  bar.querySelector('i').style.width = pct + '%';
+  el('prog').innerHTML = chars >= th
+    ? '<b>' + chars + '</b> / ' + th + '字　<span style="color:#1a7f37">インデックス対象です</span>'
+    : '<b>' + chars + '</b> / ' + th + '字　あと <b>' + (th - chars) + '</b> 字';
+}
+
+function formatFileSize(bytes){
+  if (bytes < 1024) return bytes + 'B';
+  return (bytes / 1024).toFixed(bytes >= 1024 * 1024 ? 0 : 1) + 'KB';
+}
+
+function setEditBusy(busy){
+  EDIT_BUSY = busy;
+  var saveButton = el('btnSave');
+  var uploadButton = el('btnUpload');
+  var reloadButton = el('btnReload');
+  var fileInput = el('f_imageFile');
+  if (saveButton) saveButton.disabled = busy;
+  if (uploadButton) uploadButton.disabled = busy || !PENDING_IMAGE;
+  if (reloadButton) reloadButton.disabled = busy;
+  if (fileInput) fileInput.disabled = busy;
+}
+
+function imageSelected(){
+  var input = el('f_imageFile');
+  var file = input.files && input.files[0];
+  var info = el('imageFileInfo');
+  var button = el('btnUpload');
+  PENDING_IMAGE = null;
+  button.disabled = true;
+
+  if (!file) {
+    info.textContent = 'JPG・PNG・WebP / 2MB以下。';
+    return;
+  }
+
+  var allowed = ['image/jpeg', 'image/png', 'image/webp'];
+  if (allowed.indexOf(file.type) < 0) {
+    input.value = '';
+    info.textContent = '対応形式は JPG・PNG・WebP の3種類です。';
+    show('err', info.textContent);
+    return;
+  }
+
+  var max = BOOT.imageMaxBytes || (2 * 1024 * 1024);
+  if (!file.size || file.size > max) {
+    input.value = '';
+    info.textContent = '画像は2MB以下にしてください。';
+    show('err', info.textContent);
+    return;
+  }
+
+  var monsterId = CUR.id;
+  info.textContent = '画像を読み込んでいます…';
+  var reader = new FileReader();
+  reader.onload = function(){
+    if (!CUR || CUR.id !== monsterId) return;
+    var dataUrl = String(reader.result || '');
+    var comma = dataUrl.indexOf(',');
+    if (comma < 0) {
+      input.value = '';
+      info.textContent = '画像を読み込めませんでした。';
+      show('err', info.textContent);
+      return;
+    }
+    PENDING_IMAGE = {
+      mimeType: file.type,
+      base64: dataUrl.slice(comma + 1),
+      originalName: file.name,
+      size: file.size
+    };
+    info.textContent = file.name + '（' + formatFileSize(file.size) + '）を選択中。';
+    button.disabled = EDIT_BUSY;
+  };
+  reader.onerror = function(){
+    if (!CUR || CUR.id !== monsterId) return;
+    input.value = '';
+    info.textContent = '画像を読み込めませんでした。';
+    show('err', info.textContent);
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadImage(){
+  if (!PENDING_IMAGE) {
+    show('err', '先に画像ファイルを選んでください。');
+    return;
+  }
+
+  if (CUR.image) {
+    var ok = confirm('現在の画像「' + CUR.image + '」を差し替えます。\n' +
+      'Drive上の同じIDの旧画像はゴミ箱へ移動します。\n\nよろしいですか？');
+    if (!ok) return;
+  }
+
+  var payload = {
+    id: CUR.id,
+    mimeType: PENDING_IMAGE.mimeType,
+    base64: PENDING_IMAGE.base64,
+    baseUpdatedAt: CUR.updatedAt
+  };
+
+  setEditBusy(true);
+  show('ok', '画像をアップロード中…');
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      CUR.image = res.image;
+      CUR.updatedAt = res.updatedAt;
+      el('f_imageCurrent').value = res.image;
+      el('f_imageFile').value = '';
+      el('imageFileInfo').textContent = res.image + '（' + formatFileSize(res.size) + '）を保存しました。';
+      PENDING_IMAGE = null;
+      for (var i = 0; i < BOOT.monsters.length; i++) {
+        if (BOOT.monsters[i].id === res.id) {
+          BOOT.monsters[i].updatedAt = res.updatedAt;
+          break;
+        }
+      }
+      setEditBusy(false);
+      show('ok', '画像をアップロードしました。Drive: monster/' + res.image +
+        '\nサイトに表示されるのはC6・C7の完成後です。');
+    })
+    .withFailureHandler(function(e){
+      setEditBusy(false);
+      show('err', e.message);
+    })
+    .api_uploadImage(payload);
+}
+
+// ---------------------------------------------------------------- 保存
+function save(){
+  var mode = authorMode();
+  var ghost = el('f_ghostName').value.trim();
+  if (mode === 'ghost' && !ghost) {
+    show('err', '代筆を選んだときは著者名を入れてください。');
+    return;
+  }
+
+  var newAuthor = (mode === 'author') ? BOOT.me.nickname : (mode === 'ghost' ? ghost : null);
+  if (newAuthor && CUR.author && CUR.author !== newAuthor) {
+    var ok = confirm('著者を「' + CUR.author + '」から「' + newAuthor + '」に変更します。\n' +
+      '元の著者は加筆者として残ります。記録上の更新者はあなた（' + BOOT.me.nickname + '）です。\n\nよろしいですか？');
+    if (!ok) return;
+  }
+
+  var mainBlood = el('f_mainBlood').value;
+  var subBlood = el('f_subBlood').value;
+  if (mainBlood !== CUR.mainBlood || subBlood !== CUR.subBlood) {
+    var ok2 = confirm('血統を変更しました。\n' +
+      CUR.mainBlood + ' / ' + CUR.subBlood + ' → ' + mainBlood + ' / ' + subBlood + '\n\n' +
+      'IDと公開URLが変わる場合があります。よろしいですか？');
+    if (!ok2) return;
+  }
+
+  var payload = {
+    id: CUR.id,
+    aura: el('f_aura').value,
+    mon: el('f_mon').value,
+    mainBlood: mainBlood,
+    subBlood: subBlood,
+    limited: el('f_limited').checked,
+    limitedLabel: el('f_limitedLabel').value,
+    releasedAt: el('f_releasedAt').value.trim(),
+    explanation: el('f_explanation').value,
+    formations: el('f_formations').value,
+    authorMode: mode,
+    ghostName: ghost,
+    baseUpdatedAt: CUR.updatedAt
+  };
+
+  setEditBusy(true);
+  show('ok', '保存中…');
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      setEditBusy(false);
+      CUR.updatedAt = res.updatedAt;
+      CUR.author = res.author;
+      CUR.contributors = res.contributors.join(', ');
+      CUR.createdAt = res.createdAt;
+      CUR.mainBlood = payload.mainBlood;
+      CUR.subBlood = payload.subBlood;
+      CUR.explanation = payload.explanation;
+
+      // 一覧側も更新する（開き直さずに済むように）
+      for (var i = 0; i < BOOT.monsters.length; i++) {
+        if (BOOT.monsters[i].id !== res.id) continue;
+        BOOT.monsters[i].visibleChars = res.visibleChars;
+        BOOT.monsters[i].indexable = res.indexable;
+        BOOT.monsters[i].author = res.author;
+        BOOT.monsters[i].hasExplanation = !!payload.explanation;
+        BOOT.monsters[i].mainBlood = payload.mainBlood;
+        BOOT.monsters[i].subBlood = payload.subBlood;
+        BOOT.monsters[i].mon = payload.mon;
+        BOOT.monsters[i].aura = payload.aura;
+        BOOT.monsters[i].releasedAt = payload.releasedAt;
+        BOOT.monsters[i].updatedAt = res.updatedAt;
+        break;
+      }
+      renderStats();
+      renderList();
+      show('ok', '保存しました（' + res.kind + '）。著者：' + (res.author || '未設定') +
+        '　' + res.visibleChars + '字　' + (res.indexable ? 'インデックス対象' : 'noindex'));
+    })
+    .withFailureHandler(function(e){
+      setEditBusy(false);
+      show('err', e.message);
+    })
+    .api_save(payload);
+}
+
+function show(kind, text){
+  var box = el('msg');
+  if (!box) return;
+  box.innerHTML = '<div class="' + (kind === 'err' ? 'errbox' : 'okbox') + '">' + esc(text) + '</div>';
+  box.scrollIntoView({ block: 'nearest' });
+}
+
+boot();
+</script>
+</body>
+</html>

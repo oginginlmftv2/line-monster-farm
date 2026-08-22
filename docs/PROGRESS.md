@@ -13,13 +13,14 @@
 |---|---|---|---|---|---|
 | P10-1 | 管理者の開発準備、文書同期、次回Claudeへの引き継ぎ | `chore/p10-1-admin-readiness` / `chore/p10-1-claude-handoff` | **保留** | ⚪ | 主要整備とPR経路確認済み。問題発生時だけ再開 |
 | P10-2 | 非公開影響の人工的な通し稽古 | – | **保留** | ⚪ | 実更新が無いため省略。後続の実作業で確認する |
-| P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **レビュー待ち** | ⚪ | repo・GitHub・GASを読取監査。Firestoreと一部権限は管理者確認待ち |
-| P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **次の作業** | ⚪ | GASは読取比較だけ。同期・deployは別承認まで行わない |
-| P11-3以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
+| P11-1 | CMS・セキュリティの現状監査と実施計画 | `chore/p11-1-cms-security-audit` | **完了** | ⚪ | PR #24をmainへマージ（`449a7b2`）。外部確認待ちは未完了のまま分離 |
+| P11-2 | GASソースの正とC10検査対象の復旧 | `chore/p11-2-gas-source-control` | **レビュー待ち** | ⚪ | エディタ版を読取export。GAS同期・deployは別承認まで行わない |
+| P11-3 | 配列lockのappend検証と再生成 | `chore/p11-3-repo-guard-lock` | **次の作業** | ⚪ | 348体prefix一致を機械検査し、正規手順で351体lockを生成する |
+| P11-4以降 | 監査で分割したCMS・セキュリティ改善 | P11-1で提示 | 未着手 | ⚪〜🟡🔴 | 実施順と完了条件は開発計画のP11-1監査結果を参照 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`4651dec`（P11引き継ぎ訂正後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`449a7b2`（P11-1マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -52,11 +53,11 @@
 
 | 実績 | 状態 | 根拠・備考 |
 |---|---|---|
-| C1〜C6 GAS管理画面、編集・画像・公開操作、スマホ最適化 | **完了・運用中** | GASソースはリポジトリ外。運用手順と公開成果物を確認 |
+| C1〜C6 GAS管理画面、編集・画像・公開操作、スマホ最適化 | **完了・運用中** | `_cms/gas`にエディタ版の読取export基準を配置。deployment一致は未確認 |
 | C7 CMS公開Workflow | **完了** | `cms/publish`からbuild・verify後にmainへpush |
 | C8 ID検算 | **完了** | 名前・4桁ID・arrayIndexを全件照合 |
 | C9 運用ルール | **完了** | `AGENTS.md`と`CLAUDE.md`へ反映 |
-| C10 GitHubトークン検出 | **完了** | `scripts/verify.js`の秘密情報検査 |
+| C10 GitHubトークン検出 | **完了** | `scripts/verify.js`が`_cms/gas`の必須2ファイルを検査。欠落はFAIL |
 | CMS公開の実運用 | **稼働中** | 2026-08-20〜21に複数回成功。最新はsource `2a9a9a4` → main `a45ce13` |
 
 現在の公開フロー:
@@ -97,6 +98,30 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 - GAS 2ファイルの手動画面検索では既知GitHub token接頭辞と`EDIT_PASSWORD`は0件
 - `node scripts/verify.js`はPASS 19 / FAIL 0 / WARN 2 / SKIP 1。既知WARN 2件以外の増加なし
 
+## P11-2実施結果
+
+確認できた事実:
+
+- Apps Script「ライ徹CMS」のエディタ上の`コード.gs`と`index.html`を、保存・実行・deployせず
+  読み取りexportし、`_cms/gas`へ完全一致で配置した
+- `コード.gs`: 60,120 bytes / 1,624行 /
+  SHA-256 `989cef32df21c49065d6c177bc360b80bf6f8b2a40642785df71c2095ccf2996`
+- `index.html`: 40,836 bytes / 963行 /
+  SHA-256 `43619119a9eb20f39b95c698a6bfc950502241b93c114659e50f89eeec5b24c2`
+- `_cms`は標準Jekyllの公開対象外となる先頭`_`のディレクトリとし、`.nojekyll`もJekyllの
+  `include`設定も無い。公開HTMLとPages設定は変更していない
+- `scripts/verify.js`は`_cms/gas`と必須2ファイルを検査する。欠落はFAIL、既知GitHub token形式0件はPASS
+- exportした2ファイルの`EDIT_PASSWORD`代入は0件。秘密値は取得・表示・記録していない
+- `node scripts/verify.js`はPASS 21 / FAIL 0 / WARN 2 / SKIP 0。WARNは既知2件だけ
+
+未確認・未変更:
+
+- 稼働中deployment版とエディタ版が同一かは未確認。`_cms/gas`はエディタ版の開発・監査用の正であり、
+  deploymentを更新したとは扱わない
+- GASの保存・同期・deploy、Script Properties、GitHub・Firestore設定は変更していない
+- `コード.gs`先頭の旧予定パス`cms/gas/コード.gs`は完全一致のため残した。
+  repoとGASを同時に直せる別承認の同期タスクまで変更しない
+
 確認できなかった外部状態:
 
 - Firestoreの公開中rules本文と公開日時。現在のブラウザアカウントには対象projectの権限が無い
@@ -109,13 +134,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P11-2「GASソースの正とC10検査対象の復旧」だけを次に行う。
+P11-3「配列lockのappend検証と再生成」だけを次に行う。
 
-- ブランチ: `chore/p11-2-gas-source-control`
-- Apps Script「ライ徹CMS」の2ファイルを読取exportし、repoとの差を秘密値なしで確認する
-- `cms/gas`を正にするかGAS exportを正にするかを、実物と現在のdeploymentから確定する
-- repoへ置く場合は実GASと一致させ、`scripts/verify.js`をSKIPではなくPASSにする
-- GASへの同期・保存・deploy、GitHub外部設定、公開物は管理者の別承認まで変更しない
+- ブランチ: `chore/p11-3-repo-guard-lock`
+- 348体lockの並びが現在351体の先頭と完全一致し、差が末尾3体の追加だけであることを機械検査する
+- `node scripts/verify.js --lock`の正規手順で`src/data/repo-guard.lock.json`を再生成する
+- `scripts/verify.js`に必要なappend検証を追加し、公開HTML、CMS管理データ、外部設定は変更しない
 
 ## 第2段階への引き継ぎ
 
@@ -145,8 +169,7 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
   FAILにせずWARNにしている。ロック更新は自動生成物を変更する別タスクとして扱う
 - `EDIT_PASSWORD = 'mf2024'`が7ファイルに残る。既知数から増えていないためWARNだが、
   第2段階で機能、撤去範囲、公開影響、安全な移行先を決める
-- `scripts/verify.js`のGASトークン検査は`cms/gas`がリポジトリに無いためSKIPになる。
-  第2段階でGASソースの置き場所を推測せず、同等の検査方法を決める
+- GASトークン検査は`_cms/gas`の必須2ファイルへ復旧済み。欠落はFAIL、既知token形式0件はPASSする
 
 ## 差し戻し履歴
 

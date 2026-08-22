@@ -110,6 +110,14 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 ### CMS管理対象（モンスター）
 
 - モンスターの新規登録・属性・解説・編成・画像は**GAS管理画面から変更する**
+- GASの開発・監査用ソースは`_cms/gas/コード.gs`と`_cms/gas/index.html`を正とする。
+  先頭が`_`のディレクトリはGitHub PagesのJekyll公開対象に含めず、`include`にも追加しない。
+  `_cms`を置く間はJekyll処理を無効にする`.nojekyll`も追加しない
+- `_cms/gas`は稼働中GASから読み取りexportした基準である。通常作業で直接編集せず、
+  GASへの同期・保存・deployは管理者が別タスクで明示承認した場合だけ行う
+- GASの秘密値はScript Propertiesだけに置き、`_cms/gas`へ書かない
+- 現在の`コード.gs`先頭コメントには旧予定パス`cms/gas/コード.gs`が残る。
+  完全一致の基準を保つため、別承認のGAS同期タスクまで変更しない
 - `monsters-data.js`、`src/data/monsters-editorial.json`、
   `src/data/cms-id-predictions.json` をリポジトリ側で直接編集しない。次のCMS公開で上書きされる
 - `monster/<4桁ID>.<拡張子>` はDrive経由で管理する。リポジトリ側で差し替えない
