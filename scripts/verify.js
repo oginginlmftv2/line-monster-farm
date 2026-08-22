@@ -353,6 +353,38 @@ head('8. 秘密情報');
   } else {
     ok('既知7ファイルにクライアント側認証・write API・書込削除UIなし');
   }
+
+  const protectedTestWorkflow = '.github/workflows/cms-protected-test.yml';
+  if (!exists(protectedTestWorkflow)) {
+    ng(`${protectedTestWorkflow} がない`);
+  } else {
+    const workflow = read(protectedTestWorkflow);
+    const unsafeTargets = [
+      /HEAD:main/,
+      /refs\/heads\/main/,
+      /--base\s+["']?main\b/,
+      /TEST_BASE_BRANCH:\s*main\b/,
+    ];
+    const requiredMarkers = [
+      /workflow_dispatch:/,
+      /TEST_BASE_BRANCH:\s*cms\/protected-test/,
+      /secrets\.CMS_PROTECTED_TEST_TOKEN/,
+      /permissions:\s*\n\s*contents:\s*read\s*\n\s*pull-requests:\s*read/,
+      /direct-push-rejection/,
+      /cms-pr/,
+      /normal-pr/,
+      /revert-pr/,
+    ];
+    if (unsafeTargets.some(pattern => pattern.test(workflow))) {
+      ng(`${protectedTestWorkflow} がmainを更新対象にしている`);
+    } else if (requiredMarkers.some(pattern => !pattern.test(workflow))) {
+      ng(`${protectedTestWorkflow} のtest専用ゲートが不足している`);
+    } else if (/CMS_PUBLISH_TOKEN/.test(workflow)) {
+      ng(`${protectedTestWorkflow} が本番CMS tokenを参照している`);
+    } else {
+      ok('CMS保護test Workflowは専用branch・専用tokenだけを使用');
+    }
+  }
 }
 
 // ---------------------------------------------------------------- 9
