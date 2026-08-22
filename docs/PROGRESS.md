@@ -21,11 +21,12 @@
 | P11-6 | 公開クライアントの共有パスワード撤去 | `fix/p11-6-remove-client-password` | **完了** | 🔴 | PR #28をmainへマージ（`6dfb403`）。共有文字列・write UI 0件 |
 | P11-7 | 保護対応CMS PR経路のtest | `feat/p11-7-cms-protected-pr` | **保留** | ⚪ | 外部設定を実施できるGitHub管理権限がないため保留。test Workflow実装済み |
 | P11-8以降 | token最小権限化とmain Ruleset | P11-1で提示 | **保留** | 🟡🔴 | P11-7の実機証跡が揃うまで開始しない |
-| P12-1 | リセマラ記事刷新 | `content/p12-1-reroll-refresh` | **進行中** | 🔴 | モンスター狙いを除外し、アシストカード、手順、天井比較、関連導線を改善 |
+| P12-1 | リセマラ記事刷新 | `content/p12-1-reroll-refresh` | **完了** | 🔴 | PR #30をmainへマージ（`958ffd2`）。Pages公開成功 |
+| P12-2 | アシストカードDB・静的ページ・CMS設計 | `chore/p12-2-assist-cms-design` | **レビュー待ち** | ⚪ | 現状、3DB、静的生成、OCRレビュー、専用CMS、移行・復旧の設計案を作成 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`6dfb403`（P11-6マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`958ffd2`（P12-1マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -179,21 +180,30 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-1「リセマラ記事刷新」のローカル表示確認だけを次に行う。
+P12-3「アシストカードデータ監査と読取export」だけを次に行う。
 
-- ブランチ: `content/p12-1-reroll-refresh`
-- 本番影響: 🔴。mainへマージするまで公開されない
-- `reroll.html`のPC幅・スマートフォン幅、内部リンク、カード画像を確認する
-- タイトル、URL、canonical、既存の更新日は変更しない
-- `index.html`の更新履歴は変更しない
-- P11-7〜9は外部設定を実施できる管理権限が用意されるまで保留する
+- ブランチ: `chore/p12-3-assist-data-audit`
+- 本番影響: ⚪。公開HTML、本番データ、外部設定を変更しない
+- 休止中・100KB超のデータはNodeスクリプトで件数、hash、項目、参照関係だけを抽出する
+- Firestore `cards`、`cardAbilities/assignments`、必要なら旧`assistEffects`を読取exportする
+- 現行91カードを`cardId`基準で照合し、自動確定、候補、未解決を分離する
+- 詳細設計とP12-3以降の完了条件は`docs/assist-card-cms-progress.md`を正とする
 
-## 第2段階への引き継ぎ
+## 明示的な保留
 
-第1段階のルール、CMS境界、検証、PR・マージ手順は整備済みで、P10-1のPR経路も成功した。
-人工的な文書1行テストは保留する。第2段階では`docs/claude-next-session.md`を起点に、
-CMSとセキュリティの残課題を読み取り監査する。稼働中のCMSを壊さないよう、監査と実装を分離し、
-mainのブランチ保護はCMSの迂回経路を実機確認するまで変更しない。
+- P10-2: 人工的な文書1行テスト。実作業で運用確認できているため保留
+- P11-7: GitHub管理権限がなくtest Ruleset・Secretを作れないため保留
+- P11-8〜9: P11-7の実機証跡に依存するため保留。main Rulesetを先に有効化しない
+- AdSense再申請: 更新利用規約への管理者同意が必要なため保留。Claudeは同意操作をしない
+- GASエディタ版とdeployment版の一致: 外部画面未確認
+- P12能力画像割当: Firestore `cardAbilities/assignments`の現在値をP12-3で読取確認する
+
+## 現在の引き継ぎ
+
+P11-1〜6でCMSとセキュリティのリポジトリ内作業は完了した。P11-7〜9はGitHub管理権限待ちのため
+保留し、mainの保護を先に有効化しない。P12-1の公開後、優先対象をアシストカード個別ページへ
+変更した。P12-2の設計を基準に、P12-3でデータを変更しない読取監査を行い、P12-4〜6の3DBを
+独立して作れる根拠を確定する。開始文は`docs/claude-next-session.md`を使う。
 
 ## 管理者確認待ち
 
@@ -205,8 +215,9 @@ mainのブランチ保護はCMSの迂回経路を実機確認するまで変更�
   エディタ版、復旧可能な直前版を確認する。保存・再デプロイしない
 - GAS Script Propertiesの`GITHUB_TOKEN`とGitHub secret `CMS_PUBLISH_TOKEN`が同じtokenか、
   値を比較・共有せず、token名・作成者の台帳で確認する
-- Search Consoleの最新状態とAdSense再申請の状況
-- P7のreroll刷新・カード記事を今後の優先タスクにするか
+- AdSense管理画面で更新利用規約の同意待ち状態を確認する。Claudeは同意・再申請しない
+- P12-3でFirebase Consoleの`Firestore Database` → `データ`を読み取り、`cards`、
+  `cardAbilities/assignments`、存在する場合だけ`assistEffects`をexportする。document、rulesは保存しない
 
 ## 既知の検証WARN
 
