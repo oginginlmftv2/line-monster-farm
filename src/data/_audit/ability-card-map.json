@@ -1,0 +1,6476 @@
+[
+  {
+    "abilityId": 1,
+    "sourceName": "バロム",
+    "cardId": "f3k-SSR-baromu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 2,
+    "sourceName": "バロム",
+    "cardId": "f3k-SSR-baromu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 3,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 4,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 5,
+    "sourceName": "アライブ",
+    "cardId": "f6l-SSR-araibu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 6,
+    "sourceName": "アライブ",
+    "cardId": "f6l-SSR-araibu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 7,
+    "sourceName": "アライブ",
+    "cardId": "f6l-SSR-araibu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 8,
+    "sourceName": "アライブ",
+    "cardId": "f6l-SSR-araibu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 9,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 10,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 11,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 12,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 13,
+    "sourceName": "スズカ",
+    "cardId": "c14k-MR-suzuka",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 14,
+    "sourceName": "スズカ",
+    "cardId": "c14k-MR-suzuka",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 15,
+    "sourceName": "スズカ",
+    "cardId": "c14k-MR-suzuka",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 16,
+    "sourceName": "スズカ",
+    "cardId": "c14k-MR-suzuka",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 17,
+    "sourceName": "ルリ",
+    "cardId": "b17h-MR-ruri",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 18,
+    "sourceName": "ルリ",
+    "cardId": "b17h-MR-ruri",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 19,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 20,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 21,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 22,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 23,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 24,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 25,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 26,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 27,
+    "sourceName": "リヴァイ",
+    "cardId": "d7-SSR-rivai",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 28,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 29,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 30,
+    "sourceName": "リムル・グラサン",
+    "cardId": "b5i-SSR-rimurugurasan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 31,
+    "sourceName": "リムル・グラサン",
+    "cardId": "b5i-SSR-rimurugurasan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 32,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 33,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 34,
+    "sourceName": "シュナ",
+    "cardId": "a7-MR-syuna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 35,
+    "sourceName": "シュナ",
+    "cardId": "a7-MR-syuna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 36,
+    "sourceName": "ピーシィ(黄)",
+    "cardId": "c7-SSR-piisii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 37,
+    "sourceName": "ピーシィ(黄)",
+    "cardId": "c7-SSR-piisii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 38,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 39,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 40,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 41,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 42,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 43,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 44,
+    "sourceName": "恐山アンナ",
+    "cardId": "a7-SSR-anna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 45,
+    "sourceName": "恐山アンナ",
+    "cardId": "a7-SSR-anna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 46,
+    "sourceName": "キャトル",
+    "cardId": "e17g-MR-kyatoru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 47,
+    "sourceName": "キャトル",
+    "cardId": "e17g-MR-kyatoru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 48,
+    "sourceName": "ミリム",
+    "cardId": "a3i-SSR-mirimu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 49,
+    "sourceName": "ミリム",
+    "cardId": "a3i-SSR-mirimu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 50,
+    "sourceName": "ヴェルドラ",
+    "cardId": "b7-SSR-verudora",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 51,
+    "sourceName": "ヴェルドラ",
+    "cardId": "b7-SSR-verudora",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 52,
+    "sourceName": "ジョンソン",
+    "cardId": "c6k-SSR-jonson",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 53,
+    "sourceName": "ジョンソン",
+    "cardId": "c6k-SSR-jonson",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 54,
+    "sourceName": "クロース",
+    "cardId": "a1j-SSR-kurousu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 55,
+    "sourceName": "クロース",
+    "cardId": "a1j-SSR-kurousu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 56,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 57,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 58,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 59,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 60,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 61,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 62,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 63,
+    "sourceName": "ハオ",
+    "cardId": "a3g-SSR-hao",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 64,
+    "sourceName": "ハオ",
+    "cardId": "a3g-SSR-hao",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 65,
+    "sourceName": "恐山アンナ",
+    "cardId": "a7-SSR-anna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 66,
+    "sourceName": "ミカサ",
+    "cardId": "d2l-SSR-mikasa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 67,
+    "sourceName": "ミカサ",
+    "cardId": "d2l-SSR-mikasa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 68,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 69,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 70,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 71,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 72,
+    "sourceName": "ラブレス",
+    "cardId": "e12i-MR-raburesu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 73,
+    "sourceName": "ラブレス",
+    "cardId": "e12i-MR-raburesu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 74,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 75,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 76,
+    "sourceName": "ラブレス",
+    "cardId": "e12i-MR-raburesu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 77,
+    "sourceName": "ラブレス",
+    "cardId": "e12i-MR-raburesu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 78,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 79,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 80,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 81,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 82,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 83,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 84,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 85,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 86,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 87,
+    "sourceName": "アカゾナエヌシ",
+    "cardId": "a6j-SSR-akazonaenusi",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 88,
+    "sourceName": "アカゾナエヌシ",
+    "cardId": "a6j-SSR-akazonaenusi",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 89,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 90,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 91,
+    "sourceName": "キャトル",
+    "cardId": "e17g-MR-kyatoru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 92,
+    "sourceName": "キャトル",
+    "cardId": "e17g-MR-kyatoru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 93,
+    "sourceName": "ルリ",
+    "cardId": "b17h-MR-ruri",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 94,
+    "sourceName": "ルリ",
+    "cardId": "b17h-MR-ruri",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 95,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 96,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 97,
+    "sourceName": "リムル",
+    "cardId": "b1i-SSR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 98,
+    "sourceName": "リムル",
+    "cardId": "b1i-SSR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 99,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 100,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 101,
+    "sourceName": "メリオダス",
+    "cardId": "c2h-SSR-meriodasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 102,
+    "sourceName": "メリオダス",
+    "cardId": "c2h-SSR-meriodasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 103,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 104,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 105,
+    "sourceName": "キング",
+    "cardId": "d6g-SSR-king",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 106,
+    "sourceName": "キング",
+    "cardId": "d6g-SSR-king",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 107,
+    "sourceName": "キング",
+    "cardId": "d6g-SSR-king",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 108,
+    "sourceName": "キング",
+    "cardId": "d6g-SSR-king",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 109,
+    "sourceName": "バロム",
+    "cardId": "f3k-SSR-baromu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 110,
+    "sourceName": "バロム",
+    "cardId": "f3k-SSR-baromu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 111,
+    "sourceName": "リムル",
+    "cardId": "b1i-SSR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 112,
+    "sourceName": "リムル",
+    "cardId": "b1i-SSR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 113,
+    "sourceName": "シュナ",
+    "cardId": "a7-MR-syuna",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 114,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 115,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 116,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 117,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 118,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 119,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 120,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 121,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 122,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 123,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 124,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 125,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 126,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 127,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 128,
+    "sourceName": "アウフィエル",
+    "cardId": "c19h-MR-aufieru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 129,
+    "sourceName": "アウフィエル",
+    "cardId": "c19h-MR-aufieru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 130,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 131,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 132,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 133,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 134,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 135,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 136,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 137,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 138,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 139,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 140,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 141,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 142,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 143,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 144,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 145,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 146,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 147,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 148,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 149,
+    "sourceName": "ミリアム",
+    "cardId": "a13i-MR-miriamu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 150,
+    "sourceName": "ミリアム",
+    "cardId": "a13i-MR-miriamu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 151,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 152,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 153,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 154,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 155,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 156,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 157,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 158,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 159,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 160,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 161,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 162,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 163,
+    "sourceName": "アウフィエル",
+    "cardId": "c19h-MR-aufieru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 164,
+    "sourceName": "アウフィエル",
+    "cardId": "c19h-MR-aufieru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 165,
+    "sourceName": "リストン",
+    "cardId": "c18k-MR-risuton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 166,
+    "sourceName": "リストン",
+    "cardId": "c18k-MR-risuton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 167,
+    "sourceName": "パルマー",
+    "cardId": "d19h-MR-parumaa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 168,
+    "sourceName": "パルマー",
+    "cardId": "d19h-MR-parumaa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 169,
+    "sourceName": "パルマー",
+    "cardId": "d19h-MR-parumaa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 170,
+    "sourceName": "パルマー",
+    "cardId": "d19h-MR-parumaa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 171,
+    "sourceName": "ミリアム",
+    "cardId": "a13i-MR-miriamu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 172,
+    "sourceName": "ミリアム",
+    "cardId": "a13i-MR-miriamu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 173,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 174,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 175,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 176,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 177,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 178,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 179,
+    "sourceName": "ステラ",
+    "cardId": "e7-MR-sutera",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 180,
+    "sourceName": "ステラ",
+    "cardId": "e7-MR-sutera",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 181,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 182,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 183,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 184,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 185,
+    "sourceName": "リムル・グラサン",
+    "cardId": "b5i-SSR-rimurugurasan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 186,
+    "sourceName": "リムル・グラサン",
+    "cardId": "b5i-SSR-rimurugurasan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 187,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 188,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 189,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 190,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 191,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 192,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 193,
+    "sourceName": "クリス",
+    "cardId": "b7-MR-kurisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 194,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 195,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 196,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 197,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 198,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 199,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 200,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 201,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 202,
+    "sourceName": "ラムスイート",
+    "cardId": "a16h-MR-ramusuiito",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 203,
+    "sourceName": "ラムスイート",
+    "cardId": "a16h-MR-ramusuiito",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 204,
+    "sourceName": "ラムスイート",
+    "cardId": "a16h-MR-ramusuiito",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 205,
+    "sourceName": "ラムスイート",
+    "cardId": "a16h-MR-ramusuiito",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 206,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 207,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 208,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 209,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 210,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 211,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 212,
+    "sourceName": "ピーシィ(黄)",
+    "cardId": "c7-SSR-piisii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 213,
+    "sourceName": "ユニバース",
+    "cardId": "e1g-SSR-yunibaasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 214,
+    "sourceName": "ユニバース",
+    "cardId": "e1g-SSR-yunibaasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 215,
+    "sourceName": "デミウルゴス",
+    "cardId": "f7-MR-demiurugosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 216,
+    "sourceName": "デミウルゴス",
+    "cardId": "f7-MR-demiurugosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 217,
+    "sourceName": "リカント",
+    "cardId": "b2l-SSR-rikanto",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 218,
+    "sourceName": "リカント",
+    "cardId": "b2l-SSR-rikanto",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 219,
+    "sourceName": "リカント",
+    "cardId": "b2l-SSR-rikanto",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 220,
+    "sourceName": "リカント",
+    "cardId": "b2l-SSR-rikanto",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 221,
+    "sourceName": "リストン",
+    "cardId": "c18k-MR-risuton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 222,
+    "sourceName": "リストン",
+    "cardId": "c18k-MR-risuton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 223,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 224,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 225,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 226,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 227,
+    "sourceName": "クリス",
+    "cardId": "b7-MR-kurisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 228,
+    "sourceName": "クリス",
+    "cardId": "b7-MR-kurisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 229,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 230,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 231,
+    "sourceName": "アカゾナエヌシ",
+    "cardId": "a6j-SSR-akazonaenusi",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 232,
+    "sourceName": "アカゾナエヌシ",
+    "cardId": "a6j-SSR-akazonaenusi",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 233,
+    "sourceName": "レクス",
+    "cardId": "e2j-SSR-rekusu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 234,
+    "sourceName": "レクス",
+    "cardId": "e2j-SSR-rekusu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 235,
+    "sourceName": "レクス",
+    "cardId": "e2j-SSR-rekusu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 236,
+    "sourceName": "レクス",
+    "cardId": "e2j-SSR-rekusu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 237,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 238,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 239,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 240,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 241,
+    "sourceName": "ローズヘッド",
+    "cardId": "a5g-SSR-roozuheddo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 242,
+    "sourceName": "ローズヘッド",
+    "cardId": "a5g-SSR-roozuheddo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 243,
+    "sourceName": "ローズヘッド",
+    "cardId": "a5g-SSR-roozuheddo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 244,
+    "sourceName": "ローズヘッド",
+    "cardId": "a5g-SSR-roozuheddo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 245,
+    "sourceName": "ユニバース",
+    "cardId": "e1g-SSR-yunibaasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 246,
+    "sourceName": "ユニバース",
+    "cardId": "e1g-SSR-yunibaasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 247,
+    "sourceName": "ラタトスク",
+    "cardId": "d11g-MR-ratatosuku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 248,
+    "sourceName": "ラタトスク",
+    "cardId": "d11g-MR-ratatosuku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 249,
+    "sourceName": "ラタトスク",
+    "cardId": "d11g-MR-ratatosuku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 250,
+    "sourceName": "ラタトスク",
+    "cardId": "d11g-MR-ratatosuku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 251,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 252,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 253,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 254,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 255,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 256,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 257,
+    "sourceName": "タツドシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 258,
+    "sourceName": "タツドシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 259,
+    "sourceName": "タツドシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 260,
+    "sourceName": "タツドシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 261,
+    "sourceName": "リュージン",
+    "cardId": "b17h-MR-ryuujin",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 262,
+    "sourceName": "リュージン",
+    "cardId": "b17h-MR-ryuujin",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 263,
+    "sourceName": "リュージン",
+    "cardId": "b17h-MR-ryuujin",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 264,
+    "sourceName": "リュージン",
+    "cardId": "b17h-MR-ryuujin",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 265,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 266,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 267,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 268,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 269,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 270,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 271,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 272,
+    "sourceName": "リムル・リゾート",
+    "cardId": "b21i-MR-rimuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 273,
+    "sourceName": "リュージン",
+    "cardId": "b17h-MR-ryuujin",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 274,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 276,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 277,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 278,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 279,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 280,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 281,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 282,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 283,
+    "sourceName": "サフィルス",
+    "cardId": "b2h-SSR-sappirutti",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 275,
+    "sourceName": "ルーカス",
+    "cardId": "f10h-MR-rucas",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 284,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 285,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 286,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 287,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 288,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 289,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 290,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 291,
+    "sourceName": "ギフトン",
+    "cardId": "c12l-MR-gifton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 292,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 293,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 294,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 295,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 296,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 297,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 298,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 299,
+    "sourceName": "スケアクロウ",
+    "cardId": "d14k-MR-sukeakurou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 300,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 301,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 302,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 303,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 304,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 305,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 306,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 307,
+    "sourceName": "シャルティア",
+    "cardId": "f5l-SSR-sharutia",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 308,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 309,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 310,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 311,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 312,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 313,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 314,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 315,
+    "sourceName": "ナデシコ",
+    "cardId": "e20i-MR-nadeshiko",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 316,
+    "sourceName": "リストン",
+    "cardId": "c18k-MR-risuton",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 317,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 318,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 319,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 320,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 321,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 322,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 323,
+    "sourceName": "チャコール",
+    "cardId": "f1g-SSR-tyakooru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 324,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 325,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 326,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 327,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 328,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 329,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 330,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 331,
+    "sourceName": "メガラニカ",
+    "cardId": "f24i-MR-megaranika",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 332,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 333,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 334,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 335,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 336,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 337,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 338,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 339,
+    "sourceName": "麻倉葉",
+    "cardId": "d13i-MR-asakurayou",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 340,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 341,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 342,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 343,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 344,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 345,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 346,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 347,
+    "sourceName": "オフリィ",
+    "cardId": "c19k-MR-ofurii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 348,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 349,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 350,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 351,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 352,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 353,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 354,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 355,
+    "sourceName": "ドルチェ",
+    "cardId": "d12g-MR-doruche",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 356,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 357,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 358,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 359,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 360,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 361,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 362,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 363,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 364,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 365,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 366,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 367,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 368,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 369,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 370,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 371,
+    "sourceName": "チャックル",
+    "cardId": "f5h-SSR-tyakkuru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 372,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 373,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 374,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 375,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 376,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 377,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 378,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 379,
+    "sourceName": "ダラス",
+    "cardId": "f14g-MR-darasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 380,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 381,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 382,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 383,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 384,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 385,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 386,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 387,
+    "sourceName": "カルキノス",
+    "cardId": "a4g-SSR-karukinosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 388,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 389,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 390,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 391,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 392,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 393,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 394,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 395,
+    "sourceName": "ボルシャック",
+    "cardId": "a25i-MR-borusyakku",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 396,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 397,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 398,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 399,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 400,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 401,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 402,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 403,
+    "sourceName": "マリッジ",
+    "cardId": "e3h-SSR-marijji",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 404,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 405,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 406,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 407,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 408,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 409,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 410,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 411,
+    "sourceName": "ナイアーラ",
+    "cardId": "c23i-MR-naiara",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 412,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 413,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 414,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 415,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 416,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 417,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 418,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 419,
+    "sourceName": "アルカディアス",
+    "cardId": "e6l-SSR-arukadiasu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 420,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 421,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 422,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 423,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 424,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 425,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 426,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 427,
+    "sourceName": "ヴィトニル",
+    "cardId": "a24j-MR-vitoniru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 428,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 429,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 430,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 431,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 432,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 433,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 434,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 435,
+    "sourceName": "アインズ",
+    "cardId": "f18k-MR-ainzu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 436,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 437,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 438,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 439,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 440,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 441,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 442,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 443,
+    "sourceName": "エムロード",
+    "cardId": "d22g-MR-emuroudo",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 444,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 445,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 446,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 447,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 448,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 449,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 450,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 451,
+    "sourceName": "ミリム・リゾート",
+    "cardId": "a6i-SSR-mirimuresort",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 452,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 453,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 454,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 455,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 456,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 457,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 458,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 459,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 460,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 461,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 462,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 463,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 464,
+    "sourceName": "ブライド",
+    "cardId": "d18k-MR-furan",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 465,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 466,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 467,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 468,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 469,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 470,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 471,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 472,
+    "sourceName": "ミルキィ",
+    "cardId": "c11j-MR-mirukii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 473,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 474,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 475,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 476,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 477,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 478,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 479,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 480,
+    "sourceName": "フォールン",
+    "cardId": "f16h-MR-iburiisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 481,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 482,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 483,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 484,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 485,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 486,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 487,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 488,
+    "sourceName": "セレネ",
+    "cardId": "f21l-MR-serene",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 489,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 490,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 491,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 492,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 493,
+    "sourceName": "スイゲキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 494,
+    "sourceName": "スイゲキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 495,
+    "sourceName": "スイゲキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 496,
+    "sourceName": "スイゲキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 497,
+    "sourceName": "ヒショウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 498,
+    "sourceName": "ヒショウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 499,
+    "sourceName": "ヒショウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 500,
+    "sourceName": "ヒショウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 501,
+    "sourceName": "ヒショウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 502,
+    "sourceName": "バールラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 503,
+    "sourceName": "バールラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 504,
+    "sourceName": "バールラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 505,
+    "sourceName": "バールラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 506,
+    "sourceName": "カイリウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 507,
+    "sourceName": "カイリウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 508,
+    "sourceName": "カイリウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 509,
+    "sourceName": "カイリウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 510,
+    "sourceName": "オービン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 511,
+    "sourceName": "オービン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 512,
+    "sourceName": "オービン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 513,
+    "sourceName": "オービン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 514,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 515,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 516,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 517,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 518,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 519,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 521,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 522,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 523,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 524,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 525,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 526,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 527,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 528,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 529,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 530,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 531,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 532,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 533,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 534,
+    "sourceName": "シエナ(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 535,
+    "sourceName": "アイリス(友人)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 536,
+    "sourceName": "アイリス(友人)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 537,
+    "sourceName": "アイリス(友人)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 538,
+    "sourceName": "ハカイシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 539,
+    "sourceName": "ハカイシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 540,
+    "sourceName": "ハカイシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 541,
+    "sourceName": "ハカイシ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 542,
+    "sourceName": "ゼーランディア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 543,
+    "sourceName": "ゼーランディア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 544,
+    "sourceName": "ゼーランディア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 545,
+    "sourceName": "ゼーランディア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 546,
+    "sourceName": "ムーンダスト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 547,
+    "sourceName": "ムーンダスト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 548,
+    "sourceName": "ムーンダスト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 549,
+    "sourceName": "ムーンダスト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 550,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 551,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 552,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 553,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 554,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 555,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 556,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 557,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 558,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 559,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 560,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 561,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 562,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 563,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 564,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 565,
+    "sourceName": "ホリィ",
+    "cardId": "f9-SSR-hori",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 570,
+    "sourceName": "テレース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 571,
+    "sourceName": "テレース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 572,
+    "sourceName": "テレース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 573,
+    "sourceName": "テレース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 574,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 575,
+    "sourceName": "フレリア",
+    "cardId": null,
+    "linkStatus": "ambiguous"
+  },
+  {
+    "abilityId": 576,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 577,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 578,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 579,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 580,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 581,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 582,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 583,
+    "sourceName": "ノア",
+    "cardId": "b22h-MR-noa",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 584,
+    "sourceName": "ソウキュウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 585,
+    "sourceName": "ソウキュウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 586,
+    "sourceName": "ソウキュウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 587,
+    "sourceName": "ソウキュウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 588,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 589,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 590,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 591,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 592,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 593,
+    "sourceName": "リッピー",
+    "cardId": "e18l-MR-rippii",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 594,
+    "sourceName": "モモン＆ハムスケ",
+    "cardId": "f6g-SSR-momonandhamusuke",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 595,
+    "sourceName": "モモン＆ハムスケ",
+    "cardId": "f6g-SSR-momonandhamusuke",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 596,
+    "sourceName": "モモン＆ハムスケ",
+    "cardId": "f6g-SSR-momonandhamusuke",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 597,
+    "sourceName": "モモン＆ハムスケ",
+    "cardId": "f6g-SSR-momonandhamusuke",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 598,
+    "sourceName": "ブリキノ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 599,
+    "sourceName": "ブリキノ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 600,
+    "sourceName": "ブリキノ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 601,
+    "sourceName": "ブリキノ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 602,
+    "sourceName": "ヤシャマル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 603,
+    "sourceName": "ヤシャマル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 604,
+    "sourceName": "ヤシャマル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 605,
+    "sourceName": "ヤシャマル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 606,
+    "sourceName": "ヤシャマル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 607,
+    "sourceName": "ガンバーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 608,
+    "sourceName": "ガンバーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 609,
+    "sourceName": "ガンバーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 610,
+    "sourceName": "ガンバーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 611,
+    "sourceName": "スティーブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 612,
+    "sourceName": "スティーブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 613,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 614,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 615,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 616,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 617,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 618,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 619,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 620,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 621,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 622,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 623,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 624,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 625,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 626,
+    "sourceName": "サフィン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 627,
+    "sourceName": "ジョンソン",
+    "cardId": "c6k-SSR-jonson",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 628,
+    "sourceName": "ジョンソン",
+    "cardId": "c6k-SSR-jonson",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 629,
+    "sourceName": "パパルク=レール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 630,
+    "sourceName": "パパルク=レール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 631,
+    "sourceName": "パパルク=レール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 632,
+    "sourceName": "パパルク=レール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 633,
+    "sourceName": "ファイナライザー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 634,
+    "sourceName": "ファイナライザー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 635,
+    "sourceName": "ファイナライザー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 636,
+    "sourceName": "ファイナライザー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 637,
+    "sourceName": "フレアガス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 638,
+    "sourceName": "フレアガス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 639,
+    "sourceName": "フレアガス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 640,
+    "sourceName": "フレアガス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 641,
+    "sourceName": "コウオウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 642,
+    "sourceName": "コウオウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 643,
+    "sourceName": "コウオウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 644,
+    "sourceName": "コウオウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 645,
+    "sourceName": "コウオウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 646,
+    "sourceName": "ラファール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 647,
+    "sourceName": "ラファール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 648,
+    "sourceName": "ラファール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 649,
+    "sourceName": "ラファール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 650,
+    "sourceName": "アーキュロン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 651,
+    "sourceName": "アーキュロン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 652,
+    "sourceName": "アーキュロン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 653,
+    "sourceName": "アーキュロン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 654,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 655,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 656,
+    "sourceName": "タナトス",
+    "cardId": "f15k-MR-tanatosu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 657,
+    "sourceName": "マグニス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 658,
+    "sourceName": "マグニス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 659,
+    "sourceName": "マグニス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 660,
+    "sourceName": "マグニス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 661,
+    "sourceName": "スヴィズニル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 662,
+    "sourceName": "スヴィズニル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 663,
+    "sourceName": "スヴィズニル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 664,
+    "sourceName": "スヴィズニル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 665,
+    "sourceName": "レドンド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 666,
+    "sourceName": "レドンド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 667,
+    "sourceName": "レドンド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 668,
+    "sourceName": "レドンド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 669,
+    "sourceName": "ラスバブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 670,
+    "sourceName": "ラスバブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 671,
+    "sourceName": "ラスバブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 672,
+    "sourceName": "ラスバブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 673,
+    "sourceName": "ボレアス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 674,
+    "sourceName": "ボレアス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 675,
+    "sourceName": "ボレアス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 676,
+    "sourceName": "ボレアス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 677,
+    "sourceName": "カペラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 678,
+    "sourceName": "カペラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 679,
+    "sourceName": "カペラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 680,
+    "sourceName": "カペラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 681,
+    "sourceName": "ディアン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 682,
+    "sourceName": "ディアン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 683,
+    "sourceName": "ディアン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 684,
+    "sourceName": "ディアン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 685,
+    "sourceName": "ルルーシュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 686,
+    "sourceName": "ルルーシュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 687,
+    "sourceName": "ルルーシュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 688,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 689,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 690,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 691,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 692,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 693,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 694,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 695,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 696,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 697,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 698,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 699,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 700,
+    "sourceName": "アインズ(SSR)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 701,
+    "sourceName": "グランド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 702,
+    "sourceName": "グランド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 703,
+    "sourceName": "グランド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 704,
+    "sourceName": "グランド",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 705,
+    "sourceName": "ブリガンディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 706,
+    "sourceName": "ブリガンディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 707,
+    "sourceName": "ブリガンディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 708,
+    "sourceName": "ブリガンディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 709,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 710,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 711,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 712,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 713,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 714,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 715,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 716,
+    "sourceName": "エスエル",
+    "cardId": "f18l-MR-esueru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 717,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 718,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 719,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 720,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 721,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 722,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 723,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 724,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 725,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 726,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 727,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 728,
+    "sourceName": "シオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 729,
+    "sourceName": "シエナ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 730,
+    "sourceName": "シエナ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 731,
+    "sourceName": "シエナ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 732,
+    "sourceName": "シエナ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 733,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 734,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 735,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 736,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 737,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 738,
+    "sourceName": "サフィン(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 739,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 740,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 741,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 742,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 743,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 744,
+    "sourceName": "ポルツ(育成論)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 745,
+    "sourceName": "ニコラオ(天星翼-ブリマス)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 746,
+    "sourceName": "ニコラオ(天星翼-ブリマス)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 747,
+    "sourceName": "ニコラオ(天星翼-ブリマス)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 748,
+    "sourceName": "ニコラオ(天星翼-ブリマス)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 749,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 750,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 751,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 752,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 753,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 754,
+    "sourceName": "ルーカス(天星翼-六天将)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 755,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 756,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 757,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 758,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 759,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 760,
+    "sourceName": "ミカ(天星翼-六英雄)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 761,
+    "sourceName": "アルミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 762,
+    "sourceName": "アルミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 763,
+    "sourceName": "アルミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 764,
+    "sourceName": "アルミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 765,
+    "sourceName": "アルベルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 766,
+    "sourceName": "アルベルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 767,
+    "sourceName": "アルベルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 768,
+    "sourceName": "アルベルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 769,
+    "sourceName": "エイメイ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 770,
+    "sourceName": "エイメイ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 771,
+    "sourceName": "エイメイ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 772,
+    "sourceName": "エイメイ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 773,
+    "sourceName": "アントン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 774,
+    "sourceName": "アントン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 775,
+    "sourceName": "アントン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 776,
+    "sourceName": "アントン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 777,
+    "sourceName": "ウロコン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 778,
+    "sourceName": "ウロコン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 779,
+    "sourceName": "ウロコン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 780,
+    "sourceName": "ウロコン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 781,
+    "sourceName": "ウロコン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 782,
+    "sourceName": "エイル",
+    "cardId": "d23k-MR-eiru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 783,
+    "sourceName": "エイル",
+    "cardId": "d23k-MR-eiru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 784,
+    "sourceName": "エイル",
+    "cardId": "d23k-MR-eiru",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 785,
+    "sourceName": "エコール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 786,
+    "sourceName": "エコール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 787,
+    "sourceName": "エコール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 788,
+    "sourceName": "エコール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 789,
+    "sourceName": "エリザベス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 790,
+    "sourceName": "エリザベス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 791,
+    "sourceName": "エリザベス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 792,
+    "sourceName": "エリザベス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 793,
+    "sourceName": "カタリーナ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 794,
+    "sourceName": "カタリーナ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 795,
+    "sourceName": "カタリーナ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 796,
+    "sourceName": "カタリーナ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 797,
+    "sourceName": "カレン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 798,
+    "sourceName": "カレン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 799,
+    "sourceName": "カレン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 800,
+    "sourceName": "カレン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 801,
+    "sourceName": "カレン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 802,
+    "sourceName": "カーマイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 803,
+    "sourceName": "カーマイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 804,
+    "sourceName": "カーマイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 805,
+    "sourceName": "カーマイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 806,
+    "sourceName": "コルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 807,
+    "sourceName": "コルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 808,
+    "sourceName": "コルト",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 809,
+    "sourceName": "グレブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 810,
+    "sourceName": "グレブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 811,
+    "sourceName": "グレブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 812,
+    "sourceName": "グレブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 813,
+    "sourceName": "グレブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 814,
+    "sourceName": "グラスアロマ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 815,
+    "sourceName": "グラスアロマ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 816,
+    "sourceName": "グラスアロマ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 817,
+    "sourceName": "グラスアロマ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 818,
+    "sourceName": "グールシャイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 819,
+    "sourceName": "グールシャイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 820,
+    "sourceName": "グールシャイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 821,
+    "sourceName": "グールシャイン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 822,
+    "sourceName": "コーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 823,
+    "sourceName": "コーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 824,
+    "sourceName": "コーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 825,
+    "sourceName": "コーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 826,
+    "sourceName": "ゴルゴーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 827,
+    "sourceName": "ゴルゴーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 828,
+    "sourceName": "ゴルゴーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 829,
+    "sourceName": "ゴルゴーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 830,
+    "sourceName": "ゴルゴーン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 831,
+    "sourceName": "サクラアート",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 832,
+    "sourceName": "サクラアート",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 833,
+    "sourceName": "サクラアート",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 834,
+    "sourceName": "サクラアート",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 835,
+    "sourceName": "サラセニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 836,
+    "sourceName": "サラセニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 837,
+    "sourceName": "サラセニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 838,
+    "sourceName": "サラセニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 839,
+    "sourceName": "シノブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 840,
+    "sourceName": "シノブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 841,
+    "sourceName": "シノブ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 842,
+    "sourceName": "フレリア(エイプリル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 843,
+    "sourceName": "フレリア(エイプリル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 844,
+    "sourceName": "フレリア(エイプリル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 845,
+    "sourceName": "フレリア(エイプリル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 846,
+    "sourceName": "シャーキン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 847,
+    "sourceName": "シャーキン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 848,
+    "sourceName": "シャーキン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 849,
+    "sourceName": "シャーキン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 850,
+    "sourceName": "シャーキン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 851,
+    "sourceName": "シュン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 852,
+    "sourceName": "シュン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 853,
+    "sourceName": "シュン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 854,
+    "sourceName": "シュン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 855,
+    "sourceName": "ストロッグ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 856,
+    "sourceName": "ストロッグ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 857,
+    "sourceName": "ストロッグ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 858,
+    "sourceName": "ストロッグ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 859,
+    "sourceName": "メカお父さん",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 860,
+    "sourceName": "メカお父さん",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 861,
+    "sourceName": "メカお父さん",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 862,
+    "sourceName": "メカお父さん",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 863,
+    "sourceName": "スコッチ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 864,
+    "sourceName": "スコッチ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 865,
+    "sourceName": "スコッチ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 866,
+    "sourceName": "スコッチ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 867,
+    "sourceName": "スザク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 868,
+    "sourceName": "スザク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 869,
+    "sourceName": "スザク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 870,
+    "sourceName": "スザク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 871,
+    "sourceName": "スザク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 872,
+    "sourceName": "ステイサム",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 873,
+    "sourceName": "ステイサム",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 874,
+    "sourceName": "ステイサム",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 875,
+    "sourceName": "ステイサム",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 876,
+    "sourceName": "ズッカール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 877,
+    "sourceName": "ズッカール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 878,
+    "sourceName": "ズッカール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 879,
+    "sourceName": "ズッカール",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 880,
+    "sourceName": "タバサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 881,
+    "sourceName": "タバサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 882,
+    "sourceName": "タバサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 883,
+    "sourceName": "タバサ(バレンタイン)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 884,
+    "sourceName": "タバサ(バレンタイン)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 885,
+    "sourceName": "タバサ(バレンタイン)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 886,
+    "sourceName": "キディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 887,
+    "sourceName": "キディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 888,
+    "sourceName": "キディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 889,
+    "sourceName": "キディ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 890,
+    "sourceName": "チャージン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 891,
+    "sourceName": "チャージン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 892,
+    "sourceName": "チャージン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 893,
+    "sourceName": "チャージン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 894,
+    "sourceName": "チャージン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 895,
+    "sourceName": "チヨザクラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 896,
+    "sourceName": "チヨザクラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 897,
+    "sourceName": "チヨザクラ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 898,
+    "sourceName": "ツートン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 899,
+    "sourceName": "ツートン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 900,
+    "sourceName": "ツートン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 901,
+    "sourceName": "ツートン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 902,
+    "sourceName": "テテュース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 903,
+    "sourceName": "テテュース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 904,
+    "sourceName": "テテュース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 905,
+    "sourceName": "テテュース",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 906,
+    "sourceName": "トウリュウモン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 907,
+    "sourceName": "トウリュウモン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 908,
+    "sourceName": "トウリュウモン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 909,
+    "sourceName": "トウリュウモン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 910,
+    "sourceName": "ドルーガード",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 911,
+    "sourceName": "ドルーガード",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 912,
+    "sourceName": "ドルーガード",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 913,
+    "sourceName": "ドルーガード",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 914,
+    "sourceName": "ドレッドスパイク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 915,
+    "sourceName": "ドレッドスパイク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 916,
+    "sourceName": "ドレッドスパイク",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 917,
+    "sourceName": "ニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 918,
+    "sourceName": "ニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 919,
+    "sourceName": "ニア",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 920,
+    "sourceName": "ノヴァ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 921,
+    "sourceName": "ノヴァ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 922,
+    "sourceName": "ノヴァ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 923,
+    "sourceName": "ノヴァ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 924,
+    "sourceName": "ハイペリオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 925,
+    "sourceName": "ハイペリオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 926,
+    "sourceName": "ハイペリオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 927,
+    "sourceName": "ハイペリオン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 928,
+    "sourceName": "ハクトウリキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 929,
+    "sourceName": "ハクトウリキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 930,
+    "sourceName": "ハクトウリキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 931,
+    "sourceName": "ハクトウリキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 932,
+    "sourceName": "ハクヨウキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 933,
+    "sourceName": "ハクヨウキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 934,
+    "sourceName": "ハクヨウキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 935,
+    "sourceName": "ハクヨウキ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 936,
+    "sourceName": "ヒマワリ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 937,
+    "sourceName": "ヒマワリ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 938,
+    "sourceName": "ヒマワリ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 939,
+    "sourceName": "ヒマワリ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 940,
+    "sourceName": "ピーシィ(青)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 941,
+    "sourceName": "ピーシィ(青)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 942,
+    "sourceName": "ピーシィ(青)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 943,
+    "sourceName": "ブライドン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 944,
+    "sourceName": "ブライドン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 945,
+    "sourceName": "ブライドン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 946,
+    "sourceName": "ブライドン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 947,
+    "sourceName": "ミルフィー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 948,
+    "sourceName": "ミルフィー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 949,
+    "sourceName": "ミルフィー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 950,
+    "sourceName": "ミルフィー",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 951,
+    "sourceName": "メリッサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 952,
+    "sourceName": "メリッサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 953,
+    "sourceName": "メリッサ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 954,
+    "sourceName": "ユノウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 955,
+    "sourceName": "ユノウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 956,
+    "sourceName": "ユノウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 957,
+    "sourceName": "ユノウ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 958,
+    "sourceName": "ヨツミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 959,
+    "sourceName": "ヨツミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 960,
+    "sourceName": "ヨツミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 961,
+    "sourceName": "ヨツミン",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 962,
+    "sourceName": "リキエル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 963,
+    "sourceName": "リキエル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 964,
+    "sourceName": "リキエル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 965,
+    "sourceName": "リリィ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 966,
+    "sourceName": "リリィ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 967,
+    "sourceName": "リリィ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 968,
+    "sourceName": "リリィ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 969,
+    "sourceName": "ルージュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 970,
+    "sourceName": "ルージュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 971,
+    "sourceName": "ルージュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 972,
+    "sourceName": "ルージュ",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 973,
+    "sourceName": "ルーブス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 974,
+    "sourceName": "ルーブス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 975,
+    "sourceName": "ルーブス",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 976,
+    "sourceName": "ロンター",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 977,
+    "sourceName": "ロンター",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 978,
+    "sourceName": "ロンター",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 979,
+    "sourceName": "ロンター",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 980,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 981,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 982,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 983,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 984,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 985,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 986,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 987,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 988,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 989,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 990,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 991,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 992,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 993,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 994,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 995,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 996,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 997,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 998,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 999,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1000,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1001,
+    "sourceName": "ポルツ(ライバル)",
+    "cardId": "c9-SSR-porutsu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1002,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1003,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1004,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1005,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1006,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1007,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1008,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1009,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1010,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1011,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1012,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1013,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1014,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1015,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1016,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1017,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1018,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1019,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1020,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1021,
+    "sourceName": "白凰(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1022,
+    "sourceName": "トロイダル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1023,
+    "sourceName": "トロイダル",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1024,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1025,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1026,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1027,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1028,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1029,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1030,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1031,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1032,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1033,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1034,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1035,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1036,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1037,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1038,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1039,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1040,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1041,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1042,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1043,
+    "sourceName": "アイリス(ライバル)",
+    "cardId": "d9-SSR-airisu",
+    "linkStatus": "resolved"
+  },
+  {
+    "abilityId": 1044,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1045,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1046,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1047,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1048,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1049,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1050,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1051,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1052,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1053,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1054,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1055,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1056,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1057,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1058,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1059,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1060,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1061,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1062,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1063,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1064,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1065,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1066,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1067,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1068,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1069,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1070,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1071,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1072,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1073,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1074,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1075,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1076,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1077,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1078,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1079,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1080,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1081,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1082,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1083,
+    "sourceName": "バン(ライバル)",
+    "cardId": null,
+    "linkStatus": "unlinked"
+  },
+  {
+    "abilityId": 1084,
+    "sourceName": "デミウルゴス",
+    "cardId": "f7-MR-demiurugosu",
+    "linkStatus": "resolved"
+  }
+]
