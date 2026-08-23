@@ -1,0 +1,382 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": "Firestore cardAbilities/assignments（管理画面表示の手動コピー）",
+  "sourceFile": "src/data/_source/cardAbilities-assignments.txt",
+  "exportedAt": "2026-08-23",
+  "counts": {
+    "cards": 88,
+    "assignments": 193,
+    "referencedImages": 189
+  },
+  "assignments": {
+    "c20k-MR-teosu": [
+      "S__98091023_0.jpg",
+      "S__98091022_0.jpg"
+    ],
+    "d24k-SSR-rupinasu": [
+      "S__3571722_0.jpg",
+      "S__3571721_0.jpg"
+    ],
+    "d23k-MR-eiru": [
+      "S__3571717_0.jpg",
+      "S__3571718_0.jpg",
+      "S__3571719_0.jpg",
+      "S__3571716_0.jpg",
+      "S__3571715_0.jpg"
+    ],
+    "c28j-SSR-rokusho": [
+      "S__3497993_0.jpg",
+      "S__3497994_0.jpg"
+    ],
+    "c27j-MR-godemperor": [
+      "S__3497995_0.jpg",
+      "S__3497996_0.jpg"
+    ],
+    "c26j-SSR-ikki": [
+      "S__127885330_0.jpg",
+      "S__127885331_0.jpg"
+    ],
+    "c25j-SSR-metabee": [
+      "S__3465220_0.jpg",
+      "S__3465219_0.jpg"
+    ],
+    "c24j-MR-ikki": [
+      "S__3465221_0.jpg",
+      "S__3465222_0.jpg"
+    ],
+    "a13i-MR-nishiki": [
+      "S__3399684_0.jpg",
+      "S__3399685_0.jpg"
+    ],
+    "b16i-MR-diana": [
+      "S__3399688_0.jpg",
+      "S__3399689_0.jpg"
+    ],
+    "b5g-SSR-norun": [
+      "S__3399686_0.jpg",
+      "S__3399687_0.jpg"
+    ],
+    "f18l-MR-esueru": [
+      "S__71286789_0.jpg",
+      "S__71286790_0.jpg"
+    ],
+    "a10j-SSR-fureria": [
+      "S__71049236_0.jpg",
+      "S__94117893_0.jpg",
+      "S__94117892_0.jpg",
+      "S__94117891_0.jpg"
+    ],
+    "a4g-SSR-karukinosu": [
+      "S__71049253_0.jpg",
+      "S__71049251_0.jpg"
+    ],
+    "a24j-MR-vitoniru": [
+      "S__71049244_0.jpg",
+      "S__71049243_0.jpg"
+    ],
+    "a10j-MR-fureria": [
+      "S__71049235_0.jpg",
+      "S__71049237_0.jpg",
+      "S__71049236_0.jpg",
+      "S__94117893_0.jpg",
+      "S__94117892_0.jpg",
+      "S__94117891_0.jpg"
+    ],
+    "f14g-MR-darasu": [
+      "S__143507518_0.jpg",
+      "S__143507520_0.jpg"
+    ],
+    "f2k-SSR-shionresort": [
+      "S__143507539_0.jpg",
+      "S__143507538_0.jpg"
+    ],
+    "a6i-SSR-mirimuresort": [
+      "S__71049255_0.jpg",
+      "S__71049254_0.jpg"
+    ],
+    "b5i-SSR-rimurugurasan": [
+      "S__29696024_0.jpg",
+      "S__29696025_0.jpg"
+    ],
+    "a7-MR-syuna": [
+      "S__71049221_0.jpg",
+      "S__71049228_0.jpg"
+    ],
+    "b21i-MR-rimuru": [
+      "S__29696012_0.jpg",
+      "S__29696013_0.jpg"
+    ],
+    "f24i-MR-megaranika": [
+      "S__143507521_0.jpg",
+      "S__143507522_0.jpg"
+    ],
+    "e7-MR-sutera": [
+      "S__143507475_0.jpg",
+      "S__143507477_0.jpg"
+    ],
+    "e20i-MR-nadeshiko": [
+      "S__143507479_0.jpg",
+      "S__143507478_0.jpg"
+    ],
+    "c12l-MR-gifton": [
+      "S__143515654_0.jpg",
+      "S__143515652_0.jpg"
+    ],
+    "c19h-MR-aufieru": [
+      "S__143515656_0.jpg",
+      "S__143515655_0.jpg"
+    ],
+    "c9-SSR-safin": [
+      "S__143515669_0.jpg",
+      "S__143515671_0.jpg"
+    ],
+    "f5l-SSR-sharutia": [
+      "S__71049249_0.jpg",
+      "S__71049250_0.jpg"
+    ],
+    "f7-MR-demiurugosu": [
+      "S__143507523_0.jpg",
+      "S__143507524_0.jpg"
+    ],
+    "f18k-MR-ainzu": [
+      "S__143507525_0.jpg",
+      "S__143507526_0.jpg"
+    ],
+    "d14k-MR-sukeakurou": [
+      "S__29753348_0.jpg",
+      "S__29753349_0.jpg"
+    ],
+    "d9-SSR-airisu": [
+      "S__29761546_0.jpg",
+      "S__29761547_0.jpg"
+    ],
+    "b7-MR-kurisu": [
+      "S__29696017_0.jpg",
+      "S__29696016_0.jpg"
+    ],
+    "d18k-MR-furan": [
+      "S__29753361_0.jpg",
+      "S__29753362_0.jpg"
+    ],
+    "b2h-SSR-sappirutti": [
+      "S__29696028_0.jpg",
+      "S__29696029_0.jpg"
+    ],
+    "b22h-MR-noa": [
+      "S__29696008_0.jpg",
+      "S__29696009_0.jpg"
+    ],
+    "f3k-SSR-baromu": [
+      "S__143507542_0.jpg",
+      "S__143507543_0.jpg"
+    ],
+    "e9-SSR-hakuou": [
+      "S__143507501_0.jpg",
+      "S__143507503_0.jpg"
+    ],
+    "e6l-SSR-arukadiasu": [
+      "S__143507498_0.jpg",
+      "S__143507500_0.jpg"
+    ],
+    "a25i-MR-borusyakku": [
+      "S__71049246_0.jpg",
+      "S__71049245_0.jpg"
+    ],
+    "c23i-MR-naiara": [
+      "S__143515657_0.jpg",
+      "S__143515658_0.jpg"
+    ],
+    "c7-SSR-piisii": [
+      "S__143515672_0.jpg",
+      "S__143515673_0.jpg"
+    ],
+    "c11j-MR-mirukii": [
+      "S__143515659_0.jpg",
+      "S__143515660_0.jpg"
+    ],
+    "d22g-MR-emuroudo": [
+      "S__29753353_0.jpg",
+      "S__29753352_0.jpg"
+    ],
+    "e3h-SSR-marijji": [
+      "S__143507497_0.jpg",
+      "S__143507496_0.jpg"
+    ],
+    "d12g-MR-doruche": [
+      "S__29753354_0.jpg",
+      "S__29753355_0.jpg"
+    ],
+    "a3g-SSR-hao": [
+      "S__71049247_0.jpg",
+      "S__71049248_0.jpg"
+    ],
+    "a7-SSR-anna": [
+      "S__71049223_0.jpg",
+      "S__71049222_0.jpg"
+    ],
+    "d13i-MR-asakurayou": [
+      "S__29753359_0.jpg",
+      "S__29753360_0.jpg"
+    ],
+    "e2j-SSR-rekusu": [
+      "S__143507494_0.jpg",
+      "S__143507495_0.jpg"
+    ],
+    "e18l-MR-rippii": [
+      "S__143507486_0.jpg",
+      "S__143507488_0.jpg"
+    ],
+    "f9-SSR-hori": [
+      "S__143507544_0.jpg",
+      "S__143507545_0.jpg",
+      "S__143507555_0.jpg",
+      "S__143507554_0.jpg",
+      "S__143507557_0.jpg",
+      "S__143507556_0.jpg"
+    ],
+    "f16h-MR-iburiisu": [
+      "S__143507527_0.jpg",
+      "S__143507528_0.jpg"
+    ],
+    "f6l-SSR-araibu": [
+      "S__143507546_0.jpg",
+      "S__143507548_0.jpg"
+    ],
+    "f1g-SSR-tyakooru": [
+      "S__143507549_0.jpg",
+      "S__143507550_0.jpg"
+    ],
+    "c19k-MR-ofurii": [
+      "S__143515661_0.jpg",
+      "S__143515662_0.jpg"
+    ],
+    "f21l-MR-serene": [
+      "S__143507529_0.jpg",
+      "S__143507531_0.jpg"
+    ],
+    "d6g-SSR-king": [
+      "S__29761545_0.jpg",
+      "S__29761544_0.jpg"
+    ],
+    "a9-SSR-ban": [
+      "S__71049234_0.jpg",
+      "S__71049233_0.jpg"
+    ],
+    "c2h-SSR-meriodasu": [
+      "S__143515674_0.jpg",
+      "S__143515675_0.jpg"
+    ],
+    "b2l-SSR-rikanto": [
+      "S__29696026_0.jpg",
+      "S__29696027_0.jpg"
+    ],
+    "b9-SSR-siena": [
+      "S__29696022_0.jpg",
+      "S__29696023_0.jpg"
+    ],
+    "b17h-MR-ryuujin": [
+      "S__29696014_0.jpg",
+      "S__29696015_0.jpg"
+    ],
+    "a5g-SSR-roozuheddo": [
+      "S__71049227_0.jpg",
+      "S__71049229_0.jpg"
+    ],
+    "a1j-SSR-kurousu": [
+      "S__71049232_0.jpg",
+      "S__71049231_0.jpg"
+    ],
+    "d19h-MR-parumaa": [
+      "S__29753356_0.jpg",
+      "S__29753357_0.jpg"
+    ],
+    "d2l-SSR-mikasa": [
+      "S__29761542_0.jpg",
+      "S__29761543_0.jpg"
+    ],
+    "d7-SSR-rivai": [
+      "S__29761540_0.jpg",
+      "S__29761541_0.jpg"
+    ],
+    "c6k-SSR-jonson": [
+      "S__143515676_0.jpg",
+      "S__143515677_0.jpg"
+    ],
+    "c18k-MR-risuton": [
+      "S__143515663_0.jpg",
+      "S__143515665_0.jpg"
+    ],
+    "c9-SSR-porutsu": [
+      "S__143515678_0.jpg",
+      "S__143515679_0.jpg"
+    ],
+    "e1g-SSR-yunibaasu": [
+      "S__143507504_0.jpg",
+      "S__143507506_0.jpg"
+    ],
+    "e17g-MR-kyatoru": [
+      "S__143507482_0.jpg",
+      "S__143507483_0.jpg"
+    ],
+    "a3i-SSR-mirimu": [
+      "S__71049224_0.jpg",
+      "S__71049256_0.jpg"
+    ],
+    "b7-SSR-verudora": [
+      "S__29696031_0.jpg",
+      "S__29696032_0.jpg"
+    ],
+    "b1i-SSR-rimuru": [
+      "S__29696020_0.jpg",
+      "S__29696021_0.jpg"
+    ],
+    "a6j-SSR-akazonaenusi": [
+      "S__71049225_0.jpg",
+      "S__71049226_0.jpg"
+    ],
+    "b17h-MR-ruri": [
+      "S__29696010_0.jpg",
+      "S__29696011_0.jpg"
+    ],
+    "f15k-MR-tanatosu": [
+      "S__143507532_0.jpg",
+      "S__143507533_0.jpg"
+    ],
+    "a16h-MR-ramusuiito": [
+      "S__71049242_0.jpg",
+      "S__71049240_0.jpg"
+    ],
+    "c14k-MR-suzuka": [
+      "S__143515666_0.jpg",
+      "S__143515667_0.jpg"
+    ],
+    "a13i-MR-miriamu": [
+      "S__71049239_0.jpg",
+      "S__71049238_0.jpg"
+    ],
+    "e12i-MR-raburesu": [
+      "S__143507484_0.jpg",
+      "S__143507485_0.jpg"
+    ],
+    "d11g-MR-ratatosuku": [
+      "S__29753350_0.jpg",
+      "S__29753351_0.jpg"
+    ],
+    "f6g-SSR-momonandhamusuke": [
+      "S__143507540_0.jpg",
+      "S__143507541_0.jpg"
+    ],
+    "f10h-MR-rucas": [
+      "S__143507511_0.jpg",
+      "S__143507509_0.jpg",
+      "S__143507512_0.jpg",
+      "S__143507514_0.jpg",
+      "S__143507515_0.jpg",
+      "S__143507517_0.jpg"
+    ],
+    "f5h-SSR-tyakkuru": [
+      "S__143507535_0.jpg",
+      "S__143507537_0.jpg"
+    ]
+  }
+}
