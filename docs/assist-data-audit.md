@@ -403,3 +403,24 @@ robotsをnoindexに固定した。
 横スクロール0、画像読込成功、コンソールエラー0を確認した。見出しはPCでh1 24px・h2 20px・
 h3 16px、スマートフォンでh1 20px・h2 16px・h3 14pxに固定し、ブラウザ既定値へ依存しない。
 解説と一覧を含む最上位セクション間は30pxを維持した。
+
+## 11. 公開導線の切替結果
+
+P12-7bで、可視本文800字以上かつ解説50字以上のゲートを静的HTMLへ適用した。
+各文字列は`/<[^>]+>/g`でタグを除去してから`String.length`を加算し、解説50字の条件も
+将来の自動昇格を防ぐ歯止めとして維持した。3DBの内容は変更していない。
+
+| 項目 | 切替結果 |
+|---|---:|
+| 生成カードページ | 91件 |
+| index | 54件。robotsメタなし・sitemap掲載・広告あり |
+| noindex | 37件。`noindex,follow`・sitemap非掲載・広告なし |
+| sitemap | 手書き23 + モンスター生成58 + カード生成54 = 135URL |
+| `assist.html`旧fragmentリンク | 0件 |
+| `assist.html`静的カードリンク | 91件。全リンク先実在 |
+| `cards/SSR-hori.html` | `cards/f9-SSR-hori.html`へcanonical・meta refresh・通常リンクで誘導 |
+
+`node scripts/verify.js`はカード91件についてゲートとsitemap・robots・広告の一致を3DBから
+再計算し、一覧リンクと転送元URLも継続検査する。`cards/SSR-hori.html`はnoindexを付けず、
+sitemapから除外した。モンスター側の生成物と`monsters.html`は変更していない。
+`index.html`はカードリンク4本のURLだけを同じ静的URL形式へ切り替えた。

@@ -940,13 +940,13 @@ function createCmsSeed(context, detailPages) {
 function renderSitemap(existingXml, pages) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
-  const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)<\/loc>/;
+  const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/(?:monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)|cards\/[^/]+\.html)<\/loc>/;
   const existingBlocks = matches
     .map(match => match[0])
     .filter(block => !generatedUrlPattern.test(block));
 
-  if (existingBlocks.length !== 24) {
-    throw new Error(`sitemap.xml の既存URLが24件ではありません: ${existingBlocks.length}件`);
+  if (existingBlocks.length !== 23) {
+    throw new Error(`sitemap.xml の手書きURLが23件ではありません: ${existingBlocks.length}件`);
   }
 
   const header = existingXml.slice(0, matches[0].index);
@@ -1107,7 +1107,8 @@ function main() {
       return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
         - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
     }));
-  const sitemap = renderSitemap(inputs.sitemap, sitemapPages);
+  const assistBuild = buildAssistPages({ dryRun: DRY_RUN });
+  const sitemap = renderSitemap(inputs.sitemap, sitemapPages.concat(assistBuild.sitemapPages));
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
@@ -1133,7 +1134,6 @@ function main() {
     JSON.stringify(cmsSeed, null, 2) + '\n'
   )]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
-  buildAssistPages({ dryRun: DRY_RUN });
 }
 
 try {

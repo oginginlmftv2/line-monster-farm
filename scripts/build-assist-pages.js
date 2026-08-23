@@ -11,6 +11,9 @@ const INPUTS = {
   abilities: 'src/data/assist-abilities.json',
 };
 const RANK_ORDER = ['無凸', '1凸', '2凸', '3凸', '4凸'];
+const INDEXABLE_VISIBLE_CHARS = 800;
+const INDEXABLE_EXPLANATION_CHARS = 50;
+const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>';
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
@@ -156,9 +159,11 @@ ${card.formations.map(formation => `    <h3 class="assist-subtitle">${escapeHtml
   </section>`;
 }
 
-function renderPage(card, effects, abilities, cardById) {
+function renderPage(card, effects, abilities, cardById, indexable) {
   const canonical = `${SITE_URL}/cards/${card.cardId}.html`;
   const title = `${card.name}（${card.rarity}・${card.aura}）| LINEモンスターファーム徹底攻略`;
+  const robotsMeta = indexable ? '' : '\n  <meta name="robots" content="noindex,follow">';
+  const adsense = indexable ? `\n  ${ADSENSE_TAG}` : '';
   const basicRows = [
     ['レアリティ', card.rarity],
     ['オーラ', card.aura],
@@ -176,11 +181,10 @@ function renderPage(card, effects, abilities, cardById) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
-  <meta name="description" content="${escapeHtml(descriptionFor(card))}">
-  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="${escapeHtml(descriptionFor(card))}">${robotsMeta}
   <link rel="canonical" href="${escapeHtml(canonical)}">
   <link rel="stylesheet" href="../style.css">
-  <link rel="stylesheet" href="../assist-detail.css">
+  <link rel="stylesheet" href="../assist-detail.css">${adsense}
 </head>
 <body class="assist-detail-page">
 <header>
@@ -265,22 +269,34 @@ function buildAssistPages(options = {}) {
     const effects = effectsByCard[card.cardId].effects;
     const abilities = resolvedAbilities.filter(ability => ability.cardId === card.cardId)
       .sort((a, b) => a.sortOrder - b.sortOrder);
-    const html = renderPage(card, effects, abilities, cardById);
-    counts[writeIfChanged(`cards/${card.cardId}.html`, html, dryRun)]++;
     const effectChars = effects.reduce((sum, effect) => sum + stripTags(effect.name).length + stripTags(effect.description).length, 0);
     const abilityChars = abilities.reduce((sum, ability) => sum + stripTags(ability.name).length + stripTags(ability.description).length, 0);
     const explanationChars = stripTags(card.explanation).length;
-    reports.push({ cardId: card.cardId, visible: effectChars + abilityChars + explanationChars, explanation: explanationChars });
+    const visible = effectChars + abilityChars + explanationChars;
+    const indexable = visible >= INDEXABLE_VISIBLE_CHARS
+      && explanationChars >= INDEXABLE_EXPLANATION_CHARS;
+    const html = renderPage(card, effects, abilities, cardById, indexable);
+    counts[writeIfChanged(`cards/${card.cardId}.html`, html, dryRun)]++;
+    reports.push({ cardId: card.cardId, visible, explanation: explanationChars, indexable });
   }
 
   const values = reports.map(report => report.visible).sort((a, b) => a - b);
-  const passed = reports.filter(report => report.visible >= 800 && report.explanation >= 160);
+  const passed = reports.filter(report => report.indexable);
   console.log('\n=== 静的カード詳細 ===');
   console.log(`  生成 ${cards.length}件 / 新規 ${counts.new}件 / 更新 ${counts.updated}件 / 変更なし ${counts.unchanged}件`);
   console.log(`  ゲート通過 ${passed.length}件: ${passed.map(report => report.cardId).join(', ')}`);
   console.log(`  可視本文 最小 ${values[0]} / 中央値 ${values[Math.floor(values.length / 2)]} / 最大 ${values[values.length - 1]} / 800字以上 ${reports.filter(report => report.visible >= 800).length}件`);
-  console.log('  ※ ゲート判定はレポートのみ。全ページ noindex,follow・広告なし');
-  return { count: cards.length, counts, reports, passed: passed.map(report => report.cardId) };
+  console.log(`  index ${passed.length}件（robotsメタなし・広告あり） / noindex ${reports.length - passed.length}件（広告なし）`);
+  return {
+    count: cards.length,
+    counts,
+    reports,
+    passed: passed.map(report => report.cardId),
+    sitemapPages: passed.map(report => ({
+      canonical: `${SITE_URL}/cards/${report.cardId}.html`,
+      priority: '0.7',
+    })),
+  };
 }
 
 if (require.main === module) {
