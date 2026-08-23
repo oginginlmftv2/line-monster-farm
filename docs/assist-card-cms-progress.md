@@ -1,8 +1,8 @@
 # アシストカードDB・静的ページ・CMS 設計進捗
 
-最終更新: 2026-08-23
+最終更新: 2026-08-24
 
-状態: **P12-2 設計案作成済み・レビュー待ち。公開物・本番データ・外部設定は未変更**
+状態: **P12-8 test実装・実機受入完了。進捗管理レビュー待ち**
 
 この文書は、アシストカード情報基盤の詳細な現在地、設計、依存関係、保留事項、
 実施順を管理する正である。全体の現在地は`docs/PROGRESS.md`、全体計画は
@@ -415,6 +415,17 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 | 11 | P12-12 | 能力検索の再構築 / `feat/p12-12-ability-search` | 静的能力DBを使う検索UI | 無 | 🔴 | 旧データを直接使わず、確認済み能力だけを検索できる |
 
 公開物または外部設定を変更するP12-7以降は、管理者の明示承認なしに開始しない。
+
+### 9-1. P12-8 test実機結果
+
+- P12-8専用のApps Scriptとスプレッドシートを作成し、本番CMS・本番Sheetとは分離した
+- Script Propertiesは`ENVIRONMENT=test`とtest用`SPREADSHEET_ID`だけを設定した。値はリポジトリへ記録しない
+- mainの公開JSONからカード91件、効果888件、能力1,079件を取り込み、`setup4_check`はissues 0
+- カード1件の保存と復元、古いversionからの保存拒否、効果11件の無変更保存、resolved能力1件の無変更保存を確認した
+- 初回exportでSheetsの日付型変換と`withStats`集計条件の不備を検出した。日付を`yyyy/MM/dd`へ戻し、全値nullのstatsを集計対象外にする修正をdeployment v2へ反映した
+- ウェブアプリは実行者本人だけに限定した。GitHub token、Driveフォルダ、公開branch、本番deploymentは使っていない
+- 修正版3DBを再exportし、元JSONとの意味差分0、`releasedAt`形式不正0件、`withStats: 56`を確認した
+- exportの秘密情報検査はメールアドレス、GitHub token、Spreadsheet ID名、Drive ID名が全て0件だった
 
 ## 10. 現在の保留・外部確認待ち
 

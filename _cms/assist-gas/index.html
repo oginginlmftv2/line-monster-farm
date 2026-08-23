@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <style>
+    :root { --ink:#302a22; --muted:#746b60; --line:#ddd2c1; --cream:#f8f2e7; --accent:#8b5e2f; --danger:#a12c2c; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); background:#f4f0e9; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif; }
+    button,input,select,textarea { font:inherit; }
+    button { border:1px solid #b8aa98; border-radius:7px; background:white; color:var(--ink); padding:8px 13px; cursor:pointer; }
+    button.primary { color:white; border-color:var(--accent); background:var(--accent); }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    header { position:sticky; top:0; z-index:5; display:flex; align-items:center; gap:12px; min-height:58px; padding:10px 18px; background:#fff; border-bottom:1px solid var(--line); }
+    header h1 { margin:0; font-size:19px; }
+    .test { padding:3px 7px; border-radius:999px; background:#fff0c7; color:#7a4d00; font-size:12px; font-weight:700; }
+    .spacer { flex:1; }
+    .muted { color:var(--muted); font-size:13px; }
+    main { display:grid; grid-template-columns:minmax(280px,360px) minmax(0,1fr); gap:16px; max-width:1440px; margin:auto; padding:16px; }
+    .panel { background:white; border:1px solid var(--line); border-radius:10px; box-shadow:0 2px 8px rgba(55,40,20,.05); }
+    .sidebar { overflow:hidden; align-self:start; position:sticky; top:74px; max-height:calc(100vh - 90px); display:flex; flex-direction:column; }
+    .filters { display:grid; grid-template-columns:1fr 110px; gap:8px; padding:12px; border-bottom:1px solid var(--line); }
+    input,select,textarea { width:100%; border:1px solid #bfb3a3; border-radius:6px; background:#fff; color:var(--ink); padding:8px; }
+    textarea { min-height:90px; resize:vertical; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12px; line-height:1.5; }
+    .card-list { overflow:auto; }
+    .card-row { display:grid; grid-template-columns:1fr auto; gap:5px 10px; width:100%; padding:10px 12px; border:0; border-bottom:1px solid #eee6da; border-radius:0; text-align:left; }
+    .card-row:hover,.card-row.active { background:var(--cream); }
+    .card-row strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .counts { grid-column:1/-1; color:var(--muted); font-size:12px; }
+    .editor { min-height:560px; padding:18px; }
+    .empty { padding:60px 20px; color:var(--muted); text-align:center; }
+    .tabs { display:flex; gap:5px; border-bottom:1px solid var(--line); margin:-4px 0 18px; overflow:auto; }
+    .tab { border:0; border-bottom:3px solid transparent; border-radius:0; padding:10px 14px; white-space:nowrap; }
+    .tab.active { border-bottom-color:var(--accent); color:var(--accent); font-weight:700; }
+    .grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+    .field label { display:block; margin:0 0 5px; font-size:13px; font-weight:700; }
+    .field.wide { grid-column:1/-1; }
+    .readonly { background:#eeeae4; }
+    .actions { position:sticky; bottom:0; display:flex; align-items:center; gap:9px; margin:18px -18px -18px; padding:12px 18px; background:rgba(255,255,255,.96); border-top:1px solid var(--line); }
+    .message { min-height:20px; margin:0 0 12px; padding:8px 10px; border-radius:6px; background:#edf6eb; color:#2e642d; display:none; white-space:pre-wrap; }
+    .message.error { display:block; background:#fdecec; color:var(--danger); }
+    .message.show { display:block; }
+    .ability-list { display:grid; gap:8px; margin-top:12px; }
+    .ability-item { display:flex; gap:8px; align-items:center; padding:9px; border:1px solid var(--line); border-radius:7px; }
+    .ability-item button { margin-left:auto; }
+    .export-box { padding:12px; margin-top:14px; border-radius:7px; background:var(--cream); }
+    .mobile-back { display:none; margin-bottom:12px; }
+    @media (max-width:760px) {
+      header { padding:9px 12px; flex-wrap:wrap; }
+      header h1 { font-size:16px; }
+      main { display:block; padding:10px; }
+      .sidebar { position:static; max-height:none; }
+      .editor { display:none; margin-top:10px; padding:14px; }
+      body.editing .sidebar { display:none; }
+      body.editing .editor { display:block; }
+      .mobile-back { display:inline-block; }
+      .grid { grid-template-columns:1fr; }
+      .field.wide { grid-column:auto; }
+      .actions { margin:18px -14px -14px; padding:10px 14px; }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <h1>ライ徹アシストCMS</h1><span class="test">TEST</span>
+  <span id="summary" class="muted">読み込み中…</span><span class="spacer"></span>
+  <button id="btnAbilitySearch">能力ID検索</button>
+  <button id="btnExport" class="primary" disabled>3DBを検証・export</button>
+  <span id="who" class="muted"></span>
+</header>
+<main>
+  <aside class="panel sidebar">
+    <div class="filters">
+      <input id="query" type="search" placeholder="カード名・IDで検索">
+      <select id="status"><option value="">状態すべて</option><option>draft</option><option>verified</option><option>published</option><option>retired</option></select>
+    </div>
+    <div id="cardList" class="card-list"><div class="empty">読み込み中…</div></div>
+  </aside>
+  <section id="editor" class="panel editor"><div class="empty">左の一覧からカードを選んでください。</div></section>
+</main>
+<script>
+'use strict';
+var state = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0 };
+function el(id){ return document.getElementById(id); }
+function esc(value){ return String(value == null ? '' : value).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function pretty(value){ return JSON.stringify(value, null, 2); }
+function parse(id,label){ try { return JSON.parse(el(id).value); } catch(e){ throw new Error(label+'のJSONが不正です。'); } }
+function setBusy(busy){ state.busy=busy; document.querySelectorAll('button').forEach(function(button){ button.disabled=busy; }); el('btnExport').disabled=busy||!state.cards.length; }
+function call(name,args,onSuccess){
+  setBusy(true);
+  var runner=google.script.run.withSuccessHandler(function(result){ setBusy(false); onSuccess(result); })
+    .withFailureHandler(function(error){ setBusy(false); show(error&&error.message?error.message:String(error),true); });
+  runner[name].apply(runner,args||[]);
+}
+function show(message,isError){
+  var box=el('message');
+  if(!box){ alert(message); return; }
+  box.textContent=message; box.className='message show'+(isError?' error':'');
+}
+function boot(){ call('api_bootstrap',[],function(data){
+  state.cards=data.cards; el('who').textContent=data.user.nickname+' / '+data.user.role;
+  el('summary').textContent='カード '+data.cards.length+'件'; el('btnExport').disabled=false; renderList();
+}); }
+function filteredCards(){
+  var q=el('query').value.trim().toLowerCase(), status=el('status').value;
+  return state.cards.filter(function(card){ return (!status||card.status===status)&&(!q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0); });
+}
+function renderList(){
+  var cards=filteredCards();
+  el('cardList').innerHTML=cards.length?cards.map(function(card){
+    return '<button class="card-row'+(card.cardId===state.selectedId?' active':'')+'" data-id="'+esc(card.cardId)+'">'+
+      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+' ・ '+esc(card.status)+'</span></button>';
+  }).join(''):'<div class="empty">該当カードなし</div>';
+  el('cardList').querySelectorAll('[data-id]').forEach(function(button){ button.onclick=function(){ openCard(button.dataset.id); }; });
+}
+function openCard(cardId){
+  state.selectedId=cardId; state.tab='card'; renderList();
+  call('api_getCard',[cardId],function(detail){ state.detail=detail; document.body.classList.add('editing'); renderEditor(); });
+}
+function tabButton(key,label,count){ return '<button class="tab'+(state.tab===key?' active':'')+'" data-tab="'+key+'">'+label+(count==null?'':' ('+count+')')+'</button>'; }
+function renderEditor(){
+  var d=state.detail;
+  if(!d)return;
+  var html='<button class="mobile-back" id="btnBack">← カード一覧</button><div id="message" class="message"></div>'+
+    '<div class="tabs">'+tabButton('card','カード')+tabButton('effects','効果',d.effects.length)+tabButton('abilities','能力',d.abilities.length)+'</div>';
+  if(state.tab==='card')html+=renderCardForm(d);
+  if(state.tab==='effects')html+=renderEffectsForm(d);
+  if(state.tab==='abilities')html+=renderAbilities(d);
+  el('editor').innerHTML=html;
+  el('btnBack').onclick=function(){ document.body.classList.remove('editing'); };
+  el('editor').querySelectorAll('[data-tab]').forEach(function(button){ button.onclick=function(){ state.tab=button.dataset.tab; renderEditor(); }; });
+  if(el('btnSaveCard'))el('btnSaveCard').onclick=saveCard;
+  if(el('btnSaveEffects'))el('btnSaveEffects').onclick=saveEffects;
+  el('editor').querySelectorAll('[data-ability]').forEach(function(button){ button.onclick=function(){ openAbility(button.dataset.ability); }; });
+}
+function optionList(values,selected,blank){ return (blank?'<option value="">—</option>':'')+values.map(function(value){ return '<option'+(value===selected?' selected':'')+'>'+esc(value)+'</option>'; }).join(''); }
+function renderCardForm(d){
+  var c=d.card;
+  return '<div class="grid">'+
+    field('cardId','cardId','text',c.cardId,true)+field('name','カード名','text',c.name)+
+    selectField('rarity','レアリティ',['MR','SSR'],c.rarity)+selectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
+    field('cardType','カードタイプ','text',c.cardType)+selectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
+    field('image','画像パス','text',c.image)+field('distance','距離適性','text',c.distance||'')+
+    field('event2','イベント2','text',c.event2||'')+field('releasedAt','実装日','text',c.releasedAt||'')+
+    jsonField('terrain','地形適性',c.terrain)+jsonField('ratings','評価',c.ratings)+
+    jsonField('stats','ステータス',c.stats)+jsonField('limitBreak','凸データ（表示には未使用）',c.limitBreak)+
+    jsonField('formations','編成',c.formations)+jsonField('sapoRef','SAPO参照',c.sapoRef)+
+    '<div class="field wide"><label>管理者解説</label><textarea id="f_explanation" rows="12">'+esc(c.explanation)+'</textarea></div>'+
+    selectField('cardStatus','状態',['draft','verified','published','retired'],c.status)+
+    '</div><div class="actions"><button class="primary" id="btnSaveCard">カードをtest保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
+}
+function field(id,label,type,value,readonly){ return '<div class="field"><label>'+label+'</label><input id="f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
+function selectField(id,label,values,selected,blank){ return '<div class="field"><label>'+label+'</label><select id="f_'+id+'">'+optionList(values,selected,blank)+'</select></div>'; }
+function jsonField(id,label,value){ return '<div class="field wide"><label>'+label+'（JSON）</label><textarea id="f_'+id+'">'+esc(pretty(value))+'</textarea></div>'; }
+function saveCard(){
+  try{
+    var c=state.detail.card;
+    var card={cardId:c.cardId,name:el('f_name').value,rarity:el('f_rarity').value,aura:el('f_aura').value,
+      cardType:el('f_cardType').value,monType:el('f_monType').value||null,image:el('f_image').value,
+      distance:el('f_distance').value||null,terrain:parse('f_terrain','地形適性'),event2:el('f_event2').value||null,
+      releasedAt:el('f_releasedAt').value||null,stats:parse('f_stats','ステータス'),limitBreak:parse('f_limitBreak','凸データ'),
+      ratings:parse('f_ratings','評価'),explanation:el('f_explanation').value,formations:parse('f_formations','編成'),
+      sapoRef:parse('f_sapoRef','SAPO参照'),status:el('f_cardStatus').value};
+    call('api_saveCard',[{cardId:c.cardId,version:state.detail.version,card:card}],function(result){
+      show('保存しました。version '+result.version,false); openCard(c.cardId);
+    });
+  }catch(error){show(error.message,true);}
+}
+function renderEffectsForm(d){ return '<p class="muted">カード内の全効果を配列で保存します。effectId・sortOrder・文字列は自動補正しません。</p>'+
+  '<div class="field"><label>効果（JSON配列）</label><textarea id="f_effects" rows="28">'+esc(pretty(d.effects))+'</textarea></div>'+
+  '<div class="actions"><button class="primary" id="btnSaveEffects">効果をtest保存</button><span class="muted">空配列はdraftとして保持</span></div>'; }
+function saveEffects(){ try{ var effects=parse('f_effects','効果'); call('api_saveEffects',[{cardId:state.selectedId,effects:effects}],function(){ show('効果を保存しました。',false); openCard(state.selectedId); }); }catch(error){show(error.message,true);} }
+function renderAbilities(d){
+  return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
+    (d.abilities.length?d.abilities.map(function(a){return '<div class="ability-item"><div><strong>'+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
+}
+function openAbility(id){ call('api_getAbility',[id],function(result){ state.ability=result.ability;state.abilityVersion=result.version;renderAbilityForm(); }); }
+function renderAbilityForm(){
+  var a=state.ability;
+  el('editor').innerHTML='<button class="mobile-back" id="btnBack">← 戻る</button><div id="message" class="message"></div><h2>能力編集</h2><div class="grid">'+
+    field('abilityId','abilityId','text',a.abilityId,true)+field('legacyId','legacyId','number',a.legacyId,true)+
+    field('abilityCardId','cardId（resolvedのみ）','text',a.cardId||'')+field('sourceName','元のカード名','text',a.sourceName)+
+    field('abilityName','能力名','text',a.name)+selectField('abilitySource','入手元',['イベント','閃き','EXトレ'],a.source)+
+    selectField('abilityRarity','レアリティ',['SSR','MR'],a.rarity,true)+field('sortOrder','sortOrder','number',a.sortOrder==null?'':a.sortOrder)+
+    selectField('linkStatus','linkStatus',['resolved','ambiguous','unlinked'],a.linkStatus)+selectField('abilityStatus','状態',['draft','verified'],a.status)+
+    jsonField('tags','タグ',a.tags)+jsonField('flags','flags',a.flags)+
+    '<div class="field wide"><label>説明</label><textarea id="f_abilityDescription" rows="10">'+esc(a.description)+'</textarea></div></div>'+
+    '<div class="actions"><button class="primary" id="btnSaveAbility">能力をtest保存</button><span class="muted">version '+state.abilityVersion+'</span></div>';
+  el('btnBack').onclick=function(){ if(state.detail)renderEditor();else document.body.classList.remove('editing'); };
+  el('btnSaveAbility').onclick=saveAbility;
+}
+function saveAbility(){
+  try{
+    var a={abilityId:state.ability.abilityId,legacyId:state.ability.legacyId,cardId:el('f_abilityCardId').value||null,
+      sourceName:el('f_sourceName').value,name:el('f_abilityName').value,description:el('f_abilityDescription').value,
+      source:el('f_abilitySource').value,rarity:el('f_abilityRarity').value||null,tags:parse('f_tags','タグ'),
+      sortOrder:el('f_sortOrder').value===''?null:Number(el('f_sortOrder').value),linkStatus:el('f_linkStatus').value,
+      flags:parse('f_flags','flags'),status:el('f_abilityStatus').value};
+    call('api_saveAbility',[{ability:a,version:state.abilityVersion}],function(result){ show('能力を保存しました。version '+result.version,false);openAbility(a.abilityId); });
+  }catch(error){show(error.message,true);}
+}
+function searchAbility(){ var id=prompt('abilityIdを入力してください'); if(!id)return; document.body.classList.add('editing'); openAbility(id.trim()); }
+function exportAll(){
+  if(!confirm('testシートを検証し、3つのJSONをブラウザへ保存します。公開サイトは変更しません。'))return;
+  call('api_export',[],function(result){
+    result.files.forEach(function(file){var blob=new Blob([file.content],{type:'application/json;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=file.name;a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);});
+    alert('export成功\n'+result.files.map(function(file){return file.name+'\nSHA-256 '+file.sha256;}).join('\n\n'));
+  });
+}
+el('query').oninput=renderList;el('status').onchange=renderList;el('btnAbilitySearch').onclick=searchAbility;el('btnExport').onclick=exportAll;boot();
+</script>
+</body>
+</html>
