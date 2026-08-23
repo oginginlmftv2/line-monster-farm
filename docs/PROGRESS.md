@@ -30,7 +30,8 @@
 | P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **完了** | ⚪ | PR #36をmainへマージ（`181f245`）。1,079能力をcardId基準へ正規化 |
 | P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **完了** | 🔴 | PR #37をmainへマージ（`9afc20d`）。91件を全件noindexで生成し実物確認済み |
 | P12-7b | カード詳細の公開導線切替 | `feat/p12-7b-assist-links` | **完了** | 🔴 | PR #38をmainへマージ（`1883098`）。54件をindex、37件をnoindexとし公開導線を切替 |
-| P12-8 | アシストCMS基盤 | `feat/p12-8-assist-cms` | **レビュー待ち** | ⚪ | 独立test GAS/Sheetで91カード・888効果・1,079能力を取込。編集・競合拒否・export一致を実機確認 |
+| P12-8 | アシストCMS基盤 | `feat/p12-8-assist-cms` | **完了** | ⚪ | PR #39をmainへマージ（`91f7ab7`）。独立test GAS/Sheetで編集・競合拒否・export一致を実機確認 |
+| P12-8b | CMS構造化フォーム | 未着手 | **未着手** | ⚪ | JSON直接入力を運用者向けフォームへ置換。本番移行前の必須作業 |
 
 ## 最新mainの監査値
 
@@ -190,12 +191,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-8「アシストCMS基盤（test環境）」のレビューと受入確認を行う。
+P12-8b「CMS構造化フォーム」を次の候補とする。
 
-- ブランチ: `feat/p12-8-assist-cms`
+- ブランチ: 着手時に進捗管理チャットが提示する
 - 本番影響: ⚪（test環境のみ。本番deploymentは変更しない）
-- 本番と分離したtest GAS/Sheetへ3DBを取り込み、編集・同時編集拒否・検査を実機確認済み
-- 日付セルの文字列正規化と`withStats`集計を修正したdeployment v2から3DBを再exportし、元JSONとの意味差分0を確認済み
+- `terrain`、`ratings`、`stats`、`formations`、効果配列、能力タグを構造化フォームで編集できるようにする
+- `limitBreak`、`sapoRef`、内部flagsなどは参照専用または非表示とし、誤編集を防ぐ
 - 本番スプレッドシートとの同居はP12-11、`cms/assist-publish`と専用WorkflowはP12-10で扱う
 - あわせて、執筆で昇格を狙えるカードが12件ある（あと100字以内で800字に届く）
   キャトル(あと4字)、ピーシィ(黄)(あと20字)、ディアナ(あと30字)、キング(あと37字) ほか
