@@ -1,6 +1,6 @@
 # 進捗
 
-最終更新: 2026-08-23
+最終更新: 2026-08-24
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -25,11 +25,12 @@
 | P12-2 | アシストカードDB・静的ページ・CMS設計 | `chore/p12-2-assist-cms-design` | **完了** | ⚪ | mainへマージ（`37be17e`）。PRを介さないローカルマージ。設計のみで公開物は無変更 |
 | P12-3 | アシストカードデータ監査 | `chore/p12-3-assist-data-audit` | **完了** | ⚪ | PR #32をmainへマージ（`c760910`）。監査値は独立検算で全項目一致 |
 | P12-3b | 能力画像割当のリポジトリ化 | `chore/p12-3b-ability-assignments` | **完了** | ⚪ | PR #33をmainへマージ（`a40f13e`）。Firestoreの一次資料を正データ化 |
-| P12-4 | カードDB正規化 | `chore/p12-4-assist-card-db` | **進行中** | ⚪ | 現行91カードをcardId基準で統合。公開表示は未切替 |
+| P12-4 | カードDB正規化 | `chore/p12-4-assist-card-db` | **完了** | ⚪ | PR #34をmainへマージ（`f4bfc24`）。現行91カードをcardId基準で統合 |
+| P12-5 | 効果DB正規化 | `chore/p12-5-assist-effects-db` | **進行中** | ⚪ | 83カード888効果を損失なく変換し、未登録8カードをdraftで明示 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`a40f13e`（P12-3bマージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`f4bfc24`（P12-4マージ後。表の監査値は不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -183,12 +184,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-5「効果DB正規化」だけを次に行う。
+P12-6「能力DB正規化」だけを次に行う。
 
-- ブランチ: `chore/p12-5-assist-effects-db`
+- ブランチ: `chore/p12-6-assist-abilities-db`
 - 本番影響: ⚪。公開HTML、本番データ、外部設定を変更しない
-- `src/data/assist-effects.json` を作り、83カード888効果を損失なく変換する
-- 未登録8カードを明示し、効果側の全cardIdをカードDBと照合する
+- `src/data/assist-abilities.json` を作り、1,079能力をcardId基準へ正規化する
+- 確定・候補・未解決を分離し、曖昧な対応を自動確定しない
 - 詳細設計は `docs/assist-card-cms-progress.md` を正とする
 
 ## 明示的な保留
