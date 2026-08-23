@@ -28,11 +28,12 @@
 | P12-4 | カードDB正規化 | `chore/p12-4-assist-card-db` | **完了** | ⚪ | PR #34をmainへマージ（`f4bfc24`）。現行91カードをcardId基準で統合 |
 | P12-5 | 効果DB正規化 | `chore/p12-5-assist-effects-db` | **完了** | ⚪ | PR #35をmainへマージ（`aa83102`）。83カード888効果を損失なく変換 |
 | P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **完了** | ⚪ | PR #36をmainへマージ（`181f245`）。1,079能力をcardId基準へ正規化 |
-| P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **進行中** | 🔴 | 91件を全件noindex・sitemap非掲載・広告なしで生成。公開導線は未切替 |
+| P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **完了** | 🔴 | PR #37をmainへマージ（`9afc20d`）。91件を全件noindexで生成し実物確認済み |
+| P12-7b | カード詳細の公開導線切替 | `feat/p12-7b-assist-links` | **進行中** | 🔴 | 54件をindex、37件をnoindexとし、一覧・sitemap・旧ホリィURLを切替 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`181f245`（P12-6マージ後。表の監査値は不変）
+調査基準: P12-7b作業ブランチ（基点は`origin/main`の`9afc20d`。モンスター側の監査値は不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -42,7 +43,9 @@
 | 生成詳細ページ | 351件 | ID一覧のURL実在をNodeで照合 |
 | index / noindex | 52 / 299 | 生成HTMLのrobots metaをNodeで集計 |
 | モン類ページ | 6件 | `monsters/<monSlug>/index.html` |
-| sitemap | 82URL | `<loc>`を集計。既存24 + 詳細52 + モン類6 |
+| カード詳細ページ | 91件 | `src/data/assist-cards.json`のcardIdと生成HTMLを照合 |
+| カード index / noindex | 54 / 37 | 可視本文800字以上かつ解説50字以上を3DBから再計算 |
+| sitemap | 135URL | `<loc>`を集計。手書き23 + モンスター生成58 + カード生成54 |
 | 公開方式 | main直接配信 | `AGENTS.md`、`CLAUDE.md`、CMS Workflow |
 
 件数はCMS公開で変わるため、次回も固定値を信じずスクリプトで集計する。
@@ -186,15 +189,14 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-7b「カード詳細の公開導線切替」を次の候補とする。
+P12-8「アシストCMS基盤（test環境）」を次の候補とする。
 
-- ブランチ: `feat/p12-7b-assist-links`
-- 本番影響: 🔴。マージ＝即公開
-- ゲート（可視本文800字以上 かつ 解説160字以上）を満たす24件の noindex を外す
-- 24件を sitemap へ追加する
-- `assist.html` のリンク91本を静的URLへ切り替える
-- `cards/SSR-hori.html` を `cards/f9-SSR-hori.html` への転送に切り替える
-- **管理者の明示承認なしに着手しない**
+- ブランチ: `feat/p12-8-assist-cms`
+- 本番影響: ⚪（test環境のみ。本番deploymentは変更しない）
+- モンスターCMSと同じスプレッドシートにシートを追加し、3DBを編集・exportできるようにする
+- 公開経路は `cms/assist-publish` と専用Workflowに分ける。既存の許可リストを広げない
+- あわせて、執筆で昇格を狙えるカードが12件ある（あと100字以内で800字に届く）
+  キャトル(あと4字)、ピーシィ(黄)(あと20字)、ディアナ(あと30字)、キング(あと37字) ほか
 
 ## 明示的な保留
 

@@ -838,10 +838,16 @@ if (!exists('src/data/assist-cards.json')) {
     const abilities = exists('src/data/assist-abilities.json')
       ? JSON.parse(read('src/data/assist-abilities.json')).abilities || []
       : [];
+    const effectsByCard = exists('src/data/assist-effects.json')
+      ? JSON.parse(read('src/data/assist-effects.json')).cards || {}
+      : {};
     const resolvedAbilityCounts = new Map();
+    const resolvedAbilitiesByCard = new Map();
     for (const ability of abilities) {
       if (ability.linkStatus !== 'resolved') continue;
       resolvedAbilityCounts.set(ability.cardId, (resolvedAbilityCounts.get(ability.cardId) || 0) + 1);
+      if (!resolvedAbilitiesByCard.has(ability.cardId)) resolvedAbilitiesByCard.set(ability.cardId, []);
+      resolvedAbilitiesByCard.get(ability.cardId).push(ability);
     }
     const expectedPaths = cards.map(card => `cards/${card.cardId}.html`);
     const expectedSet = new Set(expectedPaths);
@@ -907,6 +913,75 @@ if (!exists('src/data/assist-cards.json')) {
       ng(`生成カードの画像参照が実在しない: ${missingImages.slice(0, 5).map(card => card.image).join(', ')}`);
     } else {
       ok(`生成カード ${cards.length}件の画像参照がすべて実在`);
+    }
+
+    const stripTags = value => String(value || '').replace(/<[^>]+>/g, '');
+    const sitemapPaths = exists('sitemap.xml')
+      ? new Set([...read('sitemap.xml').matchAll(/<loc>https?:\/\/[^/]+\/(.*?)<\/loc>/g)].map(match => match[1]))
+      : new Set();
+    const gateIssues = [];
+    const indexedCards = [];
+    const noindexedCards = [];
+    for (const card of cards) {
+      const relative = `cards/${card.cardId}.html`;
+      if (!exists(relative)) continue;
+      const html = read(relative);
+      const effects = effectsByCard[card.cardId]?.effects || [];
+      const cardAbilities = resolvedAbilitiesByCard.get(card.cardId) || [];
+      const effectChars = effects.reduce((sum, effect) => (
+        sum + stripTags(effect.name).length + stripTags(effect.description).length
+      ), 0);
+      const abilityChars = cardAbilities.reduce((sum, ability) => (
+        sum + stripTags(ability.name).length + stripTags(ability.description).length
+      ), 0);
+      const explanationChars = stripTags(card.explanation).length;
+      const visibleChars = effectChars + abilityChars + explanationChars;
+      const expectedIndexable = visibleChars >= 800 && explanationChars >= 50;
+      const inSitemap = sitemapPaths.has(relative);
+      const hasRobots = /<meta\b[^>]*\bname=["']robots["'][^>]*>/i.test(html);
+      const hasNoindexFollow = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["']noindex,follow["'])[^>]*>/i.test(html);
+      const hasAds = /adsbygoogle/i.test(html);
+      if (expectedIndexable) indexedCards.push(relative);
+      else noindexedCards.push(relative);
+      if (inSitemap !== expectedIndexable) gateIssues.push(`${relative}: sitemap=${inSitemap} gate=${expectedIndexable}`);
+      if (expectedIndexable && hasRobots) gateIssues.push(`${relative}: index対象にrobotsメタあり`);
+      if (!expectedIndexable && !hasNoindexFollow) gateIssues.push(`${relative}: noindex,followなし`);
+      if (expectedIndexable && !hasAds) gateIssues.push(`${relative}: index対象に広告なし`);
+      if (!expectedIndexable && hasAds) gateIssues.push(`${relative}: noindex対象に広告あり`);
+    }
+    if (gateIssues.length) {
+      ng(`カードゲートとsitemap・robots・広告が不一致 ${gateIssues.length}件: ${gateIssues.slice(0, 5).join(', ')}`);
+    } else {
+      ok(`カードゲート一致（index ${indexedCards.length}件 / noindex ${noindexedCards.length}件、可視本文800字以上かつ解説50字以上）`);
+    }
+
+    const assistHtml = exists('assist.html') ? read('assist.html') : '';
+    const legacyAssistLinks = assistHtml.match(/href=["']cards\/card\.html#[^"']+["']/g) || [];
+    const staticAssistLinks = [...assistHtml.matchAll(/href=["']cards\/([^"'#]+\.html)["']/g)]
+      .map(match => `cards/${match[1]}`)
+      .filter(relative => expectedSet.has(relative));
+    const missingAssistTargets = staticAssistLinks.filter(relative => !exists(relative));
+    const missingCardLinks = expectedPaths.filter(relative => !staticAssistLinks.includes(relative));
+    const duplicateCardLinks = staticAssistLinks.filter((relative, index) => staticAssistLinks.indexOf(relative) !== index);
+    if (legacyAssistLinks.length || staticAssistLinks.length !== cards.length || missingAssistTargets.length
+      || missingCardLinks.length || duplicateCardLinks.length) {
+      ng(`assist.htmlのカード導線が不正（旧形式 ${legacyAssistLinks.length} / 静的 ${staticAssistLinks.length} / リンク切れ ${missingAssistTargets.length} / 欠落 ${missingCardLinks.length} / 重複 ${duplicateCardLinks.length}）`);
+    } else {
+      ok(`assist.htmlのカードリンク ${staticAssistLinks.length}件が静的URLで全件実在`);
+    }
+
+    const redirectPath = 'cards/SSR-hori.html';
+    const redirectHtml = exists(redirectPath) ? read(redirectPath) : '';
+    const redirectCanonical = redirectHtml.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']+)["'])[^>]*>/i)?.[1];
+    const redirectValid = redirectCanonical === 'https://line-monster-farm-tetteikouryaku.com/cards/f9-SSR-hori.html'
+      && /<meta\b(?=[^>]*\bhttp-equiv=["']refresh["'])(?=[^>]*\bcontent=["']0; url=f9-SSR-hori\.html["'])[^>]*>/i.test(redirectHtml)
+      && /href=["']f9-SSR-hori\.html["']/.test(redirectHtml)
+      && !/<meta\b(?=[^>]*\bname=["']robots["'])[^>]*>/i.test(redirectHtml)
+      && !sitemapPaths.has(redirectPath);
+    if (!redirectValid) {
+      ng('cards/SSR-hori.htmlのcanonical・meta refresh・通常リンク・robots・sitemap除外が不正');
+    } else {
+      ok('cards/SSR-hori.htmlは新URLへcanonical・meta refresh・通常リンクで誘導しsitemap非掲載');
     }
   } catch (error) {
     ng(`静的アシストカード詳細の検査に失敗: ${error.message}`);
