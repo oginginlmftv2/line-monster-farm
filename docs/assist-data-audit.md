@@ -226,3 +226,39 @@ SAPO対応表の`candidate`は次の3件である。名前一致候補は保持�
 | `lMfDB_abilities.json` | `397f16d5f1bae4b35c440ec4194ddf18286a9b4573e133a78e2609892219bf90` |
 | `lmfdb_abilities_data.json` | `c4c3c8639abe1475d9c0513d695856a0046883bfb48cdc997876ff872796a6e2` |
 | `src/data/monster-ids.json` | `9e001a141b611ed877161999e2418b53474e917eaad8165e0bff6ec23a7eb7e1` |
+
+## 7. カードDBの統合結果
+
+P12-4で`node scripts/build-assist-cards.js`を実行し、現行91カードを
+`src/data/assist-cards.json`へ`cardId`基準で統合した。SAPO_DATAは
+`src/data/_audit/sapo-card-map.json`の`matchType: "exact"`だけを移送し、
+`candidate` 3件と`none`は移送していない。全カードの状態は`draft`とし、公開表示は切り替えていない。
+
+| 項目 | 統合結果 |
+|---|---:|
+| cards | 91件。`cards/cards-data.js`のキー集合・キー順と完全一致 |
+| image | 91件すべて実在（jpg 76 / png 15） |
+| rarity | MR 47 / SSR 44 |
+| aura | 赤 20 / 緑 14 / 黄 16 / 白 11 / 黒 17 / 青 13 |
+| cardType | 24種 |
+| monType | 幻霊14 / 無機12 / 創造15 / 獣族9 / 魔族14 / 怪物10 / null 17 |
+| distanceが非null | 22件（零距離5 / 遠距離7 / 中距離4 / 近距離6） |
+| terrainが非空 | 19件。2要素`["海岸", "砂漠"]`は1件 |
+| event2が非null | 27件 |
+| ratings | 90件。全件`ikusei / karyo / battle / ta`の4項目 |
+| explanationが非空 | 85件。空5件と未収録1件の計6件は空文字 |
+| formations | 5カード。参照するcardId 11種はすべて実在 |
+| stats・limitBreakあり | 56件（main 42 / sub 14） |
+| stats・limitBreakなし | 35件。全項目null |
+| limitBreak 1a / 1b | 56 / 45 |
+| limitBreak 2a / 2b | 56 / 53 |
+| limitBreak 3a / 3b | 56 / 7 |
+| limitBreak 4a / 4b | 56 / 2 |
+| main専用stats | main由来42件で5項目すべて充足。欠損0 |
+| sub専用stats | sub由来14件で5項目すべて充足。欠損0 |
+| releasedAt | 対応56件すべて`YYYY/MM/DD`形式。日付以外0 |
+| candidateから移送 | 0件 |
+
+`generatedAt`は`null`固定である。生成を3回行った結果、各回のSHA-256は
+`43cf9323af826621c912e73da49126c842342bdd54fb2ba3198b21a648dccbbf`で一致し、
+バイト単位の決定性を確認した。
