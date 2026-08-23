@@ -2,7 +2,7 @@
 
 最終更新: 2026-08-24
 
-状態: **P12-8 test実装・実機受入完了。進捗管理レビュー待ち**
+状態: **P12-8完了。次はP12-8bの構造化フォーム化**
 
 この文書は、アシストカード情報基盤の詳細な現在地、設計、依存関係、保留事項、
 実施順を管理する正である。全体の現在地は`docs/PROGRESS.md`、全体計画は
@@ -409,10 +409,11 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 | 5 | P12-6 | 能力DB正規化 / `chore/p12-6-assist-abilities-db` | `src/data/assist-abilities.json`、ID対応表、検証スクリプト | 必要ならFirestore読取 | ⚪ | 1,079件を確定・候補・未解決に分離し、誤対応0、重複ID 0 |
 | 6 | P12-7 | 静的カード詳細生成 / `feat/p12-7-assist-pages` | `docs/build-spec.md`、`build.js`、`verify.js`、生成HTML、一覧、互換入口、sitemap | 無 | 🔴 | 入力全件を決定的生成し、固有canonical、index制御、リンク、FAIL 0 |
 | 7 | P12-8 | アシストCMS基盤 / `feat/p12-8-assist-cms` | `_cms/assist-gas`、test Sheet仕様、管理画面、検証 | 新規test GAS/Sheet/Drive | ⚪（test） | 3DBをtest環境で編集・exportでき、本番deploymentは未変更 |
-| 8 | P12-9 | OCR・レビュー工程 / `feat/p12-9-assist-ocr` | OCR adapter、parser、レビュー画面、重複検査 | OCR方式により外部サービス | ⚪（test） | OCR候補が自動公開されず、手入力fallbackと原画像照合が通る |
-| 9 | P12-10 | CMS公開PR経路test / `feat/p12-10-assist-publish` | 専用Workflow、source/generated gate、test手順 | GitHub test branch・専用token/App | ⚪（test） | 許可差分PR成功、許可外・古いmain・未確認データはmain不変でFAIL |
-| 10 | P12-11 | 本番移行 / `feat/p12-11-assist-cutover` | 本番データ取込、CMS deployment、全静的ページ切替 | GAS/Sheet/Drive/GitHub | 🟡🔴 | 管理者承認後、公開成功、全カード表示、旧URL互換、復旧確認 |
-| 11 | P12-12 | 能力検索の再構築 / `feat/p12-12-ability-search` | 静的能力DBを使う検索UI | 無 | 🔴 | 旧データを直接使わず、確認済み能力だけを検索できる |
+| 8 | P12-8b | CMS構造化フォーム / 未提示 | JSON入力UI、繰り返し行、選択式入力、内部項目の参照専用化 | test GAS更新 | ⚪（test） | 運用者がJSONを直接編集せず3DBを安全に更新でき、無損失exportを維持 |
+| 9 | P12-9 | OCR・レビュー工程 / `feat/p12-9-assist-ocr` | OCR adapter、parser、レビュー画面、重複検査 | OCR方式により外部サービス | ⚪（test） | OCR候補が自動公開されず、手入力fallbackと原画像照合が通る |
+| 10 | P12-10 | CMS公開PR経路test / `feat/p12-10-assist-publish` | 専用Workflow、source/generated gate、test手順 | GitHub test branch・専用token/App | ⚪（test） | 許可差分PR成功、許可外・古いmain・未確認データはmain不変でFAIL |
+| 11 | P12-11 | 本番移行 / `feat/p12-11-assist-cutover` | 本番データ取込、CMS deployment、全静的ページ切替 | GAS/Sheet/Drive/GitHub | 🟡🔴 | 管理者承認後、公開成功、全カード表示、旧URL互換、復旧確認 |
+| 12 | P12-12 | 能力検索の再構築 / `feat/p12-12-ability-search` | 静的能力DBを使う検索UI | 無 | 🔴 | 旧データを直接使わず、確認済み能力だけを検索できる |
 
 公開物または外部設定を変更するP12-7以降は、管理者の明示承認なしに開始しない。
 
