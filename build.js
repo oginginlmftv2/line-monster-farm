@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { buildAssistPages } = require('./scripts/build-assist-pages');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -1132,6 +1133,7 @@ function main() {
     JSON.stringify(cmsSeed, null, 2) + '\n'
   )]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
+  buildAssistPages({ dryRun: DRY_RUN });
 }
 
 try {
