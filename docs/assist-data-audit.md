@@ -358,3 +358,48 @@ P12-6で`node scripts/build-assist-abilities.js`を実行し、`lMfDB_abilities.
 生成を2回行った結果、各回のSHA-256は
 `cf0cb7fe3b61e625c5c53f53db61d8ff4d33e91adbcb139a7eaab8c64fb42a90`で一致し、
 バイト単位の決定性を確認した。
+
+## 10. 静的カード詳細の生成結果
+
+P12-7で3DBを入力に`cards/<cardId>.html`を91件生成した。公開導線切替前の確認用として、
+全件を`noindex,follow`・広告なし・sitemap非掲載とした。`assist.html`、旧共通詳細、
+既存`cards/SSR-hori.html`は変更していない。
+
+| 項目 | 生成結果 |
+|---|---:|
+| 生成ページ | 91件。`assist-cards.json`のcardIdと1対1 |
+| noindex,follow | 91件。例外0 |
+| adsbygoogle | 0件 |
+| title / description / canonical / h1 | 全91件にあり、各項目の重複0 |
+| canonical | 全91件が自己URL。重複0 |
+| 画像参照 | 91件すべて`assist-cards/`に実在 |
+| 効果を表示 | 83カード |
+| resolved能力を表示 | 71カード |
+| ステータス節を表示 | 56カード |
+| 解説節を表示 | 85カード |
+| 編成節を表示 | 5カード |
+| 評価節を表示 | 90カード |
+
+評価4項目は`src/data/cards-editorial.json`（2026-08-18のFirestore `cards` collection export）
+からカードDBへ文字列の意味を変えず移送された。表示名は本番`cards/card.html`を正として、
+`ikusei=総合力育成`、`karyo=火力`、`battle=バトル性能`、`ta=他オーラモン類`とする。
+総合評価は4項目、一致評価は`ta`を除く3項目の平均を小数第1位で切り捨てて表示する。
+
+`limitBreak`は効果DBと重複するため独立節を出していない。能力は`linkStatus: resolved`だけを
+`sortOrder`順に出し、`ambiguous`と`unlinked`は表示していない。効果は`unlockRank`を
+無凸から4凸の順にグループ化した。
+
+可視本文は効果とresolved能力の`name + description`、解説を、各文字列からタグ除去後に
+加算した。最小0字、中央値870字、最大1,677字、800字以上54件だった。可視本文800字以上かつ
+解説160字以上のレポート用ゲートは24件が通過した。この判定はHTMLへ適用せず、91件すべての
+robotsをnoindexに固定した。
+
+`node build.js`を2回連続で実行し、両方ともカードHTMLの更新0件だった。91件をカードDB順に
+連結したSHA-256は両回とも
+`483a768a75c1efa5b14372f01f50af46038719d6aef0efc71176263c8ade5d0d`で一致した。
+本番の旧ルピナス・ホリィ詳細と比較し、カード画像の中央配置、`/ 5.0`付き評価カード、
+能力ごとの影・角丸カード、見出しサイズ、セクション間隔を再現した。表の見出し列は黒背景を
+使わず薄いクリーム色とし、小見出しと表の間に16pxの余白を設けた。PC、390px、320pxで
+横スクロール0、画像読込成功、コンソールエラー0を確認した。見出しはPCでh1 24px・h2 20px・
+h3 16px、スマートフォンでh1 20px・h2 16px・h3 14pxに固定し、ブラウザ既定値へ依存しない。
+解説と一覧を含む最上位セクション間は30pxを維持した。

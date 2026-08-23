@@ -1,0 +1,187 @@
+.assist-detail-page .container {
+  max-width: 640px;
+}
+
+.assist-detail-page .section {
+  margin-bottom: 30px;
+}
+
+.assist-card-visual {
+  text-align: center;
+  padding: 12px 0 20px;
+}
+
+.assist-card-visual img {
+  width: 260px;
+  max-width: 100%;
+  height: auto;
+  display: inline-block;
+}
+
+.assist-card-visual p {
+  margin-top: 8px;
+}
+
+.assist-detail-table {
+  margin-top: 16px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+.assist-detail-table th,
+.assist-detail-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #eee4d3;
+  line-height: 1.6;
+}
+
+.assist-detail-table th {
+  width: 36%;
+  background: #fff7e8;
+  color: #5b4218;
+  font-size: 14px;
+  font-weight: bold;
+  vertical-align: top;
+}
+
+.assist-detail-table td {
+  background: #fff;
+  color: #333;
+  font-size: 14px;
+}
+
+.assist-detail-table tr:hover th,
+.assist-detail-table tr:hover td {
+  background: #fffaf1;
+}
+
+.assist-detail-table tr:last-child th,
+.assist-detail-table tr:last-child td {
+  border-bottom: none;
+}
+
+.assist-subtitle {
+  margin: 26px 0 12px;
+  padding: 0 0 7px;
+  border-bottom: 2px solid #f0a500;
+  color: #4b3714;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.assist-rating-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.assist-rating-card {
+  padding: 14px 10px;
+  border: 1px solid #eee4d3;
+  border-radius: 9px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.assist-rating-card--summary {
+  background: #fff8e8;
+  border-color: #f0c76b;
+}
+
+.assist-rating-label {
+  margin-bottom: 5px;
+  color: #4b3714;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.4;
+}
+
+.assist-rating-value {
+  color: #d66f00;
+  font-size: 22px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.assist-rating-max {
+  margin-left: 3px;
+  color: #999;
+  font-size: 12px;
+}
+
+.assist-ability-card {
+  margin-top: 14px;
+  padding: 18px 20px;
+  border: 1px solid #eadfca;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #fff 0%, #fffaf1 100%);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.assist-ability-title {
+  margin: 0 0 10px;
+  padding: 0 0 7px 10px;
+  border-left: 4px solid #f0a500;
+  border-bottom: 1px solid #eadfca;
+  color: #2e2618;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.assist-ability-card .comment-meta {
+  margin-top: 9px;
+}
+
+@media (max-width: 640px) {
+  .assist-detail-page .container {
+    padding: 0 14px;
+  }
+
+  .assist-detail-page .section {
+    padding: 16px;
+  }
+
+  .assist-card-visual {
+    padding-top: 6px;
+  }
+
+  .assist-detail-table th,
+  .assist-detail-table td {
+    padding: 9px 10px;
+    font-size: 13px;
+  }
+
+  .assist-subtitle {
+    margin-top: 22px;
+    font-size: 14px;
+  }
+
+  .assist-rating-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 9px;
+  }
+
+  .assist-rating-card {
+    padding: 12px 7px;
+  }
+
+  .assist-rating-label {
+    font-size: 12px;
+  }
+
+  .assist-rating-value {
+    font-size: 20px;
+  }
+
+  .assist-ability-card {
+    padding: 15px 14px;
+  }
+
+  .assist-ability-title {
+    font-size: 14px;
+  }
+}

@@ -27,11 +27,12 @@
 | P12-3b | 能力画像割当のリポジトリ化 | `chore/p12-3b-ability-assignments` | **完了** | ⚪ | PR #33をmainへマージ（`a40f13e`）。Firestoreの一次資料を正データ化 |
 | P12-4 | カードDB正規化 | `chore/p12-4-assist-card-db` | **完了** | ⚪ | PR #34をmainへマージ（`f4bfc24`）。現行91カードをcardId基準で統合 |
 | P12-5 | 効果DB正規化 | `chore/p12-5-assist-effects-db` | **完了** | ⚪ | PR #35をmainへマージ（`aa83102`）。83カード888効果を損失なく変換 |
-| P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **進行中** | ⚪ | 1,079能力をcardId基準へ正規化し、未解決・重複候補も全件保持 |
+| P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **完了** | ⚪ | PR #36をmainへマージ（`181f245`）。1,079能力をcardId基準へ正規化 |
+| P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **進行中** | 🔴 | 91件を全件noindex・sitemap非掲載・広告なしで生成。公開導線は未切替 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`aa83102`（P12-5マージ後。表の監査値は不変）
+調査基準: `origin/main`の`181f245`（P12-6マージ後。表の監査値は不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -185,13 +186,15 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-7「静的カード詳細生成」を次の候補とする。
+P12-7b「カード詳細の公開導線切替」を次の候補とする。
 
-- ブランチ: `feat/p12-7-assist-pages`
-- 本番影響: 🔴。公開HTML、一覧リンク、sitemapが変わり、mainへのマージで即時公開される
-- `docs/build-spec.md`へ仕様を追記し、3DBからカード固有URLの静的詳細を決定的に生成する
+- ブランチ: `feat/p12-7b-assist-links`
+- 本番影響: 🔴。マージ＝即公開
+- ゲート（可視本文800字以上 かつ 解説160字以上）を満たす24件の noindex を外す
+- 24件を sitemap へ追加する
+- `assist.html` のリンク91本を静的URLへ切り替える
+- `cards/SSR-hori.html` を `cards/f9-SSR-hori.html` への転送に切り替える
 - **管理者の明示承認なしに着手しない**
-- 詳細設計は `docs/assist-card-cms-progress.md` を正とする
 
 ## 明示的な保留
 

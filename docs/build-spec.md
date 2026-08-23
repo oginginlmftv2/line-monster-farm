@@ -10,6 +10,8 @@
   モン類ページが血統ハブを兼ねる（5-3）。新規生成ページ数 97 → 63。
 - 2026-08-22 改訂：CMS運用後はモンスター件数を固定せず、入力件数へ動的に追従する仕様を明記。
   同日の監査値は351体、index 52件、noindex 299件。
+- 2026-08-24 改訂：P12-7で3DBから静的アシストカード詳細91件を生成する仕様を追加。
+  公開導線の切替前のため、全件noindex・広告なし・sitemap非掲載とする。
 仕様に書かれていない挙動を追加しないこと。判断が必要な箇所は実装せず報告すること。
 
 ---
@@ -600,3 +602,93 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 - `style.css` — 既存定義は変更しない。`page-breadcrumb` の追記のみ可
 - `robots.txt` — sitemap.xml は再生成するが robots.txt は触らない
 - 血統ページを作らないこと（3-2）。仕様変更なしに追加しない
+
+---
+
+## 12. 静的アシストカード詳細（P12-7）
+
+### 12-1. 入力と入口
+
+`scripts/build-assist-pages.js`は次の3DBだけを入力とし、表示名による再照合や旧DBの参照をしない。
+
+- `src/data/assist-cards.json`
+- `src/data/assist-effects.json`
+- `src/data/assist-abilities.json`
+
+`build.js`からモジュールを`require`して呼び、CMS公開Workflowの既存入口へ含める。
+単体では`node scripts/build-assist-pages.js`、dry runは`--dry`で実行できる。
+追加パッケージ、ビルド時刻、乱数、ファイル列挙順に依存する値は使わない。
+
+### 12-2. 出力とインデックス制御
+
+`assist-cards.json`の入力順で、全91カードを`cards/<cardId>.html`へ生成してコミットする。
+canonicalは`https://line-monster-farm-tetteikouryaku.com/cards/<cardId>.html`とする。
+各ページにカード固有のtitle、description、canonical、h1を出力する。
+
+P12-7では公開導線を切り替えないため、ゲート判定に関係なく全件を次の状態に固定する。
+
+- `<meta name="robots" content="noindex,follow">`を出力する
+- AdSenseを出力しない
+- `sitemap.xml`へ追加しない
+- `assist.html`、`cards/card.html`、`cards/SSR-hori.html`を変更しない
+
+noindex解除、sitemap追加、一覧リンクと旧URLの切替はP12-7bで実物確認後に行う。
+
+### 12-3. ページ構成
+
+1. パンくず（トップ > アシストカード > カード名）
+2. h1、画像、基本属性（レアリティ、オーラ、カードタイプ、モン類、距離・地形適性、実装日）
+3. 管理者による評価。値が無ければ節ごと出さない
+4. ステータス。`stats`が全nullなら節ごと出さない
+5. アシスト効果。`unlockRank`を無凸、1凸、2凸、3凸、4凸の順にグループ化する
+6. 能力。`linkStatus: resolved`だけを`sortOrder`順に出す
+7. 管理者による解説。空なら節ごと出さない
+8. おすすめ編成。無ければ節ごと出さない
+9. `assist.html`への導線
+
+`limitBreak`は効果DBと内容が重複するため独立節として出力しない。能力の`ambiguous`と
+`unlinked`も出力しない。編成中のカード名はカードDBの`cardId`参照から解決する。
+
+表示は既存の本番カード詳細とサイト共通のサイズ感へそろえる。カード画像は中央配置し、
+評価は本番と同じ意味・計算で`/ 5.0`付きのスコアカードへ表示する。入力4項目の表示名は
+`ikusei=総合力育成`、`karyo=火力`、`battle=バトル性能`、`ta=他オーラモン類`とする。
+`ta`をタイムアタックと解釈してはならない。総合評価は4項目、一致評価は`ta`を除く3項目の
+平均を小数第1位で切り捨てる。能力は1件ずつ枠線・影・角丸のあるカードへ分け、能力名、説明、
+入手元、タグを同じ枠内に収める。h1・h2・h3はブラウザ既定の見出しサイズと余白へ依存させない。
+すべての最上位セクションは共通の
+`.section`を使い、解説と後続セクションの間にも通常の余白を確保する。
+
+すべてのDB値をHTMLエスケープする。効果・能力の`description`に含まれる`<br>`だけは
+改行として許可し、それ以外のタグは文字列としてエスケープする。サイト共通部分は`style.css`、
+生成カード詳細だけの表・評価・能力・見出し階層は`assist-detail.css`へスコープして定義する。
+既存ページへ影響する`style.css`の変更は行わない。
+
+### 12-4. レポート用ゲート
+
+HTMLのrobotsへは適用せず、標準出力だけに次を報告する。
+
+```text
+可視本文 = 効果（name + description）
+         + resolved能力（name + description）
+         + 解説
+```
+
+各文字列は`/<[^>]+>/g`でタグを除去した後の`String.length`を加算する。
+ゲートは「可視本文800字以上かつ解説160字以上」とし、通過件数・cardId一覧、可視本文の
+最小・中央値・最大・800字以上の件数を出力する。P12-7の実測は通過24件、可視本文
+最小0・中央値870・最大1,677・800字以上54件である。
+
+### 12-5. 検証と決定性
+
+`scripts/verify.js`は3DBから導いた91パスだけをカード生成物として検査する。
+`cards/card.html`と`cards/SSR-hori.html`は対象に含めない。
+
+- DBのcardIdと生成ページが1対1である
+- title、description、canonical、h1が全件にあり、カードごとに固有である
+- canonicalが自己URLを指す
+- sitemap非掲載なら`noindex,follow`がある
+- noindexページに`adsbygoogle`がない
+- カード画像参照が実在する
+
+`node build.js`を2回実行した後、生成HTML91件がバイト単位で一致し、2回目の更新が0件で
+あることを確認する。モンスター生成物、`monsters.html`、`sitemap.xml`は変更しない。

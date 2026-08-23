@@ -401,6 +401,15 @@ else {
     }
   };
   if (fs.existsSync(monstersDir)) walk(monstersDir);
+  if (exists('src/data/assist-cards.json')) {
+    try {
+      const assistCards = JSON.parse(read('src/data/assist-cards.json')).cards || [];
+      for (const card of assistCards) {
+        const file = path.join(REPO, 'cards', `${card.cardId}.html`);
+        if (fs.existsSync(file)) generated.push(file);
+      }
+    } catch { /* DB自体の詳細なエラーはセクション11で報告する */ }
+  }
 
   const sitemapPaths = new Set([...read('sitemap.xml').matchAll(/<loc>https?:\/\/[^/]+\/(.*?)<\/loc>/g)]
     .map(match => match[1].endsWith('/') ? match[1] + 'index.html' : match[1]));
@@ -814,6 +823,93 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
     }
   } catch (error) {
     ng(`assist-abilities.jsonの検査に失敗: ${error.message}`);
+  }
+}
+
+// ---------------------------------------------------------------- 14
+head('14. 静的アシストカード詳細');
+if (!exists('src/data/assist-cards.json')) {
+  ng('assist-cards.json がないため生成カードページを検査できない');
+} else if (!exists('assist-detail.css')) {
+  ng('生成カード詳細用のassist-detail.cssがない');
+} else {
+  try {
+    const cards = JSON.parse(read('src/data/assist-cards.json')).cards || [];
+    const abilities = exists('src/data/assist-abilities.json')
+      ? JSON.parse(read('src/data/assist-abilities.json')).abilities || []
+      : [];
+    const resolvedAbilityCounts = new Map();
+    for (const ability of abilities) {
+      if (ability.linkStatus !== 'resolved') continue;
+      resolvedAbilityCounts.set(ability.cardId, (resolvedAbilityCounts.get(ability.cardId) || 0) + 1);
+    }
+    const expectedPaths = cards.map(card => `cards/${card.cardId}.html`);
+    const expectedSet = new Set(expectedPaths);
+    const allCardHtml = fs.readdirSync(path.join(REPO, 'cards'), { withFileTypes: true })
+      .filter(entry => entry.isFile() && entry.name.endsWith('.html'))
+      .map(entry => `cards/${entry.name}`);
+    const actualGenerated = allCardHtml.filter(relative => (
+      /元データ: src\/data\/assist-cards\.json/.test(read(relative))
+    ));
+    const missing = expectedPaths.filter(relative => !exists(relative));
+    const unexpected = actualGenerated.filter(relative => !expectedSet.has(relative));
+    const duplicates = expectedPaths.filter((relative, index) => expectedPaths.indexOf(relative) !== index);
+    if (missing.length || unexpected.length || duplicates.length || actualGenerated.length !== cards.length) {
+      ng(`生成カードページがDBと1対1でない（DB ${cards.length} / 実在 ${actualGenerated.length} / 欠落 ${missing.length} / 余分 ${unexpected.length} / 重複ID ${duplicates.length}）`);
+    } else {
+      ok(`生成カードページ ${cards.length}件がassist-cards.jsonと1対1`);
+    }
+
+    const qualityIssues = [];
+    const titles = [];
+    const descriptions = [];
+    const canonicals = [];
+    const headings = [];
+    for (const card of cards) {
+      const relative = `cards/${card.cardId}.html`;
+      if (!exists(relative)) continue;
+      const html = read(relative);
+      const title = html.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+      const description = html.match(/<meta\b(?=[^>]*\bname=["']description["'])(?=[^>]*\bcontent=["']([^"']*)["'])[^>]*>/i)?.[1];
+      const canonical = html.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']*)["'])[^>]*>/i)?.[1];
+      const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
+      const expectedCanonical = `https://line-monster-farm-tetteikouryaku.com/cards/${card.cardId}.html`;
+      const expectedImage = `src="../${card.image}"`;
+      const rawRatingCount = Object.values(card.ratings || {}).filter(value => value !== null).length;
+      const expectedRatingCount = rawRatingCount ? rawRatingCount + 2 : 0;
+      const actualRatingCount = (html.match(/<div class="assist-rating-card(?:\s|\")/g) || []).length;
+      const expectedAbilityCount = resolvedAbilityCounts.get(card.cardId) || 0;
+      const actualAbilityCount = (html.match(/<article class="assist-ability-card">/g) || []).length;
+      if (!title || !description || !canonical || !h1) qualityIssues.push(`${relative}: title/description/canonical/h1欠落`);
+      else if (canonical !== expectedCanonical) qualityIssues.push(`${relative}: canonicalが自URLでない`);
+      if (!html.includes(expectedImage)) qualityIssues.push(`${relative}: カード画像参照がDBと不一致`);
+      if (!html.includes('<link rel="stylesheet" href="../assist-detail.css">')) qualityIssues.push(`${relative}: 専用CSS参照がない`);
+      if (/<h[1-3]\b(?![^>]*\bclass=)[^>]*>/i.test(html)) qualityIssues.push(`${relative}: classの無いh1-h3がある`);
+      if (actualRatingCount !== expectedRatingCount) qualityIssues.push(`${relative}: 評価カード数がDBと不一致`);
+      if (actualAbilityCount !== expectedAbilityCount) qualityIssues.push(`${relative}: 能力カード数がDBと不一致`);
+      if (/class="explanation-section"/.test(html)) qualityIssues.push(`${relative}: 下余白のない旧解説枠を使用`);
+      titles.push(title);
+      descriptions.push(description);
+      canonicals.push(canonical);
+      headings.push(h1);
+    }
+    const duplicateCount = values => values.length - new Set(values).size;
+    const duplicateMeta = duplicateCount(titles) + duplicateCount(descriptions)
+      + duplicateCount(canonicals) + duplicateCount(headings);
+    if (qualityIssues.length || duplicateMeta) {
+      ng(`生成カードの固有メタデータが不正（問題 ${qualityIssues.length} / 重複 ${duplicateMeta}）${qualityIssues.length ? `: ${qualityIssues.slice(0, 3).join(', ')}` : ''}`);
+    } else {
+      ok(`生成カード ${cards.length}件すべてtitle / description / canonical / h1があり固有`);
+    }
+
+    const missingImages = cards.filter(card => !exists(card.image));
+    if (missingImages.length) {
+      ng(`生成カードの画像参照が実在しない: ${missingImages.slice(0, 5).map(card => card.image).join(', ')}`);
+    } else {
+      ok(`生成カード ${cards.length}件の画像参照がすべて実在`);
+    }
+  } catch (error) {
+    ng(`静的アシストカード詳細の検査に失敗: ${error.message}`);
   }
 }
 
