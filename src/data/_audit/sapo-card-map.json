@@ -1,0 +1,2037 @@
+[
+  {
+    "sapoIndex": 0,
+    "type": "main",
+    "固有名": "ラタトスク",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d11g-MR-ratatosuku"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 1,
+    "type": "main",
+    "固有名": "ラブレス",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "e12i-MR-raburesu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 2,
+    "type": "main",
+    "固有名": "ミリアム",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "a13i-MR-miriamu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 3,
+    "type": "main",
+    "固有名": "スズカ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c14k-MR-suzuka"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 4,
+    "type": "main",
+    "固有名": "タナトス",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f15k-MR-tanatosu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 5,
+    "type": "main",
+    "固有名": "ラムスイート",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "a16h-MR-ramusuiito"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 6,
+    "type": "main",
+    "固有名": "ルリ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "b17h-MR-ruri"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 7,
+    "type": "main",
+    "固有名": "キャトル",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "e17g-MR-kyatoru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 8,
+    "type": "main",
+    "固有名": "リストン",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c18k-MR-risuton"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 9,
+    "type": "main",
+    "固有名": "パルマー",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d19h-MR-parumaa"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 10,
+    "type": "main",
+    "固有名": "リュージン",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "b17h-MR-ryuujin"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 11,
+    "type": "main",
+    "固有名": "セレネ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f21l-MR-serene"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 12,
+    "type": "main",
+    "固有名": "オフリィ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c19k-MR-ofurii"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 13,
+    "type": "main",
+    "固有名": "リッピー",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "e18l-MR-rippii"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 14,
+    "type": "main",
+    "固有名": "ともに歩む未来",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 15,
+    "type": "main",
+    "固有名": "ドルチェ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d12g-MR-doruche"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 16,
+    "type": "main",
+    "固有名": "エムロード",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d22g-MR-emuroudo"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 17,
+    "type": "main",
+    "固有名": "ミルキィ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c11j-MR-mirukii"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 18,
+    "type": "main",
+    "固有名": "ナイアーラ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c23i-MR-naiara"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 19,
+    "type": "main",
+    "固有名": "勝舞の切り札",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 20,
+    "type": "main",
+    "固有名": "ノア",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "b22h-MR-noa"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 21,
+    "type": "main",
+    "固有名": "フォールン",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f16h-MR-iburiisu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 22,
+    "type": "main",
+    "固有名": "ブライド",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d18k-MR-furan"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 23,
+    "type": "main",
+    "固有名": "スケアクロウ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "d14k-MR-sukeakurou"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 24,
+    "type": "main",
+    "固有名": "死の支配者",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 25,
+    "type": "main",
+    "固有名": "アウフィエル",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c19h-MR-aufieru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 26,
+    "type": "main",
+    "固有名": "ギフトン",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "c12l-MR-gifton"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 27,
+    "type": "main",
+    "固有名": "ナデシコ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "e20i-MR-nadeshiko"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 28,
+    "type": "main",
+    "固有名": "メガラニカ",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f24i-MR-megaranika"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 29,
+    "type": "main",
+    "固有名": "波乗りテンペスト",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 30,
+    "type": "main",
+    "固有名": "ダラス",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f14g-MR-darasu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 31,
+    "type": "main",
+    "固有名": "ヴィトニル",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "a24j-MR-vitoniru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 32,
+    "type": "main",
+    "固有名": "エスエル",
+    "キャラ名": null,
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f18l-MR-esueru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 33,
+    "type": "main",
+    "固有名": "キディ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 34,
+    "type": "main",
+    "固有名": "グラスアロマ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 35,
+    "type": "main",
+    "固有名": "マグニス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 36,
+    "type": "main",
+    "固有名": "チヨザクラ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 37,
+    "type": "main",
+    "固有名": "レドンド",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 38,
+    "type": "main",
+    "固有名": "ノヴァ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 39,
+    "type": "main",
+    "固有名": "リキエル",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 40,
+    "type": "main",
+    "固有名": "ドルーガード",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 41,
+    "type": "main",
+    "固有名": "ドレッドスパイク",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 42,
+    "type": "main",
+    "固有名": "アルベルト",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 43,
+    "type": "main",
+    "固有名": "ディアン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 44,
+    "type": "main",
+    "固有名": "カタリーナ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 45,
+    "type": "main",
+    "固有名": "ツートン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 46,
+    "type": "main",
+    "固有名": "ルーブス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 47,
+    "type": "main",
+    "固有名": "ブライトン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 48,
+    "type": "main",
+    "固有名": "ブリガンディ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 49,
+    "type": "main",
+    "固有名": "グールシャイン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 50,
+    "type": "main",
+    "固有名": "ヨツミン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 51,
+    "type": "main",
+    "固有名": "シノブ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 52,
+    "type": "main",
+    "固有名": "ズッカール",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 53,
+    "type": "main",
+    "固有名": "ラスバブ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 54,
+    "type": "main",
+    "固有名": "ステイサム",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 55,
+    "type": "main",
+    "固有名": "スコッチ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 56,
+    "type": "main",
+    "固有名": "ボレアス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 57,
+    "type": "main",
+    "固有名": "エイメイ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 58,
+    "type": "main",
+    "固有名": "グランド",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 59,
+    "type": "main",
+    "固有名": "ユノウ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 60,
+    "type": "main",
+    "固有名": "メカお父さん",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 61,
+    "type": "main",
+    "固有名": "ハクトウリキ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 62,
+    "type": "main",
+    "固有名": "カーマイン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 63,
+    "type": "main",
+    "固有名": "フレアガス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 64,
+    "type": "main",
+    "固有名": "ウロコン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 65,
+    "type": "main",
+    "固有名": "シュン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 66,
+    "type": "main",
+    "固有名": "ハイペリオン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 67,
+    "type": "main",
+    "固有名": "サクラアート",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 68,
+    "type": "main",
+    "固有名": "スイゲキ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 69,
+    "type": "main",
+    "固有名": "カペラ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 70,
+    "type": "main",
+    "固有名": "グレブ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 71,
+    "type": "main",
+    "固有名": "サラセニア",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 72,
+    "type": "main",
+    "固有名": "チャージン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 73,
+    "type": "main",
+    "固有名": "リリィ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 74,
+    "type": "main",
+    "固有名": "アントン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 75,
+    "type": "main",
+    "固有名": "ロンター",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 76,
+    "type": "main",
+    "固有名": "ヒショウ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 77,
+    "type": "main",
+    "固有名": "ハカイシ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 78,
+    "type": "main",
+    "固有名": "アカゾナエヌシ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a6j-SSR-akazonaenusi"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 79,
+    "type": "main",
+    "固有名": "バールラ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 80,
+    "type": "main",
+    "固有名": "ゴルゴーン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 81,
+    "type": "main",
+    "固有名": "アーキュロン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 82,
+    "type": "main",
+    "固有名": "ラファール",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 83,
+    "type": "main",
+    "固有名": "ムーンダスト",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 84,
+    "type": "main",
+    "固有名": "ゼーランディア",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 85,
+    "type": "main",
+    "固有名": "テレース",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 86,
+    "type": "main",
+    "固有名": "シャーキン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 87,
+    "type": "main",
+    "固有名": "紅きエース",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 88,
+    "type": "main",
+    "固有名": "白き騎士",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 89,
+    "type": "main",
+    "固有名": "コーン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 90,
+    "type": "main",
+    "固有名": "コウオウ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 91,
+    "type": "main",
+    "固有名": "タツドシ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 92,
+    "type": "main",
+    "固有名": "カイリウ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 93,
+    "type": "main",
+    "固有名": "オービン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 94,
+    "type": "main",
+    "固有名": "ルージュ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 95,
+    "type": "main",
+    "固有名": "パパルクレール",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 96,
+    "type": "main",
+    "固有名": "トウリュウモン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 97,
+    "type": "main",
+    "固有名": "ハクヨウキ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 98,
+    "type": "main",
+    "固有名": "ヒマワリ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 99,
+    "type": "main",
+    "固有名": "ストロッグ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 100,
+    "type": "main",
+    "固有名": "テテュース",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 101,
+    "type": "main",
+    "固有名": "ブリキノ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 102,
+    "type": "main",
+    "固有名": "ヤシャマル",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 103,
+    "type": "main",
+    "固有名": "ファイナライザー",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 104,
+    "type": "main",
+    "固有名": "スヴィズニル",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 105,
+    "type": "main",
+    "固有名": "エリザベス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 106,
+    "type": "main",
+    "固有名": "ソウキュウ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 107,
+    "type": "main",
+    "固有名": "新星",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 108,
+    "type": "main",
+    "固有名": "破壊の暴君",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 109,
+    "type": "main",
+    "固有名": "ユニバース",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "e1g-SSR-yunibaasu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 110,
+    "type": "main",
+    "固有名": "エコール",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 111,
+    "type": "main",
+    "固有名": "ガンバーン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 112,
+    "type": "main",
+    "固有名": "ジョンソン",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "c6k-SSR-jonson"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 113,
+    "type": "main",
+    "固有名": "さえわたる頭脳",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 114,
+    "type": "main",
+    "固有名": "類の無い逸材",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 115,
+    "type": "main",
+    "固有名": "クロース",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a1j-SSR-kurousu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 116,
+    "type": "main",
+    "固有名": "ローズヘッド",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a5g-SSR-roozuheddo"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 117,
+    "type": "main",
+    "固有名": "リカント",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "b2l-SSR-rikanto"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 118,
+    "type": "main",
+    "固有名": "たしかなぬくもり",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 119,
+    "type": "main",
+    "固有名": "通じ合った想い",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 120,
+    "type": "main",
+    "固有名": "チャコール",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "f1g-SSR-tyakooru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 121,
+    "type": "main",
+    "固有名": "アライブ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "f6l-SSR-araibu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 122,
+    "type": "main",
+    "固有名": "ミルフィー",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 123,
+    "type": "main",
+    "固有名": "レクス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "e2j-SSR-rekusu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 124,
+    "type": "main",
+    "固有名": "憑依合体",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 125,
+    "type": "main",
+    "固有名": "S・O・F",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 126,
+    "type": "main",
+    "固有名": "マリッジ",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "e3h-SSR-marijji"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 127,
+    "type": "main",
+    "固有名": "決闘王",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 128,
+    "type": "main",
+    "固有名": "天聖王",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 129,
+    "type": "main",
+    "固有名": "悪魔王",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 130,
+    "type": "main",
+    "固有名": "サフィルス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "b2h-SSR-sappirutti"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 131,
+    "type": "main",
+    "固有名": "骸骨の魔法使い",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 132,
+    "type": "main",
+    "固有名": "鮮血の戦乙女",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 133,
+    "type": "main",
+    "固有名": "森の賢王",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 134,
+    "type": "main",
+    "固有名": "新しい教え子達",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 135,
+    "type": "main",
+    "固有名": "秘書との語らい",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 136,
+    "type": "main",
+    "固有名": "魔王とバカンス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 137,
+    "type": "main",
+    "固有名": "カルキノス",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a4g-SSR-karukinosu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 138,
+    "type": "main",
+    "固有名": "チャックル",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "f5h-SSR-tyakkuru"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 139,
+    "type": "main",
+    "固有名": "懐かしの姿",
+    "キャラ名": null,
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 140,
+    "type": "main",
+    "固有名": "ラッフィー",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 141,
+    "type": "main",
+    "固有名": "チラベール",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 142,
+    "type": "main",
+    "固有名": "ハミダシ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 143,
+    "type": "main",
+    "固有名": "ヨリキリ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 144,
+    "type": "main",
+    "固有名": "スカーレット",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 145,
+    "type": "main",
+    "固有名": "マユゲストレート",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 146,
+    "type": "main",
+    "固有名": "ジウスドラ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 147,
+    "type": "main",
+    "固有名": "レックネン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 148,
+    "type": "main",
+    "固有名": "アルビオン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 149,
+    "type": "main",
+    "固有名": "シ－スルー",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 150,
+    "type": "main",
+    "固有名": "シュバルツ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 151,
+    "type": "main",
+    "固有名": "フランシス",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 152,
+    "type": "main",
+    "固有名": "ノーブルワン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 153,
+    "type": "main",
+    "固有名": "ジェイド",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 154,
+    "type": "main",
+    "固有名": "ラガマーム",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 155,
+    "type": "main",
+    "固有名": "シルクサンド",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 156,
+    "type": "main",
+    "固有名": "アトラ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 157,
+    "type": "main",
+    "固有名": "シンボリック",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 158,
+    "type": "main",
+    "固有名": "ミオン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 159,
+    "type": "main",
+    "固有名": "フジヤマ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 160,
+    "type": "main",
+    "固有名": "ライラ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 161,
+    "type": "main",
+    "固有名": "ルビィ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 162,
+    "type": "main",
+    "固有名": "プヨリン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 163,
+    "type": "main",
+    "固有名": "ソウケツ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 164,
+    "type": "main",
+    "固有名": "セレスト",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 165,
+    "type": "main",
+    "固有名": "フリント",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 166,
+    "type": "main",
+    "固有名": "エースの休日",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 167,
+    "type": "main",
+    "固有名": "棋士の休日",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 168,
+    "type": "main",
+    "固有名": "トロイダル",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 169,
+    "type": "main",
+    "固有名": "ルーガルー",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 170,
+    "type": "main",
+    "固有名": "エネロン",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 171,
+    "type": "main",
+    "固有名": "メロエ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 172,
+    "type": "main",
+    "固有名": "魔物の主",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 173,
+    "type": "main",
+    "固有名": "スティーブ",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 174,
+    "type": "main",
+    "固有名": "酒場のマスター",
+    "キャラ名": null,
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 175,
+    "type": "sub",
+    "固有名": "古代トチカの教え",
+    "キャラ名": "フレリア",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "a10j-MR-fureria"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 176,
+    "type": "sub",
+    "固有名": "消せない過去",
+    "キャラ名": "ルーカス",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f10h-MR-rucas"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 177,
+    "type": "sub",
+    "固有名": "ショップでの一幕",
+    "キャラ名": "フレリア",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a10j-SSR-fureria"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 178,
+    "type": "sub",
+    "固有名": "本気の勝負服",
+    "キャラ名": "ポルツ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 179,
+    "type": "sub",
+    "固有名": "雪原のプリンセス",
+    "キャラ名": "シエナ",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "b9-SSR-siena"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 180,
+    "type": "sub",
+    "固有名": "永遠の愛",
+    "キャラ名": "バン",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a9-SSR-ban"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 181,
+    "type": "sub",
+    "固有名": "伝説のブリーダー",
+    "キャラ名": "ホリィ",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "f9-SSR-hori"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 182,
+    "type": "sub",
+    "固有名": "完全決闘",
+    "キャラ名": "白鳳",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 183,
+    "type": "sub",
+    "固有名": "魔女へのあこがれ",
+    "キャラ名": "アイリス",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 184,
+    "type": "sub",
+    "固有名": "トーブルのエース",
+    "キャラ名": "サフィン",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "c9-SSR-safin"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 185,
+    "type": "sub",
+    "固有名": "新たな大陸へ",
+    "キャラ名": "ホリィ",
+    "rarity": "SR",
+    "cardIdCandidates": [
+      "f9-SSR-hori"
+    ],
+    "matchType": "candidate"
+  },
+  {
+    "sapoIndex": 186,
+    "type": "sub",
+    "固有名": "凛々しき明星",
+    "キャラ名": "クリス",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "b7-MR-kurisu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 187,
+    "type": "sub",
+    "固有名": "炎獄の造物主",
+    "キャラ名": "デミウルゴス",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "f7-MR-demiurugosu"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 188,
+    "type": "sub",
+    "固有名": "神聖な巫女姿",
+    "キャラ名": "ステラ",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "e7-MR-sutera"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 189,
+    "type": "sub",
+    "固有名": "陽だまりの巫女姫",
+    "キャラ名": "シュナ",
+    "rarity": "MR",
+    "cardIdCandidates": [
+      "a7-MR-syuna"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 190,
+    "type": "sub",
+    "固有名": "調教助手",
+    "キャラ名": "タバサ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 191,
+    "type": "sub",
+    "固有名": "魅惑のバカンス",
+    "キャラ名": "ピーシィ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 192,
+    "type": "sub",
+    "固有名": "夜に咲く花",
+    "キャラ名": "アイリス",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 193,
+    "type": "sub",
+    "固有名": "やんちゃな魔女様",
+    "キャラ名": "ニア",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 194,
+    "type": "sub",
+    "固有名": "黒き革命者",
+    "キャラ名": "ルルーシュ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 195,
+    "type": "sub",
+    "固有名": "聖夜に乾杯",
+    "キャラ名": "エイル",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "d23k-MR-eiru"
+    ],
+    "matchType": "candidate"
+  },
+  {
+    "sapoIndex": 196,
+    "type": "sub",
+    "固有名": "甘～いひととき",
+    "キャラ名": "タバサ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 197,
+    "type": "sub",
+    "固有名": "永遠の友人",
+    "キャラ名": "コルト",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 198,
+    "type": "sub",
+    "固有名": "夏色バケーション",
+    "キャラ名": "メリッサ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 199,
+    "type": "sub",
+    "固有名": "暴風竜",
+    "キャラ名": "ヴェルドラ",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "b7-SSR-verudora"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 200,
+    "type": "sub",
+    "固有名": "人類最強の兵士",
+    "キャラ名": "リヴァイ",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "d7-SSR-rivai"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 201,
+    "type": "sub",
+    "固有名": "ふんばり温泉女将",
+    "キャラ名": "恐山アンナ",
+    "rarity": "SSR",
+    "cardIdCandidates": [
+      "a7-SSR-anna"
+    ],
+    "matchType": "exact"
+  },
+  {
+    "sapoIndex": 202,
+    "type": "sub",
+    "固有名": "夏色メモリーズ",
+    "キャラ名": "ピーシィ",
+    "rarity": "SSR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 203,
+    "type": "sub",
+    "固有名": "ブリーダー",
+    "キャラ名": "ボルツ",
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 204,
+    "type": "sub",
+    "固有名": "厳たるブリーダー",
+    "キャラ名": "お父さん",
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 205,
+    "type": "sub",
+    "固有名": "穏やかな休日",
+    "キャラ名": "ルルーシュ",
+    "rarity": "SR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 206,
+    "type": "sub",
+    "固有名": "非番",
+    "キャラ名": "リヴァイ",
+    "rarity": "SR",
+    "cardIdCandidates": [
+      "d7-SSR-rivai"
+    ],
+    "matchType": "candidate"
+  },
+  {
+    "sapoIndex": 207,
+    "type": "sub",
+    "固有名": "紅炎の王者",
+    "キャラ名": "コウエン",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 208,
+    "type": "sub",
+    "固有名": "万緑の薬師",
+    "キャラ名": "ハインケル",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 209,
+    "type": "sub",
+    "固有名": "氷花の継承者",
+    "キャラ名": "ミズキ",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 210,
+    "type": "sub",
+    "固有名": "純白の神子",
+    "キャラ名": "マルタ",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 211,
+    "type": "sub",
+    "固有名": "黒衣の使者",
+    "キャラ名": "ミカ",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  },
+  {
+    "sapoIndex": 212,
+    "type": "sub",
+    "固有名": "日だまりの遊子",
+    "キャラ名": "レイラ",
+    "rarity": "MR",
+    "cardIdCandidates": [],
+    "matchType": "none"
+  }
+]

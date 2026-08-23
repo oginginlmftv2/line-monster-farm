@@ -271,6 +271,34 @@ draft → ocr_done → needs_review → verified → published
 - `published`: 対応PRがmainへ反映済み
 - `rejected`: 誤画像・重複・対象外
 
+## 能力検索ツールの再構築に向けた前提
+
+### 公開用JSONを別に生成する
+
+`src/data/assist-abilities.json` はCMSの入力データであり、`legacyId`、
+`linkStatus`、未確認レコードを含む。これをブラウザに直接読ませると内部状態が公開される。
+
+`build.js` が、**`status: verified` かつ検索に必要な項目だけ**を抜いた
+公開用JSONを別途生成し、検索ページはそれを読む。
+GitHub Pages 配信のため同一オリジンで取得でき、外部ドメインを叩く必要はない。
+
+### unlinked 512件の扱い
+
+能力1,079件のうち、現行91カードに結べたのは560件（resolved）で、
+512件は現行カードに存在しない名前（unlinked）である。
+
+- **resolved**: カード詳細ページへリンクする
+- **ambiguous / unlinked**: `sourceName` をテキスト表示するだけでリンクしない
+
+`sourceName` を必ず保持する設計になっているため、この出し分けに追加設計は要らない。
+検索の網羅性を保ったまま、リンク切れを作らない。
+
+### 検索ページ自体は noindex とする
+
+検索結果はJS描画でクローラーに見えない。インデックスを狙うと、
+中身の無いページとして薄いコンテンツ判定の材料になる。
+ツールページとして `noindex` で運用する。
+
 ## 7. 保存先と公開経路
 
 推奨する管理境界:
@@ -300,6 +328,42 @@ P11-7〜9と同じ外部依存が解消するまで、自動PR公開は完了扱
 
 専用tokenを使う場合も本番`CMS_PUBLISH_TOKEN`と共有しない。値はGAS Script Propertiesと
 GitHub Secretにだけ置き、文書・Sheet・ログへ記録しない。
+
+### 7-1. スプレッドシートはモンスターと同居させる
+
+カード・効果・能力の各DBは、モンスターCMSと**同じスプレッドシート**に
+シートを追加する形で持つ（`cards` / `assist_effects` / `abilities` / `capture_queue`）。
+メンバー管理、認証、Driveはそのまま流用する。データ量は
+能力1,079＋効果888＋カード91 ≒ 2,000行で、Sheetsにも実行時間にも収まる。
+
+### 7-2. 🔴 公開経路は分ける（許可リストを広げない）
+
+P11-4 で入れた `scripts/verify-cms-source.js` の許可リストは、
+モンスター用の入力ファイルだけを通す。
+
+```
+TEXT_SOURCE_FILES = monsters-data.js / cms-id-predictions.json / monsters-editorial.json
+IMAGE_PATH        = monster/<4桁>.(jpg|png|webp)
+```
+
+同じ「公開」操作でカードのJSONを流そうとすると、このゲートは正しく拒否する。
+**許可リストにカード用ファイルを足してはならない。** ゲートの価値は狭さにあり、
+広げるとモンスター側の守備範囲まで緩む。
+
+分けるのは**公開ブランチとWorkflowだけ**とする。
+
+```
+モンスター: cms/publish        → 既存Workflow・既存許可リスト
+アシスト  : cms/assist-publish → 新Workflow・カード用の別許可リスト
+```
+
+### 7-3. 🔴 `sitemap.xml` の競合を防ぐ
+
+`sitemap.xml` は両方の公開経路が書き換える生成物である。
+モンスター公開とカード公開が同時に走ると競合し、片方のURLが消える。
+
+- GitHub Actions に **concurrency group** を設定し、2つの公開Workflowを直列化する
+- どちらの経路も、差分を当てるのではなく**必ず全データからsitemapを作り直す**
 
 ## 8. 移行方針
 
@@ -364,6 +428,9 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 | GASエディタ版とdeployment版の一致 | 未確認 | Apps Script画面で履歴とdeployment版を読み取り確認する |
 | Firestore能力画像割当の現在値 | 未確認 | P12-3で`cardAbilities/assignments`を読取exportする |
 | OCR方式 | 未決定 | P12-9着手前に費用、規約、精度、秘密管理を比較し承認する |
+| SAPO_DATA から凸データを移送する対応 | P12-4で人手確認 | 56/91件が対応可能。残り35件は元データが無い。同名別レアリティの候補3件は未確定 |
+| 2つの公開Workflowの直列化 | P12-10で設定 | concurrency group とsitemap全再生成 |
+| 検索用公開JSONの項目確定 | P12-12着手前 | verified のみ・内部項目を含めない |
 
 ## 11. P12-3でClaudeへ引き継ぐ内容
 
