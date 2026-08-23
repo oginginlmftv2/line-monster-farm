@@ -553,6 +553,90 @@ if (!exists('src/data/card-ability-assignments.json')) {
   }
 }
 
+// ---------------------------------------------------------------- 11
+head('11. アシストカードDB');
+if (!exists('src/data/assist-cards.json')) {
+  ng('assist-cards.json がない');
+} else {
+  try {
+    const database = JSON.parse(read('src/data/assist-cards.json'));
+    const cards = Array.isArray(database.cards) ? database.cards : [];
+    const sourceIds = [...read('cards/cards-data.js').matchAll(/^\s*'([^']+)'\s*:/gm)]
+      .map(match => match[1]);
+    const databaseIds = cards.map(card => card.cardId);
+    const sourceIdSet = new Set(sourceIds);
+    const databaseIdSet = new Set(databaseIds);
+    const missingIds = sourceIds.filter(cardId => !databaseIdSet.has(cardId));
+    const unexpectedIds = databaseIds.filter(cardId => !sourceIdSet.has(cardId));
+    const duplicateIds = databaseIds.filter((cardId, index) => databaseIds.indexOf(cardId) !== index);
+
+    if (cards.length !== sourceIds.length || databaseIdSet.size !== sourceIdSet.size
+        || missingIds.length || unexpectedIds.length || duplicateIds.length) {
+      ng(`assist-cards.jsonのcardId集合が不一致（DB ${cards.length}件 / 入力 ${sourceIds.length}件 / 欠落 ${missingIds.length}件 / 余分 ${unexpectedIds.length}件 / 重複 ${duplicateIds.length}件）`);
+    } else {
+      ok(`assist-cards.jsonのcardId集合がcards-data.jsと完全一致（${cards.length}件）`);
+    }
+
+    const missingImages = cards.filter(card => typeof card.image !== 'string' || !exists(card.image));
+    if (missingImages.length) {
+      ng(`assist-cards.jsonに存在しない画像参照がある: ${missingImages.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    } else {
+      ok(`assist-cards.jsonの全画像が実在（${cards.length}件）`);
+    }
+
+    const allowed = {
+      rarity: new Set(['MR', 'SSR']),
+      aura: new Set(['赤', '緑', '黄', '白', '黒', '青']),
+      cardType: new Set([
+        'ガード', 'かしこさ', 'ジャッジ', 'アサルト', '回避', '師匠',
+        'ちから', 'テクニック', '友人', '丈夫さ', 'インパクト', 'フォース',
+        '命中', 'メンタル', 'フィジカル', 'クイック', 'サバイブ', 'ライバル',
+        'ルミナス', 'バイタル', 'フォーカス', 'タフネス', 'ライフ', 'アキュメン',
+      ]),
+      monType: new Set(['幻霊', '無機', '創造', '獣族', '魔族', '怪物', null]),
+    };
+    const invalidAttributes = cards.flatMap(card => Object.entries(allowed)
+      .filter(([key, values]) => !values.has(card[key]))
+      .map(([key]) => `${card.cardId}.${key}=${String(card[key])}`));
+    if (invalidAttributes.length) {
+      ng(`assist-cards.jsonに許可外属性がある: ${invalidAttributes.slice(0, 5).join(', ')}`);
+    } else {
+      ok('assist-cards.jsonのrarity / aura / cardType / monTypeはすべて許可値');
+    }
+
+    const formationRefs = cards.flatMap(card => (card.formations || []).flatMap(formation => [
+      ...(formation.cards || []),
+      formation.rental,
+    ])).filter(Boolean);
+    const unknownFormationRefs = [...new Set(formationRefs.filter(cardId => !databaseIdSet.has(cardId)))];
+    if (unknownFormationRefs.length) {
+      ng(`編成に存在しないcardId参照がある: ${unknownFormationRefs.join(', ')}`);
+    } else {
+      ok(`編成が参照するcardIdはすべて実在（${new Set(formationRefs).size}種）`);
+    }
+
+    const sapoMap = JSON.parse(read('src/data/_audit/sapo-card-map.json'));
+    const exactCardIds = sapoMap
+      .filter(mapping => mapping.matchType === 'exact')
+      .map(mapping => mapping.cardIdCandidates[0]);
+    const cardsWithLimitBreak = cards
+      .filter(card => card.limitBreak && Object.values(card.limitBreak).some(value => value !== null))
+      .map(card => card.cardId);
+    const exactCardIdSet = new Set(exactCardIds);
+    const limitBreakIdSet = new Set(cardsWithLimitBreak);
+    const missingLimitBreak = exactCardIds.filter(cardId => !limitBreakIdSet.has(cardId));
+    const unexpectedLimitBreak = cardsWithLimitBreak.filter(cardId => !exactCardIdSet.has(cardId));
+    if (cardsWithLimitBreak.length !== exactCardIds.length
+        || missingLimitBreak.length || unexpectedLimitBreak.length) {
+      ng(`limitBreakとSAPO exact対応が不一致（limitBreak ${cardsWithLimitBreak.length}件 / exact ${exactCardIds.length}件 / 欠落 ${missingLimitBreak.length}件 / 余分 ${unexpectedLimitBreak.length}件）`);
+    } else {
+      ok(`limitBreakを持つカードがSAPO exact対応と一致（${exactCardIds.length}件）`);
+    }
+  } catch (error) {
+    ng(`assist-cards.jsonの検査に失敗: ${error.message}`);
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);

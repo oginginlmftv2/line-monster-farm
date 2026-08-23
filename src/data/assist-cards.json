@@ -1,0 +1,4466 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "cards/cards-data.js",
+    "src/data/cards-editorial.json",
+    "assist-card-data.js",
+    "src/data/_audit/sapo-card-map.json"
+  ],
+  "generatedAt": null,
+  "counts": {
+    "cards": 91,
+    "withStats": 56,
+    "withExplanation": 85,
+    "withFormations": 5
+  },
+  "cards": [
+    {
+      "cardId": "g1-MR-serafina",
+      "name": "セラフィナ",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "ガード",
+      "monType": "幻霊",
+      "image": "assist-cards/g1-MR-serafina.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "調査中",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1.1,
+        "battle": 2,
+        "ta": 1.3
+      },
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "g2-SSR-monodasu",
+      "name": "モノダス",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "かしこさ",
+      "monType": "無機",
+      "image": "assist-cards/g2-SSR-monodasu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "調査中",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.1,
+        "karyo": 1.5,
+        "battle": 2.3,
+        "ta": 1.5
+      },
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "g3-MR-jingorou",
+      "name": "ジンゴロウ",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "ジャッジ",
+      "monType": "幻霊",
+      "image": "assist-cards/g3-MR-jingorou.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "調査中",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c20k-MR-teosu",
+      "name": "テオス",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "アサルト",
+      "monType": "創造",
+      "image": "assist-cards/c20k-MR-teosu.jpg",
+      "distance": "零距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 1.8,
+        "battle": 2,
+        "ta": 1.3
+      },
+      "explanation": "・創造のモン類ブリーダー継承2枚目\n・申し分ない最強格のトレ性能\n・トレ効果18の忠誠度45で鍛錬は強い\n・創造のトレーニングはこの1枚で\n　世界が変わるはず\n・エムロードとかしこさが被っている\n　ことがちょっともったいない\n・フォームは距離ごとの技数が3じゃないと\n　恩恵をフルで受けられないのが\n　ちょっと厳しいけど性能はまぁまぁまぁ\n・アディションはオーラ技3つは\n　さすがに全員クリアできるので\n　創造の中での汎用性は◎\n・どちらもぶっ壊れではないがまぁまぁまぁ",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "d24k-SSR-rupinasu",
+      "name": "ルピナス",
+      "rarity": "SSR",
+      "aura": "緑",
+      "cardType": "回避",
+      "monType": "獣族",
+      "image": "assist-cards/d24k-SSR-rupinasu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "調査中",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.8,
+        "karyo": 1,
+        "battle": 3,
+        "ta": 2
+      },
+      "explanation": "・緑SSRでモン類は獣\n・トレ効果17％と忠誠度45％に加えオーラトレ効果12％は破格\n・MR含む全カードの中でも最強クラスのトレ性能\n・リカバーは性能も恩恵を受けるモンスターの数も優秀\n・ガッツ回復と回避上昇はバトルの環境を動かすパワーがある\n・メンタルが真の壊れ能力\n・残りガッツ60以下なら技当てるたびにガッツ20回復は破格すぎる",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "d23k-MR-eiru",
+      "name": "エイル",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "師匠",
+      "monType": "創造",
+      "image": "assist-cards/d23k-MR-eiru.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.8,
+        "karyo": 1.2,
+        "battle": 2.5,
+        "ta": 5
+      },
+      "explanation": "・創造待望の師匠\n・トレ性能には特殊なところはなく他の師匠と遜色ない性能\n・環境を変えてくれること間違いなし\n・創造を強くしたいなら絶対に必要\n・被ダメブロックはよい\n・被ガッツダメ低下もよい\n・全ステ上昇はおまけでシールド破壊が本体\n・幻霊を絶対許さないマン製造機\n・幻霊には強いが他にはどうかと言われたらまぁまぁまぁ",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c28j-SSR-rokusho",
+      "name": "ロクショウ",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "ちから",
+      "monType": "無機",
+      "image": "assist-cards/c28j-SSR-rokusho.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "森林",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 2.5,
+        "battle": 1.8,
+        "ta": 1.5
+      },
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c27j-MR-godemperor",
+      "name": "ゴッドエンペラー",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "テクニック",
+      "monType": "獣族",
+      "image": "assist-cards/c27j-MR-godemperor.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超本気",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.3,
+        "karyo": 2.3,
+        "battle": 2.5,
+        "ta": 1.5
+      },
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c26j-SSR-ikki",
+      "name": "イッキ",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/c26j-SSR-ikki.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.3,
+        "karyo": 1.2,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・評価点数は低いがロード秘伝での能力パッケージとしては非常に有用で、MRイッキの能力と重なる(未検証)ことでカチカチモンスターが爆誕する。\n・単体で見ても配布能力としては破格の性能。",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c25j-SSR-metabee",
+      "name": "メタビー",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "丈夫さ",
+      "monType": "無機",
+      "image": "assist-cards/c25j-SSR-metabee.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 2,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "まず初めに評価点数は気にしないでほしい。\nこのカードを真に評価すべき項目が用意されていないからである。\nオーラ超ワイルドという秘伝周回必須効果を総合力やバトルでの評価でしか見ないのはサイトとしての欠陥である。反省。でも面倒だから変えない。\nちなみにオーラスキルアップもソロモンクエストで必須級であるが評価項目にはない。\n見た目以上にゲームプレイに重要なカード。以下動画からそのまま抜粋\n\n・メダロットコラボフェスSSRカード\n・黄色SSR初のEXトレパワー持ち\n・トレ性能も悪くはないで\n・オーラスキルアップはソロクエ向け\n・オーラ超ワイルドとかいう神効果\n・秘伝周回において革命という言葉で\n　は足りないほどの効果のノラ勝利時\n　「ボスモン遭遇確定」1回持ち\n・バーサークはデメリットこそあるが\n　効果がめちゃくちゃ強力\n・特に命中回避を累計40％近く上げ\n　られるのがやばくてやばい\n・威力全開も結構強い\n・メタビーを強くするぞという\n　確かな意志を感じる",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c24j-MR-ikki",
+      "name": "イッキ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/c24j-MR-ikki.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 2.3,
+        "battle": 4.5,
+        "ta": 1.2
+      },
+      "explanation": "・メダロットコラボMRカード\n・黄色初の友人MR\n・絶好調チャンスではなく革新パワー\n・革新パワーはともかくトレ集合率が\n　大正義であることは間違いない\n・Rイッキからも同じ能力が取得可能\n・トレ性能的に他の友人MRより\n　突出してる点は特別なし\n・ロボトルファイトが強すぎる\n・その強すぎる能力がRからでも手に\n　入るのは親切設計すぎる\n・この能力一つで世界が黄色に染まる\n　ほどのバトル性能の高さ\n・じゃあ熱い魂のほうは弱くないと\n　バランスとれないよね？\n・めちゃくちゃ強いんだなこれが\n\n※評価が高いのはぶっ壊れ能力によるものが大きいが、その能力はRのイッキからも獲得できる。だからこのカードじゃなきゃダメ的な部分で実質的な評価はもう少し落ちる",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a13i-MR-nishiki",
+      "name": "ニシキ",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "テクニック",
+      "monType": "魔族",
+      "image": "assist-cards/a13i-MR-nishiki.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超逆上",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4.2,
+        "karyo": 2,
+        "battle": 1.5,
+        "ta": 1.2
+      },
+      "explanation": "・魔族のモン類ブリーダー継承4枚目\n・半分のモン類が1枚なのに対して\n　驚異の4枚目\n・じゃあ師匠でよかったのでは？\n・トレ性能はちゃんと最強クラス\n・モン類能力も既存と被っていて\n　これから魔族を強くしたい人には\n　おすすめ\n・チェイサーはまぁまぁまぁ\n・スマッシュのほうは有利に対して\n　かなり強く出られるようになるから\n　魔族推しにはほしい能力\n・まだまだ獣が強い環境ではあるので\n　その獣にさらに強く出られるように\n　なる能力は貴重\n（5/18追記）\n・モン類忠誠度効果が半端なく強くて想定よりもトレ性能が鬼",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b16i-MR-diana",
+      "name": "ディアナ",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "インパクト",
+      "monType": "魔族",
+      "image": "assist-cards/b16i-MR-diana.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.3,
+        "karyo": 1.1,
+        "battle": 1.3,
+        "ta": 1.3
+      },
+      "explanation": "・3枚目の青オーラブリーダー継承\n・オーラブリーダーの中では\n　最強クラスのトレ性能\n・恩恵なのもよき\n・大成功持ちの中では最強かも\n・オーラ修行がノアと被っている\n・ノアがない人はぜひともほしい\n・チェイサーはあったらいいな\n・魔境は汎用性が高めな分効果が\n　ひかえめに見えるが使ってみないと\n　本当の強さは未知数\n・ピクシーにとっては積みたい能力\n・世界を変える能力ではない",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b5g-SSR-norun",
+      "name": "ノルン",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "回避",
+      "monType": "創造",
+      "image": "assist-cards/b5g-SSR-norun.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.2,
+        "karyo": 1.2,
+        "battle": 1.2,
+        "ta": 3.5
+      },
+      "explanation": "・青の回避SSR\n・オーラ修行50％がおまけに見える\n　ほどのトレ性能の高さ\n・EXトレパワーがかすむほどの\n　トレ性能の高さ\n・MRがしょぼく見えてしまうほどの\n　トレ性能の高さ\n・圧倒的トレ性能の高さ\n・ホワイトアウトは３回避けるのは\n　なかなか難しいけどトレ性能が高い\n・雪花は汎用性が高い分効果が\n　おさえられているかと思いきや\n　ナデシコアジリティと同格以上\n・汎用性が高いので色んな能力と合わ\n　せられるのが強いしトレ性能が高い",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "f18l-MR-esueru",
+      "name": "エスエル",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "フォース",
+      "monType": "無機",
+      "image": "assist-cards/f18l-MR-esueru.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超闘魂",
+      "releasedAt": "2026/04/14",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フォース",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類忠誠度効果アップ・無機 +10%",
+        "1b": "フォースボーナスⅡ +1",
+        "2a": "モン類トレ共鳴・無機 +3%",
+        "2b": "大成功率アップ +8",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": "トレ効果アップ +8%",
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.2,
+        "karyo": 1,
+        "battle": 2.5,
+        "ta": 1
+      },
+      "explanation": "・能力の汎用性が終わっている\n・無機だけじゃなく黒技や自身黒\n　といった制約があり単純な無機の強化と\n　言いづらい部分がある\n・そのかわり刺さるモンスターは\n　かなりの強化と言えるので\n　愛するモンスターに刺さる場合は\n　絶対にほしい",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 32,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a10j-SSR-fureria",
+      "name": "フレリア",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "師匠",
+      "monType": "獣族",
+      "image": "assist-cards/a10j-SSR-fureria.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/02/28",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "師匠",
+        "attribute": "赤",
+        "hpLimit": "7",
+        "allStatLimitUp": "50",
+        "challengeEffectUp": "5"
+      },
+      "limitBreak": {
+        "1a": "初期ステータスアップ +25",
+        "1b": "全距離技習得率アップⅡ +10%",
+        "2a": "トレ人数効果アップ +25%",
+        "2b": null,
+        "3a": "モン類超修行 +1",
+        "3b": null,
+        "4a": "修行特別効果アップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 3,
+        "battle": 3,
+        "ta": 4
+      },
+      "explanation": "・史上最強の配布カード。\n・バトルや総合力で世界一を目指さないならMRフレリアをゲットする必要がないレベルで有用。\n・総合力育成にしぼればオーラ色やモン類問わず全ての編成でスタメンに入る。\n・バトル面はフレリアの試練が白しか取れないのでMRにはかなり劣るが、ロード秘伝があればそれすら解決出来るのでずるい。\n・ただしここまでの全てに※高い凸のMRフレリアを持っていなければの注釈が入る\n・総合力育成では2凸MRと完凸SSRが同じくらいと言われている",
+      "formations": [
+        {
+          "rental": "a25i-MR-borusyakku",
+          "cards": [
+            "a10j-SSR-fureria",
+            "a24j-MR-vitoniru",
+            "a7-MR-syuna",
+            "a4g-SSR-karukinosu",
+            "f5l-SSR-sharutia"
+          ],
+          "title": "おすすめ編成①赤獣総合力"
+        }
+      ],
+      "sapoRef": {
+        "sapoIndex": 177,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a4g-SSR-karukinosu",
+      "name": "カルキノス",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "命中",
+      "monType": "創造",
+      "image": "assist-cards/a4g-SSR-karukinosu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超闘魂",
+      "releasedAt": "2026/03/14",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "命中",
+        "ouenKouka": "28",
+        "tokuiRitsu": "30",
+        "shokiStatus": "25",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "命中アップ +3",
+        "1b": "モン類強化 +4",
+        "2a": "トレ効果アップ＋ +6%",
+        "2b": "オーラEXトレパワーアップ +40%",
+        "3a": "オーラ修行アップ +25%",
+        "3b": "大成功率アップ +8",
+        "4a": "忠誠度効果アップ +25%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 3.5,
+        "battle": 2.3,
+        "ta": 2
+      },
+      "explanation": "・現在最強のSSR（20260314時点）。\n・今までのSSRとはオーラ効果の数字も行の数も多く、バランスを壊さないようにインフレさせてきた印象。\n・トレ効果、忠誠度効果、大成功が高いレベルで共存してる初めてのカード。\n・トレ性能が申し分ない上にカルキノスチェイサーの追撃が今までのチェイサーと別次元すぎて驚愕。\n・唯一の減点要素はSSRであるがために初期親密度がMRより低いこと。",
+      "formations": [
+        {
+          "rental": "",
+          "cards": [
+            "a4g-SSR-karukinosu",
+            "a10j-MR-fureria",
+            "a7-MR-syuna",
+            "a25i-MR-borusyakku",
+            ""
+          ],
+          "title": "おすすめ編成①赤総合力育成"
+        }
+      ],
+      "sapoRef": {
+        "sapoIndex": 137,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a24j-MR-vitoniru",
+      "name": "ヴィトニル",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "メンタル",
+      "monType": "獣族",
+      "image": "assist-cards/a24j-MR-vitoniru.jpg",
+      "distance": "中距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/03/14",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "メンタル",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類名声ボーナス +20%",
+        "1b": "メンタルボーナスⅡ +1",
+        "2a": "モン類トレ共鳴・獣族 +3%",
+        "2b": "忠誠度効果アップ +15%",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": "トレ効果アップ +8%",
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4,
+        "karyo": 3,
+        "battle": 2.5,
+        "ta": 2
+      },
+      "explanation": "・獣2枚目のモン類ブリーダー\n・レンタル出来るのはヴィトニルが初\n・トレ性能も、同じくらいのカードはいるが最強と言っていいレベル（20260314時点）\n・ヴィトニルエッジも火力をかなり上げてくれる\n・シールドはフレリアの能力と噛み合わせが悪いところが少し減点\n・汎用性もそこまで高くないのでモン類不一致で入れるほどではない",
+      "formations": [
+        {
+          "title": "おすすめ編成①赤獣バトル",
+          "cards": [
+            "a24j-MR-vitoniru",
+            "a10j-MR-fureria",
+            "f5l-SSR-sharutia",
+            "a6i-SSR-mirimuresort",
+            "a4g-SSR-karukinosu"
+          ],
+          "rental": "a7-MR-syuna"
+        }
+      ],
+      "sapoRef": {
+        "sapoIndex": 31,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a10j-MR-fureria",
+      "name": "フレリア",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "師匠",
+      "monType": "獣族",
+      "image": "assist-cards/a10j-MR-fureria.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "師匠",
+        "attribute": "赤",
+        "hpLimit": "10",
+        "allStatLimitUp": "60",
+        "challengeEffectUp": "7"
+      },
+      "limitBreak": {
+        "1a": "トレ人数効果アップ +50%",
+        "1b": "全距離技習得率アップⅡ +10%",
+        "2a": "モン類超修行 +1",
+        "2b": "修行特別効果アップ +3",
+        "3a": "モン類編成ボーナス:友人 +100",
+        "3b": "モン類編成ボーナス:ライバル +4%",
+        "4a": "モン類チャレンジ・幸運",
+        "4b": "トレ人数効果アップ +50%"
+      },
+      "ratings": {
+        "ikusei": 4.5,
+        "karyo": 3.5,
+        "battle": 4.5,
+        "ta": 5
+      },
+      "explanation": "・3周年の目玉カード\n・新カードタイプ師匠\n・ずっと不遇と言われてた獣をたった1枚で最前線まで引き上げた\n・1枚で専用能力が5個付与できてどれも強い\n・総合力、火力、バトル性能、汎用性どれをとっても最強のカード\n・ただ人権とまではいかない理由は、配布のSSRフレリアとロード秘伝&ガチャ産のRフレリアでバトル面も総合力面もかなりカバーできてしまうため\n・レンタル不可なので迷ったらこのカードを凸ろう\n・無課金微課金の人はSSRで我慢して他のMRを凸するのもあり",
+      "formations": [
+        {
+          "rental": "",
+          "title": "おすすめ編成①獣",
+          "cards": [
+            "a10j-MR-fureria",
+            "a24j-MR-vitoniru",
+            "",
+            "",
+            ""
+          ]
+        }
+      ],
+      "sapoRef": {
+        "sapoIndex": 175,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f14g-MR-darasu",
+      "name": "ダラス",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "フィジカル",
+      "monType": "創造",
+      "image": "assist-cards/f14g-MR-darasu.jpg",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フィジカル",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ追加トレボーナス +20",
+        "1b": "フィジカルボーナスⅡ +1",
+        "2a": "トレ効果アップ +7%",
+        "2b": "大成功率アップ +8",
+        "3a": "オーラブリーダー・幸運Ⅱ",
+        "3b": "修行効果アップ +8%",
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1.8,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・3周年の目玉カード\n・黒のオーラブリーダー\n・総合力育成の性能はかなり高いが、他の強いカードが揃っていて初めて真価を発揮する(大成功上限アップ)タイプなので、強さを実感出来る人は少数\n・能力のバトル性能も強さを実感しづらく汎用性も高くない\n・環境の変化によってのちに評価が変わる可能性あり",
+      "formations": [
+        {
+          "title": "おすすめ編成①黒総合力",
+          "cards": [
+            "f14g-MR-darasu",
+            "f7-MR-demiurugosu",
+            "f18k-MR-ainzu",
+            "",
+            ""
+          ],
+          "rental": ""
+        }
+      ],
+      "sapoRef": {
+        "sapoIndex": 30,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f2k-SSR-shionresort",
+      "name": "シオン・リゾート",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "ちから",
+      "monType": "怪物",
+      "image": "assist-cards/f2k-SSR-shionresort.jpg",
+      "distance": null,
+      "terrain": [
+        "海岸"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 1,
+        "battle": 1.5,
+        "ta": 1.5
+      },
+      "explanation": "・転スラリゾートコラボガチャカード\n・オーラ忠誠度効果Ⅱがかなり強い\n・それ以外が強くない\n・見た目は強い",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a6i-SSR-mirimuresort",
+      "name": "ミリム・リゾート",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "丈夫さ",
+      "monType": "魔族",
+      "image": "assist-cards/a6i-SSR-mirimuresort.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超本気",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 2,
+        "battle": 3,
+        "ta": 1
+      },
+      "explanation": "・転スラリゾートコラボガチャカード\n・オーラ効果が人気度と賞金励とどちらもなんで強いかわからないけどなんか強い筆頭\n・おかわりなのだは必中Lv3が2回のぶっ壊れ能力だけど魔族かつランク4以上かつ赤技じゃないと意味ないので汎用性は激低\n・もう一つの能力はわかりやすく強いけどぶっ壊れではない\n・汎用性は終わってるけど魔族で戦うとき、特にピクシーやドラゴンでバトルするときには絶対入れたい能力を持っている",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b5i-SSR-rimurugurasan",
+      "name": "リムル・グラサン",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "回避",
+      "monType": "魔族",
+      "image": "assist-cards/b5i-SSR-rimurugurasan.jpg",
+      "distance": "零距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 2,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・転スラリゾートコラボの配布SSR\n・配布時はMRリムルの圧倒的下位互換で無課金初心者にのみ有用だとされていて、このアシストカード一覧にも載ることはなかったであろうカード\n・ロード秘伝の登場により俺は喰らうものだⅡがMRのⅣと併用出来るようになり、叡智之王と合わせれば青オーラモンスターの火力がとんでもないことに\n・今後もコラボカードで実装されるSSRの下位互換能力に注目したい",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a7-MR-syuna",
+      "name": "シュナ",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/a7-MR-syuna.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/01/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "赤",
+        "hpLimit": "28",
+        "allStatLimitUp": "28",
+        "challengeEffectUp": "28"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +1",
+        "1b": "トレーニングチャンス",
+        "2a": "トレーニング出現率アップ +15%",
+        "2b": "逆境トレレベルアップ",
+        "3a": "オーラトレ集合率アップⅡ +20%",
+        "3b": null,
+        "4a": "忠誠度効果アップ +16%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4.2,
+        "karyo": 1,
+        "battle": 3.5,
+        "ta": 3
+      },
+      "explanation": "・転スラリゾートコラボガチャカード\n・赤初のMR友人\n・集合率40%と絶好調チャンスが抜群のトレ性能で強い\n・バトル性能は防御面に寄っている\n・1枚で環境を変えるほどではないが、赤で戦うならまず搭載したい能力\n・202603に出たロードモンスターとの相性がとてもいい",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 189,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b21i-MR-rimuru",
+      "name": "リムル・リゾート",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "クイック",
+      "monType": "魔族",
+      "image": "assist-cards/b21i-MR-rimuru.jpg",
+      "distance": "零距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.3,
+        "karyo": 4,
+        "battle": 4.5,
+        "ta": 1
+      },
+      "explanation": "・転スラリゾートコラボガチャカード\n・トレ出現数アップは全オーラ効果で最強ということを必ず覚えておこう\n・能力の『俺は喰らうものだ』が対戦環境で大暴れしている\n・火力だけではなく命中も大幅に上げてくれるのが命中カードが乏しい青にとって神\n・早く黄色オーラを強くしないといつまで経っても青が世界を支配してしまう（20260314時点）\n・総合力育成にも強くバトル性能もぶっ壊れだが汎用性だけはない",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "f24i-MR-megaranika",
+      "name": "メガラニカ",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "メンタル",
+      "monType": "魔族",
+      "image": "assist-cards/f24i-MR-megaranika.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超憤怒",
+      "releasedAt": "2026/01/14",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "メンタル",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類名声ボーナス +20%",
+        "1b": "メンタルボーナスⅡ +1",
+        "2a": "モン類トレ共鳴・魔族 +3%",
+        "2b": "忠誠度効果アップ +12%",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4,
+        "karyo": 4,
+        "battle": 2,
+        "ta": 1
+      },
+      "explanation": "・常設のモン類魔族ブリーダー\n・メガラニカシールドはシールドという名前だけど本体は火力アップのほう\n・火力アップ性能が実装から2ヶ月経った今（20260314時点）でも最強格\n・こいつのせいかおかげかグラスラは魔族以外でトップを取るのが難しくなった\n・ただ対人バトルでシールドを生かすのはなかなか難しい\n・そのかわりチェイサーが対人バトルでも有能だけど生かしきるハードルは高め\n・欠点は黒の魔族を育成するときライバルホリィを編成するとメガラニカのモン類ブリーダーホリィと同じトレに出現しないという弊害が出る\n・今後も強いカードのブリーダーの再登場は少し評価が落ちることを覚えておきたい",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 28,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e7-MR-sutera",
+      "name": "ステラ",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/e7-MR-sutera.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/12/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "白",
+        "hpLimit": "28",
+        "allStatLimitUp": "28",
+        "challengeEffectUp": "28"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +1",
+        "1b": "修行チャンス",
+        "2a": "トレーニング出現率アップ +15%",
+        "2b": "逆境トレレベルアップ",
+        "3a": "オーラトレ集合率アップⅡ +20%",
+        "3b": null,
+        "4a": "トレ効果アップ +6%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 1,
+        "battle": 1.5,
+        "ta": 2.5
+      },
+      "explanation": "・白の友人MR\n・他MR友人の絶好調チャンスがトレを爆裂強化してくれる性能に対して、ステラの革新パワーは修行をほんのちょっぴり強くしてくれてるような気がする\n・集合率40%は強い\n・SSRコルトでもかなり代用できる\n・能力もSSRマリッジの下位互換とギャンブル能力なので替えがきく\n・替えがきく\n・グレイスウィッチの秘伝周回にはかなり役立つので思ってるより出番は多い",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 188,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e20i-MR-nadeshiko",
+      "name": "ナデシコ",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "サバイブ",
+      "monType": "魔族",
+      "image": "assist-cards/e20i-MR-nadeshiko.jpg",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/12/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "サバイブ",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラトレ効果アップ +7%",
+        "1b": "サバイブボーナスⅡ +1",
+        "2a": "トレ効果アップ +6%",
+        "2b": "忠誠度効果アップ +15%",
+        "3a": "オーラブリーダー・信頼Ⅱ",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.8,
+        "karyo": 1.5,
+        "battle": 2.5,
+        "ta": 1.5
+      },
+      "explanation": "・白のオーラブリーダーMR\n・初のサバイブタイプ\n・バトルで強いカードタイプのフォース、サバイブ、テクニックのうち唯一のサバイブなのでとりあえず編成には入れたい\n・トレ性能も高くバトル性能もよし\n・1枚で世界をひっくり返す能力はない\n・コルトがブリーダーなのでSSRコルトと合わせて使うとナデシコのオーラブリーダーコルトが同じトレに出現しないので評価ダウン\n・ステラを使えば問題なし",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 27,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c12l-MR-gifton",
+      "name": "ギフトン",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "アサルト",
+      "monType": "無機",
+      "image": "assist-cards/c12l-MR-gifton.jpg",
+      "distance": null,
+      "terrain": [
+        "雪山"
+      ],
+      "event2": null,
+      "releasedAt": "2025/12/14",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "アサルト",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類名声ボーナス +20%",
+        "1b": "アサルトボーナス +1",
+        "2a": "モン類素質共鳴・無機 +2%",
+        "2b": "大成功率アップ +6",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4,
+        "karyo": 1,
+        "battle": 2.3,
+        "ta": 1
+      },
+      "explanation": "・無機のモン類ブリーダー2枚目\n・抜群のトレ性能で無機のステータスが爆発的に上げやすくなった\n・同じモン類ブリーダーのリッピーとの噛み合わせがとても良いので合わせて使いたい\n・バトル面でも前衛と後衛に分かれて回避やクリ無効は良い\n・1枚だけだとバトル面はそこまで変わらない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 26,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c19h-MR-aufieru",
+      "name": "アウフィエル",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "ジャッジ",
+      "monType": "幻霊",
+      "image": "assist-cards/c19h-MR-aufieru.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超余裕",
+      "releasedAt": "2025/11/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ジャッジ",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ人気度効果アップ +40%",
+        "1b": "ジャッジボーナス +1",
+        "2a": "トレ効果アップ +6%",
+        "2b": "忠誠度効果アップ +12%",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1.5,
+        "battle": 2.5,
+        "ta": 1
+      },
+      "explanation": "・黄色のオーラブリーダー2枚目\n・トレ性能は他の継承持ちMR（2周年以降に出たMR）と比べると控えめ\n・能力も絶妙で、青モンスターに勝ちたいならチャームトラップは絶対必要\n・でもアウフィエルより先に出てたSSRバロムの悪魔の力の下位互換なのが少し残念\n・原本さえあればロード秘伝で能力だけ抽出して使うのもあり\n・20260314時点でアウフィエルに真書を突っ込んで凸上げてもいいですか？という質問に対してYESと答えるおじさんについていってはいけない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 25,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c9-SSR-safin",
+      "name": "サフィン",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/c9-SSR-safin.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/11/30",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "ライバル",
+        "attribute": "黄",
+        "hpLimit": "50",
+        "allStatLimitUp": "50",
+        "challengeEffectUp": "4"
+      },
+      "limitBreak": {
+        "1a": "アサルトボーナス +2",
+        "1b": "オーラトレ集合率アップ +15%",
+        "2a": "トレ人数効果アップ +50%",
+        "2b": "修行効果アップⅡ +10%",
+        "3a": "オーラステ上限ブースト +25%",
+        "3b": null,
+        "4a": "トレレベルアップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1.8,
+        "battle": 2,
+        "ta": 2.5
+      },
+      "explanation": "・黄色のSSRライバル2枚目\n・ライバルポルツが不要になった\n・集合率も初期修行チケット+1もついているので優秀\n・能力もバトル面に大きな影響を与えるものだけどフルで生かすのはハードルがかなり高い\n・・20260314時点では黄色育成の全コンテンツでスタメン",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 184,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f5l-SSR-sharutia",
+      "name": "シャルティア",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "回避",
+      "monType": "無機",
+      "image": "assist-cards/f5l-SSR-sharutia.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 1,
+        "battle": 2.3,
+        "ta": 1
+      },
+      "explanation": "・オーバーロードコラボガチャカード\n・まあまあのトレ性能\n・トレ性能だけ見ればいくらでも替えがきく\n・能力の蹂躙を開始しんすが赤にとっては生命線になるほど重要\n・前衛にしか効果はないが、環境トップモンスターは前衛に強力な技を持ってる場合が多いから活躍するシーンは多いと思われる\n・シールドはなくてもまあ",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "f7-MR-demiurugosu",
+      "name": "デミウルゴス",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/f7-MR-demiurugosu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/10/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "黒",
+        "hpLimit": "28",
+        "allStatLimitUp": "28",
+        "challengeEffectUp": "28"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +1",
+        "1b": "トレーニングチャンス",
+        "2a": "トレーニング出現率アップ +15%",
+        "2b": "逆境トレレベルアップ",
+        "3a": "オーラトレ集合率アップⅡ +20%",
+        "3b": null,
+        "4a": "大成功率アップ +10",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4.2,
+        "karyo": 2.5,
+        "battle": 1.5,
+        "ta": 3
+      },
+      "explanation": "・オーバーロードコラボガチャカード\n・黒のMR友人\n・トレ集合率40%と絶好調チャンスにより絶大なトレ性能を誇る\n・能力はわかりやすくてわりと強いが環境を変えるようなものではない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 187,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f18k-MR-ainzu",
+      "name": "アインズ",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "フォース",
+      "monType": "怪物",
+      "image": "assist-cards/f18k-MR-ainzu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超本気",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 1,
+        "battle": 2.8,
+        "ta": 1.8
+      },
+      "explanation": "・オーバーロードコラボガチャカード\n・黒のオーラブリーダー2枚目\n・書いてある情報だけだと全然強そうに見えないがトレ性能がかなり高い\n・能力は必中も命中アップもそこそこ強い\n・カードタイプも優秀で、わかりやすく強いデミウルゴスの影に隠れて取らなかったことを後悔する人も多いとか",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "d14k-MR-sukeakurou",
+      "name": "スケアクロウ",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "フィジカル",
+      "monType": "怪物",
+      "image": "assist-cards/d14k-MR-sukeakurou.jpg",
+      "distance": null,
+      "terrain": [
+        "砂漠"
+      ],
+      "event2": null,
+      "releasedAt": "2025/10/15",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フィジカル",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類名声ボーナス +20%",
+        "1b": "フィジカルボーナス +1",
+        "2a": "トレ効果アップ +6%",
+        "2b": "大成功率アップ +6",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 1.5,
+        "battle": 2.5,
+        "ta": 1
+      },
+      "explanation": "・怪物のモン類ブリーダー2枚目\n・トレ性能はまあまあ\n・他のモン類ブリーダーカードは名声、共鳴、EXトレブーストの中から2つ与えられているのに対してモン類効果が1行しかない唯一のモン類ブリーダーカード\n・トリックコンフューズが世界を制する可能性を秘めていたが、ボスモン秘伝の登場で獣には運ゲーにすら持ち込めないほどの差に\n・いつかまた怪物の時代がくると信じて",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 23,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d9-SSR-airisu",
+      "name": "アイリス(ライバル)",
+      "rarity": "SSR",
+      "aura": "緑",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/d9-SSR-airisu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 1.5,
+        "battle": 2.8,
+        "ta": 2.5
+      },
+      "explanation": "・緑のSSRライバル\n・トレ集合率と初期修行チケット+1をもっている\n・能力が3発目以降奇数回目必中&クリ確という強すぎるオンリーワン能力\n・おまけにクリダメアップ能力もあり火力要員としても優秀\n・現在（20260314時点）緑勢力は辛い戦いを強いられているがいつかまた緑の時代がくるでしょう",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b7-MR-kurisu",
+      "name": "クリス",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/b7-MR-kurisu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/09/12",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "青",
+        "hpLimit": "28",
+        "allStatLimitUp": "28",
+        "challengeEffectUp": "28"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +1",
+        "1b": "トレーニングチャンス",
+        "2a": "トレーニング出現率アップ +15%",
+        "2b": "逆境トレレベルアップ",
+        "3a": "オーラトレ集合率アップⅡ +20%",
+        "3b": null,
+        "4a": "トレ効果アップ +6%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 4.2,
+        "karyo": 1,
+        "battle": 4.5,
+        "ta": 3
+      },
+      "explanation": "・初のMR友人で世間を騒がせた\n・トレ集合率と絶好調チャンスでトレ性能も抜群\n・登場から半年経ってもバトル界隈で猛威をふるい続けている\n・能力の通称寝顔がダメカット&有利で追撃無効が前半続く\n・これが青オーラのモンスターであれば発動とかいう条件の緩さも相まって、使いやすく人気\n・おまけにライフ+300\n・師匠の登場でライバルか友人かを選ばなくてはいけなくなってからも、なかなかクリスを外す選択はしづらいほどの性能",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 186,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d18k-MR-furan",
+      "name": "ブライド",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "フォース",
+      "monType": "怪物",
+      "image": "assist-cards/d18k-MR-furan.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超根性",
+      "releasedAt": "2025/09/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フォース",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ修行アップ +40%",
+        "1b": "フォースボーナス +1",
+        "2a": "トレ効果アップ +6%",
+        "2b": "大成功率アップ +6",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 1.3,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・緑のオーラブリーダー2枚目\n・トレ性能はまあまあ\n・能力もまあまあ\n・超根性が取れるのは優秀\n・ロード秘伝登場で怪物堅固が掘れるのも評価アップ\n・なきゃないでなんとかなる\n・カードタイプは優秀\n・本当に不遇なのはこういうコメントしづらいカードなのかもしれない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 22,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b2h-SSR-sappirutti",
+      "name": "サフィルス",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "ちから",
+      "monType": "幻霊",
+      "image": "assist-cards/b2h-SSR-sappirutti.jpg",
+      "distance": null,
+      "terrain": [
+        "海岸"
+      ],
+      "event2": null,
+      "releasedAt": "2025/08/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ちから",
+        "ouenKouka": "25",
+        "tokuiRitsu": "35",
+        "shokiStatus": "23",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ちからアップ +2",
+        "1b": "モン類強化 +3",
+        "2a": "トレ効果アップ +7%",
+        "2b": "オーラEXトレパワーアップ +30%",
+        "3a": "オーラ素質アップ +3%",
+        "3b": null,
+        "4a": "大成功率アップ +10",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.2,
+        "karyo": 1.3,
+        "battle": 1.8,
+        "ta": 1
+      },
+      "explanation": "・2.5周年で出たSSR\n・SSRの1番の価値はモン類レベルを1枚で4以上上げられるところにあるのでオーラとモン類が一致しているかどうかで使いやすさがかなり変わる\n・サフィルスは青幻霊にはめちゃくちゃ刺さるが他のモン類では入れるか悩ましい\n・能力はリジェクトの追撃無効が優秀",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 130,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b22h-MR-noa",
+      "name": "ノア",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "ルミナス",
+      "monType": "幻霊",
+      "image": "assist-cards/b22h-MR-noa.jpg",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/08/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ルミナス",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ修行アップ +40%",
+        "1b": "ルミナスボーナス +1",
+        "2a": "トレ効果アップ +8%",
+        "2b": "忠誠度効果アップ +18%",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 1.8,
+        "battle": 2,
+        "ta": 1
+      },
+      "explanation": "・青のオーラブリーダー1枚目（継承）\n・オーラブリーダー幸運は一般的にはハズレとされているが、他のアシスト効果の数字が優秀なのでトレ性能はまあまあ\n・能力は抗えぬ宿命がアディション&追撃で優秀\n・もう一つは誤差\n・純血アークを化け物に変えるパーツの一つ\n・他の青にも十分使える",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 20,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f3k-SSR-baromu",
+      "name": "バロム",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "かしこさ",
+      "monType": "怪物",
+      "image": "assist-cards/f3k-SSR-baromu.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超逆上",
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 2.2,
+        "battle": 2.2,
+        "ta": 1
+      },
+      "explanation": "・デュエマコラボガチャカード\n・トレ性能、能力共にMRと張り合える数少ないSSR\n・能力は二つとも優秀で、アディションのほうは言うまでもないが、悪魔の力は有利の上下関係をより強烈にできるから黒モンスターのバトルではぜひ入れておきたい\n・バロムがMRでよかったのでは？",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "e9-SSR-hakuou",
+      "name": "白凰",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/e9-SSR-hakuou.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 1,
+        "battle": 1.5,
+        "ta": 2.5
+      },
+      "explanation": "・デュエマコラボガチャカード\n・白初のライバル\n・オーラ効果が微妙\n・能力は有利完全回避が優秀\n・欲を言えばもっと強くしてほしかった\n・白はまだ、眠りについている",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "e6l-SSR-arukadiasu",
+      "name": "アルカディアス",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "丈夫さ",
+      "monType": "無機",
+      "image": "assist-cards/e6l-SSR-arukadiasu.jpg",
+      "distance": null,
+      "terrain": [
+        "火山"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 2.2,
+        "battle": 1.8,
+        "ta": 1
+      },
+      "explanation": "・デュエマコラボガチャカード\n・トレ性能はちょっぴりまあまあ\n・火力も黒ボスのグラスラ専用機としては絶対に入るレベル\n・それ以外の出番はなかなか\n・出番があるだけ恵まれている",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a25i-MR-borusyakku",
+      "name": "ボルシャック",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "バイタル",
+      "monType": "魔族",
+      "image": "assist-cards/a25i-MR-borusyakku.jpg",
+      "distance": null,
+      "terrain": [
+        "火山"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 1.8,
+        "battle": 1.3,
+        "ta": 1.5
+      },
+      "explanation": "・デュエマコラボガチャカード\n・赤のオーラブリーダー1枚目\n・トレ性能はかなり高いが、条件の緩すぎる被ダメ40%アップと条件のキツすぎる火力40%アップ能力のせいで半年間罵声を浴び続けた\n・その悲しみを怒りに変えて今後は活躍してほしい\n・逆に言えば被ダメを大幅に上げられる唯一無二のカードなので、どこかで必ずボルシャックにしか出来ないことが現れるはず\n・たぶん",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c23i-MR-naiara",
+      "name": "ナイアーラ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "フォーカス",
+      "monType": "魔族",
+      "image": "assist-cards/c23i-MR-naiara.jpg",
+      "distance": null,
+      "terrain": [
+        "雪山"
+      ],
+      "event2": null,
+      "releasedAt": "2025/07/15",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フォーカス",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類EXトレブースト +10%",
+        "1b": "フォーカスボーナス +1",
+        "2a": "モン類トレ共鳴・魔族 +3%",
+        "2b": "トレ効果アップ +6%",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 1.8,
+        "battle": 1.8,
+        "ta": 1
+      },
+      "explanation": "・魔族のモン類ブリーダー2枚目\n・モン類ブリーダーのトレ性能は鍛錬によってかなり保証されているので、鍛錬がついている時点で弱いことはない\n・能力は実装当初強いとされていたがモン類レベルを上げないとフルパワーを発揮出来ないところがネックだった\n・じゃあモン類レベルを上げやすくなった今強いかと言われたらうーんと言わざるを得ない\n・ちから命中のフォーカスじゃなくてライフちからのバイタルだったら今も評価は高かったと思われる",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 18,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c7-SSR-piisii",
+      "name": "ピーシィ(黄)",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/c7-SSR-piisii.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.4,
+        "karyo": 1.7,
+        "battle": 1.1,
+        "ta": 1.2
+      },
+      "explanation": "・トレ集合率持ちのSSR友人\n・MR友人が出る前の最後のSSR友人ということで格落ちすることがほぼ確定しているが、やっぱりトレ集合率は強い\n・能力も火力面ではなかなかだがパッとしない\n・いずれこの一覧からも姿を消してしまうのかもしれない",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "c11j-MR-mirukii",
+      "name": "ミルキィ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "タフネス",
+      "monType": "獣族",
+      "image": "assist-cards/c11j-MR-mirukii.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超根性",
+      "releasedAt": "2025/06/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "タフネス",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ修行アップ +40%",
+        "1b": "タフネスボーナス +1",
+        "2a": "トレ効果アップ +6%",
+        "2b": "大成功率アップ +6",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.3,
+        "karyo": 1,
+        "battle": 1.8,
+        "ta": 1
+      },
+      "explanation": "・黄色のオーラブリーダー1枚目\n・トレ性能はそこそこ\n・獣が強化されてやっと出番が増えるかと思われたが、使ってみたらあんまり強くなかったのでスタメン落ちの日は近い\n・超根性が取れるのは優秀\n・能力も有利完全回避とリジェクトが優秀なのでロード秘伝枠には採用されやすいか\n・なきゃないで構わない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 17,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d22g-MR-emuroudo",
+      "name": "エムロード",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "ルミナス",
+      "monType": "創造",
+      "image": "assist-cards/d22g-MR-emuroudo.jpg",
+      "distance": null,
+      "terrain": [
+        "森林"
+      ],
+      "event2": null,
+      "releasedAt": "2025/06/16",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ルミナス",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類EXトレブースト +10%",
+        "1b": "ルミナスボーナス +1",
+        "2a": "モン類トレ共鳴・創造 +3%",
+        "2b": "忠誠度効果アップ +12%",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 2.5,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・創造のモン類ブリーダー1枚目\n・202506に実装されてから9ヶ月間1枚で創造を支え続けた\n・そろそろエムロードの相棒が出そう\n・モン類ブリーダー基準のトレ性能で強い\n・能力は火力に寄っていて、条件も限定的でモン類ブリーダーのなかでは最低クラスの汎用性\n・ただキングをはじめとする緑創造にはかなり刺さった",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 16,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e3h-SSR-marijji",
+      "name": "マリッジ",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "かしこさ",
+      "monType": "幻霊",
+      "image": "assist-cards/e3h-SSR-marijji.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/05/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "かしこさ",
+        "ouenKouka": "25",
+        "tokuiRitsu": "30",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "かしこさアップ +2",
+        "1b": "モン類強化 +3",
+        "2a": "トレ効果アップ +7%",
+        "2b": "オーラEXトレパワーアップ +30%",
+        "3a": "オーラステータスボーナス +1",
+        "3b": null,
+        "4a": "忠誠度効果アップ +20%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 1,
+        "battle": 1.3,
+        "ta": 1
+      },
+      "explanation": "・白かしこさのSSR\n・トレ性能はSSRの中ではかなり優秀\n・能力も花嫁のほうはダメカットと条件次第で追撃無効なのでバトルでは重要なはたらき\n・もう一つはモン類の条件のせいで汎用性低い上に効果も微妙",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 126,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d12g-MR-doruche",
+      "name": "ドルチェ",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "アサルト",
+      "monType": "創造",
+      "image": "assist-cards/d12g-MR-doruche.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超逆上",
+      "releasedAt": "2025/05/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "アサルト",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラトレ効果アップ +7%",
+        "1b": "アサルトボーナス +1",
+        "2a": "忠誠度効果アップ +12%",
+        "2b": "大成功率アップ +6",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 2.2,
+        "battle": 2,
+        "ta": 1
+      },
+      "explanation": "・緑のオーラブリーダー1枚目\n・継承持ちのMRの中で最弱の名をほしいままにしている\n・大成功はしやすいので他にトレ性能が高いカードだらけなら強い\n・能力は火力面もガッツ回復もかなり優秀で能力のために編成しているといっても過言ではない\n・ロード秘伝の登場により編成する必要がなくなった\n・さよならドルチェ",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 15,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a3g-SSR-hao",
+      "name": "ハオ",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "かしこさ",
+      "monType": "創造",
+      "image": "assist-cards/a3g-SSR-hao.jpg",
+      "distance": null,
+      "terrain": [
+        "火山"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 1.3,
+        "battle": 1.7,
+        "ta": 1
+      },
+      "explanation": "・シャーマンキングコラボガチャカード\n・赤のかしこさSSR\n・トレ性能もなかなかで赤ではまだまだ現役\n・能力も火山に寄っているダメージ追撃とステータス追撃で、赤創造であればフルパワーを発揮できる\n・火山じゃないと活躍出来ない能力は、逆に火山であればかなり息は長い",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a7-SSR-anna",
+      "name": "恐山アンナ",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/a7-SSR-anna.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/04/30",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "赤",
+        "hpLimit": "25",
+        "allStatLimitUp": "20",
+        "challengeEffectUp": "20"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +1",
+        "1b": null,
+        "2a": "応援効果サポート +8%",
+        "2b": "オーラモン類Lvブースト +2",
+        "3a": "オーラトレ集合率アップ +15%",
+        "3b": null,
+        "4a": "トレ効果アップ +7%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.4,
+        "karyo": 1.7,
+        "battle": 1.3,
+        "ta": 1.3
+      },
+      "explanation": "・シャーマンキングコラボガチャカード\n・トレ集合率を持つ赤友人SSR2枚目\n・MRシュナという完全上位互換が出たのでシュナを持ってる人はお役御免だが、持ってないならまだまだ現役\n・能力は微妙\n・火力としてもイマイチだし追撃無効が当たり前の世界で追撃ダメ半減は弱い",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 201,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d13i-MR-asakurayou",
+      "name": "麻倉葉",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "テクニック",
+      "monType": "魔族",
+      "image": "assist-cards/d13i-MR-asakurayou.jpg",
+      "distance": "中距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3,
+        "karyo": 1.1,
+        "battle": 1.2,
+        "ta": 1.5
+      },
+      "explanation": "・シャーマンキングコラボガチャカード\n・魔族のモン類ブリーダー1枚目\n・モン類ブリーダーでテクニックなのは麻倉葉だけ\n・能力はモンスターの麻倉葉専用機みたいな汎用性の狭さだが、ロード秘伝の登場により能力の強さよりトレ性能の高さが評価に繋がる時代になり評価アップ\n・バトルでも総合力でも魔族の育成には入れたい1枚",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "e2j-SSR-rekusu",
+      "name": "レクス",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "ちから",
+      "monType": "獣族",
+      "image": "assist-cards/e2j-SSR-rekusu.jpg",
+      "distance": null,
+      "terrain": [
+        "海岸"
+      ],
+      "event2": null,
+      "releasedAt": "2025/04/14",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ちから",
+        "ouenKouka": "25",
+        "tokuiRitsu": "30",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ちからアップ +2",
+        "1b": "モン類強化 +3",
+        "2a": "トレ効果アップ +9%",
+        "2b": "オーラEXトレパワーアップ +30%",
+        "3a": "オーラ適正アップⅡ +2",
+        "3b": null,
+        "4a": "大成功率アップ +8",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・白ちからSSR\n・獣のモン類レベルを本体含めて4上げられる唯一のカードということで載せている\n・次獣のSSRがきたらこの一覧からも姿を消すだろう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 123,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e18l-MR-rippii",
+      "name": "リッピー",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "フォース",
+      "monType": "無機",
+      "image": "assist-cards/e18l-MR-rippii.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超必死",
+      "releasedAt": "2025/03/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フォース",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類EXトレブースト +10%",
+        "1b": "フォースボーナス",
+        "2a": "モン類トレ共鳴・無機 +3%",
+        "2b": "忠誠度効果アップ +20%",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 1,
+        "battle": 3,
+        "ta": 1.3
+      },
+      "explanation": "・無機のモン類ブリーダー1枚目\n・1年経っても色褪せないトレ性能の高さ\n・ギフトンと合わせて編成することで爆発的トレを体感できる\n・リッピー単体でも十分強い\n・バトル性能も今でこそ存在感が小さくなってきたもののリッピーカットが世界を3ヶ月ほど支配していたことがある\n・頂上決戦が16体中14体イルミネになったのは、リッピーカットの責任である\n・嫌われるほど強い能力なので仕上がり次第では今でも十分最前線で戦える",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 13,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f9-SSR-hori",
+      "name": "ホリィ",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/f9-SSR-hori.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/03/12",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "ライバル",
+        "attribute": "黒",
+        "hpLimit": "50",
+        "allStatLimitUp": "50",
+        "challengeEffectUp": "4"
+      },
+      "limitBreak": {
+        "1a": "フォースボーナス +2",
+        "1b": "オーラトレ集合率アップ +20%",
+        "2a": "トレ人数効果アップ +50%",
+        "2b": "大成功率アップ +6",
+        "3a": "オーラステ上限ブースト +25%",
+        "3b": null,
+        "4a": "トレレベルアップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 2.5,
+        "battle": 2,
+        "ta": 2
+      },
+      "explanation": "・2周年の目玉カード\n・黒のライバルSSR\n・モンスターファーム1の助手がライバルとして登場したときの盛り上がりはすごかった\n・性能も衝撃的な強さで、202504アシストカードランキングではMRのリッピーやセレネを抑えてぶっちぎり1位だった\n・3周年時点でも余裕の現役\n・師匠の登場で友人とどちらかしか編成出来なくなったとき渋々外す選択をしなければならなくなる\n・火力面はかなり優秀な能力を持っているが、他の能力は微妙\n・ロード秘伝が登場したことによりFI MBAアディションと永遠の少女を求めてしばらく出番は消えないだろう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 181,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f16h-MR-iburiisu",
+      "name": "フォールン",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "インパクト",
+      "monType": "幻霊",
+      "image": "assist-cards/f16h-MR-iburiisu.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/09/12",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "インパクト",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類EXトレブースト +10%",
+        "1b": "インパクトボーナス +1",
+        "2a": "モン類素質共鳴・幻霊 +2%",
+        "2b": "大成功率アップ +10",
+        "3a": "モン類ブリーダー・鍛錬",
+        "3b": null,
+        "4a": "モン類ブリー０ダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 1.5,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・幻霊のモン類ブリーダー1枚目\n・抜群のトレ性能で幻霊を底上げしている\n・バトル性能に関しては、実装当初はステータス追撃が強いとされていたが半年経ったら物足りなくなってきている\n・幻霊育成ではしばらく現役だろう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 21,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f6l-SSR-araibu",
+      "name": "アライブ",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "丈夫さ",
+      "monType": "無機",
+      "image": "assist-cards/f6l-SSR-araibu.jpg",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/03/12",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "丈夫さ",
+        "ouenKouka": "25",
+        "tokuiRitsu": "30",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "丈夫さアップ +2",
+        "1b": "モン類強化 +3",
+        "2a": "トレ効果アップ +9%",
+        "2b": "オーラEXトレパワーアップ +30%",
+        "3a": "オーラワイルドⅡ +1",
+        "3b": null,
+        "4a": "忠誠度効果アップ +20%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.7,
+        "karyo": 1.5,
+        "battle": 1.3,
+        "ta": 1
+      },
+      "explanation": "・黒の丈夫さSSR\n・SSRは基本オーラ一致でオーラ効果が発揮されモン類一致で上限が上がるものが多いが、アライブはモン類一致でトレ効果が10%上がる\n・これによるトレ性能の上がり方が凄まじく、オーラモン類一致での性能はピカイチ\n・バトル性能は控えめだが入ってると嬉しい性能",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 121,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f1g-SSR-tyakooru",
+      "name": "チャコール",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "ライフ",
+      "monType": "創造",
+      "image": "assist-cards/f1g-SSR-tyakooru.jpg",
+      "distance": "中距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/02/28",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ライフ",
+        "ouenKouka": "30",
+        "tokuiRitsu": "30",
+        "shokiStatus": "23",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ライフアップ +2",
+        "1b": "モン類強化 +3",
+        "2a": "トレ効果アップ +9%",
+        "2b": "オーラEXトレパワーアップ +30%",
+        "3a": "オーラ初期ステアップ +75%",
+        "3b": null,
+        "4a": "大成功率アップ +8",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.8,
+        "karyo": 1.8,
+        "battle": 1.8,
+        "ta": 1.5
+      },
+      "explanation": "・2周年で実装された黒のSSR\n・トレ性能はまずまず\n・能力はアディションもブロックもまずまず\n・ひらめきが目に見えるSSRで数少ない堅固を付与できるカード\n・ロード秘伝の登場で、創造でバトルに挑みたい場合は出番が続く",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 120,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c19k-MR-ofurii",
+      "name": "オフリィ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "ジャッジ",
+      "monType": "怪物",
+      "image": "assist-cards/c19k-MR-ofurii.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超余裕",
+      "releasedAt": "2025/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ジャッジ",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "モン類EXトレブースト +10%",
+        "1b": "ジャッジボーナス +1",
+        "2a": "モン類トレ共鳴・怪物 +3%",
+        "2b": "大成功率アップ +8",
+        "3a": "モン類ブリーダー・団連",
+        "3b": null,
+        "4a": "モン類ブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 3.5,
+        "karyo": 1,
+        "battle": 3,
+        "ta": 1
+      },
+      "explanation": "・2周年で実装された初のモン類ブリーダーカード\n・怪物のモン類ブリーダー1枚目\n・実装当初は書いてあることから強さが推測しづらく微妙な評価だったが、育成で使ってみるとなんかわからないけど強いといった感想であふれた\n・能力も非常に優秀で怪物であるだけでいいオーラ技完全回避と追撃無効のリジェクトで怪物にバトルでの人権を与え続けている",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 12,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f21l-MR-serene",
+      "name": "セレネ",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "クイック",
+      "monType": "無機",
+      "image": "assist-cards/f21l-MR-serene.jpg",
+      "distance": null,
+      "terrain": [
+        "砂漠"
+      ],
+      "event2": null,
+      "releasedAt": "2025/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "クイック",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "オーラ修行アップ +40%",
+        "1b": "クイックボーナス +1",
+        "2a": "トレ効果アップ +9%",
+        "2b": "忠誠度効果アップ +15%",
+        "3a": "オーラブリーダー・信頼",
+        "3b": null,
+        "4a": "オーラブリーダー・継承",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.8,
+        "karyo": 2,
+        "battle": 2,
+        "ta": 1.3
+      },
+      "explanation": "・2周年の目玉カード\n・黒オーラブリーダー継承1枚目\n・トレ性能は1年経ってもトップクラス\n・他のオーラブリーダーより数字が高めだからオーラブリーダーの中でもモン類ブリーダーに近い総合力への影響を誇る\n・バトル性能も条件緩めなチェイサーとアディションでとりあえず編成したい1枚の座を守り続けている",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 11,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d6g-SSR-king",
+      "name": "キング",
+      "rarity": "SSR",
+      "aura": "緑",
+      "cardType": "丈夫さ",
+      "monType": "創造",
+      "image": "assist-cards/d6g-SSR-king.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.8,
+        "battle": 1.5,
+        "ta": 1.1
+      },
+      "explanation": "・七つの大罪コラボガチャカード\n・丈夫さSSR\n・2周年より前のカードなのでステ上限アップはないがオーラ一致のトレ性能はまあまあ\n・バトル性能もまあまあ\n・実装当初はかなり強かったのでインフレが少しずつ進んでいるのを感じる",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a9-SSR-ban",
+      "name": "バン",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/a9-SSR-ban.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2025/01/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "ライバル",
+        "attribute": "赤",
+        "hpLimit": "50",
+        "allStatLimitUp": "50",
+        "challengeEffectUp": "4"
+      },
+      "limitBreak": {
+        "1a": "命中アップ +2",
+        "1b": null,
+        "2a": "トレ人数効果アップ +50%",
+        "2b": "大成功率アップ +6",
+        "3a": "オーラステ上限ブースト +25%",
+        "3b": null,
+        "4a": "トレレベルアップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.3,
+        "battle": 1.5,
+        "ta": 4.5
+      },
+      "explanation": "・七つの大罪コラボガチャカード\n・赤のライバルSSR\n・トレ性能も火力もパッとしないところはある\n・ただアカゾナエヌシ以外にレッドアディションを付与できる唯一のカード\n・さらに固有の本当の罪ってのははオーラ技発動時攻撃ステ10%アップ\n・これはレッドアディションに匹敵する汎用性の高さ\n・今後も多くのモンスターの能力に入っていくことだろう\n・なきゃないで構わない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 180,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c2h-SSR-meriodasu",
+      "name": "メリオダス",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "ちから",
+      "monType": "幻霊",
+      "image": "assist-cards/c2h-SSR-meriodasu.jpg",
+      "distance": null,
+      "terrain": [
+        "雪山"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.5,
+        "karyo": 1,
+        "battle": 1.5,
+        "ta": 1
+      },
+      "explanation": "・七つの大罪コラボガチャカード\n・黄ちからのSSR\n・オーラ効果で最強なのはトレ出現数アップ+1\n・メリオダスはそれが2行\n・つまり最強ってこと\n・SSRであるがゆえに初期親密度がMRに比べて低いことと、2周年より前のカードであるがゆえにステ上限アップがないことが弱点\n・能力も対青性能は優秀",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b2l-SSR-rikanto",
+      "name": "リカント",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "ちから",
+      "monType": "無機",
+      "image": "assist-cards/b2l-SSR-rikanto.jpg",
+      "distance": null,
+      "terrain": [
+        "森林"
+      ],
+      "event2": null,
+      "releasedAt": "2025/01/15",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ちから",
+        "ouenKouka": "25",
+        "tokuiRitsu": "30",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ちからアップ +2",
+        "1b": null,
+        "2a": "トレ効果アップ +7%",
+        "2b": "ちからアップ +1",
+        "3a": "オーラ修行アップ +20%",
+        "3b": null,
+        "4a": "忠誠度効果アップ +17%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・とりあえずラインナップに入れてみたけどとりわけ言いたいことがあるわけでもないカード\n・もう使われることはないんだろうな",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 117,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b9-SSR-siena",
+      "name": "シエナ",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/b9-SSR-siena.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/12/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "ライバル",
+        "attribute": "青",
+        "hpLimit": "50",
+        "allStatLimitUp": "50",
+        "challengeEffectUp": "4"
+      },
+      "limitBreak": {
+        "1a": "ライフアップ +2",
+        "1b": null,
+        "2a": "トレ人数効果アップ +50%",
+        "2b": "大会消費体力ダウン-15%",
+        "3a": "オーラステ上限ブースト +25%",
+        "3b": null,
+        "4a": "トレレベルアップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.5,
+        "battle": 1.3,
+        "ta": 1.8
+      },
+      "explanation": "・青のライバルSSR\n・師匠の出現によってお役御免になりつつあるカード\n・ひらめきもボトルアディション以外特段影響が大きいものはない\n・師匠がないモン類ではまだしばらく出番がありそう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 179,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b17h-MR-ryuujin",
+      "name": "リュージン",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "ガード",
+      "monType": "幻霊",
+      "image": "assist-cards/b17h-MR-ryuujin.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超余裕",
+      "releasedAt": "2024/12/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ガード",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "ガードボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "大成功率アップ +10",
+        "3a": "オーラブリーダー・信頼",
+        "3b": null,
+        "4a": "トレ効果アップ +7%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1.1,
+        "battle": 1.3,
+        "ta": 1
+      },
+      "explanation": "・青ガードMR\n・リュージンチェイサーで一時期バトルの世界を支配していた\n・火力がインフレした今はステータスチェイサーよりダメ%チェイサーのほうがダメージが出るので出番が減っている",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 10,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a5g-SSR-roozuheddo",
+      "name": "ローズヘッド",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "回避",
+      "monType": "創造",
+      "image": "assist-cards/a5g-SSR-roozuheddo.jpg",
+      "distance": null,
+      "terrain": [
+        "海岸",
+        "砂漠"
+      ],
+      "event2": null,
+      "releasedAt": "2024/12/18",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "回避",
+        "ouenKouka": "23",
+        "tokuiRitsu": "35",
+        "shokiStatus": "25",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "回避アップ +2",
+        "1b": null,
+        "2a": "大成功率アップ +10",
+        "2b": "回避アップ +1",
+        "3a": "オーラワイルドⅡ +1",
+        "3b": null,
+        "4a": "トレ効果アップ +7%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・世界が認めるオーラワイルドカード\n・ワイルドは何物の代わりにもなれるという意味でも使われるが、オーラワイルドは他の代わりにはならないし、オーラワイルドの代わりになれるものもない\n・ノラモンと出会いやすくなるのは今後も出番はずっとあるが、バトル用っぽい雰囲気を出していたこともあって、最近ではオーラワイルドという悪口も使われている",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 116,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a1j-SSR-kurousu",
+      "name": "クロース",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "ライフ",
+      "monType": "獣族",
+      "image": "assist-cards/a1j-SSR-kurousu.jpg",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/11/30",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ライフ",
+        "ouenKouka": "25",
+        "tokuiRitsu": "35",
+        "shokiStatus": "23",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ライフアップ +2",
+        "1b": null,
+        "2a": "トレ効果アップ +7%",
+        "2b": "大成功率アップ +5",
+        "3a": "オーラ初期ステアップ +50%",
+        "3b": null,
+        "4a": "忠誠度効果アップ +17%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・一昔前すぎて特に言うこともないカード\n・クロースアディションは今後も出番はありそう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 115,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d19h-MR-parumaa",
+      "name": "パルマー",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "ジャッジ",
+      "monType": "幻霊",
+      "image": "assist-cards/d19h-MR-parumaa.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": "超必死",
+      "releasedAt": "2024/11/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ジャッジ",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "ジャッジボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "大成功率アップ +12",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "トレ効果アップ +7%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.3,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1.1
+      },
+      "explanation": "・2周年前のMR\n・緑ではまだ出番があるくらいには緑の役者は揃ってない\n・能力が微妙で今後の出番は減っていく一方\n・能力が弱い昔のカードにも活路を",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 9,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d2l-SSR-mikasa",
+      "name": "ミカサ",
+      "rarity": "SSR",
+      "aura": "緑",
+      "cardType": "ちから",
+      "monType": "無機",
+      "image": "assist-cards/d2l-SSR-mikasa.jpg",
+      "distance": null,
+      "terrain": [
+        "火山"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1.2
+      },
+      "explanation": "・進撃の巨人コラボガチャカード\n・実装から1年半経っても緑の総合力育成ではまだまだ活躍できるほどトレ性能が高い\n・能力はそこまで強くないので出番は減っていきそう",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "d7-SSR-rivai",
+      "name": "リヴァイ",
+      "rarity": "SSR",
+      "aura": "緑",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/d7-SSR-rivai.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/10/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "緑",
+        "hpLimit": "20",
+        "allStatLimitUp": "20",
+        "challengeEffectUp": "25"
+      },
+      "limitBreak": {
+        "1a": "トレーニング出現率アップ +15%",
+        "1b": null,
+        "2a": "応援効果サポート +8%",
+        "2b": null,
+        "3a": "オーラトレ集合率アップ +15%",
+        "3b": null,
+        "4a": "トレ効果アップ +7%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.3,
+        "karyo": 1,
+        "battle": 2,
+        "ta": 1
+      },
+      "explanation": "・進撃の巨人コラボガチャカード\n・実装当初はトレ集合率アップもあり最強の名をほしいままにしていた\n・能力の必中2回が一時期世界を支配していた\n・これまでの対戦環境における緑モンスターに人権を与え続けた元祖環境破壊神\n・ロード秘伝の登場で緑モンスターには標準装備したい\n・未所持の人にも似たような能力持ちを出して救済がほしいところ",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 200,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c6k-SSR-jonson",
+      "name": "ジョンソン",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "丈夫さ",
+      "monType": "怪物",
+      "image": "assist-cards/c6k-SSR-jonson.jpg",
+      "distance": null,
+      "terrain": [
+        "砂漠"
+      ],
+      "event2": null,
+      "releasedAt": "2024/10/16",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "丈夫さ",
+        "ouenKouka": "28",
+        "tokuiRitsu": "30",
+        "shokiStatus": "25",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "丈夫さアップ +2",
+        "1b": null,
+        "2a": "忠誠度効果アップ +22%",
+        "2b": "忠誠度効果アップ +5%",
+        "3a": "オーラ初期ステアップ +50%",
+        "3b": null,
+        "4a": "トレ効果アップ +5%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.5,
+        "battle": 1.1,
+        "ta": 1
+      },
+      "explanation": "・キラーアディションアタエヌシ",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 112,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c18k-MR-risuton",
+      "name": "リストン",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "フォース",
+      "monType": "怪物",
+      "image": "assist-cards/c18k-MR-risuton.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超根性",
+      "releasedAt": "2024/09/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フォース",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "フォースボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +9%",
+        "3a": "オーラブリーダー・信頼",
+        "3b": null,
+        "4a": "忠誠度効果アップ +15%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.5,
+        "karyo": 1.1,
+        "battle": 1,
+        "ta": 1.3
+      },
+      "explanation": "・2周年前のカード\n・トレ性能も高く今でも活躍できそうではあるが、2周年以降のカードとはオーラブリーダーの性能が違いすぎるのでいずれ出番は減っていくだろう\n・能力も弱くはないが環境を動かすものではない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 8,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c9-SSR-porutsu",
+      "name": "ポルツ(ライバル)",
+      "rarity": "SSR",
+      "aura": "黄",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/c9-SSR-porutsu.png",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1.1
+      },
+      "explanation": "・初のメガネSSR\n・実装当初は革命的だったが長い時を経て産業廃棄物へクラスチェンジ\n・能力も強くない",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "e1g-SSR-yunibaasu",
+      "name": "ユニバース",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "ライフ",
+      "monType": "創造",
+      "image": "assist-cards/e1g-SSR-yunibaasu.png",
+      "distance": "中距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/08/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "ライフ",
+        "ouenKouka": "30",
+        "tokuiRitsu": "30",
+        "shokiStatus": "23",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "ライフアップ +2",
+        "1b": null,
+        "2a": "忠誠度効果アップ +22%",
+        "2b": "修行効果アップ +5%",
+        "3a": "オーラトレ効果アップ +5%",
+        "3b": null,
+        "4a": "トレ効果アップ +6%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・トレ性能は決して低くはないが、時代においていかれたカード\n・中距離適性を上げることができる",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 109,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e17g-MR-kyatoru",
+      "name": "キャトル",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "ガード",
+      "monType": "創造",
+      "image": "assist-cards/e17g-MR-kyatoru.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超根性",
+      "releasedAt": "2024/08/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "ガード",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "ガードボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +8%",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "修行効果アップ +6%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1.5,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・2周年前のカード\n・スペースアディションは強そうに見えるが前衛の条件がついているのがちょっと残念\n・株式会社なきゃないで構わない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 7,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a3i-SSR-mirimu",
+      "name": "ミリム",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "かしこさ",
+      "monType": "魔族",
+      "image": "assist-cards/a3i-SSR-mirimu.png",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.3,
+        "battle": 1.1,
+        "ta": 1
+      },
+      "explanation": "・転スラ1回目コラボガチャカード\n・",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "b7-SSR-verudora",
+      "name": "ヴェルドラ",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "友人",
+      "monType": null,
+      "image": "assist-cards/b7-SSR-verudora.png",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/08/17",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "友人",
+        "attribute": "青",
+        "hpLimit": "20",
+        "allStatLimitUp": "20",
+        "challengeEffectUp": "25"
+      },
+      "limitBreak": {
+        "1a": "トレ人数効果アップ +50%",
+        "1b": null,
+        "2a": "トレ後回復効果アップ +5",
+        "2b": "修行効果アップ +5%",
+        "3a": "オーラトレ出現アップ +1",
+        "3b": null,
+        "4a": "トレ人数効果アップ +50%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1.1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・最強のオーラ効果、トレ出現数アップを持っているのに弱い唯一のカード\n・ただ増えるだけじゃダメなんだ\n・トレ性能が高いやつが増えて初めて強いということを彼は教えてくれた\n・能力はまあまあ",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 199,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b1i-SSR-rimuru",
+      "name": "リムル",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "ライフ",
+      "monType": "魔族",
+      "image": "assist-cards/b1i-SSR-rimuru.png",
+      "distance": null,
+      "terrain": [
+        "森林"
+      ],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1.5,
+        "battle": 1.3,
+        "ta": 1
+      },
+      "explanation": "・転スラ1回目コラボガチャカード\n・叡智の王は火力要員としてロード秘伝の登場で今後も出番がかなりありそう\n・リムルのカードは能力が強いということを覚えておこう",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "a6j-SSR-akazonaenusi",
+      "name": "アカゾナエヌシ",
+      "rarity": "SSR",
+      "aura": "赤",
+      "cardType": "丈夫さ",
+      "monType": "獣族",
+      "image": "assist-cards/a6j-SSR-akazonaenusi.png",
+      "distance": "近距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2023/09/12",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "丈夫さ",
+        "ouenKouka": "28",
+        "tokuiRitsu": "30",
+        "shokiStatus": "25",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "丈夫さアップ +1",
+        "1b": null,
+        "2a": "大成功率アップ +12%",
+        "2b": null,
+        "3a": "オーラピークターンアップ +1",
+        "3b": null,
+        "4a": "得意率アップ +15%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 2,
+        "battle": 2,
+        "ta": 5
+      },
+      "explanation": "・リリース半年後に出たカード\n・評価点数の上限が5だから5点しかついていないだけで他オーラモン類（汎用性）の点数は本来300万点\n・レッドアディションアタエヌシ\n・登場から2年半後の20260314アシストカードランキングで9位に\n・ロード秘伝の登場で本物の宗教へと覚醒\n・皆さんはレッドアディションをご存知だろうか。\nレッドアディションとはオーラ技発動時丈夫さの15%を攻撃ステに加算という能力である。\nもちろん強いは強いが世界をひっくり返すほどの能力ではない。\nしかし人々はレッドアディションを信仰している。\n一体なぜ？\nそれはレッドアディションの発動条件がガバガバだからである。\nオーラ技を打つだけでいい。\n打ったモンスターのオーラ色やモン類なんて関係ない。\nロード秘伝が登場した今、全てのモンスターの1番初めの選択肢がレッドアディションなのである。\nもし、ロードオブマスターズの頂上決戦にレッドアディションを搭載してないモンスターが現れたら？\nそのときはこう思ってほしい。\nああ、彼はレッドアディションを信じていないのだなと。\n残念ながらそのモンスターは優勝しない。\n投票するのは危険だ。\nなぜならレッドアディションを持っていないのだから。\nもし今後レッドアディションを持たないモンスターが優勝したらこのコラムを編集しよう。\nそんな日が訪れることがあるのだろうか。",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 78,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "b17h-MR-ruri",
+      "name": "ルリ",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "ガード",
+      "monType": "幻霊",
+      "image": "assist-cards/b17h-MR-ruri.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超必死",
+      "releasedAt": "2024/07/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "アキュメン",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "アキュメンボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +7%",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "大成功率アップ +9",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.5,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・2周年前のカード\n・噛み合わせ的に命中が不足している青ではまだまだ活躍できることが多い\n・能力は弱くはないが強くもない",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 6,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f15k-MR-tanatosu",
+      "name": "タナトス",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "アキュメン",
+      "monType": "怪物",
+      "image": "assist-cards/f15k-MR-tanatosu.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超本気",
+      "releasedAt": "2024/05/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "アキュメン",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "アキュメンボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +7%",
+        "3a": "オーラブリーダー・信頼",
+        "3b": null,
+        "4a": "忠誠度効果アップ +17%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.3,
+        "karyo": 1,
+        "battle": 1.1,
+        "ta": 1.3
+      },
+      "explanation": "・ラタトスクと全く同じ数字\n・トレ性能が高く、能力の必中がバトルの世界を動かしてきた実績がある\n・タナトスゾーンは今でも強い",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 4,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a16h-MR-ramusuiito",
+      "name": "ラムスイート",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "インパクト",
+      "monType": "幻霊",
+      "image": "assist-cards/a16h-MR-ramusuiito.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超根性",
+      "releasedAt": "2024/06/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "インパクト",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "インパクトボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "大成功率アップ +9",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "忠誠度効果アップ +17%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・本当にMRなのか疑わしいレベルだが昔のカードだから仕方ないよね",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 5,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "c14k-MR-suzuka",
+      "name": "スズカ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "フィジカル",
+      "monType": "怪物",
+      "image": "assist-cards/c14k-MR-suzuka.png",
+      "distance": "零距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/04/30",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "フィジカル",
+        "ouenKouka": "32",
+        "tokuiRitsu": "30",
+        "shokiStatus": "32",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "フィジカルボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +8%",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "大成功率アップ +9",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1.1
+      },
+      "explanation": "",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 3,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "a13i-MR-miriamu",
+      "name": "ミリアム",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "テクニック",
+      "monType": "魔族",
+      "image": "assist-cards/a13i-MR-miriamu.png",
+      "distance": null,
+      "terrain": [],
+      "event2": "超逆上",
+      "releasedAt": "2024/03/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "テクニック",
+        "ouenKouka": "32",
+        "tokuiRitsu": "35",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "テクニックボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +8%",
+        "3a": "オーラブリーダー・恩恵",
+        "3b": null,
+        "4a": "回避アップ +1",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.6,
+        "karyo": 1.4,
+        "battle": 1.4,
+        "ta": 1.3
+      },
+      "explanation": "・赤のMRの選択肢が少ないこととオーラブリーダーの恩恵が強いのも相まって長いことスタメンに居続ける魔物\n・いい加減外したいけど代わりになれるものがいないという立ち位置\n・フェアリーブーストの汎用性が高く出番はあり続ける",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 2,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "e12i-MR-raburesu",
+      "name": "ラブレス",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "アサルト",
+      "monType": "魔族",
+      "image": "assist-cards/e12i-MR-raburesu.png",
+      "distance": "零距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2024/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "アサルト",
+        "ouenKouka": "30",
+        "tokuiRitsu": "40",
+        "shokiStatus": "30",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ +",
+        "1b": "アサルトボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "修行効果アップ +8%",
+        "3a": "オーラブリーダー・幸運",
+        "3b": null,
+        "4a": "大成功率アップ +9",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1
+      },
+      "explanation": "・1枚目のMR\n・トレ性能も低く能力も弱すぎる\n・じゃあどこで活躍できるのか\n・今はもうできません",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 1,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "d11g-MR-ratatosuku",
+      "name": "ラタトスク",
+      "rarity": "MR",
+      "aura": "緑",
+      "cardType": "タフネス",
+      "monType": "創造",
+      "image": "assist-cards/d11g-MR-ratatosuku.png",
+      "distance": null,
+      "terrain": [
+        "森林"
+      ],
+      "event2": null,
+      "releasedAt": "2024/02/28",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": "○",
+        "tokuiTre": "タフネス",
+        "ouenKouka": "34",
+        "tokuiRitsu": "35",
+        "shokiStatus": "28",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "血統上限アップ;",
+        "1b": "タフネスボーナス +1",
+        "2a": "血統オーラアクティブ",
+        "2b": "トレ効果アップ +7%",
+        "3a": "オーラブリーダー・信頼",
+        "3b": null,
+        "4a": "忠誠度効果アップ +17%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 1.3,
+        "karyo": 1,
+        "battle": 1,
+        "ta": 1.1
+      },
+      "explanation": "・1枚目のMR\n・トレ性能が高く今のカードも基準はある程度ここを大幅に超えないように守られている\n・能力はパッとしないがワールドカウンターは今後出番がありそう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 0,
+        "type": "main"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f6g-SSR-momonandhamusuke",
+      "name": "モモン＆ハムスケ",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "丈夫さ",
+      "monType": "創造",
+      "image": "assist-cards/f6g-SSR-momonandhamusuke.jpg",
+      "distance": "遠距離",
+      "terrain": [],
+      "event2": null,
+      "releasedAt": null,
+      "stats": {
+        "shokiShinmitsudo": null,
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": null,
+        "1b": null,
+        "2a": null,
+        "2b": null,
+        "3a": null,
+        "3b": null,
+        "4a": null,
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2,
+        "karyo": 1,
+        "battle": 3,
+        "ta": 1
+      },
+      "explanation": "・オーバーロードコラボガチャカード\n・黒の丈夫さSSR\n・トレ性能も高くバトル性能も高い優秀なカード\n・実装当初より新シナリオで距離適性を上げやすくなったおかげで全種族魅了を生かしやすくなり、黒にバトルの人権を与えることになった",
+      "formations": [],
+      "sapoRef": null,
+      "status": "draft"
+    },
+    {
+      "cardId": "f10h-MR-rucas",
+      "name": "ルーカス",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "師匠",
+      "monType": "幻霊",
+      "image": "assist-cards/f10h-MR-rucas.jpg",
+      "distance": null,
+      "terrain": [],
+      "event2": null,
+      "releasedAt": "2026/03/31",
+      "stats": {
+        "shokiShinmitsudo": "60",
+        "accessory": null,
+        "tokuiTre": null,
+        "ouenKouka": null,
+        "tokuiRitsu": null,
+        "shokiStatus": null,
+        "cardTypeSapo": "師匠",
+        "attribute": "黒",
+        "hpLimit": "10",
+        "allStatLimitUp": "60",
+        "challengeEffectUp": "7"
+      },
+      "limitBreak": {
+        "1a": "トレ人数効果アップ +50%",
+        "1b": "全距離技習得率アップⅡ +10%",
+        "2a": "モン類超修行 +1",
+        "2b": "修行特別効果アップ +3",
+        "3a": "モン類編成ボーナス:友人 +100",
+        "3b": "モン類編成ボーナス:ライバル +4%",
+        "4a": "モン類チャレンジ・幸運",
+        "4b": "トレ人数効果アップ +50%"
+      },
+      "ratings": {
+        "ikusei": 4.5,
+        "karyo": 1.5,
+        "battle": 4.5,
+        "ta": 5
+      },
+      "explanation": "・幻霊の師匠MR\n・アシスト効果がフレリアと全く同じ\n・少しくらい変えてもよかったのでは\n・ただ、つまり最強クラスのトレ性能が保証されているということ\n・能力がほとんどバトル耐久寄りで、幻霊だけではなく黒オーラであるだけでもなかなか大きい恩恵を受けられる\n・正直バトルでの幻霊が強くなりすぎて心配になるレベルの強化\n・ただ一点、火力増強だけはほんのちょっぴりなので長期戦を楽しみたい人はルーカスを使って黒幻霊を育成しよう",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 176,
+        "type": "sub"
+      },
+      "status": "draft"
+    },
+    {
+      "cardId": "f5h-SSR-tyakkuru",
+      "name": "チャックル",
+      "rarity": "SSR",
+      "aura": "黒",
+      "cardType": "回避",
+      "monType": "幻霊",
+      "image": "assist-cards/f5h-SSR-tyakkuru.jpg",
+      "distance": null,
+      "terrain": [
+        "火山"
+      ],
+      "event2": null,
+      "releasedAt": "2026/03/31",
+      "stats": {
+        "shokiShinmitsudo": "50",
+        "accessory": "○",
+        "tokuiTre": "回避",
+        "ouenKouka": "28",
+        "tokuiRitsu": "30",
+        "shokiStatus": "25",
+        "cardTypeSapo": null,
+        "attribute": null,
+        "hpLimit": null,
+        "allStatLimitUp": null,
+        "challengeEffectUp": null
+      },
+      "limitBreak": {
+        "1a": "回避アップ +3",
+        "1b": "モン類強化 +4",
+        "2a": "トレ効果アップ＋ +6%",
+        "2b": "オーラEXトレパワーアップ +40%",
+        "3a": "オーラ素質アップ +4%",
+        "3b": "忠誠度効果アップ +20%",
+        "4a": "修行効果アップ +10%",
+        "4b": null
+      },
+      "ratings": {
+        "ikusei": 2.8,
+        "karyo": 1,
+        "battle": 2,
+        "ta": 2.3
+      },
+      "explanation": "・スタフェス春2026の黒回避SSR\n・トレ効果17%に忠誠度45%の抜群のトレ性能に加えオーラトレ効果12%は破格のトレ性能\n・大成功があるので単純比較は出来ないが、カルキノスと同じかそれ以上のトレ性能になっている\n・能力は耐久寄りで、条件が限定的だけど師匠ルーカスの能力と噛み合わせが良い\n・とりあえず全員持っておきたい",
+      "formations": [],
+      "sapoRef": {
+        "sapoIndex": 138,
+        "type": "main"
+      },
+      "status": "draft"
+    }
+  ]
+}
