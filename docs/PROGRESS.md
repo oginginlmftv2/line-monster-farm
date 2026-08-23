@@ -26,11 +26,12 @@
 | P12-3 | アシストカードデータ監査 | `chore/p12-3-assist-data-audit` | **完了** | ⚪ | PR #32をmainへマージ（`c760910`）。監査値は独立検算で全項目一致 |
 | P12-3b | 能力画像割当のリポジトリ化 | `chore/p12-3b-ability-assignments` | **完了** | ⚪ | PR #33をmainへマージ（`a40f13e`）。Firestoreの一次資料を正データ化 |
 | P12-4 | カードDB正規化 | `chore/p12-4-assist-card-db` | **完了** | ⚪ | PR #34をmainへマージ（`f4bfc24`）。現行91カードをcardId基準で統合 |
-| P12-5 | 効果DB正規化 | `chore/p12-5-assist-effects-db` | **進行中** | ⚪ | 83カード888効果を損失なく変換し、未登録8カードをdraftで明示 |
+| P12-5 | 効果DB正規化 | `chore/p12-5-assist-effects-db` | **完了** | ⚪ | PR #35をmainへマージ（`aa83102`）。83カード888効果を損失なく変換 |
+| P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **進行中** | ⚪ | 1,079能力をcardId基準へ正規化し、未解決・重複候補も全件保持 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`f4bfc24`（P12-4マージ後。表の監査値は不変）
+調査基準: `origin/main`の`aa83102`（P12-5マージ後。表の監査値は不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -184,12 +185,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-6「能力DB正規化」だけを次に行う。
+P12-7「静的カード詳細生成」を次の候補とする。
 
-- ブランチ: `chore/p12-6-assist-abilities-db`
-- 本番影響: ⚪。公開HTML、本番データ、外部設定を変更しない
-- `src/data/assist-abilities.json` を作り、1,079能力をcardId基準へ正規化する
-- 確定・候補・未解決を分離し、曖昧な対応を自動確定しない
+- ブランチ: `feat/p12-7-assist-pages`
+- 本番影響: 🔴。公開HTML、一覧リンク、sitemapが変わり、mainへのマージで即時公開される
+- `docs/build-spec.md`へ仕様を追記し、3DBからカード固有URLの静的詳細を決定的に生成する
+- **管理者の明示承認なしに着手しない**
 - 詳細設計は `docs/assist-card-cms-progress.md` を正とする
 
 ## 明示的な保留
