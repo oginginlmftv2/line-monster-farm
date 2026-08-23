@@ -262,3 +262,34 @@ P12-4で`node scripts/build-assist-cards.js`を実行し、現行91カードを
 `generatedAt`は`null`固定である。生成を3回行った結果、各回のSHA-256は
 `43cf9323af826621c912e73da49126c842342bdd54fb2ba3198b21a648dccbbf`で一致し、
 バイト単位の決定性を確認した。
+
+## 8. 効果DBの変換結果
+
+P12-5で`node scripts/build-assist-effects.js`を実行し、`assist-effect-data.js`の効果を
+`src/data/assist-effects.json`へ`cardId`基準で損失なく変換した。カードの順序は
+`src/data/assist-cards.json`の配列順、カード内の効果順は入力配列順を維持している。
+テキストのトリム、全角半角変換、記号統一、表記ゆれの補正は行っていない。
+
+| 項目 | 変換結果 |
+|---|---:|
+| cardsエントリ | 91件。`assist-cards.json`と集合一致 |
+| 効果を持つカード | 83件。`status: verified` |
+| 未登録カード | 8件。`status: draft`かつ`effects: []` |
+| 効果総数 | 888件。入力からの欠落・増加0 |
+| unlockRank | 無凸416 / 1凸147 / 2凸156 / 3凸86 / 4凸83 |
+| カード当たり効果数 | 最小8 / 中央値11 / 最大14（効果を持つ83カード） |
+| `name + description + unlockRank`の重複 | 0件 |
+| `name + description`だけの重複 | 81件。凸で同じ効果が再度上乗せされる仕様として保持 |
+| 空文字 | name 0 / description 0 / unlockRank 0 |
+| HTMLタグを含む効果 | 0件 |
+| effectId重複 | 0件 |
+| sortOrderの欠番・重複 | 0件 |
+| 元データとの文字列一致 | 888件すべてname・desc・totsujouが完全一致 |
+
+未登録8カードは`g1-MR-serafina`、`g2-SSR-monodasu`、`g3-MR-jingorou`、
+`c20k-MR-teosu`、`d24k-SSR-rupinasu`、`d23k-MR-eiru`、
+`c28j-SSR-rokusho`、`c27j-MR-godemperor`である。
+
+同一カード内で`name + description`が同じ81件は削除していない。これらは凸段階が異なり、
+同じ効果が再度上乗せされるゲーム仕様である。一意性は`name + description + unlockRank`の
+3つ組で検査し、この3つ組の重複は0件だった。

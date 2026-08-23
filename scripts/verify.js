@@ -637,6 +637,96 @@ if (!exists('src/data/assist-cards.json')) {
   }
 }
 
+// ---------------------------------------------------------------- 12
+head('12. アシスト効果DB');
+if (!exists('src/data/assist-effects.json') || !exists('src/data/assist-cards.json')) {
+  ng('assist-effects.json または assist-cards.json がない');
+} else {
+  try {
+    const effectsDatabase = JSON.parse(read('src/data/assist-effects.json'));
+    const assistCards = JSON.parse(read('src/data/assist-cards.json'));
+    const cards = effectsDatabase.cards && typeof effectsDatabase.cards === 'object'
+      && !Array.isArray(effectsDatabase.cards) ? effectsDatabase.cards : {};
+    const expectedIds = Array.isArray(assistCards.cards)
+      ? assistCards.cards.map(card => card.cardId) : [];
+    const actualIds = Object.keys(cards);
+    const expectedIdSet = new Set(expectedIds);
+    const actualIdSet = new Set(actualIds);
+    const missingIds = expectedIds.filter(cardId => !actualIdSet.has(cardId));
+    const unexpectedIds = actualIds.filter(cardId => !expectedIdSet.has(cardId));
+    if (expectedIdSet.size !== expectedIds.length || actualIds.length !== expectedIds.length
+        || missingIds.length || unexpectedIds.length) {
+      ng(`assist-effects.jsonのcardId集合が不一致（効果DB ${actualIds.length}件 / カードDB ${expectedIds.length}件 / 欠落 ${missingIds.length}件 / 余分 ${unexpectedIds.length}件）`);
+    } else {
+      ok(`assist-effects.jsonのcardId集合がassist-cards.jsonと完全一致（${actualIds.length}件）`);
+    }
+
+    const allowedRanks = new Set(['無凸', '1凸', '2凸', '3凸', '4凸']);
+    const allEffects = actualIds.flatMap(cardId => Array.isArray(cards[cardId]?.effects)
+      ? cards[cardId].effects.map(effect => ({ cardId, effect })) : []);
+    const invalidRanks = allEffects.filter(({ effect }) => !allowedRanks.has(effect.unlockRank));
+    if (invalidRanks.length) {
+      ng(`assist-effects.jsonに許可外unlockRankがある: ${invalidRanks.slice(0, 5).map(({ cardId, effect }) => `${cardId}.${effect.effectId}=${String(effect.unlockRank)}`).join(', ')}`);
+    } else {
+      ok('assist-effects.jsonのunlockRankはすべて許可値');
+    }
+
+    const effectIds = allEffects.map(({ effect }) => effect.effectId);
+    const duplicateEffectIds = effectIds.filter((effectId, index) => effectIds.indexOf(effectId) !== index);
+    if (duplicateEffectIds.length) {
+      ng(`assist-effects.jsonのeffectIdが重複: ${[...new Set(duplicateEffectIds)].slice(0, 5).join(', ')}`);
+    } else {
+      ok(`assist-effects.jsonのeffectIdはファイル全体で一意（${effectIds.length}件）`);
+    }
+
+    const invalidSortOrders = [];
+    const duplicateTriples = [];
+    const invalidStatuses = [];
+    for (const cardId of actualIds) {
+      const card = cards[cardId];
+      const effects = Array.isArray(card?.effects) ? card.effects : null;
+      if (!effects) {
+        invalidSortOrders.push(`${cardId}: effectsが配列ではない`);
+        invalidStatuses.push(`${cardId}: effectsが配列ではない`);
+        continue;
+      }
+      const expectedSortOrders = effects.map((_, index) => index + 1);
+      if (effects.some((effect, index) => effect.sortOrder !== expectedSortOrders[index])) {
+        invalidSortOrders.push(cardId);
+      }
+      const triples = effects.map(effect => JSON.stringify([
+        effect.name,
+        effect.description,
+        effect.unlockRank,
+      ]));
+      if (new Set(triples).size !== triples.length) duplicateTriples.push(cardId);
+      if ((card.status === 'draft' && effects.length !== 0)
+          || (card.status === 'verified' && effects.length === 0)
+          || (card.status !== 'draft' && card.status !== 'verified')) {
+        invalidStatuses.push(cardId);
+      }
+    }
+
+    if (invalidSortOrders.length) {
+      ng(`assist-effects.jsonのsortOrderが1からの連番ではない: ${invalidSortOrders.slice(0, 5).join(', ')}`);
+    } else {
+      ok('assist-effects.jsonのsortOrderは全カードで1からの連番');
+    }
+    if (duplicateTriples.length) {
+      ng(`assist-effects.jsonの同一カード内にname + description + unlockRankの重複がある: ${duplicateTriples.slice(0, 5).join(', ')}`);
+    } else {
+      ok('assist-effects.jsonの同一カード内にname + description + unlockRankの重複なし');
+    }
+    if (invalidStatuses.length) {
+      ng(`assist-effects.jsonのstatusとeffectsの空・非空が不整合: ${invalidStatuses.slice(0, 5).join(', ')}`);
+    } else {
+      ok('assist-effects.jsonのdraftはeffects空、verifiedはeffects非空');
+    }
+  } catch (error) {
+    ng(`assist-effects.jsonの検査に失敗: ${error.message}`);
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
