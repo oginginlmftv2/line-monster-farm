@@ -22,11 +22,13 @@
 | P11-7 | 保護対応CMS PR経路のtest | `feat/p11-7-cms-protected-pr` | **保留** | ⚪ | 外部設定を実施できるGitHub管理権限がないため保留。test Workflow実装済み |
 | P11-8以降 | token最小権限化とmain Ruleset | P11-1で提示 | **保留** | 🟡🔴 | P11-7の実機証跡が揃うまで開始しない |
 | P12-1 | リセマラ記事刷新 | `content/p12-1-reroll-refresh` | **完了** | 🔴 | PR #30をmainへマージ（`958ffd2`）。Pages公開成功 |
-| P12-2 | アシストカードDB・静的ページ・CMS設計 | `chore/p12-2-assist-cms-design` | **レビュー待ち** | ⚪ | 現状、3DB、静的生成、OCRレビュー、専用CMS、移行・復旧の設計案を作成 |
+| P12-2 | アシストカードDB・静的ページ・CMS設計 | `chore/p12-2-assist-cms-design` | **完了** | ⚪ | mainへマージ（`37be17e`）。PRを介さないローカルマージ。設計のみで公開物は無変更 |
+| P12-3 | アシストカードデータ監査 | `chore/p12-3-assist-data-audit` | **完了** | ⚪ | PR #32をmainへマージ（`c760910`）。監査値は独立検算で全項目一致 |
+| P12-3b | 能力画像割当のリポジトリ化 | `chore/p12-3b-ability-assignments` | **進行中** | ⚪ | Firestoreにしか無かった割当を一次資料から正データ化 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`958ffd2`（P12-1マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
+調査基準: `origin/main`の`c760910`（P12-3マージ後。データ監査値は直前のCMS生成`a45ce13`から不変）
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -180,14 +182,14 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 次の作業
 
-P12-3「アシストカードデータ監査と読取export」だけを次に行う。
+P12-4「カードDB正規化」だけを次に行う。
 
-- ブランチ: `chore/p12-3-assist-data-audit`
+- ブランチ: `chore/p12-4-assist-card-db`
 - 本番影響: ⚪。公開HTML、本番データ、外部設定を変更しない
-- 休止中・100KB超のデータはNodeスクリプトで件数、hash、項目、参照関係だけを抽出する
-- Firestore `cards`、`cardAbilities/assignments`、必要なら旧`assistEffects`を読取exportする
-- 現行91カードを`cardId`基準で照合し、自動確定、候補、未解決を分離する
-- 詳細設計とP12-3以降の完了条件は`docs/assist-card-cms-progress.md`を正とする
+- `src/data/assist-cards.json` を作る。cardIdは `cards/cards-data.js` のキーを引き継ぐ
+- SAPO_DATA から凸・得意トレ等を移送する。`src/data/_audit/sapo-card-map.json` の
+  `exact` 56件だけを自動移送の対象とし、`candidate` 3件は人手確認まで移送しない
+- 詳細設計は `docs/assist-card-cms-progress.md` を正とする
 
 ## 明示的な保留
 

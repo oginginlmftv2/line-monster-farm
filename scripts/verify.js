@@ -520,6 +520,39 @@ else {
   }
 }
 
+// ---------------------------------------------------------------- 10
+head('10. 能力画像の割当');
+if (!exists('src/data/card-ability-assignments.json')) {
+  ng('card-ability-assignments.json がない');
+} else {
+  try {
+    const assignmentData = JSON.parse(read('src/data/card-ability-assignments.json'));
+    const cardIds = new Set(
+      [...read('cards/cards-data.js').matchAll(/^\s*'([^']+)'\s*:/gm)].map(match => match[1]),
+    );
+    const assignmentEntries = Object.entries(assignmentData.assignments || {});
+    const unknownCardIds = assignmentEntries
+      .map(([cardId]) => cardId)
+      .filter(cardId => !cardIds.has(cardId));
+    if (unknownCardIds.length) {
+      ng(`能力画像割当に cards-data.js に無いcardIdがある: ${unknownCardIds.join(', ')}`);
+    } else {
+      ok(`能力画像割当の全cardIdが cards-data.js に実在（${assignmentEntries.length}件）`);
+    }
+
+    const referencedImages = [...new Set(assignmentEntries.flatMap(([, filenames]) => filenames))];
+    const missingImages = referencedImages
+      .filter(filename => !exists(`assist-abilities/${filename}`));
+    if (missingImages.length) {
+      ng(`能力画像割当に存在しない画像参照がある: ${missingImages.join(', ')}`);
+    } else {
+      ok(`能力画像割当の全参照画像が assist-abilities/ に実在（${referencedImages.length}種）`);
+    }
+  } catch (error) {
+    ng(`card-ability-assignments.json の検査に失敗: ${error.message}`);
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
