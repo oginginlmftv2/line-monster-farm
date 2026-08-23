@@ -293,3 +293,68 @@ P12-5で`node scripts/build-assist-effects.js`を実行し、`assist-effect-data
 同一カード内で`name + description`が同じ81件は削除していない。これらは凸段階が異なり、
 同じ効果が再度上乗せされるゲーム仕様である。一意性は`name + description + unlockRank`の
 3つ組で検査し、この3つ組の重複は0件だった。
+
+## 9. 能力DBの正規化結果
+
+P12-6で`node scripts/build-assist-abilities.js`を実行し、`lMfDB_abilities.json`の全能力を
+`src/data/assist-abilities.json`へ入力配列順のまま変換した。カード対応は
+`src/data/_audit/ability-card-map.json`をそのまま使い、名前による再照合や推測確定はしていない。
+`generatedAt`は`null`固定で、文字列のトリム、HTMLタグの除去、表記統一もしていない。
+
+| 項目 | 正規化結果 |
+|---|---:|
+| abilities | 1,079件。入力からの欠落・増加0 |
+| abilityId / legacyId重複 | 0件 / 0件 |
+| 入力のid欠番 | 520、566、567、568、569の5件 |
+| linkStatus | resolved 560 / ambiguous 7 / unlinked 512 |
+| ambiguousのsourceName | 7件すべて「フレリア」 |
+| resolved以外でcardId非null | 0件 |
+| source | イベント644 / 閃き403 / EXトレ32 |
+| rarity | SSR 733 / MR 310 / null 36 |
+| rarity nullの内訳 | EXトレ32 / 閃き2 / イベント2 |
+| tags | 36種 / 空配列115件 |
+| descriptionにHTMLタグを含む | 186件。タグをそのまま保持 |
+| resolvedが付くカード | 71件 / 91件。71件すべて画像割当にも存在 |
+| カード当たり能力数 | 最小1 / 中央値5 / 最大24 |
+| duplicate-candidate | 22グループ44件。全件保持 |
+| 元データとの一致 | 1,079件すべて`name / desc / card / source / rarity / tags`が一致 |
+
+`unlinked` 512件は現行91カードに結べないが、1件も捨てていない。`cardId: null`のまま
+元の表示名を`sourceName`へ保持しており、将来カードの母集団を広げた際の再対応に使える。
+
+`name + description + sourceName`が完全一致する重複候補は次の22グループである。
+原本確認前にはどちらのlegacyIdが正しいか判断できないため、44件すべてへ
+`duplicate-candidate`を付け、マージ・除去していない。
+
+| # | legacyIdのペア | 備考 |
+|---:|---|---|
+| 1 | 139 / 655 | legacyId以外は同一 |
+| 2 | 140 / 656 | tagsのみ相違 |
+| 3 | 1044 / 1064 | legacyId以外は同一 |
+| 4 | 1045 / 1065 | legacyId以外は同一 |
+| 5 | 1046 / 1066 | legacyId以外は同一 |
+| 6 | 1047 / 1067 | legacyId以外は同一 |
+| 7 | 1048 / 1068 | legacyId以外は同一 |
+| 8 | 1049 / 1069 | legacyId以外は同一 |
+| 9 | 1050 / 1070 | legacyId以外は同一 |
+| 10 | 1051 / 1071 | legacyId以外は同一 |
+| 11 | 1052 / 1072 | legacyId以外は同一 |
+| 12 | 1053 / 1073 | legacyId以外は同一 |
+| 13 | 1054 / 1074 | legacyId以外は同一 |
+| 14 | 1055 / 1075 | legacyId以外は同一 |
+| 15 | 1056 / 1076 | legacyId以外は同一 |
+| 16 | 1057 / 1077 | legacyId以外は同一 |
+| 17 | 1058 / 1078 | legacyId以外は同一 |
+| 18 | 1059 / 1079 | legacyId以外は同一 |
+| 19 | 1060 / 1080 | legacyId以外は同一 |
+| 20 | 1061 / 1081 | legacyId以外は同一 |
+| 21 | 1062 / 1082 | legacyId以外は同一 |
+| 22 | 1063 / 1083 | legacyId以外は同一 |
+
+旧`lmfdb_abilities_data.json`の593件は、全legacyIdが新形式に存在し、消失は0件だった。
+旧形式が持つ共通項目で比較すると575件は完全一致し、18件は同一idで内容が更新されている。
+この旧形式との関係は監査記録だけに残し、能力DBには追加していない。
+
+生成を2回行った結果、各回のSHA-256は
+`cf0cb7fe3b61e625c5c53f53db61d8ff4d33e91adbcb139a7eaab8c64fb42a90`で一致し、
+バイト単位の決定性を確認した。
