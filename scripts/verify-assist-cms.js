@@ -18,13 +18,20 @@ const DATA_FILES = [
 const ALLOWED = {
   rarity: new Set(['MR', 'SSR']),
   aura: new Set(['赤', '緑', '黄', '白', '黒', '青']),
+  cardType: new Set([
+    'ガード', 'かしこさ', 'ジャッジ', 'アサルト', '回避', '師匠',
+    'ちから', 'テクニック', '友人', '丈夫さ', 'インパクト', 'フォース',
+    '命中', 'メンタル', 'フィジカル', 'クイック', 'サバイブ', 'ライバル',
+    'ルミナス', 'バイタル', 'フォーカス', 'タフネス', 'ライフ', 'アキュメン',
+  ]),
   monType: new Set(['幻霊', '無機', '創造', '獣族', '魔族', '怪物']),
-  cardStatus: new Set(['draft', 'verified', 'published', 'retired']),
   unlockRank: new Set(['無凸', '1凸', '2凸', '3凸', '4凸']),
   abilitySource: new Set(['イベント', '閃き', 'EXトレ']),
   linkStatus: new Set(['resolved', 'ambiguous', 'unlinked']),
   abilityStatus: new Set(['draft', 'verified']),
+  accessoryStatus: new Set(['unknown', 'yes', 'no']),
 };
+const RATING_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
 
 function read(root, relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
@@ -63,8 +70,8 @@ function validateRoot(root) {
   if (!/prop_\('ENVIRONMENT'\)\s*!==\s*'test'/.test(gas)) issues.push('ENVIRONMENT=testの強制検査がない');
   if (!/P12-8 ASSIST CMS TEST/.test(gas)) issues.push('testスプレッドシートのマーカー検査がない');
   if (!/releasedAt:\s*dateCell_\(row\.releasedAt\)/.test(gas)) issues.push('SheetsのDateをYYYY/MM/DDへ戻す処理がない');
-  if (!/withStats:\s*cards\.filter\(function \(card\) \{ return hasNonNullValue_\(card\.stats\); \}\)\.length/.test(gas)) {
-    issues.push('withStatsが非null値を持つカードだけを数えていない');
+  if (!/withStats:\s*cards\.filter\(function \(card\) \{ return card\.stats\.length > 0; \}\)\.length/.test(gas)) {
+    issues.push('withStatsが入力済みstats配列だけを数えていない');
   }
   for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'capture_queue', 'publish_log']) {
     if (!new RegExp(`['"]${sheet}['"]`).test(gas)) issues.push(`必須シート定義がない: ${sheet}`);
@@ -97,6 +104,29 @@ function validateRoot(root) {
     issues.push('READMEに独立testスプレッドシート方針がない');
   }
   if (!/<span class="test">TEST<\/span>/.test(html)) issues.push('管理画面にTEST表示がない');
+  if (/jsonField\s*\(|効果（JSON配列）|（JSON）/.test(html)) issues.push('管理画面にJSON直接入力が残っている');
+  if (/地形適性|renderTerrainFields|name=["']terrain["']/.test(html)) issues.push('管理画面に不要な地形適性入力が残っている');
+  if (/距離適性|f_distance/.test(html)) issues.push('管理画面に不要な距離適性入力が残っている');
+  if (/cardStatus|状態すべて|card\.status/.test(html)) issues.push('管理画面に不要なカードstatusが残っている');
+  for (const fn of [
+    'renderAccessoryField', 'collectRatings', 'collectStats', 'collectFormations',
+    'collectEffects', 'collectTags', 'sourceManagedField',
+  ]) {
+    if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(html)) issues.push(`構造化フォーム関数がない: ${fn}`);
+  }
+  if (!/var original=state\.ability\.tags\|\|\[\]/.test(html)) issues.push('能力タグの既存順序を保持していない');
+  if (!/limitBreakJson:\s*jsonCell_\(currentCard\.limitBreak\)/.test(gas) ||
+      !/sapoRefJson:\s*jsonCell_\(currentCard\.sapoRef\)/.test(gas) ||
+      !/flagsJson:\s*row\.flagsJson/.test(gas)) {
+    issues.push('参照専用項目をサーバー側で保持していない');
+  }
+  if (!/inList_\(card\.cardType,\s*CARD_TYPES/.test(gas) ||
+      !/validateImagePath_\(card,\s*true\)/.test(gas) ||
+      !/validateReleasedAt_\(card\.releasedAt/.test(gas) ||
+      !/validateRatings_\(card\.ratings/.test(gas) ||
+      !/concat\(validateImageFiles_\(docs\.cards\.cards\)\)/.test(gas)) {
+    issues.push('カード保存・exportの必須値検査が不足');
+  }
 
   const calledApis = [...html.matchAll(/call\(['"](api_[A-Za-z0-9_]+)['"]/g)].map(match => match[1]);
   for (const api of new Set(calledApis)) {
@@ -114,7 +144,7 @@ function validateRoot(root) {
     issues.push(`3DBのJSON解析に失敗: ${error.message}`);
     return issues;
   }
-  if (cardsDoc.schemaVersion !== 1 || !Array.isArray(cardsDoc.cards)) {
+  if (cardsDoc.schemaVersion !== 3 || !Array.isArray(cardsDoc.cards)) {
     issues.push('カードDBのschemaVersion/cardsが不正');
     return issues;
   }
@@ -135,9 +165,46 @@ function validateRoot(root) {
     if (!card.name || !card.image || !card.cardType) issues.push(`${card.cardId}: カード必須文字列が空欄`);
     if (!ALLOWED.rarity.has(card.rarity)) issues.push(`${card.cardId}: rarity不正`);
     if (!ALLOWED.aura.has(card.aura)) issues.push(`${card.cardId}: aura不正`);
+    if (!ALLOWED.cardType.has(card.cardType)) issues.push(`${card.cardId}: cardType不正`);
     if (card.monType !== null && !ALLOWED.monType.has(card.monType)) issues.push(`${card.cardId}: monType不正`);
-    if (!ALLOWED.cardStatus.has(card.status)) issues.push(`${card.cardId}: status不正`);
-    if (!Array.isArray(card.terrain) || !Array.isArray(card.formations)) issues.push(`${card.cardId}: terrain/formations不正`);
+    if (!ALLOWED.accessoryStatus.has(card.accessoryStatus)) issues.push(`${card.cardId}: accessoryStatus不正`);
+    if ('distance' in card || 'terrain' in card || 'status' in card) issues.push(`${card.cardId}: 削除済みカード項目が残存`);
+    if (!Array.isArray(card.formations)) issues.push(`${card.cardId}: formations不正`);
+    if (card.event2 !== null && (typeof card.event2 !== 'string' || !card.event2.trim())) issues.push(`${card.cardId}: event2不正`);
+    const expectedImage = new RegExp(`^assist-cards/${card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\.(?:jpg|jpeg|png|webp)$`, 'i');
+    if (!expectedImage.test(card.image || '') || !fs.existsSync(path.join(root, card.image || ''))) issues.push(`${card.cardId}: imageパスまたは実在不正`);
+    if (card.releasedAt !== null) {
+      const match = /^(\d{4})\/(\d{2})\/(\d{2})$/.exec(card.releasedAt);
+      const date = match && new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+      if (!match || date.getUTCFullYear() !== Number(match[1]) || date.getUTCMonth() + 1 !== Number(match[2]) || date.getUTCDate() !== Number(match[3])) issues.push(`${card.cardId}: releasedAt不正`);
+    }
+    if (card.ratings !== null && (!card.ratings || Object.keys(card.ratings).sort().join() !== [...RATING_KEYS].sort().join() ||
+        Object.values(card.ratings).some(value => value !== null && (!Number.isFinite(value) || value < 0 || value > 5)))) {
+      issues.push(`${card.cardId}: ratingsの構造が不正`);
+    }
+    if (!Array.isArray(card.stats) || ![0, 3].includes(card.stats.length) ||
+        card.stats.some(row => !row || typeof row.label !== 'string' || !row.label.trim() ||
+          typeof row.value !== 'string' || !/^\+\d+(?:\.\d+)?%?$/.test(row.value)) ||
+        duplicates((card.stats || []).map(row => row && row.label)).length) {
+      issues.push(`${card.cardId}: statsの構造が不正`);
+    }
+  }
+  const ruri = cardsDoc.cards.find(card => card.cardId === 'b17h-MR-ruri');
+  if (!ruri || ruri.cardType !== 'アキュメン') issues.push('ルリのcardTypeはアキュメン必須');
+  const withStats = cardsDoc.cards.filter(card => card.stats.length > 0).length;
+  if (!cardsDoc.counts || cardsDoc.counts.withStats !== withStats) issues.push('counts.withStatsがstats配列と不一致');
+  for (const card of cardsDoc.cards) {
+    if (!Array.isArray(card.formations)) continue;
+    card.formations.forEach((formation, index) => {
+      if (!formation || !formation.title || !Array.isArray(formation.cards) || formation.cards.length !== 5) {
+        issues.push(`${card.cardId}: formation ${index + 1}の構造が不正`);
+        return;
+      }
+      if (formation.cards.some(cardId => cardId && !cardIdSet.has(cardId)) ||
+          (formation.rental && !cardIdSet.has(formation.rental))) {
+        issues.push(`${card.cardId}: formation ${index + 1}に未知cardId`);
+      }
+    });
   }
 
   const effectCardIds = new Set(Object.keys(effectsDoc.cards));
@@ -170,6 +237,10 @@ function validateRoot(root) {
     if (!ALLOWED.linkStatus.has(ability.linkStatus)) issues.push(`${ability.abilityId}: linkStatus不正`);
     if (!ALLOWED.abilityStatus.has(ability.status)) issues.push(`${ability.abilityId}: status不正`);
     if (!Array.isArray(ability.tags) || !Array.isArray(ability.flags)) issues.push(`${ability.abilityId}: tags/flags不正`);
+    else if ([...ability.tags, ...ability.flags].some(value => typeof value !== 'string' || !value.trim()) ||
+        duplicates(ability.tags).length || duplicates(ability.flags).length) {
+      issues.push(`${ability.abilityId}: tags/flagsの値または重複が不正`);
+    }
     if (ability.linkStatus === 'resolved') {
       if (!cardIdSet.has(ability.cardId)) issues.push(`${ability.abilityId}: resolvedのcardId不正`);
       if (!Number.isInteger(ability.sortOrder)) issues.push(`${ability.abilityId}: resolvedのsortOrder不正`);

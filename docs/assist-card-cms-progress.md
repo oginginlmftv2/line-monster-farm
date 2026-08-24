@@ -2,7 +2,7 @@
 
 最終更新: 2026-08-24
 
-状態: **P12-8完了。次はP12-8bの構造化フォーム化**
+状態: **P12-8完了。P12-8bの構造化フォーム化を実装中**
 
 この文書は、アシストカード情報基盤の詳細な現在地、設計、依存関係、保留事項、
 実施順を管理する正である。全体の現在地は`docs/PROGRESS.md`、全体計画は
@@ -94,7 +94,7 @@ P11-6で停止した旧管理画面には次の処理があった。
 
 ```json
 {
-  "schemaVersion": 1,
+  "schemaVersion": 3,
   "cards": [
     {
       "cardId": "g3-MR-jingorou",
@@ -103,13 +103,17 @@ P11-6で停止した旧管理画面には次の処理があった。
       "aura": "緑",
       "cardType": "ジャッジ",
       "monType": "幻霊",
-      "aptitude": { "distance": null, "terrain": null },
       "event2": "調査中",
       "image": "assist-cards/g3-MR-jingorou.jpg",
+      "accessoryStatus": "unknown",
+      "stats": [
+        { "label": "応援効果", "value": "+32%" },
+        { "label": "得意率", "value": "+30%" },
+        { "label": "初期ジャッジ", "value": "+32" }
+      ],
       "ratings": { "ikusei": null, "karyo": null, "battle": null, "ta": null },
       "explanation": "",
-      "formations": [],
-      "status": "draft"
+      "formations": []
     }
   ]
 }
@@ -120,9 +124,13 @@ P11-6で停止した旧管理画面には次の処理があった。
 - `cardId`重複0、空欄0、既存IDの変更0
 - 画像は`cardId + 拡張子`と一致し、実在すること
 - `rarity/aura/cardType/monType`は許可値で検査する
+- `accessoryStatus`は`unknown/yes/no`。既存nullはCMS入力完了まで`unknown`とする
+- `stats`は入力済みカードが重複なしの`label/value`3項目、値は`+実数`または`+数値%`、未入力カードは空配列とする
+- 得意トレ、初期親密度、`cardType`/属性との重複は`stats`へ含めない。ルリの`cardType`は「アキュメン」
+- 旧`distance/terrain`は`event2`へ統合し、カードDBから削除する。カード`status`も文章量ゲートと重複するため持たない
 - 評価・解説・編成は現在のFirestore exportを取り込み、カードDBの論理的な子データとする
 - 日付はCMSが保存した値を入力に含める。build時刻は出力しない
-- `draft/verified/published/retired`を区別し、未確認データを公開扱いにしない
+- カードのindex可否は可視本文800字以上かつ管理者解説50字以上の文章量ゲートで決める
 
 ### 4-2. アシスト効果DB
 
@@ -409,7 +417,7 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 | 5 | P12-6 | 能力DB正規化 / `chore/p12-6-assist-abilities-db` | `src/data/assist-abilities.json`、ID対応表、検証スクリプト | 必要ならFirestore読取 | ⚪ | 1,079件を確定・候補・未解決に分離し、誤対応0、重複ID 0 |
 | 6 | P12-7 | 静的カード詳細生成 / `feat/p12-7-assist-pages` | `docs/build-spec.md`、`build.js`、`verify.js`、生成HTML、一覧、互換入口、sitemap | 無 | 🔴 | 入力全件を決定的生成し、固有canonical、index制御、リンク、FAIL 0 |
 | 7 | P12-8 | アシストCMS基盤 / `feat/p12-8-assist-cms` | `_cms/assist-gas`、test Sheet仕様、管理画面、検証 | 新規test GAS/Sheet/Drive | ⚪（test） | 3DBをtest環境で編集・exportでき、本番deploymentは未変更 |
-| 8 | P12-8b | CMS構造化フォーム / 未提示 | JSON入力UI、繰り返し行、選択式入力、内部項目の参照専用化 | test GAS更新 | ⚪（test） | 運用者がJSONを直接編集せず3DBを安全に更新でき、無損失exportを維持 |
+| 8 | P12-8b | CMS構造化フォーム / `feat/p12-8b-assist-forms` | JSON入力UI、繰り返し行、選択式入力、カードDB schema v3、内部項目の参照専用化 | test GAS更新 | 🟡🔴 | 運用者がJSONを直接編集せず3DBを安全に更新でき、無損失exportを維持 |
 | 9 | P12-9 | OCR・レビュー工程 / `feat/p12-9-assist-ocr` | OCR adapter、parser、レビュー画面、重複検査 | OCR方式により外部サービス | ⚪（test） | OCR候補が自動公開されず、手入力fallbackと原画像照合が通る |
 | 10 | P12-10 | CMS公開PR経路test / `feat/p12-10-assist-publish` | 専用Workflow、source/generated gate、test手順 | GitHub test branch・専用token/App | ⚪（test） | 許可差分PR成功、許可外・古いmain・未確認データはmain不変でFAIL |
 | 11 | P12-11 | 本番移行 / `feat/p12-11-assist-cutover` | 本番データ取込、CMS deployment、全静的ページ切替 | GAS/Sheet/Drive/GitHub | 🟡🔴 | 管理者承認後、公開成功、全カード表示、旧URL互換、復旧確認 |
@@ -427,6 +435,19 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 - ウェブアプリは実行者本人だけに限定した。GitHub token、Driveフォルダ、公開branch、本番deploymentは使っていない
 - 修正版3DBを再exportし、元JSONとの意味差分0、`releasedAt`形式不正0件、`withStats: 56`を確認した
 - exportの秘密情報検査はメールアドレス、GitHub token、Spreadsheet ID名、Drive ID名が全て0件だった
+
+### 9-2. P12-8b test実機結果
+
+- カードDBをschema version 3へ更新し、`accessoryStatus`と3組の`label/value`型`stats`を導入した
+- 旧距離適性22件・地形適性19件を`event2`へ統合し、カードDB・CMSシートから独立項目を削除した
+- ルリ`b17h-MR-ruri`の`cardType`を「ガード」から「アキュメン」へ訂正した
+- testへ再取込後の`setup4_check`はカード91件、効果888件、能力1,079件、issues 0
+- `stats.value`の単位を復旧し、応援効果・得意率・チャレンジ効果アップは`+数値%`、その他は`+数値`へ全56カードを再生成した
+- カード`status`は文章量ゲートと重複するためカードDB・CMSシート・画面から削除した
+- `cardType`、画像、実装日、評価範囲の保存・export検査を追加した
+- ウェブアプリdeployment v6へ更新し、実行者本人限定のまま91カードの読込を確認した
+- カード画像アップロードはP12-9、`assist.html`のデータ源切替はP12-11で扱う。既存の`cards/<cardId>.html` URLは維持する
+- カード詳細フォーム内の各入力と無変更保存は管理者の画面確認待ち
 
 ## 10. 現在の保留・外部確認待ち
 

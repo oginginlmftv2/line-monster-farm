@@ -19,19 +19,6 @@ const GENERATED_FROM = [
   'assist-card-data.js',
   'src/data/_audit/sapo-card-map.json',
 ];
-const STAT_KEYS = [
-  'shokiShinmitsudo',
-  'accessory',
-  'tokuiTre',
-  'ouenKouka',
-  'tokuiRitsu',
-  'shokiStatus',
-  'cardTypeSapo',
-  'attribute',
-  'hpLimit',
-  'allStatLimitUp',
-  'challengeEffectUp',
-];
 const LIMIT_BREAK_KEYS = ['1a', '1b', '2a', '2b', '3a', '3b', '4a', '4b'];
 
 function absolute(relativePath) {
@@ -61,27 +48,48 @@ function normalizeNullable(value) {
   return value === undefined ? null : value;
 }
 
-function buildStats(sapoRow) {
-  const stats = nullObject(STAT_KEYS);
-  if (!sapoRow) return stats;
+function formatStatValue(value, percent) {
+  if (value === null || value === undefined || value === '') return null;
+  return `+${String(value).replace(/^\+/, '').replace(/%$/, '')}${percent ? '%' : ''}`;
+}
 
-  stats.shokiShinmitsudo = normalizeNullable(sapoRow['初期親密度']);
+function statRows(entries) {
+  return entries
+    .filter(([, value]) => value !== null && value !== undefined && value !== '')
+    .map(([label, value]) => ({ label, value: String(value) }));
+}
+
+function buildStats(sapoRow, cardType) {
+  if (!sapoRow) return [];
   if (sapoRow._type === 'main') {
-    stats.accessory = normalizeNullable(sapoRow['アクセサリー']);
-    stats.tokuiTre = normalizeNullable(sapoRow['得意トレ']);
-    stats.ouenKouka = normalizeNullable(sapoRow['応援効果']);
-    stats.tokuiRitsu = normalizeNullable(sapoRow['得意率']);
-    stats.shokiStatus = normalizeNullable(sapoRow['初期ステ+']);
+    return statRows([
+      ['応援効果', formatStatValue(sapoRow['応援効果'], true)],
+      ['得意率', formatStatValue(sapoRow['得意率'], true)],
+      [`初期${cardType}`, formatStatValue(sapoRow['初期ステ+'], false)],
+    ]);
   } else if (sapoRow._type === 'sub') {
-    stats.cardTypeSapo = normalizeNullable(sapoRow['カードタイプ']);
-    stats.attribute = normalizeNullable(sapoRow['属性']);
-    stats.hpLimit = normalizeNullable(sapoRow['体力上限']);
-    stats.allStatLimitUp = normalizeNullable(sapoRow['全ステ上限アップ']);
-    stats.challengeEffectUp = normalizeNullable(sapoRow['チャレンジ効果アップ']);
+    return statRows([
+      ['体力上限', formatStatValue(sapoRow['体力上限'], false)],
+      ['全ステ上限アップ', formatStatValue(sapoRow['全ステ上限アップ'], false)],
+      ['チャレンジ効果アップ', formatStatValue(sapoRow['チャレンジ効果アップ'], true)],
+    ]);
   } else {
     throw new Error(`SAPO_DATAの_typeが不正です: ${sapoRow._type}`);
   }
-  return stats;
+}
+
+function buildAccessoryStatus(sapoRow) {
+  if (!sapoRow || sapoRow['アクセサリー'] === null || sapoRow['アクセサリー'] === undefined) return 'unknown';
+  if (sapoRow['アクセサリー'] === '○') return 'yes';
+  throw new Error(`アクセサリーの値が不正です: ${sapoRow['アクセサリー']}`);
+}
+
+function buildEvent2(source) {
+  if (source.event2 !== null && source.event2 !== undefined && source.event2 !== '') return source.event2;
+  if (source.dist !== null && source.dist !== undefined && source.dist !== '') return source.dist;
+  if (source.terrain === null || source.terrain === undefined || source.terrain === '') return null;
+  const values = Array.isArray(source.terrain) ? source.terrain : [source.terrain];
+  return values.filter(Boolean).join(' / ') || null;
 }
 
 function buildLimitBreak(sapoRow) {
@@ -140,13 +148,10 @@ function buildDatabase() {
       cardType: source.type,
       monType: normalizeNullable(source.mon),
       image: `assist-cards/${cardId}.${source.ext}`,
-      distance: normalizeNullable(source.dist),
-      terrain: source.terrain === undefined
-        ? []
-        : Array.isArray(source.terrain) ? [...source.terrain] : [source.terrain],
-      event2: normalizeNullable(source.event2),
+      event2: buildEvent2(source),
       releasedAt: sapoRow ? normalizeNullable(sapoRow['実装日']) : null,
-      stats: buildStats(sapoRow),
+      accessoryStatus: buildAccessoryStatus(sapoRow),
+      stats: buildStats(sapoRow, source.type),
       limitBreak: buildLimitBreak(sapoRow),
       ratings,
       explanation: editorialCard?.explanation || '',
@@ -154,17 +159,16 @@ function buildDatabase() {
       sapoRef: exact
         ? { sapoIndex: exact.mapping.sapoIndex, type: exact.mapping.type }
         : null,
-      status: 'draft',
     };
   });
 
   return {
-    schemaVersion: 1,
+    schemaVersion: 3,
     generatedFrom: GENERATED_FROM,
     generatedAt: null,
     counts: {
       cards: cards.length,
-      withStats: cards.filter(card => card.sapoRef !== null).length,
+      withStats: cards.filter(card => card.stats.length > 0).length,
       withExplanation: cards.filter(card => card.explanation !== '').length,
       withFormations: cards.filter(card => card.formations.length > 0).length,
     },

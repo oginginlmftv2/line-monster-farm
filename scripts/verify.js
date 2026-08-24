@@ -613,6 +613,51 @@ if (!exists('src/data/assist-cards.json')) {
       ok('assist-cards.jsonのrarity / aura / cardType / monTypeはすべて許可値');
     }
 
+    if (database.schemaVersion !== 3) {
+      ng(`assist-cards.jsonのschemaVersionが3でない: ${database.schemaVersion}`);
+    } else {
+      ok('assist-cards.jsonはschemaVersion 3');
+    }
+    const removedCardFields = cards.filter(card => 'distance' in card || 'terrain' in card || 'status' in card);
+    if (removedCardFields.length) {
+      ng(`削除済みdistance / terrain / statusが残っている: ${removedCardFields.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    } else {
+      ok('distance / terrain / statusはカードDBから削除済み');
+    }
+    const allowedAccessory = new Set(['unknown', 'yes', 'no']);
+    const invalidAccessory = cards.filter(card => !allowedAccessory.has(card.accessoryStatus));
+    if (invalidAccessory.length) {
+      ng(`accessoryStatusが不正: ${invalidAccessory.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    } else {
+      ok('全カードのaccessoryStatusが許可値');
+    }
+    const invalidStats = cards.filter(card => !Array.isArray(card.stats)
+      || ![0, 3].includes(card.stats.length)
+      || card.stats.some(row => !row || typeof row.label !== 'string' || !row.label.trim()
+        || typeof row.value !== 'string' || !/^\+\d+(?:\.\d+)?%?$/.test(row.value))
+      || new Set(card.stats.map(row => row.label)).size !== card.stats.length);
+    if (invalidStats.length) {
+      ng(`statsが空配列または重複なし3項目でない: ${invalidStats.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    } else {
+      ok('全カードのstatsが空配列または重複なし3項目');
+    }
+    const ruri = cards.find(card => card.cardId === 'b17h-MR-ruri');
+    if (!ruri || ruri.cardType !== 'アキュメン') ng('ルリのcardTypeがアキュメンでない');
+    else ok('ルリのcardTypeはアキュメン');
+    const invalidRatings = cards.filter(card => card.ratings !== null && Object.values(card.ratings)
+      .some(value => value !== null && (!Number.isFinite(value) || value < 0 || value > 5)));
+    if (invalidRatings.length) ng(`評価が0〜5の範囲外: ${invalidRatings.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    else ok('全カードの評価は0〜5または未入力');
+    const invalidDates = cards.filter(card => {
+      if (card.releasedAt === null) return false;
+      const match = /^(\d{4})\/(\d{2})\/(\d{2})$/.exec(card.releasedAt);
+      if (!match) return true;
+      const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+      return date.getUTCFullYear() !== Number(match[1]) || date.getUTCMonth() + 1 !== Number(match[2]) || date.getUTCDate() !== Number(match[3]);
+    });
+    if (invalidDates.length) ng(`実装日がYYYY/MM/DDの実在日でない: ${invalidDates.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    else ok('全カードの実装日はYYYY/MM/DDの実在日または未入力');
+
     const formationRefs = cards.flatMap(card => (card.formations || []).flatMap(formation => [
       ...(formation.cards || []),
       formation.rental,

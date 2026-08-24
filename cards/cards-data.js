@@ -80,7 +80,7 @@ const cardsData = {
   'b7-SSR-verudora':          { name: 'ヴェルドラ',        rarity: 'SSR', oura: '青', type: '友人',       mon: null,   ext: 'png' },
   'b1i-SSR-rimuru':           { name: 'リムル',            rarity: 'SSR', oura: '青', type: 'ライフ',     mon: '魔族', ext: 'png', terrain: '森林' },
   'a6j-SSR-akazonaenusi':     { name: 'アカゾナエヌシ',    rarity: 'SSR', oura: '赤', type: '丈夫さ',     mon: '獣族',   ext: 'png', dist: '近距離' },
-  'b17h-MR-ruri':             { name: 'ルリ',              rarity: 'MR',  oura: '青', type: 'ガード',     mon: '幻霊', ext: 'png', event2: '超必死' },
+  'b17h-MR-ruri':             { name: 'ルリ',              rarity: 'MR',  oura: '青', type: 'アキュメン', mon: '幻霊', ext: 'png', event2: '超必死' },
   'f15k-MR-tanatosu':         { name: 'タナトス',          rarity: 'MR',  oura: '黒', type: 'アキュメン', mon: '怪物', ext: 'png', event2: '超本気' },
   'a16h-MR-ramusuiito':       { name: 'ラムスイート',      rarity: 'MR',  oura: '赤', type: 'インパクト', mon: '幻霊', ext: 'png', event2: '超根性' },
   'c14k-MR-suzuka':           { name: 'スズカ',            rarity: 'MR',  oura: '黄', type: 'フィジカル', mon: '怪物', ext: 'png', dist: '零距離' },

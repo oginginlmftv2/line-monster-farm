@@ -82,21 +82,7 @@ ${ratings.map(rating => `      <div class="assist-rating-card${rating.summary ? 
 }
 
 function renderStats(card) {
-  const labels = [
-    ['tokuiTre', '得意トレ'],
-    ['ouenKouka', '応援効果'],
-    ['tokuiRitsu', '得意率'],
-    ['shokiShinmitsudo', '初期親密度'],
-    ['shokiStatus', '初期ステ+'],
-    ['accessory', 'アクセサリー'],
-    ['cardTypeSapo', 'カードタイプ'],
-    ['attribute', '属性'],
-    ['hpLimit', '体力上限'],
-    ['allStatLimitUp', '全ステ上限アップ'],
-    ['challengeEffectUp', 'チャレンジ効果アップ'],
-  ];
-  const rows = labels.filter(([key]) => card.stats && card.stats[key] !== null)
-    .map(([key, label]) => [label, card.stats[key]]);
+  const rows = Array.isArray(card.stats) ? card.stats.map(row => [row.label, row.value]) : [];
   if (!rows.length) return '';
   return `
   <section class="section">
@@ -168,9 +154,9 @@ function renderPage(card, effects, abilities, cardById, indexable) {
     ['レアリティ', card.rarity],
     ['オーラ', card.aura],
     ['カードタイプ', card.cardType],
+    ['アクセサリー', card.accessoryStatus === 'yes' ? '○' : card.accessoryStatus === 'no' ? 'なし' : null],
     ['モン類', card.monType],
-    ['距離適性', card.distance],
-    ['地形適性', card.terrain],
+    ['イベント2', card.event2],
     ['実装日', card.releasedAt],
   ].filter(([, value]) => value !== null && (!Array.isArray(value) || value.length));
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
