@@ -1,5 +1,5 @@
 /**
- * ライ徹アシストCMS（P12-8 test環境）
+ * ライ徹アシストCMS（P12-8 / P12-8b test環境）
  *
  * このソースはtest専用。ENVIRONMENT=test の独立スプレッドシートでだけ動作する。
  * GitHubへのpush、公開サイト更新、本番モンスターCMSのシート変更は行わない。
@@ -8,6 +8,8 @@
 
 var RAW_BASE =
   'https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/src/data/';
+var RAW_REPO_BASE =
+  'https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/';
 var SOURCE_URLS = {
   cards: RAW_BASE + 'assist-cards.json',
   effects: RAW_BASE + 'assist-effects.json',
@@ -25,8 +27,8 @@ var HEADERS = {};
 HEADERS[SHEET_MEMBERS] = ['email', 'nickname', 'role', 'active', 'note'];
 HEADERS[SHEET_CARDS] = [
   'sourceOrder', 'cardId', 'name', 'rarity', 'aura', 'cardType', 'monType', 'image',
-  'distance', 'terrainJson', 'event2', 'releasedAt', 'statsJson', 'limitBreakJson',
-  'ratingsJson', 'explanation', 'formationsJson', 'sapoRefJson', 'status',
+  'event2', 'releasedAt', 'accessoryStatus', 'statsJson', 'limitBreakJson',
+  'ratingsJson', 'explanation', 'formationsJson', 'sapoRefJson',
   'version', 'updatedAt', 'updatedBy'
 ];
 HEADERS[SHEET_EFFECTS] = [
@@ -46,12 +48,19 @@ HEADERS[SHEET_PUBLISH_LOG] = ['timestamp', 'user', 'action', 'result', 'detail']
 
 var RARITIES = ['MR', 'SSR'];
 var AURAS = ['赤', '緑', '黄', '白', '黒', '青'];
+var CARD_TYPES = [
+  'ガード', 'かしこさ', 'ジャッジ', 'アサルト', '回避', '師匠',
+  'ちから', 'テクニック', '友人', '丈夫さ', 'インパクト', 'フォース',
+  '命中', 'メンタル', 'フィジカル', 'クイック', 'サバイブ', 'ライバル',
+  'ルミナス', 'バイタル', 'フォーカス', 'タフネス', 'ライフ', 'アキュメン'
+];
 var MON_TYPES = ['幻霊', '無機', '創造', '獣族', '魔族', '怪物'];
-var CARD_STATUSES = ['draft', 'verified', 'published', 'retired'];
 var ABILITY_STATUSES = ['draft', 'verified'];
 var LINK_STATUSES = ['resolved', 'ambiguous', 'unlinked'];
 var ABILITY_SOURCES = ['イベント', '閃き', 'EXトレ'];
 var UNLOCK_RANKS = ['無凸', '1凸', '2凸', '3凸', '4凸'];
+var RATING_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
+var ACCESSORY_STATUSES = ['unknown', 'yes', 'no'];
 
 // ---------------------------------------------------------------- test境界・共通
 
@@ -124,6 +133,94 @@ function inList_(value, allowed, label, allowBlank) {
   return value;
 }
 
+function validateStringArray_(values, label, allowed) {
+  if (!Array.isArray(values)) throw new Error(label + ' は配列です。');
+  var seen = {};
+  values.forEach(function (value) {
+    if (typeof value !== 'string' || !value.trim()) throw new Error(label + ' に空欄または文字列以外があります。');
+    if (allowed && allowed.indexOf(value) < 0) throw new Error(label + ' が許可値ではありません: ' + value);
+    if (seen[value]) throw new Error(label + ' が重複しています: ' + value);
+    seen[value] = true;
+  });
+}
+
+function validateObjectKeys_(value, keys, label, allowNull, numbersOnly) {
+  if (allowNull && value === null) return;
+  if (!value || typeof value !== 'object' || Array.isArray(value)) throw new Error(label + ' はオブジェクトです。');
+  var actual = Object.keys(value);
+  if (actual.length !== keys.length || keys.some(function (key) { return actual.indexOf(key) < 0; })) {
+    throw new Error(label + ' の項目が不正です。');
+  }
+  keys.forEach(function (key) {
+    var item = value[key];
+    if (item === null) return;
+    if (numbersOnly && (typeof item !== 'number' || !isFinite(item))) throw new Error(label + '.' + key + ' は数値または空欄です。');
+    if (!numbersOnly && typeof item !== 'string') throw new Error(label + '.' + key + ' は文字列または空欄です。');
+  });
+}
+
+function validateStatRows_(stats, label) {
+  if (!Array.isArray(stats)) throw new Error(label + ' は配列です。');
+  if (stats.length !== 0 && stats.length !== 3) throw new Error(label + ' は空または3件です。');
+  var labels = {};
+  stats.forEach(function (row) {
+    if (!row || typeof row !== 'object' || !text_(row.label).trim() || !text_(row.value).trim()) {
+      throw new Error(label + ' の項目名と値は両方必須です。');
+    }
+    if (!/^\+\d+(?:\.\d+)?%?$/.test(text_(row.value).trim())) {
+      throw new Error(label + ' の値は +数値 または +数値% です: ' + row.value);
+    }
+    if (labels[row.label]) throw new Error(label + ' の項目名が重複しています: ' + row.label);
+    labels[row.label] = true;
+  });
+}
+
+function validateRatings_(ratings, label) {
+  validateObjectKeys_(ratings, RATING_KEYS, label, true, true);
+  if (ratings === null) return;
+  RATING_KEYS.forEach(function (key) {
+    var value = ratings[key];
+    if (value !== null && (value < 0 || value > 5)) throw new Error(label + '.' + key + ' は0〜5です。');
+  });
+}
+
+function validateReleasedAt_(value, label) {
+  if (value === null || value === undefined || value === '') return;
+  value = text_(value);
+  var match = value.match(/^(\d{4})\/(\d{2})\/(\d{2})$/);
+  if (!match) throw new Error(label + ' はYYYY/MM/DD形式です。');
+  var date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
+  if (date.getUTCFullYear() !== Number(match[1]) || date.getUTCMonth() + 1 !== Number(match[2]) || date.getUTCDate() !== Number(match[3])) {
+    throw new Error(label + ' は実在する日付ではありません。');
+  }
+}
+
+function validateImagePath_(card, checkExists) {
+  var imagePath = text_(card.image).trim();
+  if (!imagePath) throw new Error(card.cardId + ': image空欄');
+  var expected = new RegExp('^assist-cards/' + card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.(?:jpg|jpeg|png|webp)$', 'i');
+  if (!expected.test(imagePath)) throw new Error(card.cardId + ': imageはcardIdと一致するassist-cards配下の画像パス必須');
+  if (!checkExists) return;
+  var response = UrlFetchApp.fetch(RAW_REPO_BASE + imagePath, { muteHttpExceptions: true, headers: { Range: 'bytes=0-0' } });
+  if ([200, 206].indexOf(response.getResponseCode()) < 0) throw new Error(card.cardId + ': imageがmainに存在しません（HTTP ' + response.getResponseCode() + '）');
+}
+
+function validateImageFiles_(cards) {
+  var validCards = cards.filter(function (card) {
+    try { validateImagePath_(card, false); return true; } catch (error) { return false; }
+  });
+  if (!validCards.length) return [];
+  var responses = UrlFetchApp.fetchAll(validCards.map(function (card) {
+    return { url: RAW_REPO_BASE + card.image, muteHttpExceptions: true, headers: { Range: 'bytes=0-0' } };
+  }));
+  return responses.reduce(function (issues, response, index) {
+    if ([200, 206].indexOf(response.getResponseCode()) < 0) {
+      issues.push(validCards[index].cardId + ': imageがmainに存在しません（HTTP ' + response.getResponseCode() + '）');
+    }
+    return issues;
+  }, []);
+}
+
 function sheet_(name) {
   var sheet = book_().getSheetByName(name);
   if (!sheet) throw new Error(name + ' シートがありません。setup1_createSheets を実行してください。');
@@ -146,7 +243,7 @@ function setRows_(name, values) {
   var sheet = sheet_(name);
   var headers = HEADERS[name];
   if (sheet.getLastRow() > 1) {
-    sheet.getRange(2, 1, sheet.getLastRow() - 1, headers.length).clearContent();
+    sheet.getRange(2, 1, sheet.getLastRow() - 1, Math.max(headers.length, sheet.getLastColumn())).clearContent();
   }
   if (values.length) sheet.getRange(2, 1, values.length, headers.length).setValues(values);
 }
@@ -180,6 +277,9 @@ function setup1_createSheets() {
   Object.keys(HEADERS).forEach(function (name) {
     var sheet = book.getSheetByName(name) || book.insertSheet(name);
     var header = HEADERS[name];
+    if (sheet.getLastColumn() > header.length) {
+      sheet.getRange(1, header.length + 1, Math.max(sheet.getLastRow(), 1), sheet.getLastColumn() - header.length).clearContent();
+    }
     sheet.getRange(1, 1, 1, header.length).setValues([header]);
     sheet.setFrozenRows(1);
     sheet.getRange(1, 1, 1, header.length).setFontWeight('bold').setBackground('#f3ead7');
@@ -205,12 +305,55 @@ function fetchJson_(url) {
   return JSON.parse(response.getContentText('UTF-8').replace(/^\uFEFF/, ''));
 }
 
+function migrateCardsDocument_(doc) {
+  if (doc && doc.schemaVersion === 3) return doc;
+  if (!doc || [1, 2].indexOf(doc.schemaVersion) < 0 || !Array.isArray(doc.cards)) return doc;
+  var oldSchemaVersion = doc.schemaVersion;
+  doc.cards = doc.cards.map(function (card) {
+    if (card.cardId === 'b17h-MR-ruri') card.cardType = 'アキュメン';
+    if (oldSchemaVersion === 1) {
+      var oldStats = card.stats || {};
+      card.accessoryStatus = oldStats.accessory === '○' ? 'yes' : 'unknown';
+      if (card.sapoRef && card.sapoRef.type === 'main') {
+        card.stats = [
+          { label: '応援効果', value: formatStatValue_(oldStats.ouenKouka, true) },
+          { label: '得意率', value: formatStatValue_(oldStats.tokuiRitsu, true) },
+          { label: '初期' + card.cardType, value: formatStatValue_(oldStats.shokiStatus, false) }
+        ];
+      } else if (card.sapoRef && card.sapoRef.type === 'sub') {
+        card.stats = [
+          { label: '体力上限', value: formatStatValue_(oldStats.hpLimit, false) },
+          { label: '全ステ上限アップ', value: formatStatValue_(oldStats.allStatLimitUp, false) },
+          { label: 'チャレンジ効果アップ', value: formatStatValue_(oldStats.challengeEffectUp, true) }
+        ];
+      } else {
+        card.stats = [];
+      }
+      card.stats = card.stats.filter(function (row) { return row.value !== null && row.value !== undefined && row.value !== ''; });
+    }
+    if (!card.event2 && card.distance) card.event2 = card.distance;
+    if (!card.event2 && Array.isArray(card.terrain) && card.terrain.length) card.event2 = card.terrain.join(' / ');
+    delete card.distance;
+    delete card.terrain;
+    delete card.status;
+    return card;
+  });
+  doc.schemaVersion = 3;
+  doc.counts.withStats = doc.cards.filter(function (card) { return card.stats.length > 0; }).length;
+  return doc;
+}
+
+function formatStatValue_(value, percent) {
+  if (value === null || value === undefined || value === '') return null;
+  return '+' + text_(value).replace(/^\+/, '').replace(/%$/, '') + (percent ? '%' : '');
+}
+
 function setup3_importFromMain() {
   requireTest_();
   var lock = LockService.getScriptLock();
   if (!lock.tryLock(20000)) throw new Error('他の処理と重なりました。少し待って再実行してください。');
   try {
-    var cardsDoc = fetchJson_(SOURCE_URLS.cards);
+    var cardsDoc = migrateCardsDocument_(fetchJson_(SOURCE_URLS.cards));
     var effectsDoc = fetchJson_(SOURCE_URLS.effects);
     var abilitiesDoc = fetchJson_(SOURCE_URLS.abilities);
     var issues = validateDocuments_(cardsDoc, effectsDoc, abilitiesDoc);
@@ -219,10 +362,9 @@ function setup3_importFromMain() {
     var cardRows = cardsDoc.cards.map(function (card, index) {
       return [
         index + 1, card.cardId, card.name, card.rarity, card.aura, card.cardType,
-        card.monType || '', card.image, card.distance || '', jsonCell_(card.terrain || []),
-        card.event2 || '', card.releasedAt || '', jsonCell_(card.stats),
+        card.monType || '', card.image, card.event2 || '', card.releasedAt || '', card.accessoryStatus, jsonCell_(card.stats),
         jsonCell_(card.limitBreak), jsonCell_(card.ratings), card.explanation || '',
-        jsonCell_(card.formations || []), jsonCell_(card.sapoRef), card.status, 1, '', ''
+        jsonCell_(card.formations || []), jsonCell_(card.sapoRef), 1, '', ''
       ];
     });
 
@@ -267,7 +409,8 @@ function setup3_importFromMain() {
 function setup4_check() {
   requireTest_();
   var docs = buildDocuments_();
-  var issues = validateDocuments_(docs.cards, docs.effects, docs.abilities);
+  var issues = validateDocuments_(docs.cards, docs.effects, docs.abilities)
+    .concat(validateImageFiles_(docs.cards.cards));
   var result = {
     environment: prop_('ENVIRONMENT'),
     spreadsheetIdConfigured: Boolean(prop_('SPREADSHEET_ID')),
@@ -310,17 +453,15 @@ function cardFromRow_(row) {
     cardType: text_(row.cardType),
     monType: text_(row.monType) || null,
     image: text_(row.image),
-    distance: text_(row.distance) || null,
-    terrain: parseJsonCell_(row.terrainJson, [], row.cardId + '/terrainJson'),
     event2: text_(row.event2) || null,
     releasedAt: dateCell_(row.releasedAt),
-    stats: parseJsonCell_(row.statsJson, null, row.cardId + '/statsJson'),
+    accessoryStatus: text_(row.accessoryStatus) || 'unknown',
+    stats: parseJsonCell_(row.statsJson, [], row.cardId + '/statsJson'),
     limitBreak: parseJsonCell_(row.limitBreakJson, null, row.cardId + '/limitBreakJson'),
     ratings: parseJsonCell_(row.ratingsJson, {}, row.cardId + '/ratingsJson'),
     explanation: text_(row.explanation),
     formations: parseJsonCell_(row.formationsJson, [], row.cardId + '/formationsJson'),
-    sapoRef: parseJsonCell_(row.sapoRefJson, null, row.cardId + '/sapoRefJson'),
-    status: text_(row.status)
+    sapoRef: parseJsonCell_(row.sapoRefJson, null, row.cardId + '/sapoRefJson')
   };
 }
 
@@ -372,7 +513,7 @@ function buildDocuments_() {
   var abilities = abilityRows.map(abilityFromRow_);
   var cardCounts = {
     cards: cards.length,
-    withStats: cards.filter(function (card) { return hasNonNullValue_(card.stats); }).length,
+    withStats: cards.filter(function (card) { return card.stats.length > 0; }).length,
     withExplanation: cards.filter(function (card) { return Boolean(card.explanation); }).length,
     withFormations: cards.filter(function (card) { return card.formations.length > 0; }).length
   };
@@ -385,7 +526,7 @@ function buildDocuments_() {
 
   return {
     cards: {
-      schemaVersion: 1,
+      schemaVersion: 3,
       generatedFrom: ['P12-8 test assist CMS'],
       generatedAt: null,
       counts: cardCounts,
@@ -415,7 +556,7 @@ function buildDocuments_() {
 
 function validateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   var issues = [];
-  if (!cardsDoc || cardsDoc.schemaVersion !== 1 || !Array.isArray(cardsDoc.cards)) {
+  if (!cardsDoc || cardsDoc.schemaVersion !== 3 || !Array.isArray(cardsDoc.cards)) {
     return ['カードDBのschemaVersionまたはcardsが不正'];
   }
   if (!effectsDoc || effectsDoc.schemaVersion !== 1 || !effectsDoc.cards || Array.isArray(effectsDoc.cards)) {
@@ -433,9 +574,28 @@ function validateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
     if (!card.name) issues.push(card.cardId + ': name空欄');
     if (RARITIES.indexOf(card.rarity) < 0) issues.push(card.cardId + ': rarity不正');
     if (AURAS.indexOf(card.aura) < 0) issues.push(card.cardId + ': aura不正');
+    if (CARD_TYPES.indexOf(card.cardType) < 0) issues.push(card.cardId + ': cardType不正');
     if (card.monType !== null && MON_TYPES.indexOf(card.monType) < 0) issues.push(card.cardId + ': monType不正');
-    if (CARD_STATUSES.indexOf(card.status) < 0) issues.push(card.cardId + ': status不正');
-    if (!Array.isArray(card.terrain) || !Array.isArray(card.formations)) issues.push(card.cardId + ': 配列項目不正');
+    if (!Array.isArray(card.formations)) issues.push(card.cardId + ': formations不正');
+    try { validateImagePath_(card, false); } catch (error) { issues.push(error.message); }
+    try { validateReleasedAt_(card.releasedAt, card.cardId + '/releasedAt'); } catch (error) { issues.push(error.message); }
+    try { validateRatings_(card.ratings, card.cardId + '/ratings'); } catch (error) { issues.push(error.message); }
+    try { inList_(card.accessoryStatus, ACCESSORY_STATUSES, card.cardId + '/accessoryStatus', false); } catch (error) { issues.push(error.message); }
+    try { validateStatRows_(card.stats, card.cardId + '/stats'); } catch (error) { issues.push(error.message); }
+  });
+  cardsDoc.cards.forEach(function (card) {
+    if (!Array.isArray(card.formations)) return;
+    card.formations.forEach(function (formation, index) {
+      if (!formation || !text_(formation.title).trim()) issues.push(card.cardId + '/formation' + (index + 1) + ': 編成名空欄');
+      if (!formation || !Array.isArray(formation.cards) || formation.cards.length !== 5) {
+        issues.push(card.cardId + '/formation' + (index + 1) + ': カード枠は5件必須');
+        return;
+      }
+      formation.cards.forEach(function (formationCardId) {
+        if (formationCardId && !cardIds[formationCardId]) issues.push(card.cardId + ': 編成に未知cardId ' + formationCardId);
+      });
+      if (formation.rental && !cardIds[formation.rental]) issues.push(card.cardId + ': レンタルに未知cardId ' + formation.rental);
+    });
   });
 
   var effectIds = {};
@@ -470,6 +630,10 @@ function validateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
     if (LINK_STATUSES.indexOf(ability.linkStatus) < 0) issues.push(ability.abilityId + ': linkStatus不正');
     if (ABILITY_STATUSES.indexOf(ability.status) < 0) issues.push(ability.abilityId + ': status不正');
     if (!Array.isArray(ability.tags) || !Array.isArray(ability.flags)) issues.push(ability.abilityId + ': tags/flags不正');
+    else {
+      try { validateStringArray_(ability.tags, ability.abilityId + '/tags'); } catch (error) { issues.push(error.message); }
+      try { validateStringArray_(ability.flags, ability.abilityId + '/flags'); } catch (error) { issues.push(error.message); }
+    }
     if (ability.linkStatus === 'resolved') {
       if (!cardIds[ability.cardId]) issues.push(ability.abilityId + ': resolvedのcardId不正');
       if (!resolvedOrders[ability.cardId]) resolvedOrders[ability.cardId] = [];
@@ -520,7 +684,7 @@ function api_bootstrap() {
     cards: cards.map(function (row) {
       return {
         cardId: text_(row.cardId), name: text_(row.name), rarity: text_(row.rarity),
-        aura: text_(row.aura), status: text_(row.status), version: Number(row.version || 1),
+        aura: text_(row.aura), version: Number(row.version || 1),
         effects: effectCounts[row.cardId] || 0, abilities: abilityCounts[row.cardId] || 0
       };
     })
@@ -554,23 +718,38 @@ function api_saveCard(payload) {
     if (Number(payload.version) !== currentVersion) throw new Error('他の編集が保存済みです。読み込み直してください。');
 
     var card = payload.card || {};
+    var currentCard = cardFromRow_(row);
     if (text_(card.cardId) !== row.cardId) throw new Error('cardIdは変更できません。');
     if (!text_(card.name).trim()) throw new Error('カード名は必須です。');
     inList_(card.rarity, RARITIES, 'rarity', false);
     inList_(card.aura, AURAS, 'aura', false);
+    inList_(card.cardType, CARD_TYPES, 'cardType', false);
     inList_(card.monType, MON_TYPES, 'monType', true);
-    inList_(card.status, CARD_STATUSES, 'status', false);
-    if (!Array.isArray(card.terrain) || !Array.isArray(card.formations)) throw new Error('terrain/formationsは配列です。');
-
+    inList_(card.accessoryStatus, ACCESSORY_STATUSES, 'accessoryStatus', false);
+    validateImagePath_(card, true);
+    validateReleasedAt_(card.releasedAt, 'releasedAt');
+    validateRatings_(card.ratings, 'ratings');
+    validateStatRows_(card.stats, 'stats');
+    if (!Array.isArray(card.formations)) throw new Error('formationsは配列です。');
+    var cardIds = {};
+    rows.forEach(function (item) { cardIds[item.cardId] = true; });
+    card.formations.forEach(function (formation, index) {
+      if (!formation || typeof formation !== 'object' || !text_(formation.title).trim()) throw new Error('編成 ' + (index + 1) + ' の編成名は必須です。');
+      if (!Array.isArray(formation.cards) || formation.cards.length !== 5) throw new Error('編成 ' + (index + 1) + ' のカード枠は5件です。');
+      formation.cards.forEach(function (cardId) {
+        if (cardId && !cardIds[cardId]) throw new Error('編成に未知cardIdがあります: ' + cardId);
+      });
+      if (formation.rental && !cardIds[formation.rental]) throw new Error('レンタルに未知cardIdがあります: ' + formation.rental);
+    });
     var values = HEADERS[SHEET_CARDS].map(function (header) { return row[header]; });
     var update = {
       name: text_(card.name), rarity: card.rarity, aura: card.aura, cardType: text_(card.cardType),
-      monType: card.monType || '', image: text_(card.image), distance: card.distance || '',
-      terrainJson: jsonCell_(card.terrain), event2: card.event2 || '', releasedAt: card.releasedAt || '',
-      statsJson: jsonCell_(card.stats), limitBreakJson: jsonCell_(card.limitBreak),
+      monType: card.monType || '', image: text_(card.image), event2: card.event2 || '', releasedAt: card.releasedAt || '',
+      accessoryStatus: card.accessoryStatus,
+      statsJson: jsonCell_(card.stats), limitBreakJson: jsonCell_(currentCard.limitBreak),
       ratingsJson: jsonCell_(card.ratings), explanation: text_(card.explanation),
-      formationsJson: jsonCell_(card.formations), sapoRefJson: jsonCell_(card.sapoRef),
-      status: card.status, version: currentVersion + 1, updatedAt: now_(), updatedBy: user.nickname
+      formationsJson: jsonCell_(card.formations), sapoRefJson: jsonCell_(currentCard.sapoRef),
+      version: currentVersion + 1, updatedAt: now_(), updatedBy: user.nickname
     };
     Object.keys(update).forEach(function (key) { values[HEADERS[SHEET_CARDS].indexOf(key)] = update[key]; });
     sheet_(SHEET_CARDS).getRange(row._row, 1, 1, values.length).setValues([values]);
@@ -638,7 +817,7 @@ function api_saveAbility(payload) {
     inList_(ability.linkStatus, LINK_STATUSES, 'linkStatus', false);
     inList_(ability.status, ABILITY_STATUSES, 'status', false);
     if (!ability.sourceName || !ability.name || !ability.description) throw new Error('sourceName/name/descriptionは必須です。');
-    if (!Array.isArray(ability.tags) || !Array.isArray(ability.flags)) throw new Error('tags/flagsは配列です。');
+    validateStringArray_(ability.tags, 'tags');
     if (ability.linkStatus === 'resolved') {
       if (!rows_(SHEET_CARDS).some(function (card) { return card.cardId === ability.cardId; })) throw new Error('resolvedのcardIdが不正です。');
       integer_(ability.sortOrder, 'sortOrder', false);
@@ -663,7 +842,7 @@ function api_saveAbility(payload) {
       cardId: ability.cardId || '', sourceName: ability.sourceName, name: ability.name,
       description: ability.description, source: ability.source, rarity: ability.rarity || '',
       tagsJson: jsonCell_(ability.tags), sortOrder: ability.sortOrder === null ? '' : ability.sortOrder,
-      linkStatus: ability.linkStatus, flagsJson: jsonCell_(ability.flags), status: ability.status,
+      linkStatus: ability.linkStatus, flagsJson: row.flagsJson, status: ability.status,
       version: currentVersion + 1, updatedAt: now_(), updatedBy: user.nickname
     };
     Object.keys(update).forEach(function (key) { values[HEADERS[SHEET_ABILITIES].indexOf(key)] = update[key]; });
@@ -678,7 +857,8 @@ function api_saveAbility(payload) {
 function api_export() {
   var user = requireUser_();
   var docs = buildDocuments_();
-  var issues = validateDocuments_(docs.cards, docs.effects, docs.abilities);
+  var issues = validateDocuments_(docs.cards, docs.effects, docs.abilities)
+    .concat(validateImageFiles_(docs.cards.cards));
   if (issues.length) {
     appendLog_(user, 'export', 'FAIL', issues.slice(0, 20).join(' / '));
     throw new Error('export検査FAIL（' + issues.length + '件）: ' + issues.slice(0, 10).join(' / '));

@@ -31,7 +31,7 @@
 | P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **完了** | 🔴 | PR #37をmainへマージ（`9afc20d`）。91件を全件noindexで生成し実物確認済み |
 | P12-7b | カード詳細の公開導線切替 | `feat/p12-7b-assist-links` | **完了** | 🔴 | PR #38をmainへマージ（`1883098`）。54件をindex、37件をnoindexとし公開導線を切替 |
 | P12-8 | アシストCMS基盤 | `feat/p12-8-assist-cms` | **完了** | ⚪ | PR #39をmainへマージ（`91f7ab7`）。独立test GAS/Sheetで編集・競合拒否・export一致を実機確認 |
-| P12-8b | CMS構造化フォーム | 未着手 | **未着手** | ⚪ | JSON直接入力を運用者向けフォームへ置換。本番移行前の必須作業 |
+| P12-8b | CMS構造化フォーム | `feat/p12-8b-assist-forms` | **進行中** | 🟡🔴 | JSON直接入力を運用者向けフォームへ置換。カードDB schema v3と生成ページを含むため、main反映は要承認 |
 
 ## 最新mainの監査値
 
@@ -189,15 +189,19 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 詳細な根拠、危険性、本番影響、依存関係、復旧方法、完了条件とP11-2〜9は
 `docs/ライ徹_開発計画.md`のP11-1監査結果を正とする。
 
-## 次の作業
+## 現在の作業
 
-P12-8b「CMS構造化フォーム」を次の候補とする。
+P12-8b「CMS構造化フォーム」を進行中。
 
-- ブランチ: 着手時に進捗管理チャットが提示する
-- 本番影響: ⚪（test環境のみ。本番deploymentは変更しない）
-- `terrain`、`ratings`、`stats`、`formations`、効果配列、能力タグを構造化フォームで編集できるようにする
+- ブランチ: `feat/p12-8b-assist-forms`
+- 本番影響: 🟡🔴（test deployment更新に加え、カードDB schema v3と生成ページをmain反映時に公開）
+- 旧`distance/terrain`41件を`event2`へ統合し、`ratings`4項目、`stats`3組、アクセサリー3状態、`formations`、効果配列、能力タグを構造化フォームで編集できるようにする
+- `stats`は不要な得意トレ・初期親密度・cardType/属性重複を除外し、ルリの`cardType`を「アキュメン」へ訂正する
+- `stats.value`の単位を復旧し、実数は`+数値`、割合は`+数値%`へ統一する。カード`status`は文章量ゲートと重複するため削除する
+- カード保存・exportでcardType許可値、画像パスと実在、実装日、評価0〜5を検査する
+- test Apps Scriptへschema v3を再取込し、`setup4_check`はカード91・効果888・能力1,079・issues 0。ウェブアプリdeployment v6へ更新済み
 - `limitBreak`、`sapoRef`、内部flagsなどは参照専用または非表示とし、誤編集を防ぐ
-- 本番スプレッドシートとの同居はP12-11、`cms/assist-publish`と専用WorkflowはP12-10で扱う
+- カード画像アップロードはP12-9、本番スプレッドシートとの同居と`assist.html`のデータ源切替はP12-11、`cms/assist-publish`と専用WorkflowはP12-10で扱う
 - あわせて、執筆で昇格を狙えるカードが12件ある（あと100字以内で800字に届く）
   キャトル(あと4字)、ピーシィ(黄)(あと20字)、ディアナ(あと30字)、キング(あと37字) ほか
 

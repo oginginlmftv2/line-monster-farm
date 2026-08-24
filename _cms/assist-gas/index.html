@@ -20,6 +20,7 @@
     .sidebar { overflow:hidden; align-self:start; position:sticky; top:74px; max-height:calc(100vh - 90px); display:flex; flex-direction:column; }
     .filters { display:grid; grid-template-columns:1fr 110px; gap:8px; padding:12px; border-bottom:1px solid var(--line); }
     input,select,textarea { width:100%; border:1px solid #bfb3a3; border-radius:6px; background:#fff; color:var(--ink); padding:8px; }
+    input[type="checkbox"] { width:auto; margin-right:4px; }
     textarea { min-height:90px; resize:vertical; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12px; line-height:1.5; }
     .card-list { overflow:auto; }
     .card-row { display:grid; grid-template-columns:1fr auto; gap:5px 10px; width:100%; padding:10px 12px; border:0; border-bottom:1px solid #eee6da; border-radius:0; text-align:left; }
@@ -71,7 +72,6 @@
   <aside class="panel sidebar">
     <div class="filters">
       <input id="query" type="search" placeholder="カード名・IDで検索">
-      <select id="status"><option value="">状態すべて</option><option>draft</option><option>verified</option><option>published</option><option>retired</option></select>
     </div>
     <div id="cardList" class="card-list"><div class="empty">読み込み中…</div></div>
   </aside>
@@ -80,10 +80,13 @@
 <script>
 'use strict';
 var state = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0 };
+var RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
+var ABILITY_TAGS=['オーラ白','オーラ緑','オーラ赤','オーラ青','オーラ黄','オーラ黒','ガッツ回復','ガッツ変化系','クリティカル','シールド','デバフ','不利以外','中盤','前半','創造','命中','命中強化','回避','完全回避','幻霊','序盤','後半','必中','怪物','攻撃','攻撃強化','有利時','無効化','無機','獣族','終盤','被ダメ軽減','追撃','追撃連撃','連撃','魔族'];
 function el(id){ return document.getElementById(id); }
 function esc(value){ return String(value == null ? '' : value).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-function pretty(value){ return JSON.stringify(value, null, 2); }
-function parse(id,label){ try { return JSON.parse(el(id).value); } catch(e){ throw new Error(label+'のJSONが不正です。'); } }
+function nullableText(id){ var value=el(id).value.trim();return value===''?null:value; }
+function nullableNumber(id,label){ var value=el(id).value.trim();if(value==='')return null;var number=Number(value);if(!isFinite(number))throw new Error(label+'は数値で入力してください。');return number; }
+function checkedValues(name){ return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(input){return input.value;}); }
 function setBusy(busy){ state.busy=busy; document.querySelectorAll('button').forEach(function(button){ button.disabled=busy; }); el('btnExport').disabled=busy||!state.cards.length; }
 function call(name,args,onSuccess){
   setBusy(true);
@@ -101,14 +104,14 @@ function boot(){ call('api_bootstrap',[],function(data){
   el('summary').textContent='カード '+data.cards.length+'件'; el('btnExport').disabled=false; renderList();
 }); }
 function filteredCards(){
-  var q=el('query').value.trim().toLowerCase(), status=el('status').value;
-  return state.cards.filter(function(card){ return (!status||card.status===status)&&(!q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0); });
+  var q=el('query').value.trim().toLowerCase();
+  return state.cards.filter(function(card){ return !q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0; });
 }
 function renderList(){
   var cards=filteredCards();
   el('cardList').innerHTML=cards.length?cards.map(function(card){
     return '<button class="card-row'+(card.cardId===state.selectedId?' active':'')+'" data-id="'+esc(card.cardId)+'">'+
-      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+' ・ '+esc(card.status)+'</span></button>';
+      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+'</span></button>';
   }).join(''):'<div class="empty">該当カードなし</div>';
   el('cardList').querySelectorAll('[data-id]').forEach(function(button){ button.onclick=function(){ openCard(button.dataset.id); }; });
 }
@@ -128,8 +131,8 @@ function renderEditor(){
   el('editor').innerHTML=html;
   el('btnBack').onclick=function(){ document.body.classList.remove('editing'); };
   el('editor').querySelectorAll('[data-tab]').forEach(function(button){ button.onclick=function(){ state.tab=button.dataset.tab; renderEditor(); }; });
-  if(el('btnSaveCard'))el('btnSaveCard').onclick=saveCard;
-  if(el('btnSaveEffects'))el('btnSaveEffects').onclick=saveEffects;
+  if(el('btnSaveCard'))bindCardForm();
+  if(el('btnSaveEffects'))bindEffectsForm();
   el('editor').querySelectorAll('[data-ability]').forEach(function(button){ button.onclick=function(){ openAbility(button.dataset.ability); }; });
 }
 function optionList(values,selected,blank){ return (blank?'<option value="">—</option>':'')+values.map(function(value){ return '<option'+(value===selected?' selected':'')+'>'+esc(value)+'</option>'; }).join(''); }
@@ -139,62 +142,146 @@ function renderCardForm(d){
     field('cardId','cardId','text',c.cardId,true)+field('name','カード名','text',c.name)+
     selectField('rarity','レアリティ',['MR','SSR'],c.rarity)+selectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
     field('cardType','カードタイプ','text',c.cardType)+selectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
-    field('image','画像パス','text',c.image)+field('distance','距離適性','text',c.distance||'')+
+    field('image','画像パス','text',c.image)+
     field('event2','イベント2','text',c.event2||'')+field('releasedAt','実装日','text',c.releasedAt||'')+
-    jsonField('terrain','地形適性',c.terrain)+jsonField('ratings','評価',c.ratings)+
-    jsonField('stats','ステータス',c.stats)+jsonField('limitBreak','凸データ（表示には未使用）',c.limitBreak)+
-    jsonField('formations','編成',c.formations)+jsonField('sapoRef','SAPO参照',c.sapoRef)+
+    renderAccessoryField(c.accessoryStatus)+renderRatingsFields(c.ratings)+renderStatsFields(c.stats)+
+    sourceManagedField('凸データ','参照専用（元データをそのまま保持）')+
+    renderFormationsField(c.formations)+sourceManagedField('SAPO参照',c.sapoRef?'参照専用（'+c.sapoRef.type+' / index '+c.sapoRef.sapoIndex+'）':'参照なし')+
     '<div class="field wide"><label>管理者解説</label><textarea id="f_explanation" rows="12">'+esc(c.explanation)+'</textarea></div>'+
-    selectField('cardStatus','状態',['draft','verified','published','retired'],c.status)+
     '</div><div class="actions"><button class="primary" id="btnSaveCard">カードをtest保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
 }
 function field(id,label,type,value,readonly){ return '<div class="field"><label>'+label+'</label><input id="f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
 function selectField(id,label,values,selected,blank){ return '<div class="field"><label>'+label+'</label><select id="f_'+id+'">'+optionList(values,selected,blank)+'</select></div>'; }
-function jsonField(id,label,value){ return '<div class="field wide"><label>'+label+'（JSON）</label><textarea id="f_'+id+'">'+esc(pretty(value))+'</textarea></div>'; }
+function sourceManagedField(label,message){ return '<div class="field"><label>'+label+'</label><input class="readonly" readonly value="'+esc(message)+'"></div>'; }
+function renderAccessoryField(value){
+  return '<div class="field"><label>アクセサリー</label><select id="f_accessoryStatus"><option value="unknown"'+(value==='unknown'?' selected':'')+'>未確認</option><option value="yes"'+(value==='yes'?' selected':'')+'>あり</option><option value="no"'+(value==='no'?' selected':'')+'>なし</option></select></div>';
+}
+function renderRatingsFields(ratings){
+  var enabled=ratings!==null,values=ratings||{};
+  return '<div class="field wide"><label><input id="f_ratingsEnabled" type="checkbox"'+(enabled?' checked':'')+'> 評価データあり</label><div class="grid">'+RATING_FIELDS.map(function(item){return field('rating_'+item[0],item[1],'number',values[item[0]]==null?'':values[item[0]]);}).join('')+'</div></div>';
+}
+function renderStatsFields(stats){
+  var rows=(stats||[]).slice(0,3);while(rows.length<3)rows.push({label:'',value:''});
+  return '<div class="field wide"><label>ステータス（3項目）</label><div class="grid">'+rows.map(function(row,index){return field('stat_label_'+index,'項目名 '+(index+1),'text',row.label||'')+field('stat_value_'+index,'値 '+(index+1)+'（+数値 / +数値%）','text',row.value||'');}).join('')+'</div></div>';
+}
+function cardOptions(selected,blank){
+  return (blank?'<option value="">— 未設定 —</option>':'')+state.cards.map(function(card){return '<option value="'+esc(card.cardId)+'"'+(card.cardId===selected?' selected':'')+'>'+esc(card.name)+'（'+esc(card.cardId)+'）</option>';}).join('');
+}
+function formationRow(formation,index){
+  formation=formation||{title:'',cards:['','','','',''],rental:''};var cards=(formation.cards||[]).slice(0,5);while(cards.length<5)cards.push('');
+  return '<fieldset data-formation-row><legend>編成 '+(index+1)+'</legend>'+field('formation_'+index+'_title','編成名','text',formation.title||'')+
+    '<div class="grid">'+cards.map(function(cardId,slot){return '<div class="field"><label>カード '+(slot+1)+'</label><select data-formation-card>'+cardOptions(cardId,true)+'</select></div>';}).join('')+
+    '<div class="field"><label>レンタル</label><select data-formation-rental>'+cardOptions(formation.rental||'',true)+'</select></div></div><button type="button" data-remove-formation>この編成を削除</button></fieldset>';
+}
+function renderFormationsField(formations){ return '<div class="field wide"><label>おすすめ編成</label><div id="formationRows">'+formations.map(formationRow).join('')+'</div><button type="button" id="btnAddFormation">編成を追加</button></div>'; }
+function bindCardForm(){
+  el('btnSaveCard').onclick=saveCard;
+  var enabled=el('f_ratingsEnabled');function toggleRatings(){RATING_FIELDS.forEach(function(item){el('f_rating_'+item[0]).disabled=!enabled.checked;});}enabled.onchange=toggleRatings;toggleRatings();
+  el('btnAddFormation').onclick=function(){var index=document.querySelectorAll('[data-formation-row]').length;el('formationRows').insertAdjacentHTML('beforeend',formationRow(null,index));bindFormationRemove();};
+  bindFormationRemove();
+}
+function bindFormationRemove(){ document.querySelectorAll('[data-remove-formation]').forEach(function(button){button.onclick=function(){button.closest('[data-formation-row]').remove();};}); }
+function collectRatings(){ if(!el('f_ratingsEnabled').checked)return null;var result={};RATING_FIELDS.forEach(function(item){result[item[0]]=nullableNumber('f_rating_'+item[0],item[1]);});return result; }
+function collectStats(){
+  var result=[];
+  for(var index=0;index<3;index++){
+    var label=nullableText('f_stat_label_'+index),value=nullableText('f_stat_value_'+index);
+    if((label===null)!==(value===null))throw new Error('ステータス '+(index+1)+' は項目名と数値を両方入力してください。');
+    if(label!==null)result.push({label:label,value:value});
+  }
+  if(result.length!==0&&result.length!==3)throw new Error('ステータスは3項目すべて入力するか、すべて空欄にしてください。');
+  return result;
+}
+function collectFormations(){
+  return Array.from(document.querySelectorAll('[data-formation-row]')).map(function(row,index){
+    var title=row.querySelector('input').value.trim();if(!title)throw new Error('編成 '+(index+1)+'の編成名は必須です。');
+    return {title:title,cards:Array.from(row.querySelectorAll('[data-formation-card]')).map(function(select){return select.value;}),rental:row.querySelector('[data-formation-rental]').value};
+  });
+}
 function saveCard(){
   try{
     var c=state.detail.card;
     var card={cardId:c.cardId,name:el('f_name').value,rarity:el('f_rarity').value,aura:el('f_aura').value,
       cardType:el('f_cardType').value,monType:el('f_monType').value||null,image:el('f_image').value,
-      distance:el('f_distance').value||null,terrain:parse('f_terrain','地形適性'),event2:el('f_event2').value||null,
-      releasedAt:el('f_releasedAt').value||null,stats:parse('f_stats','ステータス'),limitBreak:parse('f_limitBreak','凸データ'),
-      ratings:parse('f_ratings','評価'),explanation:el('f_explanation').value,formations:parse('f_formations','編成'),
-      sapoRef:parse('f_sapoRef','SAPO参照'),status:el('f_cardStatus').value};
+      event2:el('f_event2').value||null,
+      releasedAt:el('f_releasedAt').value||null,stats:collectStats(),limitBreak:c.limitBreak,
+      accessoryStatus:el('f_accessoryStatus').value,
+      ratings:collectRatings(),explanation:el('f_explanation').value,formations:collectFormations(),
+      sapoRef:c.sapoRef};
     call('api_saveCard',[{cardId:c.cardId,version:state.detail.version,card:card}],function(result){
       show('保存しました。version '+result.version,false); openCard(c.cardId);
     });
   }catch(error){show(error.message,true);}
 }
-function renderEffectsForm(d){ return '<p class="muted">カード内の全効果を配列で保存します。effectId・sortOrder・文字列は自動補正しません。</p>'+
-  '<div class="field"><label>効果（JSON配列）</label><textarea id="f_effects" rows="28">'+esc(pretty(d.effects))+'</textarea></div>'+
-  '<div class="actions"><button class="primary" id="btnSaveEffects">効果をtest保存</button><span class="muted">空配列はdraftとして保持</span></div>'; }
-function saveEffects(){ try{ var effects=parse('f_effects','効果'); call('api_saveEffects',[{cardId:state.selectedId,effects:effects}],function(){ show('効果を保存しました。',false); openCard(state.selectedId); }); }catch(error){show(error.message,true);} }
+function effectRow(effect,index){
+  return '<fieldset data-effect-row><legend>効果 '+(index+1)+'</legend><div class="grid">'+
+    field('effect_'+index+'_id','effectId','text',effect.effectId,true)+selectField('effect_'+index+'_rank','解放ランク',['無凸','1凸','2凸','3凸','4凸'],effect.unlockRank)+
+    field('effect_'+index+'_name','効果名','text',effect.name)+'<div class="field wide"><label>説明</label><textarea id="f_effect_'+index+'_description">'+esc(effect.description)+'</textarea></div></div>'+
+    '<button type="button" data-effect-up>↑ 上へ</button> <button type="button" data-effect-down>↓ 下へ</button> <button type="button" data-effect-remove>削除</button></fieldset>';
+}
+function renderEffectsForm(d){ return '<p class="muted">effectIdは変更不可、sortOrderは表示順から自動設定します。</p><div id="effectRows">'+d.effects.map(effectRow).join('')+'</div><button type="button" id="btnAddEffect">効果を追加</button>'+
+  '<div class="actions"><button class="primary" id="btnSaveEffects">効果をtest保存</button><span class="muted">0件で保存するとdraftになります</span></div>'; }
+function collectEffects(validate){
+  return Array.from(document.querySelectorAll('[data-effect-row]')).map(function(row,index){
+    var effect={effectId:row.querySelector('input[readonly]').value,name:row.querySelector('input:not([readonly])').value.trim(),description:row.querySelector('textarea').value.trim(),unlockRank:row.querySelector('select').value,sortOrder:index+1};
+    if(validate&&(!effect.effectId||!effect.name||!effect.description))throw new Error('効果 '+(index+1)+'のID・効果名・説明は必須です。');return effect;
+  });
+}
+function nextEffectId(effects){ var max=effects.reduce(function(value,effect){var match=effect.effectId.match(/-e(\d+)$/);return Math.max(value,match?Number(match[1]):0);},0);return state.selectedId+'-e'+String(max+1).padStart(2,'0'); }
+function rerenderEffects(effects){ state.detail.effects=effects;renderEditor(); }
+function bindEffectsForm(){
+  el('btnSaveEffects').onclick=saveEffects;
+  el('btnAddEffect').onclick=function(){var effects=collectEffects(false);effects.push({effectId:nextEffectId(effects),name:'',description:'',unlockRank:'無凸',sortOrder:effects.length+1});rerenderEffects(effects);};
+  document.querySelectorAll('[data-effect-row]').forEach(function(row,index){
+    row.querySelector('[data-effect-up]').onclick=function(){var effects=collectEffects(false);if(index>0){var item=effects.splice(index,1)[0];effects.splice(index-1,0,item);rerenderEffects(effects);}};
+    row.querySelector('[data-effect-down]').onclick=function(){var effects=collectEffects(false);if(index<effects.length-1){var item=effects.splice(index,1)[0];effects.splice(index+1,0,item);rerenderEffects(effects);}};
+    row.querySelector('[data-effect-remove]').onclick=function(){var effects=collectEffects(false);effects.splice(index,1);rerenderEffects(effects);};
+  });
+}
+function saveEffects(){ try{ var effects=collectEffects(true);call('api_saveEffects',[{cardId:state.selectedId,effects:effects}],function(){show('効果を保存しました。',false);openCard(state.selectedId);});}catch(error){show(error.message,true);} }
 function renderAbilities(d){
   return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
     (d.abilities.length?d.abilities.map(function(a){return '<div class="ability-item"><div><strong>'+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
 }
 function openAbility(id){ call('api_getAbility',[id],function(result){ state.ability=result.ability;state.abilityVersion=result.version;renderAbilityForm(); }); }
+function renderTagFields(tags){
+  var custom=tags.filter(function(tag){return ABILITY_TAGS.indexOf(tag)<0;});
+  return '<div class="field wide"><label>タグ</label><div class="grid">'+ABILITY_TAGS.map(function(tag){return '<label><input type="checkbox" name="abilityTag" value="'+esc(tag)+'"'+(tags.indexOf(tag)>=0?' checked':'')+'> '+esc(tag)+'</label>';}).join('')+'</div>'+
+    '<label>追加タグ（カンマまたは改行区切り）</label><textarea id="f_customTags" rows="3">'+esc(custom.join('\n'))+'</textarea></div>';
+}
+function collectTags(){
+  var values=checkedValues('abilityTag');var custom=el('f_customTags').value.split(/[、,\n]/).map(function(value){return value.trim();}).filter(Boolean);
+  var chosen=values.concat(custom).filter(function(value,index,array){return array.indexOf(value)===index;});
+  var original=state.ability.tags||[];
+  return original.filter(function(value){return chosen.indexOf(value)>=0;}).concat(chosen.filter(function(value){return original.indexOf(value)<0;}));
+}
+function abilityCardField(ability){ return '<div class="field"><label>cardId（resolvedのみ）</label><select id="f_abilityCardId">'+cardOptions(ability.cardId||'',true)+'</select></div>'; }
+function bindAbilityLinkStatus(){
+  function update(){var resolved=el('f_linkStatus').value==='resolved';el('f_abilityCardId').disabled=!resolved;el('f_sortOrder').disabled=!resolved;}
+  el('f_linkStatus').onchange=update;update();
+}
 function renderAbilityForm(){
   var a=state.ability;
   el('editor').innerHTML='<button class="mobile-back" id="btnBack">← 戻る</button><div id="message" class="message"></div><h2>能力編集</h2><div class="grid">'+
     field('abilityId','abilityId','text',a.abilityId,true)+field('legacyId','legacyId','number',a.legacyId,true)+
-    field('abilityCardId','cardId（resolvedのみ）','text',a.cardId||'')+field('sourceName','元のカード名','text',a.sourceName)+
+    abilityCardField(a)+field('sourceName','元のカード名','text',a.sourceName)+
     field('abilityName','能力名','text',a.name)+selectField('abilitySource','入手元',['イベント','閃き','EXトレ'],a.source)+
     selectField('abilityRarity','レアリティ',['SSR','MR'],a.rarity,true)+field('sortOrder','sortOrder','number',a.sortOrder==null?'':a.sortOrder)+
     selectField('linkStatus','linkStatus',['resolved','ambiguous','unlinked'],a.linkStatus)+selectField('abilityStatus','状態',['draft','verified'],a.status)+
-    jsonField('tags','タグ',a.tags)+jsonField('flags','flags',a.flags)+
+    renderTagFields(a.tags)+sourceManagedField('内部flags',a.flags.length?'参照専用（'+a.flags.join('、')+'）':'なし')+
     '<div class="field wide"><label>説明</label><textarea id="f_abilityDescription" rows="10">'+esc(a.description)+'</textarea></div></div>'+
     '<div class="actions"><button class="primary" id="btnSaveAbility">能力をtest保存</button><span class="muted">version '+state.abilityVersion+'</span></div>';
   el('btnBack').onclick=function(){ if(state.detail)renderEditor();else document.body.classList.remove('editing'); };
-  el('btnSaveAbility').onclick=saveAbility;
+  el('btnSaveAbility').onclick=saveAbility;bindAbilityLinkStatus();
 }
 function saveAbility(){
   try{
-    var a={abilityId:state.ability.abilityId,legacyId:state.ability.legacyId,cardId:el('f_abilityCardId').value||null,
+    var resolved=el('f_linkStatus').value==='resolved';
+    var a={abilityId:state.ability.abilityId,legacyId:state.ability.legacyId,cardId:resolved?(el('f_abilityCardId').value||null):null,
       sourceName:el('f_sourceName').value,name:el('f_abilityName').value,description:el('f_abilityDescription').value,
-      source:el('f_abilitySource').value,rarity:el('f_abilityRarity').value||null,tags:parse('f_tags','タグ'),
-      sortOrder:el('f_sortOrder').value===''?null:Number(el('f_sortOrder').value),linkStatus:el('f_linkStatus').value,
-      flags:parse('f_flags','flags'),status:el('f_abilityStatus').value};
+      source:el('f_abilitySource').value,rarity:el('f_abilityRarity').value||null,tags:collectTags(),
+      sortOrder:resolved?nullableNumber('f_sortOrder','sortOrder'):null,linkStatus:el('f_linkStatus').value,
+      flags:state.ability.flags,status:el('f_abilityStatus').value};
     call('api_saveAbility',[{ability:a,version:state.abilityVersion}],function(result){ show('能力を保存しました。version '+result.version,false);openAbility(a.abilityId); });
   }catch(error){show(error.message,true);}
 }
@@ -206,7 +293,7 @@ function exportAll(){
     alert('export成功\n'+result.files.map(function(file){return file.name+'\nSHA-256 '+file.sha256;}).join('\n\n'));
   });
 }
-el('query').oninput=renderList;el('status').onchange=renderList;el('btnAbilitySearch').onclick=searchAbility;el('btnExport').onclick=exportAll;boot();
+el('query').oninput=renderList;el('btnAbilitySearch').onclick=searchAbility;el('btnExport').onclick=exportAll;boot();
 </script>
 </body>
 </html>
