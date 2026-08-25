@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜4） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` | **進行中** | ⚪🔴🟡 | 段階1はPR #46（`07fa6c3`）、段階2はPR #47（`139b75b`）、段階3はPR #48（`4330026`）、段階2bはPR #49（`c25e9bd`）で完了。段階4のA（公開経路実装）を進行中。B（管理者の経路確認5項目）は未実施 |
+| P12-11 | CMS統合の実装（段階1〜4） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` | **完了** | ⚪🔴🟡 | 段階1はPR #46（`07fa6c3`）、段階2はPR #47（`139b75b`）、段階3はPR #48（`4330026`）、段階2bはPR #49（`c25e9bd`）、段階4AはPR #50（`5c6f4a5`）で完了。段階4Bも管理者が経路確認5項目を実証済み |
 
 ## 最新mainの監査値
 
@@ -203,60 +203,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-11 段階4「アシスト公開経路の実証」のA（リポジトリ実装）を行う。
+P12-11 段階4A（公開経路実装）と段階4B（管理者の経路確認5項目）は完了した。
+現在は**段階5待ち（管理者のGAS操作）**である。
 
-- ブランチ: `feat/p12-11-s4-assist-publish-path`
-- 本番影響: 🟡。mainへ届く経路を追加するが、今回投入するデータの差分はゼロ
-- アシスト専用の公開ゲートとWorkflowを追加し、送信範囲・許可リスト分離・concurrencyを機械検査する
-- AはPR作成まで。B（管理者が行う経路確認5項目）はPRマージ後に実施するため、現時点では未実施
-- `cms/assist-publish` ブランチの作成・push、GAS・deployment・外部データの操作は行わない
-
-事前調査の前提を実物で検証し、次の食い違いを設計書 第0章へ記録した。
-
-- 関数名11個の衝突に加え、**グローバル`var`も4個衝突する。**
-  `HEADERS`は同名キー`members`/`publish_log`で列定義が違い、単純結合で列ずれを起こす
-- アシスト側のタブは**トップレベルではなくカード編集画面の中のサブタブ**である。
-  トップレベルは両者とも同じ2ペイン構造
-- Script Propertiesは7キーではなく8キー。`OCR_DAILY_USAGE`はGAS自身が書く日次カウンタ
-- CMS検査は`verify.js`の2か所にある。token走査は`_cms/gas`にしか掛かっておらず、
-  `_cms/assist-gas`は走査されていない。また`verify-assist-cms.js`の`forbiddenSource`は
-  統合すると必ずFAILする
-- **`cms/assist-publish`は存在しない。** Workflow・許可リスト・GAS送信処理のいずれも無く、
-  アシストの`api_export`はJSONをブラウザへ返すだけ。「出し分け」ではなく新規作成である
-
-### 管理者の決定による改訂（初版から変更した点）
-
-1. **testシートの実データを本番bookへ持ち込む。**
-   初版のB-5「mainの3DBから入れ直す」は誤りだった。mainの3DBには
-   `accessoryStatus` unknown 49件、`stats`未入力35件、`releasedAt` null 35件、
-   `event2` null 23件の空欄が残っており、`cms/assist-publish`が無いため
-   **CMSで入力した内容は一度もmainへ届いていない。**
-   取り込みは**export → mainへPR → 本番bookへ取込**とし、シートの直接コピーは採らない
-2. **常設のtest環境を作らない。**
-   `ENVIRONMENT`を`production`/`rehearsal`の2値へ再定義し、移行時と大改修時だけ
-   **本番bookのコピー**でリハーサルする方式に変えた。旧設計の合成test bookと違い、
-   本番の`monsters` 351行が入った状態で確認できるため忠実度は上がる
-3. **列の棚卸しを行った。**
-   アシスト3シートの全46列を分類し、**削除1列 / 保留6列 / 必須39列**とした
-
-### 設計の欠陥1件を自己修正
-
-初版C-2は環境マーカーを`book.getSheets()[0]`から読む設計だった。
-**シート順に依存するため、アシスト5シートを足す運用と両立しない。**
-マーカーの置き場所を`members`シートのA1へ移した。
-
-### 実物確認で判明した落とし穴（設計書へ記録済み）
-
-- `validateImagePath_`は**main上の画像実在**を見る。同じ拡張子で再アップロードした画像は
-  検査を素通りして**バイト列がtest Driveに取り残され**、拡張子が変わると`api_export()`が
-  停止する。移行前にtest Driveと`assist-cards/`91件を突き合わせる手順を入れた
-- `buildDocuments_`は`generatedFrom`を`['P12-8 test assist CMS']`へ固定し、
-  **`verify.js`も`verify-assist-cms.js`もこの項目を検査していない。**
-  exportで現在の4項目の由来リストが消える。想定内として扱い、検査項目を追加する
-- `assist_effects`の`cardStatus`は`api_saveEffects`が
-  `effects.length ? 'verified' : 'draft'`をliteralで書いているだけの導出値で、
-  カード1枚の値を効果行すべてに重複して持つ。編集UIも無い。
-  **`ASST_HEADERS`から外して導出すればexportされるJSONは1バイトも変わらない**
+- 段階4Bでは正常経路が全ステップ成功し、拒否3ケースも最初の門で期待どおり停止した
+- 正常経路によりmainは`4e1de69`へfast-forwardしたが、treeは段階4A直後の`5c6f4a5`と同一
+- 段階5以降は管理者の明示承認なしに着手しない
 
 ## 次の作業
 
@@ -267,7 +219,8 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - 段階2: **完了** — 統合ソースの作成（⚪）`chore/p12-11-s2-cms-unified-source`、PR #47 / `139b75b`
 - 段階2b: **完了** — 公開範囲と件名の是正（⚪）`fix/p12-11-s2b-assist-publish-scope`、PR #49 / `c25e9bd`
 - 段階3: **完了** — testCMSの3DBをmainへ反映（🔴）`chore/p12-11-s3-assist-db-from-cms`、PR #48 / `4330026`
-- 段階4: **進行中** — アシスト公開経路の実証（🟡）`feat/p12-11-s4-assist-publish-path`。Aはリポジトリ実装・PR作成、Bは管理者の経路確認5項目で、Bは未実施
+- 段階4: **完了** — アシスト公開経路の実証（🟡）。AはPR #50 / `5c6f4a5`で実装済み、Bは管理者が経路確認5項目を実証済み
+- 段階5: **管理者のGAS操作待ち** — 本番bookのコピーでリハーサル（⚪）
 - 段階5以降: **管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
@@ -287,6 +240,11 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - **常設のtest環境: 作らない（決定）。**
   移行時と大改修時に本番bookのコピーでリハーサルする（設計書 B-1・I-4）。
   旧assist test スプレッドシートとGASプロジェクトは、段階3のPRがmainへ入った後に捨てる
+- **GitHub ActionsのNode.js 24移行警告:** `actions/checkout@v4`と`actions/setup-node@v4`が
+  Node.js 20を対象としており、runner側でNode.js 24に強制されている旨の警告が出る。
+  `cms-publish.yml` / `cms-assist-publish.yml` / `verify.yml`の3つが対象。現時点で動作に影響は
+  無いが、v4が停止する前に`@v5`へ更新する必要がある。更新は3ファイル同時に行い、
+  モンスター側とアシスト側で版を揃える
 - P10-2: 人工的な文書1行テスト。実作業で運用確認できているため保留
 - AdSense再申請: Search Consoleのインデックス反映待ち。
   更新利用規約への管理者同意も必要。Claudeは同意操作をしない
@@ -307,8 +265,8 @@ P11-7〜9 は決着済み（実施不可 / P12-12へ吸収 / 不要）。
 統合後はtokenが1本になるため、先にアシスト用tokenを発行しない。
 
 testCMSの3DBは段階3（PR #48 / `4330026`）でmainへ反映済みである。
-段階4ではデータを再投入せず、差分ゼロのコミットでアシスト公開経路だけを実証する。
-リポジトリ実装のPRマージ後、管理者が経路確認5項目を実施するまで段階4は完了しない。
+段階4AはPR #50 / `5c6f4a5`で実装済み、段階4Bも管理者が経路確認5項目を実証済みである。
+次は段階5（本番bookのコピーでリハーサル）だが、管理者のGAS操作待ちである。
 段階5以降は管理者の明示承認なしに着手しない。
 
 ## 管理者確認待ち
