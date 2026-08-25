@@ -30,6 +30,7 @@
 | 管理者がClaudeへ依頼して開発・公開するとき | `docs/admin-development.md` |
 | 次回のClaude作業を開始するとき | `docs/claude-next-session.md` |
 | アシストカードDB・静的ページ・CMSの設計と進捗 | `docs/assist-card-cms-progress.md` |
+| CMS統合の方針と実施順 | `docs/cms-integration-plan.md` |
 | コンテンツ運用（ガチャ更新・日記追加） | `CLAUDE.md` |
 
 **索引にない作業を始める前に、関連する `docs/` が無いか確認すること。**
