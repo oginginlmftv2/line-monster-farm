@@ -369,8 +369,40 @@ function api_asstPublish() {
     { path: 'src/data/assist-abilities.json', value: docs.abilities }
   ];
   var tree = files.map(function (file) { return { path: file.path, mode: '100644', type: 'blob', sha: githubBlob_(JSON.stringify(file.value, null, 2) + '\n', 'utf-8') }; });
+  var referencedImages = docs.cards.cards.reduce(function (set, card) {
+    var filename = String(card.image || '').replace(/^assist-cards\//, '');
+    if (filename) set[filename] = true;
+    return set;
+  }, {});
+  var imageFolder = asstImageFolder_();
+  var driveFiles = imageFolder.getFiles();
+  while (driveFiles.hasNext()) {
+    var driveFile = driveFiles.next();
+    var filename = driveFile.getName();
+    if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
+      throw new Error('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
+    }
+    // カードDBから参照されていないファイルは公開コミットへ含めない。
+    if (!referencedImages[filename]) continue;
+    var bytes = driveFile.getBlob().getBytes();
+    if (!bytes.length || bytes.length > ASST_IMAGE_MAX_BYTES) {
+      throw new Error(filename + ' は空、または2MBを超えています。');
+    }
+    var extension = filename.split('.').pop().toLowerCase();
+    var expectedMime = extension === 'jpg' ? 'image/jpeg' :
+      (extension === 'png' ? 'image/png' : 'image/webp');
+    if (!isExpectedImage_(bytes, expectedMime)) {
+      throw new Error(filename + ' の拡張子と画像データが一致しません。');
+    }
+    tree.push({
+      path: 'assist-cards/' + filename,
+      mode: '100644',
+      type: 'blob',
+      sha: githubBlob_(Utilities.base64Encode(bytes), 'base64')
+    });
+  }
   var newTree = githubRequest_('post', '/git/trees', { base_tree: mainCommit.tree.sha, tree: tree }, false);
-  var commit = githubRequest_('post', '/git/commits', { message: 'Assist CMS publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha] }, false);
+  var commit = githubRequest_('post', '/git/commits', { message: 'CMS assist publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha] }, false);
   var latestMain = githubRef_(GITHUB_MAIN_BRANCH, false);
   if (!latestMain.object || latestMain.object.sha !== mainSha) throw new Error('公開処理中にmainブランチが更新されました。');
   var ref = githubRef_(GITHUB_ASST_PUBLISH_BRANCH, true);
@@ -379,4 +411,3 @@ function api_asstPublish() {
   asstAppendLog_(user, 'publish', 'SENT', commit.sha);
   return { ok: true, sha: commit.sha, shortSha: commit.sha.slice(0, 7), branch: GITHUB_ASST_PUBLISH_BRANCH, fileCount: tree.length };
 }
-
