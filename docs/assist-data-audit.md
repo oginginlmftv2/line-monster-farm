@@ -470,3 +470,61 @@ P12-11 段階3で、現行test CMSの`api_export()`が出力した3DBを手編�
   CMSが既存IDを引き継いだ結果であり、今回は直していない。採番規約の見直しを別タスクで扱う。
 - ヴィトニルの`ratings`は値が同一だが、test CMS exportによってキー順が変わる。
   export成果物を手編集しない原則に従い、今回はそのまま保持した。
+
+## 13. 段階4: 管理者が行う経路確認
+
+以下はP12-11 段階4のPRがマージされたあとに、管理者が手で行う。
+Codexはこの節の操作を実行しない。
+
+### 差分ゼロのコミットで経路を通す
+
+段階3で3DBは既にmainへ入っている。**同一内容＝差分ゼロのコミットで、経路だけを試す。**
+
+```bash
+git checkout main
+git pull
+git checkout -B cms/assist-publish
+git commit --allow-empty -m "CMS assist publish $(date '+%Y-%m-%d %H:%M:%S')"
+git push -f origin cms/assist-publish
+```
+
+**確認すること**
+
+```text
+1. Workflow が起動し、全ステップ成功する
+2. main への push 結果が「差分なし」である（git commit がスキップされる）
+```
+
+### 拒否されることを3通りで確認する
+
+**いずれも main を更新しないので、失敗しても影響が無い。**
+
+```bash
+# 3. 許可外パスを混ぜる
+git checkout -B cms/assist-publish main
+echo x > README_TEST.md && git add README_TEST.md
+git commit -m "CMS assist publish $(date '+%Y-%m-%d %H:%M:%S')"
+git push -f origin cms/assist-publish        # → 拒否されること
+
+# 4. 件名を規則外にする
+git checkout -B cms/assist-publish main
+git commit --allow-empty -m "test publish"
+git push -f origin cms/assist-publish        # → 拒否されること
+
+# 5. 親を古い main にする
+git checkout -B cms/assist-publish main~1
+git commit --allow-empty -m "CMS assist publish $(date '+%Y-%m-%d %H:%M:%S')"
+git push -f origin cms/assist-publish        # → 拒否されること
+```
+
+**後始末**
+
+```bash
+git checkout main
+git branch -D cms/assist-publish
+git push origin --delete cms/assist-publish
+```
+
+**5項目すべての結果を記録し、Claudeへ報告する。**
+`git commit --allow-empty` を使うのは、**経路の実証とデータの投入を同時にしないため**である。
+片方が失敗したときに原因が1つに絞れる。
