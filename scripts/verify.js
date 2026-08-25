@@ -374,6 +374,39 @@ head('8. 秘密情報');
       return end < 0 ? '' : source.slice(start, end + 2);
     };
 
+    const allowlistFromVerifier = relative => {
+      if (!exists(relative)) throw new Error(`${relative} がない`);
+      const source = read(relative);
+      const textBlock = source.match(/const TEXT_SOURCE_FILES = new Set\(\[([\s\S]*?)\]\);/);
+      const imageLiteral = source.match(/^const IMAGE_PATH = (\/(?:\\.|[^/])+\/[a-z]*);$/m);
+      if (!textBlock || !imageLiteral) throw new Error(`${relative} の許可リストを解析できない`);
+      const fixed = new Set([...textBlock[1].matchAll(/['"]([^'"]+)['"]/g)].map(match => match[1]));
+      const parsedLiteral = imageLiteral[1].match(/^\/(.*)\/([a-z]*)$/);
+      if (!parsedLiteral) throw new Error(`${relative} の画像許可リストを解析できない`);
+      return { fixed, image: new RegExp(parsedLiteral[1], parsedLiteral[2]) };
+    };
+
+    const publishPathsFromGas = name => {
+      const source = functionSource(name);
+      if (!source) throw new Error(`${name} がない`);
+      const fixed = new Set([...source.matchAll(/\bpath:\s*'([^']+)'\s*,/g)].map(match => match[1]));
+      const dynamicPaths = [...source.matchAll(/\bpath:\s*'([^']+)'\s*\+\s*filename/g)];
+      const filenamePattern = source.match(/if\s*\(\s*!\/((?:\\.|[^/])+)\/([a-z]*)\.test\(filename\)\)/);
+      if (dynamicPaths.length !== 1 || !filenamePattern) {
+        throw new Error(`${name} の画像送信パスを解析できない`);
+      }
+      const prefix = dynamicPaths[0][1];
+      const inner = filenamePattern[1].replace(/^\^/, '').replace(/\$$/, '');
+      const escapedPrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return { fixed, image: new RegExp(`^${escapedPrefix}${inner}$`, filenamePattern[2]) };
+    };
+
+    const pathSetLabel = value => [...value.fixed].sort().concat(`画像 ${value.image}`).join(', ');
+    const samePathSet = (actual, allowed) => actual.fixed.size === allowed.fixed.size
+      && [...actual.fixed].every(item => allowed.fixed.has(item))
+      && actual.image.source === allowed.image.source
+      && actual.image.flags === allowed.image.flags;
+
     // H-3 検査5: bookの環境マーカーと破壊的setupの一回限り鍵。
     const coreSource = gasSources.find(item => item.file === '00_core.gs')?.source || '';
     const setupSource = gasSources.find(item => item.file === '40_setup.gs')?.source || '';
@@ -399,6 +432,66 @@ head('8. 秘密情報');
     if (githubOutsidePublish.length || !/api\.github\.com/.test(publishSource) || !/git\/refs/.test(publishSource)) {
       ng(`GitHub送信が30_publish.gsへ局在していない: ${githubOutsidePublish.map(item => item.file).join(', ') || '送信実装不足'}`);
     } else ok('GitHub送信は30_publish.gsだけに局在');
+
+    // H-3 検査6: GASが送る全pathと、trusted main版ゲートの許可リストを完全一致させる。
+    let monAllowlist;
+    let asstAllowlist;
+    try {
+      const monPublishPaths = publishPathsFromGas('api_monPublish');
+      const asstPublishPaths = publishPathsFromGas('api_asstPublish');
+      monAllowlist = allowlistFromVerifier('scripts/verify-cms-source.js');
+      asstAllowlist = allowlistFromVerifier('scripts/verify-assist-source.js');
+      const monMatches = samePathSet(monPublishPaths, monAllowlist);
+      const asstMatches = samePathSet(asstPublishPaths, asstAllowlist);
+      if (!monMatches || !asstMatches) {
+        ng(`公開送信範囲と許可リストが不一致（monster ${monMatches ? 'OK' : `GAS [${pathSetLabel(monPublishPaths)}] / gate [${pathSetLabel(monAllowlist)}]`} / assist ${asstMatches ? 'OK' : `GAS [${pathSetLabel(asstPublishPaths)}] / gate [${pathSetLabel(asstAllowlist)}]`}）`);
+      } else {
+        ok(`公開送信範囲と許可リストが完全一致（monster: ${pathSetLabel(monPublishPaths)} / assist: ${pathSetLabel(asstPublishPaths)}）`);
+      }
+    } catch (error) {
+      ng(`公開送信範囲と許可リストの検査FAIL: ${error.message}`);
+    }
+
+    // H-3 検査7: 固定path同士、固定pathと画像規則、画像規則同士を分離する。
+    try {
+      monAllowlist ||= allowlistFromVerifier('scripts/verify-cms-source.js');
+      asstAllowlist ||= allowlistFromVerifier('scripts/verify-assist-source.js');
+      const overlaps = [...monAllowlist.fixed].filter(item => asstAllowlist.fixed.has(item)
+        || asstAllowlist.image.test(item));
+      overlaps.push(...[...asstAllowlist.fixed].filter(item => monAllowlist.image.test(item)));
+      const monImagePrefix = monAllowlist.image.source.match(/^\^([^\\[]+)/)?.[1] || '';
+      const asstImagePrefix = asstAllowlist.image.source.match(/^\^([^\\[]+)/)?.[1] || '';
+      if (monImagePrefix && monImagePrefix === asstImagePrefix) overlaps.push(`画像 ${monAllowlist.image}`);
+      if (overlaps.length) {
+        ng(`モンスターとアシストの許可リストが重複: ${[...new Set(overlaps)].join(', ')}`);
+      } else {
+        ok('モンスターとアシストの許可リストは互いに素');
+      }
+    } catch (error) {
+      ng(`許可リスト分離の検査FAIL: ${error.message}`);
+    }
+
+    // H-3 検査9: sitemap.xmlを生成する2経路は同じgroupで直列実行する。
+    try {
+      const concurrency = relative => {
+        if (!exists(relative)) throw new Error(`${relative} がない`);
+        const block = read(relative).match(/^concurrency:\s*\n((?:^[ \t]+.*\n?)*)/m)?.[1] || '';
+        const group = block.match(/^\s+group:\s*([^\s#]+)\s*$/m)?.[1] || '';
+        const cancel = block.match(/^\s+cancel-in-progress:\s*(true|false)\s*$/m)?.[1] || '';
+        if (!group || !cancel) throw new Error(`${relative} のconcurrency設定を解析できない`);
+        return { group, cancel };
+      };
+      const monsterWorkflow = concurrency('.github/workflows/cms-publish.yml');
+      const assistWorkflow = concurrency('.github/workflows/cms-assist-publish.yml');
+      if (monsterWorkflow.group !== assistWorkflow.group
+          || monsterWorkflow.cancel === 'true' || assistWorkflow.cancel === 'true') {
+        ng(`CMS Workflowのconcurrencyが不正（monster group=${monsterWorkflow.group} cancel=${monsterWorkflow.cancel} / assist group=${assistWorkflow.group} cancel=${assistWorkflow.cancel}）`);
+      } else {
+        ok(`CMS Workflowはconcurrency group=${monsterWorkflow.group} / cancel-in-progress=falseで直列化`);
+      }
+    } catch (error) {
+      ng(`CMS Workflowのconcurrency検査FAIL: ${error.message}`);
+    }
 
     // H-3 検査10: データ行を消す処理は40_setup.gsだけに置く。
     const destructiveOutsideSetup = gasSources.filter(item => item.file !== '40_setup.gs'

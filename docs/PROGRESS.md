@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜3・段階2b） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` | **進行中** | ⚪🔴 | 段階1はPR #46（`07fa6c3`）、段階2はPR #47（`139b75b`）、段階3はPR #48（`4330026`）で完了。段階2b（公開範囲と件名の是正）を進行中 |
+| P12-11 | CMS統合の実装（段階1〜4） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` | **進行中** | ⚪🔴🟡 | 段階1はPR #46（`07fa6c3`）、段階2はPR #47（`139b75b`）、段階3はPR #48（`4330026`）、段階2bはPR #49（`c25e9bd`）で完了。段階4のA（公開経路実装）を進行中。B（管理者の経路確認5項目）は未実施 |
 
 ## 最新mainの監査値
 
@@ -203,13 +203,13 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-11 段階2b「アシスト公開範囲と件名の是正」を行う。
+P12-11 段階4「アシスト公開経路の実証」のA（リポジトリ実装）を行う。
 
-- ブランチ: `fix/p12-11-s2b-assist-publish-scope`
-- 本番影響: ⚪。リポジトリ内のテキストだけを変更し、GASへの同期・保存・deployは行わない
-- `api_asstPublish()` が、3DBに加えてDriveに存在しカードDBから参照される画像だけを送るよう是正する
-- コミット件名を設計F-3の `CMS assist publish <JST日時>` に合わせる
-- 段階4には着手しない
+- ブランチ: `feat/p12-11-s4-assist-publish-path`
+- 本番影響: 🟡。mainへ届く経路を追加するが、今回投入するデータの差分はゼロ
+- アシスト専用の公開ゲートとWorkflowを追加し、送信範囲・許可リスト分離・concurrencyを機械検査する
+- AはPR作成まで。B（管理者が行う経路確認5項目）はPRマージ後に実施するため、現時点では未実施
+- `cms/assist-publish` ブランチの作成・push、GAS・deployment・外部データの操作は行わない
 
 事前調査の前提を実物で検証し、次の食い違いを設計書 第0章へ記録した。
 
@@ -265,9 +265,10 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 
 - 段階1: **完了** — 検査の先行強化（⚪）`chore/p12-11-s1-cms-token-scan`、PR #46 / `07fa6c3`
 - 段階2: **完了** — 統合ソースの作成（⚪）`chore/p12-11-s2-cms-unified-source`、PR #47 / `139b75b`
-- 段階2b: **進行中** — 公開範囲と件名の是正（⚪）`fix/p12-11-s2b-assist-publish-scope`
+- 段階2b: **完了** — 公開範囲と件名の是正（⚪）`fix/p12-11-s2b-assist-publish-scope`、PR #49 / `c25e9bd`
 - 段階3: **完了** — testCMSの3DBをmainへ反映（🔴）`chore/p12-11-s3-assist-db-from-cms`、PR #48 / `4330026`
-- 段階4: 段階2bのマージ後に着手する。**管理者の次の明示指示なしに着手しない**
+- 段階4: **進行中** — アシスト公開経路の実証（🟡）`feat/p12-11-s4-assist-publish-path`。Aはリポジトリ実装・PR作成、Bは管理者の経路確認5項目で、Bは未実施
+- 段階5以降: **管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
 
@@ -305,11 +306,10 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 P11-7〜9 は決着済み（実施不可 / P12-12へ吸収 / 不要）。
 統合後はtokenが1本になるため、先にアシスト用tokenを発行しない。
 
-**testCMSで入力した内容はまだ公開へ届いていない。**
-`cms/assist-publish` が存在しないため、P12-8以降に入力したカード・効果・能力は
-test スプレッドシートにしか無い。設計書 第I章の段階3（export → PR）で運ぶ。
-この作業は統合の完成を待たずに単独で実施でき、
-実施すればカードのindex件数が増える見込みである（AdSense再申請に効く）。
+testCMSの3DBは段階3（PR #48 / `4330026`）でmainへ反映済みである。
+段階4ではデータを再投入せず、差分ゼロのコミットでアシスト公開経路だけを実証する。
+リポジトリ実装のPRマージ後、管理者が経路確認5項目を実施するまで段階4は完了しない。
+段階5以降は管理者の明示承認なしに着手しない。
 
 ## 管理者確認待ち
 
