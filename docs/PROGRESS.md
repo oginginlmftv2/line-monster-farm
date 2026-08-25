@@ -34,7 +34,8 @@
 | P12-8 | アシストCMS基盤 | `feat/p12-8-assist-cms` | **完了** | ⚪ | PR #39をmainへマージ（`91f7ab7`）。独立test GAS/Sheetで編集・競合拒否・export一致を実機確認 |
 | P12-8b | CMS構造化フォーム | `feat/p12-8b-assist-forms` | **完了** | 🟡🔴 | PR #41をmainへマージ（`e4b6408`）。schema v3、生成ページ、test deployment v6を反映 |
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
-| P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **進行中** | ⚪ | 個人リポジトリでadmin付与不可を確定。計画からadmin依存を外し、verify.jsのクラッシュも修正 |
+| P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
+| P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **進行中** | ⚪ | `docs/cms-integration-design.md` にA〜Jの結論を記載。実装・GAS・シート・deploymentは未変更 |
 
 ## 最新mainの監査値
 
@@ -201,24 +202,38 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-7c「旧カード共通ページのnoindex化」を行う。
+P12-10「CMS統合の設計」を行う。
 
-- ブランチ: `fix/p12-7c-card-html-noindex`
-- 本番影響: 🔴。マージ＝即公開
-- `cards/card.html` に `noindex,follow` を付け、広告タグを外す。表示機能は維持する
-- Search Console で「検出 - インデックス未登録」が40件滞留しており、
-  重複ページがクロール枠を消費している状態を解消する
+- ブランチ: `chore/p12-10-cms-integration-design`
+- 本番影響: ⚪。設計文書のみ。コード・GAS・シート・deploymentは変更しない
+- 成果物は `docs/cms-integration-design.md`。A〜Jの判断をすべて確定させ、
+  採らなかった案と採った理由を各章に書く
+- 方針は `docs/cms-integration-plan.md` を正とし、そこで決まったことを覆さない
+- **公開ブランチと許可リストは分けたまま維持する**
+
+事前調査の前提を実物で検証し、次の食い違いを設計書 第0章へ記録した。
+
+- 関数名11個の衝突に加え、**グローバル`var`も4個衝突する。**
+  `HEADERS`は同名キー`members`/`publish_log`で列定義が違い、単純結合で列ずれを起こす
+- アシスト側のタブは**トップレベルではなくカード編集画面の中のサブタブ**である。
+  トップレベルは両者とも同じ2ペイン構造
+- Script Propertiesは7キーではなく8キー。`OCR_DAILY_USAGE`はGAS自身が書く日次カウンタ
+- CMS検査は`verify.js`の2か所にある。token走査は`_cms/gas`にしか掛かっておらず、
+  `_cms/assist-gas`は走査されていない。また`verify-assist-cms.js`の`forbiddenSource`は
+  統合すると必ずFAILする
+- **`cms/assist-publish`は存在しない。** Workflow・許可リスト・GAS送信処理のいずれも無く、
+  アシストの`api_export`はJSONをブラウザへ返すだけ。「出し分け」ではなく新規作成である
 
 ## 次の作業
 
-P12-10「CMS統合の設計」を次に行う。**P11-7〜9 の決着により、着手を妨げるものは無い。**
+P12-11「test環境での統合実装」を次に行う。
+**`docs/cms-integration-design.md` を管理者が承認するまで着手しない。**
 
-- ブランチ: `chore/p12-10-cms-integration-design`
-- 本番影響: ⚪。設計文書のみ。実装・deployment変更はしない
-- モンスターCMSとアシストCMSを1つのApps Scriptプロジェクトへ統合する設計を作る
-- **公開ブランチと許可リストは分けたまま維持する**
-- 方針は `docs/cms-integration-plan.md` を正とする
-- 実装（P12-11）は設計の承認後
+- ブランチ: `feat/p12-11-cms-integration`（進捗管理チャットの指示に従う）
+- 本番影響: ⚪。testプロジェクト・testスプレッドシートの中で完結させる
+- 実施範囲は設計書 第I章の段階1〜3（検査の先行強化 / 統合ソースの作成 / test環境での実機確認）
+- 段階4以降（アシスト公開経路・本番book同居・deployment切替）はP12-12
+- 稼働中のモンスターCMSと`cms/publish`経路には段階6まで一切触れない
 
 ## 明示的な保留
 
@@ -244,10 +259,10 @@ P12-10「CMS統合の設計」を次に行う。**P11-7〜9 の決着により�
 次はCMS統合である。モンスターCMSとアシストCMSを1つのApps Scriptプロジェクト・
 1つのWebアプリへ統合し、タブ切り替えで両方を扱えるようにする。
 **ただし公開ブランチと許可リストは分けたまま維持する。**
-方針は `docs/cms-integration-plan.md` を正とする。
+方針は `docs/cms-integration-plan.md`、具体設計は `docs/cms-integration-design.md` を正とする。
 
-統合の前に P11-7〜9 を片付ける。統合後はtokenが1本になるため、
-先にアシスト用tokenを発行すると作り直しになる。
+P11-7〜9 は決着済み（実施不可 / P12-12へ吸収 / 不要）。
+統合後はtokenが1本になるため、先にアシスト用tokenを発行しない。
 
 ## 管理者確認待ち
 
