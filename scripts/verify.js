@@ -252,7 +252,7 @@ head('8. 秘密情報');
   const cmsDir = path.join(REPO, cmsRelativeDir);
   const gasRelativeDir = '_cms/gas';
   const gasDir = path.join(REPO, gasRelativeDir);
-  const requiredGasFiles = ['コード.gs', 'index.html'];
+  const gasManifestRelative = `${gasRelativeDir}/manifest.json`;
   const jekyllConfigs = ['_config.yml', '_config.yaml'].filter(exists);
   const githubTokenPatterns = [
     { name: 'classic PAT', regex: /\bghp_[A-Za-z0-9]{20,}\b/ },
@@ -290,10 +290,146 @@ head('8. 秘密情報');
   if (!fs.existsSync(gasDir)) {
     ng(`GitHubトークン検査対象の ${gasRelativeDir} がない`);
   } else {
-    const missingGasFiles = requiredGasFiles.filter(file => !fs.existsSync(path.join(gasDir, file)));
-    if (missingGasFiles.length) {
-      ng(`GAS基準ファイルがない: ${missingGasFiles.map(file => `${gasRelativeDir}/${file}`).join(', ')}`);
+    try {
+      if (!exists(gasManifestRelative)) throw new Error(`${gasManifestRelative} がない`);
+      const manifest = JSON.parse(read(gasManifestRelative));
+      if (!Array.isArray(manifest.files) || !manifest.files.length) {
+        throw new Error('manifest.json の files が空、または配列ではない');
+      }
+      const invalidNames = manifest.files.filter(file => typeof file !== 'string'
+        || !/^[A-Za-z0-9_.-]+$/.test(file) || file === 'manifest.json');
+      const duplicateNames = manifest.files.filter((file, index) => manifest.files.indexOf(file) !== index);
+      const missingFiles = manifest.files.filter(file => !fs.existsSync(path.join(gasDir, file)));
+      const actualFiles = fs.readdirSync(gasDir, { withFileTypes: true })
+        .filter(entry => entry.isFile() && entry.name !== 'manifest.json')
+        .map(entry => entry.name)
+        .sort();
+      const unexpectedFiles = actualFiles.filter(file => !manifest.files.includes(file));
+      const unexpectedDirectories = fs.readdirSync(gasDir, { withFileTypes: true })
+        .filter(entry => entry.isDirectory()).map(entry => entry.name);
+      if (invalidNames.length || duplicateNames.length || missingFiles.length
+          || unexpectedFiles.length || unexpectedDirectories.length) {
+        throw new Error(`不正名 ${invalidNames.join(', ') || '0'} / 重複 ${duplicateNames.join(', ') || '0'} / `
+          + `欠落 ${missingFiles.join(', ') || '0'} / 余剰 ${unexpectedFiles.concat(unexpectedDirectories).join(', ') || '0'}`);
+      }
+      ok(`GAS manifestと実ファイルが完全一致（${manifest.files.length}ファイル）`);
+    } catch (error) {
+      ng(`GAS manifest検査FAIL: ${error.message}`);
     }
+
+    const gasFiles = fs.readdirSync(gasDir).filter(file => file.endsWith('.gs')).sort();
+    const gasSources = gasFiles.map(file => ({
+      file,
+      source: fs.readFileSync(path.join(gasDir, file), 'utf8'),
+    }));
+    const htmlFiles = fs.readdirSync(gasDir)
+      .filter(file => file === 'index.html' || /^ui_.*\.html$/.test(file)).sort();
+    const htmlSources = htmlFiles.map(file => ({
+      file,
+      source: fs.readFileSync(path.join(gasDir, file), 'utf8'),
+    }));
+    // H-3 検査1: Apps Scriptの単一グローバルスコープで関数名が衝突しない。
+    const functions = gasSources.flatMap(item => [...item.source.matchAll(/^function\s+([A-Za-z_$][\w$]*)\s*\(/gm)]
+      .map(match => ({ name: match[1], file: item.file })));
+    const duplicateFunctions = functions.filter((item, index) => functions
+      .findIndex(other => other.name === item.name) !== index);
+    if (duplicateFunctions.length) {
+      ng(`統合GASで関数名が重複: ${duplicateFunctions.map(item => `${item.name}(${item.file})`).join(', ')}`);
+    } else ok(`統合GASの関数名は一意（${functions.length}件）`);
+
+    // H-3 検査2: 行頭varだけをトップレベル宣言として扱う。
+    const globalVars = gasSources.flatMap(item => [...item.source.matchAll(/^var\s+([A-Za-z_$][\w$]*)\s*=/gm)]
+      .map(match => ({ name: match[1], file: item.file })));
+    const duplicateVars = globalVars.filter((item, index) => globalVars
+      .findIndex(other => other.name === item.name) !== index);
+    if (duplicateVars.length) {
+      ng(`統合GASでトップレベルvarが重複: ${duplicateVars.map(item => `${item.name}(${item.file})`).join(', ')}`);
+    } else ok(`統合GASのトップレベルvarは一意（${globalVars.length}件）`);
+
+    // H-3 検査3: 動的に組み立てるidは除き、ソース上で確定するidを横断照合する。
+    const elementIds = htmlSources.flatMap(item => [...item.source
+      .matchAll(/\bid=(?:"([A-Za-z][A-Za-z0-9_:-]*)"|'([A-Za-z][A-Za-z0-9_:-]*)')/g)]
+      .map(match => ({ id: match[1] || match[2], file: item.file })));
+    const duplicateIds = elementIds.filter((item, index) => elementIds
+      .findIndex(other => other.id === item.id) !== index);
+    if (duplicateIds.length) {
+      ng(`統合UIで要素idが重複: ${duplicateIds.map(item => `${item.id}(${item.file})`).join(', ')}`);
+    } else ok(`統合UIの要素idは一意（${elementIds.length}件）`);
+
+    // H-3 検査4: ui_*.htmlの共通callから呼ぶ公開APIがGAS側に存在する。
+    const apiFunctions = new Set(functions.filter(item => item.name.startsWith('api_')).map(item => item.name));
+    const apiCalls = htmlSources.filter(item => item.file.startsWith('ui_')).flatMap(item => [...item.source
+      .matchAll(/\bcall\(\s*['"](api_[A-Za-z_$][\w$]*)['"]/g)]
+      .map(match => ({ name: match[1], file: item.file })));
+    const undefinedApis = apiCalls.filter(call => !apiFunctions.has(call.name));
+    if (undefinedApis.length) {
+      ng(`統合UIに未定義API呼び出し: ${undefinedApis.map(call => `${call.name}(${call.file})`).join(', ')}`);
+    } else ok(`統合UIのAPI呼び出しは全て定義済み（${new Set(apiCalls.map(call => call.name)).size}件）`);
+
+    const functionSource = name => {
+      const source = gasSources.map(item => item.source).join('\n');
+      const start = source.indexOf(`function ${name}(`);
+      if (start < 0) return '';
+      const end = source.indexOf('\n}', start);
+      return end < 0 ? '' : source.slice(start, end + 2);
+    };
+
+    // H-3 検査5: bookの環境マーカーと破壊的setupの一回限り鍵。
+    const coreSource = gasSources.find(item => item.file === '00_core.gs')?.source || '';
+    const setupSource = gasSources.find(item => item.file === '40_setup.gs')?.source || '';
+    const bookSource = functionSource('book_');
+    const destructiveSetups = [
+      'setup3_importMonsterSeed', 'setup3_resetMonsters', 'setup3_importAssistFromMain',
+    ];
+    const environmentGuarded = /getSheetByName\(SHEET_MEMBERS\)[\s\S]{0,300}getRange\('A1'\)\.getNote\(\)/.test(bookSource)
+      && /marker\s*!==\s*expected/.test(bookSource)
+      && /ENVIRONMENT は production または rehearsal/.test(coreSource);
+    const grantHelper = /function consumeDestructiveGrant_\(/.test(setupSource)
+      && /ALLOW_DESTRUCTIVE_SETUP/.test(setupSource)
+      && /deleteProperty\('ALLOW_DESTRUCTIVE_SETUP'\)/.test(setupSource);
+    const unguardedSetups = destructiveSetups.filter(name => !/consumeDestructiveGrant_\(/.test(functionSource(name)));
+    if (!environmentGuarded || !grantHelper || unguardedSetups.length) {
+      ng(`統合GASの環境防御が不足（book ${environmentGuarded ? 'OK' : 'NG'} / 鍵 ${grantHelper ? 'OK' : 'NG'} / 鍵なしsetup ${unguardedSetups.join(', ') || '0'}）`);
+    } else ok('統合GASはmembers A1環境マーカーと破壊的setupの一回限り鍵を持つ');
+
+    // H-3 検査8: GitHub API文字列は30_publish.gsだけに置く。
+    const githubOutsidePublish = gasSources.filter(item => item.file !== '30_publish.gs'
+      && /api\.github\.com|git\/refs/.test(item.source));
+    const publishSource = gasSources.find(item => item.file === '30_publish.gs')?.source || '';
+    if (githubOutsidePublish.length || !/api\.github\.com/.test(publishSource) || !/git\/refs/.test(publishSource)) {
+      ng(`GitHub送信が30_publish.gsへ局在していない: ${githubOutsidePublish.map(item => item.file).join(', ') || '送信実装不足'}`);
+    } else ok('GitHub送信は30_publish.gsだけに局在');
+
+    // H-3 検査10: データ行を消す処理は40_setup.gsだけに置く。
+    const destructiveOutsideSetup = gasSources.filter(item => item.file !== '40_setup.gs'
+      && /setRows_|deleteRows\s*\(|clearContent\s*\(/i.test(item.source));
+    if (destructiveOutsideSetup.length) {
+      ng(`破壊的setup処理が40_setup.gs以外にある: ${destructiveOutsideSetup.map(item => item.file).join(', ')}`);
+    } else ok('setRows_ / deleteRows / clearContentは40_setup.gsだけに局在');
+
+    // H-3 検査11: 段階3前の3DBの由来を固定し、統合exportの由来も製品名へ固定する。
+    const expectedGeneratedFrom = {
+      'src/data/assist-cards.json': ['cards/cards-data.js', 'src/data/cards-editorial.json', 'assist-card-data.js', 'src/data/_audit/sapo-card-map.json'],
+      'src/data/assist-effects.json': ['assist-effect-data.js', 'src/data/assist-cards.json'],
+      'src/data/assist-abilities.json': ['lMfDB_abilities.json', 'src/data/_audit/ability-card-map.json', 'src/data/assist-cards.json'],
+    };
+    const wrongGeneratedFrom = Object.entries(expectedGeneratedFrom).filter(([file, expected]) => {
+      try { return JSON.stringify(JSON.parse(read(file)).generatedFrom) !== JSON.stringify(expected); }
+      catch { return true; }
+    }).map(([file]) => file);
+    const assistSource = gasSources.find(item => item.file === '20_assist.gs')?.source || '';
+    const unifiedGeneratedFromCount = (assistSource.match(/generatedFrom:\s*\['ライ徹CMS'\]/g) || []).length;
+    if (wrongGeneratedFrom.length || unifiedGeneratedFromCount !== 3) {
+      ng(`generatedFromが想定外（3DB ${wrongGeneratedFrom.join(', ') || 'OK'} / 統合source ${unifiedGeneratedFromCount}/3）`);
+    } else ok('3DBと統合exportのgeneratedFromは想定値');
+
+    // H-3 検査12: cardStatusをシートに持たず、効果件数からstatusを導出する。
+    const buildDocumentsSource = functionSource('asstBuildDocuments_');
+    const hasCardStatusHeader = /ASST_HEADERS\[ASST_SHEET_EFFECTS\][\s\S]{0,300}cardStatus/.test(assistSource);
+    const derivesStatus = /group\.status\s*=\s*group\.effects\.length\s*\?\s*['"]verified['"]\s*:\s*['"]draft['"]/.test(buildDocumentsSource);
+    if (hasCardStatusHeader || !derivesStatus) {
+      ng(`cardStatus列またはstatus導出が不正（列 ${hasCardStatusHeader ? 'あり' : 'なし'} / 導出 ${derivesStatus ? 'あり' : 'なし'}）`);
+    } else ok('assist_effectsにcardStatus列がなく、effects.lengthからstatusを導出');
   }
 
   if (!fs.existsSync(cmsDir)) {

@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜3） | `chore/p12-11-s1-cms-token-scan` ほか | **進行中** | ⚪🔴 | 設計書I-1の段階ごとにPRを分ける。今回は段階1（検査の先行強化） |
+| P12-11 | CMS統合の実装（段階1〜3） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` ほか | **進行中** | ⚪🔴 | 段階1はPR #46（`07fa6c3`）で完了。段階2（統合ソースの作成）を進行中 |
 
 ## 最新mainの監査値
 
@@ -203,14 +203,13 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-10「CMS統合の設計」を行う。
+P12-11 段階2「統合ソースの作成」を行う。
 
-- ブランチ: `chore/p12-10-cms-integration-design`
-- 本番影響: ⚪。設計文書のみ。コード・GAS・シート・deploymentは変更しない
-- 成果物は `docs/cms-integration-design.md`。A〜Jの判断をすべて確定させ、
-  採らなかった案と採った理由を各章に書く
-- 方針は `docs/cms-integration-plan.md` を正とし、そこで決まったことを覆さない
-- **公開ブランチと許可リストは分けたまま維持する**
+- ブランチ: `chore/p12-11-s2-cms-unified-source`
+- 本番影響: ⚪。リポジトリ内のGAS基準ソース・検査・文書だけを変更し、GASへは反映しない
+- `_cms/gas/` をmanifest方式の統合構成へ変更し、`_cms/assist-gas/` は段階8まで残す
+- H-3の検査1・2・3・4・5・8・10・11・12を追加する。検査6・7・9は段階4で追加する
+- 段階3以降には着手しない
 
 事前調査の前提を実物で検証し、次の食い違いを設計書 第0章へ記録した。
 
@@ -264,8 +263,8 @@ P12-10「CMS統合の設計」を行う。
 P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 **1段階ごとに push → PR → マージまで行い、そこで止まる。複数段階を1つのPRにまとめない。**
 
-- 段階1: 検査の先行強化（⚪）`chore/p12-11-s1-cms-token-scan` ← 進行中
-- 段階2: 統合ソースの作成（⚪）— 段階1のマージ後に着手する
+- 段階1: **完了** — 検査の先行強化（⚪）`chore/p12-11-s1-cms-token-scan`、PR #46 / `07fa6c3`
+- 段階2: **進行中** — 統合ソースの作成（⚪）`chore/p12-11-s2-cms-unified-source`
 - 段階3: testCMSの3DBをmainへ反映（🔴）— 管理者がタイミングを決める
 - 段階4以降は P12-12。**管理者の明示承認なしに着手しない**
 

@@ -1,0 +1,16 @@
+{
+  "description": "_cms/gas 配下の正しいファイル一覧。GASプロジェクトと1対1で対応する。",
+  "files": [
+    "00_core.gs",
+    "10_monster.gs",
+    "20_assist.gs",
+    "30_publish.gs",
+    "40_setup.gs",
+    "index.html",
+    "ui_common.html",
+    "ui_monster.html",
+    "ui_assist.html",
+    "ui_publish.html",
+    "README.md"
+  ]
+}

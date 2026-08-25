@@ -1213,7 +1213,9 @@ abilityId・legacyId・linkStatus・resolved順序）は、判定基準を1つ�
 
 - 壊れたら戻せるか: **稼働中の GAS は1バイトも変わっていない。**
   リポジトリを revert すれば完全に戻る
-- 確認: H-3 の検査1〜12 が新ソースに対して全て PASS
+- 確認: H-3 の検査 1・2・3・4・5・8・10・11・12 が新ソースに対して全て PASS。
+  **検査6・7・9 は `verify-assist-source.js` と assist用Workflowを前提とするため、
+  段階4で追加する**（段階2の時点では参照先が存在しない）
 
 **段階3 — testCMSの3DBをmainへ反映（🔴）**
 

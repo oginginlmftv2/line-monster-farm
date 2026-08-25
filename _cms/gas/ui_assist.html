@@ -1,0 +1,392 @@
+<section class="domain-panel" id="asst_root"><div class="domain-tools"><span id="asst_summary">読み込み中…</span><button id="asst_btnAbilitySearch">能力ID検索</button><button id="asst_btnExport" disabled>3DBを検証・export</button></div><main>
+  <aside class="panel sidebar">
+    <div class="filters">
+      <input id="asst_query" type="search" placeholder="カード名・IDで検索">
+    </div>
+    <div id="asst_cardList" class="card-list"><div class="empty">読み込み中…</div></div>
+  </aside>
+  <section id="asst_editor" class="panel editor"><div class="empty">左の一覧からカードを選んでください。</div></section>
+</main>
+</section><script>
+'use strict';
+var APP_LOCAL_PREVIEW=typeof google==='undefined';
+var ASST = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null };
+var ASST_RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
+var ASST_ABILITY_TAGS=['オーラ白','オーラ緑','オーラ赤','オーラ青','オーラ黄','オーラ黒','ガッツ回復','ガッツ変化系','クリティカル','シールド','デバフ','不利以外','中盤','前半','創造','命中','命中強化','回避','完全回避','幻霊','序盤','後半','必中','怪物','攻撃','攻撃強化','有利時','無効化','無機','獣族','終盤','被ダメ軽減','追撃','追撃連撃','連撃','魔族'];
+var ASST_OCR_CONDITIONS=[['mainBloodlineMatch','主血統一致'],['subBloodlineMatch','副血統一致'],['auraMatch','オーラ一致'],['monTypeMatch','モン類一致'],['speciesMatch','種族一致']];
+function asstNullableText(id){ var value=el(id).value.trim();return value===''?null:value; }
+function asstNullableNumber(id,label){ var value=el(id).value.trim();if(value==='')return null;var number=Number(value);if(!isFinite(number))throw new Error(label+'は数値で入力してください。');return number; }
+function asstCheckedValues(name){ return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(input){return input.value;}); }
+function asstBoot(){ call('api_asstBootstrap',[],function(data){
+  ASST.cards=data.cards; el('app_who').textContent=data.user.nickname+' / '+data.user.role;
+  ASST.ocrConfigured=Boolean(data.ocr&&data.ocr.configured);
+  ASST.imageUploadConfigured=Boolean(data.imageUpload&&data.imageUpload.configured);
+  el('asst_summary').textContent='カード '+data.cards.length+'件'; el('asst_btnExport').disabled=false; asstRenderList();
+}); }
+function asstBootLocalPreview(){
+  Promise.all([fetch('/src/data/assist-cards.json').then(function(response){return response.json();}),fetch('/src/data/assist-effects.json').then(function(response){return response.json();})]).then(function(docs){
+    ASST.localCardsDoc=docs[0];ASST.localEffectsDoc=docs[1];ASST.cards=docs[0].cards.map(function(card){var group=docs[1].cards[card.cardId];return{cardId:card.cardId,name:card.name,rarity:card.rarity,aura:card.aura,effects:group&&group.effects?group.effects.length:0,abilities:0};});
+    el('app_who').textContent='ローカル・読み取り専用';el('asst_summary').textContent='カード '+ASST.cards.length+'件';el('asst_btnExport').disabled=true;el('asst_btnAbilitySearch').disabled=true;asstRenderList();
+  }).catch(function(error){el('asst_cardList').innerHTML='<div class="empty">ローカルDBを読み込めません: '+esc(error.message)+'</div>';});
+}
+function asstFilteredCards(){
+  var q=el('asst_query').value.trim().toLowerCase();
+  return ASST.cards.filter(function(card){ return !q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0; });
+}
+function asstRenderList(){
+  var cards=asstFilteredCards();
+  el('asst_cardList').innerHTML=cards.length?cards.map(function(card){
+    return '<button class="card-row'+(card.cardId===ASST.selectedId?' active':'')+'" data-id="'+esc(card.cardId)+'">'+
+      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+'</span></button>';
+  }).join(''):'<div class="empty">該当カードなし</div>';
+  el('asst_cardList').querySelectorAll('[data-id]').forEach(function(button){ button.onclick=function(){ asstOpenCard(button.dataset.id); }; });
+}
+function asstOpenCard(cardId){
+  ASST.selectedId=cardId; ASST.tab='card'; ASST.pendingCardImage=null;ASST.ocrFiles=[];ASST.ocrCandidates=[];asstRenderList();
+  if(APP_LOCAL_PREVIEW){var card=ASST.localCardsDoc.cards.find(function(item){return item.cardId===cardId;}),group=ASST.localEffectsDoc.cards[cardId];ASST.detail={card:card,version:1,effects:group.effects||[],abilities:[]};document.body.classList.add('editing');asstRenderEditor();return;}
+  call('api_asstGetCard',[cardId],function(detail){ ASST.detail=detail; document.body.classList.add('editing'); asstRenderEditor(); });
+}
+function asstTabButton(key,label,count){ return '<button class="tab'+(ASST.tab===key?' active':'')+'" data-tab="'+key+'">'+label+(count==null?'':' ('+count+')')+'</button>'; }
+function asstRenderEditor(){
+  var d=ASST.detail;
+  if(!d)return;
+  var html='<button class="mobile-back" id="asst_btnBackCard">← カード一覧</button><div id="asst_cardMessage" class="message"></div>'+
+    '<div class="tabs">'+asstTabButton('card','カード')+asstTabButton('effects','効果',d.effects.length)+asstTabButton('ocr','効果OCR')+asstTabButton('abilities','能力',d.abilities.length)+'</div>';
+  if(ASST.tab==='card')html+=asstRenderCardForm(d);
+  if(ASST.tab==='effects')html+=asstRenderEffectsForm(d);
+  if(ASST.tab==='ocr')html+=asstRenderEffectOcr(d);
+  if(ASST.tab==='abilities')html+=asstRenderAbilities(d);
+  el('asst_editor').innerHTML=html;
+  el('asst_btnBackCard').onclick=function(){ document.body.classList.remove('editing'); };
+  el('asst_editor').querySelectorAll('[data-tab]').forEach(function(button){ button.onclick=function(){ ASST.tab=button.dataset.tab; asstRenderEditor(); }; });
+  if(el('asst_btnSaveCard'))asstBindCardForm();
+  if(el('asst_btnSaveEffects'))asstBindEffectsForm();
+  if(el('asst_ocrFiles'))asstBindEffectOcr();
+  el('asst_editor').querySelectorAll('[data-ability]').forEach(function(button){ button.onclick=function(){ asstOpenAbility(button.dataset.ability); }; });
+}
+function asstOptionList(values,selected,blank){ return (blank?'<option value="">—</option>':'')+values.map(function(value){ return '<option'+(value===selected?' selected':'')+'>'+esc(value)+'</option>'; }).join(''); }
+function asstRenderCardForm(d){
+  var c=d.card;
+  return '<div class="grid">'+
+    asstField('cardId','cardId','text',c.cardId,true)+asstField('name','カード名','text',c.name)+
+    asstSelectField('rarity','レアリティ',['MR','SSR'],c.rarity)+asstSelectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
+    asstField('cardType','カードタイプ','text',c.cardType)+asstSelectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
+    asstRenderCardImageField(c)+
+    asstField('event2','イベント2','text',c.event2||'')+asstField('releasedAt','実装日','text',c.releasedAt||'')+
+    asstRenderAccessoryField(c.accessoryStatus)+asstRenderRatingsFields(c.ratings)+asstRenderStatsFields(c.stats)+
+    asstSourceManagedField('凸データ','参照専用（元データをそのまま保持）')+
+    asstRenderFormationsField(c.formations)+asstSourceManagedField('SAPO参照',c.sapoRef?'参照専用（'+c.sapoRef.type+' / index '+c.sapoRef.sapoIndex+'）':'参照なし')+
+    '<div class="asstField wide"><label>管理者解説</label><textarea id="asst_f_explanation" rows="12">'+esc(c.explanation)+'</textarea></div>'+
+    '</div><div class="actions"><button class="primary" id="asst_btnSaveCard"'+(APP_LOCAL_PREVIEW?' disabled':'')+'>カードを保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
+}
+function asstField(id,label,type,value,readonly){ return '<div class="asstField"><label>'+label+'</label><input id="asst_f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
+function asstSelectField(id,label,values,selected,blank){ return '<div class="asstField"><label>'+label+'</label><select id="asst_f_'+id+'">'+asstOptionList(values,selected,blank)+'</select></div>'; }
+function asstSourceManagedField(label,message){ return '<div class="asstField"><label>'+label+'</label><input class="readonly" readonly value="'+esc(message)+'"></div>'; }
+function asstRenderCardImageField(card){
+  var publicUrl='https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/'+card.image;
+  var message=APP_LOCAL_PREVIEW?'GAS版でアップロードできます':ASST.imageUploadConfigured?'指定Driveへ直接アップロード（2MB以下）':'Script PropertiesへASSIST_IMAGE_FOLDER_IDを設定してください';
+  return '<div class="asstField wide"><label>カード画像</label><input id="asst_f_image" class="readonly" readonly value="'+esc(card.image)+'"><p><img id="asst_cardImagePreview" src="'+esc(publicUrl)+'" alt="'+esc(card.name)+'" style="max-width:220px;max-height:300px;border-radius:8px"></p><input id="asst_f_imageFile" type="file" accept="image/jpeg,image/png,image/webp"'+(!ASST.imageUploadConfigured||APP_LOCAL_PREVIEW?' disabled':'')+'><p><button type="button" id="asst_btnUploadCardImage"'+(!ASST.imageUploadConfigured||APP_LOCAL_PREVIEW?' disabled':'')+'>画像をDriveへアップロード</button> <span class="muted">'+esc(message)+'</span></p></div>';
+}
+function asstRenderAccessoryField(value){
+  return '<div class="asstField"><label>アクセサリー</label><select id="asst_f_accessoryStatus"><option value="unknown"'+(value==='unknown'?' selected':'')+'>未確認</option><option value="yes"'+(value==='yes'?' selected':'')+'>あり</option><option value="no"'+(value==='no'?' selected':'')+'>なし</option></select></div>';
+}
+function asstRenderRatingsFields(ratings){
+  var enabled=ratings!==null,values=ratings||{};
+  return '<div class="asstField wide"><label><input id="asst_f_ratingsEnabled" type="checkbox"'+(enabled?' checked':'')+'> 評価データあり</label><div class="grid">'+ASST_RATING_FIELDS.map(function(item){return asstField('rating_'+item[0],item[1],'number',values[item[0]]==null?'':values[item[0]]);}).join('')+'</div></div>';
+}
+function asstRenderStatsFields(stats){
+  var rows=(stats||[]).slice(0,3);while(rows.length<3)rows.push({label:'',value:''});
+  return '<div class="asstField wide"><label>ステータス（3項目）</label><div class="grid">'+rows.map(function(row,index){return asstField('stat_label_'+index,'項目名 '+(index+1),'text',row.label||'')+asstField('stat_value_'+index,'値 '+(index+1)+'（+数値 / +数値%）','text',row.value||'');}).join('')+'</div></div>';
+}
+function asstCardOptions(selected,blank){
+  return (blank?'<option value="">— 未設定 —</option>':'')+ASST.cards.map(function(card){return '<option value="'+esc(card.cardId)+'"'+(card.cardId===selected?' selected':'')+'>'+esc(card.name)+'（'+esc(card.cardId)+'）</option>';}).join('');
+}
+function asstFormationRow(formation,index){
+  formation=formation||{title:'',cards:['','','','',''],rental:''};var cards=(formation.cards||[]).slice(0,5);while(cards.length<5)cards.push('');
+  return '<fieldset data-formation-row><legend>編成 '+(index+1)+'</legend>'+asstField('formation_'+index+'_title','編成名','text',formation.title||'')+
+    '<div class="grid">'+cards.map(function(cardId,slot){return '<div class="asstField"><label>カード '+(slot+1)+'</label><select data-formation-card>'+asstCardOptions(cardId,true)+'</select></div>';}).join('')+
+    '<div class="asstField"><label>レンタル</label><select data-formation-rental>'+asstCardOptions(formation.rental||'',true)+'</select></div></div><button type="button" data-remove-formation>この編成を削除</button></fieldset>';
+}
+function asstRenderFormationsField(formations){ return '<div class="asstField wide"><label>おすすめ編成</label><div id="asst_formationRows">'+formations.map(asstFormationRow).join('')+'</div><button type="button" id="asst_btnAddFormation">編成を追加</button></div>'; }
+function asstBindCardForm(){
+  el('asst_btnSaveCard').onclick=asstSaveCard;
+  if(el('asst_f_imageFile'))el('asst_f_imageFile').onchange=asstSelectCardImage;
+  if(el('asst_btnUploadCardImage'))el('asst_btnUploadCardImage').onclick=asstUploadCardImage;
+  var enabled=el('asst_f_ratingsEnabled');function toggleRatings(){ASST_RATING_FIELDS.forEach(function(item){el('asst_f_rating_'+item[0]).disabled=!enabled.checked;});}enabled.onchange=toggleRatings;toggleRatings();
+  el('asst_btnAddFormation').onclick=function(){var index=document.querySelectorAll('[data-formation-row]').length;el('asst_formationRows').insertAdjacentHTML('beforeend',asstFormationRow(null,index));asstBindFormationRemove();};
+  asstBindFormationRemove();
+}
+function asstSelectCardImage(){
+  var file=this.files&&this.files[0];ASST.pendingCardImage=null;if(!file)return;
+  if(['image/jpeg','image/png','image/webp'].indexOf(file.type)<0){show('JPEG / PNG / WebPだけを選択してください。',true);this.value='';return;}
+  if(!file.size||file.size>2*1024*1024){show('画像は2MB以下にしてください。',true);this.value='';return;}
+  var reader=new FileReader();reader.onerror=function(){show('画像を読み込めません。',true);};reader.onload=function(){var dataUrl=String(reader.result);ASST.pendingCardImage={name:file.name,mimeType:file.type,size:file.size,base64:dataUrl.split(',')[1]};el('asst_cardImagePreview').src=dataUrl;show('画像を確認し、アップロードボタンを押してください。',false);};reader.readAsDataURL(file);
+}
+function asstUploadCardImage(){
+  try{
+    if(!ASST.pendingCardImage)throw new Error('アップロードする画像を選択してください。');
+    if(!confirm('選択した画像を指定Driveへ保存します。\n同じcardIdの旧画像がDriveにある場合はゴミ箱へ移動します。\n既存91画像をDriveへ複製する処理ではありません。\n\nよろしいですか？'))return;
+    var file=ASST.pendingCardImage;
+    call('api_asstUploadCardImage',[{cardId:ASST.selectedId,version:ASST.detail.version,fileName:file.name,mimeType:file.mimeType,base64:file.base64}],function(result){
+      ASST.pendingCardImage=null;ASST.detail.card.image=result.image;ASST.detail.version=result.version;
+      el('asst_f_image').value=result.image;el('asst_f_imageFile').value='';el('asst_btnUploadCardImage').disabled=true;
+      show('指定Driveへ保存しました: '+result.fileName+'（'+result.bytes+' bytes）。サイト表示はGitHub公開後です。',false);
+    });
+  }catch(error){show(error.message,true);}
+}
+function asstBindFormationRemove(){ document.querySelectorAll('[data-remove-formation]').forEach(function(button){button.onclick=function(){button.closest('[data-formation-row]').remove();};}); }
+function asstCollectRatings(){ if(!el('asst_f_ratingsEnabled').checked)return null;var result={};ASST_RATING_FIELDS.forEach(function(item){result[item[0]]=asstNullableNumber('asst_f_rating_'+item[0],item[1]);});return result; }
+function asstCollectStats(){
+  var result=[];
+  for(var index=0;index<3;index++){
+    var label=asstNullableText('asst_f_stat_label_'+index),value=asstNullableText('asst_f_stat_value_'+index);
+    if((label===null)!==(value===null))throw new Error('ステータス '+(index+1)+' は項目名と数値を両方入力してください。');
+    if(label!==null)result.push({label:label,value:value});
+  }
+  if(result.length!==0&&result.length!==3)throw new Error('ステータスは3項目すべて入力するか、すべて空欄にしてください。');
+  return result;
+}
+function asstCollectFormations(){
+  return Array.from(document.querySelectorAll('[data-formation-row]')).map(function(row,index){
+    var title=row.querySelector('input').value.trim();if(!title)throw new Error('編成 '+(index+1)+'の編成名は必須です。');
+    return {title:title,cards:Array.from(row.querySelectorAll('[data-formation-card]')).map(function(select){return select.value;}),rental:row.querySelector('[data-formation-rental]').value};
+  });
+}
+function asstSaveCard(){
+  try{
+    var c=ASST.detail.card;
+    var card={cardId:c.cardId,name:el('asst_f_name').value,rarity:el('asst_f_rarity').value,aura:el('asst_f_aura').value,
+      cardType:el('asst_f_cardType').value,monType:el('asst_f_monType').value||null,image:el('asst_f_image').value,
+      event2:el('asst_f_event2').value||null,
+      releasedAt:el('asst_f_releasedAt').value||null,stats:asstCollectStats(),limitBreak:c.limitBreak,
+      accessoryStatus:el('asst_f_accessoryStatus').value,
+      ratings:asstCollectRatings(),explanation:el('asst_f_explanation').value,formations:asstCollectFormations(),
+      sapoRef:c.sapoRef};
+    call('api_asstSaveCard',[{cardId:c.cardId,version:ASST.detail.version,card:card}],function(result){
+      show('保存しました。version '+result.version,false); asstOpenCard(c.cardId);
+    });
+  }catch(error){show(error.message,true);}
+}
+function asstEffectRow(effect,index){
+  return '<fieldset data-effect-row><legend>効果 '+(index+1)+'</legend><div class="grid">'+
+    asstField('effect_'+index+'_id','effectId','text',effect.effectId,true)+asstSelectField('effect_'+index+'_rank','解放ランク',['無凸','1凸','2凸','3凸','4凸'],effect.unlockRank)+
+    asstField('effect_'+index+'_name','効果名','text',effect.name)+'<div class="asstField wide"><label>説明</label><textarea id="asst_f_effect_'+index+'_description">'+esc(effect.description)+'</textarea></div></div>'+
+    '<button type="button" data-effect-up>↑ 上へ</button> <button type="button" data-effect-down>↓ 下へ</button> <button type="button" data-effect-remove>削除</button></fieldset>';
+}
+function asstRenderEffectsForm(d){ return '<p class="muted">effectIdは変更不可、sortOrderは表示順から自動設定します。</p><div id="asst_effectRows">'+d.effects.map(asstEffectRow).join('')+'</div><button type="button" id="asst_btnAddEffect">効果を追加</button>'+
+  '<div class="actions"><button class="primary" id="asst_btnSaveEffects"'+(APP_LOCAL_PREVIEW?' disabled':'')+'>効果を保存</button><span class="muted">0件で保存するとdraftになります</span></div>'; }
+function asstCollectEffects(validate){
+  return Array.from(document.querySelectorAll('[data-effect-row]')).map(function(row,index){
+    var effect={effectId:row.querySelector('input[readonly]').value,name:row.querySelector('input:not([readonly])').value.trim(),description:row.querySelector('textarea').value.trim(),unlockRank:row.querySelector('select').value,sortOrder:index+1};
+    if(validate&&(!effect.effectId||!effect.name||!effect.description))throw new Error('効果 '+(index+1)+'のID・効果名・説明は必須です。');return effect;
+  });
+}
+function asstNextEffectId(effects){ var max=effects.reduce(function(value,effect){var match=effect.effectId.match(/-e(\d+)$/);return Math.max(value,match?Number(match[1]):0);},0);return ASST.selectedId+'-e'+String(max+1).padStart(2,'0'); }
+function asstRerenderEffects(effects){ ASST.detail.effects=effects;asstRenderEditor(); }
+function asstBindEffectsForm(){
+  el('asst_btnSaveEffects').onclick=asstSaveEffects;
+  el('asst_btnAddEffect').onclick=function(){var effects=asstCollectEffects(false);effects.push({effectId:asstNextEffectId(effects),name:'',description:'',unlockRank:'無凸',sortOrder:effects.length+1});asstRerenderEffects(effects);};
+  document.querySelectorAll('[data-effect-row]').forEach(function(row,index){
+    row.querySelector('[data-effect-up]').onclick=function(){var effects=asstCollectEffects(false);if(index>0){var item=effects.splice(index,1)[0];effects.splice(index-1,0,item);asstRerenderEffects(effects);}};
+    row.querySelector('[data-effect-down]').onclick=function(){var effects=asstCollectEffects(false);if(index<effects.length-1){var item=effects.splice(index,1)[0];effects.splice(index+1,0,item);asstRerenderEffects(effects);}};
+    row.querySelector('[data-effect-remove]').onclick=function(){var effects=asstCollectEffects(false);effects.splice(index,1);asstRerenderEffects(effects);};
+  });
+}
+function asstSaveEffects(){ try{ var effects=asstCollectEffects(true);call('api_asstSaveEffects',[{cardId:ASST.selectedId,effects:effects}],function(){show('効果を保存しました。',false);asstOpenCard(ASST.selectedId);});}catch(error){show(error.message,true);} }
+function asstOcrComparisonKey(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[\s「」『』【】\[\]()（）<>＜＞・、。:：!！?？/／]/g,'');}
+function asstOcrTitleKey(value){return asstOcrComparisonKey(value).replace(/[|｜]/g,'ii').replace(/\+$/,'');}
+function asstOcrEditDistance(left,right){var previous=Array.from({length:right.length+1},function(_,index){return index;});for(var i=1;i<=left.length;i++){var current=[i];for(var j=1;j<=right.length;j++)current[j]=Math.min(current[j-1]+1,previous[j]+1,previous[j-1]+(left.charAt(i-1)===right.charAt(j-1)?0:1));previous=current;}return previous[right.length];}
+function asstOcrMatchesKnownTitle(value,known){var key=asstOcrTitleKey(value);return known.some(function(knownName){var knownKey=asstOcrTitleKey(knownName);return key===knownKey||(Math.min(key.length,knownKey.length)>=6&&asstOcrEditDistance(key,knownKey)<=2);});}
+function asstOcrMedian(values){var sorted=values.slice().sort(function(a,b){return a-b;});return sorted.length?sorted[Math.floor(sorted.length/2)]:null;}
+function asstOcrBounds(vertices){
+  var xs=vertices.map(function(vertex){return Number(vertex.x||0);}),ys=vertices.map(function(vertex){return Number(vertex.y||0);});
+  return {x:Math.min.apply(null,xs),y:Math.min.apply(null,ys),width:Math.max.apply(null,xs)-Math.min.apply(null,xs),height:Math.max.apply(null,ys)-Math.min.apply(null,ys)};
+}
+function asstOcrVisionLines(payload){
+  var response=payload&&payload.responses&&payload.responses[0],page=response&&response.fullTextAnnotation&&response.fullTextAnnotation.pages&&response.fullTextAnnotation.pages[0];
+  if(!page)throw new Error('OCR結果に座標付きテキストがありません。');
+  var lines=[],text='',vertices=[];
+  function flush(){var value=text.normalize('NFKC').replace(/\s+/g,' ').trim();if(value&&vertices.length)lines.push({text:value,bounds:asstOcrBounds(vertices)});text='';vertices=[];}
+  (page.blocks||[]).forEach(function(block){(block.paragraphs||[]).forEach(function(paragraph){(paragraph.words||[]).forEach(function(word){(word.symbols||[]).forEach(function(symbol){
+    text+=symbol.text||'';vertices=vertices.concat(symbol.boundingBox&&symbol.boundingBox.vertices||[]);
+    var type=symbol.property&&symbol.property.detectedBreak&&symbol.property.detectedBreak.type;
+    if(type==='SPACE'||type==='SURE_SPACE')text+=' ';if(type==='EOL_SURE'||type==='LINE_BREAK')flush();
+  });});flush();});});
+  return {width:Number(page.width),height:Number(page.height),lines:lines};
+}
+function asstOcrLooksLikeTitle(line,known){
+  var text=String(line.text||'').trim();
+  if(!text||text.length>42||/^(?:アシスト|能力|イベント|とじる)$/.test(text))return false;
+  if(asstOcrMatchesKnownTitle(text,known))return true;
+  if(known.length>=5)return false;
+  if(/^(?:育成対象|一緒に|忠誠度に|ブリーダーが|かしこさ|人気度)/.test(text))return false;
+  return /\+\s*\d+(?:\.\d+)?%?$/.test(text)||/(?:継承|鍛錬|共鳴|ブリーダー)$/.test(text);
+}
+function asstOcrParseCandidates(payload,file){
+  var parsed=asstOcrVisionLines(payload),known=ASST.detail.effects.map(function(effect){return effect.name;});
+  var sorted=parsed.lines.slice().sort(function(a,b){return a.bounds.y-b.bounds.y||a.bounds.x-b.bounds.x;});
+  var anchor=sorted.find(function(line){return asstOcrComparisonKey(line.text)===asstOcrComparisonKey('アシスト効果');});
+  var close=sorted.find(function(line){return asstOcrComparisonKey(line.text)===asstOcrComparisonKey('とじる');});
+  var content=sorted.filter(function(line){return(!anchor||line.bounds.y>anchor.bounds.y+anchor.bounds.height)&&(!close||line.bounds.y<close.bounds.y);});
+  var titleIndexes=[];content.forEach(function(line,index){if(asstOcrLooksLikeTitle(line,known))titleIndexes.push(index);});
+  return titleIndexes.map(function(start,index){
+    var group=content.slice(start,titleIndexes[index+1]===undefined?content.length:titleIndexes[index+1]),title=group[0];
+    var description=group.slice(1).filter(function(line){return line.bounds.x<title.bounds.x+Math.max(500,title.bounds.width*5);}).map(function(line){return line.text.trim();}).join('');
+    var candidate={name:title.text.trim(),description:description,titleBounds:title.bounds,activationScope:'unknown',activationConditions:null,
+      backgroundConfidence:0,backgroundScore:null,unlockRank:null,blueMarkers:null,
+      sourceScreenshots:[file.name],issues:description?[]:['description-empty-or-cropped']};
+    return asstOcrAnalyzeVisual(candidate,file,parsed,index<titleIndexes.length-1?content[titleIndexes[index+1]].bounds.y:null);
+  });
+}
+function asstOcrPixelSamples(file,parsed,bounds,nextY){
+  var canvas=document.createElement('canvas'),context=canvas.getContext('2d');canvas.width=file.image.naturalWidth;canvas.height=file.image.naturalHeight;context.drawImage(file.image,0,0);
+  var sx=canvas.width/parsed.width,sy=canvas.height/parsed.height,x1=Math.floor(canvas.width*.35),x2=Math.floor(canvas.width*.82);
+  var y1=Math.max(0,Math.floor((bounds.y+bounds.height+5)*sy)),y2=Math.min(canvas.height,Math.floor(((nextY||bounds.y+bounds.height+130)-8)*sy));
+  var samples=[];for(var y=y1;y<y2;y+=10){for(var x=x1;x<x2;x+=12){var data=context.getImageData(x,y,1,1).data;samples.push({r:data[0],g:data[1],b:data[2]});}}
+  return {context:context,sx:sx,sy:sy,samples:samples};
+}
+function asstOcrClassifyBackground(samples){
+  var usable=samples.map(function(sample){var max=Math.max(sample.r,sample.g,sample.b),min=Math.min(sample.r,sample.g,sample.b);return{yellowBias:sample.r-sample.b,saturation:max?(max-min)/max:0,brightness:(sample.r+sample.g+sample.b)/3};}).filter(function(feature){return feature.brightness>=120;});
+  if(usable.length<5)return{scope:'unknown',confidence:0,score:null};
+  var score=asstOcrMedian(usable.map(function(feature){return feature.yellowBias;}))+asstOcrMedian(usable.map(function(feature){return feature.saturation;}))*100;
+  if(score>=58)return{scope:'conditional',confidence:Math.min(1,(score-45)/35),score:score};
+  if(score<=38)return{scope:'universal',confidence:Math.min(1,(50-score)/30),score:score};
+  return{scope:'unknown',confidence:0,score:score};
+}
+function asstOcrDetectUnlock(context,parsed,bounds,sx,sy){
+  var ratios=[.775,.817,.859,.901],blue=0,y=Math.round((bounds.y+bounds.height*.5)*sy);
+  ratios.forEach(function(ratio){var hit=0,total=0,cx=Math.round(context.canvas.width*ratio);for(var dy=-5;dy<=5;dy+=2){for(var dx=-5;dx<=5;dx+=2){var d=context.getImageData(cx+dx,y+dy,1,1).data;total++;if(d[2]>=115&&d[1]>=115&&d[2]>d[0]*1.25&&d[1]>d[0]*1.25)hit++;}}if(hit>=Math.max(2,Math.ceil(total*.15)))blue++;});
+  return{blueMarkers:blue,unlockRank:['無凸','1凸','2凸','3凸','4凸'][blue]};
+}
+function asstOcrBreederDependency(name,description){
+  var type=/モン類ブリーダー/.test(name)?'monTypeMatch':/オーラブリーダー/.test(name)?'auraMatch':null;if(!type)return null;
+  var match=description.match(/ブリーダー[^、。]*(?:とき|時)(?:でも)?/);return{sourceText:match?match[0]:description,expression:{type:type},basis:'breeder-dependency'};
+}
+function asstOcrActivationConditions(description,scope,name){
+  if(scope!=='conditional')return null;var end=description.indexOf('とき');if(end<0)return asstOcrBreederDependency(name||'',description);var sourceText=description.slice(0,end+2).replace(/[、,]\s*$/,'');
+  var defs=[['mainBloodlineMatch',/主血統/],['subBloodlineMatch',/副血統/],['auraMatch',/オーラ/],['monTypeMatch',/モン類/],['speciesMatch',/種族/]];
+  var operands=defs.filter(function(def){return def[1].test(sourceText);}).map(function(def){return{type:def[0]};});if(!operands.length)return asstOcrBreederDependency(name||'',description);
+  if(operands.length===1)return{sourceText:sourceText,expression:operands[0],basis:'direct-text'};var hasOr=/(?:または|もしくは|いずれか)/.test(sourceText),hasAnd=/(?:かつ|且つ|および|及び)/.test(sourceText);
+  if(hasOr===hasAnd)return null;return{sourceText:sourceText,expression:{operator:hasOr?'or':'and',operands:operands},basis:'direct-text'};
+}
+function asstOcrAnalyzeVisual(candidate,file,parsed,nextY){
+  var pixels=asstOcrPixelSamples(file,parsed,candidate.titleBounds,nextY),background=asstOcrClassifyBackground(pixels.samples),unlock=asstOcrDetectUnlock(pixels.context,parsed,candidate.titleBounds,pixels.sx,pixels.sy);
+  candidate.activationScope=background.scope;candidate.backgroundConfidence=background.confidence;candidate.backgroundScore=background.score;
+  candidate.unlockRank=unlock.unlockRank;candidate.blueMarkers=unlock.blueMarkers;candidate.activationConditions=asstOcrActivationConditions(candidate.description,candidate.activationScope,candidate.name);
+  if(candidate.activationScope==='unknown')candidate.issues.push('background-unknown');
+  if(candidate.activationScope==='conditional'&&!candidate.activationConditions)candidate.issues.push('activation-condition-needs-review');return candidate;
+}
+function asstOcrMergeCandidates(groups){
+  var merged=[];groups.forEach(function(group){group.forEach(function(candidate){var current=merged.find(function(item){return asstOcrComparisonKey(item.name)===asstOcrComparisonKey(candidate.name);});
+    if(!current){merged.push(candidate);return;}if(candidate.description.length>current.description.length)current.description=candidate.description;
+    current.sourceScreenshots=current.sourceScreenshots.concat(candidate.sourceScreenshots).filter(function(value,index,array){return array.indexOf(value)===index;});
+    ['activationScope','unlockRank'].forEach(function(asstField){if((current[asstField]==='unknown'||current[asstField]===null)&&candidate[asstField]!=null)current[asstField]=candidate[asstField];else if(candidate[asstField]!=null&&candidate[asstField]!=='unknown'&&current[asstField]!==candidate[asstField])current.issues.push(asstField+'-conflict');});
+    if(!current.activationConditions&&candidate.activationConditions)current.activationConditions=candidate.activationConditions;current.issues=current.issues.concat(candidate.issues).filter(function(value,index,array){return array.indexOf(value)===index;});
+  });});return merged;
+}
+function asstRenderEffectOcr(){
+  var status=APP_LOCAL_PREVIEW?'ローカル画面確認：OCR実行はGAS版で行います':ASST.ocrConfigured?'Google Cloud Vision接続設定済み':'未設定：Script PropertiesへGOOGLE_CLOUD_VISION_API_KEYが必要';
+  return '<h2>アシスト効果OCR</h2><p class="muted">画像とOCR候補はこの画面を開いている間だけブラウザ内に保持します。Driveやスプレッドシートには保存せず、ページの再読み込み・カード切替・候補破棄で消えます。</p><div class="message show">'+esc(status)+'</div>'+
+    '<div class="asstField"><label>スクロール画像（JPEG / PNG / WebP、複数可、1枚8MB以下）</label><input id="asst_ocrFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>'+
+    '<div id="asst_ocrPreviews">'+ASST.ocrFiles.map(function(file){return '<figure style="display:inline-block;margin:10px 10px 10px 0"><img src="'+file.dataUrl+'" alt="'+esc(file.name)+'" style="max-width:180px;max-height:260px;display:block"><figcaption class="muted">'+esc(file.name)+'</figcaption></figure>';}).join('')+'</div>'+
+    '<p><button type="button" class="primary" id="asst_btnRunOcr"'+(!ASST.ocrConfigured||!ASST.ocrFiles.length?' disabled':'')+'>選択画像をOCR</button> <button type="button" id="asst_btnOcrDemo">既存効果で画面を試す</button></p>'+
+    '<div id="asst_ocrCandidates">'+(ASST.ocrCandidates.length?ASST.ocrCandidates.map(asstRenderOcrCandidate).join(''):'<div class="empty">画像を選択してOCRを実行してください。</div>')+'</div>'+
+    (ASST.ocrCandidates.length?'<fieldset><legend>原画像確認</legend><label><input type="checkbox" id="asst_ocrSourceConfirmed"> 表示中の原画像と全候補の文字・背景・解放段階・発動条件を照合しました</label><p class="muted">チェック後に効果編集へ反映できます。未反映の候補はブラウザを閉じると破棄されます。</p></fieldset><div class="actions"><button type="button" class="primary" id="asst_btnApplyOcr">効果編集へ反映（未保存）</button><button type="button" id="asst_btnDiscardOcr">候補を破棄</button><span class="muted">反映後に効果タブで再確認・保存</span></div>':'');
+}
+function asstRenderOcrCandidate(candidate,index){
+  var types=candidate.activationConditions?(candidate.activationConditions.expression.operands||[candidate.activationConditions.expression]).map(function(item){return item.type;}):[];
+  var operator=candidate.activationConditions&&candidate.activationConditions.expression.operator||'or';
+  var basis=candidate.activationConditions&&candidate.activationConditions.basis||'';var basisLabel=basis==='breeder-dependency'?'ブリーダー効果への依存から判定':basis==='direct-text'?'条件原文から直接判定':basis==='manual'?'手動指定':'未判定';
+  return '<fieldset class="ocr-candidate '+esc(candidate.activationScope)+'" data-ocr-candidate><legend>OCR候補 '+(index+1)+'</legend><div class="grid">'+
+    '<div class="asstField"><label>背景</label><select data-ocr-scope><option value="unknown"'+(candidate.activationScope==='unknown'?' selected':'')+'>要確認</option><option value="conditional"'+(candidate.activationScope==='conditional'?' selected':'')+'>黄色・条件付き</option><option value="universal"'+(candidate.activationScope==='universal'?' selected':'')+'>白・汎用</option></select></div>'+
+    '<div class="asstField"><label>解放ランク</label><select data-ocr-rank>'+asstOptionList(['無凸','1凸','2凸','3凸','4凸'],candidate.unlockRank)+'</select></div>'+
+    '<div class="asstField wide"><label>効果名</label><input data-ocr-name value="'+esc(candidate.name)+'"></div>'+
+    '<div class="asstField wide"><label>説明</label><textarea data-ocr-description>'+esc(candidate.description)+'</textarea></div>'+
+    '<div class="asstField wide"><label>効果全体の発動条件（黄色背景のみ）</label><div>'+ASST_OCR_CONDITIONS.map(function(item){return '<label><input type="checkbox" data-ocr-condition value="'+item[0]+'"'+(types.indexOf(item[0])>=0?' checked':'')+'> '+item[1]+'</label> ';}).join('')+'</div>'+
+    '<div class="grid"><div class="asstField"><label>複数条件の関係</label><select data-ocr-operator><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option></select></div>'+
+    '<div class="asstField"><label>条件原文（自動抽出・OCR照合用）</label><input data-ocr-source value="'+esc(candidate.activationConditions&&candidate.activationConditions.sourceText||'')+'"><span class="muted" data-ocr-basis="'+esc(basis)+'">判定根拠: '+esc(basisLabel)+'</span></div></div></div></div>'+
+    '<p class="muted">元画像: '+esc((candidate.sourceScreenshots||[]).join(' / '))+(candidate.issues&&candidate.issues.length?' ・ 要確認: '+esc(candidate.issues.join(', ')):'')+'</p></fieldset>';
+}
+function asstReadOcrFile(file){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onerror=function(){reject(new Error(file.name+'を読み込めません。'));};reader.onload=function(){var image=new Image();image.onerror=function(){reject(new Error(file.name+'は画像として読み込めません。'));};image.onload=function(){resolve({name:file.name,mimeType:file.type,size:file.size,dataUrl:reader.result,base64:String(reader.result).split(',')[1],image:image});};image.src=reader.result;};reader.readAsDataURL(file);});}
+function asstGasPromise(name,args){return new Promise(function(resolve,reject){var runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(function(error){reject(new Error(error&&error.message?error.message:String(error)));});runner[name].apply(runner,args||[]);});}
+function asstBindEffectOcr(){
+  el('asst_ocrFiles').onchange=function(){var files=Array.from(this.files||[]);if(files.length>8){show('画像は一度に8枚までです。',true);return;}setBusy(true,'画像を読み込み中…');Promise.all(files.map(asstReadOcrFile)).then(function(items){ASST.ocrFiles=items;setBusy(false);asstRenderEditor();}).catch(function(error){setBusy(false);show(error.message,true);});};
+  el('asst_btnOcrDemo').onclick=function(){ASST.ocrCandidates=ASST.detail.effects.map(function(effect){var activation=asstOcrActivationConditions(effect.description,'conditional',effect.name);return{name:effect.name,description:effect.description,activationScope:activation?'conditional':'universal',activationConditions:activation,unlockRank:effect.unlockRank,sourceScreenshots:['画面デモ'],issues:activation?[]:['demo-background-not-available']};});asstRenderEditor();};
+  document.querySelectorAll('[data-ocr-candidate]').forEach(function(row){row.querySelector('[data-ocr-scope]').onchange=function(){row.classList.toggle('conditional',this.value==='conditional');row.classList.toggle('universal',this.value==='universal');if(this.value==='conditional')asstPopulateOcrConditionFields(row);};row.querySelector('[data-ocr-description]').onblur=function(){if(row.querySelector('[data-ocr-scope]').value==='conditional')asstPopulateOcrConditionFields(row);};});
+  if(el('asst_btnRunOcr'))el('asst_btnRunOcr').onclick=asstRunEffectOcr;
+  if(el('asst_btnApplyOcr'))el('asst_btnApplyOcr').onclick=asstApplyOcrCandidates;
+  if(el('asst_btnDiscardOcr'))el('asst_btnDiscardOcr').onclick=function(){if(!confirm('表示中のOCR候補を破棄しますか？'))return;ASST.ocrFiles=[];ASST.ocrCandidates=[];asstRenderEditor();show('OCR候補を破棄しました。',false);};
+}
+function asstPopulateOcrConditionFields(row){
+  var activation=asstOcrActivationConditions(row.querySelector('[data-ocr-description]').value.trim(),'conditional',row.querySelector('[data-ocr-name]').value.trim());if(!activation)return;
+  var expression=activation.expression,types=(expression.operands||[expression]).map(function(item){return item.type;});
+  row.querySelectorAll('[data-ocr-condition]').forEach(function(input){input.checked=types.indexOf(input.value)>=0;});
+  if(expression.operator)row.querySelector('[data-ocr-operator]').value=expression.operator;row.querySelector('[data-ocr-source]').value=activation.sourceText;var basis=row.querySelector('[data-ocr-basis]');if(basis){basis.dataset.ocrBasis=activation.basis||'manual';basis.textContent='判定根拠: '+(activation.basis==='breeder-dependency'?'ブリーダー効果への依存から判定':'条件原文から直接判定');}
+}
+function asstRunEffectOcr(){
+  if(!ASST.ocrFiles.length)return;setBusy(true,'OCRを開始しています…');var groups=[];var chain=Promise.resolve();ASST.ocrFiles.forEach(function(file,index){chain=chain.then(function(){setBusy(true,'OCR処理中 '+(index+1)+' / '+ASST.ocrFiles.length+'：'+file.name);return asstGasPromise('api_asstOcrEffectImage',[{cardId:ASST.selectedId,fileName:file.name,mimeType:file.mimeType,base64:file.base64}]);}).then(function(result){groups.push(asstOcrParseCandidates(result.vision,file));});});
+  chain.then(function(){ASST.ocrCandidates=asstOcrMergeCandidates(groups);setBusy(false);asstRenderEditor();show('OCR候補 '+ASST.ocrCandidates.length+'件を作成しました。原画像と照合してください。',false);}).catch(function(error){setBusy(false);show(error.message,true);});
+}
+function asstCollectOcrCandidates(){return Array.from(document.querySelectorAll('[data-ocr-candidate]')).map(function(row,index){
+  var scope=row.querySelector('[data-ocr-scope]').value,name=row.querySelector('[data-ocr-name]').value.trim(),description=row.querySelector('[data-ocr-description]').value.trim(),rank=row.querySelector('[data-ocr-rank]').value;
+  if(!name||!description)throw new Error('OCR候補 '+(index+1)+'の効果名・説明は必須です。');if(scope==='unknown')throw new Error('OCR候補 '+(index+1)+'の背景を確認してください。');
+  var activation=null,issues=(ASST.ocrCandidates[index].issues||[]).slice();if(scope==='conditional'){var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});var source=row.querySelector('[data-ocr-source]').value.trim();if(!types.length)throw new Error('OCR候補 '+(index+1)+'の条件付き効果は、発動条件を1件以上選択してください。');if(!source)throw new Error('OCR候補 '+(index+1)+'の条件原文を入力してください。');var operands=types.map(function(type){return{type:type};});var basis=row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual';activation={sourceText:source,expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},basis:basis};}
+  issues=issues.filter(function(issue){if(issue==='background-unknown')return false;if(issue==='activation-condition-needs-review'&&(scope!=='conditional'||activation))return false;return true;});
+  return{name:name,description:description,activationScope:scope,activationConditions:activation,unlockRank:rank,sourceScreenshots:ASST.ocrCandidates[index].sourceScreenshots||[],issues:issues};
+});}
+function asstApplyOcrCandidates(){try{if(!el('asst_ocrSourceConfirmed').checked)throw new Error('原画像と全候補を照合し、確認チェックを入れてください。');var candidates=asstCollectOcrCandidates();if(candidates.some(function(candidate){return candidate.issues&&candidate.issues.length;}))throw new Error('要確認項目が残っています。背景・発動条件・OCR文字列を原画像と照合してください。');if(!confirm('照合済みOCR候補 '+candidates.length+'件を効果編集へ反映します。まだ保存はされません。'))return;var existing=ASST.detail.effects.slice(),used={};var effects=candidates.map(function(candidate,index){var match=existing.find(function(effect){return !used[effect.effectId]&&asstOcrComparisonKey(effect.name)===asstOcrComparisonKey(candidate.name);});var id;if(match){id=match.effectId;used[id]=true;}else{id=asstNextEffectId(existing.concat(Object.keys(used).map(function(key){return{effectId:key};})));used[id]=true;}return{effectId:id,name:candidate.name,description:candidate.description,unlockRank:candidate.unlockRank,sortOrder:index+1};});ASST.detail.effects=effects;ASST.ocrFiles=[];ASST.ocrCandidates=[];ASST.tab='effects';asstRenderEditor();show('照合済みOCR候補を効果編集へ反映しました。内容確認後に保存してください。',false);}catch(error){show(error.message,true);}}
+function asstRenderAbilities(d){
+  return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
+    (d.abilities.length?d.abilities.map(function(a){return '<div class="ability-item"><div><strong>'+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
+}
+function asstOpenAbility(id){ call('api_asstGetAbility',[id],function(result){ ASST.ability=result.ability;ASST.abilityVersion=result.version;asstRenderAbilityForm(); }); }
+function asstRenderTagFields(tags){
+  var custom=tags.filter(function(tag){return ASST_ABILITY_TAGS.indexOf(tag)<0;});
+  return '<div class="asstField wide"><label>タグ</label><div class="grid">'+ASST_ABILITY_TAGS.map(function(tag){return '<label><input type="checkbox" name="abilityTag" value="'+esc(tag)+'"'+(tags.indexOf(tag)>=0?' checked':'')+'> '+esc(tag)+'</label>';}).join('')+'</div>'+
+    '<label>追加タグ（カンマまたは改行区切り）</label><textarea id="asst_f_customTags" rows="3">'+esc(custom.join('\n'))+'</textarea></div>';
+}
+function asstCollectTags(){
+  var values=asstCheckedValues('abilityTag');var custom=el('asst_f_customTags').value.split(/[、,\n]/).map(function(value){return value.trim();}).filter(Boolean);
+  var chosen=values.concat(custom).filter(function(value,index,array){return array.indexOf(value)===index;});
+  var original=ASST.ability.tags||[];
+  return original.filter(function(value){return chosen.indexOf(value)>=0;}).concat(chosen.filter(function(value){return original.indexOf(value)<0;}));
+}
+function asstAbilityCardField(ability){ return '<div class="asstField"><label>cardId（resolvedのみ）</label><select id="asst_f_abilityCardId">'+asstCardOptions(ability.cardId||'',true)+'</select></div>'; }
+function asstBindAbilityLinkStatus(){
+  function update(){var resolved=el('asst_f_linkStatus').value==='resolved';el('asst_f_abilityCardId').disabled=!resolved;el('asst_f_sortOrder').disabled=!resolved;}
+  el('asst_f_linkStatus').onchange=update;update();
+}
+function asstRenderAbilityForm(){
+  var a=ASST.ability;
+  el('asst_editor').innerHTML='<button class="mobile-back" id="asst_btnBackAbility">← 戻る</button><div id="asst_abilityMessage" class="message"></div><h2>能力編集</h2><div class="grid">'+
+    asstField('abilityId','abilityId','text',a.abilityId,true)+asstField('legacyId','legacyId','number',a.legacyId,true)+
+    asstAbilityCardField(a)+asstField('sourceName','元のカード名','text',a.sourceName)+
+    asstField('abilityName','能力名','text',a.name)+asstSelectField('abilitySource','入手元',['イベント','閃き','EXトレ'],a.source)+
+    asstSelectField('abilityRarity','レアリティ',['SSR','MR'],a.rarity,true)+asstField('sortOrder','sortOrder','number',a.sortOrder==null?'':a.sortOrder)+
+    asstSelectField('linkStatus','linkStatus',['resolved','ambiguous','unlinked'],a.linkStatus)+asstSelectField('abilityStatus','状態',['draft','verified'],a.status)+
+    asstRenderTagFields(a.tags)+asstSourceManagedField('内部flags',a.flags.length?'参照専用（'+a.flags.join('、')+'）':'なし')+
+    '<div class="asstField wide"><label>説明</label><textarea id="asst_f_abilityDescription" rows="10">'+esc(a.description)+'</textarea></div></div>'+
+    '<div class="actions"><button class="primary" id="asst_btnSaveAbility">能力を保存</button><span class="muted">version '+ASST.abilityVersion+'</span></div>';
+  el('asst_btnBackAbility').onclick=function(){ if(ASST.detail)asstRenderEditor();else document.body.classList.remove('editing'); };
+  el('asst_btnSaveAbility').onclick=asstSaveAbility;asstBindAbilityLinkStatus();
+}
+function asstSaveAbility(){
+  try{
+    var resolved=el('asst_f_linkStatus').value==='resolved';
+    var a={abilityId:ASST.ability.abilityId,legacyId:ASST.ability.legacyId,cardId:resolved?(el('asst_f_abilityCardId').value||null):null,
+      sourceName:el('asst_f_sourceName').value,name:el('asst_f_abilityName').value,description:el('asst_f_abilityDescription').value,
+      source:el('asst_f_abilitySource').value,rarity:el('asst_f_abilityRarity').value||null,tags:asstCollectTags(),
+      sortOrder:resolved?asstNullableNumber('asst_f_sortOrder','sortOrder'):null,linkStatus:el('asst_f_linkStatus').value,
+      flags:ASST.ability.flags,status:el('asst_f_abilityStatus').value};
+    call('api_asstSaveAbility',[{ability:a,version:ASST.abilityVersion}],function(result){ show('能力を保存しました。version '+result.version,false);asstOpenAbility(a.abilityId); });
+  }catch(error){show(error.message,true);}
+}
+function asstSearchAbility(){ var id=prompt('abilityIdを入力してください'); if(!id)return; document.body.classList.add('editing'); asstOpenAbility(id.trim()); }
+function asstExportAll(){
+  if(!confirm('アシストシートを検証し、3つのJSONをブラウザへ保存します。公開サイトは変更しません。'))return;
+  call('api_asstExport',[],function(result){
+    result.files.forEach(function(file){var blob=new Blob([file.content],{type:'application/json;charset=utf-8'});var url=URL.createObjectURL(blob);var a=document.createElement('a');a.href=url;a.download=file.name;a.click();setTimeout(function(){URL.revokeObjectURL(url);},1000);});
+    alert('export成功\n'+result.files.map(function(file){return file.name+'\nSHA-256 '+file.sha256;}).join('\n\n'));
+  });
+}
+el('asst_query').oninput=asstRenderList;el('asst_btnAbilitySearch').onclick=asstSearchAbility;el('asst_btnExport').onclick=asstExportAll;</script>
