@@ -16,6 +16,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const childProcess = require('child_process');
 
 const REPO = process.cwd();
 const LOCK = path.join(REPO, 'src', 'data', 'repo-guard.lock.json');
@@ -1049,6 +1050,18 @@ if (!exists('_cms/assist-gas/コード.gs') || !exists('_cms/assist-gas/index.ht
   } catch (error) {
     ng(`アシストCMS検査の実行に失敗: ${error.message}`);
   }
+}
+
+// ---------------------------------------------------------------- 16
+head('16. アシスト効果OCR候補');
+if (!exists('scripts/test-assist-effect-ocr.js')) {
+  ng('アシスト効果OCRテストがない');
+} else {
+  const result = childProcess.spawnSync(process.execPath, ['scripts/test-assist-effect-ocr.js'], {
+    cwd: REPO, encoding: 'utf8',
+  });
+  if (result.status !== 0) ng(`アシスト効果OCRテストFAIL: ${(result.stderr || result.stdout).trim()}`);
+  else ok('効果OCRは背景分類・青丸解放段階・スクロール重複・既存DB差分を検査');
 }
 
 // ---------------------------------------------------------------- 結果

@@ -8,6 +8,8 @@ const SOURCE_FILES = [
   '_cms/assist-gas/コード.gs',
   '_cms/assist-gas/index.html',
   '_cms/assist-gas/README.md',
+  'scripts/assist-effect-ocr.js',
+  'scripts/test-assist-effect-ocr.js',
 ];
 const DATA_FILES = [
   'src/data/assist-cards.json',
@@ -65,6 +67,7 @@ function validateRoot(root) {
   const gas = read(root, SOURCE_FILES[0]);
   const html = read(root, SOURCE_FILES[1]);
   const guide = read(root, SOURCE_FILES[2]);
+  const effectOcr = read(root, SOURCE_FILES[3]);
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('コード.gsが100KBを超えている');
   if (!/prop_\('ENVIRONMENT'\)\s*!==\s*'test'/.test(gas)) issues.push('ENVIRONMENT=testの強制検査がない');
@@ -73,13 +76,14 @@ function validateRoot(root) {
   if (!/withStats:\s*cards\.filter\(function \(card\) \{ return card\.stats\.length > 0; \}\)\.length/.test(gas)) {
     issues.push('withStatsが入力済みstats配列だけを数えていない');
   }
-  for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'capture_queue', 'publish_log']) {
+  for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'publish_log']) {
     if (!new RegExp(`['"]${sheet}['"]`).test(gas)) issues.push(`必須シート定義がない: ${sheet}`);
   }
   for (const fn of [
-    'setup1_createSheets', 'setup2_registerMe', 'setup3_importFromMain', 'setup4_check',
+    'setup1_createSheets', 'setup2_registerMe', 'setup3_importFromMain', 'setup4_check', 'setup5_createAssistImageFolder',
     'doGet', 'api_bootstrap', 'api_getCard', 'api_saveCard', 'api_saveEffects',
     'api_getAbility', 'api_saveAbility', 'api_export', 'validateDocuments_',
+    'api_ocrEffectImage', 'api_uploadCardImage',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(gas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -90,7 +94,6 @@ function validateRoot(root) {
     [/cms\/(?:assist-)?publish/, '公開ブランチ参照'],
     [/api\.github\.com/, 'GitHub API参照'],
     [/git\/refs|actions\/workflows/i, 'GitHub公開処理'],
-    [/DriveApp/, 'P12-9前のDrive処理'],
     [/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i, 'メールアドレス直書き'],
     [/(?:ghp|github_pat)_[A-Za-z0-9_]{10,}/, 'tokenらしき文字列'],
   ];
@@ -115,6 +118,87 @@ function validateRoot(root) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(html)) issues.push(`構造化フォーム関数がない: ${fn}`);
   }
   if (!/var original=state\.ability\.tags\|\|\[\]/.test(html)) issues.push('能力タグの既存順序を保持していない');
+  if (!/activationScope:\s*'unknown'/.test(effectOcr) || !/verified:\s*false/.test(effectOcr) || /verified:\s*true/.test(effectOcr)) {
+    issues.push('効果OCR候補が背景未判定または未確認で開始しない');
+  }
+  if (!/conditional/.test(effectOcr) || !/universal/.test(effectOcr) || !/yellowBias/.test(effectOcr)) {
+    issues.push('効果OCRに黄・金色条件付き／白背景汎用の画像判定がない');
+  }
+  if (!/extractActivationConditions/.test(effectOcr) || !/activationConditions/.test(effectOcr) ||
+      !/mainBloodlineMatch/.test(effectOcr) || !/subBloodlineMatch/.test(effectOcr) ||
+      !/auraMatch/.test(effectOcr) || !/monTypeMatch/.test(effectOcr) ||
+      !/speciesMatch/.test(effectOcr) || !/operator:\s*hasOr\s*\?\s*'or'\s*:\s*'and'/.test(effectOcr)) {
+    issues.push('効果OCRに全体発動条件5種またはOR条件の保持がない');
+  }
+  if (!/detectUnlockRank/.test(effectOcr) || !/blueMarkers/.test(effectOcr)) {
+    issues.push('効果OCRに青丸数の解放段階判定がない');
+  }
+  if (!/mergeScreenshotCandidates/.test(effectOcr) || !/sourceScreenshots/.test(effectOcr)) {
+    issues.push('効果OCRにスクロール画像重複の統合がない');
+  }
+  if (!/tabButton\('ocr','効果OCR'/.test(html) || !/id="ocrFiles"[^>]+multiple/.test(html) ||
+      !/function\s+runEffectOcr\s*\(/.test(html) || !/function\s+collectOcrCandidates\s*\(/.test(html) ||
+      !/function\s+applyOcrCandidates\s*\(/.test(html) || !/function\s+populateOcrConditionFields\s*\(/.test(html) ||
+      !/activation\?\s*'conditional'\s*:\s*'universal'/.test(html)) {
+    issues.push('test CMSに複数画像OCR・候補レビュー画面がない');
+  }
+  if (!/function\s+api_ocrEffectImage\s*\(/.test(gas) || !/DOCUMENT_TEXT_DETECTION/.test(gas) ||
+      !/languageHints:\s*\['ja'\]/.test(gas) || !/optionalProp_\('GOOGLE_CLOUD_VISION_API_KEY'\)/.test(gas)) {
+    issues.push('test GASにScript Properties経由の日本語Vision OCRがない');
+  }
+  const assistImageFolderBlock = gas.match(/function\s+assistImageFolder_\s*\([\s\S]*?(?=function\s+api_uploadCardImage\s*\()/);
+  const cardImageUploadBlock = gas.match(/function\s+api_uploadCardImage\s*\([\s\S]*?(?=function\s+api_ocrEffectImage\s*\()/);
+  const setup5Block = gas.match(/function\s+setup5_createAssistImageFolder\s*\([\s\S]*?(?=\/\/ ---------------------------------------------------------------- 認証)/);
+  if (!/function\s+api_uploadCardImage\s*\(/.test(gas) || !/ASSIST_IMAGE_FOLDER_ID/.test(gas) ||
+      !/DriveApp\.getFolderById/.test(gas) ||
+      !(assistImageFolderBlock && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(assistImageFolderBlock[0]) &&
+        /return root;/.test(assistImageFolderBlock[0]) && !/getFoldersByName|createFolder/.test(assistImageFolderBlock[0])) ||
+      !(setup5Block && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(setup5Block[0]) &&
+        /DriveApp\.getFolderById/.test(setup5Block[0]) && !/DriveApp\.createFolder/.test(setup5Block[0])) ||
+      !/CARD_IMAGE_MAX_BYTES\s*=\s*2 \* 1024 \* 1024/.test(gas) ||
+      !(cardImageUploadBlock && /isExpectedImage_\(bytes, mimeType\)/.test(cardImageUploadBlock[0])) ||
+      !/oldFile\.setTrashed\(true\)/.test(gas) || !/file\.setTrashed\(false\)/.test(gas) ||
+      !/imagePath\s*=\s*'assist-cards\/'/.test(gas) ||
+      !/id="f_imageFile"/.test(html) || !/id="btnUploadCardImage"/.test(html) ||
+      !/function\s+uploadCardImage\s*\(/.test(html) || !/version:state\.detail\.version/.test(html) ||
+      !/file\.size>2\*1024\*1024/.test(html)) {
+    issues.push('カード画像をtest Driveへ安全にアップロードする経路がない');
+  }
+  if (!/headers:\s*\{\s*['"]x-goog-api-key['"]:\s*apiKey\s*\}/.test(gas) ||
+      /images:annotate\?key=/.test(gas)) {
+    issues.push('Vision APIキーがURLではなくx-goog-api-keyヘッダーで送信されていない');
+  }
+  if (!/function\s+reserveOcrDailyUsage_\s*\(/.test(gas) ||
+      !/positiveIntProp_\('OCR_DAILY_LIMIT'\)/.test(gas) ||
+      !/getProperty\('OCR_DAILY_USAGE'\)/.test(gas) ||
+      !/setProperty\('OCR_DAILY_USAGE'/.test(gas) ||
+      !/LockService\.getScriptLock\(\)/.test(gas) ||
+      !/var usage = reserveOcrDailyUsage_\(\);[\s\S]*UrlFetchApp\.fetch/.test(gas)) {
+    issues.push('OCR_DAILY_LIMITの日次上限をVision送信前に競合なく強制していない');
+  }
+  if (/capture_queue|SHEET_CAPTURE_QUEUE|api_(?:saveEffectOcrCandidates|getEffectOcrCapture|reviewEffectOcrCapture)/.test(gas + html)) {
+    issues.push('撤去済みcapture_queueまたは永続化APIが残っている');
+  }
+  if (!/if\(!types\.length\)throw new Error/.test(html) ||
+      !/if\(!source\)throw new Error/.test(html)) {
+    issues.push('黄色背景の条件付き候補を発動条件未選択のまま進行できる');
+  }
+  if (!/id="ocrSourceConfirmed"/.test(html) || !/if\(!el\('ocrSourceConfirmed'\)\.checked\)throw new Error/.test(html) ||
+      !/候補を破棄/.test(html) || !/ブラウザ内に保持/.test(html)) {
+    issues.push('OCR候補が原画像確認なしで反映できる、またはブラウザ内一時保持になっていない');
+  }
+  if (!/function\s+ocrBreederDependency\s*\(/.test(html) || !/breeder-dependency/.test(html) ||
+      !/モン類ブリーダー/.test(effectOcr) || !/オーラブリーダー/.test(effectOcr) ||
+      !/basis:\s*'breeder-dependency'/.test(effectOcr)) {
+    issues.push('モン類・オーラブリーダー派生効果の一致条件を保持できない');
+  }
+  if (!/fieldset\.ocr-candidate\.conditional/.test(html) || !/class="busy-overlay"/.test(html) ||
+      !/#message\.show/.test(html) || !/--message-bottom/.test(html) ||
+      !/actions\?actions\.offsetHeight:0/.test(html) || !/OCR処理中/.test(html)) {
+    issues.push('OCR候補の条件背景・処理中表示・下部通知がない');
+  }
+  const ocrApiBlock = gas.match(/function\s+api_ocrEffectImage\s*\([\s\S]*?(?=function\s+api_getCard\s*\()/);
+  if (ocrApiBlock && /DriveApp/.test(ocrApiBlock[0])) issues.push('OCR原画像をDriveへ保存している');
   if (!/limitBreakJson:\s*jsonCell_\(currentCard\.limitBreak\)/.test(gas) ||
       !/sapoRefJson:\s*jsonCell_\(currentCard\.sapoRef\)/.test(gas) ||
       !/flagsJson:\s*row\.flagsJson/.test(gas)) {

@@ -20,6 +20,40 @@ P12-8では本番データ変更を避けるため同居させない。
 
 - `コード.gs`: test境界、シート作成、mainからの初期取込、編集API、3DB検査・export
 - `index.html`: カード・効果・能力の構造化管理画面
+- `scripts/assist-effect-ocr.js`: Google Visionの座標付き結果から効果候補と既存DB差分を作るadapter
+- `scripts/test-assist-effect-ocr.js`: 背景色、青丸、カード分割、スクロール重複統合のテスト
+
+P12-9の効果OCR候補は、黄・金色背景を`conditional`、白背景を`universal`、判別不能を
+`unknown`として保持する。解放段階は右上の青丸数から別判定する。OCR結果だけで既存効果を
+上書きせず、原画像と既存DBの差分を管理者が確認してから保存する。
+条件付き効果は説明冒頭から、効果全体に対する主血統・副血統・オーラ・モン類・種族の
+一致だけを`activationConditions`へ抽出する。複数条件は`and`/`or`を持てる論理式とし、
+原文も残す。説明中の特定モンスターやトレーニング要件は分類対象にしない。
+条件原文は論理式を抽出した根拠とOCR照合用に保持し、公開表示用データとはしない。
+説明から抽出できる場合は画面へ自動入力し、OCR誤読がある場合だけ管理者が補正する。
+黄色背景の条件付き候補は、対象5種の発動条件を1件以上選択しない限り、効果編集へ反映できない。
+通常は条件原文から直接抽出する。`モン類ブリーダー`または
+`オーラブリーダー`の派生効果は、ブリーダー出現自体がモン類一致・オーラ一致へ依存するため、
+それぞれ`monTypeMatch`・`auraMatch`として扱う。この場合も条件原文は効果欄の実文を保持し、
+捏造した一致文へ置換せず、`basis: breeder-dependency`を判定根拠として併記する。
+管理画面の「効果OCR」タブでは、複数のJPEG / PNG / WebPをGoogle Cloud Visionへ送り、
+効果名・説明・背景種別・解放段階・全体発動条件を候補化する。画像と候補はブラウザ内だけに保持し、
+Driveやスプレッドシートへ保存しない。ページ再読み込み、カード切替、候補破棄で消える。
+管理者は表示中の原画像と全候補を照合し、確認チェックを入れてから「効果編集へ反映」する。
+反映後も通常のtest保存を行うまではDBを更新しない。永続的な確認キュー、ファイル名一致、
+`needs_review` / `verified` / `rejected`のOCR用状態管理は使用しない。
+候補カードは黄色条件付き・白汎用で背景色を分ける。画像読込・Vision OCR・GAS通信中は画面下部へ
+処理中モーダルを表示し、成功・失敗通知は最下部の追従操作欄より上へ固定して、長い候補一覧でも見失わず
+操作ボタンとも重ならないようにする。
+
+カード画像はカードフォームからtest専用Driveへアップロードする。管理者がモンスター画像とは別の
+正確な格納位置へtest専用フォルダを作成し、そのURL末尾のフォルダIDをScript Propertiesの
+`ASSIST_IMAGE_FOLDER_ID`へ登録する。画像をその指定フォルダ直下へ
+`cardId.拡張子`で保存する。サブフォルダは作らない。既存91画像をDriveへ複製せず、CMSで新規選択・
+差し替えた画像だけを置く。同じcardIdの旧Drive画像はゴミ箱へ移動する。
+モンスターCMSと同じく、画像は2MB以下のJPEG / PNG / WebPに限定し、拡張子・MIME申告だけでなく
+バイナリ先頭も検査する。公開サイトが読む正画像はGitHubの`assist-cards/`であり、Drive URLを直接表示しない。
+P12-9ではDriveから公開リポジトリへの送信は行わず、P12-10以降の公開工程で扱う。
 
 ## Script Properties
 
@@ -27,8 +61,15 @@ P12-8では本番データ変更を避けるため同居させない。
 |---|---|
 | `ENVIRONMENT` | `test` 固定 |
 | `SPREADSHEET_ID` | P12-8専用testスプレッドシートのID |
+| `GOOGLE_CLOUD_VISION_API_KEY` | 任意。効果OCRを実行するtest用Google Cloud Vision APIキー |
+| `OCR_DAILY_LIMIT` | OCRの1日上限。testでは`100`（1以上の整数） |
+| `ASSIST_IMAGE_FOLDER_ID` | 管理者が正確な格納位置に作成し、test・本番で共有すると明示承認したアシストカード画像用DriveフォルダのID |
 
 値はApps Scriptのプロジェクト設定だけに保存する。リポジトリ、シート本文、ログへ転記しない。
+Vision APIキーはURLへ付けず、`x-goog-api-key`ヘッダーで送信する。OCR実行直前に
+`OCR_DAILY_LIMIT`を日本時間の日付単位で予約し、同時実行でも上限を超えないようScript Lockを使う。
+送信後にVisionがエラーを返した場合も利用済み1件として数える。現在値はコード管理の
+`OCR_DAILY_USAGE`に保存され、日付が変わった最初の実行時に自動で0件から数え直す。
 
 ## シート
 
@@ -40,7 +81,6 @@ P12-8では本番データ変更を避けるため同居させない。
 | `cards` | カード | カードDB。複合値はJSON列で損失なく保持 |
 | `assist_effects` | 効果 | カード内の効果。空のdraftカードもcardIdだけの1行で保持 |
 | `abilities` | 能力 | 1,079件を含む能力DB。unlinked・ambiguousを削除しない |
-| `capture_queue` | キャプチャ候補 | P12-9用の受け皿。P12-8ではOCRや画像アップロードを実装しない |
 | `publish_log` | 操作履歴 | testの取込・保存・export結果とhash |
 
 `sourceOrder`は元JSONの配列順、`version`は同時編集検出に使う。Sheetの複合列は無損失exportの
@@ -52,13 +92,16 @@ P12-8では本番データ変更を避けるため同居させない。
 1. P12-8専用の空スプレッドシートとスタンドアロンApps Scriptプロジェクトを作る
 2. Apps Scriptへ`コード.gs`と`index.html`を配置する
 3. Script Propertiesへ`ENVIRONMENT=test`と`SPREADSHEET_ID`を設定する
-4. エディタから`setup1_createSheets`を実行する
-5. `setup2_registerMe`を実行し、実行者をtestのadminとして登録する
-6. `setup3_importFromMain`を実行する
-7. `setup4_check`がカード91件・効果888件・能力1,079件・issues 0になることを確認する
-8. Webアプリを「自分として実行」「Googleアカウントを持つユーザー」に限定してtest deployする
+4. モンスター画像とは別の正確なDrive格納位置へ、アシストカード画像用フォルダを管理者が作成する
+5. 作成したフォルダのURL末尾（`/folders/`以降）のIDをScript Propertiesの`ASSIST_IMAGE_FOLDER_ID`へ設定する
+6. `setup5_createAssistImageFolder`を実行し、指定フォルダを開けることを確認する。フォルダやサブフォルダは自動作成・移動しない
+7. エディタから`setup1_createSheets`を実行する
+8. `setup2_registerMe`を実行し、実行者をtestのadminとして登録する
+9. `setup3_importFromMain`を実行する
+10. `setup4_check`がカード91件・効果888件・能力1,079件・issues 0になることを確認する
+11. Webアプリを「自分として実行」「Googleアカウントを持つユーザー」に限定してtest deployする
 
-データ件数は将来変わるため、7の数字をコードや検査へ固定しない。初回の受入確認だけに使う。
+データ件数は将来変わるため、10の数字をコードや検査へ固定しない。初回の受入確認だけに使う。
 
 ## 編集とexport
 

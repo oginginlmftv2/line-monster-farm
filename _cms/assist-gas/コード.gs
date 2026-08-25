@@ -20,8 +20,13 @@ var SHEET_MEMBERS = 'members';
 var SHEET_CARDS = 'cards';
 var SHEET_EFFECTS = 'assist_effects';
 var SHEET_ABILITIES = 'abilities';
-var SHEET_CAPTURE_QUEUE = 'capture_queue';
 var SHEET_PUBLISH_LOG = 'publish_log';
+var CARD_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
+var CARD_IMAGE_MIME_EXT = {
+  'image/jpeg': 'jpg',
+  'image/png': 'png',
+  'image/webp': 'webp'
+};
 
 var HEADERS = {};
 HEADERS[SHEET_MEMBERS] = ['email', 'nickname', 'role', 'active', 'note'];
@@ -39,10 +44,6 @@ HEADERS[SHEET_ABILITIES] = [
   'sourceOrder', 'abilityId', 'legacyId', 'cardId', 'sourceName', 'name', 'description',
   'source', 'rarity', 'tagsJson', 'sortOrder', 'linkStatus', 'flagsJson', 'status',
   'version', 'updatedAt', 'updatedBy'
-];
-HEADERS[SHEET_CAPTURE_QUEUE] = [
-  'captureId', 'cardId', 'driveFileId', 'fileName', 'mimeType', 'rawText',
-  'candidateJson', 'status', 'notes', 'createdAt', 'createdBy', 'reviewedAt', 'reviewedBy'
 ];
 HEADERS[SHEET_PUBLISH_LOG] = ['timestamp', 'user', 'action', 'result', 'detail'];
 
@@ -68,6 +69,68 @@ function prop_(key) {
   var value = PropertiesService.getScriptProperties().getProperty(key);
   if (!value) throw new Error('スクリプトプロパティ ' + key + ' が未設定です。');
   return value;
+}
+
+function optionalProp_(key) {
+  return text_(PropertiesService.getScriptProperties().getProperty(key)).trim();
+}
+
+function positiveIntProp_(key) {
+  var raw = prop_(key).trim();
+  if (!/^\d+$/.test(raw) || Number(raw) < 1) {
+    throw new Error('スクリプトプロパティ ' + key + ' は1以上の整数で設定してください。');
+  }
+  return Number(raw);
+}
+
+function byteAt_(bytes, index) {
+  return bytes[index] & 255;
+}
+
+function isExpectedImage_(bytes, mimeType) {
+  if (mimeType === 'image/jpeg') {
+    return bytes.length >= 3 &&
+      byteAt_(bytes, 0) === 0xff && byteAt_(bytes, 1) === 0xd8 && byteAt_(bytes, 2) === 0xff;
+  }
+  if (mimeType === 'image/png') {
+    var png = [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a];
+    if (bytes.length < png.length) return false;
+    for (var i = 0; i < png.length; i++) {
+      if (byteAt_(bytes, i) !== png[i]) return false;
+    }
+    return true;
+  }
+  if (mimeType === 'image/webp') {
+    return bytes.length >= 12 &&
+      byteAt_(bytes, 0) === 0x52 && byteAt_(bytes, 1) === 0x49 &&
+      byteAt_(bytes, 2) === 0x46 && byteAt_(bytes, 3) === 0x46 &&
+      byteAt_(bytes, 8) === 0x57 && byteAt_(bytes, 9) === 0x45 &&
+      byteAt_(bytes, 10) === 0x42 && byteAt_(bytes, 11) === 0x50;
+  }
+  return false;
+}
+
+function reserveOcrDailyUsage_() {
+  requireTest_();
+  var limit = positiveIntProp_('OCR_DAILY_LIMIT');
+  var lock = LockService.getScriptLock();
+  if (!lock.tryLock(20000)) throw new Error('OCR利用回数の確認が他の実行と重なりました。');
+  try {
+    var properties = PropertiesService.getScriptProperties();
+    var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
+    var usage = {};
+    try { usage = JSON.parse(text_(properties.getProperty('OCR_DAILY_USAGE')) || '{}'); }
+    catch (error) { usage = {}; }
+    var count = usage.date === today && Number.isFinite(Number(usage.count)) ? Number(usage.count) : 0;
+    if (count >= limit) {
+      throw new Error('本日のOCR上限（' + limit + '件）に達しました。翌日まで待つか、管理者がOCR_DAILY_LIMITを見直してください。');
+    }
+    count += 1;
+    properties.setProperty('OCR_DAILY_USAGE', JSON.stringify({ date: today, count: count }));
+    return { date: today, count: count, limit: limit, remaining: limit - count };
+  } finally {
+    lock.releaseLock();
+  }
 }
 
 function requireTest_() {
@@ -396,7 +459,6 @@ function setup3_importFromMain() {
     setRows_(SHEET_CARDS, cardRows);
     setRows_(SHEET_EFFECTS, effectRows);
     setRows_(SHEET_ABILITIES, abilityRows);
-    setRows_(SHEET_CAPTURE_QUEUE, []);
     appendLog_({ nickname: 'setup' }, 'import', 'PASS',
       'cards=' + cardRows.length + ' effects=' + effectRows.length + ' abilities=' + abilityRows.length);
     return 'mainからtestへ取り込みました: カード' + cardRows.length + ' / 効果行' +
@@ -421,6 +483,15 @@ function setup4_check() {
   };
   Logger.log(JSON.stringify(result, null, 2));
   return result;
+}
+
+function setup5_createAssistImageFolder() {
+  requireTest_();
+  var folderId = optionalProp_('ASSIST_IMAGE_FOLDER_ID');
+  if (!folderId) throw new Error('先に管理者が作成したtest画像フォルダのIDをASSIST_IMAGE_FOLDER_IDへ設定してください。');
+  var root = DriveApp.getFolderById(folderId);
+  appendLog_({ nickname: 'setup' }, 'prepare-assist-image-folder', 'PASS', root.getName());
+  return { configured: true, folderName: root.getName() };
 }
 
 // ---------------------------------------------------------------- 認証
@@ -681,6 +752,8 @@ function api_bootstrap() {
   return {
     environment: 'test',
     user: user,
+    ocr: { provider: 'google-cloud-vision', configured: Boolean(optionalProp_('GOOGLE_CLOUD_VISION_API_KEY')) },
+    imageUpload: { configured: Boolean(optionalProp_('ASSIST_IMAGE_FOLDER_ID')) },
     cards: cards.map(function (row) {
       return {
         cardId: text_(row.cardId), name: text_(row.name), rarity: text_(row.rarity),
@@ -689,6 +762,117 @@ function api_bootstrap() {
       };
     })
   };
+}
+
+function assistImageFolder_() {
+  var folderId = optionalProp_('ASSIST_IMAGE_FOLDER_ID');
+  if (!folderId) throw new Error('Script PropertiesのASSIST_IMAGE_FOLDER_IDが未設定です。');
+  var root = DriveApp.getFolderById(folderId);
+  return root;
+}
+
+function api_uploadCardImage(payload) {
+  var user = requireUser_();
+  payload = payload || {};
+  var cardId = text_(payload.cardId).trim();
+  var mimeType = text_(payload.mimeType).toLowerCase().trim();
+  var extension = CARD_IMAGE_MIME_EXT[mimeType];
+  if (!extension) throw new Error('対応形式はJPG・PNG・WebPの3種類です。');
+  var base64 = text_(payload.base64).replace(/\s/g, '');
+  var maxBase64Length = Math.ceil(CARD_IMAGE_MAX_BYTES / 3) * 4 + 4;
+  if (!base64 || base64.length > maxBase64Length) throw new Error('画像は2MB以下にしてください。');
+  if (base64.length % 4 !== 0 || !/^[A-Za-z0-9+/]*={0,2}$/.test(base64)) throw new Error('画像データが壊れています。');
+  var bytes;
+  try { bytes = Utilities.base64Decode(base64); }
+  catch (error) { throw new Error('画像データを復号できません。'); }
+  if (!bytes.length || bytes.length > CARD_IMAGE_MAX_BYTES) throw new Error('画像は2MB以下にしてください。');
+  if (!isExpectedImage_(bytes, mimeType)) throw new Error('ファイルの内容と画像形式が一致しません。');
+
+  var fileName = cardId + '.' + extension;
+  var imagePath = 'assist-cards/' + fileName;
+  var lock = LockService.getScriptLock();
+  if (!lock.tryLock(20000)) throw new Error('他の画像保存と重なりました。');
+  var newFile = null;
+  var trashedFiles = [];
+  try {
+    var row = rows_(SHEET_CARDS).filter(function (item) { return item.cardId === cardId; })[0];
+    if (!row) throw new Error('未知cardIdです。');
+    var currentVersion = Number(row.version || 1);
+    if (Number(payload.version) !== currentVersion) throw new Error('他の編集が保存済みです。読み込み直してください。');
+
+    var folder = assistImageFolder_();
+    newFile = folder.createFile(Utilities.newBlob(bytes, mimeType, fileName));
+    var sameId = new RegExp('^' + cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.[^.]+$', 'i');
+    var files = folder.getFiles();
+    while (files.hasNext()) {
+      var oldFile = files.next();
+      if (oldFile.getId() === newFile.getId() || !sameId.test(oldFile.getName())) continue;
+      oldFile.setTrashed(true);
+      trashedFiles.push(oldFile);
+    }
+
+    var values = HEADERS[SHEET_CARDS].map(function (header) { return row[header]; });
+    var updatedAt = now_();
+    values[HEADERS[SHEET_CARDS].indexOf('image')] = imagePath;
+    values[HEADERS[SHEET_CARDS].indexOf('version')] = currentVersion + 1;
+    values[HEADERS[SHEET_CARDS].indexOf('updatedAt')] = updatedAt;
+    values[HEADERS[SHEET_CARDS].indexOf('updatedBy')] = user.nickname;
+    sheet_(SHEET_CARDS).getRange(row._row, 1, 1, values.length).setValues([values]);
+    appendLog_(user, 'upload-assist-image', 'PASS', cardId + ' / ' + fileName + ' / bytes=' + bytes.length);
+    return { ok: true, cardId: cardId, image: imagePath, fileName: fileName, bytes: bytes.length, version: currentVersion + 1, updatedAt: updatedAt };
+  } catch (error) {
+    if (newFile) {
+      try { newFile.setTrashed(true); } catch (ignoreNew) { /* 復旧は次回手動確認 */ }
+    }
+    trashedFiles.forEach(function (file) {
+      try { file.setTrashed(false); } catch (ignoreOld) { /* 復旧は次回手動確認 */ }
+    });
+    throw error;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function api_ocrEffectImage(payload) {
+  var user = requireUser_();
+  payload = payload || {};
+  var cardId = text_(payload.cardId).trim();
+  var fileName = text_(payload.fileName).trim();
+  var mimeType = text_(payload.mimeType).trim();
+  var base64 = text_(payload.base64).replace(/\s/g, '');
+  if (!rows_(SHEET_CARDS).some(function (row) { return row.cardId === cardId; })) throw new Error('未知cardIdです。');
+  if (!fileName) throw new Error('画像ファイル名がありません。');
+  if (['image/jpeg', 'image/png', 'image/webp'].indexOf(mimeType) < 0) throw new Error('JPEG / PNG / WebPだけを選択してください。');
+  if (!base64 || !/^[A-Za-z0-9+/]+={0,2}$/.test(base64)) throw new Error('画像データが不正です。');
+  if (Math.ceil(base64.length * 3 / 4) > 8 * 1024 * 1024) throw new Error('画像は1枚8MB以下にしてください。');
+  var apiKey = optionalProp_('GOOGLE_CLOUD_VISION_API_KEY');
+  if (!apiKey) throw new Error('Script PropertiesのGOOGLE_CLOUD_VISION_API_KEYが未設定です。');
+  var request = {
+    requests: [{
+      image: { content: base64 },
+      features: [{ type: 'DOCUMENT_TEXT_DETECTION', maxResults: 1 }],
+      imageContext: { languageHints: ['ja'] }
+    }]
+  };
+  var usage = reserveOcrDailyUsage_();
+  var response = UrlFetchApp.fetch('https://vision.googleapis.com/v1/images:annotate', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { 'x-goog-api-key': apiKey },
+    payload: JSON.stringify(request),
+    muteHttpExceptions: true
+  });
+  var body;
+  try { body = JSON.parse(response.getContentText('UTF-8')); }
+  catch (error) { throw new Error('OCR応答を解析できません（HTTP ' + response.getResponseCode() + '）。'); }
+  if (response.getResponseCode() !== 200 || !body.responses || !body.responses[0]) {
+    var message = body && body.error && body.error.message ? body.error.message : '応答が不正です。';
+    appendLog_(user, 'effect-ocr', 'FAIL', cardId + ' / ' + fileName + ' / HTTP ' + response.getResponseCode() + ' / daily=' + usage.count + '/' + usage.limit);
+    throw new Error('Google Cloud Vision OCRに失敗しました: ' + message);
+  }
+  if (body.responses[0].error) throw new Error('Google Cloud Vision OCRに失敗しました: ' + body.responses[0].error.message);
+  appendLog_(user, 'effect-ocr', 'PASS', cardId + ' / ' + fileName + ' / daily=' + usage.count + '/' + usage.limit);
+  return { fileName: fileName, vision: body, dailyUsage: usage };
 }
 
 function api_getCard(cardId) {
