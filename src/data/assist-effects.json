@@ -1,8 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedFrom": [
-    "assist-effect-data.js",
-    "src/data/assist-cards.json"
+    "P12-8 test assist CMS"
   ],
   "generatedAt": null,
   "counts": {
@@ -801,84 +800,84 @@
       "effects": [
         {
           "effectId": "a24j-MR-vitoniru-e01",
-          "name": "血統オーラ上限解放+60",
-          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ",
+          "name": "血統オーラ上限解放 +60",
+          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップまた主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
           "unlockRank": "無凸",
           "sortOrder": 1
         },
         {
           "effectId": "a24j-MR-vitoniru-e02",
-          "name": "モン類ブリーダー+60%",
+          "name": "モン類ブリーダー +60%",
           "description": "育成対象とモン類が一致したとき、ブリーダーがトレーニングに出現する（最大3人まで）",
           "unlockRank": "無凸",
           "sortOrder": 2
         },
         {
           "effectId": "a24j-MR-vitoniru-e03",
-          "name": "トレ効果アップ+10%",
+          "name": "トレ効果アップ +10%",
           "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
           "unlockRank": "無凸",
           "sortOrder": 3
         },
         {
           "effectId": "a24j-MR-vitoniru-e04",
-          "name": "忠誠度効果アップ+22%",
+          "name": "忠誠度効果アップ +22%",
           "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
           "unlockRank": "無凸",
           "sortOrder": 4
         },
         {
           "effectId": "a24j-MR-vitoniru-e05",
-          "name": "メンタル上限アップ+120",
+          "name": "メンタル上限アップ +120",
           "description": "かしこさと丈夫さの基礎ステータスを上限アップ",
           "unlockRank": "無凸",
           "sortOrder": 5
         },
         {
           "effectId": "a24j-MR-vitoniru-e06",
-          "name": "モン類名声ボーナス+20%",
-          "description": "育成対象とモン類一致したとき、人気度、忠誠度の上昇量アップ",
+          "name": "モン類名声ボーナス +20%",
+          "description": "育成対象とモン類一致したとき、人気度、忠誠度の上昇量アップ人気度、忠誠度に応じて大会勝利イベントの効果量アップ（最大50%）（重複不可）",
           "unlockRank": "1凸",
           "sortOrder": 6
         },
         {
-          "effectId": "a24j-MR-vitoniru-e07",
-          "name": "メンタルボーナスⅡ+1",
-          "description": "かしこさ、丈夫さの素質アップ+1%、トレーニング時の上昇量アップ+1",
+          "effectId": "a24j-MR-vitoniru-e13",
+          "name": "メンタルボーナスⅡ +1",
+          "description": "かしこさ、丈夫さの素質アップ+1%一緒にトレーニングしたとき、かしこさ、丈夫さの上昇量アップ+1",
           "unlockRank": "1凸",
           "sortOrder": 7
         },
         {
           "effectId": "a24j-MR-vitoniru-e08",
-          "name": "モン類トレ共鳴・獣族+3%",
-          "description": "育成対象とモン類が一致したとき、獣族の数に応じて基礎ステータス上昇量アップ（最大10%）（重複不可）",
+          "name": "モン類トレ共鳴・獣族 +3%",
+          "description": "育成対象とモン類が一致したとき、育成対象と一緒にトレーニングする獣族の数に応じて、基礎ステータスの上昇量アップ（最大10%）（重複不可）",
           "unlockRank": "2凸",
           "sortOrder": 8
         },
         {
           "effectId": "a24j-MR-vitoniru-e09",
-          "name": "忠誠度効果アップ+15%",
+          "name": "忠誠度効果アップ +15%",
           "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
           "unlockRank": "2凸",
           "sortOrder": 9
         },
         {
-          "effectId": "a24j-MR-vitoniru-e10",
-          "name": "モン類ブリーダー・鍛錬+",
-          "description": "ブルーダートレ出現率+15%。ブリーダー出現時、発動中のトレ効果を25%上昇",
+          "effectId": "a24j-MR-vitoniru-e14",
+          "name": "モン類ブリーダー・鍛錬",
+          "description": "ブリーダートレ出現率+15%ブリーダーがトレーニングに出現時、発動中のトレ効果を25%上昇、応援効果+15%",
           "unlockRank": "3凸",
           "sortOrder": 10
         },
         {
           "effectId": "a24j-MR-vitoniru-e11",
-          "name": "トレ効果アップ+8%",
+          "name": "トレ効果アップ +8%",
           "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
           "unlockRank": "3凸",
           "sortOrder": 11
         },
         {
-          "effectId": "a24j-MR-vitoniru-e12",
-          "name": "モン類ブリーダー・継承+",
+          "effectId": "a24j-MR-vitoniru-e15",
+          "name": "モン類ブリーダー・継承",
           "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
           "unlockRank": "4凸",
           "sortOrder": 12

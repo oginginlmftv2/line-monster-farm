@@ -1,10 +1,7 @@
 {
   "schemaVersion": 3,
   "generatedFrom": [
-    "cards/cards-data.js",
-    "src/data/cards-editorial.json",
-    "assist-card-data.js",
-    "src/data/_audit/sapo-card-map.json"
+    "P12-8 test assist CMS"
   ],
   "generatedAt": null,
   "counts": {
@@ -661,10 +658,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 4,
         "karyo": 3,
         "battle": 2.5,
-        "ta": 2
+        "ta": 2,
+        "ikusei": 4
       },
       "explanation": "・獣2枚目のモン類ブリーダー\n・レンタル出来るのはヴィトニルが初\n・トレ性能も、同じくらいのカードはいるが最強と言っていいレベル（20260314時点）\n・ヴィトニルエッジも火力をかなり上げてくれる\n・シールドはフレリアの能力と噛み合わせが悪いところが少し減点\n・汎用性もそこまで高くないのでモン類不一致で入れるほどではない",
       "formations": [

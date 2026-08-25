@@ -1,9 +1,7 @@
 {
   "schemaVersion": 1,
   "generatedFrom": [
-    "lMfDB_abilities.json",
-    "src/data/_audit/ability-card-map.json",
-    "src/data/assist-cards.json"
+    "P12-8 test assist CMS"
   ],
   "generatedAt": null,
   "counts": {
