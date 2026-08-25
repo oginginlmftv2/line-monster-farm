@@ -1,0 +1,648 @@
+<section class="domain-panel" id="mon_root"><div class="domain-tools"><span id="mon_stats"></span></div><div class="wrap">
+  <div class="col-list panel">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+      <button class="primary" id="mon_btnNew" disabled>＋ 新規モンスター</button>
+    </div>
+    <div class="filters">
+      <input type="text" id="mon_q" placeholder="名前・ID・血統で絞り込み">
+      <select id="mon_fMon" style="width:110px"><option value="">モン類すべて</option></select>
+      <select id="mon_fState" style="width:150px">
+        <option value="">状態すべて</option>
+        <option value="index">インデックス対象</option>
+        <option value="near">あと少し（700字〜）</option>
+        <option value="has">解説あり</option>
+        <option value="none">解説なし</option>
+      </select>
+      <select id="mon_fSort" style="width:150px">
+        <option value="id">ID順</option>
+        <option value="charsDesc">字数が多い順</option>
+        <option value="charsAsc">字数が少ない順</option>
+        <option value="near">昇格に近い順</option>
+        <option value="newest">追加が新しい順</option>
+      </select>
+    </div>
+    <div class="list" id="mon_list"><div class="center">読み込み中…</div></div>
+  </div>
+
+  <button type="button" class="mobile-back" id="mon_btnBackToList">← 一覧へ戻る</button>
+  <div class="col-edit panel" id="mon_edit">
+    <div class="center">左の一覧からモンスターを選んでください。</div>
+  </div>
+</div></section><script>
+// ---------------------------------------------------------------- 状態
+var MON = { monBoot:null, current:null, overhead:0, pendingImage:null, editBusy:false, newPrediction:null, newPredictSeq:0, nextEditMessage:'', publishBusy:false, publishPollTimer:null };
+
+// ★ コード.gs の countChars_() と同じ定義。片方だけ直さないこと。
+function monCountChars(text){ return String(text == null ? '' : text).replace(/\s+/g, '').length; }
+
+function monIsMobileLayout(){
+  return window.matchMedia && window.matchMedia('(max-width:860px)').matches;
+}
+
+function monShowMobileEdit(){
+  document.body.classList.add('mobile-editing');
+  if (monIsMobileLayout()) window.scrollTo(0, 0);
+}
+
+function monShowMobileList(){
+  document.body.classList.remove('mobile-editing');
+  if (monIsMobileLayout()) window.scrollTo(0, 0);
+}
+
+function monOptions(list, selected, blank){
+  var out = blank ? '<option value="">' + esc(blank) + '</option>' : '';
+  (list || []).forEach(function(v){
+    out += '<option value="' + esc(v) + '"' + (v === selected ? ' selected' : '') + '>' + esc(v) + '</option>';
+  });
+  return out;
+}
+
+// ---------------------------------------------------------------- 起動
+function monBoot(){
+  google.script.run
+    .withSuccessHandler(function(data){
+      MON.boot = data;
+      el('mon_btnNew').disabled = false;
+      el('app_who').textContent = data.me.nickname + '（' + data.me.role + '）';
+      el('mon_fMon').innerHTML = '<option value="">モン類すべて</option>' + monOptions(data.monList, '', null);
+      monRenderStats();
+      monRenderList();
+      if (!data.baselineLoaded || !data.bloodsLoaded) {
+        el('mon_edit').innerHTML = '<div class="warnbox">GitHub から ' +
+          (!data.baselineLoaded ? 'page-baseline.json ' : '') +
+          (!data.bloodsLoaded ? 'id-availability.json ' : '') +
+          'を取得できませんでした。字数の目安や血統の選択肢が正しく出ないことがあります。' +
+          '時間をおいて画面を開き直してください。</div>' +
+          '<div class="center">左の一覧からモンスターを選んでください。</div>';
+      }
+    })
+    .withFailureHandler(function(e){
+      el('mon_list').innerHTML = '<div class="errbox">' + esc(e.message) + '</div>';
+    })
+    .api_monBootstrap();
+}
+
+function monRenderStats(){
+  var m = MON.boot.monsters;
+  var idx = m.filter(function(x){ return x.indexable; }).length;
+  var has = m.filter(function(x){ return x.hasExplanation; }).length;
+  el('mon_stats').textContent = m.length + '体 / 解説 ' + has + ' / インデックス ' + idx;
+}
+
+// ---------------------------------------------------------------- 一覧
+function monFiltered(){
+  var q = el('mon_q').value.trim().toLowerCase();
+  var mon = el('mon_fMon').value;
+  var state = el('mon_fState').value;
+  var sort = el('mon_fSort').value;
+  var th = MON.boot.threshold;
+
+  var list = MON.boot.monsters.filter(function(x){
+    if (mon && x.mon !== mon) return false;
+    if (state === 'index' && !x.indexable) return false;
+    if (state === 'near' && !(x.visibleChars >= 700 && x.visibleChars < th)) return false;
+    if (state === 'has' && !x.hasExplanation) return false;
+    if (state === 'none' && x.hasExplanation) return false;
+    if (q) {
+      var hay = (x.id + ' ' + x.name + ' ' + x.mainBlood + ' ' + x.subBlood + ' ' + x.mon).toLowerCase();
+      if (hay.indexOf(q) < 0) return false;
+    }
+    return true;
+  });
+
+  list.sort(function(a, b){
+    if (sort === 'charsDesc') return b.visibleChars - a.visibleChars;
+    if (sort === 'charsAsc') return a.visibleChars - b.visibleChars;
+    if (sort === 'newest') return b.arrayIndex - a.arrayIndex;
+    if (sort === 'near') {
+      var ra = a.indexable ? 1e9 : th - a.visibleChars;
+      var rb = b.indexable ? 1e9 : th - b.visibleChars;
+      return ra - rb;
+    }
+    return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
+  });
+  return list;
+}
+
+function monBarClass(chars){
+  if (chars >= MON.boot.threshold) return 'bar done';
+  if (chars >= 700) return 'bar near';
+  return 'bar';
+}
+
+function monRenderList(){
+  var list = monFiltered();
+  if (!list.length) { el('mon_list').innerHTML = '<div class="center">該当なし</div>'; return; }
+  var th = MON.boot.threshold;
+  var html = list.map(function(x){
+    var pct = Math.min(100, Math.round(x.visibleChars / th * 100));
+    var tag = x.indexable ? '公開対象' : (th - x.visibleChars) + '字';
+    return '<button class="row' + (MON.current && MON.current.id === x.id ? ' sel' : '') +
+      '" data-id="' + esc(x.id) + '">' +
+      '<div class="r1"><span class="id">' + esc(x.id) + '</span>' +
+      '<span class="nm">' + esc(x.name) + '</span>' +
+      '<span class="tag">' + esc(x.mon) + ' / ' + tag + '</span></div>' +
+      '<div class="' + monBarClass(x.visibleChars) + '"><i style="width:' + pct + '%"></i></div>' +
+      '<div class="cnt">' + x.visibleChars + ' / ' + th + '字' +
+      (x.author ? '　著者：' + esc(x.author) : '') + '</div>' +
+      '</button>';
+  }).join('');
+  el('mon_list').innerHTML = html;
+  Array.prototype.forEach.call(el('mon_list').querySelectorAll('.row'), function(b){
+    b.addEventListener('click', function(){ monOpenMonster(b.getAttribute('data-id')); });
+  });
+}
+
+['mon_q','mon_fMon','mon_fState','mon_fSort'].forEach(function(id){
+  el(id).addEventListener('input', monRenderList);
+  el(id).addEventListener('change', monRenderList);
+});
+el('mon_btnNew').addEventListener('click', monRenderNewForm);
+el('mon_btnBackToList').addEventListener('click', monShowMobileList);
+
+// ---------------------------------------------------------------- 公開（C6 + C7 / adminのみ）
+function monOpenMonster(id){
+  monShowMobileEdit();
+  el('mon_edit').innerHTML = '<div class="center">読み込み中…</div>';
+  google.script.run
+    .withSuccessHandler(function(m){
+      MON.current = m;
+      MON.overhead = m.overhead;
+      monRenderEdit();
+      monRenderList();
+      if (MON.nextEditMessage) {
+        show(MON.nextEditMessage);
+        MON.nextEditMessage = '';
+      }
+    })
+    .withFailureHandler(function(e){
+      el('mon_edit').innerHTML = '<div class="errbox">' + esc(e.message) + '</div>';
+    })
+    .api_monGet(id);
+}
+
+// ---------------------------------------------------------------- 新規登録（C5）
+function monRenderNewForm(){
+  monShowMobileEdit();
+  MON.current = null;
+  MON.pendingImage = null;
+  MON.newPrediction = null;
+  MON.newPredictSeq++;
+  monRenderList();
+
+  if (!MON.boot || !MON.boot.bloodsLoaded) {
+    el('mon_edit').innerHTML = '<div class="errbox">GitHubから id-availability.json を取得できないため、' +
+      '新規登録はできません。時間をおいて画面を開き直してください。</div>';
+    return;
+  }
+
+  var html = '<div id="mon_newMessage" aria-live="polite"></div>';
+  html += '<h3>新規モンスター登録</h3>';
+  html += '<div class="warnbox">登録後の名前は管理画面から変更できません。' +
+    '名前は確定IDと公開URLの紐付けに使われるため、表記を必ず確認してください。</div>';
+  html += '<div class="grid">';
+  html += '<div class="field" style="grid-column:1/-1"><label>モンスター名</label>' +
+    '<input type="text" id="mon_n_name" maxlength="60" placeholder="正式な名前を入力"></div>';
+  html += '<div class="field"><label>オーラ</label><select id="mon_n_aura">' +
+    monOptions(MON.boot.auraList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>モン類</label><select id="mon_n_mon">' +
+    monOptions(MON.boot.monList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>主血統</label><select id="mon_n_mainBlood">' +
+    monOptions(MON.boot.mainBloodList, '', '（選択）') + '</select></div>';
+  html += '<div class="field"><label>副血統</label><select id="mon_n_subBlood">' +
+    monOptions(MON.boot.subBloodList, '', '（選択）') + '</select></div>';
+  html += '</div>';
+  html += '<div class="prediction" id="mon_newPrediction">主血統と副血統を選ぶと、予測IDを表示します。</div>';
+  html += '<div class="hint">IDは `id-availability.json` による予測です。' +
+    '採番の正は generate-ids.js、公開時の最終確定はC8のビルド検算です。</div>';
+  html += '<div class="sticky"><button class="primary" id="mon_btnCreate" disabled>登録する</button>' +
+    '<button id="mon_btnCancelNew">キャンセル</button>' +
+    '<span class="muted">新規行は draft で保存されます。サイトはまだ変わりません。</span></div>';
+
+  el('mon_edit').innerHTML = html;
+  el('mon_n_mainBlood').addEventListener('change', monUpdateNewPrediction);
+  el('mon_n_subBlood').addEventListener('change', monUpdateNewPrediction);
+  el('mon_btnCreate').addEventListener('click', monCreateNewMonster);
+  el('mon_btnCancelNew').addEventListener('click', function(){
+    el('mon_edit').innerHTML = '<div class="center">左の一覧からモンスターを選んでください。</div>';
+    monShowMobileList();
+  });
+}
+
+function monUpdateNewPrediction(){
+  var mainBlood = el('mon_n_mainBlood').value;
+  var subBlood = el('mon_n_subBlood').value;
+  var box = el('mon_newPrediction');
+  var button = el('mon_btnCreate');
+  var seq = ++MON.newPredictSeq;
+  MON.newPrediction = null;
+  button.disabled = true;
+
+  if (!mainBlood || !subBlood) {
+    box.textContent = '主血統と副血統を選ぶと、予測IDを表示します。';
+    return;
+  }
+
+  box.textContent = 'IDを予測中…';
+  google.script.run
+    .withSuccessHandler(function(result){
+      if (seq !== MON.newPredictSeq) return;
+      MON.newPrediction = {
+        id: result.id,
+        arrayIndex: result.arrayIndex,
+        mainBlood: mainBlood,
+        subBlood: subBlood
+      };
+      box.innerHTML = '予測ID：<b>' + esc(result.id) + '</b>　arrayIndex：' + esc(result.arrayIndex);
+      button.disabled = false;
+    })
+    .withFailureHandler(function(e){
+      if (seq !== MON.newPredictSeq) return;
+      box.innerHTML = '<span style="color:#b42318">' + esc(e.message) + '</span>';
+    })
+    .api_monPredictNewId({ mainBlood: mainBlood, subBlood: subBlood });
+}
+
+function monCreateNewMonster(){
+  var name = el('mon_n_name').value.trim();
+  var aura = el('mon_n_aura').value;
+  var mon = el('mon_n_mon').value;
+  var mainBlood = el('mon_n_mainBlood').value;
+  var subBlood = el('mon_n_subBlood').value;
+
+  if (!name || !aura || !mon || !mainBlood || !subBlood) {
+    show('名前・オーラ・モン類・主血統・副血統をすべて入れてください。');
+    return;
+  }
+  if (!MON.newPrediction || MON.newPrediction.mainBlood !== mainBlood || MON.newPrediction.subBlood !== subBlood) {
+    show('ID予測が完了するまで待ってください。');
+    return;
+  }
+
+  var ok = confirm('「' + name + '」を新規登録します。\n' +
+    '予測ID: ' + MON.newPrediction.id + '\n' +
+    '血統: ' + mainBlood + ' / ' + subBlood + '\n\n' +
+    '登録後は管理画面から名前を変更できません。よろしいですか？');
+  if (!ok) return;
+
+  var button = el('mon_btnCreate');
+  button.disabled = true;
+  show('新規登録中…');
+
+  google.script.run
+    .withSuccessHandler(function(result){
+      MON.boot.monsters.push(result.monster);
+      monRenderStats();
+      monRenderList();
+      MON.nextEditMessage = result.monster.id + ' ' + result.monster.name +
+        ' を draft で登録しました。必要に応じて画像・実装日・解説を追加してください。';
+      monOpenMonster(result.monster.id);
+    })
+    .withFailureHandler(function(e){
+      button.disabled = false;
+      show(e.message);
+      monUpdateNewPrediction();
+    })
+    .api_monCreateMonster({
+      name: name,
+      aura: aura,
+      mon: mon,
+      mainBlood: mainBlood,
+      subBlood: subBlood,
+      predictedId: MON.newPrediction.id
+    });
+}
+
+function monRenderEdit(){
+  var m = MON.current;
+  var isFirst = !m.author;
+  var names = MON.boot.memberNames.filter(function(n){ return n !== MON.boot.me.nickname; });
+  MON.pendingImage = null;
+
+  var html = '';
+  html += '<div id="mon_msg" aria-live="polite"></div>';
+
+  html += '<div class="split">';
+  html += '<div><div class="field"><label>名前（変更不可）</label>' +
+    '<input type="text" class="ro" value="' + esc(m.name) + '" readonly></div></div>';
+  html += '<div><div class="field"><label>ID / 公開URL</label>' +
+    '<input type="text" class="ro" value="' + esc(m.id) + '　' + esc(m.url) + '" readonly></div></div>';
+  html += '</div>';
+
+  html += '<div class="hint">名前を変えるとIDと公開URLが変わり、公開済みページが失われます。' +
+    'この画面からは変更できません。</div>';
+
+  html += '<h3>属性</h3>';
+  html += '<div class="grid">';
+  html += '<div class="field"><label>オーラ</label><select id="mon_f_aura">' +
+    monOptions(MON.boot.auraList, m.aura, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>モン類</label><select id="mon_f_mon">' +
+    monOptions(MON.boot.monList, m.mon, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>主血統</label><select id="mon_f_mainBlood">' +
+    monOptions(MON.boot.mainBloodList, m.mainBlood, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>副血統</label><select id="mon_f_subBlood">' +
+    monOptions(MON.boot.subBloodList, m.subBlood, '（未設定）') + '</select></div>';
+  html += '<div class="field"><label>実装日（YYYY-MM-DD / YYYY-MM・空でも可）</label>' +
+    '<input type="text" id="mon_f_releasedAt" value="' + esc(m.releasedAt) + '" placeholder="2025-06-01"></div>';
+  html += '<div class="field"><label>限定</label>' +
+    '<label style="font-weight:400"><input type="checkbox" id="mon_f_limited"' +
+    (m.limited ? ' checked' : '') + '> 限定モンスター</label>' +
+    '<input type="text" id="mon_f_limitedLabel" value="' + esc(m.limitedLabel) +
+    '" placeholder="限定ラベル（任意）" style="margin-top:4px"></div>';
+  html += '<div class="field" style="grid-column:1/-1"><label>画像</label>' +
+    '<input type="text" id="mon_f_imageCurrent" class="ro" value="' +
+    esc(m.image || '（未設定）') + '" readonly>' +
+    '<div class="image-upload"><input type="file" id="mon_f_imageFile" ' +
+    'accept="image/jpeg,image/png,image/webp">' +
+    '<button type="button" id="mon_btnUpload" disabled>画像をアップロード</button></div>' +
+    '<div class="hint" id="mon_imageFileInfo">JPG・PNG・WebP / 2MB以下。' +
+    'Driveの「ライ徹_画像 / monster」に ' + esc(m.id) +
+    '.拡張子 で保存します。</div></div>';
+  html += '</div>';
+  html += '<div class="hint">血統を変えるとIDと公開URLが変わることがあります（確定IDのモンスターは変わりません）。' +
+    '保存前に確認が出ます。</div>';
+
+  html += '<h3>解説</h3>';
+  html += '<div class="progress-big" id="mon_prog"></div>';
+  html += '<div class="bar" id="mon_progbar"><i style="width:0%"></i></div>';
+  html += '<div class="hint" style="margin-bottom:6px">この数字は目安です。' +
+    '最終的な判定は公開後のビルドで確定します。</div>';
+  html += '<textarea id="mon_f_explanation" rows="18">' + esc(m.explanation) + '</textarea>';
+
+  html += '<h3>編成（JSON・空でも可）</h3>';
+  html += '<textarea id="mon_f_formations" rows="4" placeholder=\'[{"title":"おすすめ編成①","rental":"カードID","cards":["カードID", ...]}]\'>' +
+    esc(m.formations) + '</textarea>';
+
+  html += '<h3>著者情報</h3>';
+  html += '<div class="hint" style="margin-bottom:6px">現在：著者 <b>' +
+    esc(m.author || '（未設定）') + '</b>' +
+    (m.contributors ? '　加筆 ' + esc(m.contributors) : '') +
+    (m.createdAt ? '　公開 ' + esc(m.createdAt) : '') +
+    (m.updatedAt ? '　更新 ' + esc(m.updatedAt) : '') +
+    (m.lastEditor ? '　最終更新者 ' + esc(m.lastEditor) : '') + '</div>';
+
+  html += '<div class="radios">';
+  html += '<label><input type="radio" name="am" value="author"' + (isFirst ? ' checked' : '') +
+    '>著者として更新 — 著者を <b>' + esc(MON.boot.me.nickname) + '</b> にする</label>';
+  html += '<label><input type="radio" name="am" value="ghost">代筆（著者は別の人） — 原稿を受け取って入力する場合</label>';
+  html += '<div id="mon_ghostBox" style="display:none;padding:0 0 6px 22px">' +
+    '<div class="split"><div><select id="mon_f_ghostSelect">' +
+    monOptions(names, '', '（登録者から選ぶ）') + '</select></div>' +
+    '<div><input type="text" id="mon_f_ghostName" placeholder="または名前を直接入力"></div></div>' +
+    '<div class="hint">登録者を選ぶとプロフィールへリンクされます。直接入力の場合は名前だけ表示されます。</div></div>';
+  html += '<label><input type="radio" name="am" value="contributor"' + (isFirst ? '' : ' checked') +
+    '>加筆として更新 — 著者はそのまま、加筆者に <b>' + esc(MON.boot.me.nickname) + '</b> を足す</label>';
+  html += '<label><input type="radio" name="am" value="none">著者情報を更新しない — 誤字修正・整形など</label>';
+  html += '</div>';
+  html += '<div class="hint">どれを選んでも更新日と最終更新者は必ず更新されます。</div>';
+
+  html += '<div class="sticky">' +
+    '<button class="primary" id="mon_btnSave">保存する</button>' +
+    '<button id="mon_btnReload">読み込み直す</button>' +
+    '<span class="muted" id="mon_saveHint">保存先はスプレッドシートです。サイトへの反映は「公開」（未実装）で行います。</span>' +
+    '</div>';
+
+  el('mon_edit').innerHTML = html;
+
+  el('mon_f_explanation').addEventListener('input', monUpdateProgress);
+  el('mon_f_imageFile').addEventListener('change', monImageSelected);
+  el('mon_btnUpload').addEventListener('click', monUploadImage);
+  el('mon_btnSave').addEventListener('click', monSave);
+  el('mon_btnReload').addEventListener('click', function(){ monOpenMonster(MON.current.id); });
+  Array.prototype.forEach.call(document.getElementsByName('am'), function(r){
+    r.addEventListener('change', function(){
+      el('mon_ghostBox').style.display = (monAuthorMode() === 'ghost') ? 'block' : 'none';
+    });
+  });
+  el('mon_f_ghostSelect').addEventListener('change', function(){
+    if (this.value) el('mon_f_ghostName').value = this.value;
+  });
+
+  monUpdateProgress();
+}
+
+function monAuthorMode(){
+  var rs = document.getElementsByName('am');
+  for (var i = 0; i < rs.length; i++) if (rs[i].checked) return rs[i].value;
+  return 'none';
+}
+
+function monUpdateProgress(){
+  var th = MON.boot.threshold;
+  var chars = MON.overhead + monCountChars(el('mon_f_explanation').value);
+  var pct = Math.min(100, Math.round(chars / th * 100));
+  var bar = el('mon_progbar');
+  bar.className = monBarClass(chars);
+  bar.querySelector('i').style.width = pct + '%';
+  el('mon_prog').innerHTML = chars >= th
+    ? '<b>' + chars + '</b> / ' + th + '字　<span style="color:#1a7f37">インデックス対象です</span>'
+    : '<b>' + chars + '</b> / ' + th + '字　あと <b>' + (th - chars) + '</b> 字';
+}
+
+function monFormatFileSize(bytes){
+  if (bytes < 1024) return bytes + 'B';
+  return (bytes / 1024).toFixed(bytes >= 1024 * 1024 ? 0 : 1) + 'KB';
+}
+
+function monSetEditBusy(busy){
+  MON.editBusy = busy;
+  var saveButton = el('mon_btnSave');
+  var uploadButton = el('mon_btnUpload');
+  var reloadButton = el('mon_btnReload');
+  var fileInput = el('mon_f_imageFile');
+  if (saveButton) saveButton.disabled = busy;
+  if (uploadButton) uploadButton.disabled = busy || !MON.pendingImage;
+  if (reloadButton) reloadButton.disabled = busy;
+  if (fileInput) fileInput.disabled = busy;
+}
+
+function monImageSelected(){
+  var input = el('mon_f_imageFile');
+  var file = input.files && input.files[0];
+  var info = el('mon_imageFileInfo');
+  var button = el('mon_btnUpload');
+  MON.pendingImage = null;
+  button.disabled = true;
+
+  if (!file) {
+    info.textContent = 'JPG・PNG・WebP / 2MB以下。';
+    return;
+  }
+
+  var allowed = ['image/jpeg', 'image/png', 'image/webp'];
+  if (allowed.indexOf(file.type) < 0) {
+    input.value = '';
+    info.textContent = '対応形式は JPG・PNG・WebP の3種類です。';
+    show(info.textContent);
+    return;
+  }
+
+  var max = MON.boot.imageMaxBytes || (2 * 1024 * 1024);
+  if (!file.size || file.size > max) {
+    input.value = '';
+    info.textContent = '画像は2MB以下にしてください。';
+    show(info.textContent);
+    return;
+  }
+
+  var monsterId = MON.current.id;
+  info.textContent = '画像を読み込んでいます…';
+  var reader = new FileReader();
+  reader.onload = function(){
+    if (!MON.current || MON.current.id !== monsterId) return;
+    var dataUrl = String(reader.result || '');
+    var comma = dataUrl.indexOf(',');
+    if (comma < 0) {
+      input.value = '';
+      info.textContent = '画像を読み込めませんでした。';
+      show(info.textContent);
+      return;
+    }
+    MON.pendingImage = {
+      mimeType: file.type,
+      base64: dataUrl.slice(comma + 1),
+      originalName: file.name,
+      size: file.size
+    };
+    info.textContent = file.name + '（' + monFormatFileSize(file.size) + '）を選択中。';
+    button.disabled = MON.editBusy;
+  };
+  reader.onerror = function(){
+    if (!MON.current || MON.current.id !== monsterId) return;
+    input.value = '';
+    info.textContent = '画像を読み込めませんでした。';
+    show(info.textContent);
+  };
+  reader.readAsDataURL(file);
+}
+
+function monUploadImage(){
+  if (!MON.pendingImage) {
+    show('先に画像ファイルを選んでください。');
+    return;
+  }
+
+  if (MON.current.image) {
+    var ok = confirm('現在の画像「' + MON.current.image + '」を差し替えます。\n' +
+      'Drive上の同じIDの旧画像はゴミ箱へ移動します。\n\nよろしいですか？');
+    if (!ok) return;
+  }
+
+  var payload = {
+    id: MON.current.id,
+    mimeType: MON.pendingImage.mimeType,
+    base64: MON.pendingImage.base64,
+    baseUpdatedAt: MON.current.updatedAt
+  };
+
+  monSetEditBusy(true);
+  show('画像をアップロード中…');
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      MON.current.image = res.image;
+      MON.current.updatedAt = res.updatedAt;
+      el('mon_f_imageCurrent').value = res.image;
+      el('mon_f_imageFile').value = '';
+      el('mon_imageFileInfo').textContent = res.image + '（' + monFormatFileSize(res.size) + '）を保存しました。';
+      MON.pendingImage = null;
+      for (var i = 0; i < MON.boot.monsters.length; i++) {
+        if (MON.boot.monsters[i].id === res.id) {
+          MON.boot.monsters[i].updatedAt = res.updatedAt;
+          break;
+        }
+      }
+      monSetEditBusy(false);
+      show('画像をアップロードしました。Drive: monster/' + res.image +
+        '\nサイトに表示されるのはC6・C7の完成後です。');
+    })
+    .withFailureHandler(function(e){
+      monSetEditBusy(false);
+      show(e.message);
+    })
+    .api_monUploadImage(payload);
+}
+
+// ---------------------------------------------------------------- 保存
+function monSave(){
+  var mode = monAuthorMode();
+  var ghost = el('mon_f_ghostName').value.trim();
+  if (mode === 'ghost' && !ghost) {
+    show('代筆を選んだときは著者名を入れてください。');
+    return;
+  }
+
+  var newAuthor = (mode === 'author') ? MON.boot.me.nickname : (mode === 'ghost' ? ghost : null);
+  if (newAuthor && MON.current.author && MON.current.author !== newAuthor) {
+    var ok = confirm('著者を「' + MON.current.author + '」から「' + newAuthor + '」に変更します。\n' +
+      '元の著者は加筆者として残ります。記録上の更新者はあなた（' + MON.boot.me.nickname + '）です。\n\nよろしいですか？');
+    if (!ok) return;
+  }
+
+  var mainBlood = el('mon_f_mainBlood').value;
+  var subBlood = el('mon_f_subBlood').value;
+  if (mainBlood !== MON.current.mainBlood || subBlood !== MON.current.subBlood) {
+    var ok2 = confirm('血統を変更しました。\n' +
+      MON.current.mainBlood + ' / ' + MON.current.subBlood + ' → ' + mainBlood + ' / ' + subBlood + '\n\n' +
+      'IDと公開URLが変わる場合があります。よろしいですか？');
+    if (!ok2) return;
+  }
+
+  var payload = {
+    id: MON.current.id,
+    aura: el('mon_f_aura').value,
+    mon: el('mon_f_mon').value,
+    mainBlood: mainBlood,
+    subBlood: subBlood,
+    limited: el('mon_f_limited').checked,
+    limitedLabel: el('mon_f_limitedLabel').value,
+    releasedAt: el('mon_f_releasedAt').value.trim(),
+    explanation: el('mon_f_explanation').value,
+    formations: el('mon_f_formations').value,
+    monAuthorMode: mode,
+    ghostName: ghost,
+    baseUpdatedAt: MON.current.updatedAt
+  };
+
+  monSetEditBusy(true);
+  show('保存中…');
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      monSetEditBusy(false);
+      MON.current.updatedAt = res.updatedAt;
+      MON.current.author = res.author;
+      MON.current.contributors = res.contributors.join(', ');
+      MON.current.createdAt = res.createdAt;
+      MON.current.mainBlood = payload.mainBlood;
+      MON.current.subBlood = payload.subBlood;
+      MON.current.explanation = payload.explanation;
+
+      // 一覧側も更新する（開き直さずに済むように）
+      for (var i = 0; i < MON.boot.monsters.length; i++) {
+        if (MON.boot.monsters[i].id !== res.id) continue;
+        MON.boot.monsters[i].visibleChars = res.visibleChars;
+        MON.boot.monsters[i].indexable = res.indexable;
+        MON.boot.monsters[i].author = res.author;
+        MON.boot.monsters[i].hasExplanation = !!payload.explanation;
+        MON.boot.monsters[i].mainBlood = payload.mainBlood;
+        MON.boot.monsters[i].subBlood = payload.subBlood;
+        MON.boot.monsters[i].mon = payload.mon;
+        MON.boot.monsters[i].aura = payload.aura;
+        MON.boot.monsters[i].releasedAt = payload.releasedAt;
+        MON.boot.monsters[i].updatedAt = res.updatedAt;
+        break;
+      }
+      monRenderStats();
+      monRenderList();
+      show('保存しました（' + res.kind + '）。著者：' + (res.author || '未設定') +
+        '　' + res.visibleChars + '字　' + (res.indexable ? 'インデックス対象' : 'noindex'));
+    })
+    .withFailureHandler(function(e){
+      monSetEditBusy(false);
+      show(e.message);
+    })
+    .api_monSave(payload);
+}
+
+</script>
