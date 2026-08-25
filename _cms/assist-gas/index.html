@@ -40,6 +40,13 @@
     .message { min-height:20px; margin:0 0 12px; padding:8px 10px; border-radius:6px; background:#edf6eb; color:#2e642d; display:none; white-space:pre-wrap; }
     .message.error { display:block; background:#fdecec; color:var(--danger); }
     .message.show { display:block; }
+    #message.show { position:fixed; left:50%; bottom:var(--message-bottom,22px); z-index:30; width:min(680px,calc(100vw - 28px)); transform:translateX(-50%); box-shadow:0 4px 18px rgba(40,25,10,.24); }
+    fieldset.ocr-candidate { margin:14px 0; padding:14px; border:2px solid var(--line); border-radius:9px; transition:background .15s,border-color .15s; }
+    fieldset.ocr-candidate.conditional { border-color:#d09b22; background:#fff3c4; }
+    fieldset.ocr-candidate.universal { background:#fff; }
+    .busy-overlay { position:fixed; inset:0; z-index:40; display:none; align-items:flex-end; justify-content:center; padding:0 16px 26px; background:rgba(48,42,34,.18); }
+    .busy-overlay.show { display:flex; }
+    .busy-dialog { min-width:min(440px,calc(100vw - 32px)); padding:16px 20px; border-radius:10px; background:#302a22; color:#fff; box-shadow:0 6px 24px rgba(0,0,0,.3); text-align:center; font-weight:700; }
     .ability-list { display:grid; gap:8px; margin-top:12px; }
     .ability-item { display:flex; gap:8px; align-items:center; padding:9px; border:1px solid var(--line); border-radius:7px; }
     .ability-item button { margin-left:auto; }
@@ -77,32 +84,50 @@
   </aside>
   <section id="editor" class="panel editor"><div class="empty">左の一覧からカードを選んでください。</div></section>
 </main>
+<div id="busyOverlay" class="busy-overlay" role="status" aria-live="polite"><div id="busyText" class="busy-dialog">処理中…</div></div>
 <script>
 'use strict';
-var state = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0 };
+var LOCAL_PREVIEW=typeof google==='undefined';
+var state = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0,
+  ocrConfigured:false,imageUploadConfigured:false,pendingCardImage:null,ocrFiles:[],ocrCandidates:[],
+  localCardsDoc:null,localEffectsDoc:null };
 var RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
 var ABILITY_TAGS=['オーラ白','オーラ緑','オーラ赤','オーラ青','オーラ黄','オーラ黒','ガッツ回復','ガッツ変化系','クリティカル','シールド','デバフ','不利以外','中盤','前半','創造','命中','命中強化','回避','完全回避','幻霊','序盤','後半','必中','怪物','攻撃','攻撃強化','有利時','無効化','無機','獣族','終盤','被ダメ軽減','追撃','追撃連撃','連撃','魔族'];
+var OCR_CONDITIONS=[['mainBloodlineMatch','主血統一致'],['subBloodlineMatch','副血統一致'],['auraMatch','オーラ一致'],['monTypeMatch','モン類一致'],['speciesMatch','種族一致']];
 function el(id){ return document.getElementById(id); }
 function esc(value){ return String(value == null ? '' : value).replace(/[&<>"']/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function nullableText(id){ var value=el(id).value.trim();return value===''?null:value; }
 function nullableNumber(id,label){ var value=el(id).value.trim();if(value==='')return null;var number=Number(value);if(!isFinite(number))throw new Error(label+'は数値で入力してください。');return number; }
 function checkedValues(name){ return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(input){return input.value;}); }
-function setBusy(busy){ state.busy=busy; document.querySelectorAll('button').forEach(function(button){ button.disabled=busy; }); el('btnExport').disabled=busy||!state.cards.length; }
+function setBusy(busy,message){ state.busy=busy; document.querySelectorAll('button').forEach(function(button){ button.disabled=busy; }); el('btnExport').disabled=busy||!state.cards.length;var overlay=el('busyOverlay');if(overlay){overlay.classList.toggle('show',busy);el('busyText').textContent=message||'通信中…';} }
 function call(name,args,onSuccess){
-  setBusy(true);
-  var runner=google.script.run.withSuccessHandler(function(result){ setBusy(false); onSuccess(result); })
-    .withFailureHandler(function(error){ setBusy(false); show(error&&error.message?error.message:String(error),true); });
-  runner[name].apply(runner,args||[]);
+  setBusy(true,'データを読み込み中…');
+  try{
+    var runner=google.script.run.withSuccessHandler(function(result){ setBusy(false); onSuccess(result); })
+      .withFailureHandler(function(error){ setBusy(false); show(error&&error.message?error.message:String(error),true); });
+    if(typeof runner[name]!=='function')throw new Error('GAS APIが現在のdeploymentにありません: '+name);
+    runner[name].apply(runner,args||[]);
+  }catch(error){setBusy(false);show(error&&error.message?error.message:String(error),true);}
 }
 function show(message,isError){
   var box=el('message');
   if(!box){ alert(message); return; }
+  var actions=el('editor')&&el('editor').querySelector('.actions');
+  box.style.setProperty('--message-bottom',(22+(actions?actions.offsetHeight:0))+'px');
   box.textContent=message; box.className='message show'+(isError?' error':'');
 }
 function boot(){ call('api_bootstrap',[],function(data){
   state.cards=data.cards; el('who').textContent=data.user.nickname+' / '+data.user.role;
+  state.ocrConfigured=Boolean(data.ocr&&data.ocr.configured);
+  state.imageUploadConfigured=Boolean(data.imageUpload&&data.imageUpload.configured);
   el('summary').textContent='カード '+data.cards.length+'件'; el('btnExport').disabled=false; renderList();
 }); }
+function bootLocalPreview(){
+  Promise.all([fetch('/src/data/assist-cards.json').then(function(response){return response.json();}),fetch('/src/data/assist-effects.json').then(function(response){return response.json();})]).then(function(docs){
+    state.localCardsDoc=docs[0];state.localEffectsDoc=docs[1];state.cards=docs[0].cards.map(function(card){var group=docs[1].cards[card.cardId];return{cardId:card.cardId,name:card.name,rarity:card.rarity,aura:card.aura,effects:group&&group.effects?group.effects.length:0,abilities:0};});
+    el('who').textContent='ローカル・読み取り専用';el('summary').textContent='カード '+state.cards.length+'件';el('btnExport').disabled=true;el('btnAbilitySearch').disabled=true;renderList();
+  }).catch(function(error){el('cardList').innerHTML='<div class="empty">ローカルDBを読み込めません: '+esc(error.message)+'</div>';});
+}
 function filteredCards(){
   var q=el('query').value.trim().toLowerCase();
   return state.cards.filter(function(card){ return !q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0; });
@@ -116,7 +141,8 @@ function renderList(){
   el('cardList').querySelectorAll('[data-id]').forEach(function(button){ button.onclick=function(){ openCard(button.dataset.id); }; });
 }
 function openCard(cardId){
-  state.selectedId=cardId; state.tab='card'; renderList();
+  state.selectedId=cardId; state.tab='card'; state.pendingCardImage=null;state.ocrFiles=[];state.ocrCandidates=[];renderList();
+  if(LOCAL_PREVIEW){var card=state.localCardsDoc.cards.find(function(item){return item.cardId===cardId;}),group=state.localEffectsDoc.cards[cardId];state.detail={card:card,version:1,effects:group.effects||[],abilities:[]};document.body.classList.add('editing');renderEditor();return;}
   call('api_getCard',[cardId],function(detail){ state.detail=detail; document.body.classList.add('editing'); renderEditor(); });
 }
 function tabButton(key,label,count){ return '<button class="tab'+(state.tab===key?' active':'')+'" data-tab="'+key+'">'+label+(count==null?'':' ('+count+')')+'</button>'; }
@@ -124,15 +150,17 @@ function renderEditor(){
   var d=state.detail;
   if(!d)return;
   var html='<button class="mobile-back" id="btnBack">← カード一覧</button><div id="message" class="message"></div>'+
-    '<div class="tabs">'+tabButton('card','カード')+tabButton('effects','効果',d.effects.length)+tabButton('abilities','能力',d.abilities.length)+'</div>';
+    '<div class="tabs">'+tabButton('card','カード')+tabButton('effects','効果',d.effects.length)+tabButton('ocr','効果OCR')+tabButton('abilities','能力',d.abilities.length)+'</div>';
   if(state.tab==='card')html+=renderCardForm(d);
   if(state.tab==='effects')html+=renderEffectsForm(d);
+  if(state.tab==='ocr')html+=renderEffectOcr(d);
   if(state.tab==='abilities')html+=renderAbilities(d);
   el('editor').innerHTML=html;
   el('btnBack').onclick=function(){ document.body.classList.remove('editing'); };
   el('editor').querySelectorAll('[data-tab]').forEach(function(button){ button.onclick=function(){ state.tab=button.dataset.tab; renderEditor(); }; });
   if(el('btnSaveCard'))bindCardForm();
   if(el('btnSaveEffects'))bindEffectsForm();
+  if(el('ocrFiles'))bindEffectOcr();
   el('editor').querySelectorAll('[data-ability]').forEach(function(button){ button.onclick=function(){ openAbility(button.dataset.ability); }; });
 }
 function optionList(values,selected,blank){ return (blank?'<option value="">—</option>':'')+values.map(function(value){ return '<option'+(value===selected?' selected':'')+'>'+esc(value)+'</option>'; }).join(''); }
@@ -142,17 +170,22 @@ function renderCardForm(d){
     field('cardId','cardId','text',c.cardId,true)+field('name','カード名','text',c.name)+
     selectField('rarity','レアリティ',['MR','SSR'],c.rarity)+selectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
     field('cardType','カードタイプ','text',c.cardType)+selectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
-    field('image','画像パス','text',c.image)+
+    renderCardImageField(c)+
     field('event2','イベント2','text',c.event2||'')+field('releasedAt','実装日','text',c.releasedAt||'')+
     renderAccessoryField(c.accessoryStatus)+renderRatingsFields(c.ratings)+renderStatsFields(c.stats)+
     sourceManagedField('凸データ','参照専用（元データをそのまま保持）')+
     renderFormationsField(c.formations)+sourceManagedField('SAPO参照',c.sapoRef?'参照専用（'+c.sapoRef.type+' / index '+c.sapoRef.sapoIndex+'）':'参照なし')+
     '<div class="field wide"><label>管理者解説</label><textarea id="f_explanation" rows="12">'+esc(c.explanation)+'</textarea></div>'+
-    '</div><div class="actions"><button class="primary" id="btnSaveCard">カードをtest保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
+    '</div><div class="actions"><button class="primary" id="btnSaveCard"'+(LOCAL_PREVIEW?' disabled':'')+'>カードをtest保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
 }
 function field(id,label,type,value,readonly){ return '<div class="field"><label>'+label+'</label><input id="f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
 function selectField(id,label,values,selected,blank){ return '<div class="field"><label>'+label+'</label><select id="f_'+id+'">'+optionList(values,selected,blank)+'</select></div>'; }
 function sourceManagedField(label,message){ return '<div class="field"><label>'+label+'</label><input class="readonly" readonly value="'+esc(message)+'"></div>'; }
+function renderCardImageField(card){
+  var publicUrl='https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/'+card.image;
+  var message=LOCAL_PREVIEW?'GAS版でアップロードできます':state.imageUploadConfigured?'指定test Driveへ直接アップロード（2MB以下）':'Script PropertiesへASSIST_IMAGE_FOLDER_IDを設定してください';
+  return '<div class="field wide"><label>カード画像</label><input id="f_image" class="readonly" readonly value="'+esc(card.image)+'"><p><img id="cardImagePreview" src="'+esc(publicUrl)+'" alt="'+esc(card.name)+'" style="max-width:220px;max-height:300px;border-radius:8px"></p><input id="f_imageFile" type="file" accept="image/jpeg,image/png,image/webp"'+(!state.imageUploadConfigured||LOCAL_PREVIEW?' disabled':'')+'><p><button type="button" id="btnUploadCardImage"'+(!state.imageUploadConfigured||LOCAL_PREVIEW?' disabled':'')+'>画像をtest Driveへアップロード</button> <span class="muted">'+esc(message)+'</span></p></div>';
+}
 function renderAccessoryField(value){
   return '<div class="field"><label>アクセサリー</label><select id="f_accessoryStatus"><option value="unknown"'+(value==='unknown'?' selected':'')+'>未確認</option><option value="yes"'+(value==='yes'?' selected':'')+'>あり</option><option value="no"'+(value==='no'?' selected':'')+'>なし</option></select></div>';
 }
@@ -176,9 +209,29 @@ function formationRow(formation,index){
 function renderFormationsField(formations){ return '<div class="field wide"><label>おすすめ編成</label><div id="formationRows">'+formations.map(formationRow).join('')+'</div><button type="button" id="btnAddFormation">編成を追加</button></div>'; }
 function bindCardForm(){
   el('btnSaveCard').onclick=saveCard;
+  if(el('f_imageFile'))el('f_imageFile').onchange=selectCardImage;
+  if(el('btnUploadCardImage'))el('btnUploadCardImage').onclick=uploadCardImage;
   var enabled=el('f_ratingsEnabled');function toggleRatings(){RATING_FIELDS.forEach(function(item){el('f_rating_'+item[0]).disabled=!enabled.checked;});}enabled.onchange=toggleRatings;toggleRatings();
   el('btnAddFormation').onclick=function(){var index=document.querySelectorAll('[data-formation-row]').length;el('formationRows').insertAdjacentHTML('beforeend',formationRow(null,index));bindFormationRemove();};
   bindFormationRemove();
+}
+function selectCardImage(){
+  var file=this.files&&this.files[0];state.pendingCardImage=null;if(!file)return;
+  if(['image/jpeg','image/png','image/webp'].indexOf(file.type)<0){show('JPEG / PNG / WebPだけを選択してください。',true);this.value='';return;}
+  if(!file.size||file.size>2*1024*1024){show('画像は2MB以下にしてください。',true);this.value='';return;}
+  var reader=new FileReader();reader.onerror=function(){show('画像を読み込めません。',true);};reader.onload=function(){var dataUrl=String(reader.result);state.pendingCardImage={name:file.name,mimeType:file.type,size:file.size,base64:dataUrl.split(',')[1]};el('cardImagePreview').src=dataUrl;show('画像を確認し、アップロードボタンを押してください。',false);};reader.readAsDataURL(file);
+}
+function uploadCardImage(){
+  try{
+    if(!state.pendingCardImage)throw new Error('アップロードする画像を選択してください。');
+    if(!confirm('選択した画像を指定test Driveへ保存します。\n同じcardIdの旧画像がDriveにある場合はゴミ箱へ移動します。\n既存91画像をDriveへ複製する処理ではありません。\n\nよろしいですか？'))return;
+    var file=state.pendingCardImage;
+    call('api_uploadCardImage',[{cardId:state.selectedId,version:state.detail.version,fileName:file.name,mimeType:file.mimeType,base64:file.base64}],function(result){
+      state.pendingCardImage=null;state.detail.card.image=result.image;state.detail.version=result.version;
+      el('f_image').value=result.image;el('f_imageFile').value='';el('btnUploadCardImage').disabled=true;
+      show('指定test Driveへ保存しました: '+result.fileName+'（'+result.bytes+' bytes）。サイト表示はGitHub公開後です。',false);
+    });
+  }catch(error){show(error.message,true);}
 }
 function bindFormationRemove(){ document.querySelectorAll('[data-remove-formation]').forEach(function(button){button.onclick=function(){button.closest('[data-formation-row]').remove();};}); }
 function collectRatings(){ if(!el('f_ratingsEnabled').checked)return null;var result={};RATING_FIELDS.forEach(function(item){result[item[0]]=nullableNumber('f_rating_'+item[0],item[1]);});return result; }
@@ -220,7 +273,7 @@ function effectRow(effect,index){
     '<button type="button" data-effect-up>↑ 上へ</button> <button type="button" data-effect-down>↓ 下へ</button> <button type="button" data-effect-remove>削除</button></fieldset>';
 }
 function renderEffectsForm(d){ return '<p class="muted">effectIdは変更不可、sortOrderは表示順から自動設定します。</p><div id="effectRows">'+d.effects.map(effectRow).join('')+'</div><button type="button" id="btnAddEffect">効果を追加</button>'+
-  '<div class="actions"><button class="primary" id="btnSaveEffects">効果をtest保存</button><span class="muted">0件で保存するとdraftになります</span></div>'; }
+  '<div class="actions"><button class="primary" id="btnSaveEffects"'+(LOCAL_PREVIEW?' disabled':'')+'>効果をtest保存</button><span class="muted">0件で保存するとdraftになります</span></div>'; }
 function collectEffects(validate){
   return Array.from(document.querySelectorAll('[data-effect-row]')).map(function(row,index){
     var effect={effectId:row.querySelector('input[readonly]').value,name:row.querySelector('input:not([readonly])').value.trim(),description:row.querySelector('textarea').value.trim(),unlockRank:row.querySelector('select').value,sortOrder:index+1};
@@ -239,6 +292,148 @@ function bindEffectsForm(){
   });
 }
 function saveEffects(){ try{ var effects=collectEffects(true);call('api_saveEffects',[{cardId:state.selectedId,effects:effects}],function(){show('効果を保存しました。',false);openCard(state.selectedId);});}catch(error){show(error.message,true);} }
+function ocrComparisonKey(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[\s「」『』【】\[\]()（）<>＜＞・、。:：!！?？/／]/g,'');}
+function ocrTitleKey(value){return ocrComparisonKey(value).replace(/[|｜]/g,'ii').replace(/\+$/,'');}
+function ocrEditDistance(left,right){var previous=Array.from({length:right.length+1},function(_,index){return index;});for(var i=1;i<=left.length;i++){var current=[i];for(var j=1;j<=right.length;j++)current[j]=Math.min(current[j-1]+1,previous[j]+1,previous[j-1]+(left.charAt(i-1)===right.charAt(j-1)?0:1));previous=current;}return previous[right.length];}
+function ocrMatchesKnownTitle(value,known){var key=ocrTitleKey(value);return known.some(function(knownName){var knownKey=ocrTitleKey(knownName);return key===knownKey||(Math.min(key.length,knownKey.length)>=6&&ocrEditDistance(key,knownKey)<=2);});}
+function ocrMedian(values){var sorted=values.slice().sort(function(a,b){return a-b;});return sorted.length?sorted[Math.floor(sorted.length/2)]:null;}
+function ocrBounds(vertices){
+  var xs=vertices.map(function(vertex){return Number(vertex.x||0);}),ys=vertices.map(function(vertex){return Number(vertex.y||0);});
+  return {x:Math.min.apply(null,xs),y:Math.min.apply(null,ys),width:Math.max.apply(null,xs)-Math.min.apply(null,xs),height:Math.max.apply(null,ys)-Math.min.apply(null,ys)};
+}
+function ocrVisionLines(payload){
+  var response=payload&&payload.responses&&payload.responses[0],page=response&&response.fullTextAnnotation&&response.fullTextAnnotation.pages&&response.fullTextAnnotation.pages[0];
+  if(!page)throw new Error('OCR結果に座標付きテキストがありません。');
+  var lines=[],text='',vertices=[];
+  function flush(){var value=text.normalize('NFKC').replace(/\s+/g,' ').trim();if(value&&vertices.length)lines.push({text:value,bounds:ocrBounds(vertices)});text='';vertices=[];}
+  (page.blocks||[]).forEach(function(block){(block.paragraphs||[]).forEach(function(paragraph){(paragraph.words||[]).forEach(function(word){(word.symbols||[]).forEach(function(symbol){
+    text+=symbol.text||'';vertices=vertices.concat(symbol.boundingBox&&symbol.boundingBox.vertices||[]);
+    var type=symbol.property&&symbol.property.detectedBreak&&symbol.property.detectedBreak.type;
+    if(type==='SPACE'||type==='SURE_SPACE')text+=' ';if(type==='EOL_SURE'||type==='LINE_BREAK')flush();
+  });});flush();});});
+  return {width:Number(page.width),height:Number(page.height),lines:lines};
+}
+function ocrLooksLikeTitle(line,known){
+  var text=String(line.text||'').trim();
+  if(!text||text.length>42||/^(?:アシスト|能力|イベント|とじる)$/.test(text))return false;
+  if(ocrMatchesKnownTitle(text,known))return true;
+  if(known.length>=5)return false;
+  if(/^(?:育成対象|一緒に|忠誠度に|ブリーダーが|かしこさ|人気度)/.test(text))return false;
+  return /\+\s*\d+(?:\.\d+)?%?$/.test(text)||/(?:継承|鍛錬|共鳴|ブリーダー)$/.test(text);
+}
+function ocrParseCandidates(payload,file){
+  var parsed=ocrVisionLines(payload),known=state.detail.effects.map(function(effect){return effect.name;});
+  var sorted=parsed.lines.slice().sort(function(a,b){return a.bounds.y-b.bounds.y||a.bounds.x-b.bounds.x;});
+  var anchor=sorted.find(function(line){return ocrComparisonKey(line.text)===ocrComparisonKey('アシスト効果');});
+  var close=sorted.find(function(line){return ocrComparisonKey(line.text)===ocrComparisonKey('とじる');});
+  var content=sorted.filter(function(line){return(!anchor||line.bounds.y>anchor.bounds.y+anchor.bounds.height)&&(!close||line.bounds.y<close.bounds.y);});
+  var titleIndexes=[];content.forEach(function(line,index){if(ocrLooksLikeTitle(line,known))titleIndexes.push(index);});
+  return titleIndexes.map(function(start,index){
+    var group=content.slice(start,titleIndexes[index+1]===undefined?content.length:titleIndexes[index+1]),title=group[0];
+    var description=group.slice(1).filter(function(line){return line.bounds.x<title.bounds.x+Math.max(500,title.bounds.width*5);}).map(function(line){return line.text.trim();}).join('');
+    var candidate={name:title.text.trim(),description:description,titleBounds:title.bounds,activationScope:'unknown',activationConditions:null,
+      backgroundConfidence:0,backgroundScore:null,unlockRank:null,blueMarkers:null,
+      sourceScreenshots:[file.name],issues:description?[]:['description-empty-or-cropped']};
+    return ocrAnalyzeVisual(candidate,file,parsed,index<titleIndexes.length-1?content[titleIndexes[index+1]].bounds.y:null);
+  });
+}
+function ocrPixelSamples(file,parsed,bounds,nextY){
+  var canvas=document.createElement('canvas'),context=canvas.getContext('2d');canvas.width=file.image.naturalWidth;canvas.height=file.image.naturalHeight;context.drawImage(file.image,0,0);
+  var sx=canvas.width/parsed.width,sy=canvas.height/parsed.height,x1=Math.floor(canvas.width*.35),x2=Math.floor(canvas.width*.82);
+  var y1=Math.max(0,Math.floor((bounds.y+bounds.height+5)*sy)),y2=Math.min(canvas.height,Math.floor(((nextY||bounds.y+bounds.height+130)-8)*sy));
+  var samples=[];for(var y=y1;y<y2;y+=10){for(var x=x1;x<x2;x+=12){var data=context.getImageData(x,y,1,1).data;samples.push({r:data[0],g:data[1],b:data[2]});}}
+  return {context:context,sx:sx,sy:sy,samples:samples};
+}
+function ocrClassifyBackground(samples){
+  var usable=samples.map(function(sample){var max=Math.max(sample.r,sample.g,sample.b),min=Math.min(sample.r,sample.g,sample.b);return{yellowBias:sample.r-sample.b,saturation:max?(max-min)/max:0,brightness:(sample.r+sample.g+sample.b)/3};}).filter(function(feature){return feature.brightness>=120;});
+  if(usable.length<5)return{scope:'unknown',confidence:0,score:null};
+  var score=ocrMedian(usable.map(function(feature){return feature.yellowBias;}))+ocrMedian(usable.map(function(feature){return feature.saturation;}))*100;
+  if(score>=58)return{scope:'conditional',confidence:Math.min(1,(score-45)/35),score:score};
+  if(score<=38)return{scope:'universal',confidence:Math.min(1,(50-score)/30),score:score};
+  return{scope:'unknown',confidence:0,score:score};
+}
+function ocrDetectUnlock(context,parsed,bounds,sx,sy){
+  var ratios=[.775,.817,.859,.901],blue=0,y=Math.round((bounds.y+bounds.height*.5)*sy);
+  ratios.forEach(function(ratio){var hit=0,total=0,cx=Math.round(context.canvas.width*ratio);for(var dy=-5;dy<=5;dy+=2){for(var dx=-5;dx<=5;dx+=2){var d=context.getImageData(cx+dx,y+dy,1,1).data;total++;if(d[2]>=115&&d[1]>=115&&d[2]>d[0]*1.25&&d[1]>d[0]*1.25)hit++;}}if(hit>=Math.max(2,Math.ceil(total*.15)))blue++;});
+  return{blueMarkers:blue,unlockRank:['無凸','1凸','2凸','3凸','4凸'][blue]};
+}
+function ocrBreederDependency(name,description){
+  var type=/モン類ブリーダー/.test(name)?'monTypeMatch':/オーラブリーダー/.test(name)?'auraMatch':null;if(!type)return null;
+  var match=description.match(/ブリーダー[^、。]*(?:とき|時)(?:でも)?/);return{sourceText:match?match[0]:description,expression:{type:type},basis:'breeder-dependency'};
+}
+function ocrActivationConditions(description,scope,name){
+  if(scope!=='conditional')return null;var end=description.indexOf('とき');if(end<0)return ocrBreederDependency(name||'',description);var sourceText=description.slice(0,end+2).replace(/[、,]\s*$/,'');
+  var defs=[['mainBloodlineMatch',/主血統/],['subBloodlineMatch',/副血統/],['auraMatch',/オーラ/],['monTypeMatch',/モン類/],['speciesMatch',/種族/]];
+  var operands=defs.filter(function(def){return def[1].test(sourceText);}).map(function(def){return{type:def[0]};});if(!operands.length)return ocrBreederDependency(name||'',description);
+  if(operands.length===1)return{sourceText:sourceText,expression:operands[0],basis:'direct-text'};var hasOr=/(?:または|もしくは|いずれか)/.test(sourceText),hasAnd=/(?:かつ|且つ|および|及び)/.test(sourceText);
+  if(hasOr===hasAnd)return null;return{sourceText:sourceText,expression:{operator:hasOr?'or':'and',operands:operands},basis:'direct-text'};
+}
+function ocrAnalyzeVisual(candidate,file,parsed,nextY){
+  var pixels=ocrPixelSamples(file,parsed,candidate.titleBounds,nextY),background=ocrClassifyBackground(pixels.samples),unlock=ocrDetectUnlock(pixels.context,parsed,candidate.titleBounds,pixels.sx,pixels.sy);
+  candidate.activationScope=background.scope;candidate.backgroundConfidence=background.confidence;candidate.backgroundScore=background.score;
+  candidate.unlockRank=unlock.unlockRank;candidate.blueMarkers=unlock.blueMarkers;candidate.activationConditions=ocrActivationConditions(candidate.description,candidate.activationScope,candidate.name);
+  if(candidate.activationScope==='unknown')candidate.issues.push('background-unknown');
+  if(candidate.activationScope==='conditional'&&!candidate.activationConditions)candidate.issues.push('activation-condition-needs-review');return candidate;
+}
+function ocrMergeCandidates(groups){
+  var merged=[];groups.forEach(function(group){group.forEach(function(candidate){var current=merged.find(function(item){return ocrComparisonKey(item.name)===ocrComparisonKey(candidate.name);});
+    if(!current){merged.push(candidate);return;}if(candidate.description.length>current.description.length)current.description=candidate.description;
+    current.sourceScreenshots=current.sourceScreenshots.concat(candidate.sourceScreenshots).filter(function(value,index,array){return array.indexOf(value)===index;});
+    ['activationScope','unlockRank'].forEach(function(field){if((current[field]==='unknown'||current[field]===null)&&candidate[field]!=null)current[field]=candidate[field];else if(candidate[field]!=null&&candidate[field]!=='unknown'&&current[field]!==candidate[field])current.issues.push(field+'-conflict');});
+    if(!current.activationConditions&&candidate.activationConditions)current.activationConditions=candidate.activationConditions;current.issues=current.issues.concat(candidate.issues).filter(function(value,index,array){return array.indexOf(value)===index;});
+  });});return merged;
+}
+function renderEffectOcr(){
+  var status=LOCAL_PREVIEW?'ローカル画面確認：OCR実行はGAS版で行います':state.ocrConfigured?'Google Cloud Vision接続設定済み':'未設定：Script PropertiesへGOOGLE_CLOUD_VISION_API_KEYが必要';
+  return '<h2>アシスト効果OCR</h2><p class="muted">画像とOCR候補はこの画面を開いている間だけブラウザ内に保持します。Driveやスプレッドシートには保存せず、ページの再読み込み・カード切替・候補破棄で消えます。</p><div class="message show">'+esc(status)+'</div>'+
+    '<div class="field"><label>スクロール画像（JPEG / PNG / WebP、複数可、1枚8MB以下）</label><input id="ocrFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>'+
+    '<div id="ocrPreviews">'+state.ocrFiles.map(function(file){return '<figure style="display:inline-block;margin:10px 10px 10px 0"><img src="'+file.dataUrl+'" alt="'+esc(file.name)+'" style="max-width:180px;max-height:260px;display:block"><figcaption class="muted">'+esc(file.name)+'</figcaption></figure>';}).join('')+'</div>'+
+    '<p><button type="button" class="primary" id="btnRunOcr"'+(!state.ocrConfigured||!state.ocrFiles.length?' disabled':'')+'>選択画像をOCR</button> <button type="button" id="btnOcrDemo">既存効果で画面を試す</button></p>'+
+    '<div id="ocrCandidates">'+(state.ocrCandidates.length?state.ocrCandidates.map(renderOcrCandidate).join(''):'<div class="empty">画像を選択してOCRを実行してください。</div>')+'</div>'+
+    (state.ocrCandidates.length?'<fieldset><legend>原画像確認</legend><label><input type="checkbox" id="ocrSourceConfirmed"> 表示中の原画像と全候補の文字・背景・解放段階・発動条件を照合しました</label><p class="muted">チェック後に効果編集へ反映できます。未反映の候補はブラウザを閉じると破棄されます。</p></fieldset><div class="actions"><button type="button" class="primary" id="btnApplyOcr">効果編集へ反映（未保存）</button><button type="button" id="btnDiscardOcr">候補を破棄</button><span class="muted">反映後に効果タブで再確認・test保存</span></div>':'');
+}
+function renderOcrCandidate(candidate,index){
+  var types=candidate.activationConditions?(candidate.activationConditions.expression.operands||[candidate.activationConditions.expression]).map(function(item){return item.type;}):[];
+  var operator=candidate.activationConditions&&candidate.activationConditions.expression.operator||'or';
+  var basis=candidate.activationConditions&&candidate.activationConditions.basis||'';var basisLabel=basis==='breeder-dependency'?'ブリーダー効果への依存から判定':basis==='direct-text'?'条件原文から直接判定':basis==='manual'?'手動指定':'未判定';
+  return '<fieldset class="ocr-candidate '+esc(candidate.activationScope)+'" data-ocr-candidate><legend>OCR候補 '+(index+1)+'</legend><div class="grid">'+
+    '<div class="field"><label>背景</label><select data-ocr-scope><option value="unknown"'+(candidate.activationScope==='unknown'?' selected':'')+'>要確認</option><option value="conditional"'+(candidate.activationScope==='conditional'?' selected':'')+'>黄色・条件付き</option><option value="universal"'+(candidate.activationScope==='universal'?' selected':'')+'>白・汎用</option></select></div>'+
+    '<div class="field"><label>解放ランク</label><select data-ocr-rank>'+optionList(['無凸','1凸','2凸','3凸','4凸'],candidate.unlockRank)+'</select></div>'+
+    '<div class="field wide"><label>効果名</label><input data-ocr-name value="'+esc(candidate.name)+'"></div>'+
+    '<div class="field wide"><label>説明</label><textarea data-ocr-description>'+esc(candidate.description)+'</textarea></div>'+
+    '<div class="field wide"><label>効果全体の発動条件（黄色背景のみ）</label><div>'+OCR_CONDITIONS.map(function(item){return '<label><input type="checkbox" data-ocr-condition value="'+item[0]+'"'+(types.indexOf(item[0])>=0?' checked':'')+'> '+item[1]+'</label> ';}).join('')+'</div>'+
+    '<div class="grid"><div class="field"><label>複数条件の関係</label><select data-ocr-operator><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option></select></div>'+
+    '<div class="field"><label>条件原文（自動抽出・OCR照合用）</label><input data-ocr-source value="'+esc(candidate.activationConditions&&candidate.activationConditions.sourceText||'')+'"><span class="muted" data-ocr-basis="'+esc(basis)+'">判定根拠: '+esc(basisLabel)+'</span></div></div></div></div>'+
+    '<p class="muted">元画像: '+esc((candidate.sourceScreenshots||[]).join(' / '))+(candidate.issues&&candidate.issues.length?' ・ 要確認: '+esc(candidate.issues.join(', ')):'')+'</p></fieldset>';
+}
+function readOcrFile(file){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onerror=function(){reject(new Error(file.name+'を読み込めません。'));};reader.onload=function(){var image=new Image();image.onerror=function(){reject(new Error(file.name+'は画像として読み込めません。'));};image.onload=function(){resolve({name:file.name,mimeType:file.type,size:file.size,dataUrl:reader.result,base64:String(reader.result).split(',')[1],image:image});};image.src=reader.result;};reader.readAsDataURL(file);});}
+function gasPromise(name,args){return new Promise(function(resolve,reject){var runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(function(error){reject(new Error(error&&error.message?error.message:String(error)));});runner[name].apply(runner,args||[]);});}
+function bindEffectOcr(){
+  el('ocrFiles').onchange=function(){var files=Array.from(this.files||[]);if(files.length>8){show('画像は一度に8枚までです。',true);return;}setBusy(true,'画像を読み込み中…');Promise.all(files.map(readOcrFile)).then(function(items){state.ocrFiles=items;setBusy(false);renderEditor();}).catch(function(error){setBusy(false);show(error.message,true);});};
+  el('btnOcrDemo').onclick=function(){state.ocrCandidates=state.detail.effects.map(function(effect){var activation=ocrActivationConditions(effect.description,'conditional',effect.name);return{name:effect.name,description:effect.description,activationScope:activation?'conditional':'universal',activationConditions:activation,unlockRank:effect.unlockRank,sourceScreenshots:['画面デモ'],issues:activation?[]:['demo-background-not-available']};});renderEditor();};
+  document.querySelectorAll('[data-ocr-candidate]').forEach(function(row){row.querySelector('[data-ocr-scope]').onchange=function(){row.classList.toggle('conditional',this.value==='conditional');row.classList.toggle('universal',this.value==='universal');if(this.value==='conditional')populateOcrConditionFields(row);};row.querySelector('[data-ocr-description]').onblur=function(){if(row.querySelector('[data-ocr-scope]').value==='conditional')populateOcrConditionFields(row);};});
+  if(el('btnRunOcr'))el('btnRunOcr').onclick=runEffectOcr;
+  if(el('btnApplyOcr'))el('btnApplyOcr').onclick=applyOcrCandidates;
+  if(el('btnDiscardOcr'))el('btnDiscardOcr').onclick=function(){if(!confirm('表示中のOCR候補を破棄しますか？'))return;state.ocrFiles=[];state.ocrCandidates=[];renderEditor();show('OCR候補を破棄しました。',false);};
+}
+function populateOcrConditionFields(row){
+  var activation=ocrActivationConditions(row.querySelector('[data-ocr-description]').value.trim(),'conditional',row.querySelector('[data-ocr-name]').value.trim());if(!activation)return;
+  var expression=activation.expression,types=(expression.operands||[expression]).map(function(item){return item.type;});
+  row.querySelectorAll('[data-ocr-condition]').forEach(function(input){input.checked=types.indexOf(input.value)>=0;});
+  if(expression.operator)row.querySelector('[data-ocr-operator]').value=expression.operator;row.querySelector('[data-ocr-source]').value=activation.sourceText;var basis=row.querySelector('[data-ocr-basis]');if(basis){basis.dataset.ocrBasis=activation.basis||'manual';basis.textContent='判定根拠: '+(activation.basis==='breeder-dependency'?'ブリーダー効果への依存から判定':'条件原文から直接判定');}
+}
+function runEffectOcr(){
+  if(!state.ocrFiles.length)return;setBusy(true,'OCRを開始しています…');var groups=[];var chain=Promise.resolve();state.ocrFiles.forEach(function(file,index){chain=chain.then(function(){setBusy(true,'OCR処理中 '+(index+1)+' / '+state.ocrFiles.length+'：'+file.name);return gasPromise('api_ocrEffectImage',[{cardId:state.selectedId,fileName:file.name,mimeType:file.mimeType,base64:file.base64}]);}).then(function(result){groups.push(ocrParseCandidates(result.vision,file));});});
+  chain.then(function(){state.ocrCandidates=ocrMergeCandidates(groups);setBusy(false);renderEditor();show('OCR候補 '+state.ocrCandidates.length+'件を作成しました。原画像と照合してください。',false);}).catch(function(error){setBusy(false);show(error.message,true);});
+}
+function collectOcrCandidates(){return Array.from(document.querySelectorAll('[data-ocr-candidate]')).map(function(row,index){
+  var scope=row.querySelector('[data-ocr-scope]').value,name=row.querySelector('[data-ocr-name]').value.trim(),description=row.querySelector('[data-ocr-description]').value.trim(),rank=row.querySelector('[data-ocr-rank]').value;
+  if(!name||!description)throw new Error('OCR候補 '+(index+1)+'の効果名・説明は必須です。');if(scope==='unknown')throw new Error('OCR候補 '+(index+1)+'の背景を確認してください。');
+  var activation=null,issues=(state.ocrCandidates[index].issues||[]).slice();if(scope==='conditional'){var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});var source=row.querySelector('[data-ocr-source]').value.trim();if(!types.length)throw new Error('OCR候補 '+(index+1)+'の条件付き効果は、発動条件を1件以上選択してください。');if(!source)throw new Error('OCR候補 '+(index+1)+'の条件原文を入力してください。');var operands=types.map(function(type){return{type:type};});var basis=row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual';activation={sourceText:source,expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},basis:basis};}
+  issues=issues.filter(function(issue){if(issue==='background-unknown')return false;if(issue==='activation-condition-needs-review'&&(scope!=='conditional'||activation))return false;return true;});
+  return{name:name,description:description,activationScope:scope,activationConditions:activation,unlockRank:rank,sourceScreenshots:state.ocrCandidates[index].sourceScreenshots||[],issues:issues};
+});}
+function applyOcrCandidates(){try{if(!el('ocrSourceConfirmed').checked)throw new Error('原画像と全候補を照合し、確認チェックを入れてください。');var candidates=collectOcrCandidates();if(candidates.some(function(candidate){return candidate.issues&&candidate.issues.length;}))throw new Error('要確認項目が残っています。背景・発動条件・OCR文字列を原画像と照合してください。');if(!confirm('照合済みOCR候補 '+candidates.length+'件を効果編集へ反映します。まだtest保存はされません。'))return;var existing=state.detail.effects.slice(),used={};var effects=candidates.map(function(candidate,index){var match=existing.find(function(effect){return !used[effect.effectId]&&ocrComparisonKey(effect.name)===ocrComparisonKey(candidate.name);});var id;if(match){id=match.effectId;used[id]=true;}else{id=nextEffectId(existing.concat(Object.keys(used).map(function(key){return{effectId:key};})));used[id]=true;}return{effectId:id,name:candidate.name,description:candidate.description,unlockRank:candidate.unlockRank,sortOrder:index+1};});state.detail.effects=effects;state.ocrFiles=[];state.ocrCandidates=[];state.tab='effects';renderEditor();show('照合済みOCR候補を効果編集へ反映しました。内容確認後にtest保存してください。',false);}catch(error){show(error.message,true);}}
 function renderAbilities(d){
   return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
     (d.abilities.length?d.abilities.map(function(a){return '<div class="ability-item"><div><strong>'+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
@@ -293,7 +488,7 @@ function exportAll(){
     alert('export成功\n'+result.files.map(function(file){return file.name+'\nSHA-256 '+file.sha256;}).join('\n\n'));
   });
 }
-el('query').oninput=renderList;el('btnAbilitySearch').onclick=searchAbility;el('btnExport').onclick=exportAll;boot();
+el('query').oninput=renderList;el('btnAbilitySearch').onclick=searchAbility;el('btnExport').onclick=exportAll;if(LOCAL_PREVIEW)bootLocalPreview();else boot();
 </script>
 </body>
 </html>
