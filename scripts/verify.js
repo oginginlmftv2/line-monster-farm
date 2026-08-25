@@ -524,6 +524,29 @@ head('8. 秘密情報');
     if (hasCardStatusHeader || !derivesStatus) {
       ng(`cardStatus列またはstatus導出が不正（列 ${hasCardStatusHeader ? 'あり' : 'なし'} / 導出 ${derivesStatus ? 'あり' : 'なし'}）`);
     } else ok('assist_effectsにcardStatus列がなく、effects.lengthからstatusを導出');
+
+    // H-3 検査13: シェルのタブ対応表と実在するdomain-panelを双方向で照合する。
+    const indexSource = htmlSources.find(item => item.file === 'index.html')?.source || '';
+    const panelMapBlock = indexSource.match(/\bvar\s+APP_PANEL_IDS\s*=\s*\{([\s\S]*?)\}\s*;/)?.[1] || '';
+    const panelMapEntries = [...panelMapBlock.matchAll(/(?:^|,)\s*(?:([A-Za-z_$][\w$]*)|['"]([^'"]+)['"])\s*:\s*['"]([^'"]+)['"]/g)]
+      .map(match => ({ tab: match[1] || match[2], panelId: match[3] }));
+    const panelMapValues = new Set(panelMapEntries.map(entry => entry.panelId));
+    const appOpenTabSource = indexSource.match(/function\s+appOpenTab\s*\([^)]*\)\s*\{([^\n]*)\}/)?.[1] || '';
+    const usesPanelMap = /APP_PANEL_IDS\s*\[\s*name\s*\]/.test(appOpenTabSource)
+      && !/name\s*\+\s*['"]_root['"]/.test(appOpenTabSource);
+    const domainPanelIds = htmlSources.filter(item => item.file.startsWith('ui_')).flatMap(item => [...item.source.matchAll(/<([A-Za-z][\w:-]*)\b([^>]*)>/g)]
+      .map(match => match[2])
+      .filter(attributes => /\bclass\s*=\s*(["'])[^"']*\bdomain-panel\b[^"']*\1/.test(attributes))
+      .map(attributes => attributes.match(/\bid\s*=\s*(["'])([^"']+)\1/)?.[2])
+      .filter(Boolean));
+    const allElementIds = new Set(elementIds.map(item => item.id));
+    const missingPanelIds = [...panelMapValues].filter(panelId => !allElementIds.has(panelId));
+    const unreachablePanelIds = [...new Set(domainPanelIds)].filter(panelId => !panelMapValues.has(panelId));
+    if (!panelMapEntries.length || !usesPanelMap || missingPanelIds.length || unreachablePanelIds.length) {
+      ng(`タブとパネルの対応が不正（対応表 ${panelMapEntries.length ? panelMapEntries.map(entry => `${entry.tab}->${entry.panelId}`).join(', ') : '解析不能'} / 対応表の使用 ${usesPanelMap ? 'OK' : 'NG'} / 実在しないID ${missingPanelIds.join(', ') || '0'} / 到達不能パネル ${unreachablePanelIds.join(', ') || '0'}）`);
+    } else {
+      ok(`タブとパネルの対応は双方向一致（${panelMapEntries.map(entry => `${entry.tab}->${entry.panelId}`).join(', ')}）`);
+    }
   }
 
   if (!fs.existsSync(cmsDir)) {
