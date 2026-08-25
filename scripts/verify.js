@@ -248,6 +248,8 @@ head('7. ブランチ名');
 // ---------------------------------------------------------------- 8
 head('8. 秘密情報');
 {
+  const cmsRelativeDir = '_cms';
+  const cmsDir = path.join(REPO, cmsRelativeDir);
   const gasRelativeDir = '_cms/gas';
   const gasDir = path.join(REPO, gasRelativeDir);
   const requiredGasFiles = ['コード.gs', 'index.html'];
@@ -278,7 +280,6 @@ head('8. 秘密情報');
             tokenHits.push({
               file: path.relative(REPO, fp).replace(/\\/g, '/'),
               line: index + 1,
-              type: pattern.name,
             });
           }
         }
@@ -293,12 +294,17 @@ head('8. 秘密情報');
     if (missingGasFiles.length) {
       ng(`GAS基準ファイルがない: ${missingGasFiles.map(file => `${gasRelativeDir}/${file}`).join(', ')}`);
     }
-    scanGitHubTokens(gasDir);
+  }
+
+  if (!fs.existsSync(cmsDir)) {
+    ng(`GitHubトークン検査対象の ${cmsRelativeDir} がない`);
+  } else {
+    scanGitHubTokens(cmsDir);
     if (tokenHits.length) {
       ng('GitHubトークンらしき文字列がある: '
-        + tokenHits.map(hit => `${hit.file}:${hit.line}（${hit.type}）`).join(', '));
-    } else if (!missingGasFiles.length) {
-      ok(`${gasRelativeDir} の必須2ファイルにGitHubトークンらしき文字列なし`);
+        + tokenHits.map(hit => `${hit.file}:${hit.line}`).join(', '));
+    } else {
+      ok(`${cmsRelativeDir} 配下にGitHubトークンらしき文字列なし`);
     }
   }
 
