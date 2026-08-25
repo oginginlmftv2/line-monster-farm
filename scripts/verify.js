@@ -407,11 +407,12 @@ head('8. 秘密情報');
       ng(`破壊的setup処理が40_setup.gs以外にある: ${destructiveOutsideSetup.map(item => item.file).join(', ')}`);
     } else ok('setRows_ / deleteRows / clearContentは40_setup.gsだけに局在');
 
-    // H-3 検査11: 段階3前の3DBの由来を固定し、統合exportの由来も製品名へ固定する。
+    // 段階3で現行test CMSのexport由来へ更新した。
+    // 段階7の本番deployment切替後、統合CMSのexportは ['ライ徹CMS'] を出すため再度更新する。
     const expectedGeneratedFrom = {
-      'src/data/assist-cards.json': ['cards/cards-data.js', 'src/data/cards-editorial.json', 'assist-card-data.js', 'src/data/_audit/sapo-card-map.json'],
-      'src/data/assist-effects.json': ['assist-effect-data.js', 'src/data/assist-cards.json'],
-      'src/data/assist-abilities.json': ['lMfDB_abilities.json', 'src/data/_audit/ability-card-map.json', 'src/data/assist-cards.json'],
+      'src/data/assist-cards.json': ['P12-8 test assist CMS'],
+      'src/data/assist-effects.json': ['P12-8 test assist CMS'],
+      'src/data/assist-abilities.json': ['P12-8 test assist CMS'],
     };
     const wrongGeneratedFrom = Object.entries(expectedGeneratedFrom).filter(([file, expected]) => {
       try { return JSON.stringify(JSON.parse(read(file)).generatedFrom) !== JSON.stringify(expected); }
