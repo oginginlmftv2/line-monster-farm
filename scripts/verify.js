@@ -337,6 +337,10 @@ head('8. 秘密情報');
   ];
   const clientWriteIssues = [];
   for (const file of formerClientWriteFiles) {
+    if (!exists(file)) {
+      clientWriteIssues.push(`${file}: ファイル欠落`);
+      continue;
+    }
     const source = read(file);
     if (/<input[^>]+type=["']password["']/i.test(source)
         || /\bprompt\s*\([^)]*パスワード/i.test(source)) {

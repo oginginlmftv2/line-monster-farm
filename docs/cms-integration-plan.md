@@ -52,42 +52,61 @@ UIが1つでも、公開時に「今回変更したドメイン」でブラン�
 ## 4. 順序
 
 ```
-Phase A  P12-7c  旧カード共通ページのnoindex化       🔴
-Phase B  P11-7〜9 GitHub外部設定の確認と最小権限化    🟡
+Phase A  P12-7c  旧カード共通ページのnoindex化       🔴  完了（PR #43）
+Phase B  P11-10  GitHub権限の前提を確定              ⚪
 Phase C  P12-10  CMS統合の設計                       ⚪
 Phase D  P12-11  test環境で統合実装                  ⚪
-Phase E  P12-12  本番deployment切替                  🟡🔴
-Phase F  P12-13  統合CMSの公開PR経路test             ⚪
+Phase E  P12-12  本番deployment切替＋token1本化      🟡🔴
+Phase F  （旧 統合CMSの公開PR経路test）              —  実施不可
 ```
 
-**なぜ P11-7〜9 が統合より先か。** 統合後のtokenは1本になる。先に統合の姿を決めてから
-発行すれば P11-8 は1回で済む。また P11-9（mainのRuleset）は公開経路の設計に直結し、
-Phase F の前提条件になる。
+### GitHub権限の前提（2026-08-25 確定）
 
-### Phase B で管理者が確認すること（外部画面・読み取りのみ）
+リポジトリのオーナーは別の個人アカウントであり、作業者はコラボレーター（write）である。
+**個人アカウントのリポジトリには「オーナー」と「コラボレーター」の2段階しか無く、
+admin をコラボレーターへ付与できない。** この前提は変わらない。
 
-1. GitHub Settings → Actions → General → Workflow permissions の現在値と、
-   「Allow GitHub Actions to create and approve pull requests」のcheck状態
-2. Developer settings → Personal access tokens で該当tokenの
-   種類・所有者・対象repo・権限・期限（**値は開示しない**）
-3. GAS Script Properties の `GITHUB_TOKEN` と GitHub secret `CMS_PUBLISH_TOKEN` が
-   同一tokenか（値を比較せず台帳で）
-4. Apps Script「ライ徹CMS」のプロジェクト履歴とデプロイ管理で、
-   現在のdeployment版・エディタ版・復旧可能な直前版
+| 操作 | 可否 |
+|---|---|
+| push / PRのマージ / ブランチ作成 | ○ |
+| GitHub Actions の実行と結果確認 | ○ |
+| Secrets and variables の閲覧・編集 | ○ |
+| Settings → Actions → General（Workflow permissions） | **×** |
+| Rulesets / Branch protection | **×** |
+| Pages の設定 / 可視性 / 移管 / 削除 | **×** |
 
-**いずれも保存・再デプロイしない。**
+### この前提が計画に与える影響
+
+- **P11-7 は実施不可。** test Ruleset と Workflow permissions の変更ができない
+- **P11-9 は不要。** main の Ruleset を有効化すると、mainへ直接pushするCMSが止まる。
+  公開ゲートは `scripts/verify-cms-source.js` としてWorkflow内に実装済みで、
+  ブランチ保護が無くても機能する
+- **旧「統合CMSの公開PR経路test」は実施不可。** GitHub Actions によるPR作成に
+  admin 権限の設定が必要なため、統合の必須要件から外す
+- **P11-8（token最小権限化）は実施可能。** ただしCMS統合でtokenが1本になるため、
+  Phase E（P12-12）と同時に1回で行う
+
+**結論: CMS統合（Phase C〜E）は admin 権限なしで完結する。**
+
+### 復旧の前提
+
+リポジトリは公開で、独自ドメイン `line-monster-farm-tetteikouryaku.com` を CNAME で配信している。
+**完全な履歴つきローカルクローンを常に最新に保つこと。**
+配信基盤に問題が生じた場合の復旧は、クローンとドメインの再設定によって行う。
 
 ## 5. タスク番号の改訂
 
 | 新ID | 内容 | 影響 | 旧ID |
 |---|---|:-:|---|
-| P12-7c | 旧カード共通ページのnoindex化 | 🔴 | 新規 |
+| P12-7c | 旧カード共通ページのnoindex化 | 🔴 | 完了（PR #43） |
+| P11-10 | GitHub権限の前提を確定 | ⚪ | 新規 |
 | P12-10 | CMS統合の設計 | ⚪ | 差し替え |
 | P12-11 | test環境での統合実装 | ⚪ | 新規 |
-| P12-12 | 本番deployment切替 | 🟡🔴 | 新規 |
-| P12-13 | 統合CMSの公開PR経路test | ⚪ | 旧P12-10 |
-| P12-14 | 本番移行（カードデータの実運用投入） | 🟡🔴 | 旧P12-11 |
-| P12-15 | 能力検索の再構築 | 🔴 | 旧P12-12 |
+| P12-12 | 本番deployment切替＋token1本化 | 🟡🔴 | 新規（P11-8を吸収） |
+| P12-13 | 本番移行（カードデータの実運用投入） | 🟡🔴 | 旧P12-14 |
+| P12-14 | 能力検索の再構築 | 🔴 | 旧P12-15 |
+
+**旧「統合CMSの公開PR経路test」は admin 権限が必要なため実施しない。**
 
 ## 6. P12-10 で決めること（この文書では決めない）
 

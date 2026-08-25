@@ -30,10 +30,11 @@
 | P12-6 | 能力DB正規化 | `chore/p12-6-assist-abilities-db` | **完了** | ⚪ | PR #36をmainへマージ（`181f245`）。1,079能力をcardId基準へ正規化 |
 | P12-7 | 静的カード詳細生成 | `feat/p12-7-assist-pages` | **完了** | 🔴 | PR #37をmainへマージ（`9afc20d`）。91件を全件noindexで生成し実物確認済み |
 | P12-7b | カード詳細の公開導線切替 | `feat/p12-7b-assist-links` | **完了** | 🔴 | PR #38をmainへマージ（`1883098`）。54件をindex、37件をnoindexとし公開導線を切替 |
-| P12-7c | 旧カード共通ページのnoindex化 | `fix/p12-7c-card-html-noindex` | **進行中** | 🔴 | 重複ページのクロール枠消費を止める。表示機能は維持 |
+| P12-7c | 旧カード共通ページのnoindex化 | `fix/p12-7c-card-html-noindex` | **完了** | 🔴 | PR #43をmainへマージ（`79aa481`） |
 | P12-8 | アシストCMS基盤 | `feat/p12-8-assist-cms` | **完了** | ⚪ | PR #39をmainへマージ（`91f7ab7`）。独立test GAS/Sheetで編集・競合拒否・export一致を実機確認 |
 | P12-8b | CMS構造化フォーム | `feat/p12-8b-assist-forms` | **完了** | 🟡🔴 | PR #41をmainへマージ（`e4b6408`）。schema v3、生成ページ、test deployment v6を反映 |
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
+| P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **進行中** | ⚪ | 個人リポジトリでadmin付与不可を確定。計画からadmin依存を外し、verify.jsのクラッシュも修正 |
 
 ## 最新mainの監査値
 
@@ -210,21 +211,29 @@ P12-7c「旧カード共通ページのnoindex化」を行う。
 
 ## 次の作業
 
-**CMS統合の方針変更により、旧P12-10「CMS公開PR経路test」は後ろへずらす。**
-詳細は `docs/cms-integration-plan.md` を正とする。
+P12-10「CMS統合の設計」を次に行う。**P11-7〜9 の決着により、着手を妨げるものは無い。**
 
-- 次は P11-7〜9（GitHub外部設定の確認と最小権限化）。**管理者の外部確認が前提**
-- その結果を得てから P12-10「CMS統合の設計」に着手する
-- P12-10以降は管理者の明示承認なしに開始しない
+- ブランチ: `chore/p12-10-cms-integration-design`
+- 本番影響: ⚪。設計文書のみ。実装・deployment変更はしない
+- モンスターCMSとアシストCMSを1つのApps Scriptプロジェクトへ統合する設計を作る
+- **公開ブランチと許可リストは分けたまま維持する**
+- 方針は `docs/cms-integration-plan.md` を正とする
+- 実装（P12-11）は設計の承認後
 
 ## 明示的な保留
 
+- P11-7: **実施不可。** test Ruleset・Workflow permissions の変更に admin 権限が必要だが、
+  個人アカウントのリポジトリでは admin をコラボレーターへ付与できない。
+  test Workflow（`.github/workflows/cms-protected-test.yml`）は実装済みのまま残す
+- P11-8: **後回し。** token最小権限化は Secrets を編集できるため実施可能だが、
+  CMS統合でtokenが1本になるため、統合後に1回で行う（P12-12へ吸収）
+- P11-9: **不要。** main の Ruleset を有効化すると、mainへ直接pushするCMSの公開経路が止まる。
+  公開ゲートは `scripts/verify-cms-source.js` としてWorkflow内に実装済みで、
+  ブランチ保護が無くても機能する（破壊37ケースの拒否を確認済み）
 - P10-2: 人工的な文書1行テスト。実作業で運用確認できているため保留
-- P11-7: GitHub管理権限がなくtest Ruleset・Secretを作れないため保留
-- P11-8〜9: P11-7の実機証跡に依存するため保留。main Rulesetを先に有効化しない
-- AdSense再申請: 更新利用規約への管理者同意が必要なため保留。Claudeは同意操作をしない
+- AdSense再申請: Search Consoleのインデックス反映待ち。
+  更新利用規約への管理者同意も必要。Claudeは同意操作をしない
 - GASエディタ版とdeployment版の一致: 外部画面未確認
-- P12能力画像割当: Firestore `cardAbilities/assignments`の現在値をP12-3で読取確認する
 
 ## 現在の引き継ぎ
 
@@ -242,10 +251,9 @@ P12-7c「旧カード共通ページのnoindex化」を行う。
 
 ## 管理者確認待ち
 
-- GitHub `Settings` → `Actions` → `General` → `Workflow permissions`で現在の選択値と、
-  `Allow GitHub Actions to create and approve pull requests`のcheck状態を確認する。保存しない
-- GitHub個人設定の`Developer settings` → `Personal access tokens`で、値を開示せず、
-  該当tokenの種類、所有者、対象repo、権限、期限を確認する
+> GitHub の admin 権限を要する確認項目は、権限が得られないことが確定したため削除した。
+> 経緯は `docs/cms-integration-plan.md` の「GitHub権限の前提」を正とする。
+
 - Apps Script「ライ徹CMS」の`プロジェクト履歴`と`デプロイを管理`で、現在のdeployment版と
   エディタ版、復旧可能な直前版を確認する。保存・再デプロイしない
 - GAS Script Propertiesの`GITHUB_TOKEN`とGitHub secret `CMS_PUBLISH_TOKEN`が同じtokenか、
