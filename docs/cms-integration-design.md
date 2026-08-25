@@ -130,8 +130,8 @@ HEADERS['publish_log']  monster: 日時, モンスターID... （日本語5列�
 ### A-1. 決定
 
 **1つのApps Scriptプロジェクトへ集約する。共通ライブラリは使わない。**
-プロジェクトは同一ソースから本番用とtest用の2つを作る（第C章）。
-これは「製品が2つ」ではなく「同じ製品の本番と検証」である。
+常設のプロジェクトは本番の1つだけとする。検証が要るときだけ、
+同一ソースの一時プロジェクトを作ってリハーサルする（第C章）。
 
 ### A-2. 採らなかった案と理由
 
@@ -164,7 +164,7 @@ _cms/
     README.md          運用・セットアップ・token更新手順
 ```
 
-**`_cms/assist-gas/` は移行完了時に削除する**（第I章 段階7）。
+**`_cms/assist-gas/` は移行完了時に削除する**（第I章 段階8）。
 削除まではモンスター側の唯一動いている経路を守るため残す。
 
 ### A-4. ファイル分割の単位と根拠
@@ -212,15 +212,16 @@ GASエディタ上の並び順を人が読んで確認するためのもので�
 `SPREADSHEET_ID` は1キーのままにする。**
 `docs/cms-integration-plan.md` の「スプレッドシート: すでに同居方針」を踏襲する。
 
-test環境は、**同じソースから作った別のApps Scriptプロジェクト**が
-自分の Script Properties で自分の test スプレッドシートを指すことで維持する。
-1つのプロジェクトに2つのIDを持たせるのではなく、
-**プロジェクトを環境ごとに分ける。**
+**常設のtest環境は作らない。**（管理者の決定）
+代わりに、移行時と将来の大改修時だけ**本番bookのコピー**を作り、
+同一ソースの一時プロジェクトをそこへ向けてリハーサルする。終わったら捨てる。
 
 ```text
-本番プロジェクト   ENVIRONMENT=production  SPREADSHEET_ID=<本番book>
-testプロジェクト   ENVIRONMENT=test        SPREADSHEET_ID=<testbook>
-                   ↑ ソースは同一。GITHUB_TOKEN は本番だけに設定する
+本番プロジェクト     ENVIRONMENT=production  SPREADSHEET_ID=<本番book>
+                     GITHUB_TOKEN を設定する
+
+リハーサル（一時）   ENVIRONMENT=rehearsal   SPREADSHEET_ID=<本番bookのコピー>
+                     ↑ ソースは同一。GITHUB_TOKEN は設定しない
 ```
 
 ### B-2. 採らなかった案と理由
@@ -229,7 +230,8 @@ testプロジェクト   ENVIRONMENT=test        SPREADSHEET_ID=<testbook>
 |---|---|
 | `SPREADSHEET_ID` と `ASSIST_SPREADSHEET_ID` の2キー | 移行は不要になるが、方針の「スプレッドシート統合」から外れる。`members` が2つに割れたままになり、「名簿が1つになり追加・削除の漏れが消える」という統合の目的を1つ落とす。またシートを跨いだ整合（同じ人が両方に居るか）を誰も検査できない |
 | 本番bookにtest用シートも同居させ、シート名で分ける | 1つのbookに本番データとtestデータが混ざる。`setup3_importFromMain` は `setRows_()` で全行を消して書き直すため、シート名を1つ間違えた瞬間に本番が消える。前提3の防御が守っていたのはまさにこれで、これを捨てることになる |
-| testを廃止して本番だけにする | P12-9のOCR検証はDriveと外部API課金を伴う。本番データで試す構成にはできない。`docs/cms-integration-plan.md` のPhase D「test環境で完成させてから本番deploymentを切り替える」も実行不能になる |
+| 常設のtest bookを維持する | 本番bookと恒久的に二重管理になり、シート構成が少しずつずれる。ずれたtest環境での確認は本番の証拠にならない。リハーサル方式なら常にその時点の本番の複製で確認できる |
+| 検証をやめて本番だけにする | `docs/cms-integration-plan.md` のPhase D「test環境で完成させてから本番deploymentを切り替える」が実行不能になる。P12-9のOCR検証はDriveと外部API課金を伴い、いきなり本番で試す構成にはできない |
 
 ### B-3. 統合後のシート構成
 
@@ -292,17 +294,151 @@ function requireScope_(scope) {
 
 ### B-5. データ移行
 
-アシストの3DBは既に `src/data/*.json` としてリポジトリにある（P12-4〜P12-6で正規化済み）。
-**testスプレッドシートから本番スプレッドシートへ行をコピーしない。**
-本番bookでは `setup3_importAssistFromMain()` を1回だけ実行し、
-`main` の3DB JSONから読み直す。
+**testスプレッドシートで入力した内容を1件も捨てない。**
+ただしシートを直接コピーせず、**mainを経由させる。**
 
-理由: リポジトリの3DBが正であり、`node scripts/verify.js` 第15章が全件を検査している。
-検査済みの正データから入れ直すほうが、検査されていないシート間コピーより安全である。
-test側で行った編集は、実運用の入力ではなく検証用の試し書きである。
+```text
+① testCMSで api_asstExport() を実行する
+     validateDocuments_ + validateImageFiles_ が3DB全体を検査する。
+     不整合が1件でもあればダウンロードできない（既存の歯止め）
+② 出力3ファイルを src/data/ へ置き、build.js → verify.js → git diff を経てPRを出す
+     testで何を入力したかが、この diff の全てになる
+③ 本番bookで setup3_importAssistFromMain を実行する
+     mainの3DB（＝②で検査を通った内容）が入る
+```
 
-移行対象の唯一の実データは `assist-cards/` のカード画像で、これは既にリポジトリにあり
-（`verify-assist-cms.js` が全91件の実在を検査している）、移動しない。
+**新規実装は要らない。** `api_export()`（現行 `_cms/assist-gas/コード.gs:1041`）と
+`setup3_importAssistFromMain` はどちらも既にある。
+
+#### なぜ「mainのJSONから入れ直す」だけでは駄目か
+
+mainの3DBには、CMSで埋めるべき空欄が大量に残っている。
+
+| 項目 | 未入力 |
+|---|---:|
+| `accessoryStatus` が `unknown` | 49 / 91 |
+| `stats` 未入力 | 35 / 91 |
+| `releasedAt` が null | 35 / 91 |
+| `event2` が null | 23 / 91 |
+
+`assist-cards.json` の `generatedFrom` は `cards/cards-data.js` などの旧データで、
+**CMSで入力した内容は一度もmainへ届いていない**（0-5節のとおり `cms/assist-publish` が
+存在しないため）。testシートの入力を捨てる設計は、埋めた空欄を全部戻すことになる。
+
+#### 採らなかった案と理由
+
+| 案 | 採らない理由 |
+|---|---|
+| スプレッドシートのシートを直接コピー | 検査を1つも通らない。`book_()` のマーカー読み取り先が変わりうる（C-2）。testのA1ノートが運ばれると環境を誤判定する。index対象54枚の公開ページが未レビューで変わる |
+| mainの3DBから入れ直す | testで埋めた上表の空欄が全部戻る |
+| 3DBのJSONを人が手で編集して差分を作る | exportの検査を通らない値が入りうる。`api_export()` の `validateDocuments_` を迂回する経路を作らない |
+
+#### 画像の突き合わせ（①の前に必ず行う）
+
+`validateImagePath_`（現行 `_cms/assist-gas/コード.gs:261-269`）は
+`RAW_REPO_BASE + card.image` を叩き、**main上の画像実在**を見る。
+現在 `assist-cards/` は91件（jpg 76 / png 15）でDBの拡張子と完全一致している。
+P12-9のカード画像アップロードを使っていた場合に2通りの事故が起きる。
+
+| 状況 | 結果 |
+|---|---|
+| 同じ拡張子で再アップロードした | パスが変わらないので検査を素通りし、**新しい画像バイト列がtest Driveに取り残される（無言の損失）** |
+| 拡張子が変わった（jpg→png等） | パスが変わり、`api_export()` が「imageがmainに存在しません」で**停止する** |
+
+したがって①の前に、test Driveのアシスト画像フォルダのファイル一覧
+（名前・更新日時・サイズ）と、リポジトリの `assist-cards/` 91件を突き合わせる。
+差分があるファイルをPRへ手で含めてから①を実行する。
+
+#### `generatedFrom` が書き換わることの扱い
+
+`buildDocuments_`（現行 `_cms/assist-gas/コード.gs:602`）は `generatedFrom` を
+`['P12-8 test assist CMS']` に固定し、`generatedAt` を `null` にする。
+**`verify.js` も `verify-assist-cms.js` もこの2項目を検査していない。**
+②のexportで、現在の4項目の由来リスト（`cards/cards-data.js` /
+`src/data/cards-editorial.json` / `assist-card-data.js` /
+`src/data/_audit/sapo-card-map.json`）が消える。
+
+- ②ではexport出力をそのまま置き、**diffで想定内として確認する。**
+  JSONを手で書き戻さない（「exportの出力をそのまま置く」原則を崩さないため）
+- 旧4項目の由来は P12-4・P12-5 のPRと `docs/assist-card-cms-progress.md` に残る。
+  JSONのメタ1行より、そちらを正の記録とする
+- 統合後の `generatedFrom` は `['ライ徹CMS']` にする（段階名ではなく製品名）
+- `generatedFrom` が想定値であることを検査へ足す（H-3 検査11）
+
+#### 持ち込まないもの
+
+- **testの `members` シート。** 本番bookの `members` が既にあり、そちらが正である
+- **testの操作履歴（旧 assist `publish_log`）。** 段階6では空の `assist_log` を作る
+- **`cardStatus` 列。** B-6のとおり本番bookでは作らない
+
+### B-6. 列の棚卸し
+
+本番bookへ持ち込む前に、アシスト3シートの全46列（cards 20 / assist_effects 9 /
+abilities 17）を分類する。判定は「JSONに出るか」「公開ページに描画されるか」
+「検査が依存するか」を実物で確認して行った。
+
+**結論: 削除1列 / 保留6列 / 必須39列。**
+
+#### 削除する — `assist_effects` の `cardStatus`（1列）
+
+| 根拠 | 場所 |
+|---|---|
+| `effects.length ? 'verified' : 'draft'` をliteralでそのまま書いているだけ | `api_saveEffects`（現行 `_cms/assist-gas/コード.gs:967,969`） |
+| カード1枚ぶんの値を効果行すべてに重複して持ち、最後の行の値が勝つ | `buildDocuments_`（同 `:576-577`） |
+| 管理画面に編集UIが無い。むしろ残っているとFAIL条件 | `verify-assist-cms.js`「管理画面に不要なカードstatusが残っている」 |
+| 検査が主張しているのは導出との同値性だけで、情報量がゼロ | `verify-assist-cms.js`「空effectsはdraft必須 / 効果ありはverified必須」 |
+
+**この1列だけ移行のついでに消せる。** 段階6の `setup1_createSheets` が
+`ASST_HEADERS['assist_effects']` からこの列を外し、`buildDocuments_` が
+`effects.length` から `status` を導出すれば、**exportされるJSONは1バイトも変わらない。**
+
+```js
+// 20_assist.gs（統合後）
+// cardStatus 列は持たない。status は効果件数から導出する。
+// この導出は verify-assist-cms.js が主張してきた同値性そのものである。
+group.status = group.effects.length ? 'verified' : 'draft';
+```
+
+現データで検算済み: 効果0件の8カード→`draft`、効果ありの83カード→`verified`。
+現在の値と完全一致する。**検査を1つも壊さずにシートが1列細くなる。**
+
+#### 保留する（6列）
+
+いずれも「公開ページに描画されない」が、**消すと失われるものがある。**
+解除条件を列ごとに定める。
+
+| 列 | シート | 保留の理由 | 解除条件 |
+|---|---|---|---|
+| `limitBreakJson` | cards | `build-spec.md` 12-3のとおり独立節として出力しないが、**`verify.js` がSAPO exact 56件との一致を検査している**。消すとPASSが1つ減る | SAPO由来データの再突合（P12-13）が完了したとき |
+| `sapoRefJson` | cards | 旧 `assist-card-data.js` の `sapoIndex` への参照（56/91件）。上の突合とセットで使う | 同上 |
+| `legacyId` | abilities | **`verify.js` が一意性を検査している**。P12-3bで正データ化したFirestore一次資料への追跡子 | 一次資料への追跡が不要と判断できたとき |
+| `rarity` | abilities | `renderAbilities` は name / description / source / tags しか描画しないが、1,043/1,079件に値がある | P12-14「能力検索の再構築」で使うかどうかを決めたとき |
+| `flagsJson` | abilities | 値は `duplicate-candidate` のみ44件。**不要な列ではなく未解決の監査結果**である | 44件の重複判定が終わったとき |
+| `status` | abilities | 現在1,079件すべて `verified` で情報量ゼロ。ただし新規登録のdraft運用に要る | 能力にdraft運用を採らないと決めたとき |
+
+#### 必須（39列）
+
+公開ページに描画される列に加え、**JSONに出ないがシート運用に要る**5種を残す。
+
+| 列 | 役割 |
+|---|---|
+| `sourceOrder`（cards / abilities） | 生成順と `assist.html` の並び順を決める。`build-spec.md` 12-2「入力順で全91カードを生成」 |
+| `version` | 楽観ロック。`api_saveCard` が `payload.version` と現在値を照合する |
+| `updatedAt` / `updatedBy` | 誰がいつ触ったかの監査 |
+
+`sourceName`（abilities）は**削除しない**。resolved 560件はカード名と完全一致で冗長だが
+（実測 560/560）、**未解決519件では唯一の由来情報**であり、
+`linkStatus` を解決する作業の手がかりが消える。
+
+#### 移行では保留6列を消さない理由
+
+| | 理由 |
+|---|---|
+| 1 | 段階3のdiffは「testで何を入力したか」を人が読むためのもの。列削除が混ざると**入力の変更と構造の変更が区別できなくなる** |
+| 2 | 保留6列のうち3列（`limitBreakJson`・`sapoRefJson`・`legacyId`）は `verify.js` のPASSを支えている。消すと検査が減り、H-4に反する |
+| 3 | `AGENTS.md` 第6章「指示されたファイル以外を変更しない。ついでに整理をしない」 |
+
+保留6列の削除は **P12-13以降の独立タスク**とする（J章）。
 
 ---
 
@@ -327,27 +463,36 @@ test側で行った編集は、実運用の入力ではなく検証用の試し�
 
 ### C-2. 決定
 
-**`ENVIRONMENT` を必須キーとし、`production` / `test` の2値に再定義する。
-A1メモは廃止せず、「test専用マーカー」から「環境識別マーカー」へ格上げして両ドメインへ適用する。**
+**`ENVIRONMENT` を必須キーとし、`production` / `rehearsal` の2値に再定義する。
+A1メモは廃止せず、「test専用マーカー」から「環境識別マーカー」へ格上げして両ドメインへ適用する。
+置き場所は先頭シートではなく `members` シートのA1にする。**
+
+| 値 | 対象book | 公開 | `GITHUB_TOKEN` |
+|---|---|---|---|
+| `production` | 本番book | できる | 設定する |
+| `rehearsal` | **本番bookのコピー**（一時） | **できない** | **設定しない** |
 
 ```js
 // 00_core.gs
 var ENV_PRODUCTION = 'production';
-var ENV_TEST = 'test';
+var ENV_REHEARSAL = 'rehearsal';
 var BOOK_MARKER_PREFIX = 'LMF CMS ';
 
 function env_() {
   var value = prop_('ENVIRONMENT');
-  if (value !== ENV_PRODUCTION && value !== ENV_TEST) {
-    throw new Error('ENVIRONMENT は production または test を設定してください（現在: ' + value + '）。');
+  if (value !== ENV_PRODUCTION && value !== ENV_REHEARSAL) {
+    throw new Error('ENVIRONMENT は production または rehearsal を設定してください（現在: ' + value + '）。');
   }
   return value;
 }
 
 function book_() {
   var book = SpreadsheetApp.openById(prop_('SPREADSHEET_ID'));
-  var expected = BOOK_MARKER_PREFIX + env_();     // 'LMF CMS production' / 'LMF CMS test'
-  var marker = String(book.getSheets()[0].getRange('A1').getNote() || '');
+  var expected = BOOK_MARKER_PREFIX + env_();   // 'LMF CMS production' / 'LMF CMS rehearsal'
+  // ★ 先頭シートではなく members シートのA1を読む。理由は下記。
+  var members = book.getSheetByName(SHEET_MEMBERS);
+  if (!members) throw new Error('members シートがありません。対象のスプレッドシートを確認してください。');
+  var marker = String(members.getRange('A1').getNote() || '');
   if (marker !== expected) {
     throw new Error('スプレッドシートの環境マーカーが一致しません。' +
       '期待「' + expected + '」／実際「' + (marker || '（なし）') + '」。' +
@@ -357,11 +502,24 @@ function book_() {
 }
 ```
 
-これは現行より強い。
+#### マーカーを `members` シートへ置く理由
 
-- 現行: testコードがtest以外のbookを開くのを止める（片方向・アシストのみ）
-- 統合後: **本番コードがtest bookを開くこと**も、**testコードが本番bookを開くこと**も、
-  **どちらのコードも無関係なbookを開くこと**も止める（双方向・両ドメイン）
+現行アシストは `book.getSheets()[0].getRange('A1').getNote()` を読む。
+**これはシート順に依存する。** 統合ではアシスト5シートを追加し、将来もシートが増減する。
+シートが1枚先頭に入るだけでマーカーが読めなくなり、CMS全体が起動しなくなる。
+最悪の場合、別環境のノートを持つシートが先頭に来て**環境を誤判定する。**
+
+`members` は必ず存在し、両ドメインが使い、消される可能性が最も低い。
+`setup1_createSheets` の書き込み先もここにする。
+
+#### 現行より強くなる点
+
+- 現行: testコードがtest以外のbookを開くのを止める（片方向・アシストのみ・シート順依存）
+- 統合後: **本番コードがコピーを開くこと**も、**リハーサルのコードが本番bookを開くこと**も、
+  **どちらのコードも無関係なbookを開くこと**も止める（双方向・両ドメイン・順序非依存）
+
+リハーサル用コピーは本番bookと中身がそっくりな別bookである。
+明らかに別物だった旧test bookより**取り違えのリスクは高い**。この防御はむしろ重要になる。
 
 ### C-3. 破壊的セットアップの追加ゲート
 
@@ -410,9 +568,9 @@ function requirePublishable_(scope) {
 }
 ```
 
-加えて **testプロジェクトには `GITHUB_TOKEN` を設定しない。**
+加えて **リハーサル用の一時プロジェクトには `GITHUB_TOKEN` を設定しない。**
 コード上のゲートと、鍵の不在という物理的な事実の2重で、
-testからGitHubへ何かが飛ぶことはない。
+リハーサルからGitHubへ何かが飛ぶことはない。
 
 ### C-5. 画面側の表示
 
@@ -421,10 +579,11 @@ testからGitHubへ何かが飛ぶことはない。
 | 環境 | バッジ | 公開タブ |
 |---|---|---|
 | `production` | 表示しない（通常配色） | **表示する** |
-| `test` | 画面上部に固定の帯「TEST環境 — 公開されません」 | **表示しない** |
+| `rehearsal` | 画面上部に固定の帯「リハーサル環境 — 本番bookのコピーです。公開されません」 | **表示しない** |
 
-test環境で公開タブそのものを出さない。押せないボタンを置いて
+リハーサル環境で公開タブそのものを出さない。押せないボタンを置いて
 エラーで止めるより、存在しないほうが誤解が無い。
+帯には**コピーであること**を明記する。画面だけを見た人が本番と取り違えないようにする。
 
 ### C-6. 採らなかった案と理由
 
@@ -432,6 +591,8 @@ test環境で公開タブそのものを出さない。押せないボタンを�
 |---|---|
 | A1メモを廃止し `ENVIRONMENT` だけで守る | 前提3の防御を等価物なしに撤去することになる。`ENVIRONMENT` と `SPREADSHEET_ID` はどちらもScript Propertiesの1行で、同じ画面で同じ人が編集する。片方だけ直す事故を、もう片方では検出できない。マーカーは**データ側に置かれた独立した事実**なので、Properties をどう間違えても効く |
 | `ENVIRONMENT` を廃止しマーカーだけにする | マーカーはbookを開いて初めて読める。`GITHUB_TOKEN` の有無や公開タブの表示など、bookを開く前に決めたいことがある |
+| 常設test環境が無いので `ENVIRONMENT` も不要とする | リハーサル用コピーは本番bookと中身がそっくりな別bookで、取り違えのリスクは旧test環境より高い。環境値とマーカーの両方が要る |
+| マーカーを先頭シートのA1に置いたままにする | シート順に依存する。統合でアシスト5シートを足す運用と両立しない（C-2） |
 | 破壊的操作を確認ダイアログだけで守る | `setup3_*` はGASエディタから実行する関数で、実行前に画面を出せない。GASエディタの実行ボタンは確認を挟まない |
 | 破壊的操作を削除する | 復旧手段が消える。`_cms/assist-gas/README.md:139` の再セットアップ手順が実行不能になる |
 
@@ -444,7 +605,7 @@ test環境で公開タブそのものを出さない。押せないボタンを�
 | 種別 | 規約 | 例 |
 |---|---|---|
 | 共通の内部関数 | 接頭辞なし、末尾 `_` | `prop_` `book_` `me_` `env_` |
-| 共通の定数 | 接頭辞なし、大文字 | `ENV_PRODUCTION` `BOOK_MARKER_PREFIX` |
+| 共通の定数 | 接頭辞なし、大文字 | `ENV_PRODUCTION` `ENV_REHEARSAL` `BOOK_MARKER_PREFIX` |
 | モンスター固有 | `mon` / `MON_` | `monReadAll_` `MON_SHEET_MONSTERS` |
 | アシスト固有 | `asst` / `ASST_` | `asstRows_` `ASST_SHEET_CARDS` |
 | 画面API | `api_` + ドメイン略号 | `api_monSave` `api_asstSaveCard` |
@@ -567,7 +728,7 @@ function setupTarget_() {
   return 'ENVIRONMENT=' + env_() + ' / book=「' + book.getName() + '」';
 }
 // 各 setup の戻り値1行目
-//   ENVIRONMENT=test / book=「ライ徹CMS test」
+//   ENVIRONMENT=rehearsal / book=「ライ徹CMS 本番 のコピー」
 //   → 実行者が実行ログの1行目で対象を確認できる
 ```
 
@@ -882,7 +1043,7 @@ P11-8 は「既存 token の権限を最小化する」タスクだった。
 リポジトリ単位・権限単位の制限ができない。調査してから判断するより、
 仕様の分かっている新しい token に置き換えるほうが確実で、手数も少ない。
 
-切替は第I章 段階6で行い、**revoke は新 token での公開成功を確認した後**にする。
+切替は第I章 段階7で行い、**revoke は新 token での公開成功を確認した後**にする。
 
 ### G-5. 更新手順（`_cms/gas/README.md` へ記載する内容）
 
@@ -954,10 +1115,16 @@ P11-8 は「既存 token の権限を最小化する」タスクだった。
 文字列一致）は、C-2の新実装に合わせて次へ差し替える。
 
 ```js
-if (!/ENVIRONMENT は production または test/.test(core)) issues.push('環境値の検査がない');
-if (!/BOOK_MARKER_PREFIX/.test(core) || !/getRange\('A1'\)\.getNote\(\)/.test(core)) {
-  issues.push('スプレッドシートの環境マーカー検査がない');
+if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
+  issues.push('環境値の検査がない');
 }
+// ★ マーカーの読み取り先が members シートであることまで検査する。
+//    先頭シート依存へ戻ると、シートを1枚足しただけでCMSが起動しなくなる（C-2）。
+if (!/BOOK_MARKER_PREFIX/.test(core) ||
+    !/getSheetByName\(SHEET_MEMBERS\)[\s\S]{0,200}getRange\('A1'\)\.getNote\(\)/.test(core)) {
+  issues.push('環境マーカーをmembersシートのA1から読んでいない');
+}
+if (/getSheets\(\)\[0\]/.test(core)) issues.push('シート順に依存する参照が残っている');
 ```
 
 **3DB構造の検査（`validateRoot` の後半、cardId重複・rarity・aura・cardType・
@@ -981,6 +1148,11 @@ abilityId・legacyId・linkStatus・resolved順序）は、判定基準を1つ�
 | 8 | GitHub送信の局在 | `api.github.com` / `git/refs` が `30_publish.gs` 以外に現れる |
 | 9 | concurrency group | 2つの Workflow の `concurrency.group` が異なる／`cancel-in-progress: true` |
 | 10 | 破壊的setupの局在 | `setRows_` / `deleteRows` / `clearContent` が `40_setup.gs` 以外に現れる |
+| 11 | **`generatedFrom` の値** | 3DBの `generatedFrom` が想定値でない（B-5）。現行は `verify.js` も `verify-assist-cms.js` も未検査で、exportが黙って書き換えられる |
+| 12 | **`cardStatus` 列の不在と導出** | `ASST_HEADERS['assist_effects']` に `cardStatus` がある／`buildDocuments_` が `effects.length` から `status` を導出していない（B-6） |
+
+検査11と12は**新しく増やす検査**であり、既存項目の判定基準は変えない（H-4）。
+検査12は「列を消したこと」ではなく「JSONの `status` が導出で同じ値になること」を守る。
 
 **検査6が最も重要である。**
 「GASが送る範囲」と「Workflowが受け入れる範囲」が一致していなければ、
@@ -1008,16 +1180,20 @@ abilityId・legacyId・linkStatus・resolved順序）は、判定基準を1つ�
 ### I-1. 全体像
 
 ```text
-段階1  検査の先行強化                    ⚪  現行構成のまま
-段階2  統合ソースの作成                  ⚪  リポジトリ内だけ
-段階3  test環境で統合CMSを動かす          ⚪  testプロジェクト・testbook
-段階4  アシスト公開経路の実証             🟡  cms/assist-publish（mainへ届く）
-段階5  本番bookへアシストシートを同居      🟡  本番スプレッドシート
-段階6  本番deployment切替 + token1本化    🟡🔴
-段階7  旧資産の撤去                       ⚪
+段階1  検査の先行強化                        ⚪  現行構成のまま
+段階2  統合ソースの作成                      ⚪  リポジトリ内だけ
+段階3  testCMSの3DBをmainへ反映              🔴  export → PR。統合と独立して実施できる
+段階4  アシスト公開経路の実証                 🟡  cms/assist-publish（mainへ届く）
+段階5  本番bookのコピーでリハーサル           ⚪  一時プロジェクト・コピーbook
+段階6  本番bookへアシストシートを同居          🟡  本番スプレッドシート
+段階7  本番deployment切替 + token1本化        🟡🔴
+段階8  旧資産の撤去                           ⚪
 ```
 
-段階1〜3 は P12-11、段階4〜6 は P12-12、段階7 は P12-12 の最後に行う。
+段階1〜3 は P12-11、段階4〜7 は P12-12、段階8 は P12-12 の最後に行う。
+
+**段階3だけは統合作業ではない。** testCMSで入力済みのデータを公開へ届ける作業であり、
+統合の完成を待たずに単独で実施できる。本番影響は🔴で、管理者がタイミングを決める。
 
 ### I-2. 各段階
 
@@ -1037,40 +1213,50 @@ abilityId・legacyId・linkStatus・resolved順序）は、判定基準を1つ�
 
 - 壊れたら戻せるか: **稼働中の GAS は1バイトも変わっていない。**
   リポジトリを revert すれば完全に戻る
-- 確認: H-3 の検査1〜10 が新ソースに対して全て PASS
+- 確認: H-3 の検査1〜12 が新ソースに対して全て PASS
 
-**段階3 — test環境で統合CMSを動かす（⚪）**
+**段階3 — testCMSの3DBをmainへ反映（🔴）**
 
-管理者が新しいスタンドアロンGASプロジェクトを作り、段階2のソースを貼る。
+B-5の3手順のうち①②を行う。**現行のtest CMSをそのまま使う。**
+統合ソースにも本番bookにも触れない。
+
+まず画像を突き合わせる（B-5）。
 
 ```text
-Script Properties  ENVIRONMENT=test
-                   SPREADSHEET_ID=<新しいtest統合book>
-                   ASSIST_IMAGE_FOLDER_ID=<既存のtest画像フォルダ>
-                   GOOGLE_CLOUD_VISION_API_KEY, OCR_DAILY_LIMIT=100
-                   GITHUB_TOKEN は設定しない
+test Drive のアシスト画像フォルダのファイル一覧（名前・更新日時・サイズ）と、
+リポジトリの assist-cards/ 91件を照合する。
+差分があるファイルはPRへ手で含める。含めてから export を実行する。
 ```
 
-test統合bookの先頭シートA1 note に `LMF CMS test` を入れ、
-`setup1_createSheets` → `setup2_registerMe` → `setup3_importMonsterSeed`
-→ `setup3_importAssistFromMain` → `setup4_checkAll` を順に実行する。
+次にexportと検査を行う。
 
-確認する行為（すべて test 上）:
+```text
+1. testCMSで api_export() を実行する
+     validateDocuments_ + validateImageFiles_ が3DB全体を検査する
+     1件でも不整合があればダウンロードできない
+2. 出力3ファイルを src/data/ へ上書きする
+3. node build.js        cards/<cardId>.html と sitemap.xml が再生成される
+4. node scripts/verify.js   FAIL 0 を確認する
+5. git diff を読む
+6. PRを出す。🔴 なので管理者が公開タイミングを決める
+```
 
-1. モンスタータブで1体の解説末尾へ短い文字列を足して保存し、字数表示が変わる
-2. アシストタブでカード保存・効果保存・能力保存が通り、競合（version不一致）を拒否する
-3. 効果OCRが動き、`OCR_DAILY_LIMIT` の上限に達すると拒否する
-4. カード画像アップロードが test Drive へ入る
-5. **公開タブが表示されない**（C-5）
-6. `api_monPublish` / `api_asstPublish` を GAS エディタから直接叩くと
-   「公開は本番環境でだけ実行できます」で止まる（C-4）
-7. `SPREADSHEET_ID` を一時的に本番bookのIDへ書き換えると、
-   **`book_()` が環境マーカー不一致で止まる**（C-2）。確認後すぐ戻す
-8. `setup3_importAssistFromMain` を鍵なしで実行すると拒否される（C-3）
+手順5で必ず読むもの。
 
-- 壊れたら戻せるか: **本番GAS・本番book・mainは一度も触っていない。**
-  test プロジェクトを捨てれば戻る
-- 確認: 上記8項目すべて
+| 見るもの | 現在値 | 意味 |
+|---|---|---|
+| カードのindex / noindex件数 | 54 / 37 | 効果・解説を足していればゲート通過でindexへ昇格する。`docs/PROGRESS.md` の「あと数十字で昇格するカード」がここで効く |
+| `sitemap.xml` のURL数 | 135 | 上の昇格ぶんだけ増える |
+| `generatedFrom` | 4項目 | `['P12-8 test assist CMS']` へ書き換わる。B-5のとおり想定内 |
+| 3DBの意味データ差分 | – | **これがtestで入力した内容の全て。** 他の変更が混ざっていないことを確かめる |
+
+**GASからは公開しない。** `cms/assist-publish` はこの時点でまだ無い。
+test環境から公開経路を叩かせない原則（C-5）を、経路の実装前から守る。
+
+- 壊れたら戻せるか: PRをマージするまで公開サイトは変わらない。
+  マージ後に問題が出た場合は `git revert` 1コミットで戻る
+  （3DBが戻れば `build.js` が生成ページを元へ戻す）
+- 確認: 上表4項目 + `node scripts/verify.js` FAIL 0 + PRレビュー
 
 **段階4 — アシスト公開経路の実証（🟡）**
 
@@ -1078,7 +1264,8 @@ test統合bookの先頭シートA1 note に `LMF CMS test` を入れ、
 PRで main へ入れる。ここで初めて mainへ届く経路ができる。
 
 **GASからは押さない。** 人が `cms/assist-publish` ブランチを手で作り、
-現在の3DBと同一内容（＝差分ゼロ）のコミットを、規則どおりの件名で1つ載せて push する。
+段階3で反映済みの3DBと同一内容（＝差分ゼロ）のコミットを、
+規則どおりの件名で1つ載せて push する。
 
 確認:
 
@@ -1088,31 +1275,88 @@ PRで main へ入れる。ここで初めて mainへ届く経路ができる。
 4. 件名を規則外にしたコミットで再試行し、**拒否される**
 5. 親を古い main にしたコミットで再試行し、**拒否される**
 
+**経路の実証とデータの投入を同時にしない。** 段階3でデータは既にmainにあるので、
+ここは差分ゼロで経路だけを試せる。片方が失敗したときに原因が1つに絞れる。
+
 - 壊れたら戻せるか: 3〜5は main を更新しないので影響が無い。
   2が万一 main を汚した場合、`git revert` 1コミットで戻る。
   **モンスター公開経路は無改造なので、この段階で止まっても止まらない**
 - 確認: 上記5項目 + `node scripts/verify.js` FAIL 0
 
-**段階5 — 本番bookへアシストシートを同居（🟡）**
+**段階5 — 本番bookのコピーでリハーサル（⚪）**
 
-管理者が本番bookの先頭シートA1 note へ `LMF CMS production` を入れる。
+常設のtest環境は作らない（B-1）。代わりに、**この時点の本番bookのコピー**を作り、
+統合CMSを一度だけそこで通しで動かす。
+
+```text
+1. 本番book → ファイル → コピーを作成
+2. コピーの members シートA1 note へ「LMF CMS rehearsal」を入れる
+3. 新しいスタンドアロンGASプロジェクトを作り、段階2のソースを貼る
+     ENVIRONMENT=rehearsal
+     SPREADSHEET_ID=<コピーbook>
+     ASSIST_IMAGE_FOLDER_ID, GOOGLE_CLOUD_VISION_API_KEY, OCR_DAILY_LIMIT
+     GITHUB_TOKEN は設定しない
+4. Webアプリとして限定deployする
+```
+
+**コピーには本番の `monsters` 351行と `members` がそのまま入っている。**
+合成のtest bookでは確かめられなかったことが、ここで確かめられる。
+
+確認する行為（すべてコピーの上）:
+
+1. `setup1_createSheets` を実行し、**`monsters` `edit_log` `publish_log` の行数と
+   列見出しが実行前と1つも変わらない**（D-6の4）。アシスト5シートが増える
+2. `assist_effects` シートに **`cardStatus` 列が作られない**（B-6）
+3. `setup2_registerMe` が `members` へ `scopes` 列を足し、既存行を壊さない
+4. `setup3_importAssistFromMain` を鍵なしで実行すると拒否される（C-3）。
+   鍵つきで実行すると3DBが入る
+5. `api_asstExport()` の出力が、mainの3DBと**意味データで一致する**
+   （`cardStatus` を消しても `status` が同じ値になることの実地確認。B-6）
+6. モンスタータブで1体の解説末尾へ短い文字列を足して保存し、字数表示が変わる
+7. アシストタブでカード保存・効果保存・能力保存が通り、競合（version不一致）を拒否する
+8. 効果OCRが動き、`OCR_DAILY_LIMIT` の上限に達すると拒否する
+9. カード画像アップロードがDriveへ入る
+10. **公開タブが表示されない**（C-5）
+11. `api_monPublish` / `api_asstPublish` を GAS エディタから直接叩くと
+    「公開は本番環境でだけ実行できます」で止まる（C-4）
+12. `SPREADSHEET_ID` を一時的に**本番book**のIDへ書き換えると、
+    **`book_()` が環境マーカー不一致で止まる**（C-2）。確認後すぐ戻す
+
+**手順12がこの段階の要である。** 本番bookとコピーは中身がそっくりで、
+IDを取り違えても画面上は正常に見えてしまう。マーカーだけがそれを止める。
+
+- 壊れたら戻せるか: **本番GAS・本番book・mainは一度も触っていない。**
+  コピーと一時プロジェクトを捨てれば、痕跡なく戻る
+- 確認: 上記12項目すべて
+
+終わったら**コピーと一時プロジェクトを捨てる。**
+`GITHUB_TOKEN` を持たないプロジェクトを残しておく理由が無く、
+残すと「本番bookとそっくりな別book」が放置される。
+
+**段階6 — 本番bookへアシストシートを同居（🟡）**
+
+管理者が本番bookの `members` シートA1 note へ `LMF CMS production` を入れる。
 **この時点では稼働中の本番GAS（旧モンスターCMS）はマーカーを見ないので、影響しない。**
 
 本番bookのバックアップ（ファイル → コピーを作成）を取ってから、
-本番プロジェクトではなく**段階3のtestプロジェクトを一時的に本番bookへ向けない。**
 新しい本番用GASプロジェクトを作り、`ENVIRONMENT=production` /
 `SPREADSHEET_ID=<本番book>` を設定し、**`GITHUB_TOKEN` はまだ設定しない。**
 
-そのプロジェクトで実行するのは次の3つだけ。
+そのプロジェクトで実行するのは次の3つだけ。段階5で同じ手順を通してある。
 
 ```text
 setup1_createSheets           アシスト5シートを追加する。既存4シートには触れない
+                              assist_effects に cardStatus 列を作らない（B-6）
 setup2_registerMe             members へ scopes 列を足し、既存行を埋める
 setup3_importAssistFromMain   ALLOW_DESTRUCTIVE_SETUP 付きで3DBを取り込む
+                              入るのは段階3で検査を通ったデータである
 ```
 
+**testの `members` と操作履歴は持ち込まない**（B-5）。`assist_log` は空で作る。
+
 `setup1_createSheets` が既存の `monsters` / `edit_log` / `publish_log` /
-`members` に触れないことは D-6 の4で保証し、H-3 の検査10で担保している。
+`members` に触れないことは D-6 の4で保証し、H-3 の検査10で担保し、
+段階5の手順1で実地確認済みである。
 
 - 壊れたら戻せるか: 実行前のbookコピーがある。
   **稼働中の本番GASは旧ソースのまま動いており、
@@ -1120,13 +1364,13 @@ setup3_importAssistFromMain   ALLOW_DESTRUCTIVE_SETUP 付きで3DBを取り込�
 - 確認: `setup4_checkAll` が全シートの行数を出し、
   `monsters` が実行前と同じ行数である。旧CMSの画面が今までどおり開き、保存できる
 
-**段階6 — 本番deployment切替 + token1本化（🟡🔴）**
+**段階7 — 本番deployment切替 + token1本化（🟡🔴）**
 
-1. 管理者が G-1 の新 token を発行する
+1. 管理者が G-1 の仕様で新 token を発行する
 2. GitHub secret `CMS_PUBLISH_TOKEN` を新 token へ更新する
 3. **旧CMSで「モンスターを公開」を1回実行し、成功を確認する。**
    ここで Actions 側の新 token が検証される（GAS側はまだ旧 token）
-4. 段階5で作った本番プロジェクトへ `GITHUB_TOKEN` = 新 token を設定する
+4. 段階6で作った本番プロジェクトへ `GITHUB_TOKEN` = 新 token を設定する
 5. そのプロジェクトを Webアプリとして deploy する（「自分として実行」／
    「Googleアカウントを持つユーザー」）。**新しいURLが発行される**
 6. 新URLで統合CMSを開き、モンスター公開を1回実行して成功を確認する
@@ -1147,37 +1391,49 @@ URLの変更コストは管理者1人のブックマーク1つで、退避先の
   - 手順3で失敗 → token の問題。secret を旧値へ戻す
 - 確認: 各手順の直後に、公開結果を「公開結果を確認」で `公開成功` まで見る
 
-**段階7 — 旧資産の撤去（⚪）**
+**段階8 — 旧資産の撤去（⚪）**
 
 1. `_cms/assist-gas/` を削除する
 2. `scripts/verify.js` 第15章の対象を `_cms/gas` へ移す（H-2）
 3. `scripts/verify-assist-cms.js` を H-2 の内容へ書き換える
-4. `docs/assist-card-cms-progress.md` と `docs/PROGRESS.md` を更新する
+4. 旧assist test スプレッドシートと旧assist test GASプロジェクトを捨てる
+   （段階3でデータをmainへ移し終えている。捨てる前に段階3のPRがマージ済みであることを確認する）
+5. `docs/assist-card-cms-progress.md` と `docs/PROGRESS.md` を更新する
 
-- 壊れたら戻せるか: `git revert`。**この段階は稼働中の何にも触れない**
+**旧モンスターCMSのGASプロジェクトは捨てない**（I-4の1）。退避先として残す。
+
+- 壊れたら戻せるか: 1〜3・5は `git revert`。4は取り消せないので、
+  段階3のPRがmainにあることを確認してから行う
 - 確認: `node scripts/verify.js` FAIL 0
 
 ### I-3. 移行中もモンスターCMSの公開を止めない方法
 
-段階1〜5で、モンスター公開に関わるものを1つも変えない。
+段階1〜6で、モンスター公開に関わるものを1つも変えない。
 
-| 資産 | 段階1 | 2 | 3 | 4 | 5 | 6 |
-|---|:-:|:-:|:-:|:-:|:-:|:-:|
-| 旧GASプロジェクト（稼働中） | – | – | – | – | – | 切替 |
-| 旧 deployment / URL | – | – | – | – | – | アーカイブ |
-| `cms/publish` ブランチ | – | – | – | – | – | – |
-| `cms-publish.yml` | – | – | – | – | – | – |
-| `verify-cms-source.js` | – | – | – | – | – | – |
-| 本番bookの `monsters` 行 | – | – | – | – | – | – |
-| `GITHUB_TOKEN`（旧） | – | – | – | – | – | 差替 |
+| 資産 | 段階1 | 2 | 3 | 4 | 5 | 6 | 7 |
+|---|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| 旧GASプロジェクト（稼働中） | – | – | – | – | – | – | 切替 |
+| 旧 deployment / URL | – | – | – | – | – | – | アーカイブ |
+| `cms/publish` ブランチ | – | – | – | – | – | – | – |
+| `cms-publish.yml` | – | – | – | – | – | – | – |
+| `verify-cms-source.js` | – | – | – | – | – | – | – |
+| 本番bookの `monsters` 行 | – | – | – | – | – | – | – |
+| `GITHUB_TOKEN`（旧） | – | – | – | – | – | – | 差替 |
 
-`_cms/gas/` のソースを書き換える段階2が唯一の懸念に見えるが、
-**`_cms/gas/` は監査用の正であり、GASの実行には一切使われない。**
-リポジトリのファイルを書き換えても、GASエディタ上のコードは変わらない
-（`docs/PROGRESS.md` P11-2 実施結果：「`_cms/gas`はエディタ版の開発・監査用の正であり、
-deploymentを更新したとは扱わない」）。
+疑わしく見える段階が2つあるが、どちらもモンスター側に届かない。
 
-したがって段階6の手順5まで、稼働中のモンスターCMSは
+**段階2（統合ソースの作成）**: `_cms/gas/` は監査用の正であり、
+GASの実行には一切使われない。リポジトリのファイルを書き換えても、
+GASエディタ上のコードは変わらない（`docs/PROGRESS.md` P11-2 実施結果：
+「`_cms/gas`はエディタ版の開発・監査用の正であり、deploymentを更新したとは扱わない」）。
+
+**段階3（3DBのmain反映）**: 🔴だが、変わるのは `cards/<cardId>.html` と
+`sitemap.xml` だけである。`monsters-data.js`・`monsters-editorial.json`・
+`cms-id-predictions.json`・`monsters/**` は入力が変わらないため、
+`build.js` の出力もバイト単位で変わらない。
+モンスターCMSの公開経路と本番bookには一切触れない。
+
+したがって段階7の手順5まで、稼働中のモンスターCMSは
 **一度も止まらず、一度も変更されない。**
 
 ### I-4. ロールバックの単位と手順
@@ -1187,24 +1443,45 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
 | 単位 | 戻し方 | 粒度 |
 |---|---|---|
 | リポジトリの変更 | `git revert <PR merge>` | PR単位。細かい |
-| GASのソース | **段階6以降は「旧プロジェクトのURLへ戻る」** | プロジェクト単位。粗い |
-| GASのソース（段階7以降） | GASの「プロジェクト履歴」から前の版へ | 保存単位 |
+| GASのソース | **段階7以降は「旧プロジェクトのURLへ戻る」** | プロジェクト単位。粗い |
+| GASのソース（段階8以降） | GASの「プロジェクト履歴」から前の版へ | 保存単位 |
 | Script Properties | 管理者が手で戻す | キー単位 |
-| 本番bookのデータ | 段階5前のコピー | book丸ごと。最も粗い |
+| 本番bookのデータ | 段階6前のコピー | book丸ごと。最も粗い |
 | main の公開内容 | `git revert` して push | コミット単位 |
 
 **粗さへの対処:**
 
-1. **旧プロジェクトを削除しない。**段階6の手順8はアーカイブであって削除ではない。
+1. **旧プロジェクトを削除しない。**段階7の手順8はアーカイブであって削除ではない。
    統合CMSに問題が出たら、旧URLを開けばモンスター公開は即座に復帰する。
-   この退避先を**段階7の後も残す**（`_cms/assist-gas/` は消すが、GASの旧プロジェクトは残す）
-2. **変更を小さく刻む。**段階6以降、統合CMSへの改修は
+   この退避先を**段階8の後も残す**（`_cms/assist-gas/` と旧assist test環境は消すが、
+   **モンスターCMSのGAS旧プロジェクトは残す**）
+2. **変更を小さく刻む。**段階7以降、統合CMSへの改修は
    「1PR = 1機能 = 1回のGAS保存 = 1回のdeploy」を守る。
    GASのプロジェクト履歴から戻せる最小単位が保存単位だからである
 3. **公開経路は2本のまま。**片方の Workflow が壊れても、もう片方は動く。
    これが許可リストを1本化しない理由の実利でもある
-4. **本番bookのコピーを段階5と段階6の直前に取る。**
-   段階6でシートの読み書きロジックが入れ替わるため、直前のコピーが要る
+4. **本番bookのコピーを段階6の直前に取る。**
+   段階6でアシストのシートが増え、段階7で読み書きロジックが入れ替わるため、
+   直前のコピーが要る
+
+#### 常設test環境が無いことへの対処
+
+段階8以降、恒久的な検証環境は存在しない。**大きな改修のたびに段階5をやり直す。**
+
+```text
+本番book → ファイル → コピーを作成
+  → members!A1 に「LMF CMS rehearsal」
+  → 一時GASプロジェクトへ改修版を貼る（ENVIRONMENT=rehearsal、GITHUB_TOKEN なし）
+  → 通しで確認
+  → コピーと一時プロジェクトを捨てる
+```
+
+コストはスプレッドシートのコピー1回とプロジェクト作成1回で、常設環境の
+二重管理より軽い。そして**常にその時点の本番の複製**で確認できるため、
+少しずつずれていく常設test環境より確認の価値が高い。
+
+小さな改修（1関数の修正など）はリハーサルを省き、
+上の2（1PR = 1保存 = 1deploy）とGASのプロジェクト履歴で戻す。
 
 ---
 
@@ -1232,6 +1509,11 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
 | 既存の検査項目の判定基準の変更 | H-4 |
 | GASの旧プロジェクトの削除 | I-4 の1。退避先として残す |
 | アシスト専用 GitHub token の発行 | G-3。1本にする |
+| **常設のtest環境の維持** | 管理者の決定。移行時と大改修時に本番bookのコピーで行うリハーサル方式で代替する（B-1・I-4） |
+| **スプレッドシートのシート間コピーによるデータ移行** | 検査を1つも通らず、シート順とA1ノートの事故を招く（B-5） |
+| **`cms/assist-publish` 経由でのtest成果の初回反映** | 段階3はPRで行う。test環境から公開経路を叩かせない原則を、経路の実装前から守る（I-2 段階3） |
+| **保留6列の削除** | `limitBreakJson`・`sapoRefJson`・`legacyId` の3列は `verify.js` のPASSを支えている。P12-13以降の独立タスクとする（B-6） |
+| **`cardStatus` 以外の列の整理** | 段階3のdiffは「testで何を入力したか」を読むためのもの。列削除が混ざると入力の変更と構造の変更が区別できなくなる（B-6） |
 
 ---
 
@@ -1243,8 +1525,8 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
 □ _cms/gas/manifest.json
 □ _cms/gas/00_core.gs
    □ prop_ / optionalProp_ / positiveIntProp_        （現行のまま移す）
-   □ env_ / ENV_PRODUCTION / ENV_TEST                 （新規・C-2）
-   □ book_ （環境マーカー照合つき）                    （新規・C-2）
+   □ env_ / ENV_PRODUCTION / ENV_REHEARSAL            （新規・C-2）
+   □ book_ （members!A1 の環境マーカー照合つき）        （新規・C-2）
    □ nowJst_ / nowIso_                                （改名・D-3）
    □ byteAt_ / isExpectedImage_                       （現行のまま移す）
    □ text_ / dateCell_ / jsonCell_ / parseJsonCell_ 他 （アシストから移す）
@@ -1264,9 +1546,11 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
    □ monEditLog_
 □ _cms/gas/20_assist.gs
    □ ASST_HEADERS / ASST_SHEET_* / ASST_RARITIES / ASST_AURAS / ASST_CARD_TYPES 他
+     ★ ASST_HEADERS['assist_effects'] に cardStatus を入れない（B-6）
    □ asstSheet_ / asstRows_ / asstSetRows_ / asstLog_ / asstSha256_
    □ asstCardFromRow_ / asstEffectFromRow_ / asstAbilityFromRow_
    □ asstBuildDocuments_ / asstValidateDocuments_ / asstValidate*_
+     ★ status は effects.length から導出する。generatedFrom は ['ライ徹CMS']（B-5・B-6）
    □ asstImageFolder_ / asstReserveOcrDailyUsage_
    □ api_asstBootstrap / api_asstGetCard / api_asstSaveCard /
      api_asstSaveEffects / api_asstGetAbility / api_asstSaveAbility /
@@ -1282,7 +1566,7 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
      api_monLatestPublishStatus / api_asstLatestPublishStatus
 □ _cms/gas/40_setup.gs
    □ allHeaders_ / setupTarget_ / consumeDestructiveGrant_
-   □ setup1_createSheets（冪等・既存列を消さない）
+   □ setup1_createSheets（冪等・既存列を消さない。members!A1 へ環境マーカーを書く）
    □ setup2_registerMe（scopes つき）
    □ setup3_importMonsterSeed      ← 鍵が要る
    □ setup3_resetMonsters          ← 鍵が要る
@@ -1292,8 +1576,19 @@ deployment が1つになるとロールバック単位が粗くなる。それ�
    □ setup6_createAssistImageFolder
 □ _cms/gas/index.html / ui_common.html / ui_monster.html / ui_assist.html / ui_publish.html
 □ _cms/gas/README.md（セットアップ手順・Script Properties一覧・token更新手順）
-□ scripts/verify.js         第8章の作り直し（H-1）・検査1〜10の追加（H-3）
+□ scripts/verify.js         第8章の作り直し（H-1）・検査1〜12の追加（H-3）
 □ scripts/verify-assist-cms.js  対象範囲の移設（H-2）
 □ scripts/verify-assist-source.js               （新規・F-3。段階4）
 □ .github/workflows/cms-assist-publish.yml      （新規・F-3。段階4）
+```
+
+段階3（P12-11）はリポジトリのコードを書かない。管理者と実行者の手作業になる。
+
+```text
+□ test Drive の画像一覧と assist-cards/ 91件を突き合わせ、差分をPRへ含める（B-5）
+□ testCMSで api_export() を実行する
+□ 出力3ファイルを src/data/ へ置く
+□ node build.js → node scripts/verify.js（FAIL 0）
+□ git diff で index/noindex件数・sitemap URL数・generatedFrom・3DB差分を読む
+□ PRを出す。🔴 なので管理者が公開タイミングを決める
 ```
