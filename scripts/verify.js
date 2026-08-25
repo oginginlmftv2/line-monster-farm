@@ -1029,6 +1029,16 @@ if (!exists('src/data/assist-cards.json')) {
     } else {
       ok('cards/SSR-hori.htmlは新URLへcanonical・meta refresh・通常リンクで誘導しsitemap非掲載');
     }
+
+    const legacyCardPath = 'cards/card.html';
+    const legacyCardHtml = exists(legacyCardPath) ? read(legacyCardPath) : '';
+    const legacyCardNoindex = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["']noindex,follow["'])[^>]*>/i.test(legacyCardHtml);
+    const legacyCardHasAds = /adsbygoogle/i.test(legacyCardHtml);
+    if (!exists(legacyCardPath) || !legacyCardNoindex || legacyCardHasAds) {
+      ng(`cards/card.htmlのnoindex・広告が不正（存在 ${exists(legacyCardPath) ? 'あり' : 'なし'} / noindex,follow ${legacyCardNoindex ? 'あり' : 'なし'} / adsbygoogle ${legacyCardHasAds ? 'あり' : 'なし'}）`);
+    } else {
+      ok('cards/card.htmlにnoindex,followがありadsbygoogleなし');
+    }
   } catch (error) {
     ng(`静的アシストカード詳細の検査に失敗: ${error.message}`);
   }
