@@ -33,11 +33,14 @@ function setup1_createSheets() {
     var actual = sheet.getRange(1, 1, 1, width).getValues()[0].map(function (v) { return String(v || '').trim(); });
     if (actual.slice(0, expected.length).join('\0') !== expected.join('\0') || actual.slice(expected.length).some(Boolean)) issues.push(name + ': 列見出しが想定と異なります（変更していません）');
   });
-  return target + '\n作成: ' + (made.join(', ') || 'なし') + '\n要確認: ' + (issues.join(' / ') || 'なし');
+  var result = target + '\n作成: ' + (made.join(', ') || 'なし') + '\n要確認: ' + (issues.join(' / ') || 'なし');
+  Logger.log(result);
+  return result;
 }
 
 function setup2_registerMe() {
-  var target = setupTarget_(), email = String(Session.getActiveUser().getEmail() || '').trim();
+  var target = setupTarget_();
+  var email = String(Session.getActiveUser().getEmail() || '').trim();
   if (!email) throw new Error('ログイン中のメールアドレスを取得できません。');
   var sheet = book_().getSheetByName(SHEET_MEMBERS);
   if (!String(sheet.getRange(1, 7).getValue() || '').trim()) sheet.getRange(1, 7).setValue('scopes');
@@ -48,7 +51,9 @@ function setup2_registerMe() {
     if (!String(row[6] || '').trim()) sheet.getRange(index + 2, 7).setValue(sameUser ? 'monster,assist' : 'monster');
   });
   if (!found) sheet.appendRow([email, '管理者', 'admin', '', true, '統合CMS初期登録', 'monster,assist']);
-  return target + '\n登録済み。membersシートのnicknameとscopesを確認してください。';
+  var result = target + '\n登録済み。membersシートのnicknameとscopesを確認してください。';
+  Logger.log(result);
+  return result;
 }
 
 function monImportSeed_() {
@@ -324,18 +329,39 @@ function asstRewriteSheet_(name, values) {
 function setup3_importMonsterSeed() {
   var target = setupTarget_();
   consumeDestructiveGrant_('setup3_importMonsterSeed');
-  return target + '\n' + monImportSeed_();
+  var result = target + '\n' + monImportSeed_();
+  Logger.log(result);
+  return result;
 }
 function setup3_resetMonsters() {
   var target = setupTarget_();
   consumeDestructiveGrant_('setup3_resetMonsters');
-  return target + '\n' + monResetRows_();
+  var result = target + '\n' + monResetRows_();
+  Logger.log(result);
+  return result;
 }
 function setup3_importAssistFromMain() {
   var target = setupTarget_();
   consumeDestructiveGrant_('setup3_importAssistFromMain');
-  return target + '\n' + asstImportFromMain_();
+  var result = target + '\n' + asstImportFromMain_();
+  Logger.log(result);
+  return result;
 }
-function setup4_checkAll() { var target = setupTarget_(); return target + '\n[monster]\n' + monCheck_() + '\n[assist]\n' + JSON.stringify(asstCheck_(), null, 2); }
-function setup5_upgradeMonsterEditLog() { var target = setupTarget_(); return target + '\n' + monUpgradeEditLog_(); }
-function setup5_createAssistImageFolder() { var target = setupTarget_(); return target + '\n' + JSON.stringify(asstCreateImageFolder_()); }
+function setup4_checkAll() {
+  var target = setupTarget_();
+  var result = target + '\n[monster]\n' + monCheck_() + '\n[assist]\n' + JSON.stringify(asstCheck_(), null, 2);
+  Logger.log(result);
+  return result;
+}
+function setup5_upgradeMonsterEditLog() {
+  var target = setupTarget_();
+  var result = target + '\n' + monUpgradeEditLog_();
+  Logger.log(result);
+  return result;
+}
+function setup5_createAssistImageFolder() {
+  var target = setupTarget_();
+  var result = target + '\n' + JSON.stringify(asstCreateImageFolder_());
+  Logger.log(result);
+  return result;
+}

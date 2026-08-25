@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜4） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` | **完了** | ⚪🔴🟡 | 段階1はPR #46（`07fa6c3`）、段階2はPR #47（`139b75b`）、段階3はPR #48（`4330026`）、段階2bはPR #49（`c25e9bd`）、段階4AはPR #50（`5c6f4a5`）で完了。段階4Bも管理者が経路確認5項目を実証済み |
+| P12-11 | CMS統合の実装（段階1〜5b） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` | **進行中** | ⚪🔴🟡 | 段階1〜4Bは完了。段階5のリハーサルで3件の不具合を検出して中断し、段階5bで是正中。是正後のソースを貼り直し、段階5の項目1からやり直す |
 
 ## 最新mainの監査値
 
@@ -204,11 +204,12 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 ## 現在の作業
 
 P12-11 段階4A（公開経路実装）と段階4B（管理者の経路確認5項目）は完了した。
-現在は**段階5待ち（管理者のGAS操作）**である。
+現在は**段階5実施中・段階5b（リハーサルで検出した不具合の是正）進行中**である。
 
 - 段階4Bでは正常経路が全ステップ成功し、拒否3ケースも最初の門で期待どおり停止した
 - 正常経路によりmainは`4e1de69`へfast-forwardしたが、treeは段階4A直後の`5c6f4a5`と同一
-- 段階5以降は管理者の明示承認なしに着手しない
+- 段階5は3件の不具合を検出して中断した。段階5bの是正を貼り直した後、項目1からやり直す
+- 段階5bは管理者の承認取得済み。段階6以降は管理者の明示承認なしに着手しない
 
 ## 次の作業
 
@@ -220,8 +221,9 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - 段階2b: **完了** — 公開範囲と件名の是正（⚪）`fix/p12-11-s2b-assist-publish-scope`、PR #49 / `c25e9bd`
 - 段階3: **完了** — testCMSの3DBをmainへ反映（🔴）`chore/p12-11-s3-assist-db-from-cms`、PR #48 / `4330026`
 - 段階4: **完了** — アシスト公開経路の実証（🟡）。AはPR #50 / `5c6f4a5`で実装済み、Bは管理者が経路確認5項目を実証済み
-- 段階5: **管理者のGAS操作待ち** — 本番bookのコピーでリハーサル（⚪）
-- 段階5以降: **管理者の明示承認なしに着手しない**
+- 段階5: **実施中・中断** — 本番bookのコピーでのリハーサルで3件を検出。段階5bの是正を貼り直して項目1からやり直す（⚪）
+- 段階5b: **進行中** — タブとパネルのid不一致、setup結果のログ欠落、header配色競合を是正し、再発検査を追加する（⚪）`fix/p12-11-s5b-shell-defects`
+- 段階6以降: **管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
 
@@ -294,4 +296,5 @@ testCMSの3DBは段階3（PR #48 / `4330026`）でmainへ反映済みである�
 
 | 日付 | タスクID | 内容 | 対応 |
 |---|---|---|---|
+| 2026-08-26 | P12-11 段階5b | 本番bookコピーでの段階5リハーサルにより、タブとパネルのid不一致、setup結果の実行ログ欠落、headerのCSS競合の3件を検出した。特にタブ不一致は、段階2ではidが一致する`publish`タブだけが実装上到達可能で、かつ`rehearsal`では公開タブ自体が表示されないため、画面上で不一致が現れず検証を素通りした | 段階5bで3件を是正し、タブ対応を双方向検査する。是正後のソースをリハーサル環境へ貼り直し、段階5を項目1からやり直す |
 | 2026-08-26 | P12-11 段階2b | 段階2の成果物が設計F-1/F-3と食い違い、段階4の検査6を書く段階で判明。段階2では検査6を段階4へ繰り延べたため、不一致が未検査のまま通過した | 段階4より先に、`api_asstPublish()` の画像送信範囲と件名を設計へ合わせる |
