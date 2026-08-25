@@ -528,3 +528,35 @@ git push origin --delete cms/assist-publish
 **5項目すべての結果を記録し、Claudeへ報告する。**
 `git commit --allow-empty` を使うのは、**経路の実証とデータの投入を同時にしないため**である。
 片方が失敗したときに原因が1つに絞れる。
+
+### 実施結果
+
+管理者が上記の経路確認を実施し、全項目が期待どおりの結果になった。
+
+| 項目 | commit | 親 | 件名 | ファイル差分 | 結果 |
+|---|---|---|---|---|---|
+| 1 経路の通過 | `4e1de69` | `5c6f4a5` 正 | 正規形 | ゼロ | **全ステップ成功**。mainへfast-forward、treeは不変 |
+| 2 許可外パス | `cb8e42c` | `4e1de69` 正 | 正規形 | `A README_TEST.md` | **exit 1 で停止** |
+| 3 件名違反 | `356ebfe` | `4e1de69` 正 | `test publish` | ゼロ | **exit 1 で停止** |
+| 4 古い親 | `e37e8db` | `5c6f4a5` 旧 | 正規形 | ゼロ | **exit 1 で停止** |
+
+項目2〜4は、いずれも `Verify CMS assist source commit` ステップで停止した。
+`build.js`・`verify.js`に到達する前の、最初の門で遮断されている。
+また、3件はそれぞれ欠陥を1つだけ持つ形にしてあり、どの検査が単独で効いているかを
+分離して確認した。
+
+> **注記:** 差分ゼロのコミットでもmainのSHAは進む。Workflowはbuild後に差分が無ければ
+> 新しいコミットを作らず、`git push origin HEAD:main`で元コミット自体をfast-forwardする。
+> したがって公開の判定基準は「mainのSHAが変わらないこと」ではなく
+> **「mainのtreeが変わらないこと」**である。段階4Aマージ直後の`5c6f4a5`と、経路確認4回後の
+> `4e1de69`は、どちらもtree `484f5c9e6606db62dc62e2c40ae21224195e5603`である。
+> `git diff --stat 5c6f4a5 4e1de69`は出力なしで、ファイル変更はゼロだった。
+
+後始末の結果:
+
+```yaml
+origin の cms/assist-publish : 削除済み
+ローカルの cms/assist-publish : 削除済み
+README_TEST.md               : origin/main・ローカルとも存在しない
+origin/main                  : 4e1de69（tree は 5c6f4a5 と一致）
+```
