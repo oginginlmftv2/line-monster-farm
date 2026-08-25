@@ -32,3 +32,4 @@
 | `build-spec.md` | ビルド仕様 | 作成済 |
 | `assist-card-cms-progress.md` | アシストカードDB・静的ページ・CMSの設計、詳細進捗、保留、引き継ぎ | 作成済 |
 | `cms-integration-plan.md` | モンスターCMSとアシストCMSの統合方針、リスク、実施順 | 作成済 |
+| `cms-integration-design.md` | CMS統合の具体設計。構成、名前衝突、環境防御、UI、公開経路、token、検査、移行 | 作成済 |
