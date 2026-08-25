@@ -35,7 +35,8 @@
 | P12-8b | CMS構造化フォーム | `feat/p12-8b-assist-forms` | **完了** | 🟡🔴 | PR #41をmainへマージ（`e4b6408`）。schema v3、生成ページ、test deployment v6を反映 |
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
-| P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **進行中** | ⚪ | `docs/cms-integration-design.md` にA〜Jの結論を記載。実装・GAS・シート・deploymentは未変更 |
+| P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
+| P12-11 | CMS統合の実装（段階1〜3） | `chore/p12-11-s1-cms-token-scan` ほか | **進行中** | ⚪🔴 | 設計書I-1の段階ごとにPRを分ける。今回は段階1（検査の先行強化） |
 
 ## 最新mainの監査値
 
@@ -260,31 +261,13 @@ P12-10「CMS統合の設計」を行う。
 
 ## 次の作業
 
-P12-11 を次に行う。
-**`docs/cms-integration-design.md` を管理者が承認するまで着手しない。**
+P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
+**1段階ごとに push → PR → マージまで行い、そこで止まる。複数段階を1つのPRにまとめない。**
 
-設計書 第I章は8段階になった。P12-11 は段階1〜3を担う。
-
-| 段階 | 内容 | 本番影響 |
-|---|---|:-:|
-| 1 | 検査の先行強化（`_cms/`全体のtoken走査） | ⚪ |
-| 2 | 統合ソースの作成（リポジトリ内だけ。GASへ貼らない） | ⚪ |
-| 3 | **testCMSの3DBをmainへ反映**（export → PR） | 🔴 |
-
-- ブランチ: 進捗管理チャットの指示に従う
-- 段階4〜7（アシスト公開経路・リハーサル・本番book同居・deployment切替）はP12-12
-- **稼働中のモンスターCMSと`cms/publish`経路には段階7の手順5まで一切触れない**
-
-### 段階3は単独で実施できる
-
-段階3は統合作業ではなく**データ公開**である。testCMSで入力済みの内容を
-公開へ届ける作業で、統合の完成を待たずに実施できる。
-
-- 実施前に test Drive の画像一覧と`assist-cards/`91件を突き合わせる
-- `git diff`で**カードのindex/noindex件数**（現在 54/37）の変化を必ず読む。
-  効果や解説を足していればゲート通過でindexへ昇格し、
-  「あと数十字で昇格するカード」がここで効く
-- 🔴。管理者が公開タイミングを決める
+- 段階1: 検査の先行強化（⚪）`chore/p12-11-s1-cms-token-scan` ← 進行中
+- 段階2: 統合ソースの作成（⚪）— 段階1のマージ後に着手する
+- 段階3: testCMSの3DBをmainへ反映（🔴）— 管理者がタイミングを決める
+- 段階4以降は P12-12。**管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
 
