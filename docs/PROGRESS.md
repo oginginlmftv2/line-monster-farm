@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜5） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` | **完了** | ⚪🔴🟡 | 段階1〜4B・5b・5c・5dを完了し、段階5のリハーサル12項目をすべて確認した。次は段階6（管理者のGAS操作）待ち |
+| P12-11 | CMS統合の実装（段階1〜6） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` | **完了** | ⚪🔴🟡 | 段階1〜6を完了。次は段階7（本番deployment切替 + token1本化）待ち |
 
 ## 最新mainの監査値
 
@@ -224,11 +224,18 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - 段階5b: **完了** — タブとパネルのid不一致、setup結果のログ欠落、header配色競合を是正し、再発検査を追加（⚪）PR #52 / `8471e4c`
 - 段階5c: **完了** — アシスト用の裸のタグセレクタがシェルへ波及するレイアウト不具合を是正し、再発検査を追加（⚪）PR #53 / `c37c698`
 - 段階5d: **完了** — シェル共通通知とOCRのファイル単位の成否処理を追加し、利用者へ失敗理由と部分成功を必ず届ける（⚪）PR #54 / `fd591dd`
-- 段階6: **次** — 本番bookへアシストシートを同居する（🟡、管理者のGAS操作）
-- 段階6以降: **管理者の明示承認なしに着手しない**
+- 段階6: **完了** — 本番bookへアシストシートを同居し、旧CMSの保存動作を確認（🟡、管理者のGAS操作）`docs/p12-11-s6-production-cohabitation`。PR番号とマージSHAは管理者が記入する
+- 段階7: **次** — 本番deployment切替 + token1本化（🟡🔴）
+- 段階7以降: **管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
 
+- **アシスト公開前に generatedFrom の期待値を移行対応にする（段階7の前提）:**
+  段階7でアシスト公開を実行すると、3DBの generatedFrom が
+  `['P12-8 test assist CMS']`から`['ライ徹CMS']`へ変わる。
+  `cms-assist-publish.yml`は公開の途中で`scripts/verify.js`を実行するため、
+  期待値が古いままだと公開そのものが失敗する。
+  期待値の更新は段階7の「後」ではなく「前」に行う。
 - **scopes未割り当て時の案内:** scopes が空のメンバーには、タブも説明も無い真っ白な画面が表示される。
   `api_bootstrapShell` の `tabs` が空のとき、権限が未割り当てである旨を示していない。
   運用でメンバーを追加し scopes を入れ忘れると、その人には故障として見える

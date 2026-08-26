@@ -661,3 +661,117 @@ Codexは次の操作を実行しない。管理者が段階5の記録後に行�
 
 `GITHUB_TOKEN`を持たないプロジェクトを残す理由はない。残すと「本番bookとそっくりな別book」が
 放置され、将来IDを取り違える原因になる。
+
+## 15. 段階6: 本番bookへアシストシートを同居
+
+管理者が2026-08-26に本番book「ライ徹CMS」へアシストシートを同居し、段階6を完了した。
+`members`シートA1メモの環境マーカーは`LMF CMS production`である。
+
+### 本番環境
+
+```text
+対象book           ライ徹CMS（本番）
+環境マーカー       members シートA1メモ「LMF CMS production」
+Script Properties  ENVIRONMENT=production
+                   SPREADSHEET_ID
+                   DRIVE_FOLDER_ID
+                   ASSIST_IMAGE_FOLDER_ID
+                   GOOGLE_CLOUD_VISION_API_KEY
+                   OCR_DAILY_LIMIT=30
+                   GITHUB_TOKEN は設定していない
+```
+
+スプレッドシートID、DriveフォルダID、APIキーの値は記録していない。
+
+### 実行ログ
+
+管理者から報告された実行ログは次のとおりである。実行ユーザーのメールアドレスは記録せず、
+`members`シートだけがメールアドレスを持つ状態を維持する。
+
+```text
+setup1_createSheets（1回目）
+  ENVIRONMENT=production / book=「ライ徹CMS」
+  作成: cards, assist_effects, abilities, assist_log, assist_publish_log
+  要確認: members: 列見出しが想定と異なります（変更していません）
+
+setup2_registerMe
+  ENVIRONMENT=production / book=「ライ徹CMS」
+  登録済み。membersシートのnicknameとscopesを確認してください。
+
+setup1_createSheets（2回目・確認用）
+  ENVIRONMENT=production / book=「ライ徹CMS」
+  作成: なし
+  要確認: なし
+
+setup3_importAssistFromMain
+  ENVIRONMENT=production / book=「ライ徹CMS」
+  mainから統合CMSへ取り込みました: カード91 / 効果行896 / 能力1079
+
+setup4_checkAll
+  ENVIRONMENT=production / book=「ライ徹CMS」
+  [monster]
+  SPREADSHEET_ID: 設定済み
+  DRIVE_FOLDER_ID: 設定済み
+  実行ユーザー: （管理者）
+  スプレッドシート: ライ徹CMS
+    monsters: 351行
+    edit_log: 94行
+    publish_log: 47行
+  Driveフォルダ: ライ徹_画像
+  [assist]
+  {
+    "environment": "production",
+    "spreadsheetIdConfigured": true,
+    "cards": 91,
+    "effects": 888,
+    "abilities": 1079,
+    "issues": []
+  }
+```
+
+### 実行結果の解釈
+
+1. `setup1_createSheets`（1回目）の`要確認: members`は正常である。旧ソースの
+   `HEADERS[SHEET_MEMBERS]`は6列、統合ソースの`CORE_HEADERS[SHEET_MEMBERS]`は7列目に
+   `scopes`を持つ。この差は`setup2_registerMe`が埋める。`setup1_createSheets`
+   （2回目）の`要確認: なし`が、埋まったことの実測である。`monsters` / `edit_log` /
+   `publish_log`は旧ソースと統合ソースで列見出しが完全一致するため、`要確認`に出ない。
+2. `setup3_importAssistFromMain`の`効果行896`と`setup4_checkAll`の`"effects": 888`は
+   数え方が違う。実体の効果は888件で、効果が0件のカード8枚に空行が1行ずつ入るため、
+   `assist_effects`シートは896行になる。どちらも正しい。
+3. `edit_log: 94行` / `publish_log: 47行`は`setup4_checkAll`実行時点の値である。
+   `setup1_createSheets`〜`setup4_checkAll`はこの2シートへ書き込まない。書き込むのは
+   `10_monster.gs`の`monSave` / `monCreateMonster`、`30_publish.gs`の公開ログ、および今回
+   実行していない`setup5_upgradeMonsterEditLog`だけである。したがって実行前と同値である。
+   なお実施後の旧CMS動作確認で解説を2回保存したため、現在の`edit_log`は96行である。
+
+### 旧CMSの動作確認
+
+段階6の完了条件として、旧モンスターCMSのURLを開き、モンスター1体の解説末尾へ
+全角スペースを1つ足して保存し、成功を確認した。続けて足した全角スペースを消して
+もう一度保存し、成功を確認した。公開は実行していない。
+
+シートが5枚増え、`members`に列が1つ増えても、旧CMSが壊れないことを実測した。
+旧ソースは`Object.keys(HEADERS)`に無いシートを読まない。
+
+### 本番bookの最終形
+
+| シート | 由来 | 段階6での扱い |
+|---|---|---|
+| `monsters` | 旧CMS | 無変更（351行） |
+| `edit_log` | 旧CMS | 無変更（94行） |
+| `publish_log` | 旧CMS | 無変更（47行） |
+| `members` | 旧CMS | `scopes`列を追加 |
+| `cards` | 新規 | 91行 |
+| `assist_effects` | 新規 | 896行。`cardStatus`列なし |
+| `abilities` | 新規 | 1079行 |
+| `assist_log` | 新規 | 取り込み1件のみ |
+| `assist_publish_log` | 新規 | 空 |
+
+### リハーサル環境の後始末
+
+第14章の「管理者が行う後始末」に記載した次の3項目は、段階6の実施前に完了した。
+
+1. リハーサル用GASプロジェクトを削除した
+2. コピーbookをゴミ箱へ移した
+3. リハーサル用のアシスト画像フォルダをゴミ箱へ移した
