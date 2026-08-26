@@ -547,6 +547,40 @@ head('8. 秘密情報');
     } else {
       ok(`タブとパネルの対応は双方向一致（${panelMapEntries.map(entry => `${entry.tab}->${entry.panelId}`).join(', ')}）`);
     }
+
+    // H-3 検査14: ドメイン用CSSの裸タグ指定がシェルの同名タグへ波及するのを防ぐ。
+    const commonSource = htmlSources.find(item => item.file === 'ui_common.html')?.source || '';
+    const styleBlocks = [...commonSource.matchAll(/<style\b[^>]*>([\s\S]*?)<\/style>/gi)]
+      .map(match => match[1].replace(/\/\*[\s\S]*?\*\//g, ''));
+    const bareTagSelectors = new Set();
+    styleBlocks.forEach(css => {
+      let segmentStart = 0;
+      for (let index = 0; index < css.length; index++) {
+        const char = css[index];
+        if (char === '{') {
+          const prelude = css.slice(segmentStart, index).trim();
+          if (!prelude.startsWith('@')) {
+            prelude.split(',').map(selector => selector.trim())
+              .filter(selector => /^[a-z][a-z0-9-]*$/i.test(selector))
+              .forEach(selector => bareTagSelectors.add(selector.toLowerCase()));
+          }
+          segmentStart = index + 1;
+        } else if (char === ';' || char === '}') {
+          segmentStart = index + 1;
+        }
+      }
+    });
+    const shellTags = new Set([...indexSource.matchAll(/<([a-z][a-z0-9-]*)\b/gi)]
+      .map(match => match[1].toLowerCase()));
+    // body / button / header は統合画面全体の土台・操作部品・共通ヘッダーを意図した全体指定。
+    const allowedShellBareTags = new Set(['body', 'button', 'header']);
+    const unsafeShellBareTags = [...bareTagSelectors]
+      .filter(tag => shellTags.has(tag) && !allowedShellBareTags.has(tag)).sort();
+    if (unsafeShellBareTags.length) {
+      ng(`ui_common.htmlの裸タグセレクタがシェルへ波及: ${unsafeShellBareTags.join(', ')}`);
+    } else {
+      ok(`ui_common.htmlの裸タグセレクタとシェルの重複は許可済みのみ（${[...bareTagSelectors].filter(tag => shellTags.has(tag)).sort().join(', ') || '0'}）`);
+    }
   }
 
   if (!fs.existsSync(cmsDir)) {
