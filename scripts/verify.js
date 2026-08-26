@@ -500,21 +500,35 @@ head('8. 秘密情報');
       ng(`破壊的setup処理が40_setup.gs以外にある: ${destructiveOutsideSetup.map(item => item.file).join(', ')}`);
     } else ok('setRows_ / deleteRows / clearContentは40_setup.gsだけに局在');
 
-    // 段階3で現行test CMSのexport由来へ更新した。
-    // 段階7の本番deployment切替後、統合CMSのexportは ['ライ徹CMS'] を出すため再度更新する。
-    const expectedGeneratedFrom = {
-      'src/data/assist-cards.json': ['P12-8 test assist CMS'],
-      'src/data/assist-effects.json': ['P12-8 test assist CMS'],
-      'src/data/assist-abilities.json': ['P12-8 test assist CMS'],
-    };
-    const wrongGeneratedFrom = Object.entries(expectedGeneratedFrom).filter(([file, expected]) => {
-      try { return JSON.stringify(JSON.parse(read(file)).generatedFrom) !== JSON.stringify(expected); }
-      catch { return true; }
-    }).map(([file]) => file);
+    // 移行中の2値許容。段階7でアシスト公開が成功し3DBが ['ライ徹CMS'] になったら、
+    // 別PRで ['ライ徹CMS'] の単値へ締める。混在は常にFAIL。
+    const allowedGeneratedFrom = [
+      ['P12-8 test assist CMS'],
+      ['ライ徹CMS'],
+    ];
+    const generatedFromFiles = [
+      'src/data/assist-cards.json',
+      'src/data/assist-effects.json',
+      'src/data/assist-abilities.json',
+    ];
+    const generatedFromStates = generatedFromFiles.map(file => {
+      try {
+        const value = JSON.parse(read(file)).generatedFrom;
+        return { file, serialized: JSON.stringify(value), display: JSON.stringify(value) ?? '<missing>' };
+      } catch {
+        return { file, serialized: null, display: '<read/parse error>' };
+      }
+    });
+    const allowedGeneratedFromValues = allowedGeneratedFrom.map(value => JSON.stringify(value));
+    const allGeneratedFromAllowed = generatedFromStates.every(state =>
+      allowedGeneratedFromValues.includes(state.serialized));
+    const allGeneratedFromMatch = new Set(generatedFromStates.map(state => state.serialized)).size === 1;
     const assistSource = gasSources.find(item => item.file === '20_assist.gs')?.source || '';
     const unifiedGeneratedFromCount = (assistSource.match(/generatedFrom:\s*\['ライ徹CMS'\]/g) || []).length;
-    if (wrongGeneratedFrom.length || unifiedGeneratedFromCount !== 3) {
-      ng(`generatedFromが想定外（3DB ${wrongGeneratedFrom.join(', ') || 'OK'} / 統合source ${unifiedGeneratedFromCount}/3）`);
+    if (!allGeneratedFromAllowed || !allGeneratedFromMatch || unifiedGeneratedFromCount !== 3) {
+      const generatedFromDetails = generatedFromStates
+        .map(state => `${state.file}=${state.display}`).join(' / ');
+      ng(`generatedFromが想定外（3DB ${generatedFromDetails} / 統合source ${unifiedGeneratedFromCount}/3）`);
     } else ok('3DBと統合exportのgeneratedFromは想定値');
 
     // H-3 検査12: cardStatusをシートに持たず、効果件数からstatusを導出する。
