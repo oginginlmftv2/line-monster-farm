@@ -145,7 +145,7 @@
     .test { padding:3px 7px; border-radius:999px; background:#fff0c7; color:#7a4d00; font-size:12px; font-weight:700; }
     .spacer { flex:1; }
     .muted { color:var(--muted); font-size:13px; }
-    main { display:grid; grid-template-columns:minmax(280px,360px) minmax(0,1fr); gap:16px; max-width:1440px; margin:auto; padding:16px; }
+    .domain-panel > main { display:grid; grid-template-columns:minmax(280px,360px) minmax(0,1fr); gap:16px; max-width:1440px; margin:auto; padding:16px; }
     .panel { background:white; border:1px solid var(--line); border-radius:10px; box-shadow:0 2px 8px rgba(55,40,20,.05); }
     .sidebar { overflow:hidden; align-self:start; position:sticky; top:74px; max-height:calc(100vh - 90px); display:flex; flex-direction:column; }
     .filters { display:grid; grid-template-columns:1fr 110px; gap:8px; padding:12px; border-bottom:1px solid var(--line); }
@@ -185,7 +185,7 @@
     @media (max-width:760px) {
       header { padding:9px 12px; flex-wrap:wrap; }
       header h1 { font-size:16px; }
-      main { display:block; padding:10px; }
+      .domain-panel > main { display:block; padding:10px; }
       .sidebar { position:static; max-height:none; }
       .editor { display:none; margin-top:10px; padding:14px; }
       body.editing .sidebar { display:none; }
