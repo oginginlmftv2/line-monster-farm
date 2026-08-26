@@ -581,6 +581,24 @@ head('8. 秘密情報');
     } else {
       ok(`ui_common.htmlの裸タグセレクタとシェルの重複は許可済みのみ（${[...bareTagSelectors].filter(tag => shellTags.has(tag)).sort().join(', ') || '0'}）`);
     }
+
+    // H-3 検査15: シェル通知を追加しても、ドメイン内のその場表示を失わせない。
+    const shellAlert = indexSource.match(/<([A-Za-z][\w:-]*)\b([^>]*)\bid\s*=\s*(["'])app_toast\3([^>]*)>/i);
+    const hasShellAlert = !!shellAlert && /\brole\s*=\s*(["'])alert\1/i.test(`${shellAlert[2]} ${shellAlert[4]}`);
+    const showSource = commonSource.match(/function\s+show\s*\([^)]*\)\s*\{([^\n]*)\}/)?.[1] || '';
+    const writesShellAlert = /\bel\(\s*['"]app_toast['"]\s*\)/.test(showSource)
+      && /toast\.textContent\s*=/.test(showSource);
+    const writesActivePanel = /document\.querySelector\([^)]*\.domain-panel\.active[^)]*\)/.test(showSource)
+      && /target\.textContent\s*=/.test(showSource);
+    const notificationIssues = [];
+    if (!hasShellAlert) notificationIssues.push('index.htmlにrole="alert"のapp_toastがない');
+    if (!writesShellAlert) notificationIssues.push('show()がapp_toastへ書き込んでいない');
+    if (!writesActivePanel) notificationIssues.push('show()が.domain-panel.activeへ書き込んでいない');
+    if (notificationIssues.length) {
+      ng(`利用者への通知経路が不正: ${notificationIssues.join(' / ')}`);
+    } else {
+      ok('show()はapp_toastと.domain-panel.activeの両方へ通知');
+    }
   }
 
   if (!fs.existsSync(cmsDir)) {
