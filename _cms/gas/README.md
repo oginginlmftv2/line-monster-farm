@@ -15,6 +15,7 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 ## セットアップ
 
 setup1_createSheets、setup2_registerMe、対象を明示したsetup3_*、setup4_checkAllの順で実行します。全setupの戻り値1行目でENVIRONMENTとbook名を確認します。
+破壊的setupが失敗した場合も一回限りの鍵は消費されるため、再実行前にALLOW_DESTRUCTIVE_SETUPを設定し直します。
 
 ## token更新
 
