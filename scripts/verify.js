@@ -645,10 +645,10 @@ head('8. 秘密情報');
     const monPublishSource = functionSource('api_monPublish');
     const asstPublishApiSource = functionSource('api_asstPublish');
     const publishSendIssues = [];
-    if (!/\b(?:monPublishLog_|publishLog_)\s*\(/.test(monPublishSource)) {
+    if (!/\b(?:monPublishLog_|publishLog_)\s*\([\s\S]{0,200}?'送信済み'/.test(monPublishSource)) {
       publishSendIssues.push('api_monPublish');
     }
-    if (!/publishLog_\s*\(\s*ASST_SHEET_PUBLISH_LOG\s*,/.test(asstPublishApiSource)) {
+    if (!/publishLog_\s*\(\s*ASST_SHEET_PUBLISH_LOG\s*,[\s\S]{0,200}?'送信済み'/.test(asstPublishApiSource)) {
       publishSendIssues.push('api_asstPublish');
     }
     if (logSheetConstants.length !== 4 || missingLogWriters.length || publishSendIssues.length) {
