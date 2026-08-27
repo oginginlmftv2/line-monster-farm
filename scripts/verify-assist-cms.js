@@ -195,6 +195,25 @@ function validateRoot(root) {
       !/activation\?\s*'conditional'\s*:\s*'universal'/.test(html)) {
     issues.push('アシストCMSに複数画像OCR・候補レビュー画面がない');
   }
+  const ocrNormalizationImplementations = [
+    { file: SOURCE_FILES[3], normalize: functionBlock(effectOcr, 'normalizeText'), sanitize: functionBlock(effectOcr, 'sanitizeOcrText') },
+    { file: SOURCE_FILES[1], normalize: functionBlock(html, 'asstOcrNormalizeText'), sanitize: functionBlock(html, 'asstOcrSanitizeText') },
+  ];
+  const ocrNormalizationRules = [
+    { label: '保護対象（ ）Ⅰ-Ⅹⅰ-ⅹ', block: 'normalize', present: source => /\[（）Ⅰ-Ⅹⅰ-ⅹ\]\/u/.test(source) },
+    { label: 'NFKC正規化', block: 'normalize', present: source => /\.normalize\(['"]NFKC['"]\)/.test(source) },
+    { label: '|｜ → Ⅱ の置換', block: 'sanitize', present: source => /\.replace\(\/\[\|｜\]\/g,\s*['"]Ⅱ['"]\)/.test(source) },
+    { label: 'MAX↑ の除去', block: 'sanitize', present: source => /\.replace\(\/MAX↑\/g,\s*['"]['"]\)/.test(source) },
+    { label: '行頭 • の除去', block: 'sanitize', present: source => /\.replace\(\/\^(?:•|\[[^\]]*•[^\]]*\])\\s\*\/,\s*['"]['"]\)/.test(source) },
+    { label: '・（U+30FB）を削除対象に含めない', block: 'sanitize', present: source => !/\.replace\(\/[^/\n]*・[^/\n]*\/[a-z]*,\s*['"]['"]\)/i.test(source) },
+  ];
+  for (const implementation of ocrNormalizationImplementations) {
+    for (const rule of ocrNormalizationRules) {
+      if (!rule.present(implementation[rule.block])) {
+        issues.push(`${implementation.file}: OCR正規化規則「${rule.label}」が欠けている`);
+      }
+    }
+  }
   if (!/function\s+api_asstOcrEffectImage\s*\(/.test(gas) || !/DOCUMENT_TEXT_DETECTION/.test(gas) ||
       !/languageHints:\s*\['ja'\]/.test(gas) || !/optionalProp_\('GOOGLE_CLOUD_VISION_API_KEY'\)/.test(gas)) {
     issues.push('アシストGASにScript Properties経由の日本語Vision OCRがない');

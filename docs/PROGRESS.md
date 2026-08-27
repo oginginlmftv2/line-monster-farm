@@ -39,6 +39,7 @@
 | P12-11 | CMS統合の実装（段階1〜8） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` / `chore/p12-11-s8a-assist-check-retarget` / `chore/p12-11-s8b-remove-legacy-assist` | **完了** | ⚪🔴🟡 | 段階1〜8を完了。P12-11 は完了 |
 | P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **完了** | 🟡 | PR #60をmainへマージ（`eedfcf9`）。本番GASへ反映し、公開2回で`assist_publish_log`の送信済み・公開成功を実機確認した |
 | P12-13 | OCRテキスト正規化の是正 | `fix/p12-13-ocr-normalize` | **レビュー待ち** | ⚪ | NFKCによる全角破壊を停止。既存888効果は無変更 |
+| P12-14 | 実運用OCR経路の正規化是正と両実装検査 | `fix/p12-14-ocr-ui-normalize` | **レビュー待ち** | 🟡 | 実運用のOCR経路（ui_assist.html）を是正。GAS再deploymentが必要 |
 
 ## 最新mainの監査値
 
@@ -332,6 +333,7 @@ testCMSの3DBは段階3（PR #48 / `4330026`）でmainへ反映済みである�
 
 | 日付 | タスクID | 内容 | 対応 |
 |---|---|---|---|
+| 2026-08-27 | P12-13 | OCR正規化の対象を scripts/assist-effect-ocr.js だけに絞ってしまい、実運用のOCR経路である _cms/gas/ui_assist.html を直していなかった。同じロジックが2箇所に複製されており、片方だけ直した | P12-14 で ui_assist.html を是正し、両実装が同じ規則を持つことを機械照合する検査を追加した |
 | 2026-08-27 | P12-12 | 追加した検査16が、api_monPublish / api_asstPublish の「関数内のどこかに公開ログ呼び出しがあるか」しか見ておらず、成功経路の「送信済み」の記録だけを消しても通った。catch経路の呼び出しが判定を満たしてしまうため | `'送信済み'`を同じ呼び出しの中に要求する形へ締めた（`b5423da`）。成功経路のみ削除する破壊テストをモンスター側・アシスト側の両方で必須にした |
 | 2026-08-27 | P12-11 段階5d | リハーサル項目7・8で、サーバ側の競合拒否とOCR上限拒否は正しく動いていたが、`show()`の書き込み先が画面外にあり理由が利用者へ届かなかった。段階2の統合時、アシスト側にはシェル共通の通知先が用意されず、OCRも後続1枚の失敗で成功済み結果を破棄していた | シェルに固定通知を追加してドメイン内表示と併用し、OCRは直列のまま1枚ごとに成否を受けて成功分を残す。通知経路は検査15で継続検査する |
 | 2026-08-27 | P12-11 段階5c | 段階2のCSS統合で、アシスト側だけを想定した裸のタグセレクタがシェルの同名タグにも効き、モンスタータブのレイアウトが崩れていた。段階5bのタブ不具合と同じ性質の取りこぼしだった | 裸のセレクタをアシストパネル内へ限定し、シェルと重なる裸タグを検査14で継続検査する |
