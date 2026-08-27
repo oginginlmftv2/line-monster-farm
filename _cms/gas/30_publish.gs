@@ -57,8 +57,8 @@ function githubBlob_(content, encoding) {
   return result.sha;
 }
 
-function monPublishLog_(user, sha, result, detail) {
-  var sh = book_().getSheetByName(MON_SHEET_PUBLISH_LOG);
+function publishLog_(logSheetName, user, sha, result, detail) {
+  var sh = book_().getSheetByName(logSheetName);
   if (!sh) return;
   sh.appendRow([
     nowJst_(),
@@ -67,6 +67,10 @@ function monPublishLog_(user, sha, result, detail) {
     String(result || ''),
     String(detail || '').slice(0, 1000)
   ]);
+}
+
+function monPublishLog_(user, sha, result, detail) {
+  return publishLog_(MON_SHEET_PUBLISH_LOG, user, sha, result, detail);
 }
 
 function monSetAllPublishStatus_(status) {
@@ -78,14 +82,18 @@ function monSetAllPublishStatus_(status) {
   );
 }
 
-function monPublishLogRows_() {
-  var sh = book_().getSheetByName(MON_SHEET_PUBLISH_LOG);
+function publishLogRows_(logSheetName) {
+  var sh = book_().getSheetByName(logSheetName);
   if (!sh || sh.getLastRow() < 2) return [];
   return sh.getRange(2, 1, sh.getLastRow() - 1, 5).getDisplayValues();
 }
 
-function monRecordedPublishResult_(sha) {
-  var rows = monPublishLogRows_();
+function monPublishLogRows_() {
+  return publishLogRows_(MON_SHEET_PUBLISH_LOG);
+}
+
+function recordedPublishResult_(logSheetName, sha) {
+  var rows = publishLogRows_(logSheetName);
   for (var i = rows.length - 1; i >= 0; i--) {
     if (rows[i][2] !== sha) continue;
     if (rows[i][3] === '公開成功' || rows[i][3] === '公開失敗') {
@@ -100,8 +108,12 @@ function monRecordedPublishResult_(sha) {
   return null;
 }
 
-function monSentPublishUser_(sha) {
-  var rows = monPublishLogRows_();
+function monRecordedPublishResult_(sha) {
+  return recordedPublishResult_(MON_SHEET_PUBLISH_LOG, sha);
+}
+
+function sentPublishUser_(logSheetName, sha) {
+  var rows = publishLogRows_(logSheetName);
   for (var i = rows.length - 1; i >= 0; i--) {
     if (rows[i][2] === sha &&
         (rows[i][3] === '送信済み' || rows[i][3] === 'GitHub送信済み・後処理失敗')) {
@@ -111,17 +123,25 @@ function monSentPublishUser_(sha) {
   return null;
 }
 
-function monLatestPublishSha_() {
-  var rows = monPublishLogRows_();
+function monSentPublishUser_(sha) {
+  return sentPublishUser_(MON_SHEET_PUBLISH_LOG, sha);
+}
+
+function latestPublishSha_(logSheetName) {
+  var rows = publishLogRows_(logSheetName);
   for (var i = rows.length - 1; i >= 0; i--) {
     if (/^[0-9a-f]{40}$/i.test(rows[i][2])) return rows[i][2].toLowerCase();
   }
   return '';
 }
 
-function monCmsPublishRun_(sha) {
-  var path = '/actions/workflows/cms-publish.yml/runs' +
-    '?branch=' + encodeURIComponent(GITHUB_MON_PUBLISH_BRANCH) +
+function monLatestPublishSha_() {
+  return latestPublishSha_(MON_SHEET_PUBLISH_LOG);
+}
+
+function cmsPublishRun_(workflowFileName, branchName, sha) {
+  var path = '/actions/workflows/' + workflowFileName + '/runs' +
+    '?branch=' + encodeURIComponent(branchName) +
     '&event=push&per_page=20';
   var result = githubRequest_('get', path, null, false);
   var runs = result.workflow_runs || [];
@@ -129,6 +149,10 @@ function monCmsPublishRun_(sha) {
     if (String(runs[i].head_sha || '').toLowerCase() === sha) return runs[i];
   }
   return null;
+}
+
+function monCmsPublishRun_(sha) {
+  return cmsPublishRun_('cms-publish.yml', GITHUB_MON_PUBLISH_BRANCH, sha);
 }
 
 function monFailedActionDetail_(run) {
@@ -153,16 +177,16 @@ function monFailedActionDetail_(run) {
     ' / ' + place + ' / ' + run.html_url;
 }
 
-function monPublishStatus_(sha) {
+function publishStatus_(config, sha) {
   sha = String(sha || '').trim().toLowerCase();
   if (!/^[0-9a-f]{40}$/.test(sha)) throw new Error('確認するコミットSHAが正しくありません。');
 
-  var recorded = monRecordedPublishResult_(sha);
+  var recorded = recordedPublishResult_(config.logSheet, sha);
   if (recorded) return recorded;
-  var sentUser = monSentPublishUser_(sha);
-  if (!sentUser) throw new Error('publish_log に送信記録がないコミットです。');
+  var sentUser = sentPublishUser_(config.logSheet, sha);
+  if (!sentUser) throw new Error(config.logSheet + ' に送信記録がないコミットです。');
 
-  var run = monCmsPublishRun_(sha);
+  var run = cmsPublishRun_(config.workflow, config.branch, sha);
   if (!run) {
     return { state: 'queued', sha: sha, shortSha: sha.slice(0, 7), message: 'Actionsの開始待ちです。' };
   }
@@ -190,10 +214,10 @@ function monPublishStatus_(sha) {
   var lock = LockService.getScriptLock();
   lock.waitLock(20000);
   try {
-    recorded = monRecordedPublishResult_(sha);
+    recorded = recordedPublishResult_(config.logSheet, sha);
     if (recorded) return recorded;
-    monSetAllPublishStatus_(success ? 'published' : 'publish_failed');
-    monPublishLog_(sentUser, sha, success ? '公開成功' : '公開失敗', detail);
+    if (config.onResult) config.onResult(success);
+    publishLog_(config.logSheet, sentUser, sha, success ? '公開成功' : '公開失敗', detail);
   } finally {
     lock.releaseLock();
   }
@@ -205,6 +229,17 @@ function monPublishStatus_(sha) {
     message: detail,
     url: run.html_url
   };
+}
+
+function monPublishStatus_(sha) {
+  return publishStatus_({
+    logSheet: MON_SHEET_PUBLISH_LOG,
+    workflow: 'cms-publish.yml',
+    branch: GITHUB_MON_PUBLISH_BRANCH,
+    onResult: function (success) {
+      monSetAllPublishStatus_(success ? 'published' : 'publish_failed');
+    }
+  }, sha);
 }
 
 function api_monPublish() {
@@ -356,58 +391,94 @@ function api_monLatestPublishStatus() {
 
 function api_asstPublish() {
   var user = requirePublishable_('assist');
-  var docs = asstBuildDocuments_();
-  var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(asstValidateImageFiles_(docs.cards.cards));
-  if (issues.length) throw new Error('アシスト公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
-  prop_('GITHUB_TOKEN');
-  var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
-  var mainSha = mainRef.object.sha;
-  var mainCommit = githubRequest_('get', '/git/commits/' + mainSha, null, false);
-  var files = [
-    { path: 'src/data/assist-cards.json', value: docs.cards },
-    { path: 'src/data/assist-effects.json', value: docs.effects },
-    { path: 'src/data/assist-abilities.json', value: docs.abilities }
-  ];
-  var tree = files.map(function (file) { return { path: file.path, mode: '100644', type: 'blob', sha: githubBlob_(JSON.stringify(file.value, null, 2) + '\n', 'utf-8') }; });
-  var referencedImages = docs.cards.cards.reduce(function (set, card) {
-    var filename = String(card.image || '').replace(/^assist-cards\//, '');
-    if (filename) set[filename] = true;
-    return set;
-  }, {});
-  var imageFolder = asstImageFolder_();
-  var driveFiles = imageFolder.getFiles();
-  while (driveFiles.hasNext()) {
-    var driveFile = driveFiles.next();
-    var filename = driveFile.getName();
-    if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
-      throw new Error('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
+  var pushedSha = '';
+  try {
+    var docs = asstBuildDocuments_();
+    var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(asstValidateImageFiles_(docs.cards.cards));
+    if (issues.length) throw new Error('アシスト公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
+    prop_('GITHUB_TOKEN');
+    var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
+    var mainSha = mainRef.object.sha;
+    var mainCommit = githubRequest_('get', '/git/commits/' + mainSha, null, false);
+    var files = [
+      { path: 'src/data/assist-cards.json', value: docs.cards },
+      { path: 'src/data/assist-effects.json', value: docs.effects },
+      { path: 'src/data/assist-abilities.json', value: docs.abilities }
+    ];
+    var tree = files.map(function (file) { return { path: file.path, mode: '100644', type: 'blob', sha: githubBlob_(JSON.stringify(file.value, null, 2) + '\n', 'utf-8') }; });
+    var referencedImages = docs.cards.cards.reduce(function (set, card) {
+      var filename = String(card.image || '').replace(/^assist-cards\//, '');
+      if (filename) set[filename] = true;
+      return set;
+    }, {});
+    var imageFolder = asstImageFolder_();
+    var driveFiles = imageFolder.getFiles();
+    while (driveFiles.hasNext()) {
+      var driveFile = driveFiles.next();
+      var filename = driveFile.getName();
+      if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
+        throw new Error('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
+      }
+      // カードDBから参照されていないファイルは公開コミットへ含めない。
+      if (!referencedImages[filename]) continue;
+      var bytes = driveFile.getBlob().getBytes();
+      if (!bytes.length || bytes.length > ASST_IMAGE_MAX_BYTES) {
+        throw new Error(filename + ' は空、または2MBを超えています。');
+      }
+      var extension = filename.split('.').pop().toLowerCase();
+      var expectedMime = extension === 'jpg' ? 'image/jpeg' :
+        (extension === 'png' ? 'image/png' : 'image/webp');
+      if (!isExpectedImage_(bytes, expectedMime)) {
+        throw new Error(filename + ' の拡張子と画像データが一致しません。');
+      }
+      tree.push({
+        path: 'assist-cards/' + filename,
+        mode: '100644',
+        type: 'blob',
+        sha: githubBlob_(Utilities.base64Encode(bytes), 'base64')
+      });
     }
-    // カードDBから参照されていないファイルは公開コミットへ含めない。
-    if (!referencedImages[filename]) continue;
-    var bytes = driveFile.getBlob().getBytes();
-    if (!bytes.length || bytes.length > ASST_IMAGE_MAX_BYTES) {
-      throw new Error(filename + ' は空、または2MBを超えています。');
+    var newTree = githubRequest_('post', '/git/trees', { base_tree: mainCommit.tree.sha, tree: tree }, false);
+    var commit = githubRequest_('post', '/git/commits', { message: 'CMS assist publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha] }, false);
+    var latestMain = githubRef_(GITHUB_MAIN_BRANCH, false);
+    if (!latestMain.object || latestMain.object.sha !== mainSha) throw new Error('公開処理中にmainブランチが更新されました。');
+    var ref = githubRef_(GITHUB_ASST_PUBLISH_BRANCH, true);
+    if (ref) githubRequest_('patch', '/git/refs/heads/' + GITHUB_ASST_PUBLISH_BRANCH, { sha: commit.sha, force: true }, false);
+    else githubRequest_('post', '/git/refs', { ref: 'refs/heads/' + GITHUB_ASST_PUBLISH_BRANCH, sha: commit.sha }, false);
+    pushedSha = commit.sha;
+    publishLog_(ASST_SHEET_PUBLISH_LOG, user, pushedSha, '送信済み',
+      GITHUB_ASST_PUBLISH_BRANCH + ' / ' + tree.length + 'ファイル');
+    asstAppendLog_(user, 'publish', 'SENT', pushedSha);
+    return { ok: true, sha: pushedSha, shortSha: pushedSha.slice(0, 7), branch: GITHUB_ASST_PUBLISH_BRANCH, fileCount: tree.length };
+  } catch (e) {
+    var result = pushedSha ? 'GitHub送信済み・後処理失敗' : '失敗';
+    try { publishLog_(ASST_SHEET_PUBLISH_LOG, user, pushedSha, result, e.message); } catch (ignoreLog) { /* 元のエラーを優先 */ }
+    if (pushedSha) {
+      throw new Error('GitHubへの送信（' + pushedSha.slice(0, 7) +
+        '）は完了しましたが、シート更新に失敗しました。再実行せず管理者へ連絡してください: ' + e.message);
     }
-    var extension = filename.split('.').pop().toLowerCase();
-    var expectedMime = extension === 'jpg' ? 'image/jpeg' :
-      (extension === 'png' ? 'image/png' : 'image/webp');
-    if (!isExpectedImage_(bytes, expectedMime)) {
-      throw new Error(filename + ' の拡張子と画像データが一致しません。');
-    }
-    tree.push({
-      path: 'assist-cards/' + filename,
-      mode: '100644',
-      type: 'blob',
-      sha: githubBlob_(Utilities.base64Encode(bytes), 'base64')
-    });
+    throw e;
   }
-  var newTree = githubRequest_('post', '/git/trees', { base_tree: mainCommit.tree.sha, tree: tree }, false);
-  var commit = githubRequest_('post', '/git/commits', { message: 'CMS assist publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha] }, false);
-  var latestMain = githubRef_(GITHUB_MAIN_BRANCH, false);
-  if (!latestMain.object || latestMain.object.sha !== mainSha) throw new Error('公開処理中にmainブランチが更新されました。');
-  var ref = githubRef_(GITHUB_ASST_PUBLISH_BRANCH, true);
-  if (ref) githubRequest_('patch', '/git/refs/heads/' + GITHUB_ASST_PUBLISH_BRANCH, { sha: commit.sha, force: true }, false);
-  else githubRequest_('post', '/git/refs', { ref: 'refs/heads/' + GITHUB_ASST_PUBLISH_BRANCH, sha: commit.sha }, false);
-  asstAppendLog_(user, 'publish', 'SENT', commit.sha);
-  return { ok: true, sha: commit.sha, shortSha: commit.sha.slice(0, 7), branch: GITHUB_ASST_PUBLISH_BRANCH, fileCount: tree.length };
+}
+
+function api_asstPublishStatus(sha) {
+  var user = requirePublishable_('assist');
+  return publishStatus_({
+    logSheet: ASST_SHEET_PUBLISH_LOG,
+    workflow: 'cms-assist-publish.yml',
+    branch: GITHUB_ASST_PUBLISH_BRANCH
+  }, sha);
+}
+
+function api_asstLatestPublishStatus() {
+  var user = me_();
+  if (!user) throw new Error('権限がありません。画面を開き直してください。');
+  if (user.role !== 'admin') throw new Error('公開結果の確認はadminだけが実行できます。');
+  var sha = latestPublishSha_(ASST_SHEET_PUBLISH_LOG);
+  if (!sha) return { state: 'none', message: '確認できる公開送信はまだありません。' };
+  return publishStatus_({
+    logSheet: ASST_SHEET_PUBLISH_LOG,
+    workflow: 'cms-assist-publish.yml',
+    branch: GITHUB_ASST_PUBLISH_BRANCH
+  }, sha);
 }
