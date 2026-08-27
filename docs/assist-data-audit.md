@@ -1026,3 +1026,50 @@ node scripts/verify.js  PASS 78 / FAIL 0 / WARN 1（main上での実行）
 アシストカード            91枚 / index 54 / noindex 37
 sitemap                 136 URL
 ```
+
+## 18. 段階8: 旧資産の撤去
+
+段階8aはPR #（管理者記入）/ `（管理者記入）`でmainへマージし、アシストCMSの検査対象を
+旧ソース`_cms/assist-gas/`から統合ソース`_cms/gas/`へ付け替えた。段階8bでは、参照が
+残っていないことを確認して旧ソースを撤去した。
+
+### 削除した旧ソース
+
+```text
+_cms/assist-gas/コード.gs    50,515 bytes
+_cms/assist-gas/index.html   54,920 bytes
+_cms/assist-gas/README.md    11,342 bytes
+合計                        116,777 bytes
+```
+
+### 削除前の参照確認
+
+リポジトリのルートで次を実行した。
+
+```text
+grep -rn "assist-gas" --exclude-dir=.git .
+```
+
+ヒットは`docs/`配下の設計・実施記録だけだった。停止条件として確認した`scripts/`、
+`.github/`、`_cms/`、`build.js`のヒットは0件であり、旧ソースを実行時または検査時に
+参照する箇所が残っていないことを確認してから削除した。`docs/`のヒットは履歴として残した。
+
+### 検査の移設とCI
+
+段階8aで`test-verify-assist-cms.js`の破壊テストは旧37ケースから新49ケースになった。
+`.github/workflows/verify.yml`にも`node scripts/test-verify-assist-cms.js`を追加した。
+段階8aまで、この37ケースはCIで一度も実行されておらず、ローカル実行だけだった。
+
+### PRマージ後に管理者が行う後始末
+
+次の外部資産の廃棄はCodexでは実行しない。PRマージ後、管理者が対象を識別して行う。
+
+1. 旧アシストtest用GASプロジェクトを削除する。Script Propertiesの`ENVIRONMENT`が
+   `test`であることを確認してから削除する
+2. 旧アシストtest用スプレッドシート「P12-8 アシストCMS TEST」をゴミ箱へ移す。
+   先頭シートのマーカーが「P12-8 ASSIST CMS TEST」であることを確認する
+3. 旧アシストtest用Drive画像フォルダをゴミ箱へ移す。上記test GASプロジェクトの
+   Script Propertiesにある`ASSIST_IMAGE_FOLDER_ID`が指すフォルダを対象とする
+
+**GASプロジェクトは`ENVIRONMENT`の値を確認してから削除する。** 本番book・本番プロジェクトと
+取り違えると復旧できない。
