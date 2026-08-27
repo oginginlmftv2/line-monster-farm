@@ -36,11 +36,11 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜6） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` | **完了** | ⚪🔴🟡 | 段階1〜6を完了。次は段階7（本番deployment切替 + token1本化）待ち |
+| P12-11 | CMS統合の実装（段階1〜7） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` | **完了** | ⚪🔴🟡 | 段階1〜7を完了。次は段階8（旧資産の撤去） |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`e4b6408`（P12-8bマージ済み。モンスター側の監査値は不変）
+調査基準: `origin/main`の`7b2eb10`
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -48,11 +48,11 @@
 | CMS予測ID | 351体 | `src/data/cms-id-predictions.json` |
 | ID検算 | PASS 351体 | `node scripts/verify-cms-ids.js` |
 | 生成詳細ページ | 351件 | ID一覧のURL実在をNodeで照合 |
-| index / noindex | 52 / 299 | 生成HTMLのrobots metaをNodeで集計 |
+| index / noindex | 53 / 298 | 生成HTMLのrobots metaをNodeで集計 |
 | モン類ページ | 6件 | `monsters/<monSlug>/index.html` |
 | カード詳細ページ | 91件 | `src/data/assist-cards.json`のcardIdと生成HTMLを照合 |
 | カード index / noindex | 54 / 37 | 可視本文800字以上かつ解説50字以上を3DBから再計算 |
-| sitemap | 135URL | `<loc>`を集計。手書き23 + モンスター生成58 + カード生成54 |
+| sitemap | 136URL | `<loc>`を集計。手書き23 + モンスター生成59 + カード生成54 |
 | 公開方式 | main直接配信 | `AGENTS.md`、`CLAUDE.md`、CMS Workflow |
 
 件数はCMS公開で変わるため、次回も固定値を信じずスクリプトで集計する。
@@ -225,11 +225,23 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - 段階5c: **完了** — アシスト用の裸のタグセレクタがシェルへ波及するレイアウト不具合を是正し、再発検査を追加（⚪）PR #53 / `c37c698`
 - 段階5d: **完了** — シェル共通通知とOCRのファイル単位の成否処理を追加し、利用者へ失敗理由と部分成功を必ず届ける（⚪）PR #54 / `fd591dd`
 - 段階6: **完了** — 本番bookへアシストシートを同居し、旧CMSの保存動作を確認（🟡、管理者のGAS操作）`docs/p12-11-s6-production-cohabitation`。PR #56 / `925fd22`
-- 段階7: **次** — 本番deployment切替 + token1本化（🟡🔴）
-- 段階7以降: **管理者の明示承認なしに着手しない**
+- 段階7: **完了** — 本番deployment切替 + token1本化（🟡🔴）。記録PRのPR番号とマージSHAは管理者が記入する
+- 段階8: **次** — 旧資産の撤去（⚪）
+- 段階8以降: **管理者の明示承認なしに着手しない**
 
 ## 明示的な保留
 
+- **assist_publish_log の未実装（PR-D）:**
+  シートは `setup1_createSheets` が作るが、書き込む処理が存在しない。
+  アシスト公開の記録は `assist_log` へ `SENT` として入るだけで、
+  成功・失敗の確定はGitHub Actionsを開かないと分からない。
+  設計書 B-3 の「シート名を引数にした1実装で共用する」を実装する。
+  あわせて「ヘッダを定義したシートには `appendRow` する経路が必ずある」検査を追加する。
+- **3DBのJSONキー順が不安定:**
+  CMSからの公開のたびに `stats` / `ratings` / `formations` のキー順が入れ替わり、
+  実質的な変更が差分に埋もれる。段階7の2回目のアシスト公開では、
+  解説2行の変更に対して18行の差分になった。
+  効果表記の正規化・effectId 採番規約の見直しと同じタスクで扱う。
 - **scopes未割り当て時の案内:** scopes が空のメンバーには、タブも説明も無い真っ白な画面が表示される。
   `api_bootstrapShell` の `tabs` が空のとき、権限が未割り当てである旨を示していない。
   運用でメンバーを追加し scopes を入れ忘れると、その人には故障として見える
