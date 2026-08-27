@@ -37,6 +37,7 @@
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
 | P12-11 | CMS統合の実装（段階1〜7） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` | **完了** | ⚪🔴🟡 | 段階1〜7を完了。次は段階8（旧資産の撤去） |
+| P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **レビュー待ち** | 🟡 | GAS再deploymentが必要。マージ後に管理者が実施する |
 
 ## 最新mainの監査値
 
@@ -212,6 +213,8 @@ P12-11 段階5（本番bookのコピーでのリハーサル）は、管理者�
 
 ## 次の作業
 
+P12-12の変更は、マージ後に管理者がGASの再deploymentを行うまで本番へは反映されない。
+
 P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 **1段階ごとに push → PR → マージまで行い、そこで止まる。複数段階を1つのPRにまとめない。**
 
@@ -231,12 +234,6 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 
 ## 明示的な保留
 
-- **assist_publish_log の未実装（PR-D）:**
-  シートは `setup1_createSheets` が作るが、書き込む処理が存在しない。
-  アシスト公開の記録は `assist_log` へ `SENT` として入るだけで、
-  成功・失敗の確定はGitHub Actionsを開かないと分からない。
-  設計書 B-3 の「シート名を引数にした1実装で共用する」を実装する。
-  あわせて「ヘッダを定義したシートには `appendRow` する経路が必ずある」検査を追加する。
 - **3DBのJSONキー順が不安定:**
   CMSからの公開のたびに `stats` / `ratings` / `formations` のキー順が入れ替わり、
   実質的な変更が差分に埋もれる。段階7の2回目のアシスト公開では、

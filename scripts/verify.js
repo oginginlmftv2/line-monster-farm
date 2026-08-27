@@ -367,11 +367,18 @@ head('8. 秘密情報');
     } else ok(`統合UIのAPI呼び出しは全て定義済み（${new Set(apiCalls.map(call => call.name)).size}件）`);
 
     const functionSource = name => {
-      const source = gasSources.map(item => item.source).join('\n');
-      const start = source.indexOf(`function ${name}(`);
-      if (start < 0) return '';
-      const end = source.indexOf('\n}', start);
-      return end < 0 ? '' : source.slice(start, end + 2);
+      const item = gasSources.find(candidate => new RegExp(`^function\\s+${name}\\s*\\(`, 'm').test(candidate.source));
+      if (!item) return '';
+      const start = item.source.search(new RegExp(`^function\\s+${name}\\s*\\(`, 'm'));
+      const bodyStart = item.source.indexOf('{', start);
+      if (bodyStart < 0) return '';
+      let depth = 0;
+      for (let index = bodyStart; index < item.source.length; index++) {
+        if (item.source[index] === '{') depth++;
+        if (item.source[index] === '}') depth--;
+        if (depth === 0) return item.source.slice(start, index + 1);
+      }
+      return '';
     };
 
     const allowlistFromVerifier = relative => {
@@ -611,6 +618,90 @@ head('8. 秘密情報');
       ng(`利用者への通知経路が不正: ${notificationIssues.join(' / ')}`);
     } else {
       ok('show()はapp_toastと.domain-panel.activeの両方へ通知');
+    }
+
+    // H-3 検査16: ヘッダを定義した *_log シートにはappendRowへ到達する書込経路を必須とする。
+    const allGasSource = gasSources.map(item => item.source).join('\n');
+    const sheetConstants = new Map([...allGasSource.matchAll(/^var\s+([A-Z][A-Z0-9_]*)\s*=\s*['"]([^'"]+)['"]\s*;/gm)]
+      .map(match => [match[1], match[2]]));
+    const headerSheetConstants = [...allGasSource.matchAll(/^(?:CORE|MON|ASST)_HEADERS\[([A-Z][A-Z0-9_]*)\]\s*=/gm)]
+      .map(match => match[1]);
+    const logSheetConstants = [...new Set(headerSheetConstants)]
+      .filter(name => String(sheetConstants.get(name) || '').endsWith('_log')).sort();
+    const functionNames = functions.map(item => item.name);
+    const callsFrom = name => functionNames.filter(called => called !== name
+      && new RegExp(`\\b${called}\\s*\\(`).test(functionSource(name)));
+    const reachesAppendRow = (name, visited) => {
+      if (visited.has(name)) return false;
+      visited.add(name);
+      const source = functionSource(name);
+      if (/\.appendRow\s*\(/.test(source)) return true;
+      return callsFrom(name).some(called => reachesAppendRow(called, visited));
+    };
+    const missingLogWriters = logSheetConstants.filter(constant => {
+      const entryPoints = functionNames.filter(name => functionSource(name).includes(constant));
+      return !entryPoints.some(name => reachesAppendRow(name, new Set()));
+    });
+    const monPublishSource = functionSource('api_monPublish');
+    const asstPublishApiSource = functionSource('api_asstPublish');
+    const publishSendIssues = [];
+    if (!/\b(?:monPublishLog_|publishLog_)\s*\(/.test(monPublishSource)) {
+      publishSendIssues.push('api_monPublish');
+    }
+    if (!/publishLog_\s*\(\s*ASST_SHEET_PUBLISH_LOG\s*,/.test(asstPublishApiSource)) {
+      publishSendIssues.push('api_asstPublish');
+    }
+    if (logSheetConstants.length !== 4 || missingLogWriters.length || publishSendIssues.length) {
+      ng(`ヘッダ定義済みログシートの書込経路が不正（対象 ${logSheetConstants.length}: ${logSheetConstants.join(', ') || '0'} / 書き手なし ${missingLogWriters.join(', ') || '0'} / 公開送信記録なし ${publishSendIssues.join(', ') || '0'}）`);
+    } else {
+      ok(`ヘッダ定義済みログシート4件にappendRowへの書込経路あり（${logSheetConstants.join(', ')}）`);
+    }
+
+    // H-3 検査17: モンスターとアシストの公開ログ・状態確認は同じ共用実装を通す。
+    const sharedPublishIssues = [];
+    const sharedPublishFunctions = [
+      'publishLog_', 'publishLogRows_', 'recordedPublishResult_', 'sentPublishUser_',
+      'latestPublishSha_', 'cmsPublishRun_', 'publishStatus_',
+    ];
+    sharedPublishFunctions.forEach(name => {
+      if (!functionSource(name)) sharedPublishIssues.push(`${name}なし`);
+    });
+    const monWrapperCalls = {
+      monPublishLog_: 'publishLog_',
+      monPublishLogRows_: 'publishLogRows_',
+      monRecordedPublishResult_: 'recordedPublishResult_',
+      monSentPublishUser_: 'sentPublishUser_',
+      monLatestPublishSha_: 'latestPublishSha_',
+      monCmsPublishRun_: 'cmsPublishRun_',
+      monPublishStatus_: 'publishStatus_',
+    };
+    Object.entries(monWrapperCalls).forEach(([wrapper, shared]) => {
+      const source = functionSource(wrapper);
+      if (!source || !new RegExp(`\\b${shared}\\s*\\(`).test(source)) {
+        sharedPublishIssues.push(`${wrapper}->${shared}`);
+      }
+    });
+    const monStatusWrapper = functionSource('monPublishStatus_');
+    if (!/logSheet:\s*MON_SHEET_PUBLISH_LOG/.test(monStatusWrapper)
+        || !/workflow:\s*['"]cms-publish\.yml['"]/.test(monStatusWrapper)
+        || !/branch:\s*GITHUB_MON_PUBLISH_BRANCH/.test(monStatusWrapper)
+        || !/onResult:\s*function/.test(monStatusWrapper)) {
+      sharedPublishIssues.push('monPublishStatus_ config');
+    }
+    ['api_asstPublishStatus', 'api_asstLatestPublishStatus'].forEach(name => {
+      const source = functionSource(name);
+      if (!/\bpublishStatus_\s*\(/.test(source)
+          || !/logSheet:\s*ASST_SHEET_PUBLISH_LOG/.test(source)
+          || !/workflow:\s*['"]cms-assist-publish\.yml['"]/.test(source)
+          || !/branch:\s*GITHUB_ASST_PUBLISH_BRANCH/.test(source)
+          || /onResult\s*:/.test(source)) {
+        sharedPublishIssues.push(`${name}->publishStatus_`);
+      }
+    });
+    if (sharedPublishIssues.length) {
+      ng(`公開ログ・状態確認の共用実装が不正: ${sharedPublishIssues.join(', ')}`);
+    } else {
+      ok('モンスターとアシストは同じ公開ログ・状態確認実装を使用');
     }
   }
 
