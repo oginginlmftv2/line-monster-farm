@@ -201,6 +201,30 @@ expectFailure('アシストCMSのOCR画面欠落を拒否', root => {
   fs.writeFileSync(file, source.replace("asstTabButton('ocr','効果OCR'", "asstTabButton('removed','削除'"));
 }, /候補レビュー画面がない/);
 
+expectFailure('UI効果OCRのローマ数字誤読補正欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(".replace(/[|｜]/g,'Ⅱ')", ''));
+}, /ui_assist\.html: OCR正規化規則「\|｜ → Ⅱ の置換」が欠けている/);
+
+expectFailure('scripts効果OCRのローマ数字誤読補正欠落を拒否', root => {
+  const file = path.join(root, 'scripts/assist-effect-ocr.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("    .replace(/[|｜]/g, 'Ⅱ')\n", ''));
+}, /assist-effect-ocr\.js: OCR正規化規則「\|｜ → Ⅱ の置換」が欠けている/);
+
+expectFailure('UI効果OCRのローマ数字保護欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('[（）Ⅰ-Ⅹⅰ-ⅹ]', '[（）ⅰ-ⅹ]'));
+}, /ui_assist\.html: OCR正規化規則「保護対象（ ）Ⅰ-Ⅹⅰ-ⅹ」が欠けている/);
+
+expectFailure('UI効果OCRの中黒除去を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(".replace(/^•\\s*/,'')", ".replace(/^[•・]\\s*/,'')"));
+}, /ui_assist\.html: OCR正規化規則「・（U\+30FB）を削除対象に含めない」が欠けている/);
+
 expectFailure('Vision日本語文書OCRの欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
@@ -361,4 +385,4 @@ expectFailure('処理中オーバーレイの欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
 }, /処理中表示/);
 
-console.log('OK 破壊コピー49ケースをすべて拒否');
+console.log('OK 破壊コピー53ケースをすべて拒否');

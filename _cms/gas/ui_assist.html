@@ -193,6 +193,9 @@ function asstBindEffectsForm(){
   });
 }
 function asstSaveEffects(){ try{ var effects=asstCollectEffects(true);call('api_asstSaveEffects',[{cardId:ASST.selectedId,effects:effects}],function(){show('効果を保存しました。',false);asstOpenCard(ASST.selectedId);});}catch(error){show(error.message,true);} }
+// OCRテキスト正規化規則の正は scripts/assist-effect-ocr.js。両実装を同時に更新する。
+function asstOcrNormalizeText(value){var input=String(value||''),usedCharacters=new Set(Array.from(input)),protectedCharacters=new Map(),privateUseCodePoint=0xe000;function nextPlaceholder(){while(privateUseCodePoint<=0x10fffd){if(privateUseCodePoint===0xf900)privateUseCodePoint=0xf0000;if(privateUseCodePoint===0xffffe)privateUseCodePoint=0x100000;var placeholder=String.fromCodePoint(privateUseCodePoint);privateUseCodePoint+=1;if(usedCharacters.has(placeholder))continue;usedCharacters.add(placeholder);return placeholder;}throw new Error('OCR正規化の一時文字を確保できません');}var protectedText=Array.from(input,function(character){if(!/[（）Ⅰ-Ⅹⅰ-ⅹ]/u.test(character))return character;if(!protectedCharacters.has(character))protectedCharacters.set(character,nextPlaceholder());return protectedCharacters.get(character);}).join(''),restoredCharacters=new Map(Array.from(protectedCharacters,function(entry){return[entry[1],entry[0]];}));return Array.from(protectedText.normalize('NFKC').replace(/[\t\u00a0]+/g,' ').replace(/\s+/g,' ').trim(),function(character){return restoredCharacters.get(character)||character;}).join('');}
+function asstOcrSanitizeText(value){return asstOcrNormalizeText(value).replace(/[|｜]/g,'Ⅱ').replace(/MAX↑/g,'').replace(/^•\s*/,'');}
 function asstOcrComparisonKey(value){return String(value||'').normalize('NFKC').toLowerCase().replace(/[\s「」『』【】\[\]()（）<>＜＞・、。:：!！?？/／]/g,'');}
 function asstOcrTitleKey(value){return asstOcrComparisonKey(value).replace(/[|｜]/g,'ii').replace(/\+$/,'');}
 function asstOcrEditDistance(left,right){var previous=Array.from({length:right.length+1},function(_,index){return index;});for(var i=1;i<=left.length;i++){var current=[i];for(var j=1;j<=right.length;j++)current[j]=Math.min(current[j-1]+1,previous[j]+1,previous[j-1]+(left.charAt(i-1)===right.charAt(j-1)?0:1));previous=current;}return previous[right.length];}
@@ -206,7 +209,7 @@ function asstOcrVisionLines(payload){
   var response=payload&&payload.responses&&payload.responses[0],page=response&&response.fullTextAnnotation&&response.fullTextAnnotation.pages&&response.fullTextAnnotation.pages[0];
   if(!page)throw new Error('OCR結果に座標付きテキストがありません。');
   var lines=[],text='',vertices=[];
-  function flush(){var value=text.normalize('NFKC').replace(/\s+/g,' ').trim();if(value&&vertices.length)lines.push({text:value,bounds:asstOcrBounds(vertices)});text='';vertices=[];}
+  function flush(){var value=asstOcrNormalizeText(text);if(value&&vertices.length)lines.push({text:value,bounds:asstOcrBounds(vertices)});text='';vertices=[];}
   (page.blocks||[]).forEach(function(block){(block.paragraphs||[]).forEach(function(paragraph){(paragraph.words||[]).forEach(function(word){(word.symbols||[]).forEach(function(symbol){
     text+=symbol.text||'';vertices=vertices.concat(symbol.boundingBox&&symbol.boundingBox.vertices||[]);
     var type=symbol.property&&symbol.property.detectedBreak&&symbol.property.detectedBreak.type;
@@ -215,7 +218,7 @@ function asstOcrVisionLines(payload){
   return {width:Number(page.width),height:Number(page.height),lines:lines};
 }
 function asstOcrLooksLikeTitle(line,known){
-  var text=String(line.text||'').trim();
+  var text=asstOcrSanitizeText(line.text);
   if(!text||text.length>42||/^(?:アシスト|能力|イベント|とじる)$/.test(text))return false;
   if(asstOcrMatchesKnownTitle(text,known))return true;
   if(known.length>=5)return false;
@@ -231,8 +234,8 @@ function asstOcrParseCandidates(payload,file){
   var titleIndexes=[];content.forEach(function(line,index){if(asstOcrLooksLikeTitle(line,known))titleIndexes.push(index);});
   return titleIndexes.map(function(start,index){
     var group=content.slice(start,titleIndexes[index+1]===undefined?content.length:titleIndexes[index+1]),title=group[0];
-    var description=group.slice(1).filter(function(line){return line.bounds.x<title.bounds.x+Math.max(500,title.bounds.width*5);}).map(function(line){return line.text.trim();}).join('');
-    var candidate={name:title.text.trim(),description:description,titleBounds:title.bounds,activationScope:'unknown',activationConditions:null,
+    var description=group.slice(1).filter(function(line){return line.bounds.x<title.bounds.x+Math.max(500,title.bounds.width*5);}).map(function(line){return asstOcrSanitizeText(line.text);}).join('');
+    var candidate={name:asstOcrSanitizeText(title.text),description:description,titleBounds:title.bounds,activationScope:'unknown',activationConditions:null,
       backgroundConfidence:0,backgroundScore:null,unlockRank:null,blueMarkers:null,
       sourceScreenshots:[file.name],issues:description?[]:['description-empty-or-cropped']};
     return asstOcrAnalyzeVisual(candidate,file,parsed,index<titleIndexes.length-1?content[titleIndexes[index+1]].bounds.y:null);
