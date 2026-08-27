@@ -1,16 +1,25 @@
 #!/usr/bin/env node
-/** P12-8 アシストCMSのtest境界と3DB構造を検証する。 */
+/** 統合アシストCMSのソース境界と3DB構造を検証する。 */
 
 const fs = require('fs');
 const path = require('path');
 
 const SOURCE_FILES = [
-  '_cms/assist-gas/コード.gs',
-  '_cms/assist-gas/index.html',
-  '_cms/assist-gas/README.md',
+  '_cms/gas/20_assist.gs',
+  '_cms/gas/ui_assist.html',
+  '_cms/gas/README.md',
   'scripts/assist-effect-ocr.js',
   'scripts/test-assist-effect-ocr.js',
 ];
+const SUPPORT_FILES = {
+  core: '_cms/gas/00_core.gs',
+  monsterGas: '_cms/gas/10_monster.gs',
+  publishGas: '_cms/gas/30_publish.gs',
+  setupGas: '_cms/gas/40_setup.gs',
+  shell: '_cms/gas/index.html',
+  commonHtml: '_cms/gas/ui_common.html',
+  monsterHtml: '_cms/gas/ui_monster.html',
+};
 const DATA_FILES = [
   'src/data/assist-cards.json',
   'src/data/assist-effects.json',
@@ -57,9 +66,26 @@ function duplicates(values) {
   return [...repeated];
 }
 
+function filesUnder(root, relative) {
+  const absolute = path.join(root, relative);
+  const result = [];
+  for (const entry of fs.readdirSync(absolute, { withFileTypes: true })) {
+    const child = path.join(relative, entry.name);
+    if (entry.isDirectory()) result.push(...filesUnder(root, child));
+    else if (entry.isFile()) result.push(child);
+  }
+  return result;
+}
+
+function functionBlock(source, name) {
+  const pattern = new RegExp(`function\\s+${name}\\s*\\([\\s\\S]*?(?=\\nfunction\\s+|$)`);
+  const match = source.match(pattern);
+  return match ? match[0] : '';
+}
+
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...DATA_FILES]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -68,56 +94,83 @@ function validateRoot(root) {
   const html = read(root, SOURCE_FILES[1]);
   const guide = read(root, SOURCE_FILES[2]);
   const effectOcr = read(root, SOURCE_FILES[3]);
+  const core = read(root, SUPPORT_FILES.core);
+  const monsterGas = read(root, SUPPORT_FILES.monsterGas);
+  const publishGas = read(root, SUPPORT_FILES.publishGas);
+  const setupGas = read(root, SUPPORT_FILES.setupGas);
+  const shell = read(root, SUPPORT_FILES.shell);
+  const commonHtml = read(root, SUPPORT_FILES.commonHtml);
+  const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
+  const allAssistGas = `${core}\n${gas}\n${setupGas}`;
 
-  if (Buffer.byteLength(gas) > 100 * 1024) issues.push('コード.gsが100KBを超えている');
-  if (!/prop_\('ENVIRONMENT'\)\s*!==\s*'test'/.test(gas)) issues.push('ENVIRONMENT=testの強制検査がない');
-  if (!/P12-8 ASSIST CMS TEST/.test(gas)) issues.push('testスプレッドシートのマーカー検査がない');
-  if (!/releasedAt:\s*dateCell_\(row\.releasedAt\)/.test(gas)) issues.push('SheetsのDateをYYYY/MM/DDへ戻す処理がない');
+  if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
+  if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
+    issues.push('環境値の検査がない');
+  }
+  if (!/BOOK_MARKER_PREFIX/.test(core) ||
+      !/getSheetByName\(SHEET_MEMBERS\)[\s\S]{0,200}getRange\('A1'\)\.getNote\(\)/.test(core)) {
+    issues.push('環境マーカーをmembersシートのA1から読んでいない');
+  }
+  if (/getSheets\(\)\[0\]/.test(core)) issues.push('シート順に依存する参照が残っている');
+  if (!/releasedAt:\s*asstDateCell_\(row\.releasedAt\)/.test(gas)) issues.push('SheetsのDateをYYYY/MM/DDへ戻す処理がない');
   if (!/withStats:\s*cards\.filter\(function \(card\) \{ return card\.stats\.length > 0; \}\)\.length/.test(gas)) {
     issues.push('withStatsが入力済みstats配列だけを数えていない');
   }
-  for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'publish_log']) {
-    if (!new RegExp(`['"]${sheet}['"]`).test(gas)) issues.push(`必須シート定義がない: ${sheet}`);
+  for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'assist_log', 'assist_publish_log']) {
+    if (!new RegExp(`['"]${sheet}['"]`).test(`${core}\n${gas}`)) issues.push(`必須シート定義がない: ${sheet}`);
   }
   for (const fn of [
-    'setup1_createSheets', 'setup2_registerMe', 'setup3_importFromMain', 'setup4_check', 'setup5_createAssistImageFolder',
-    'doGet', 'api_bootstrap', 'api_getCard', 'api_saveCard', 'api_saveEffects',
-    'api_getAbility', 'api_saveAbility', 'api_export', 'validateDocuments_',
-    'api_ocrEffectImage', 'api_uploadCardImage',
+    'setup1_createSheets', 'setup2_registerMe', 'setup3_importAssistFromMain', 'setup4_checkAll', 'setup5_createAssistImageFolder',
+    'doGet', 'api_bootstrapShell', 'api_asstBootstrap', 'api_asstGetCard', 'api_asstSaveCard', 'api_asstSaveEffects',
+    'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
+    'api_asstOcrEffectImage', 'api_asstUploadCardImage',
   ]) {
-    if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(gas)) issues.push(`必須関数がない: ${fn}`);
+    if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
 
-  const forbiddenSource = [
+  const forbiddenDomainSource = [
     [/GITHUB_TOKEN/, 'GitHub token参照'],
     [/CMS_PUBLISH_TOKEN/, '本番CMS token参照'],
     [/cms\/(?:assist-)?publish/, '公開ブランチ参照'],
     [/api\.github\.com/, 'GitHub API参照'],
     [/git\/refs|actions\/workflows/i, 'GitHub公開処理'],
+  ];
+  const domainSource = `${gas}\n${html}\n${monsterGas}\n${monsterHtml}`;
+  for (const [pattern, label] of forbiddenDomainSource) {
+    if (pattern.test(domainSource)) issues.push(`ドメインソースに禁止対象: ${label}`);
+  }
+  const cmsSource = filesUnder(root, '_cms').map(relative => read(root, relative)).join('\n');
+  for (const [pattern, label] of [
     [/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i, 'メールアドレス直書き'],
     [/(?:ghp|github_pat)_[A-Za-z0-9_]{10,}/, 'tokenらしき文字列'],
-  ];
-  for (const [pattern, label] of forbiddenSource) {
-    if (pattern.test(`${gas}\n${html}\n${guide}`)) issues.push(`testソースに禁止対象: ${label}`);
+  ]) {
+    if (pattern.test(cmsSource)) issues.push(`_cms配下に禁止対象: ${label}`);
   }
-  if (!/GitHubへのpush、公開サイト更新、本番モンスターCMS/.test(gas)) {
-    issues.push('コード.gsに非公開境界の宣言がない');
+  if (!/api\.github\.com/.test(publishGas)) {
+    issues.push('GitHub送信が30_publish.gsのあるべき1か所にない');
   }
-  if (!/P12-8では本番データ変更を避けるため同居させない/.test(guide)) {
-    issues.push('READMEに独立testスプレッドシート方針がない');
+  if (!/(常設のtest環境は作りません|本番bookのコピー[\s\S]{0,80}リハーサル)/.test(guide)) {
+    issues.push('READMEに常設testを作らず本番bookのコピーでリハーサルする方針がない');
   }
-  if (!/<span class="test">TEST<\/span>/.test(html)) issues.push('管理画面にTEST表示がない');
+  const rehearsalBlock = shell.match(/if\s*\(\s*data\.environment\s*===\s*['"]rehearsal['"]\s*\)\s*\{([\s\S]{0,300}?)\}/);
+  const bannerDisplays = shell.match(/el\(['"]app_env['"]\)\.hidden\s*=\s*false/g) || [];
+  if (!/id="app_env"/.test(shell) || !rehearsalBlock ||
+      !/el\(['"]app_env['"]\)\.hidden\s*=\s*false/.test(rehearsalBlock[1]) || bannerDisplays.length !== 1 ||
+      !/リハーサル環境/.test(rehearsalBlock[1]) || !/公開されません/.test(rehearsalBlock[1]) ||
+      !/\.app-env\s*\{/.test(commonHtml)) {
+    issues.push('リハーサル環境だけに安全バナーを表示する境界がない');
+  }
   if (/jsonField\s*\(|効果（JSON配列）|（JSON）/.test(html)) issues.push('管理画面にJSON直接入力が残っている');
   if (/地形適性|renderTerrainFields|name=["']terrain["']/.test(html)) issues.push('管理画面に不要な地形適性入力が残っている');
   if (/距離適性|f_distance/.test(html)) issues.push('管理画面に不要な距離適性入力が残っている');
   if (/cardStatus|状態すべて|card\.status/.test(html)) issues.push('管理画面に不要なカードstatusが残っている');
   for (const fn of [
-    'renderAccessoryField', 'collectRatings', 'collectStats', 'collectFormations',
-    'collectEffects', 'collectTags', 'sourceManagedField',
+    'asstRenderAccessoryField', 'asstCollectRatings', 'asstCollectStats', 'asstCollectFormations',
+    'asstCollectEffects', 'asstCollectTags', 'asstSourceManagedField',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(html)) issues.push(`構造化フォーム関数がない: ${fn}`);
   }
-  if (!/var original=state\.ability\.tags\|\|\[\]/.test(html)) issues.push('能力タグの既存順序を保持していない');
+  if (!/var original=ASST\.ability\.tags\|\|\[\]/.test(html)) issues.push('能力タグの既存順序を保持していない');
   if (!/activationScope:\s*'unknown'/.test(effectOcr) || !/verified:\s*false/.test(effectOcr) || /verified:\s*true/.test(effectOcr)) {
     issues.push('効果OCR候補が背景未判定または未確認で開始しない');
   }
@@ -136,44 +189,44 @@ function validateRoot(root) {
   if (!/mergeScreenshotCandidates/.test(effectOcr) || !/sourceScreenshots/.test(effectOcr)) {
     issues.push('効果OCRにスクロール画像重複の統合がない');
   }
-  if (!/tabButton\('ocr','効果OCR'/.test(html) || !/id="ocrFiles"[^>]+multiple/.test(html) ||
-      !/function\s+runEffectOcr\s*\(/.test(html) || !/function\s+collectOcrCandidates\s*\(/.test(html) ||
-      !/function\s+applyOcrCandidates\s*\(/.test(html) || !/function\s+populateOcrConditionFields\s*\(/.test(html) ||
+  if (!/asstTabButton\('ocr','効果OCR'/.test(html) || !/id="asst_ocrFiles"[^>]+multiple/.test(html) ||
+      !/function\s+asstRunEffectOcr\s*\(/.test(html) || !/function\s+asstCollectOcrCandidates\s*\(/.test(html) ||
+      !/function\s+asstApplyOcrCandidates\s*\(/.test(html) || !/function\s+asstPopulateOcrConditionFields\s*\(/.test(html) ||
       !/activation\?\s*'conditional'\s*:\s*'universal'/.test(html)) {
-    issues.push('test CMSに複数画像OCR・候補レビュー画面がない');
+    issues.push('アシストCMSに複数画像OCR・候補レビュー画面がない');
   }
-  if (!/function\s+api_ocrEffectImage\s*\(/.test(gas) || !/DOCUMENT_TEXT_DETECTION/.test(gas) ||
+  if (!/function\s+api_asstOcrEffectImage\s*\(/.test(gas) || !/DOCUMENT_TEXT_DETECTION/.test(gas) ||
       !/languageHints:\s*\['ja'\]/.test(gas) || !/optionalProp_\('GOOGLE_CLOUD_VISION_API_KEY'\)/.test(gas)) {
-    issues.push('test GASにScript Properties経由の日本語Vision OCRがない');
+    issues.push('アシストGASにScript Properties経由の日本語Vision OCRがない');
   }
-  const assistImageFolderBlock = gas.match(/function\s+assistImageFolder_\s*\([\s\S]*?(?=function\s+api_uploadCardImage\s*\()/);
-  const cardImageUploadBlock = gas.match(/function\s+api_uploadCardImage\s*\([\s\S]*?(?=function\s+api_ocrEffectImage\s*\()/);
-  const setup5Block = gas.match(/function\s+setup5_createAssistImageFolder\s*\([\s\S]*?(?=\/\/ ---------------------------------------------------------------- 認証)/);
-  if (!/function\s+api_uploadCardImage\s*\(/.test(gas) || !/ASSIST_IMAGE_FOLDER_ID/.test(gas) ||
+  const assistImageFolderBlock = functionBlock(gas, 'asstImageFolder_');
+  const cardImageUploadBlock = functionBlock(gas, 'api_asstUploadCardImage');
+  const setup5Block = functionBlock(setupGas, 'asstCreateImageFolder_');
+  if (!/function\s+api_asstUploadCardImage\s*\(/.test(gas) || !/ASSIST_IMAGE_FOLDER_ID/.test(gas) ||
       !/DriveApp\.getFolderById/.test(gas) ||
-      !(assistImageFolderBlock && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(assistImageFolderBlock[0]) &&
-        /return root;/.test(assistImageFolderBlock[0]) && !/getFoldersByName|createFolder/.test(assistImageFolderBlock[0])) ||
-      !(setup5Block && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(setup5Block[0]) &&
-        /DriveApp\.getFolderById/.test(setup5Block[0]) && !/DriveApp\.createFolder/.test(setup5Block[0])) ||
-      !/CARD_IMAGE_MAX_BYTES\s*=\s*2 \* 1024 \* 1024/.test(gas) ||
-      !(cardImageUploadBlock && /isExpectedImage_\(bytes, mimeType\)/.test(cardImageUploadBlock[0])) ||
+      !(assistImageFolderBlock && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(assistImageFolderBlock) &&
+        /return root;/.test(assistImageFolderBlock) && !/getFoldersByName|createFolder/.test(assistImageFolderBlock)) ||
+      !(setup5Block && /optionalProp_\('ASSIST_IMAGE_FOLDER_ID'\)/.test(setup5Block) &&
+        /DriveApp\.getFolderById/.test(setup5Block) && !/DriveApp\.createFolder/.test(setup5Block)) ||
+      !/ASST_IMAGE_MAX_BYTES\s*=\s*2 \* 1024 \* 1024/.test(gas) ||
+      !(cardImageUploadBlock && /isExpectedImage_\(bytes, mimeType\)/.test(cardImageUploadBlock)) ||
       !/oldFile\.setTrashed\(true\)/.test(gas) || !/file\.setTrashed\(false\)/.test(gas) ||
       !/imagePath\s*=\s*'assist-cards\/'/.test(gas) ||
-      !/id="f_imageFile"/.test(html) || !/id="btnUploadCardImage"/.test(html) ||
-      !/function\s+uploadCardImage\s*\(/.test(html) || !/version:state\.detail\.version/.test(html) ||
+      !/id="asst_f_imageFile"/.test(html) || !/id="asst_btnUploadCardImage"/.test(html) ||
+      !/function\s+asstUploadCardImage\s*\(/.test(html) || !/version:ASST\.detail\.version/.test(html) ||
       !/file\.size>2\*1024\*1024/.test(html)) {
-    issues.push('カード画像をtest Driveへ安全にアップロードする経路がない');
+    issues.push('カード画像を指定Driveへ安全にアップロードする経路がない');
   }
   if (!/headers:\s*\{\s*['"]x-goog-api-key['"]:\s*apiKey\s*\}/.test(gas) ||
       /images:annotate\?key=/.test(gas)) {
     issues.push('Vision APIキーがURLではなくx-goog-api-keyヘッダーで送信されていない');
   }
-  if (!/function\s+reserveOcrDailyUsage_\s*\(/.test(gas) ||
+  if (!/function\s+asstReserveOcrDailyUsage_\s*\(/.test(gas) ||
       !/positiveIntProp_\('OCR_DAILY_LIMIT'\)/.test(gas) ||
       !/getProperty\('OCR_DAILY_USAGE'\)/.test(gas) ||
       !/setProperty\('OCR_DAILY_USAGE'/.test(gas) ||
       !/LockService\.getScriptLock\(\)/.test(gas) ||
-      !/var usage = reserveOcrDailyUsage_\(\);[\s\S]*UrlFetchApp\.fetch/.test(gas)) {
+      !/var usage = asstReserveOcrDailyUsage_\(\);[\s\S]*UrlFetchApp\.fetch/.test(gas)) {
     issues.push('OCR_DAILY_LIMITの日次上限をVision送信前に競合なく強制していない');
   }
   if (/capture_queue|SHEET_CAPTURE_QUEUE|api_(?:saveEffectOcrCandidates|getEffectOcrCapture|reviewEffectOcrCapture)/.test(gas + html)) {
@@ -183,38 +236,41 @@ function validateRoot(root) {
       !/if\(!source\)throw new Error/.test(html)) {
     issues.push('黄色背景の条件付き候補を発動条件未選択のまま進行できる');
   }
-  if (!/id="ocrSourceConfirmed"/.test(html) || !/if\(!el\('ocrSourceConfirmed'\)\.checked\)throw new Error/.test(html) ||
+  if (!/id="asst_ocrSourceConfirmed"/.test(html) || !/if\(!el\('asst_ocrSourceConfirmed'\)\.checked\)throw new Error/.test(html) ||
       !/候補を破棄/.test(html) || !/ブラウザ内に保持/.test(html)) {
     issues.push('OCR候補が原画像確認なしで反映できる、またはブラウザ内一時保持になっていない');
   }
-  if (!/function\s+ocrBreederDependency\s*\(/.test(html) || !/breeder-dependency/.test(html) ||
+  if (!/function\s+asstOcrBreederDependency\s*\(/.test(html) || !/breeder-dependency/.test(html) ||
       !/モン類ブリーダー/.test(effectOcr) || !/オーラブリーダー/.test(effectOcr) ||
       !/basis:\s*'breeder-dependency'/.test(effectOcr)) {
     issues.push('モン類・オーラブリーダー派生効果の一致条件を保持できない');
   }
-  if (!/fieldset\.ocr-candidate\.conditional/.test(html) || !/class="busy-overlay"/.test(html) ||
-      !/#message\.show/.test(html) || !/--message-bottom/.test(html) ||
-      !/actions\?actions\.offsetHeight:0/.test(html) || !/OCR処理中/.test(html)) {
+  if (!/fieldset\.ocr-candidate\.conditional/.test(commonHtml) ||
+      !/id="app_toast"/.test(shell) ||
+      !/\.app-toast\{[^}]*position:fixed[^}]*max-width:calc\(100vw - 28px\)[^}]*overflow-wrap:anywhere/.test(commonHtml) ||
+      !/function show\([^)]*\)[\s\S]{0,500}el\('app_toast'\)/.test(commonHtml) ||
+      !/class="app-busy-overlay"/.test(shell) || !/\.app-busy-overlay/.test(commonHtml) ||
+      !/OCR処理中/.test(html)) {
     issues.push('OCR候補の条件背景・処理中表示・下部通知がない');
   }
-  const ocrApiBlock = gas.match(/function\s+api_ocrEffectImage\s*\([\s\S]*?(?=function\s+api_getCard\s*\()/);
-  if (ocrApiBlock && /DriveApp/.test(ocrApiBlock[0])) issues.push('OCR原画像をDriveへ保存している');
-  if (!/limitBreakJson:\s*jsonCell_\(currentCard\.limitBreak\)/.test(gas) ||
-      !/sapoRefJson:\s*jsonCell_\(currentCard\.sapoRef\)/.test(gas) ||
+  const ocrApiBlock = functionBlock(gas, 'api_asstOcrEffectImage');
+  if (ocrApiBlock && /DriveApp/.test(ocrApiBlock)) issues.push('OCR原画像をDriveへ保存している');
+  if (!/limitBreakJson:\s*asstJsonCell_\(currentCard\.limitBreak\)/.test(gas) ||
+      !/sapoRefJson:\s*asstJsonCell_\(currentCard\.sapoRef\)/.test(gas) ||
       !/flagsJson:\s*row\.flagsJson/.test(gas)) {
     issues.push('参照専用項目をサーバー側で保持していない');
   }
-  if (!/inList_\(card\.cardType,\s*CARD_TYPES/.test(gas) ||
-      !/validateImagePath_\(card,\s*true\)/.test(gas) ||
-      !/validateReleasedAt_\(card\.releasedAt/.test(gas) ||
-      !/validateRatings_\(card\.ratings/.test(gas) ||
-      !/concat\(validateImageFiles_\(docs\.cards\.cards\)\)/.test(gas)) {
+  if (!/asstInList_\(card\.cardType,\s*ASST_CARD_TYPES/.test(gas) ||
+      !/asstValidateImagePath_\(card,\s*true\)/.test(gas) ||
+      !/asstValidateReleasedAt_\(card\.releasedAt/.test(gas) ||
+      !/asstValidateRatings_\(card\.ratings/.test(gas) ||
+      !/concat\(asstValidateImageFiles_\(docs\.cards\.cards\)\)/.test(gas)) {
     issues.push('カード保存・exportの必須値検査が不足');
   }
 
   const calledApis = [...html.matchAll(/call\(['"](api_[A-Za-z0-9_]+)['"]/g)].map(match => match[1]);
   for (const api of new Set(calledApis)) {
-    if (!new RegExp(`function\\s+${api}\\s*\\(`).test(gas)) issues.push(`HTMLから未定義APIを呼んでいる: ${api}`);
+    if (!new RegExp(`function\\s+${api}\\s*\\(`).test(allAssistGas)) issues.push(`HTMLから未定義APIを呼んでいる: ${api}`);
   }
 
   let cardsDoc;
@@ -352,7 +408,7 @@ function runCli() {
   const quiet = process.argv.includes('--quiet');
   const issues = validateRoot(root);
   if (!quiet || issues.length) {
-    console.log(issues.length ? `FAIL アシストCMS検査 ${issues.length}件` : 'PASS アシストCMS test境界・3DB構造');
+    console.log(issues.length ? `FAIL アシストCMS検査 ${issues.length}件` : 'PASS アシストCMSソース境界・3DB構造');
     for (const issue of issues) console.log(`  - ${issue}`);
   }
   if (issues.length) process.exitCode = 1;

@@ -7,10 +7,18 @@ const path = require('path');
 const { validateRoot } = require('./verify-assist-cms');
 
 const repo = path.resolve(__dirname, '..');
+function filesUnder(relative) {
+  const result = [];
+  for (const entry of fs.readdirSync(path.join(repo, relative), { withFileTypes: true })) {
+    const child = path.join(relative, entry.name);
+    if (entry.isDirectory()) result.push(...filesUnder(child));
+    else if (entry.isFile()) result.push(child);
+  }
+  return result;
+}
+
 const targets = [
-  '_cms/assist-gas/コード.gs',
-  '_cms/assist-gas/index.html',
-  '_cms/assist-gas/README.md',
+  ...filesUnder('_cms'),
   'src/data/assist-cards.json',
   'src/data/assist-effects.json',
   'src/data/assist-abilities.json',
@@ -19,7 +27,7 @@ const targets = [
 ];
 
 function makeCopy() {
-  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'p12-8-assist-cms-'));
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'p12-11-assist-cms-'));
   for (const relative of targets) {
     const source = path.join(repo, relative);
     const destination = path.join(root, relative);
@@ -49,14 +57,14 @@ if (baselineIssues.length) {
 }
 console.log('PASS 正常コピーを受理');
 
-expectFailure('test境界の欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+expectFailure('環境値検査の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/00_core.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace("prop_('ENVIRONMENT') !== 'test'", "false"));
-}, /ENVIRONMENT=test/);
+  fs.writeFileSync(file, source.replace('ENVIRONMENT は production または rehearsal', 'ENVIRONMENTの設定が不正'));
+}, /環境値の検査/);
 
 expectFailure('GitHub token参照を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   fs.appendFileSync(file, "\nvar GITHUB_TOKEN = 'test-only-placeholder';\n");
 }, /GitHub token参照/);
 
@@ -69,25 +77,25 @@ expectFailure('未解決能力へのcardId混入を拒否', root => {
 }, /resolved以外はcardId\/sortOrder null必須/);
 
 expectFailure('Sheets日付の未正規化を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('releasedAt: dateCell_(row.releasedAt)', "releasedAt: text_(row.releasedAt) || null"));
+  fs.writeFileSync(file, source.replace('releasedAt: asstDateCell_(row.releasedAt)', "releasedAt: asstText_(row.releasedAt) || null"));
 }, /DateをYYYY\/MM\/DD/);
 
 expectFailure('withStatsの空配列誤集計を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replaceAll('card.stats.length > 0', 'card.stats !== null'));
 }, /withStatsが入力済みstats配列/);
 
 expectFailure('JSON直接入力UIの再混入を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, `${source}\n<script>function jsonField(){}</script>\n`);
 }, /JSON直接入力/);
 
 expectFailure('地形適性UIの再混入を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   fs.appendFileSync(file, '\n<!-- 地形適性 -->\n');
 }, /不要な地形適性入力/);
 
@@ -113,18 +121,18 @@ expectFailure('ルリのcardType誤りを拒否', root => {
 }, /ルリのcardType/);
 
 expectFailure('参照専用項目の上書きを拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('limitBreakJson: jsonCell_(currentCard.limitBreak)', 'limitBreakJson: jsonCell_(card.limitBreak)'));
+  fs.writeFileSync(file, source.replace('limitBreakJson: asstJsonCell_(currentCard.limitBreak)', 'limitBreakJson: asstJsonCell_(card.limitBreak)'));
 }, /参照専用項目/);
 
 expectFailure('距離適性UIの再混入を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   fs.appendFileSync(file, '\n<!-- 距離適性 -->\n');
 }, /不要な距離適性入力/);
 
 expectFailure('カードstatus UIの再混入を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   fs.appendFileSync(file, '\n<!-- cardStatus -->\n');
 }, /不要なカードstatus/);
 
@@ -164,9 +172,9 @@ expectFailure('評価の範囲外を拒否', root => {
 }, /ratingsの構造/);
 
 expectFailure('能力タグの順序破壊を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('var original=state.ability.tags||[];', 'var original=[];'));
+  fs.writeFileSync(file, source.replace('var original=ASST.ability.tags||[];', 'var original=[];'));
 }, /能力タグの既存順序/);
 
 expectFailure('効果OCRの自動verifiedを拒否', root => {
@@ -187,20 +195,20 @@ expectFailure('効果OCRのOR発動条件欠落を拒否', root => {
   fs.writeFileSync(file, source.replace("operator: hasOr ? 'or' : 'and'", "operator: 'removed'"));
 }, /全体発動条件5種またはOR条件/);
 
-expectFailure('test CMSのOCR画面欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+expectFailure('アシストCMSのOCR画面欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace("tabButton('ocr','効果OCR'", "tabButton('removed','削除'"));
+  fs.writeFileSync(file, source.replace("asstTabButton('ocr','効果OCR'", "asstTabButton('removed','削除'"));
 }, /候補レビュー画面がない/);
 
 expectFailure('Vision日本語文書OCRの欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('DOCUMENT_TEXT_DETECTION', 'REMOVED_TEXT_DETECTION'));
 }, /日本語Vision OCRがない/);
 
 expectFailure('Vision APIキーのURL送信を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source
     .replace("'https://vision.googleapis.com/v1/images:annotate'", "'https://vision.googleapis.com/v1/images:annotate?key=' + encodeURIComponent(apiKey)")
@@ -208,13 +216,13 @@ expectFailure('Vision APIキーのURL送信を拒否', root => {
 }, /x-goog-api-keyヘッダー/);
 
 expectFailure('OCR日次上限の未適用を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('var usage = reserveOcrDailyUsage_();', "var usage = { count: 0, limit: 0 };"));
+  fs.writeFileSync(file, source.replace('var usage = asstReserveOcrDailyUsage_();', "var usage = { count: 0, limit: 0 };"));
 }, /OCR_DAILY_LIMITの日次上限/);
 
 expectFailure('黄色背景の発動条件未選択進行を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('if(!types.length)throw new Error', 'if(false)throw new Error'));
 }, /発動条件未選択のまま進行/);
@@ -226,63 +234,131 @@ expectFailure('ブリーダー派生条件の欠落を拒否', root => {
 }, /ブリーダー派生効果の一致条件/);
 
 expectFailure('capture_queueの再導入を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, `${source}\nvar SHEET_CAPTURE_QUEUE = 'capture_queue';\n`);
 }, /撤去済みcapture_queue/);
 
 expectFailure('通知と追従ボタンの重なりを拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_common.html');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('(22+(actions?actions.offsetHeight:0))', '22'));
+  fs.writeFileSync(file, source.replace('.app-toast{position:fixed', '.app-toast{position:static'));
 }, /下部通知がない/);
 
 expectFailure('原画像の確認チェック欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/index.html');
+  const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace("if(!el('ocrSourceConfirmed').checked)throw new Error", 'if(false)throw new Error'));
+  fs.writeFileSync(file, source.replace("if(!el('asst_ocrSourceConfirmed').checked)throw new Error", 'if(false)throw new Error'));
 }, /原画像確認なし/);
 
 expectFailure('カード画像upload API欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('function api_uploadCardImage(', 'function removedUploadCardImage('));
-}, /カード画像をtest Drive/);
+  fs.writeFileSync(file, source.replace('function api_asstUploadCardImage(', 'function removedUploadCardImage('));
+}, /カード画像を指定Drive/);
 
 expectFailure('カード画像の指定フォルダID境界欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace(
     "var folderId = optionalProp_('ASSIST_IMAGE_FOLDER_ID');",
     "var folderId = 'uncontrolled-folder-id';"
   ));
-}, /カード画像をtest Drive/);
+}, /カード画像を指定Drive/);
 
 expectFailure('カード画像の旧版ゴミ箱移動欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('oldFile.setTrashed(true)', 'oldFile.getName()'));
-}, /カード画像をtest Drive/);
+}, /カード画像を指定Drive/);
 
 expectFailure('カード画像ルートの自動作成を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace(
     'var root = DriveApp.getFolderById(folderId);',
     "DriveApp.createFolder('UNCONTROLLED_ASSIST_ROOT');\n  var root = DriveApp.getFolderById(folderId);"
   ));
-}, /カード画像をtest Drive/);
+}, /カード画像を指定Drive/);
 
 expectFailure('カード画像の指定フォルダ直下以外への保存を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('return root;', "return root.createFolder('assist-cards');"));
-}, /カード画像をtest Drive/);
+}, /カード画像を指定Drive/);
 
 expectFailure('カード画像の実体検査欠落を拒否', root => {
-  const file = path.join(root, '_cms/assist-gas/コード.gs');
+  const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('if (!isExpectedImage_(bytes, mimeType))', 'if (false)'));
-}, /カード画像をtest Drive/);
+}, /カード画像を指定Drive/);
 
-console.log('OK 破壊コピー37ケースをすべて拒否');
+expectFailure('環境マーカーのnote参照欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/00_core.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("getRange('A1').getNote()", "getRange('A1').getValue()"));
+}, /環境マーカーをmembersシートのA1から/);
+
+expectFailure('tokenらしき文字列の混入を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  fs.appendFileSync(file, "\nvar FAKE_TOKEN = 'ghp_1234567890';\n");
+}, /tokenらしき文字列/);
+
+expectFailure('アシストUIのGitHub API参照を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  fs.appendFileSync(file, '\n<!-- api.github.com -->\n');
+}, /GitHub API参照/);
+
+expectFailure('モンスターソースのGitHub token参照を拒否', root => {
+  const file = path.join(root, '_cms/gas/10_monster.gs');
+  fs.appendFileSync(file, "\nvar GITHUB_TOKEN = 'test-only-placeholder';\n");
+}, /GitHub token参照/);
+
+expectFailure('_cms配下のメールアドレス直書きを拒否', root => {
+  const file = path.join(root, '_cms/gas/README.md');
+  fs.appendFileSync(file, '\ncontact@example.com\n');
+}, /メールアドレス直書き/);
+
+expectFailure('30_publish.gsのGitHub送信欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replaceAll('api.github.com', 'removed.example'));
+}, /GitHub送信が30_publish\.gsのあるべき1か所/);
+
+expectFailure('リハーサルバナーの環境条件反転を拒否', root => {
+  const file = path.join(root, '_cms/gas/index.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("data.environment==='rehearsal'", "data.environment==='production'"));
+}, /リハーサル環境だけに安全バナー/);
+
+expectFailure('リハーサルバナーの常時表示を拒否', root => {
+  const file = path.join(root, '_cms/gas/index.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("if(data.environment==='rehearsal'){", ''));
+}, /リハーサル環境だけに安全バナー/);
+
+expectFailure('リハーサルバナー要素の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/index.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('id="app_env"', 'id="removed_env"'));
+}, /リハーサル環境だけに安全バナー/);
+
+expectFailure('リハーサルバナーCSSの欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_common.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('.app-env{', '.removed-env{'));
+}, /リハーサル環境だけに安全バナー/);
+
+expectFailure('READMEのB-1方針欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/README.md');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(/常設のtest環境は作りません。[^\n]+\n/, ''));
+}, /READMEに常設test/);
+
+expectFailure('処理中オーバーレイの欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/index.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
+}, /処理中表示/);
+
+console.log('OK 破壊コピー49ケースをすべて拒否');
