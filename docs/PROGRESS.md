@@ -36,7 +36,7 @@
 | P12-9 | アシスト効果OCR・レビュー | `feat/p12-9-assist-ocr` | **完了** | ⚪ | PR #42をmainへマージ（`02a4b5e`）。Vision OCR・原画像レビュー・カード画像Drive uploadをtest deployment v20で実機確認 |
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
-| P12-11 | CMS統合の実装（段階1〜7） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` | **完了** | ⚪🔴🟡 | 段階1〜7を完了。次は段階8（旧資産の撤去） |
+| P12-11 | CMS統合の実装（段階1〜8） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` / `chore/p12-11-s8a-assist-check-retarget` / `chore/p12-11-s8b-remove-legacy-assist` | **完了** | ⚪🔴🟡 | 段階1〜8を完了。P12-11 は完了 |
 | P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **完了** | 🟡 | PR #60をmainへマージ（`eedfcf9`）。本番GASへ反映し、公開2回で`assist_publish_log`の送信済み・公開成功を実機確認した |
 
 ## 最新mainの監査値
@@ -230,8 +230,8 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 - 段階6: **完了** — 本番bookへアシストシートを同居し、旧CMSの保存動作を確認（🟡、管理者のGAS操作）`docs/p12-11-s6-production-cohabitation`。PR #56 / `925fd22`
 - 段階7: **完了** — 本番deployment切替 + token1本化（🟡🔴）。記録PRのPR番号とマージSHAは管理者が記入する
 - 段階8a: **完了** — アシストCMS検査を統合ソースへ移設し、CIに破壊テストを追加（⚪）`chore/p12-11-s8a-assist-check-retarget`。PR番号とマージSHAは管理者が記入する
-- 段階8b: **次** — 旧資産の撤去（⚪）
-- 段階8以降: **管理者の明示承認なしに着手しない**
+- 段階8b: **完了** — 旧資産の撤去（⚪）`chore/p12-11-s8b-remove-legacy-assist`
+- **P12-11の全段階が完了**
 
 ## 明示的な保留
 
@@ -267,9 +267,6 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
   `limitBreakJson`・`sapoRefJson`・`legacyId`・`rarity`(能力)・`flagsJson`・`status`(能力)は
   公開ページに描画されないが、うち3列は`verify.js`のPASSを支えている。
   移行のついでに消さない。解除条件は`docs/cms-integration-design.md` B-6を正とする
-- **常設のtest環境: 作らない（決定）。**
-  移行時と大改修時に本番bookのコピーでリハーサルする（設計書 B-1・I-4）。
-  旧assist test スプレッドシートとGASプロジェクトは、段階3のPRがmainへ入った後に捨てる
 - **GitHub ActionsのNode.js 24移行警告:** `actions/checkout@v4`と`actions/setup-node@v4`が
   Node.js 20を対象としており、runner側でNode.js 24に強制されている旨の警告が出る。
   `cms-publish.yml` / `cms-assist-publish.yml` / `verify.yml`の3つが対象。現時点で動作に影響は
