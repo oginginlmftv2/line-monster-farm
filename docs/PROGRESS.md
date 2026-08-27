@@ -38,6 +38,7 @@
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
 | P12-11 | CMS統合の実装（段階1〜8） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` / `chore/p12-11-s8a-assist-check-retarget` / `chore/p12-11-s8b-remove-legacy-assist` | **完了** | ⚪🔴🟡 | 段階1〜8を完了。P12-11 は完了 |
 | P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **完了** | 🟡 | PR #60をmainへマージ（`eedfcf9`）。本番GASへ反映し、公開2回で`assist_publish_log`の送信済み・公開成功を実機確認した |
+| P12-13 | OCRテキスト正規化の是正 | `fix/p12-13-ocr-normalize` | **レビュー待ち** | ⚪ | NFKCによる全角破壊を停止。既存888効果は無変更 |
 
 ## 最新mainの監査値
 
@@ -235,6 +236,15 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 
 ## 明示的な保留
 
+- **効果表記の統一（ルール4・6）は未適用:**
+  P12-13 で OCR パーサの NFKC による全角破壊は止めたが、
+  既存888効果の表記統一は行っていない。
+  半角括弧202件、name の + の前にスペースが無いもの823件が残る。
+  ルール6を適用すると可視本文が1文字ずつ増え、indexゲート
+  （可視本文800字以上 かつ 解説50字以上）の再判定が必要になる。
+  「あと数十字でゲートを超える12枚への加筆」と同時に行うと、
+  どちらの効果でゲートを超えたのか判別できない。加筆を先に済ませてから、
+  正規化を単独のPRで行い、差分レポートでindex件数の変動を確認する。
 - **環境マーカーの検査が実装の中身を見ていない:**
   `scripts/verify.js` の H-3 検査5 は `book_()` に `BOOK_MARKER_PREFIX` と
   `getNote()` があることしか見ていない。

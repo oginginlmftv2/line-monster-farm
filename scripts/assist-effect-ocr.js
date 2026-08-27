@@ -1,5 +1,14 @@
 #!/usr/bin/env node
 
+// OCRテキスト正規化ルールと実装状況
+//   1 | → Ⅱ の誤読補正          実装済み（sanitizeOcrText）
+//   2 MAX↑ の除去               実装済み（sanitizeOcrText。タイトル判定にも適用）
+//   3 行頭 • の除去             実装済み（sanitizeOcrText。タイトル判定にも適用）。・（中黒）は対象外
+//   4 括弧を全角へ統一          未実装。既存888件の書き換えを伴うため別タスク
+//                              NFKCによる全角破壊だけは normalizeText で止めてある
+//   5 読点後の半角スペース削除  未実装。既存データに該当0件
+//   6 + の前後のスペース規約    未実装。indexゲートの再判定が必要なため別タスク
+
 const fs = require('fs');
 const path = require('path');
 
@@ -15,11 +24,45 @@ const ACTIVATION_CONDITION_DEFS = [
 ];
 
 function normalizeText(value) {
-  return String(value || '')
+  const input = String(value || '');
+  const usedCharacters = new Set(input);
+  const protectedCharacters = new Map();
+  let privateUseCodePoint = 0xe000;
+  const nextPlaceholder = () => {
+    while (privateUseCodePoint <= 0x10fffd) {
+      if (privateUseCodePoint === 0xf900) privateUseCodePoint = 0xf0000;
+      if (privateUseCodePoint === 0xffffe) privateUseCodePoint = 0x100000;
+      const placeholder = String.fromCodePoint(privateUseCodePoint);
+      privateUseCodePoint += 1;
+      if (usedCharacters.has(placeholder)) continue;
+      usedCharacters.add(placeholder);
+      return placeholder;
+    }
+    throw new Error('OCR正規化の一時文字を確保できません');
+  };
+  const protectedText = Array.from(input, character => {
+    if (!/[（）Ⅰ-Ⅹⅰ-ⅹ]/u.test(character)) return character;
+    if (!protectedCharacters.has(character)) protectedCharacters.set(character, nextPlaceholder());
+    return protectedCharacters.get(character);
+  }).join('');
+  const restoredCharacters = new Map(
+    [...protectedCharacters].map(([character, placeholder]) => [placeholder, character]),
+  );
+  return Array.from(
+    protectedText
     .normalize('NFKC')
     .replace(/[\t\u00a0]+/g, ' ')
     .replace(/\s+/g, ' ')
-    .trim();
+    .trim(),
+    character => restoredCharacters.get(character) || character,
+  ).join('');
+}
+
+function sanitizeOcrText(value) {
+  return normalizeText(value)
+    .replace(/[|｜]/g, 'Ⅱ')
+    .replace(/MAX↑/g, '')
+    .replace(/^•\s*/, '');
 }
 
 function comparisonKey(value) {
@@ -214,7 +257,7 @@ function visionLines(payload) {
 }
 
 function looksLikeEffectTitle(line, knownNames) {
-  const text = normalizeText(line.text);
+  const text = sanitizeOcrText(line.text);
   if (!text || text.length > 42 || /^(?:アシスト|能力|イベント|とじる)$/.test(text)) return false;
   if (matchesKnownEffectName(text, knownNames)) return true;
   if (knownNames.size >= 5) return false;
@@ -238,11 +281,11 @@ function parseEffectCandidates(lines, knownEffectNames) {
     const group = content.slice(start, titleIndexes[index + 1] || content.length);
     const title = group[0];
     const descriptionLines = group.slice(1).filter(line => line.bounds.x < title.bounds.x + Math.max(500, title.bounds.width * 5));
-    const description = descriptionLines.map(line => normalizeText(line.text)).join('');
+    const description = descriptionLines.map(line => sanitizeOcrText(line.text)).join('');
     const candidateIssues = [];
     if (!description) candidateIssues.push('description-empty-or-cropped');
     return {
-      name: normalizeText(title.text),
+      name: sanitizeOcrText(title.text),
       description,
       titleBounds: title.bounds,
       activationScope: 'unknown',
@@ -333,7 +376,9 @@ module.exports = {
   detectUnlockRank,
   extractActivationConditions,
   mergeScreenshotCandidates,
+  normalizeText,
   parseEffectCandidates,
+  sanitizeOcrText,
   visionLines,
 };
 
