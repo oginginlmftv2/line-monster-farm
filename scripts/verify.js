@@ -500,10 +500,9 @@ head('8. 秘密情報');
       ng(`破壊的setup処理が40_setup.gs以外にある: ${destructiveOutsideSetup.map(item => item.file).join(', ')}`);
     } else ok('setRows_ / deleteRows / clearContentは40_setup.gsだけに局在');
 
-    // 移行中の2値許容。段階7でアシスト公開が成功し3DBが ['ライ徹CMS'] になったら、
-    // 別PRで ['ライ徹CMS'] の単値へ締める。混在は常にFAIL。
+    // 段階7の本番deployment切替後、統合CMSのexportは ['ライ徹CMS'] を出す。
+    // 移行は完了したので単値。3ファイルの混在は常にFAIL。
     const allowedGeneratedFrom = [
-      ['P12-8 test assist CMS'],
       ['ライ徹CMS'],
     ];
     const generatedFromFiles = [
