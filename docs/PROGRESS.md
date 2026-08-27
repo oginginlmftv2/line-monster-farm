@@ -37,11 +37,11 @@
 | P11-10 | GitHub権限の前提を確定 | `docs/p11-10-permission-baseline` | **完了** | ⚪ | PR #44をmainへマージ（`bfab2f8`）。個人リポジトリでadmin付与不可を確定し、計画からadmin依存を外した |
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
 | P12-11 | CMS統合の実装（段階1〜7） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` | **完了** | ⚪🔴🟡 | 段階1〜7を完了。次は段階8（旧資産の撤去） |
-| P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **レビュー待ち** | 🟡 | GAS再deploymentが必要。マージ後に管理者が実施する |
+| P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **完了** | 🟡 | PR #60をmainへマージ（`eedfcf9`）。本番GASへ反映し、公開2回で`assist_publish_log`の送信済み・公開成功を実機確認した |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`7b2eb10`
+調査基準: `origin/main`の`74d9e4a`
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -213,7 +213,7 @@ P12-11 段階5（本番bookのコピーでのリハーサル）は、管理者�
 
 ## 次の作業
 
-P12-12の変更は、マージ後に管理者がGASの再deploymentを行うまで本番へは反映されない。
+P12-12の変更は本番GASへ反映し、再deploymentと公開2回による実機確認まで完了した。
 
 P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 **1段階ごとに push → PR → マージまで行い、そこで止まる。複数段階を1つのPRにまとめない。**
@@ -234,6 +234,15 @@ P12-11 を `docs/cms-integration-design.md` I-1 の段階ごとに進める。
 
 ## 明示的な保留
 
+- **環境マーカーの検査が実装の中身を見ていない:**
+  `scripts/verify.js` の H-3 検査5 は `book_()` に `BOOK_MARKER_PREFIX` と
+  `getNote()` があることしか見ていない。
+  `00_core.gs` の `var expected = BOOK_MARKER_PREFIX + env_();` を
+  `var expected = '';` に書き換えても検査は PASS する。
+  環境マーカーは、本番bookとリハーサル用コピーを取り違えたときの唯一の安全網であり
+  （設計 C-2、段階5の項目12で実地確認）、防御が無効化されても気づけない。
+  比較そのもの（期待値の組み立てと不一致時の throw）を検査する形へ締める。
+  同じ検査の「破壊的setupの鍵」側は正しく機能しており、book側だけが形だけである。
 - **3DBのJSONキー順が不安定:**
   CMSからの公開のたびに `stats` / `ratings` / `formations` のキー順が入れ替わり、
   実質的な変更が差分に埋もれる。段階7の2回目のアシスト公開では、
@@ -315,6 +324,7 @@ testCMSの3DBは段階3（PR #48 / `4330026`）でmainへ反映済みである�
 
 | 日付 | タスクID | 内容 | 対応 |
 |---|---|---|---|
+| 2026-08-27 | P12-12 | 追加した検査16が、api_monPublish / api_asstPublish の「関数内のどこかに公開ログ呼び出しがあるか」しか見ておらず、成功経路の「送信済み」の記録だけを消しても通った。catch経路の呼び出しが判定を満たしてしまうため | `'送信済み'`を同じ呼び出しの中に要求する形へ締めた（`b5423da`）。成功経路のみ削除する破壊テストをモンスター側・アシスト側の両方で必須にした |
 | 2026-08-27 | P12-11 段階5d | リハーサル項目7・8で、サーバ側の競合拒否とOCR上限拒否は正しく動いていたが、`show()`の書き込み先が画面外にあり理由が利用者へ届かなかった。段階2の統合時、アシスト側にはシェル共通の通知先が用意されず、OCRも後続1枚の失敗で成功済み結果を破棄していた | シェルに固定通知を追加してドメイン内表示と併用し、OCRは直列のまま1枚ごとに成否を受けて成功分を残す。通知経路は検査15で継続検査する |
 | 2026-08-27 | P12-11 段階5c | 段階2のCSS統合で、アシスト側だけを想定した裸のタグセレクタがシェルの同名タグにも効き、モンスタータブのレイアウトが崩れていた。段階5bのタブ不具合と同じ性質の取りこぼしだった | 裸のセレクタをアシストパネル内へ限定し、シェルと重なる裸タグを検査14で継続検査する |
 | 2026-08-26 | P12-11 段階5b | 本番bookコピーでの段階5リハーサルにより、タブとパネルのid不一致、setup結果の実行ログ欠落、headerのCSS競合の3件を検出した。特にタブ不一致は、段階2ではidが一致する`publish`タブだけが実装上到達可能で、かつ`rehearsal`では公開タブ自体が表示されないため、画面上で不一致が現れず検証を素通りした | 段階5bで3件を是正し、タブ対応を双方向検査する。是正後のソースをリハーサル環境へ貼り直し、段階5を項目1からやり直す |

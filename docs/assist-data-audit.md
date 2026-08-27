@@ -915,3 +915,114 @@ sitemap                 136 URL
 公開の成否はGitHub Actionsを開かないと分からない。
 
 この積み残しはPR-Dで対応する。
+
+## 17. P12-12: アシスト公開ログの実装と実機確認
+
+P12-12はPR #60 / `eedfcf9`でmainへマージし、管理者が本番GASへ反映して実機確認まで完了した。
+
+### 直した不具合
+
+段階6の`setup1_createSheets`は本番bookへ`assist_publish_log`シートを作ったが、
+書き込む処理が実装されていなかった。`_cms/gas/`全体で`ASST_SHEET_PUBLISH_LOG`を
+参照していたのは`20_assist.gs`の定義行とヘッダ登録行の2箇所だけで、`appendRow`する
+関数が無かった。`api_asstPublish`が呼ぶ`asstAppendLog_`の書き込み先は`assist_log`である。
+
+結果として、段階7でアシスト公開を2回実行しても`assist_publish_log`は空のままで、
+公開の成否はGitHub Actionsを開かないと分からなかった。
+
+### 実装
+
+設計書B-3の「公開状態のポーリングをシート名を引数にした1実装で共用する」を実装した。
+
+```text
+共用化した関数
+  publishLogRows_(logSheetName)
+  publishLog_(logSheetName, user, sha, result, detail)
+  recordedPublishResult_(logSheetName, sha)
+  sentPublishUser_(logSheetName, sha)
+  latestPublishSha_(logSheetName)
+  cmsPublishRun_(workflowFileName, branchName, sha)
+  publishStatus_(config, sha)
+
+既存の mon*_ 関数は同名・同引数のまま、共用実装を呼ぶ薄い包みにした。
+api_monPublish / api_monPublishStatus / api_monLatestPublishStatus は差分0行。
+```
+
+`monSetAllPublishStatus_`は共用化していない。`monsters`シートの`status`列を一括更新する
+モンスター固有の処理であり、`cards`に`status`列は無く、`abilities`の`status`は
+`draft` / `verified`という別の意味を持つ。モンスター側は`config.onResult`から呼び、
+アシスト側は`onResult`を渡さない。
+
+追加したものは次のとおりである。
+
+```text
+api_asstPublish から assist_publish_log へ「送信済み」を記録
+api_asstPublishStatus(sha) / api_asstLatestPublishStatus()
+ui_publish.html のボタンを3つから4つへ
+  app_publishStatus → app_publishMonsterStatus へ改名
+  app_publishAssistStatus（アシスト公開結果を確認）を追加
+```
+
+`asstAppendLog_`は残した。`assist_log`は保存・取込・export・OCR・画像アップロードの
+操作履歴であり、公開履歴とは役割が違う（B-3）。両方に入るのが正しい。
+
+### 追加した検査
+
+```text
+H-3 検査16  ヘッダを定義した *_log シート4件
+            （edit_log / publish_log / assist_log / assist_publish_log）に
+            appendRow へ到達する書込経路が存在すること。
+            公開APIについては「送信済み」を記録する呼び出しがあること
+H-3 検査17  モンスターとアシストの公開ログ・状態確認が
+            同じ共用実装（publishStatus_ ほか）を通ること
+```
+
+検査16は当初、関数内のどこかに公開ログ呼び出しがあれば通る形だった。
+**成功経路の「送信済み」の記録だけを消しても検査が通る**ことを進捗管理側が実測し、
+差し戻して`'送信済み'`を同じ呼び出しの中に要求する形へ締めた（`b5423da`）。
+`sentPublishUser_`は`'送信済み'`を文字列で突合するため、成功経路の記録が消えると、
+公開は成功しているのに「送信記録がないコミットです」で止まる。今回直した不具合と
+同じ症状である。
+
+### 本番での実機確認
+
+管理者が本番GASプロジェクトへ`30_publish.gs`と`ui_publish.html`を反映し、
+デプロイを更新したうえで、公開を2回実行した。
+
+モンスター公開:
+
+```text
+publish_log
+  2026-08-27 15:03:05  a78cbf6e...  送信済み  cms/publish / 8ファイル（画像5件）
+  2026-08-27 15:09:20  a78cbf6e...  公開成功  GitHub Actions成功 / main a78cbf6 / run #24
+main の差分  eedfcf9 → a78cbf6
+  src/data/cms-id-predictions.json  exportedAt 1行
+  src/data/monsters-editorial.json  exportedAt 1行
+```
+
+アシスト公開:
+
+```text
+assist_publish_log
+  2026-08-27 15:10:14  74d9e4ae...  送信済み  cms/assist-publish / 4ファイル
+  2026-08-27 15:15:15  74d9e4ae...  公開成功  GitHub Actions成功 / main 74d9e4a / run #7
+main の差分  a78cbf6 → 74d9e4a
+  差分なし。両コミットの tree は同一（c18b540d...）
+```
+
+**`assist_publish_log`に「送信済み」と「公開成功」の2行が入ったことが、
+この実装の目的そのものである。** 段階7では空のままだった。
+
+公開物の内容は今回1文字も変わっていない。経路だけを通した。
+モンスター公開が「画像5件」を送っているのは、Driveの画像を毎回送る仕様のためで、
+バイト列が既存と同一のため差分にならない。
+
+### 完了時点の状態
+
+```text
+main                    74d9e4a
+node scripts/verify.js  PASS 78 / FAIL 0 / WARN 1（main上での実行）
+モンスター               351体 / index 53 / noindex 298
+アシストカード            91枚 / index 54 / noindex 37
+sitemap                 136 URL
+```
