@@ -1196,6 +1196,37 @@ if (!exists('src/data/assist-effects.json') || !exists('src/data/assist-cards.js
     } else {
       ok('assist-effects.jsonのdraftはeffects空、verifiedはeffects非空');
     }
+
+    const normalizationIssues = [];
+    const invalidEffectText = allEffects.filter(({ effect }) => (
+      /[()]/.test(String(effect.name || ''))
+      || /[()]/.test(String(effect.description || ''))
+      || /(^|[^ ])\+| {2,}\+/.test(String(effect.name || ''))
+      || /\s\+|\+\s/.test(String(effect.description || ''))
+      || /MAX↑/.test(String(effect.name || ''))
+      || /MAX↑/.test(String(effect.description || ''))
+      || /^•/m.test(String(effect.name || ''))
+      || /^•/m.test(String(effect.description || ''))
+      || /、 /.test(String(effect.name || ''))
+      || /、 /.test(String(effect.description || ''))
+      || /II|III/.test(String(effect.name || ''))
+      || /II|III/.test(String(effect.description || ''))
+    ));
+    if (invalidEffectText.length) {
+      normalizationIssues.push(`効果 ${invalidEffectText.length}件: ${invalidEffectText.slice(0, 5)
+        .map(({ cardId, effect }) => `${cardId}.${effect.effectId}`).join(', ')}`);
+    }
+    const invalidCardExplanations = (Array.isArray(assistCards.cards) ? assistCards.cards : [])
+      .filter(card => /[()]/.test(String(card.explanation || '')));
+    if (invalidCardExplanations.length) {
+      normalizationIssues.push(`カード解説 ${invalidCardExplanations.length}件: ${invalidCardExplanations.slice(0, 5)
+        .map(card => card.cardId).join(', ')}`);
+    }
+    if (normalizationIssues.length) {
+      ng(`アシスト効果・カード解説の表記が未正規化（${normalizationIssues.join(' / ')}）`);
+    } else {
+      ok('アシスト効果・カード解説の括弧・+・OCR由来表記は正規化済み');
+    }
   } catch (error) {
     ng(`assist-effects.jsonの検査に失敗: ${error.message}`);
   }
