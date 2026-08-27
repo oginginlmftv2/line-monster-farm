@@ -1464,8 +1464,8 @@ if (!exists('src/data/assist-cards.json')) {
 }
 
 // ---------------------------------------------------------------- 15
-head('15. アシストCMS test境界');
-if (!exists('_cms/assist-gas/コード.gs') || !exists('_cms/assist-gas/index.html')) {
+head('15. アシストCMSソース境界');
+if (!exists('_cms/gas/20_assist.gs') || !exists('_cms/gas/ui_assist.html')) {
   ng('アシストCMSの必須ソースがない');
 } else {
   try {
@@ -1474,7 +1474,7 @@ if (!exists('_cms/assist-gas/コード.gs') || !exists('_cms/assist-gas/index.ht
     if (assistCmsIssues.length) {
       ng(`アシストCMS検査FAIL ${assistCmsIssues.length}件: ${assistCmsIssues.slice(0, 5).join(', ')}`);
     } else {
-      ok('アシストCMSはtest専用境界を維持し、3DB構造と編集APIが整合');
+      ok('アシストCMSのソース境界を維持し、3DB構造と編集APIが整合');
     }
   } catch (error) {
     ng(`アシストCMS検査の実行に失敗: ${error.message}`);
