@@ -65,6 +65,16 @@ test('効果候補の経路でも全角ローマ数字と全角括弧を保つ',
   assert.strictEqual(parsed.candidates[0].description, '効果が上昇する（最大20%）');
 });
 
+test('UIノイズを含むタイトル行でも効果候補を生成する', () => {
+  const parsed = parseEffectCandidates([
+    line('• 攻撃力MAX↑アップ', 500),
+    line('赤・青のとき（条件）', 535),
+  ], ['攻撃力アップ']);
+  assert.strictEqual(parsed.candidates.length, 1);
+  assert.strictEqual(parsed.candidates[0].name, '攻撃力アップ');
+  assert.strictEqual(parsed.candidates[0].description, '赤・青のとき（条件）');
+});
+
 test('黄・金色背景をconditionalにする', () => {
   const result = classifyBackground(Array.from({ length: 12 }, () => ({ r: 247, g: 224, b: 158 })));
   assert.strictEqual(result.activationScope, 'conditional');
@@ -190,4 +200,4 @@ test('既存DBの説明・解放段階差分を検出する', () => {
 });
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log('OK アシスト効果OCR 23ケース');
+console.log('OK アシスト効果OCR 24ケース');

@@ -2,8 +2,8 @@
 
 // OCRテキスト正規化ルールと実装状況
 //   1 | → Ⅱ の誤読補正          実装済み（sanitizeOcrText）
-//   2 MAX↑ の除去               実装済み（sanitizeOcrText）
-//   3 行頭 • の除去             実装済み（sanitizeOcrText）。・（中黒）は対象外
+//   2 MAX↑ の除去               実装済み（sanitizeOcrText。タイトル判定にも適用）
+//   3 行頭 • の除去             実装済み（sanitizeOcrText。タイトル判定にも適用）。・（中黒）は対象外
 //   4 括弧を全角へ統一          未実装。既存888件の書き換えを伴うため別タスク
 //                              NFKCによる全角破壊だけは normalizeText で止めてある
 //   5 読点後の半角スペース削除  未実装。既存データに該当0件
@@ -257,7 +257,7 @@ function visionLines(payload) {
 }
 
 function looksLikeEffectTitle(line, knownNames) {
-  const text = normalizeText(line.text);
+  const text = sanitizeOcrText(line.text);
   if (!text || text.length > 42 || /^(?:アシスト|能力|イベント|とじる)$/.test(text)) return false;
   if (matchesKnownEffectName(text, knownNames)) return true;
   if (knownNames.size >= 5) return false;
