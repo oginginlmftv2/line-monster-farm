@@ -1,6 +1,8 @@
 # 進捗
 
-最終更新: 2026-08-27
+> 作業の型・検証手順・過去の失敗は`docs/agent-handoff.md`を参照。
+
+最終更新: 2026-08-28
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -41,7 +43,7 @@
 | P12-13 | OCRテキスト正規化の是正 | `fix/p12-13-ocr-normalize` | **レビュー待ち** | ⚪ | NFKCによる全角破壊を停止。既存888効果は無変更 |
 | P12-14 | 実運用OCR経路の正規化是正と両実装検査 | `fix/p12-14-ocr-ui-normalize` | **レビュー待ち** | 🟡 | 実運用のOCR経路（ui_assist.html）を是正。GAS再deploymentが必要 |
 | P12-15 | 888効果の表記正規化とindexゲートの再判定 | `chore/p12-15-effect-text-normalize` | **レビュー待ち** | 🔴 | 効果・カード解説の既存表記を統一。カードindex対象が1件増加 |
-| P12-16 | `asstRewriteSheet_` の恒久修正 | `fix/p12-16-assist-rewrite-sheet` | **レビュー待ち** | 🟡 | `asstRewriteSheet_` の恒久修正。GAS再deploymentが必要 |
+| P12-16 | `asstRewriteSheet_` の恒久修正 | `fix/p12-16-assist-rewrite-sheet` | **完了** | 🟡 | PR #67をmainへマージ（`f64369e`）。マージ後の管理者作業も完了 |
 
 ## 最新mainの監査値
 
