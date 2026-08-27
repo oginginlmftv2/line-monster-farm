@@ -379,10 +379,30 @@ expectFailure('READMEのB-1方針欠落を拒否', root => {
   fs.writeFileSync(file, source.replace(/常設のtest環境は作りません。[^\n]+\n/, ''));
 }, /READMEに常設test/);
 
+expectFailure('asstRewriteSheet_のdeleteRows旧実装を拒否', root => {
+  const file = path.join(root, '_cms/gas/40_setup.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const old = `function asstRewriteSheet_(name, values) {
+  var sheet = asstSheet_(name), headers = ASST_HEADERS[name];
+  if (sheet.getLastRow() > 1) sheet.deleteRows(2, sheet.getLastRow() - 1);
+  if (values.length) sheet.getRange(2, 1, values.length, headers.length).setValues(values);
+}`;
+  fs.writeFileSync(file, source.replace(
+    /function asstRewriteSheet_\(name, values\) \{[\s\S]*?(?=\nfunction\s+)/,
+    old
+  ));
+}, /asstRewriteSheet_はdeleteRowsでデータ行を全削除しない/);
+
+expectFailure('asstRewriteSheet_のclearContent欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/40_setup.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('.clearContent();', ';'));
+}, /asstRewriteSheet_は行数確保・既存領域消去・書き込みを順に行う/);
+
 expectFailure('処理中オーバーレイの欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/index.html');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
 }, /処理中表示/);
 
-console.log('OK 破壊コピー53ケースをすべて拒否');
+console.log('OK 破壊コピー55ケースをすべて拒否');

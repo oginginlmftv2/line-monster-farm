@@ -127,6 +127,14 @@ function validateRoot(root) {
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
+  const rewriteSheetBlock = functionBlock(setupGas, 'asstRewriteSheet_');
+  if (!rewriteSheetBlock || /deleteRows\s*\(/.test(rewriteSheetBlock)) {
+    issues.push('asstRewriteSheet_はdeleteRowsでデータ行を全削除しない');
+  }
+  if (!rewriteSheetBlock || !/insertRowsAfter\s*\(/.test(rewriteSheetBlock) ||
+      !/clearContent\s*\(/.test(rewriteSheetBlock) || !/setValues\s*\(/.test(rewriteSheetBlock)) {
+    issues.push('asstRewriteSheet_は行数確保・既存領域消去・書き込みを順に行う');
+  }
 
   const forbiddenDomainSource = [
     [/GITHUB_TOKEN/, 'GitHub token参照'],

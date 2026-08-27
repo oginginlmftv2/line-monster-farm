@@ -321,8 +321,16 @@ function asstCreateImageFolder_() {
 }
 
 function asstRewriteSheet_(name, values) {
-  var sheet = asstSheet_(name), headers = ASST_HEADERS[name];
-  if (sheet.getLastRow() > 1) sheet.deleteRows(2, sheet.getLastRow() - 1);
+  var sheet = asstSheet_(name);
+  var headers = ASST_HEADERS[name];
+  var requiredRows = Math.max(values.length + 1, 2);
+  if (sheet.getMaxRows() < requiredRows) {
+    sheet.insertRowsAfter(sheet.getMaxRows(), requiredRows - sheet.getMaxRows());
+  }
+  var lastRow = sheet.getLastRow();
+  if (lastRow > 1) {
+    sheet.getRange(2, 1, lastRow - 1, headers.length).clearContent();
+  }
   if (values.length) sheet.getRange(2, 1, values.length, headers.length).setValues(values);
 }
 
