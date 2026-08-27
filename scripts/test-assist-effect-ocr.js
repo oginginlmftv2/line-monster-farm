@@ -8,7 +8,9 @@ const {
   detectUnlockRank,
   extractActivationConditions,
   mergeScreenshotCandidates,
+  normalizeText,
   parseEffectCandidates,
+  sanitizeOcrText,
 } = require('./assist-effect-ocr');
 
 function test(name, callback) {
@@ -17,6 +19,51 @@ function test(name, callback) {
 }
 
 const line = (text, y, x = 100) => ({ text, bounds: { x, y, width: 280, height: 24 } });
+
+test('normalizeTextは全角ローマ数字を保つ', () => {
+  assert.strictEqual(normalizeText('効果Ⅱ'), '効果Ⅱ');
+});
+
+test('normalizeTextは全角括弧を保つ', () => {
+  assert.strictEqual(normalizeText('（条件）'), '（条件）');
+});
+
+test('normalizeTextは全角英数を半角化する', () => {
+  assert.strictEqual(normalizeText('ＡＢＣ１２３'), 'ABC123');
+});
+
+test('normalizeTextは全角空白を半角スペース1つに畳む', () => {
+  assert.strictEqual(normalizeText('全角　空白'), '全角 空白');
+});
+
+test('normalizeTextは入力中の私用領域文字と衝突しない', () => {
+  assert.strictEqual(normalizeText('\ue000効果Ⅱ（条件）'), '\ue000効果Ⅱ（条件）');
+});
+
+test('sanitizeOcrTextは縦棒をローマ数字Ⅱへ補正する', () => {
+  assert.strictEqual(sanitizeOcrText('効果|+20%'), '効果Ⅱ+20%');
+});
+
+test('sanitizeOcrTextはMAX↑を除去する', () => {
+  assert.strictEqual(sanitizeOcrText('攻撃力MAX↑アップ'), '攻撃力アップ');
+});
+
+test('sanitizeOcrTextは行頭の箇条書き記号を除去する', () => {
+  assert.strictEqual(sanitizeOcrText('• 効果名'), '効果名');
+});
+
+test('sanitizeOcrTextは中黒を保持する', () => {
+  assert.strictEqual(sanitizeOcrText('赤・青のとき'), '赤・青のとき');
+});
+
+test('効果候補の経路でも全角ローマ数字と全角括弧を保つ', () => {
+  const parsed = parseEffectCandidates([
+    line('メンタルボーナスⅡ +1', 500),
+    line('効果が上昇する（最大20%）', 535),
+  ], ['メンタルボーナスⅡ+1']);
+  assert.strictEqual(parsed.candidates[0].name, 'メンタルボーナスⅡ +1');
+  assert.strictEqual(parsed.candidates[0].description, '効果が上昇する（最大20%）');
+});
 
 test('黄・金色背景をconditionalにする', () => {
   const result = classifyBackground(Array.from({ length: 12 }, () => ({ r: 247, g: 224, b: 158 })));
@@ -143,4 +190,4 @@ test('既存DBの説明・解放段階差分を検出する', () => {
 });
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log('OK アシスト効果OCR 13ケース');
+console.log('OK アシスト効果OCR 23ケース');
