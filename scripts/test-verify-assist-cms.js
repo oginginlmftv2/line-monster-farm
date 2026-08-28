@@ -6,6 +6,7 @@ const os = require('os');
 const path = require('path');
 const assert = require('assert');
 const crypto = require('crypto');
+const childProcess = require('child_process');
 const vm = require('vm');
 const { validateRoot } = require('./verify-assist-cms');
 
@@ -25,6 +26,8 @@ const targets = [
   'src/data/assist-cards.json',
   'src/data/assist-effects.json',
   'src/data/assist-abilities.json',
+  'src/data/lmfdb-card-map.json',
+  'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz',
   'scripts/assist-effect-ocr.js',
   'scripts/test-assist-effect-ocr.js',
 ];
@@ -234,6 +237,24 @@ expectFailure('ability_external_refsの公開export混入を拒否', root => {
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace('function api_asstExport() {', "function api_asstExport() {\n  var leaked = asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS);"));
 }, /公開3DBまたはGitHub送信対象へ混入/);
+
+expectFailure('外部能力監査APIの認証欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('  asstRequireUser_();\n  var input = asstAuditPayload_(payload);', '  var input = asstAuditPayload_(payload);'));
+}, /監査APIの認証・入力・SHA固定・ローカル読取境界/);
+
+expectFailure('外部能力監査APIへの書込み混入を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('function api_asstAuditExternalAbilities(payload) {', 'function api_asstAuditExternalAbilities(payload) {\n  PropertiesService.getScriptProperties().setProperty("bad", "1");'));
+}, /監査APIの読取専用境界/);
+
+expectFailure('固定カード対応表hashのずれを拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('0d9ddf7a4cc0e0ab69b9fe8eab63b913eae70144148f54da852357826bc1c49f', 'f'.repeat(64)));
+}, /固定カード対応表hash/);
 
 expectFailure('Sheets日付の未正規化を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
@@ -564,4 +585,8 @@ expectFailure('処理中オーバーレイの欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
 }, /処理中表示/);
 
-console.log('OK 破壊コピー66ケースをすべて拒否');
+console.log('OK 既存66件を含む破壊コピー69ケースをすべて拒否');
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});

@@ -26,6 +26,8 @@ const DATA_FILES = [
   'src/data/assist-effects.json',
   'src/data/assist-abilities.json',
 ];
+const LMFDB_CARD_MAP_FILE = 'src/data/lmfdb-card-map.json';
+const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
 
 const ALLOWED = {
   rarity: new Set(['MR', 'SSR']),
@@ -89,7 +91,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -109,6 +111,10 @@ function validateRoot(root) {
   const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
   const assistExportBlock = functionBlock(gas, 'api_asstExport');
   const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
+  const auditApiBlock = functionBlock(gas, 'api_asstAuditExternalAbilities');
+  const auditFunctionNames = [...gas.matchAll(/function\s+(asstAudit[A-Za-z0-9_]*|api_asstAuditExternalAbilities)\s*\(/g)]
+    .map(match => match[1]);
+  const auditSource = auditFunctionNames.map(name => functionBlock(gas, name)).join('\n');
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
   if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
@@ -152,7 +158,7 @@ function validateRoot(root) {
     'setup1_createSheets', 'setup2_registerMe', 'setup3_importAssistFromMain', 'setup4_checkAll', 'setup5_createAssistImageFolder',
     'doGet', 'api_bootstrapShell', 'api_asstBootstrap', 'api_asstGetCard', 'api_asstSaveCard', 'api_asstSaveEffects',
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
-    'api_asstOcrEffectImage', 'api_asstUploadCardImage',
+    'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -169,12 +175,50 @@ function validateRoot(root) {
     [/GITHUB_TOKEN/, 'GitHub token参照'],
     [/CMS_PUBLISH_TOKEN/, '本番CMS token参照'],
     [/cms\/(?:assist-)?publish/, '公開ブランチ参照'],
-    [/api\.github\.com/, 'GitHub API参照'],
     [/git\/refs|actions\/workflows/i, 'GitHub公開処理'],
   ];
   const domainSource = `${gas}\n${html}\n${monsterGas}\n${monsterHtml}`;
   for (const [pattern, label] of forbiddenDomainSource) {
     if (pattern.test(domainSource)) issues.push(`ドメインソースに禁止対象: ${label}`);
+  }
+  const allowedGitHubReadUrl = 'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main';
+  const githubApiReferences = domainSource.match(/https:\/\/api\.github\.com\/[A-Za-z0-9_./-]+/g) || [];
+  if (githubApiReferences.some(url => url !== allowedGitHubReadUrl)) {
+    issues.push('ドメインソースに許可外のGitHub API参照');
+  }
+  if (/api\.github\.com/.test(domainSource.replaceAll(allowedGitHubReadUrl, ''))) {
+    issues.push('ドメインソースに禁止対象: GitHub API参照');
+  }
+  if (!auditApiBlock || !/asstRequireUser_\(\)/.test(auditApiBlock) ||
+      !/asstAuditPayload_\(payload\)/.test(auditApiBlock) ||
+      !/asstAuditResolveExternalSha_\(input\.externalSha\)/.test(auditApiBlock) ||
+      !/asstAuditReadLocal_\(\)/.test(auditApiBlock)) {
+    issues.push('外部能力監査APIの認証・入力・SHA固定・ローカル読取境界が不足');
+  }
+  if (!/ASST_LMFDB_RAW_BASE\s*=\s*'https:\/\/raw\.githubusercontent\.com\/futsalife24-bot\/lMfDB\/'/.test(gas) ||
+      !/ASST_LMFDB_RAW_PATH\s*=\s*'\/data\/abilities\.json'/.test(gas) ||
+      !/ASST_LMFDB_MAIN_REF_URL\s*=\s*'https:\/\/api\.github\.com\/repos\/futsalife24-bot\/lMfDB\/git\/ref\/heads\/main'/.test(gas)) {
+    issues.push('lMfDB取得先がmain解決URLと固定SHA raw URL定数に限定されていない');
+  }
+  if (!/var allowed = \['externalSha','page','pageSize'\]/.test(gas) ||
+      /clientUrl|payload\.url|payload\[['"]url['"]\]/.test(auditSource)) {
+    issues.push('外部能力監査APIのpayloadがexternalSha/page/pageSizeだけに限定されていない');
+  }
+  const auditForbidden = /appendRow\s*\(|setValue(?:s)?\s*\(|clearContent\s*\(|deleteRows\s*\(|PropertiesService|CacheService|LockService|ScriptApp|DriveApp|githubRequest_|api_asstCreateAbilityFromExternalCandidate|api_asstSetExternalCandidateDisposition/;
+  if (auditForbidden.test(auditSource)) issues.push('外部能力監査APIの読取専用境界に書込み・ロック・永続化処理が混入');
+  if (!/getDataRange\(\)\.getValues\(\)/.test(functionBlock(gas, 'asstAuditReadLocal_')) ||
+      !/\[ASST_SHEET_CARDS, ASST_SHEET_ABILITIES, ASST_SHEET_ABILITY_EXTERNAL_REFS\]/.test(functionBlock(gas, 'asstAuditReadLocal_'))) {
+    issues.push('外部能力監査APIがcards/abilities/ability_external_refsを各1回の範囲読取に限定していない');
+  }
+  try {
+    const cardMap = json(root, LMFDB_CARD_MAP_FILE);
+    const expectedMapHash = crypto.createHash('sha256').update(JSON.stringify(cardMap.mappings)).digest('hex');
+    const hashMatch = gas.match(/ASST_LMFDB_CARD_MAP_SHA256\s*=\s*'([0-9a-f]{64})'/);
+    if (!cardMap || cardMap.schemaVersion !== 1 || !Array.isArray(cardMap.mappings) || !hashMatch || hashMatch[1] !== expectedMapHash) {
+      issues.push('GASの固定カード対応表hashがsrc/data/lmfdb-card-map.jsonと不一致');
+    }
+  } catch (error) {
+    issues.push(`lMfDB固定対応表の検査に失敗: ${error.message}`);
   }
   const cmsSource = filesUnder(root, '_cms').map(relative => read(root, relative)).join('\n');
   for (const [pattern, label] of [

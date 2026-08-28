@@ -28,6 +28,17 @@ var ASST_EXTERNAL_REF_DISPOSITIONS = ['imported','ignored','duplicate','unsuppor
 var ASST_EXTERNAL_REVIEW_FLAGS = ['id_reused'];
 var ASST_EXTERNAL_REF_HEADERS = ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'];
 var ASST_EXTERNAL_SNAPSHOT_KEYS = ['id','card','name','desc','source','rarity','tags'];
+var ASST_LMFDB_PROVIDER = 'lmfdb';
+var ASST_LMFDB_MAIN_REF_URL = 'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main';
+var ASST_LMFDB_RAW_BASE = 'https://raw.githubusercontent.com/futsalife24-bot/lMfDB/';
+var ASST_LMFDB_RAW_PATH = '/data/abilities.json';
+var ASST_LMFDB_MAX_BYTES = 2 * 1024 * 1024;
+// src/data/lmfdb-card-map.json の mappings を固定キー順JSONにしたSHA-256。
+// scripts/verify-assist-cms.js が正ファイルとの一致を検査し、GAS側で対応表を二重保持しない。
+var ASST_LMFDB_CARD_MAP_SHA256 = '0d9ddf7a4cc0e0ab69b9fe8eab63b913eae70144148f54da852357826bc1c49f';
+var ASST_LMFDB_REQUIRED_FIELDS = ['id','name','desc','card','tags','source','rarity'];
+var ASST_LMFDB_COMPARABLE_FIELDS = ['sourceName','name','description','source','rarity','tags'];
+var ASST_LMFDB_PROCESSED_DISPOSITIONS = ['imported','ignored','duplicate','unsupported'];
 var ASST_UNLOCK_RANKS = ['無凸','1凸','2凸','3凸','4凸'];
 var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
@@ -273,7 +284,463 @@ function asstSha256_(text) {
   }).join('');
 }
 
+function asstSha256Bytes_(bytes) {
+  var digest = Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, bytes);
+  return digest.map(function (value) {
+    var unsigned = value < 0 ? value + 256 : value;
+    return ('0' + unsigned.toString(16)).slice(-2);
+  }).join('');
+}
+
 function asstRequireUser_() { return requireScope_('assist'); }
+
+function asstAuditPayload_(payload) {
+  if (payload === undefined) payload = {};
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('payloadはオブジェクトです。');
+  var allowed = ['externalSha','page','pageSize'];
+  Object.keys(payload).forEach(function (key) {
+    if (allowed.indexOf(key) < 0) throw new Error('未対応のpayload項目です: ' + key);
+  });
+  if (payload.externalSha !== undefined && !asstIsSha_(payload.externalSha, 40)) {
+    throw new Error('externalShaは40桁の小文字コミットSHAです。');
+  }
+  function pageInteger_(value, fallback, label, max) {
+    if (value === undefined) return fallback;
+    if (typeof value !== 'number' || !Number.isInteger(value) || value < 1 || (max && value > max)) {
+      throw new Error(label + (max ? 'は1〜' + max + 'の整数です。' : 'は1以上の整数です。'));
+    }
+    return value;
+  }
+  return {
+    externalSha: payload.externalSha || null,
+    page: pageInteger_(payload.page, 1, 'page'),
+    pageSize: pageInteger_(payload.pageSize, 50, 'pageSize', 50)
+  };
+}
+
+function asstAuditFetchBytes_(url, label, maxBytes) {
+  var response = UrlFetchApp.fetch(url, {
+    muteHttpExceptions: true,
+    followRedirects: false,
+    headers: { Accept: 'application/vnd.github+json' }
+  });
+  var status = response.getResponseCode();
+  if (status !== 200) throw new Error(label + ': HTTP ' + status);
+  var bytes = response.getBlob().getBytes();
+  if (!bytes.length) throw new Error(label + ': 空レスポンスです。');
+  if (bytes.length > maxBytes) throw new Error(label + ': JSONサイズが上限を超えています。');
+  return { bytes: bytes, text: response.getContentText('UTF-8').replace(/^\uFEFF/, '') };
+}
+
+function asstAuditParseJson_(text, label) {
+  try { return JSON.parse(text); }
+  catch (error) { throw new Error(label + ': JSONとして解析できません。'); }
+}
+
+function asstAuditResolveExternalSha_(specifiedSha) {
+  if (specifiedSha) return specifiedSha;
+  var resolved = asstAuditFetchBytes_(ASST_LMFDB_MAIN_REF_URL, 'lMfDB main解決', 256 * 1024);
+  var document = asstAuditParseJson_(resolved.text, 'lMfDB main解決');
+  var sha = document && document.object && document.object.sha;
+  if (!asstIsSha_(sha, 40)) throw new Error('lMfDB mainを完全なコミットSHAへ解決できません。');
+  return sha;
+}
+
+function asstAuditExternal_(externalSha) {
+  if (!asstIsSha_(externalSha, 40)) throw new Error('検証済みのexternalShaが必要です。');
+  var url = ASST_LMFDB_RAW_BASE + externalSha + ASST_LMFDB_RAW_PATH;
+  var fetched = asstAuditFetchBytes_(url, 'lMfDB abilities.json', ASST_LMFDB_MAX_BYTES);
+  return {
+    document: asstAuditParseJson_(fetched.text, 'lMfDB abilities.json'),
+    sha256: asstSha256Bytes_(fetched.bytes)
+  };
+}
+
+function asstAuditDangerousStrings_(value, location, found) {
+  location = location || '$';
+  found = found || [];
+  if (typeof value === 'string' && /<\/?script\b|javascript\s*:|on(?:error|load)\s*=/i.test(value)) found.push(location);
+  if (Array.isArray(value)) value.forEach(function (item, index) {
+    asstAuditDangerousStrings_(item, location + '[' + index + ']', found);
+  });
+  if (value && typeof value === 'object' && !Array.isArray(value)) Object.keys(value).forEach(function (key) {
+    asstAuditDangerousStrings_(value[key], location + '.' + key, found);
+  });
+  return found;
+}
+
+function asstAuditValidateExternal_(document) {
+  var errors = [];
+  if (!document || typeof document !== 'object' || Array.isArray(document)) errors.push('ルートがオブジェクトではありません');
+  if (!document || document.schemaVersion !== 1) errors.push('schemaVersionが1ではありません');
+  if (!document || document.generatedFrom !== 'ux/index.html') errors.push('generatedFromがux/index.htmlではありません');
+  var abilities = document && Array.isArray(document.abilities) ? document.abilities : [];
+  if (!document || !Array.isArray(document.abilities)) errors.push('abilitiesが配列ではありません');
+  if (!document || !document.counts || document.counts.abilities !== abilities.length) errors.push('counts.abilitiesとabilities.lengthが一致しません');
+  var ids = new Map();
+  abilities.forEach(function (ability, index) {
+    var prefix = 'abilities[' + index + ']';
+    if (!ability || typeof ability !== 'object' || Array.isArray(ability)) {
+      errors.push(prefix + 'がオブジェクトではありません'); return;
+    }
+    ASST_LMFDB_REQUIRED_FIELDS.forEach(function (field) {
+      if (!Object.prototype.hasOwnProperty.call(ability, field)) errors.push(prefix + '.' + field + 'がありません');
+    });
+    if (typeof ability.id !== 'number' || !Number.isInteger(ability.id) || ability.id <= 0) errors.push(prefix + '.idが正の整数ではありません');
+    else if (ids.has(ability.id)) errors.push('idが重複しています: ' + ability.id);
+    else ids.set(ability.id, true);
+    ['name','desc','card','source','rarity'].forEach(function (field) {
+      if (typeof ability[field] !== 'string') errors.push(prefix + '.' + field + 'が文字列ではありません');
+    });
+    try { asstValidateStringArray_(ability.tags, prefix + '.tags'); }
+    catch (error) { errors.push(error.message); }
+    if (typeof ability.source === 'string' && ASST_ABILITY_SOURCES.indexOf(ability.source) < 0) errors.push(prefix + '.sourceが許可値ではありません');
+    if (typeof ability.rarity === 'string' && ASST_ABILITY_RARITIES.indexOf(ability.rarity) < 0) errors.push(prefix + '.rarityが許可値ではありません');
+  });
+  var dangerous = asstAuditDangerousStrings_(document);
+  if (dangerous.length) errors.push('危険なHTML・script相当文字列を検出しました: ' + dangerous.slice(0, 10).join(','));
+  return errors;
+}
+
+function asstAuditReadLocal_() {
+  var book = book_();
+  var names = [ASST_SHEET_CARDS, ASST_SHEET_ABILITIES, ASST_SHEET_ABILITY_EXTERNAL_REFS];
+  var result = {};
+  names.forEach(function (name) {
+    var sheet = book.getSheetByName(name);
+    if (!sheet) throw new Error(name + ' シートがありません。自動作成・修復せず監査を停止します。');
+    var values = sheet.getDataRange().getValues();
+    var expected = ASST_HEADERS[name];
+    var actual = values.length ? values[0].map(asstText_) : [];
+    if (actual.join('\n') !== expected.join('\n')) throw new Error(name + ' シートのヘッダーが一致しません。自動修復しません。');
+    result[name] = values.slice(1).filter(function (row) {
+      return row.some(function (value) { return value !== '' && value !== null; });
+    }).map(function (row) {
+      var item = {};
+      expected.forEach(function (header, index) { item[header] = row[index]; });
+      return item;
+    });
+  });
+  return { cards: result[ASST_SHEET_CARDS], abilities: result[ASST_SHEET_ABILITIES], refs: result[ASST_SHEET_ABILITY_EXTERNAL_REFS] };
+}
+
+function asstAuditComparableFromExternal_(ability) {
+  return { sourceName: ability.card, name: ability.name, description: ability.desc, source: ability.source, rarity: ability.rarity, tags: ability.tags };
+}
+
+function asstAuditComparableFromLocal_(ability) {
+  return { sourceName: ability.sourceName, name: ability.name, description: ability.description, source: ability.source, rarity: ability.rarity, tags: ability.tags };
+}
+
+function asstAuditNormalizeComparable_(value) {
+  var normalized = {};
+  ASST_LMFDB_COMPARABLE_FIELDS.forEach(function (field) {
+    normalized[field] = Array.isArray(value[field])
+      ? value[field].map(function (item) { return typeof item === 'string' ? item.normalize('NFKC') : item; })
+      : typeof value[field] === 'string' ? value[field].normalize('NFKC') : value[field];
+  });
+  return normalized;
+}
+
+function asstAuditComparableKey_(value) { return JSON.stringify(value); }
+
+function asstAuditChangedFields_(localValue, externalValue, normalized) {
+  var left = normalized ? asstAuditNormalizeComparable_(localValue) : localValue;
+  var right = normalized ? asstAuditNormalizeComparable_(externalValue) : externalValue;
+  return ASST_LMFDB_COMPARABLE_FIELDS.filter(function (field) {
+    return JSON.stringify(left[field]) !== JSON.stringify(right[field]);
+  });
+}
+
+function asstAuditIdReuse_(changedFields) {
+  var changed = new Map(changedFields.map(function (field) { return [field, true]; }));
+  var limited = changedFields.every(function (field) { return ['name','description','rarity'].indexOf(field) >= 0; });
+  var identityAll = ['sourceName','name','source','rarity'].every(function (field) { return changed.has(field); });
+  var contextCount = ['sourceName','source','rarity'].filter(function (field) { return changed.has(field); }).length;
+  var contentCount = ['name','description','tags'].filter(function (field) { return changed.has(field); }).length;
+  return identityAll || (changedFields.length >= 3 && !limited) || (contextCount >= 2 && contentCount >= 2);
+}
+
+function asstAuditFingerprint_(external) {
+  var snapshot = { id: external.id, card: external.card, name: external.name, desc: external.desc, source: external.source, rarity: external.rarity, tags: external.tags };
+  var comparable = asstAuditComparableFromExternal_(external);
+  var externalFingerprint = asstSha256_(JSON.stringify(comparable));
+  var comparisonFingerprint = asstSha256_(JSON.stringify(asstAuditNormalizeComparable_(comparable)));
+  return {
+    snapshot: snapshot,
+    externalFingerprint: externalFingerprint,
+    comparisonFingerprint: comparisonFingerprint,
+    candidateKey: asstSha256_(ASST_LMFDB_PROVIDER + '\n' + external.id + '\n' + externalFingerprint)
+  };
+}
+
+function asstAuditExpectedAbilitiesVersion_(rows) {
+  var values = rows.map(function (row) {
+    var updatedAt = row.updatedAt;
+    if (Object.prototype.toString.call(updatedAt) === '[object Date]' && !isNaN(updatedAt.getTime())) {
+      updatedAt = Utilities.formatDate(updatedAt, 'Asia/Tokyo', "yyyy-MM-dd'T'HH:mm:ssXXX");
+    } else updatedAt = asstText_(updatedAt);
+    return { abilityId: asstText_(row.abilityId), version: row.version, updatedAt: updatedAt };
+  }).sort(function (left, right) { return left.abilityId < right.abilityId ? -1 : left.abilityId > right.abilityId ? 1 : 0; });
+  return asstSha256_(JSON.stringify(values));
+}
+
+function asstAuditCardMap_(cardRows) {
+  var mappings = cardRows.slice().sort(function (left, right) { return Number(left.sourceOrder) - Number(right.sourceOrder); }).map(function (row) {
+    return { sourceName: asstText_(row.name), rarity: asstText_(row.rarity), cardId: asstText_(row.cardId) };
+  });
+  if (asstSha256_(JSON.stringify(mappings)) !== ASST_LMFDB_CARD_MAP_SHA256) {
+    throw new Error('cardsと固定対応表src/data/lmfdb-card-map.jsonが一致しません。自動補正しません。');
+  }
+  var map = new Map();
+  mappings.forEach(function (mapping) {
+    var key = JSON.stringify([mapping.sourceName, mapping.rarity]);
+    if (map.has(key)) throw new Error('固定対応表のsourceName + rarityが重複しています。');
+    map.set(key, mapping.cardId);
+  });
+  return map;
+}
+
+function asstAuditHistoryMap_(refRows) {
+  var issues = asstValidateExternalRefRows_(refRows);
+  if (issues.length) throw new Error('ability_external_refsの行が不正です: ' + issues.slice(0, 10).join(' / '));
+  var map = new Map();
+  refRows.forEach(function (row) { map.set(row.candidateKey, asstExternalRefFromRow_(row)); });
+  return map;
+}
+
+function asstAuditLocalAbilities_(rows) {
+  var abilities = [];
+  var abilityIds = new Map();
+  var legacyIds = new Map();
+  rows.forEach(function (row) {
+    var ability = asstAbilityFromRow_(row);
+    var issues = asstValidateAbilityRecord_(ability, false);
+    if (issues.length) throw new Error(issues.join(' / '));
+    if (abilityIds.has(ability.abilityId)) throw new Error('abilitiesのabilityIdが重複しています: ' + ability.abilityId);
+    abilityIds.set(ability.abilityId, true);
+    if (ability.legacyId !== null) {
+      if (legacyIds.has(ability.legacyId)) throw new Error('abilitiesのlegacyIdが重複しています: ' + ability.legacyId);
+      legacyIds.set(ability.legacyId, true);
+    }
+    abilities.push(ability);
+  });
+  return abilities;
+}
+
+function asstAuditCandidateBase_(external, fingerprint, history) {
+  var disposition = history ? history.disposition : null;
+  return {
+    externalNumericId: external.id,
+    candidateKey: fingerprint.candidateKey,
+    externalFingerprint: fingerprint.externalFingerprint,
+    comparisonFingerprint: fingerprint.comparisonFingerprint,
+    externalSnapshot: fingerprint.snapshot,
+    exactMatchAbilityIds: [],
+    nfkcMatchAbilityIds: [],
+    sameIdComparison: null,
+    cardIdCandidate: null,
+    disposition: disposition,
+    processed: ASST_LMFDB_PROCESSED_DISPOSITIONS.indexOf(disposition) >= 0,
+    registrationEligible: false,
+    requiresIdReuseConfirmation: false,
+    auditOnly: true
+  };
+}
+
+function asstAuditPriority_(classification) {
+  return {
+    card_match_candidate: 1, unlinked_candidate: 2, ID_REUSE_SUSPECTED: 3,
+    existingContentDifferences: 4, representationOnly: 5,
+    duplicate_local_content_match: 6, missing_upstream_observation: 7
+  }[classification] || 99;
+}
+
+function asstAuditCounts_(externalCount, localCount) {
+  return {
+    external: externalCount, local: localCount, newCandidates: 0, knownExact: 0,
+    representationOnly: 0, existingContentDifferences: 0, idReuseSuspected: 0,
+    missingUpstreamObservations: 0, cardMatchCandidates: 0, unlinkedCandidates: 0,
+    duplicateLocalContentMatches: 0, processed: 0
+  };
+}
+
+function asstAuditConsecutiveRanges_(ids) {
+  var sorted = Array.from(new Set(ids)).sort(function (left, right) { return left - right; });
+  var ranges = [];
+  sorted.forEach(function (id) {
+    var last = ranges[ranges.length - 1];
+    if (last && id === last.end + 1) last.end = id;
+    else ranges.push({ start: id, end: id });
+  });
+  return ranges;
+}
+
+function asstAuditAnalyze_(externalDocument, localRows, externalSha, externalSha256) {
+  var validationErrors = asstAuditValidateExternal_(externalDocument);
+  var externalAbilities = Array.isArray(externalDocument && externalDocument.abilities) ? externalDocument.abilities : [];
+  var counts = asstAuditCounts_(externalAbilities.length, localRows.abilities.length);
+  var expectedAbilitiesVersion = asstAuditExpectedAbilitiesVersion_(localRows.abilities);
+  if (validationErrors.length) {
+    return {
+      auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['AUDIT_INPUT_INVALID'],
+      reviewReasons: [], counts: counts, warnings: [], candidates: [],
+      validationErrors: validationErrors, expectedAbilitiesVersion: expectedAbilitiesVersion
+    };
+  }
+  var localAbilities = asstAuditLocalAbilities_(localRows.abilities);
+  var history = asstAuditHistoryMap_(localRows.refs);
+  var cardMap = asstAuditCardMap_(localRows.cards);
+  var localByLegacyId = new Map();
+  var exactIndex = new Map();
+  var normalizedIndex = new Map();
+  function addIndex_(map, key, ability) {
+    var values = map.get(key) || []; values.push(ability); map.set(key, values);
+  }
+  localAbilities.forEach(function (ability) {
+    if (ability.legacyId !== null) localByLegacyId.set(ability.legacyId, ability);
+    var comparable = asstAuditComparableFromLocal_(ability);
+    addIndex_(exactIndex, asstAuditComparableKey_(comparable), ability);
+    addIndex_(normalizedIndex, asstAuditComparableKey_(asstAuditNormalizeComparable_(comparable)), ability);
+  });
+  var externalIds = new Map();
+  var candidates = [];
+  externalAbilities.forEach(function (external) {
+    externalIds.set(external.id, true);
+    var comparable = asstAuditComparableFromExternal_(external);
+    var normalizedComparable = asstAuditNormalizeComparable_(comparable);
+    var exactMatches = exactIndex.get(asstAuditComparableKey_(comparable)) || [];
+    var normalizedMatches = normalizedIndex.get(asstAuditComparableKey_(normalizedComparable)) || [];
+    var sameId = localByLegacyId.get(external.id) || null;
+    var fingerprint = asstAuditFingerprint_(external);
+    var candidate = asstAuditCandidateBase_(external, fingerprint, history.get(fingerprint.candidateKey) || null);
+    candidate.exactMatchAbilityIds = exactMatches.map(function (item) { return item.abilityId; });
+    candidate.nfkcMatchAbilityIds = normalizedMatches.map(function (item) { return item.abilityId; });
+    if (sameId) {
+      var sameComparable = asstAuditComparableFromLocal_(sameId);
+      candidate.sameIdComparison = {
+        abilityId: sameId.abilityId,
+        changedFields: asstAuditChangedFields_(sameComparable, comparable, false),
+        normalizedChangedFields: asstAuditChangedFields_(sameComparable, comparable, true),
+        local: sameComparable,
+        external: comparable
+      };
+    }
+    if (exactMatches.length > 1 || normalizedMatches.length > 1) {
+      candidate.classification = 'duplicate_local_content_match';
+      candidate.priority = 'low';
+      candidate.comparison = exactMatches.length > 1 ? 'exact' : 'normalized';
+      counts.duplicateLocalContentMatches++;
+      candidates.push(candidate); return;
+    }
+    if (sameId && candidate.sameIdComparison.normalizedChangedFields.length && asstAuditIdReuse_(candidate.sameIdComparison.normalizedChangedFields)) {
+      candidate.classification = 'ID_REUSE_SUSPECTED'; candidate.priority = 'high';
+      candidate.registrationEligible = !candidate.processed;
+      candidate.requiresIdReuseConfirmation = true;
+      candidate.auditOnly = false;
+      counts.idReuseSuspected++; candidates.push(candidate); return;
+    }
+    if (exactMatches.length === 1) { counts.knownExact++; return; }
+    if (normalizedMatches.length === 1) {
+      candidate.classification = 'representationOnly'; candidate.priority = 'low';
+      candidate.changedFields = asstAuditChangedFields_(asstAuditComparableFromLocal_(normalizedMatches[0]), comparable, false);
+      counts.representationOnly++; candidates.push(candidate); return;
+    }
+    if (sameId) {
+      candidate.classification = 'existingContentDifferences'; candidate.priority = 'medium';
+      counts.existingContentDifferences++; candidates.push(candidate); return;
+    }
+    candidate.cardIdCandidate = cardMap.get(JSON.stringify([external.card, external.rarity])) || null;
+    candidate.classification = candidate.cardIdCandidate ? 'card_match_candidate' : 'unlinked_candidate';
+    candidate.priority = 'high';
+    candidate.registrationEligible = !candidate.processed;
+    candidate.auditOnly = false;
+    counts.newCandidates++;
+    if (candidate.cardIdCandidate) counts.cardMatchCandidates++; else counts.unlinkedCandidates++;
+    candidates.push(candidate);
+  });
+  localAbilities.filter(function (ability) {
+    return ability.legacyId !== null && !externalIds.has(ability.legacyId);
+  }).forEach(function (ability) {
+    counts.missingUpstreamObservations++;
+    candidates.push({
+      classification: 'missing_upstream_observation', priority: 'low', externalNumericId: ability.legacyId,
+      candidateKey: null, externalFingerprint: null, comparisonFingerprint: null, externalSnapshot: null,
+      exactMatchAbilityIds: [], nfkcMatchAbilityIds: [], sameIdComparison: null, cardIdCandidate: null,
+      disposition: null, processed: false, registrationEligible: false, requiresIdReuseConfirmation: false, auditOnly: true,
+      localObservation: { abilityId: ability.abilityId, name: ability.name, sourceName: ability.sourceName, linkStatus: ability.linkStatus, cardId: ability.cardId }
+    });
+  });
+  counts.processed = candidates.filter(function (candidate) { return candidate.processed; }).length;
+  var blockReasons = counts.idReuseSuspected ? ['ID_REUSE_SUSPECTED'] : [];
+  var reviewReasons = [];
+  if (counts.existingContentDifferences) reviewReasons.push('EXISTING_CONTENT_DIFFERENCES');
+  if (counts.missingUpstreamObservations) reviewReasons.push('MISSING_UPSTREAM_OBSERVATIONS');
+  var warnings = [];
+  var reusedIds = new Map(candidates.filter(function (candidate) {
+    return candidate.classification === 'ID_REUSE_SUSPECTED';
+  }).map(function (candidate) { return [candidate.externalNumericId, true]; }));
+  asstAuditConsecutiveRanges_(candidates.filter(function (candidate) {
+    return candidate.classification === 'missing_upstream_observation';
+  }).map(function (candidate) { return candidate.externalNumericId; })).forEach(function (range) {
+    if (range.end > range.start && reusedIds.has(range.end + 1)) warnings.push({
+      code: 'CONTIGUOUS_MISSING_IDS_WITH_REUSE_SUSPECTED',
+      missing: range.start + '-' + range.end,
+      reusedCandidate: range.end + 1
+    });
+  });
+  candidates.forEach(function (candidate) { candidate.priorityOrder = asstAuditPriority_(candidate.classification); });
+  candidates.sort(function (left, right) {
+    return left.priorityOrder - right.priorityOrder || left.externalNumericId - right.externalNumericId ||
+      asstText_(left.candidateKey || left.localObservation.abilityId).localeCompare(asstText_(right.candidateKey || right.localObservation.abilityId));
+  });
+  return {
+    auditStatus: 'PASS', safetyVerdict: blockReasons.length ? 'BLOCKED' : reviewReasons.length ? 'REVIEW_REQUIRED' : 'SAFE',
+    blockReasons: blockReasons, reviewReasons: reviewReasons, counts: counts, warnings: warnings,
+    candidates: candidates, validationErrors: [], expectedAbilitiesVersion: expectedAbilitiesVersion,
+    externalSha: externalSha, externalSha256: externalSha256
+  };
+}
+
+function api_asstAuditExternalAbilities(payload) {
+  asstRequireUser_();
+  var input = asstAuditPayload_(payload);
+  var externalSha = asstAuditResolveExternalSha_(input.externalSha);
+  var external = asstAuditExternal_(externalSha);
+  var localRows;
+  try { localRows = asstAuditReadLocal_(); }
+  catch (error) {
+    return {
+      auditVersion: 3, provider: ASST_LMFDB_PROVIDER, externalSha: externalSha,
+      externalSha256: external.sha256, expectedAbilitiesVersion: null,
+      auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['LOCAL_AUDIT_INPUT_INVALID'],
+      reviewReasons: [], counts: asstAuditCounts_(external.document && Array.isArray(external.document.abilities) ? external.document.abilities.length : 0, 0),
+      warnings: [], validationErrors: [error.message], candidates: [],
+      pagination: { page: input.page, pageSize: input.pageSize, totalItems: 0, totalPages: 0 }
+    };
+  }
+  var report;
+  try { report = asstAuditAnalyze_(external.document, localRows, externalSha, external.sha256); }
+  catch (error) {
+    report = {
+      auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['LOCAL_AUDIT_INPUT_INVALID'],
+      reviewReasons: [], counts: asstAuditCounts_(external.document.abilities.length, localRows.abilities.length),
+      warnings: [], validationErrors: [error.message], candidates: [],
+      expectedAbilitiesVersion: asstAuditExpectedAbilitiesVersion_(localRows.abilities)
+    };
+  }
+  var totalItems = report.candidates.length;
+  var start = (input.page - 1) * input.pageSize;
+  return {
+    auditVersion: 3, provider: ASST_LMFDB_PROVIDER, externalSha: externalSha,
+    externalSha256: external.sha256, expectedAbilitiesVersion: report.expectedAbilitiesVersion,
+    auditStatus: report.auditStatus, safetyVerdict: report.safetyVerdict,
+    blockReasons: report.blockReasons, reviewReasons: report.reviewReasons,
+    counts: report.counts, warnings: report.warnings, validationErrors: report.validationErrors,
+    candidates: report.candidates.slice(start, start + input.pageSize),
+    pagination: { page: input.page, pageSize: input.pageSize, totalItems: totalItems, totalPages: totalItems ? Math.ceil(totalItems / input.pageSize) : 0 }
+  };
+}
 
 function asstCardFromRow_(row) {
   return {
