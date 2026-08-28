@@ -1,0 +1,460 @@
+{
+  "schemaVersion": 1,
+  "mappings": [
+    {
+      "sourceName": "セラフィナ",
+      "rarity": "MR",
+      "cardId": "g1-MR-serafina"
+    },
+    {
+      "sourceName": "モノダス",
+      "rarity": "SSR",
+      "cardId": "g2-SSR-monodasu"
+    },
+    {
+      "sourceName": "ジンゴロウ",
+      "rarity": "MR",
+      "cardId": "g3-MR-jingorou"
+    },
+    {
+      "sourceName": "テオス",
+      "rarity": "MR",
+      "cardId": "c20k-MR-teosu"
+    },
+    {
+      "sourceName": "ルピナス",
+      "rarity": "SSR",
+      "cardId": "d24k-SSR-rupinasu"
+    },
+    {
+      "sourceName": "エイル",
+      "rarity": "MR",
+      "cardId": "d23k-MR-eiru"
+    },
+    {
+      "sourceName": "ロクショウ",
+      "rarity": "SSR",
+      "cardId": "c28j-SSR-rokusho"
+    },
+    {
+      "sourceName": "ゴッドエンペラー",
+      "rarity": "MR",
+      "cardId": "c27j-MR-godemperor"
+    },
+    {
+      "sourceName": "イッキ",
+      "rarity": "SSR",
+      "cardId": "c26j-SSR-ikki"
+    },
+    {
+      "sourceName": "メタビー",
+      "rarity": "SSR",
+      "cardId": "c25j-SSR-metabee"
+    },
+    {
+      "sourceName": "イッキ",
+      "rarity": "MR",
+      "cardId": "c24j-MR-ikki"
+    },
+    {
+      "sourceName": "ニシキ",
+      "rarity": "MR",
+      "cardId": "a13i-MR-nishiki"
+    },
+    {
+      "sourceName": "ディアナ",
+      "rarity": "MR",
+      "cardId": "b16i-MR-diana"
+    },
+    {
+      "sourceName": "ノルン",
+      "rarity": "SSR",
+      "cardId": "b5g-SSR-norun"
+    },
+    {
+      "sourceName": "エスエル",
+      "rarity": "MR",
+      "cardId": "f18l-MR-esueru"
+    },
+    {
+      "sourceName": "フレリア",
+      "rarity": "SSR",
+      "cardId": "a10j-SSR-fureria"
+    },
+    {
+      "sourceName": "カルキノス",
+      "rarity": "SSR",
+      "cardId": "a4g-SSR-karukinosu"
+    },
+    {
+      "sourceName": "ヴィトニル",
+      "rarity": "MR",
+      "cardId": "a24j-MR-vitoniru"
+    },
+    {
+      "sourceName": "フレリア",
+      "rarity": "MR",
+      "cardId": "a10j-MR-fureria"
+    },
+    {
+      "sourceName": "ダラス",
+      "rarity": "MR",
+      "cardId": "f14g-MR-darasu"
+    },
+    {
+      "sourceName": "シオン・リゾート",
+      "rarity": "SSR",
+      "cardId": "f2k-SSR-shionresort"
+    },
+    {
+      "sourceName": "ミリム・リゾート",
+      "rarity": "SSR",
+      "cardId": "a6i-SSR-mirimuresort"
+    },
+    {
+      "sourceName": "リムル・グラサン",
+      "rarity": "SSR",
+      "cardId": "b5i-SSR-rimurugurasan"
+    },
+    {
+      "sourceName": "シュナ",
+      "rarity": "MR",
+      "cardId": "a7-MR-syuna"
+    },
+    {
+      "sourceName": "リムル・リゾート",
+      "rarity": "MR",
+      "cardId": "b21i-MR-rimuru"
+    },
+    {
+      "sourceName": "メガラニカ",
+      "rarity": "MR",
+      "cardId": "f24i-MR-megaranika"
+    },
+    {
+      "sourceName": "ステラ",
+      "rarity": "MR",
+      "cardId": "e7-MR-sutera"
+    },
+    {
+      "sourceName": "ナデシコ",
+      "rarity": "MR",
+      "cardId": "e20i-MR-nadeshiko"
+    },
+    {
+      "sourceName": "ギフトン",
+      "rarity": "MR",
+      "cardId": "c12l-MR-gifton"
+    },
+    {
+      "sourceName": "アウフィエル",
+      "rarity": "MR",
+      "cardId": "c19h-MR-aufieru"
+    },
+    {
+      "sourceName": "サフィン",
+      "rarity": "SSR",
+      "cardId": "c9-SSR-safin"
+    },
+    {
+      "sourceName": "シャルティア",
+      "rarity": "SSR",
+      "cardId": "f5l-SSR-sharutia"
+    },
+    {
+      "sourceName": "デミウルゴス",
+      "rarity": "MR",
+      "cardId": "f7-MR-demiurugosu"
+    },
+    {
+      "sourceName": "アインズ",
+      "rarity": "MR",
+      "cardId": "f18k-MR-ainzu"
+    },
+    {
+      "sourceName": "スケアクロウ",
+      "rarity": "MR",
+      "cardId": "d14k-MR-sukeakurou"
+    },
+    {
+      "sourceName": "アイリス(ライバル)",
+      "rarity": "SSR",
+      "cardId": "d9-SSR-airisu"
+    },
+    {
+      "sourceName": "クリス",
+      "rarity": "MR",
+      "cardId": "b7-MR-kurisu"
+    },
+    {
+      "sourceName": "ブライド",
+      "rarity": "MR",
+      "cardId": "d18k-MR-furan"
+    },
+    {
+      "sourceName": "サフィルス",
+      "rarity": "SSR",
+      "cardId": "b2h-SSR-sappirutti"
+    },
+    {
+      "sourceName": "ノア",
+      "rarity": "MR",
+      "cardId": "b22h-MR-noa"
+    },
+    {
+      "sourceName": "バロム",
+      "rarity": "SSR",
+      "cardId": "f3k-SSR-baromu"
+    },
+    {
+      "sourceName": "白凰",
+      "rarity": "SSR",
+      "cardId": "e9-SSR-hakuou"
+    },
+    {
+      "sourceName": "アルカディアス",
+      "rarity": "SSR",
+      "cardId": "e6l-SSR-arukadiasu"
+    },
+    {
+      "sourceName": "ボルシャック",
+      "rarity": "MR",
+      "cardId": "a25i-MR-borusyakku"
+    },
+    {
+      "sourceName": "ナイアーラ",
+      "rarity": "MR",
+      "cardId": "c23i-MR-naiara"
+    },
+    {
+      "sourceName": "ピーシィ(黄)",
+      "rarity": "SSR",
+      "cardId": "c7-SSR-piisii"
+    },
+    {
+      "sourceName": "ミルキィ",
+      "rarity": "MR",
+      "cardId": "c11j-MR-mirukii"
+    },
+    {
+      "sourceName": "エムロード",
+      "rarity": "MR",
+      "cardId": "d22g-MR-emuroudo"
+    },
+    {
+      "sourceName": "マリッジ",
+      "rarity": "SSR",
+      "cardId": "e3h-SSR-marijji"
+    },
+    {
+      "sourceName": "ドルチェ",
+      "rarity": "MR",
+      "cardId": "d12g-MR-doruche"
+    },
+    {
+      "sourceName": "ハオ",
+      "rarity": "SSR",
+      "cardId": "a3g-SSR-hao"
+    },
+    {
+      "sourceName": "恐山アンナ",
+      "rarity": "SSR",
+      "cardId": "a7-SSR-anna"
+    },
+    {
+      "sourceName": "麻倉葉",
+      "rarity": "MR",
+      "cardId": "d13i-MR-asakurayou"
+    },
+    {
+      "sourceName": "レクス",
+      "rarity": "SSR",
+      "cardId": "e2j-SSR-rekusu"
+    },
+    {
+      "sourceName": "リッピー",
+      "rarity": "MR",
+      "cardId": "e18l-MR-rippii"
+    },
+    {
+      "sourceName": "ホリィ",
+      "rarity": "SSR",
+      "cardId": "f9-SSR-hori"
+    },
+    {
+      "sourceName": "フォールン",
+      "rarity": "MR",
+      "cardId": "f16h-MR-iburiisu"
+    },
+    {
+      "sourceName": "アライブ",
+      "rarity": "SSR",
+      "cardId": "f6l-SSR-araibu"
+    },
+    {
+      "sourceName": "チャコール",
+      "rarity": "SSR",
+      "cardId": "f1g-SSR-tyakooru"
+    },
+    {
+      "sourceName": "オフリィ",
+      "rarity": "MR",
+      "cardId": "c19k-MR-ofurii"
+    },
+    {
+      "sourceName": "セレネ",
+      "rarity": "MR",
+      "cardId": "f21l-MR-serene"
+    },
+    {
+      "sourceName": "キング",
+      "rarity": "SSR",
+      "cardId": "d6g-SSR-king"
+    },
+    {
+      "sourceName": "バン",
+      "rarity": "SSR",
+      "cardId": "a9-SSR-ban"
+    },
+    {
+      "sourceName": "メリオダス",
+      "rarity": "SSR",
+      "cardId": "c2h-SSR-meriodasu"
+    },
+    {
+      "sourceName": "リカント",
+      "rarity": "SSR",
+      "cardId": "b2l-SSR-rikanto"
+    },
+    {
+      "sourceName": "シエナ",
+      "rarity": "SSR",
+      "cardId": "b9-SSR-siena"
+    },
+    {
+      "sourceName": "リュージン",
+      "rarity": "MR",
+      "cardId": "b17h-MR-ryuujin"
+    },
+    {
+      "sourceName": "ローズヘッド",
+      "rarity": "SSR",
+      "cardId": "a5g-SSR-roozuheddo"
+    },
+    {
+      "sourceName": "クロース",
+      "rarity": "SSR",
+      "cardId": "a1j-SSR-kurousu"
+    },
+    {
+      "sourceName": "パルマー",
+      "rarity": "MR",
+      "cardId": "d19h-MR-parumaa"
+    },
+    {
+      "sourceName": "ミカサ",
+      "rarity": "SSR",
+      "cardId": "d2l-SSR-mikasa"
+    },
+    {
+      "sourceName": "リヴァイ",
+      "rarity": "SSR",
+      "cardId": "d7-SSR-rivai"
+    },
+    {
+      "sourceName": "ジョンソン",
+      "rarity": "SSR",
+      "cardId": "c6k-SSR-jonson"
+    },
+    {
+      "sourceName": "リストン",
+      "rarity": "MR",
+      "cardId": "c18k-MR-risuton"
+    },
+    {
+      "sourceName": "ポルツ(ライバル)",
+      "rarity": "SSR",
+      "cardId": "c9-SSR-porutsu"
+    },
+    {
+      "sourceName": "ユニバース",
+      "rarity": "SSR",
+      "cardId": "e1g-SSR-yunibaasu"
+    },
+    {
+      "sourceName": "キャトル",
+      "rarity": "MR",
+      "cardId": "e17g-MR-kyatoru"
+    },
+    {
+      "sourceName": "ミリム",
+      "rarity": "SSR",
+      "cardId": "a3i-SSR-mirimu"
+    },
+    {
+      "sourceName": "ヴェルドラ",
+      "rarity": "SSR",
+      "cardId": "b7-SSR-verudora"
+    },
+    {
+      "sourceName": "リムル",
+      "rarity": "SSR",
+      "cardId": "b1i-SSR-rimuru"
+    },
+    {
+      "sourceName": "アカゾナエヌシ",
+      "rarity": "SSR",
+      "cardId": "a6j-SSR-akazonaenusi"
+    },
+    {
+      "sourceName": "ルリ",
+      "rarity": "MR",
+      "cardId": "b17h-MR-ruri"
+    },
+    {
+      "sourceName": "タナトス",
+      "rarity": "MR",
+      "cardId": "f15k-MR-tanatosu"
+    },
+    {
+      "sourceName": "ラムスイート",
+      "rarity": "MR",
+      "cardId": "a16h-MR-ramusuiito"
+    },
+    {
+      "sourceName": "スズカ",
+      "rarity": "MR",
+      "cardId": "c14k-MR-suzuka"
+    },
+    {
+      "sourceName": "ミリアム",
+      "rarity": "MR",
+      "cardId": "a13i-MR-miriamu"
+    },
+    {
+      "sourceName": "ラブレス",
+      "rarity": "MR",
+      "cardId": "e12i-MR-raburesu"
+    },
+    {
+      "sourceName": "ラタトスク",
+      "rarity": "MR",
+      "cardId": "d11g-MR-ratatosuku"
+    },
+    {
+      "sourceName": "モモン＆ハムスケ",
+      "rarity": "SSR",
+      "cardId": "f6g-SSR-momonandhamusuke"
+    },
+    {
+      "sourceName": "ルーカス",
+      "rarity": "MR",
+      "cardId": "f10h-MR-rucas"
+    },
+    {
+      "sourceName": "チャックル",
+      "rarity": "SSR",
+      "cardId": "f5h-SSR-tyakkuru"
+    }
+  ]
+}
