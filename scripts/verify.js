@@ -432,13 +432,17 @@ head('8. 秘密情報');
       ng(`統合GASの環境防御が不足（book ${environmentGuarded ? 'OK' : 'NG'} / 鍵 ${grantHelper ? 'OK' : 'NG'} / 鍵なしsetup ${unguardedSetups.join(', ') || '0'}）`);
     } else ok('統合GASはmembers A1環境マーカーと破壊的setupの一回限り鍵を持つ');
 
-    // H-3 検査8: GitHub API文字列は30_publish.gsだけに置く。
+    // H-3 検査8: GitHub送信は30_publish.gsだけに置く。
+    // P12-17の外部監査は、lMfDB mainを完全SHAへ解決する下記GET URLだけを20_assist.gsで使える。
+    const lmfdbMainReadUrl = 'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main';
     const githubOutsidePublish = gasSources.filter(item => item.file !== '30_publish.gs'
-      && /api\.github\.com|git\/refs/.test(item.source));
+      && /api\.github\.com|git\/refs/.test(item.source.replaceAll(lmfdbMainReadUrl, '')));
     const publishSource = gasSources.find(item => item.file === '30_publish.gs')?.source || '';
-    if (githubOutsidePublish.length || !/api\.github\.com/.test(publishSource) || !/git\/refs/.test(publishSource)) {
+    const assistAuditSource = gasSources.find(item => item.file === '20_assist.gs')?.source || '';
+    const assistHasSingleLmfdbRead = (assistAuditSource.match(new RegExp(lmfdbMainReadUrl.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length === 1;
+    if (githubOutsidePublish.length || !assistHasSingleLmfdbRead || !/api\.github\.com/.test(publishSource) || !/git\/refs/.test(publishSource)) {
       ng(`GitHub送信が30_publish.gsへ局在していない: ${githubOutsidePublish.map(item => item.file).join(', ') || '送信実装不足'}`);
-    } else ok('GitHub送信は30_publish.gsだけに局在');
+    } else ok('GitHub送信は30_publish.gsだけに局在し、lMfDB main解決GETだけを20_assist.gsに許可');
 
     // H-3 検査6: GASが送る全pathと、trusted main版ゲートの許可リストを完全一致させる。
     let monAllowlist;
