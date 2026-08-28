@@ -3,6 +3,7 @@ var ASST_RAW_REPO_BASE = 'https://raw.githubusercontent.com/oginginlmftv2/line-m
 var ASST_SHEET_CARDS = 'cards';
 var ASST_SHEET_EFFECTS = 'assist_effects';
 var ASST_SHEET_ABILITIES = 'abilities';
+var ASST_SHEET_ABILITY_EXTERNAL_REFS = 'ability_external_refs';
 var ASST_SHEET_LOG = 'assist_log';
 var ASST_SHEET_PUBLISH_LOG = 'assist_publish_log';
 var ASST_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
@@ -11,6 +12,7 @@ var ASST_HEADERS = {};
 ASST_HEADERS[ASST_SHEET_CARDS] = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'];
 ASST_HEADERS[ASST_SHEET_EFFECTS] = ['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy'];
 ASST_HEADERS[ASST_SHEET_ABILITIES] = ['sourceOrder','abilityId','legacyId','cardId','sourceName','name','description','source','rarity','tagsJson','sortOrder','linkStatus','flagsJson','status','version','updatedAt','updatedBy'];
+ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS] = ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'];
 ASST_HEADERS[ASST_SHEET_LOG] = ['timestamp','user','action','result','detail'];
 ASST_HEADERS[ASST_SHEET_PUBLISH_LOG] = ['日時','実行者','コミットSHA','結果','詳細'];
 var ASST_RARITIES = ['MR','SSR'];
@@ -19,7 +21,13 @@ var ASST_CARD_TYPES = ['ガード','かしこさ','ジャッジ','アサルト',
 var ASST_MON_TYPES = ['幻霊','無機','創造','獣族','魔族','怪物'];
 var ASST_ABILITY_STATUSES = ['draft','verified'];
 var ASST_LINK_STATUSES = ['resolved','ambiguous','unlinked'];
-var ASST_ABILITY_SOURCES = ['イベント','閃き','EXトレ'];
+var ASST_ABILITY_SOURCES = ['イベント','閃き','EXトレ','伝授'];
+var ASST_ABILITY_RARITIES = ['MR','SSR','SR','その他'];
+var ASST_EXTERNAL_REF_PROVIDERS = ['lmfdb'];
+var ASST_EXTERNAL_REF_DISPOSITIONS = ['imported','ignored','duplicate','unsupported','id_reused','reverted'];
+var ASST_EXTERNAL_REVIEW_FLAGS = ['id_reused'];
+var ASST_EXTERNAL_REF_HEADERS = ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'];
+var ASST_EXTERNAL_SNAPSHOT_KEYS = ['id','card','name','desc','source','rarity','tags'];
 var ASST_UNLOCK_RANKS = ['無凸','1凸','2凸','3凸','4凸'];
 var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
@@ -82,6 +90,57 @@ function asstInteger_(value, label, allowNull) {
   var number = Number(value);
   if (!Number.isInteger(number)) throw new Error(label + ' は整数で入力してください。');
   return number;
+}
+
+function asstLegacyId_(value, label) {
+  if (value === '' || value === null || value === undefined) return null;
+  if (typeof value !== 'number' || !Number.isInteger(value) || value <= 0) {
+    throw new Error(label + ' は正の整数または空欄です。暗黙の数値変換は行いません。');
+  }
+  return value;
+}
+
+function asstAbilityIdNumber_(value, label) {
+  if (typeof value !== 'string' || !/^ab-([0-9]{4,})$/.test(value)) {
+    throw new Error(label + ' はab-####形式です。');
+  }
+  var number = Number(value.slice(3));
+  if (!Number.isSafeInteger(number) || number <= 0) throw new Error(label + ' の番号部は正の安全な整数です。');
+  return number;
+}
+
+function asstAssertAbilityIdAvailable_(abilityId, abilityRows, externalRefRows) {
+  asstAbilityIdNumber_(abilityId, 'abilityId');
+  var used = (abilityRows || []).some(function (row) { return row.abilityId === abilityId; });
+  var reserved = (externalRefRows || []).some(function (row) { return asstText_(row.abilityId) === abilityId; });
+  if (used || reserved) throw new Error('abilityIdが既存または予約済みIDと衝突しています: ' + abilityId);
+}
+
+// 将来の追加専用APIがScriptLockを取得した後、abilitiesと外部参照を再読込してから呼ぶ。
+// この関数自身はロックも外部IDも日時も乱数も使わず、現在の最大ローカル番号+1だけを返す。
+function asstNextAbilityId_(abilityRows, externalRefRows) {
+  var max = 0;
+  var seenAbilityIds = {};
+  var seenReservedIds = {};
+  (abilityRows || []).forEach(function (row) {
+    var id = asstText_(row.abilityId);
+    var number = asstAbilityIdNumber_(id, 'abilities/abilityId');
+    if (seenAbilityIds[id]) throw new Error('abilities内のabilityIdが重複しています: ' + id);
+    seenAbilityIds[id] = true;
+    if (number > max) max = number;
+  });
+  (externalRefRows || []).forEach(function (row) {
+    var id = asstText_(row.abilityId);
+    if (!id) return;
+    var number = asstAbilityIdNumber_(id, 'ability_external_refs/abilityId');
+    if (seenReservedIds[id]) throw new Error('ability_external_refs内の予約済みabilityIdが重複しています: ' + id);
+    seenReservedIds[id] = true;
+    if (number > max) max = number;
+  });
+  if (max >= Number.MAX_SAFE_INTEGER) throw new Error('abilityIdを安全に採番できません。');
+  var next = 'ab-' + String(max + 1).padStart(4, '0');
+  asstAssertAbilityIdAvailable_(next, abilityRows, externalRefRows);
+  return next;
 }
 
 function asstInList_(value, allowed, label, allowBlank) {
@@ -250,7 +309,7 @@ function asstEffectFromRow_(row) {
 function asstAbilityFromRow_(row) {
   return {
     abilityId: asstText_(row.abilityId),
-    legacyId: asstInteger_(row.legacyId, row.abilityId + '/legacyId', false),
+    legacyId: asstLegacyId_(row.legacyId, row.abilityId + '/legacyId'),
     cardId: asstText_(row.cardId) || null,
     sourceName: asstText_(row.sourceName),
     name: asstText_(row.name),
@@ -263,6 +322,155 @@ function asstAbilityFromRow_(row) {
     flags: asstParseJsonCell_(row.flagsJson, [], row.abilityId + '/flagsJson'),
     status: asstText_(row.status)
   };
+}
+
+function asstAbilityToSheetRow_(ability, sourceOrder, version, updatedAt, updatedBy) {
+  var row = {
+    sourceOrder: sourceOrder,
+    abilityId: ability.abilityId,
+    legacyId: ability.legacyId === null ? '' : ability.legacyId,
+    cardId: ability.cardId || '',
+    sourceName: ability.sourceName,
+    name: ability.name,
+    description: ability.description,
+    source: ability.source,
+    rarity: ability.rarity || '',
+    tagsJson: asstJsonCell_(ability.tags || []),
+    sortOrder: ability.sortOrder === null ? '' : ability.sortOrder,
+    linkStatus: ability.linkStatus,
+    flagsJson: asstJsonCell_(ability.flags || []),
+    status: ability.status,
+    version: version,
+    updatedAt: updatedAt,
+    updatedBy: updatedBy
+  };
+  return ASST_HEADERS[ASST_SHEET_ABILITIES].map(function (header) { return row[header]; });
+}
+
+function asstExternalRefFromRow_(row) {
+  return {
+    provider: asstText_(row.provider),
+    candidateKey: asstText_(row.candidateKey),
+    externalNumericId: row.externalNumericId,
+    firstSeenSha: asstText_(row.firstSeenSha),
+    lastSeenSha: asstText_(row.lastSeenSha),
+    externalFingerprint: asstText_(row.externalFingerprint),
+    comparisonFingerprint: asstText_(row.comparisonFingerprint),
+    externalSnapshot: asstParseJsonCell_(row.externalSnapshotJson, null, row.candidateKey + '/externalSnapshotJson'),
+    disposition: asstText_(row.disposition),
+    abilityId: asstText_(row.abilityId) || null,
+    importedAt: asstText_(row.importedAt) || null,
+    importedBy: asstText_(row.importedBy) || null,
+    decidedAt: asstText_(row.decidedAt) || null,
+    decidedBy: asstText_(row.decidedBy) || null,
+    reviewFlags: asstParseJsonCell_(row.reviewFlagsJson, [], row.candidateKey + '/reviewFlagsJson'),
+    note: asstText_(row.note),
+    version: row.version
+  };
+}
+
+function asstIsSha_(value, length) {
+  return typeof value === 'string' && new RegExp('^[0-9a-f]{' + length + '}$').test(value);
+}
+
+function asstIsIsoTimestamp_(value) {
+  return typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?(?:Z|[+-]\d{2}:\d{2})$/.test(value) && !isNaN(Date.parse(value));
+}
+
+function asstValidateExternalRefRows_(rows) {
+  var issues = [];
+  var candidateKeys = {};
+  (rows || []).forEach(function (row, index) {
+    var label = 'ability_external_refs/' + (index + 2);
+    ['provider','candidateKey','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint',
+      'externalSnapshotJson','disposition','importedAt','importedBy','reviewFlagsJson','note'].forEach(function (key) {
+      if (typeof row[key] !== 'string' || (key !== 'note' && !row[key])) issues.push(label + ': ' + key + 'は文字列必須');
+    });
+    ['abilityId','decidedAt','decidedBy'].forEach(function (key) {
+      if (row[key] !== '' && row[key] !== null && row[key] !== undefined && typeof row[key] !== 'string') {
+        issues.push(label + ': ' + key + 'は文字列または空欄');
+      }
+    });
+    var ref;
+    try { ref = asstExternalRefFromRow_(row); }
+    catch (error) { issues.push(label + ': ' + error.message); return; }
+    if (ASST_EXTERNAL_REF_PROVIDERS.indexOf(ref.provider) < 0) issues.push(label + ': provider不正');
+    if (!asstIsSha_(ref.candidateKey, 64)) issues.push(label + ': candidateKey不正');
+    else if (candidateKeys[ref.candidateKey]) issues.push('candidateKey重複: ' + ref.candidateKey);
+    candidateKeys[ref.candidateKey] = true;
+    if (typeof ref.externalNumericId !== 'number' || !Number.isInteger(ref.externalNumericId) || ref.externalNumericId <= 0) {
+      issues.push(label + ': externalNumericIdは正の整数');
+    }
+    if (!asstIsSha_(ref.firstSeenSha, 40) || !asstIsSha_(ref.lastSeenSha, 40)) issues.push(label + ': firstSeenSha/lastSeenSha不正');
+    if (!asstIsSha_(ref.externalFingerprint, 64) || !asstIsSha_(ref.comparisonFingerprint, 64)) issues.push(label + ': fingerprint不正');
+    if (ASST_EXTERNAL_REF_DISPOSITIONS.indexOf(ref.disposition) < 0) issues.push(label + ': disposition不正');
+    if (ref.abilityId !== null) {
+      try { asstAbilityIdNumber_(ref.abilityId, label + '/abilityId'); } catch (error) { issues.push(error.message); }
+    }
+    if ((ref.disposition === 'imported' || ref.disposition === 'reverted') && ref.abilityId === null) {
+      issues.push(label + ': imported/revertedはabilityId必須');
+    }
+    if (!asstIsIsoTimestamp_(ref.importedAt) || !ref.importedBy) issues.push(label + ': importedAt/importedBy不正');
+    if ((ref.decidedAt === null) !== (ref.decidedBy === null) || (ref.decidedAt !== null && !asstIsIsoTimestamp_(ref.decidedAt))) {
+      issues.push(label + ': decidedAt/decidedBy不正');
+    }
+    if (typeof ref.version !== 'number' || !Number.isInteger(ref.version) || ref.version <= 0) issues.push(label + ': version不正');
+    try { asstValidateStringArray_(ref.reviewFlags, label + '/reviewFlagsJson', ASST_EXTERNAL_REVIEW_FLAGS); }
+    catch (error) { issues.push(error.message); }
+    var snapshot = ref.externalSnapshot;
+    if (!snapshot || typeof snapshot !== 'object' || Array.isArray(snapshot) ||
+        Object.keys(snapshot).join('\n') !== ASST_EXTERNAL_SNAPSHOT_KEYS.join('\n')) {
+      issues.push(label + ': externalSnapshotJsonの列・順序不正');
+    } else {
+      var snapshotValuesValid = snapshot.id === ref.externalNumericId && typeof snapshot.id === 'number' &&
+        !['card','name','desc','source','rarity'].some(function (key) { return typeof snapshot[key] !== 'string' || !snapshot[key]; });
+      if (!snapshotValuesValid) {
+        issues.push(label + ': externalSnapshotJsonの必須値不正');
+      }
+      if (ASST_ABILITY_SOURCES.indexOf(snapshot.source) < 0 || ASST_ABILITY_RARITIES.indexOf(snapshot.rarity) < 0) {
+        issues.push(label + ': externalSnapshotJsonのsource/rarity不正');
+      }
+      try { asstValidateStringArray_(snapshot.tags, label + '/externalSnapshotJson.tags'); }
+      catch (error) { issues.push(error.message); }
+      if (snapshotValuesValid && Array.isArray(snapshot.tags) && snapshot.tags.every(function (tag) { return typeof tag === 'string' && tag; })) {
+        var exactComparable = {
+          sourceName: snapshot.card,
+          name: snapshot.name,
+          description: snapshot.desc,
+          source: snapshot.source,
+          rarity: snapshot.rarity,
+          tags: snapshot.tags
+        };
+        var comparisonComparable = {
+          sourceName: snapshot.card.normalize('NFKC'),
+          name: snapshot.name.normalize('NFKC'),
+          description: snapshot.desc.normalize('NFKC'),
+          source: snapshot.source.normalize('NFKC'),
+          rarity: snapshot.rarity.normalize('NFKC'),
+          tags: snapshot.tags.map(function (tag) { return tag.normalize('NFKC'); })
+        };
+        if (asstSha256_(JSON.stringify(exactComparable)) !== ref.externalFingerprint ||
+            asstSha256_(JSON.stringify(comparisonComparable)) !== ref.comparisonFingerprint) {
+          issues.push(label + ': fingerprintがexternalSnapshotJsonと不一致');
+        }
+      }
+    }
+    if (asstIsSha_(ref.externalFingerprint, 64) && asstIsSha_(ref.candidateKey, 64) &&
+        asstSha256_(ref.provider + '\n' + ref.externalNumericId + '\n' + ref.externalFingerprint) !== ref.candidateKey) {
+      issues.push(label + ': candidateKeyがprovider/externalNumericId/externalFingerprintと不一致');
+    }
+  });
+  return issues;
+}
+
+function asstValidateAbilityRecord_(ability, requireNewRarity) {
+  var issues = [];
+  try { asstAbilityIdNumber_(ability.abilityId, 'abilityId'); } catch (error) { issues.push(error.message); }
+  try { asstLegacyId_(ability.legacyId, ability.abilityId + '/legacyId'); } catch (error) { issues.push(error.message); }
+  if (ASST_ABILITY_SOURCES.indexOf(ability.source) < 0) issues.push(ability.abilityId + ': source不正');
+  if (ability.rarity !== null && ASST_ABILITY_RARITIES.indexOf(ability.rarity) < 0) issues.push(ability.abilityId + ': rarity不正');
+  if (requireNewRarity && ability.rarity === null) issues.push(ability.abilityId + ': 新規能力はrarity必須');
+  return issues;
 }
 
 function asstBuildDocuments_() {
@@ -318,7 +526,7 @@ function asstBuildDocuments_() {
       cards: effectsByCard
     },
     abilities: {
-      schemaVersion: 1,
+      schemaVersion: 2,
       generatedFrom: ['ライ徹CMS'],
       generatedAt: null,
       counts: abilityCounts,
@@ -335,7 +543,7 @@ function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   if (!effectsDoc || effectsDoc.schemaVersion !== 1 || !effectsDoc.cards || Array.isArray(effectsDoc.cards)) {
     issues.push('効果DBのschemaVersionまたはcardsが不正');
   }
-  if (!abilitiesDoc || abilitiesDoc.schemaVersion !== 1 || !Array.isArray(abilitiesDoc.abilities)) {
+  if (!abilitiesDoc || abilitiesDoc.schemaVersion !== 2 || !Array.isArray(abilitiesDoc.abilities)) {
     issues.push('能力DBのschemaVersionまたはabilitiesが不正');
   }
   if (issues.length) return issues;
@@ -396,10 +604,12 @@ function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   abilitiesDoc.abilities.forEach(function (ability) {
     if (!ability.abilityId || abilityIds[ability.abilityId]) issues.push('abilityId重複または空欄: ' + ability.abilityId);
     abilityIds[ability.abilityId] = true;
-    if (legacyIds[ability.legacyId]) issues.push('legacyId重複: ' + ability.legacyId);
-    legacyIds[ability.legacyId] = true;
+    asstValidateAbilityRecord_(ability, false).forEach(function (issue) { issues.push(issue); });
+    if (ability.legacyId !== null) {
+      if (legacyIds[ability.legacyId]) issues.push('legacyId重複: ' + ability.legacyId);
+      legacyIds[ability.legacyId] = true;
+    }
     if (!ability.sourceName || !ability.name || !ability.description) issues.push(ability.abilityId + ': 必須文字列空欄');
-    if (ASST_ABILITY_SOURCES.indexOf(ability.source) < 0) issues.push(ability.abilityId + ': source不正');
     if (ASST_LINK_STATUSES.indexOf(ability.linkStatus) < 0) issues.push(ability.abilityId + ': linkStatus不正');
     if (ASST_ABILITY_STATUSES.indexOf(ability.status) < 0) issues.push(ability.abilityId + ': status不正');
     if (!Array.isArray(ability.tags) || !Array.isArray(ability.flags)) issues.push(ability.abilityId + ': tags/flags不正');
@@ -682,8 +892,9 @@ function api_asstSaveAbility(payload) {
     if (!row) throw new Error('能力が見つかりません。');
     var currentVersion = Number(row.version || 1);
     if (Number(payload.version) !== currentVersion) throw new Error('他の編集が保存済みです。');
-    if (asstInteger_(ability.legacyId, 'legacyId', false) !== Number(row.legacyId)) throw new Error('legacyIdは変更できません。');
+    if (asstLegacyId_(ability.legacyId, 'legacyId') !== asstLegacyId_(row.legacyId, '保存済みlegacyId')) throw new Error('legacyIdは変更できません。');
     asstInList_(ability.source, ASST_ABILITY_SOURCES, 'source', false);
+    asstInList_(ability.rarity, ASST_ABILITY_RARITIES, 'rarity', true);
     asstInList_(ability.linkStatus, ASST_LINK_STATUSES, 'linkStatus', false);
     asstInList_(ability.status, ASST_ABILITY_STATUSES, 'status', false);
     if (!ability.sourceName || !ability.name || !ability.description) throw new Error('sourceName/name/descriptionは必須です。');

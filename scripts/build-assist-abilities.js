@@ -121,7 +121,7 @@ function buildDatabase() {
   const statusCount = linkStatus => abilities
     .filter(ability => ability.linkStatus === linkStatus).length;
   return {
-    schemaVersion: 1,
+    schemaVersion: 2,
     generatedFrom: GENERATED_FROM,
     generatedAt: null,
     counts: {

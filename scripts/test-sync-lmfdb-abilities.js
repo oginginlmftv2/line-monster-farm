@@ -147,6 +147,29 @@ async function main() {
       assert.strictEqual(report.counts.newCandidates, 0);
     });
 
+    await test('schemaVersion 2の複数null legacyIdを外部ID照合と欠落観測から除外', () => {
+      const local = localDocuments({
+        abilities: {
+          schemaVersion: 2,
+          abilities: [
+            localAbility(1, { abilityId: 'ab-1085', legacyId: null, name: 'ローカル別能力1' }),
+            localAbility(2, { abilityId: 'ab-1086', legacyId: null, name: 'ローカル別能力2' }),
+          ],
+        },
+      });
+      const report = analyze(externalDocument(), local);
+      assert.strictEqual(report.auditStatus, 'PASS');
+      assert.strictEqual(report.counts.existingContentDifferences, 0);
+      assert.strictEqual(report.counts.missingUpstreamObservations, 0);
+      assert.strictEqual(report.counts.newCandidates, 2);
+      assert(report.details.newCandidates.every(item => item.classification === 'card_match_candidate'));
+
+      const legacyV1 = localDocuments({
+        abilities: { schemaVersion: 1, abilities: [localAbility(1, { legacyId: null })] },
+      });
+      assert.strictEqual(analyze(externalDocument(), legacyV1).auditStatus, 'FAIL');
+    });
+
     await test('外部IDが違っても内容一致なら登録済み', () => {
       const report = analyze(externalDocument([
         externalAbility(99, { ...externalAbility(1), id: 99 }), externalAbility(2),

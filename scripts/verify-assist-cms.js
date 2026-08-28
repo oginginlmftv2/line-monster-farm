@@ -3,6 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 
 const SOURCE_FILES = [
   '_cms/gas/20_assist.gs',
@@ -37,12 +38,15 @@ const ALLOWED = {
   ]),
   monType: new Set(['幻霊', '無機', '創造', '獣族', '魔族', '怪物']),
   unlockRank: new Set(['無凸', '1凸', '2凸', '3凸', '4凸']),
-  abilitySource: new Set(['イベント', '閃き', 'EXトレ']),
+  abilitySource: new Set(['イベント', '閃き', 'EXトレ', '伝授']),
+  abilityRarity: new Set(['MR', 'SSR', 'SR', 'その他']),
   linkStatus: new Set(['resolved', 'ambiguous', 'unlinked']),
   abilityStatus: new Set(['draft', 'verified']),
   accessoryStatus: new Set(['unknown', 'yes', 'no']),
 };
 const RATING_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
+const MIGRATED_ABILITY_COUNT = 1079;
+const MIGRATED_ABILITY_RECORDS_SHA256 = '85d909c797f7852e6c817b99b6908a9ec1592e9915cf460e71ee53062d7b8da3';
 
 function read(root, relative) {
   return fs.readFileSync(path.join(root, relative), 'utf8');
@@ -102,6 +106,9 @@ function validateRoot(root) {
   const commonHtml = read(root, SUPPORT_FILES.commonHtml);
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
   const allAssistGas = `${core}\n${gas}\n${setupGas}`;
+  const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
+  const assistExportBlock = functionBlock(gas, 'api_asstExport');
+  const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
   if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
@@ -118,6 +125,28 @@ function validateRoot(root) {
   }
   for (const sheet of ['members', 'cards', 'assist_effects', 'abilities', 'assist_log', 'assist_publish_log']) {
     if (!new RegExp(`['"]${sheet}['"]`).test(`${core}\n${gas}`)) issues.push(`必須シート定義がない: ${sheet}`);
+  }
+  const externalRefHeaders = [
+    'provider', 'candidateKey', 'externalNumericId', 'firstSeenSha', 'lastSeenSha',
+    'externalFingerprint', 'comparisonFingerprint', 'externalSnapshotJson', 'disposition',
+    'abilityId', 'importedAt', 'importedBy', 'decidedAt', 'decidedBy', 'reviewFlagsJson',
+    'note', 'version',
+  ];
+  const externalRefHeaderLiteral = `[${externalRefHeaders.map(value => `'${value}'`).join(',')}]`;
+  if (!/ASST_SHEET_ABILITY_EXTERNAL_REFS\s*=\s*['"]ability_external_refs['"]/.test(gas) ||
+      !gas.includes(`ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS] = ${externalRefHeaderLiteral};`) ||
+      !gas.includes(`var ASST_EXTERNAL_REF_HEADERS = ${externalRefHeaderLiteral};`)) {
+    issues.push('ability_external_refsの列名または順序が設計第13章と不一致');
+  }
+  for (const fn of ['asstLegacyId_', 'asstNextAbilityId_', 'asstAssertAbilityIdAvailable_', 'asstAbilityToSheetRow_', 'asstExternalRefFromRow_', 'asstValidateExternalRefRows_', 'asstValidateAbilityRecord_']) {
+    if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(gas)) issues.push(`能力schema基盤の必須関数がない: ${fn}`);
+  }
+  if (!/ASST_ABILITY_SOURCES\s*=\s*\['イベント','閃き','EXトレ','伝授'\]/.test(gas) ||
+      !/ASST_ABILITY_RARITIES\s*=\s*\['MR','SSR','SR','その他'\]/.test(gas)) {
+    issues.push('能力専用source/rarity許可値が設計と不一致');
+  }
+  if (/ability_external_refs|ASST_SHEET_ABILITY_EXTERNAL_REFS/.test(abilityBuildBlock + assistExportBlock + assistPublishBlock)) {
+    issues.push('ability_external_refsが公開3DBまたはGitHub送信対象へ混入');
   }
   for (const fn of [
     'setup1_createSheets', 'setup2_registerMe', 'setup3_importAssistFromMain', 'setup4_checkAll', 'setup5_createAssistImageFolder',
@@ -319,9 +348,13 @@ function validateRoot(root) {
     issues.push('効果DBのschemaVersion/cardsが不正');
     return issues;
   }
-  if (abilitiesDoc.schemaVersion !== 1 || !Array.isArray(abilitiesDoc.abilities)) {
+  if (abilitiesDoc.schemaVersion !== 2 || !Array.isArray(abilitiesDoc.abilities)) {
     issues.push('能力DBのschemaVersion/abilitiesが不正');
     return issues;
+  }
+  if (abilitiesDoc.abilities.length < MIGRATED_ABILITY_COUNT ||
+      crypto.createHash('sha256').update(JSON.stringify(abilitiesDoc.abilities.slice(0, MIGRATED_ABILITY_COUNT))).digest('hex') !== MIGRATED_ABILITY_RECORDS_SHA256) {
+    issues.push('既存移行能力1,079件の内容・値・ID・配列順が基準から変化');
   }
 
   const cardIds = cardsDoc.cards.map(card => card.cardId);
@@ -396,11 +429,18 @@ function validateRoot(root) {
   const resolvedOrders = new Map();
   for (const ability of abilitiesDoc.abilities) {
     abilityIds.push(ability.abilityId);
-    legacyIds.push(ability.legacyId);
+    if (ability.legacyId !== null) legacyIds.push(ability.legacyId);
     if (!ability.abilityId || !ability.sourceName || !ability.name || !ability.description) {
       issues.push(`${ability.abilityId}: 能力必須文字列が空欄`);
     }
+    if (typeof ability.abilityId !== 'string' || !/^ab-[0-9]{4,}$/.test(ability.abilityId)) {
+      issues.push(`${ability.abilityId}: abilityId形式不正`);
+    }
+    if (ability.legacyId !== null && (!Number.isInteger(ability.legacyId) || ability.legacyId <= 0)) {
+      issues.push(`${ability.abilityId}: legacyId不正`);
+    }
     if (!ALLOWED.abilitySource.has(ability.source)) issues.push(`${ability.abilityId}: source不正`);
+    if (ability.rarity !== null && !ALLOWED.abilityRarity.has(ability.rarity)) issues.push(`${ability.abilityId}: rarity不正`);
     if (!ALLOWED.linkStatus.has(ability.linkStatus)) issues.push(`${ability.abilityId}: linkStatus不正`);
     if (!ALLOWED.abilityStatus.has(ability.status)) issues.push(`${ability.abilityId}: status不正`);
     if (!Array.isArray(ability.tags) || !Array.isArray(ability.flags)) issues.push(`${ability.abilityId}: tags/flags不正`);

@@ -243,6 +243,9 @@ function buildAssistPages(options = {}) {
   const cardData = readJson(INPUTS.cards);
   const effectData = readJson(INPUTS.effects);
   const abilityData = readJson(INPUTS.abilities);
+  if (abilityData.schemaVersion !== 2 || !Array.isArray(abilityData.abilities)) {
+    throw new Error('assist-abilities.json はschemaVersion 2のabilities配列が必須です');
+  }
   const cards = cardData.cards;
   const effectsByCard = effectData.cards;
   const resolvedAbilities = abilityData.abilities.filter(ability => ability.linkStatus === 'resolved');
