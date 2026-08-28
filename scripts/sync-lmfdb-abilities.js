@@ -266,6 +266,12 @@ function validateLocalAndMap(local) {
   const mappings = local.cardMap && local.cardMap.mappings;
   if (!Array.isArray(cards)) errors.push('assist-cards.jsonのcardsが配列ではありません');
   if (!Array.isArray(abilities)) errors.push('assist-abilities.jsonのabilitiesが配列ではありません');
+  const abilitySchemaVersion = local.abilities && local.abilities.schemaVersion;
+  // 読取専用監査だけはP12-17aのschemaVersion 1 fixtureを後方互換で受ける。
+  // v1は全legacyIdが正の整数、現行v2だけがnullを許可する。GAS・build・公開DBはv2専用。
+  if (![1, 2].includes(abilitySchemaVersion)) {
+    errors.push('assist-abilities.jsonのschemaVersionは読取互換の1または現行の2だけです');
+  }
   if (!local.cardMap || local.cardMap.schemaVersion !== 1 || !Array.isArray(mappings)) {
     errors.push('lmfdb-card-map.jsonの構造が不正です');
   }
@@ -277,9 +283,13 @@ function validateLocalAndMap(local) {
   if (duplicateCardKeys.length) errors.push('assist-cards.jsonのname + rarityが一意ではありません');
   if (cardIds.size !== cards.length) errors.push('assist-cards.jsonのcardIdが一意ではありません');
   const localLegacyIds = abilities.map(ability => ability.legacyId);
+  const nonNullLegacyIds = localLegacyIds.filter(id => id !== null);
   const localAbilityIds = abilities.map(ability => ability.abilityId);
-  if (localLegacyIds.some(id => !Number.isInteger(id) || id <= 0) || duplicates(localLegacyIds).length) {
-    errors.push('assist-abilities.jsonのlegacyIdが正の一意な整数ではありません');
+  const invalidLegacyIds = abilitySchemaVersion === 1
+    ? localLegacyIds.some(id => !Number.isInteger(id) || id <= 0)
+    : localLegacyIds.some(id => id !== null && (!Number.isInteger(id) || id <= 0));
+  if (invalidLegacyIds || duplicates(nonNullLegacyIds).length) {
+    errors.push('assist-abilities.jsonのlegacyIdがschemaVersionに対応する正の一意な整数またはnullではありません');
   }
   if (localAbilityIds.some(id => typeof id !== 'string' || !id) || duplicates(localAbilityIds).length) {
     errors.push('assist-abilities.jsonのabilityIdが一意な非空文字列ではありません');
@@ -439,7 +449,9 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
     };
   }
 
-  const localByLegacyId = new Map(localAbilities.map(ability => [ability.legacyId, ability]));
+  const localByLegacyId = new Map(localAbilities
+    .filter(ability => ability.legacyId !== null)
+    .map(ability => [ability.legacyId, ability]));
   const externalIdSet = new Set(abilities.map(ability => ability.id));
   const exactIndex = new Map();
   const normalizedIndex = new Map();
@@ -542,7 +554,7 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
   }
 
   const missingUpstreamObservations = localAbilities
-    .filter(ability => !externalIdSet.has(ability.legacyId))
+    .filter(ability => ability.legacyId !== null && !externalIdSet.has(ability.legacyId))
     .map(ability => ({
       classification: 'missing_upstream_observation',
       legacyId: ability.legacyId,

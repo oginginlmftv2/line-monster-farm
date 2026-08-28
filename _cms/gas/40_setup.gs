@@ -277,13 +277,7 @@ function asstImportFromMain_() {
     });
 
     var abilityRows = abilitiesDoc.abilities.map(function (ability, index) {
-      return [
-        index + 1, ability.abilityId, ability.legacyId,
-        ability.cardId || '', ability.sourceName, ability.name, ability.description,
-        ability.source, ability.rarity || '', asstJsonCell_(ability.tags || []),
-        ability.sortOrder === null ? '' : ability.sortOrder, ability.linkStatus,
-        asstJsonCell_(ability.flags || []), ability.status, 1, '', ''
-      ];
+      return asstAbilityToSheetRow_(ability, index + 1, 1, '', '');
     });
 
     asstRewriteSheet_(ASST_SHEET_CARDS, cardRows);

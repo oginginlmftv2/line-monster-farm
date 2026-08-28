@@ -1240,6 +1240,9 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
   try {
     const abilitiesDatabase = JSON.parse(read('src/data/assist-abilities.json'));
     const assistCards = JSON.parse(read('src/data/assist-cards.json'));
+    if (abilitiesDatabase.schemaVersion !== 2) {
+      throw new Error(`schemaVersionが2ではありません: ${abilitiesDatabase.schemaVersion}`);
+    }
     if (!Array.isArray(abilitiesDatabase.abilities)) {
       throw new Error('abilitiesが配列ではありません');
     }
@@ -1248,6 +1251,12 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
       ? assistCards.cards.map(card => card.cardId) : []);
 
     const abilityIds = abilities.map(ability => ability.abilityId);
+    const invalidAbilityIds = abilityIds.filter(abilityId => typeof abilityId !== 'string' || !/^ab-[0-9]{4,}$/.test(abilityId));
+    if (invalidAbilityIds.length) {
+      ng(`assist-abilities.jsonのabilityId形式が不正: ${invalidAbilityIds.slice(0, 5).join(', ')}`);
+    } else {
+      ok('assist-abilities.jsonのabilityIdはab-####形式');
+    }
     const duplicateAbilityIds = abilityIds
       .filter((abilityId, index) => abilityIds.indexOf(abilityId) !== index);
     if (duplicateAbilityIds.length) {
@@ -1256,7 +1265,14 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
       ok(`assist-abilities.jsonのabilityIdはファイル全体で一意（${abilityIds.length}件）`);
     }
 
-    const legacyIds = abilities.map(ability => ability.legacyId);
+    const invalidLegacyIds = abilities.filter(ability => ability.legacyId !== null &&
+      (!Number.isInteger(ability.legacyId) || ability.legacyId <= 0));
+    if (invalidLegacyIds.length) {
+      ng(`assist-abilities.jsonのlegacyIdが正の整数またはnullでない: ${invalidLegacyIds.slice(0, 5).map(ability => ability.abilityId).join(', ')}`);
+    } else {
+      ok('assist-abilities.jsonのlegacyIdは正の整数またはnull');
+    }
+    const legacyIds = abilities.map(ability => ability.legacyId).filter(legacyId => legacyId !== null);
     const duplicateLegacyIds = legacyIds
       .filter((legacyId, index) => legacyIds.indexOf(legacyId) !== index);
     if (duplicateLegacyIds.length) {
@@ -1285,12 +1301,20 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
       ok('assist-abilities.jsonのresolvedは実在cardId、resolved以外はcardId null');
     }
 
-    const allowedSources = new Set(['イベント', '閃き', 'EXトレ']);
+    const allowedSources = new Set(['イベント', '閃き', 'EXトレ', '伝授']);
     const invalidSources = abilities.filter(ability => !allowedSources.has(ability.source));
     if (invalidSources.length) {
       ng(`assist-abilities.jsonに許可外sourceがある: ${invalidSources.slice(0, 5).map(ability => `${ability.abilityId}=${String(ability.source)}`).join(', ')}`);
     } else {
       ok('assist-abilities.jsonのsourceはすべて許可値');
+    }
+
+    const allowedAbilityRarities = new Set(['MR', 'SSR', 'SR', 'その他']);
+    const invalidAbilityRarities = abilities.filter(ability => ability.rarity !== null && !allowedAbilityRarities.has(ability.rarity));
+    if (invalidAbilityRarities.length) {
+      ng(`assist-abilities.jsonに許可外rarityがある: ${invalidAbilityRarities.slice(0, 5).map(ability => `${ability.abilityId}=${String(ability.rarity)}`).join(', ')}`);
+    } else {
+      ok('assist-abilities.jsonのrarityは既存nullまたは能力専用許可値');
     }
 
     const emptySourceNames = abilities

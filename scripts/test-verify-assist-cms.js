@@ -4,6 +4,9 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const assert = require('assert');
+const crypto = require('crypto');
+const vm = require('vm');
 const { validateRoot } = require('./verify-assist-cms');
 
 const repo = path.resolve(__dirname, '..');
@@ -51,11 +54,118 @@ function expectFailure(label, mutate, expected) {
   }
 }
 
+function gasAbilitySchemaContext() {
+  const context = {
+    console,
+    Utilities: {
+      DigestAlgorithm: { SHA_256: 'SHA_256' },
+      Charset: { UTF_8: 'UTF_8' },
+      computeDigest(algorithm, text) {
+        assert.strictEqual(algorithm, 'SHA_256');
+        return [...crypto.createHash('sha256').update(text, 'utf8').digest()];
+      },
+    },
+  };
+  vm.createContext(context);
+  vm.runInContext(fs.readFileSync(path.join(repo, '_cms/gas/20_assist.gs'), 'utf8'), context);
+  return context;
+}
+
+function validExternalRef(context, overrides = {}) {
+  const externalNumericId = 1200;
+  const provider = 'lmfdb';
+  const snapshot = {
+    id: externalNumericId, card: 'カードA', name: '新能力', desc: '説明',
+    source: '伝授', rarity: 'その他', tags: ['タグ'],
+  };
+  const comparable = {
+    sourceName: snapshot.card, name: snapshot.name, description: snapshot.desc,
+    source: snapshot.source, rarity: snapshot.rarity, tags: snapshot.tags,
+  };
+  const fingerprint = context.asstSha256_(JSON.stringify(comparable));
+  const comparisonFingerprint = context.asstSha256_(JSON.stringify(comparable));
+  const candidateKey = context.asstSha256_(`${provider}\n${externalNumericId}\n${fingerprint}`);
+  return {
+    provider,
+    candidateKey,
+    externalNumericId,
+    firstSeenSha: 'a'.repeat(40),
+    lastSeenSha: 'a'.repeat(40),
+    externalFingerprint: fingerprint,
+    comparisonFingerprint,
+    externalSnapshotJson: JSON.stringify(snapshot),
+    disposition: 'imported',
+    abilityId: 'ab-1085',
+    importedAt: '2026-08-28T12:00:00+09:00',
+    importedBy: 'tester',
+    decidedAt: '2026-08-28T12:00:00+09:00',
+    decidedBy: 'tester',
+    reviewFlagsJson: JSON.stringify(['id_reused']),
+    note: '',
+    version: 1,
+    ...overrides,
+  };
+}
+
+function runAbilitySchemaUnitTests() {
+  const gas = gasAbilitySchemaContext();
+  const abilityDoc = JSON.parse(fs.readFileSync(path.join(repo, 'src/data/assist-abilities.json'), 'utf8'));
+  assert.strictEqual(abilityDoc.schemaVersion, 2);
+  assert.strictEqual(abilityDoc.abilities.length, 1079);
+
+  const base = abilityDoc.abilities[0];
+  const blankRow = {
+    abilityId: 'ab-1085', legacyId: '', cardId: '', sourceName: '候補', name: '新能力', description: '説明',
+    source: '伝授', rarity: 'その他', tagsJson: '[]', sortOrder: '', linkStatus: 'unlinked',
+    flagsJson: '[]', status: 'draft',
+  };
+  const fromRow = gas.asstAbilityFromRow_(blankRow);
+  assert.strictEqual(fromRow.legacyId, null);
+  const sheetRow = gas.asstAbilityToSheetRow_(fromRow, 1080, 1, '', '');
+  assert.strictEqual(sheetRow[gas.ASST_HEADERS[gas.ASST_SHEET_ABILITIES].indexOf('legacyId')], '');
+  assert.strictEqual(gas.asstAbilityFromRow_(Object.assign({}, blankRow, { legacyId: 42 })).legacyId, 42);
+
+  const nullable = abilityDoc.abilities.slice(0, 2).map(item => Object.assign({}, item, { legacyId: null }));
+  const ids = nullable.map(item => item.legacyId).filter(item => item !== null);
+  assert.strictEqual(ids.length, 0);
+  assert.deepStrictEqual(Array.from(gas.asstValidateAbilityRecord_(nullable[0], false)), []);
+  assert(gas.asstValidateAbilityRecord_(Object.assign({}, nullable[0], { rarity: null }), true).some(issue => /新規能力はrarity必須/.test(issue)));
+  for (const invalid of [0, -1, 1.5, '1']) assert.throws(() => gas.asstLegacyId_(invalid, 'legacyId'));
+
+  const rows = [{ abilityId: 'ab-0001' }, { abilityId: 'ab-0003' }];
+  const refs = [{ abilityId: 'ab-0008' }];
+  assert.strictEqual(gas.asstNextAbilityId_(rows, refs), 'ab-0009');
+  assert.strictEqual(gas.asstNextAbilityId_(abilityDoc.abilities, []), 'ab-1085');
+  assert.throws(() => gas.asstNextAbilityId_([{ abilityId: 'bad-0001' }], []), /ab-####/);
+  assert.throws(() => gas.asstAssertAbilityIdAvailable_('ab-0001', rows, refs), /衝突/);
+  assert.throws(() => gas.asstAssertAbilityIdAvailable_('ab-0008', rows, refs), /衝突/);
+
+  const externalRef = validExternalRef(gas);
+  assert.deepStrictEqual(Array.from(gas.asstValidateExternalRefRows_([externalRef])), []);
+  for (const disposition of ['imported', 'ignored', 'duplicate', 'unsupported', 'id_reused', 'reverted']) {
+    assert.deepStrictEqual(Array.from(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { disposition })])), []);
+  }
+  assert(gas.asstValidateExternalRefRows_([externalRef, externalRef]).some(issue => /candidateKey重複/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { provider: 'other' })]).some(issue => /provider不正/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { disposition: 'pending' })]).some(issue => /disposition不正/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { externalNumericId: '1200' })]).some(issue => /externalNumericId/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { firstSeenSha: 'A'.repeat(40) })]).some(issue => /firstSeenSha/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { importedAt: '' })]).some(issue => /importedAt/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { externalFingerprint: 'd'.repeat(64) })]).some(issue => /fingerprint/.test(issue)));
+  const reorderedSnapshot = JSON.stringify({ card: 'カードA', id: 1200, name: '新能力', desc: '説明', source: '伝授', rarity: 'その他', tags: ['タグ'] });
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { externalSnapshotJson: reorderedSnapshot })]).some(issue => /列・順序/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { reviewFlagsJson: '["unknown"]' })]).some(issue => /許可値/.test(issue)));
+  assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { version: 1.5 })]).some(issue => /version不正/.test(issue)));
+  assert.strictEqual(base.legacyId > 0, true);
+  console.log('PASS 能力schema v2・nullable往復・採番器・外部参照行の単体検査');
+}
+
 const baselineIssues = validateRoot(repo);
 if (baselineIssues.length) {
   throw new Error(`正常系がFAIL: ${baselineIssues.join(' / ')}`);
 }
 console.log('PASS 正常コピーを受理');
+runAbilitySchemaUnitTests();
 
 expectFailure('環境値検査の欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/00_core.gs');
@@ -75,6 +185,55 @@ expectFailure('未解決能力へのcardId混入を拒否', root => {
   ability.cardId = JSON.parse(fs.readFileSync(path.join(root, 'src/data/assist-cards.json'), 'utf8')).cards[0].cardId;
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /resolved以外はcardId\/sortOrder null必須/);
+
+expectFailure('能力schemaVersion 1への後退を拒否', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.schemaVersion = 1;
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /schemaVersion\/abilitiesが不正/);
+
+expectFailure('既存移行能力1,079件の変更を拒否', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.abilities[0].name += '変更';
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /既存移行能力1,079件/);
+
+expectFailure('非null legacyId重複を拒否', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.abilities[1].legacyId = doc.abilities[0].legacyId;
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /legacyId重複/);
+
+for (const invalidLegacyId of [0, -1, 1.5, '1']) {
+  expectFailure(`不正legacyId ${JSON.stringify(invalidLegacyId)}を拒否`, root => {
+    const file = path.join(root, 'src/data/assist-abilities.json');
+    const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+    doc.abilities[0].legacyId = invalidLegacyId;
+    fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+  }, /legacyId不正/);
+}
+
+expectFailure('不正abilityId形式を拒否', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.abilities[0].abilityId = 'external-0001';
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /abilityId形式不正/);
+
+expectFailure('ability_external_refs列順の変更を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("['provider','candidateKey','externalNumericId'", "['candidateKey','provider','externalNumericId'"));
+}, /ability_external_refsの列名または順序/);
+
+expectFailure('ability_external_refsの公開export混入を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('function api_asstExport() {', "function api_asstExport() {\n  var leaked = asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS);"));
+}, /公開3DBまたはGitHub送信対象へ混入/);
 
 expectFailure('Sheets日付の未正規化を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
@@ -405,4 +564,4 @@ expectFailure('処理中オーバーレイの欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
 }, /処理中表示/);
 
-console.log('OK 破壊コピー55ケースをすべて拒否');
+console.log('OK 破壊コピー66ケースをすべて拒否');
