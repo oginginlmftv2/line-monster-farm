@@ -2,7 +2,8 @@
 'use strict';
 
 /**
- * lMfDB の能力JSONをローカル3DBと比較する、書き込み機能を持たない監査専用dry-run。
+ * lMfDB の能力JSONから未登録と思われる候補を抽出する、読取専用の監査エンジン。
+ * 外部数値IDは永続的な同一性キーや更新・削除キーとして使用しない。
  * Node.js標準機能だけを使用する。
  */
 
@@ -19,6 +20,8 @@ const MAX_RESPONSE_BYTES = 2 * 1024 * 1024;
 const TIMEOUT_MS = 15_000;
 const REQUIRED_EXTERNAL_FIELDS = ['id', 'name', 'desc', 'card', 'tags', 'source', 'rarity'];
 const EXTERNAL_STRING_FIELDS = ['name', 'desc', 'card', 'source', 'rarity'];
+const EXTERNAL_SOURCES = new Set(['イベント', '閃き', 'EXトレ', '伝授']);
+const EXTERNAL_RARITIES = new Set(['MR', 'SSR', 'SR', 'その他']);
 const LOCAL_EXTERNAL_FIELDS = {
   sourceName: 'card',
   name: 'name',
@@ -27,7 +30,7 @@ const LOCAL_EXTERNAL_FIELDS = {
   rarity: 'rarity',
   tags: 'tags',
 };
-const RANK = { SAFE: 0, REVIEW_REQUIRED: 1, BLOCKED: 2 };
+const SAFETY_RANK = { SAFE: 0, REVIEW_REQUIRED: 1, BLOCKED: 2 };
 
 class AuditError extends Error {
   constructor(message, code = 'AUDIT_ERROR') {
@@ -42,9 +45,23 @@ function absolute(relativePath) {
 }
 
 function parseArgs(argv) {
-  const options = { externalSha: null, inputFile: null, jsonReport: null };
+  const options = {
+    externalSha: null,
+    inputFile: null,
+    jsonReport: null,
+    showAllRepresentation: false,
+    showDuplicateDetails: false,
+  };
   for (let index = 0; index < argv.length; index += 1) {
     const argument = argv[index];
+    if (argument === '--show-all-representation') {
+      options.showAllRepresentation = true;
+      continue;
+    }
+    if (argument === '--show-duplicate-details') {
+      options.showDuplicateDetails = true;
+      continue;
+    }
     if (!['--sha', '--file', '--json-report'].includes(argument)) {
       throw new AuditError(`未対応の引数です: ${argument}`, 'ARGUMENT');
     }
@@ -211,6 +228,12 @@ function validateExternal(document) {
         || new Set(ability.tags).size !== ability.tags.length) {
       errors.push(`${prefix}.tagsが重複のない非空文字列配列ではありません`);
     }
+    if (typeof ability.source === 'string' && !EXTERNAL_SOURCES.has(ability.source)) {
+      errors.push(`${prefix}.sourceが外部候補の許可値ではありません: ${ability.source}`);
+    }
+    if (typeof ability.rarity === 'string' && !EXTERNAL_RARITIES.has(ability.rarity)) {
+      errors.push(`${prefix}.rarityが外部候補の許可値ではありません: ${ability.rarity}`);
+    }
   });
   const duplicateIds = duplicates(abilities.map(ability => ability && ability.id));
   if (duplicateIds.length) errors.push(`idが重複しています: ${duplicateIds.slice(0, 10).join(', ')}`);
@@ -291,165 +314,370 @@ function validateLocalAndMap(local) {
   return { errors, mappingByKey, cards, abilities };
 }
 
-function equalValue(left, right) {
-  return JSON.stringify(left) === JSON.stringify(right);
-}
-
-function analyze(externalDocument, local, input, contentHash) {
-  const externalValidation = validateExternal(externalDocument);
-  const localValidation = validateLocalAndMap(local);
-  const blockingReasons = [...externalValidation.errors, ...localValidation.errors];
-  const abilities = Array.isArray(externalDocument.abilities) ? externalDocument.abilities : [];
-  const localAbilities = localValidation.abilities;
-  const localByLegacyId = new Map(localAbilities.map(ability => [ability.legacyId, ability]));
-  const externalById = new Map(abilities.map(ability => [ability.id, ability]));
-  const allowedSources = new Set(localAbilities.map(ability => ability.source));
-  const allowedRarities = new Set(localAbilities.map(ability => ability.rarity).filter(value => value !== null));
-  const abilityIdOwner = new Map(localAbilities.map(ability => [ability.abilityId, ability.legacyId]));
-  const additions = [];
-  const changes = [];
-  const missing = [];
-  const resolvedImpacts = [];
-  const resolvedCandidates = [];
-  const unlinkedCandidates = [];
-  const abilityIdCollisions = [];
-  const cardIdContradictions = [];
-  const changedFieldCounts = {};
-  const affectedCardIds = new Set();
-
-  for (const external of abilities) {
-    const current = localByLegacyId.get(external.id);
-    const mappedCardId = localValidation.mappingByKey.get(mappingKey(external.card, external.rarity)) || null;
-    if (!current) {
-      additions.push(external.id);
-      const candidateAbilityId = `ab-${String(external.id).padStart(4, '0')}`;
-      if (abilityIdOwner.has(candidateAbilityId)) {
-        abilityIdCollisions.push({ legacyId: external.id, abilityId: candidateAbilityId, ownerLegacyId: abilityIdOwner.get(candidateAbilityId) });
-      }
-      if (mappedCardId) {
-        resolvedCandidates.push({ legacyId: external.id, cardId: mappedCardId });
-        affectedCardIds.add(mappedCardId);
-      } else {
-        unlinkedCandidates.push({ legacyId: external.id, sourceName: external.card, rarity: external.rarity });
-      }
-      continue;
-    }
-    const changedFields = [];
-    for (const [localField, externalField] of Object.entries(LOCAL_EXTERNAL_FIELDS)) {
-      if (!equalValue(current[localField], external[externalField])) {
-        changedFields.push(localField);
-        changedFieldCounts[localField] = (changedFieldCounts[localField] || 0) + 1;
-      }
-    }
-    if (changedFields.length) {
-      changes.push({ legacyId: external.id, abilityId: current.abilityId, fields: changedFields });
-      if (current.linkStatus === 'resolved') {
-        resolvedImpacts.push({ legacyId: external.id, abilityId: current.abilityId, cardId: current.cardId, fields: changedFields });
-        affectedCardIds.add(current.cardId);
-      }
-    }
-    if (current.linkStatus === 'resolved' && mappedCardId && mappedCardId !== current.cardId) {
-      cardIdContradictions.push({ legacyId: external.id, currentCardId: current.cardId, mappedCardId });
-    }
-  }
-
-  for (const current of localAbilities) {
-    if (!externalById.has(current.legacyId)) {
-      missing.push(current.legacyId);
-      if (current.linkStatus === 'resolved') affectedCardIds.add(current.cardId);
-    }
-  }
-
-  if (abilityIdCollisions.length) blockingReasons.push(`abilityId衝突候補が${abilityIdCollisions.length}件あります`);
-  if (cardIdContradictions.length) blockingReasons.push(`cardId対応の矛盾が${cardIdContradictions.length}件あります`);
-  const unknownSources = [...new Set(abilities.map(ability => ability.source).filter(value => !allowedSources.has(value)))].sort();
-  const unknownRarities = [...new Set(abilities.map(ability => ability.rarity).filter(value => !allowedRarities.has(value)))].sort();
-  const reviewReasons = [];
-  if (missing.length) reviewReasons.push(`外部から消えたIDが${missing.length}件あります（自動削除禁止）`);
-  if (changes.length) reviewReasons.push(`既存IDの外部管理項目変更が${changes.length}件あります`);
-  if (unlinkedCandidates.length) reviewReasons.push(`固定対応表にない新規能力が${unlinkedCandidates.length}件あります`);
-  if (unknownSources.length) reviewReasons.push(`未知のsourceがあります: ${unknownSources.join(', ')}`);
-  if (unknownRarities.length) reviewReasons.push(`未知のrarityがあります: ${unknownRarities.join(', ')}`);
-
-  let decision = 'SAFE';
-  if (reviewReasons.length) decision = 'REVIEW_REQUIRED';
-  if (blockingReasons.length) decision = 'BLOCKED';
-  const ids = abilities.map(ability => ability.id).filter(Number.isInteger);
+function exactComparableFromExternal(ability) {
   return {
-    reportVersion: 1,
-    input,
-    externalSha256: contentHash,
-    decision,
-    counts: {
-      external: abilities.length,
-      local: localAbilities.length,
-      externalIdMin: ids.length ? Math.min(...ids) : null,
-      externalIdMax: ids.length ? Math.max(...ids) : null,
-      externalIdDuplicates: externalValidation.duplicateIds.length,
-      additions: additions.length,
-      changes: changes.length,
-      missing: missing.length,
-      resolvedImpacts: resolvedImpacts.length,
-      resolvedCandidates: resolvedCandidates.length,
-      unlinkedCandidates: unlinkedCandidates.length,
-      abilityIdCollisions: abilityIdCollisions.length,
-      cardIdContradictions: cardIdContradictions.length,
-    },
-    breakdown: {
-      source: countBy(abilities, ability => ability.source),
-      rarity: countBy(abilities, ability => ability.rarity),
-      changedFields: Object.fromEntries(Object.entries(changedFieldCounts).sort()),
-    },
-    details: {
-      additions,
-      changes,
-      missing,
-      resolvedImpacts,
-      resolvedCandidates,
-      unlinkedCandidates,
-      unknownSources,
-      unknownRarities,
-      abilityIdCollisions,
-      cardIdContradictions,
-      affectedCardIds: [...affectedCardIds].filter(Boolean).sort(),
-    },
-    stopReasons: { blocked: blockingReasons, reviewRequired: reviewReasons },
+    sourceName: ability.card,
+    name: ability.name,
+    description: ability.desc,
+    source: ability.source,
+    rarity: ability.rarity,
+    tags: ability.tags,
   };
 }
 
-function formatList(values) {
+function exactComparableFromLocal(ability) {
+  return Object.fromEntries(Object.keys(LOCAL_EXTERNAL_FIELDS).map(field => [field, ability[field]]));
+}
+
+function normalizeForComparison(value) {
+  if (typeof value === 'string') return value.normalize('NFKC');
+  if (Array.isArray(value)) return value.map(normalizeForComparison);
+  return value;
+}
+
+function normalizedComparable(comparable) {
+  return Object.fromEntries(Object.entries(comparable)
+    .map(([field, value]) => [field, normalizeForComparison(value)]));
+}
+
+function comparableKey(comparable) {
+  return JSON.stringify(comparable);
+}
+
+function differingFields(localComparable, externalComparable, normalized = false) {
+  const localValue = normalized ? normalizedComparable(localComparable) : localComparable;
+  const externalValue = normalized ? normalizedComparable(externalComparable) : externalComparable;
+  return Object.keys(LOCAL_EXTERNAL_FIELDS)
+    .filter(field => comparableKey(localValue[field]) !== comparableKey(externalValue[field]));
+}
+
+function addToIndex(index, key, ability) {
+  const matches = index.get(key) || [];
+  matches.push(ability);
+  index.set(key, matches);
+}
+
+function isIdReuseSuspected(normalizedChangedFields) {
+  const changed = new Set(normalizedChangedFields);
+  const limitedCorrectionFields = new Set(['name', 'description', 'rarity']);
+  const limitedCorrection = normalizedChangedFields
+    .every(field => limitedCorrectionFields.has(field));
+  const identityContextAllChanged = ['sourceName', 'name', 'source', 'rarity']
+    .every(field => changed.has(field));
+  const contextChanges = ['sourceName', 'source', 'rarity'].filter(field => changed.has(field)).length;
+  const contentChanges = ['name', 'description', 'tags'].filter(field => changed.has(field)).length;
+  return identityContextAllChanged
+    || (normalizedChangedFields.length >= 3 && !limitedCorrection)
+    || (contextChanges >= 2 && contentChanges >= 2);
+}
+
+function consecutiveRanges(ids) {
+  const sorted = [...new Set(ids)].sort((left, right) => left - right);
+  const ranges = [];
+  for (const id of sorted) {
+    const last = ranges[ranges.length - 1];
+    if (last && id === last.end + 1) last.end = id;
+    else ranges.push({ start: id, end: id });
+  }
+  return ranges;
+}
+
+function emptyCounts(externalCount, localCount, ids, duplicateCount) {
+  return {
+    external: externalCount,
+    local: localCount,
+    externalIdMin: ids.length ? Math.min(...ids) : null,
+    externalIdMax: ids.length ? Math.max(...ids) : null,
+    externalIdDuplicates: duplicateCount,
+    newCandidates: 0,
+    knownExact: 0,
+    representationOnly: 0,
+    existingContentDifferences: 0,
+    idReuseSuspected: 0,
+    missingUpstreamObservations: 0,
+    cardMatchCandidates: 0,
+    unlinkedCandidates: 0,
+    duplicateLocalContentMatches: 0,
+  };
+}
+
+function analyze(externalDocument, local, input, contentHash, options = {}) {
+  const externalValidation = validateExternal(externalDocument);
+  const localValidation = validateLocalAndMap(local);
+  const abilities = Array.isArray(externalDocument && externalDocument.abilities)
+    ? externalDocument.abilities : [];
+  const localAbilities = localValidation.abilities;
+  const ids = abilities.map(ability => ability && ability.id).filter(Number.isInteger);
+  const validationErrors = [...externalValidation.errors, ...localValidation.errors];
+  const base = {
+    reportVersion: 2,
+    input,
+    externalSha256: contentHash,
+    breakdown: {
+      source: countBy(abilities.filter(Boolean), ability => ability.source),
+      rarity: countBy(abilities.filter(Boolean), ability => ability.rarity),
+    },
+  };
+  if (validationErrors.length) {
+    return {
+      ...base,
+      auditStatus: 'FAIL',
+      safetyVerdict: 'BLOCKED',
+      blockReasons: ['AUDIT_INPUT_INVALID'],
+      reviewReasons: [],
+      counts: emptyCounts(abilities.length, localAbilities.length, ids, externalValidation.duplicateIds.length),
+      warnings: [],
+      details: {
+        validationErrors,
+        newCandidates: [],
+        representationOnly: [],
+        existingContentDifferences: [],
+        idReuseSuspected: [],
+        missingUpstreamObservations: [],
+        duplicateLocalContentMatches: [],
+      },
+    };
+  }
+
+  const localByLegacyId = new Map(localAbilities.map(ability => [ability.legacyId, ability]));
+  const externalIdSet = new Set(abilities.map(ability => ability.id));
+  const exactIndex = new Map();
+  const normalizedIndex = new Map();
+  for (const localAbility of localAbilities) {
+    const comparable = exactComparableFromLocal(localAbility);
+    addToIndex(exactIndex, comparableKey(comparable), localAbility);
+    addToIndex(normalizedIndex, comparableKey(normalizedComparable(comparable)), localAbility);
+  }
+
+  const knownExact = [];
+  const representationOnly = [];
+  const existingContentDifferences = [];
+  const idReuseSuspected = [];
+  const newCandidates = [];
+  const duplicateLocalContentMatches = [];
+
+  for (const external of abilities) {
+    const externalComparable = exactComparableFromExternal(external);
+    const sameIdLocal = localByLegacyId.get(external.id) || null;
+    const exactMatches = exactIndex.get(comparableKey(externalComparable)) || [];
+    const normalizedMatches = normalizedIndex
+      .get(comparableKey(normalizedComparable(externalComparable))) || [];
+    if (exactMatches.length > 1 || normalizedMatches.length > 1) {
+      const exactDuplicate = exactMatches.length > 1;
+      const matches = exactDuplicate ? exactMatches : normalizedMatches;
+      duplicateLocalContentMatches.push({
+        classification: 'duplicate_local_content_match',
+        actionable: false,
+        priority: 'low',
+        externalId: external.id,
+        externalName: external.name,
+        comparison: exactDuplicate ? 'exact' : 'normalized',
+        localAbilityIds: matches.map(ability => ability.abilityId),
+      });
+      continue;
+    }
+
+    if (sameIdLocal) {
+      const sameIdComparable = exactComparableFromLocal(sameIdLocal);
+      const normalizedFields = differingFields(sameIdComparable, externalComparable, true);
+      if (normalizedFields.length && isIdReuseSuspected(normalizedFields)) {
+        idReuseSuspected.push({
+          classification: 'ID_REUSE_SUSPECTED',
+          externalId: external.id,
+          localAbilityId: sameIdLocal.abilityId,
+          localCardId: sameIdLocal.cardId,
+          localLinkStatus: sameIdLocal.linkStatus,
+          changedFields: differingFields(sameIdComparable, externalComparable),
+          normalizedChangedFields: normalizedFields,
+          local: sameIdComparable,
+          external: externalComparable,
+        });
+        continue;
+      }
+    }
+
+    if (exactMatches.length === 1) {
+      knownExact.push({
+        externalId: external.id,
+        localAbilityId: exactMatches[0].abilityId,
+        externalIdMatchesLegacyId: external.id === exactMatches[0].legacyId,
+      });
+      continue;
+    }
+
+    if (normalizedMatches.length === 1) {
+      const localComparable = exactComparableFromLocal(normalizedMatches[0]);
+      representationOnly.push({
+        externalId: external.id,
+        localAbilityId: normalizedMatches[0].abilityId,
+        externalIdMatchesLegacyId: external.id === normalizedMatches[0].legacyId,
+        fields: differingFields(localComparable, externalComparable),
+      });
+      continue;
+    }
+
+    if (sameIdLocal) {
+      const localComparable = exactComparableFromLocal(sameIdLocal);
+      existingContentDifferences.push({
+        externalId: external.id,
+        localAbilityId: sameIdLocal.abilityId,
+        fields: differingFields(localComparable, externalComparable),
+        normalizedChangedFields: differingFields(localComparable, externalComparable, true),
+      });
+      continue;
+    }
+
+    const cardIdCandidate = localValidation.mappingByKey
+      .get(mappingKey(external.card, external.rarity)) || null;
+    newCandidates.push({
+      classification: cardIdCandidate ? 'card_match_candidate' : 'unlinked_candidate',
+      externalId: external.id,
+      name: external.name,
+      sourceName: external.card,
+      source: external.source,
+      rarity: external.rarity,
+      tags: external.tags,
+      cardIdCandidate,
+    });
+  }
+
+  const missingUpstreamObservations = localAbilities
+    .filter(ability => !externalIdSet.has(ability.legacyId))
+    .map(ability => ({
+      classification: 'missing_upstream_observation',
+      legacyId: ability.legacyId,
+      abilityId: ability.abilityId,
+      name: ability.name,
+      sourceName: ability.sourceName,
+      linkStatus: ability.linkStatus,
+      cardId: ability.cardId,
+    }));
+  const warnings = [];
+  const missingRanges = consecutiveRanges(missingUpstreamObservations.map(item => item.legacyId));
+  for (const range of missingRanges.filter(item => item.end > item.start)) {
+    const reuse = idReuseSuspected.find(item => item.externalId === range.end + 1);
+    if (reuse) {
+      warnings.push({
+        code: 'CONTIGUOUS_MISSING_IDS_WITH_REUSE_SUSPECTED',
+        missing: `${range.start}-${range.end}`,
+        reusedCandidate: reuse.externalId,
+      });
+    }
+  }
+
+  const cardMatchCandidates = newCandidates
+    .filter(candidate => candidate.classification === 'card_match_candidate').length;
+  const unlinkedCandidates = newCandidates.length - cardMatchCandidates;
+  const blockReasons = [];
+  const reviewReasons = [];
+  if (idReuseSuspected.length) blockReasons.push('ID_REUSE_SUSPECTED');
+  if (existingContentDifferences.length) reviewReasons.push('EXISTING_CONTENT_DIFFERENCES');
+  if (missingUpstreamObservations.length) reviewReasons.push('MISSING_UPSTREAM_OBSERVATIONS');
+  let safetyVerdict = 'SAFE';
+  if (reviewReasons.length) safetyVerdict = 'REVIEW_REQUIRED';
+  if (blockReasons.length) safetyVerdict = 'BLOCKED';
+
+  return {
+    ...base,
+    auditStatus: 'PASS',
+    safetyVerdict,
+    blockReasons,
+    reviewReasons,
+    counts: {
+      ...emptyCounts(abilities.length, localAbilities.length, ids, externalValidation.duplicateIds.length),
+      newCandidates: newCandidates.length,
+      knownExact: knownExact.length,
+      representationOnly: representationOnly.length,
+      existingContentDifferences: existingContentDifferences.length,
+      idReuseSuspected: idReuseSuspected.length,
+      missingUpstreamObservations: missingUpstreamObservations.length,
+      cardMatchCandidates,
+      unlinkedCandidates,
+      duplicateLocalContentMatches: duplicateLocalContentMatches.length,
+    },
+    warnings,
+    details: {
+      validationErrors: [],
+      newCandidates,
+      knownExactIdMismatches: knownExact.filter(item => !item.externalIdMatchesLegacyId),
+      representationOnly: options.showAllRepresentation
+        ? representationOnly : representationOnly.slice(0, 5),
+      representationDetailsTruncated: !options.showAllRepresentation && representationOnly.length > 5,
+      existingContentDifferences,
+      idReuseSuspected,
+      missingUpstreamObservations,
+      duplicateLocalContentMatches: options.showDuplicateDetails
+        ? duplicateLocalContentMatches : [],
+      duplicateLocalContentDetailsHidden: !options.showDuplicateDetails
+        && duplicateLocalContentMatches.length > 0,
+    },
+  };
+}
+
+function formatCodes(values) {
   return values.length ? values.join(', ') : 'なし';
 }
 
 function formatReport(report) {
   const lines = [];
-  lines.push('=== lMfDB 能力同期 dry-run ===');
+  lines.push('=== lMfDB 外部能力候補監査 ===');
   if (report.input.type === 'remote') {
     lines.push(`入力: ${report.input.externalSha ? `外部コミット ${report.input.externalSha}` : '外部 main'} (${report.input.value})`);
   } else {
     lines.push(`入力ファイル: ${report.input.value}`);
   }
   lines.push(`外部JSON SHA-256: ${report.externalSha256}`);
+  lines.push(`監査状態: ${report.auditStatus}`);
+  lines.push(`自動同期安全性: ${report.safetyVerdict}（自動同期機能は実装していません）`);
   lines.push(`件数: 外部 ${report.counts.external} / ローカル ${report.counts.local}`);
-  lines.push(`外部ID: 最小 ${report.counts.externalIdMin} / 最大 ${report.counts.externalIdMax} / 重複 ${report.counts.externalIdDuplicates}`);
+  lines.push(`登録済み完全一致: ${report.counts.knownExact}`);
+  lines.push(`表記違い（低優先度）: ${report.counts.representationOnly}`);
+  lines.push(`既存内容差分（自動更新なし）: ${report.counts.existingContentDifferences}`);
+  lines.push(`ID再利用疑い: ${report.counts.idReuseSuspected}`);
+  lines.push(`新規候補: ${report.counts.newCandidates}`);
+  lines.push(`  カード対応候補: ${report.counts.cardMatchCandidates}`);
+  lines.push(`  未紐付け候補: ${report.counts.unlinkedCandidates}`);
+  lines.push(`外部欠落観測（削除候補ではない）: ${report.counts.missingUpstreamObservations}`);
+  lines.push(`重複内容一致（対応不要）: ${report.counts.duplicateLocalContentMatches}件`);
   lines.push(`source内訳: ${Object.entries(report.breakdown.source).map(([key, value]) => `${key} ${value}`).join(' / ') || 'なし'}`);
   lines.push(`rarity内訳: ${Object.entries(report.breakdown.rarity).map(([key, value]) => `${key} ${value}`).join(' / ') || 'なし'}`);
-  lines.push(`差分: 追加 ${report.counts.additions} / 変更 ${report.counts.changes} / 欠落 ${report.counts.missing}`);
-  lines.push(`変更項目別: ${Object.entries(report.breakdown.changedFields).map(([key, value]) => `${key} ${value}`).join(' / ') || 'なし'}`);
-  lines.push(`現在resolvedへの影響: ${report.counts.resolvedImpacts}`);
-  lines.push(`新規resolved候補: ${report.counts.resolvedCandidates} / unlinked候補: ${report.counts.unlinkedCandidates}`);
-  lines.push(`abilityId衝突候補: ${report.counts.abilityIdCollisions} / cardId対応矛盾: ${report.counts.cardIdContradictions}`);
-  lines.push(`影響するcardId: ${formatList(report.details.affectedCardIds)}`);
-  lines.push(`自動同期を止める理由（BLOCKED）: ${formatList(report.stopReasons.blocked)}`);
-  lines.push(`自動同期を止める理由（要レビュー）: ${formatList(report.stopReasons.reviewRequired)}`);
-  lines.push(`最終判定: ${report.decision}`);
+  lines.push(`BLOCK理由: ${formatCodes(report.blockReasons)}`);
+  lines.push(`要確認理由: ${formatCodes(report.reviewReasons)}`);
+  for (const warning of report.warnings) {
+    lines.push(`関連警告: ${warning.code} missing=${warning.missing} reusedCandidate=${warning.reusedCandidate}`);
+  }
+  if (report.details.idReuseSuspected.length) {
+    lines.push('--- ID再利用疑い ---');
+    for (const item of report.details.idReuseSuspected) {
+      lines.push(`  外部ID ${item.externalId}: local=${item.local.name} / external=${item.external.name} / 変更=${item.normalizedChangedFields.join(',')}`);
+    }
+  }
+  if (report.details.representationOnly.length) {
+    lines.push(`--- 表記違い${report.details.representationDetailsTruncated ? '（先頭5件のみ）' : ''} ---`);
+    for (const item of report.details.representationOnly) {
+      lines.push(`  外部ID ${item.externalId} -> ${item.localAbilityId}: ${item.fields.join(',')}`);
+    }
+  }
+  if (report.details.duplicateLocalContentMatches.length) {
+    lines.push('--- 重複内容一致の監査詳細（対応不要） ---');
+    for (const item of report.details.duplicateLocalContentMatches) {
+      const comparison = item.comparison === 'exact' ? '完全一致' : '比較用正規化後一致';
+      lines.push(`  外部ID ${item.externalId} ${item.externalName} / ${comparison} / ${item.localAbilityIds.join(',')}`);
+    }
+  }
+  if (report.details.newCandidates.length) {
+    lines.push('--- 新規候補 ---');
+    for (const candidate of report.details.newCandidates) {
+      lines.push(`  ${candidate.externalId} ${candidate.name} / ${candidate.sourceName} / ${candidate.rarity} / ${candidate.classification}${candidate.cardIdCandidate ? ` (${candidate.cardIdCandidate})` : ''}`);
+    }
+  }
   return `${lines.join('\n')}\n`;
 }
 
 async function run(options, dependencies = {}) {
   const external = await loadExternal(options, dependencies.fetchImpl);
   const local = dependencies.local || loadLocalDocuments();
-  const report = analyze(external.document, local, external.input, sha256(external.buffer));
+  const report = analyze(external.document, local, external.input, sha256(external.buffer), options);
   if (options.jsonReport) fs.writeFileSync(options.jsonReport, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
   return report;
 }
@@ -459,12 +687,14 @@ async function main() {
   const report = await run(options);
   process.stdout.write(formatReport(report));
   if (options.jsonReport) process.stdout.write(`JSON監査レポート: ${options.jsonReport}\n`);
-  if (RANK[report.decision] >= RANK.BLOCKED) process.exitCode = 1;
+  if (report.auditStatus === 'FAIL' || SAFETY_RANK[report.safetyVerdict] >= SAFETY_RANK.BLOCKED) {
+    process.exitCode = 1;
+  }
 }
 
 if (require.main === module) {
   main().catch(error => {
-    process.stderr.write(`lMfDB 能力同期 dry-run: BLOCKED ${error.message}\n`);
+    process.stderr.write(`lMfDB 外部能力候補監査: auditStatus=FAIL safetyVerdict=BLOCKED ${error.message}\n`);
     process.exit(1);
   });
 }
