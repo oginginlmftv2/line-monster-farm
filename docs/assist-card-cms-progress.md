@@ -1,8 +1,8 @@
 # アシストカードDB・静的ページ・CMS 設計進捗
 
-最終更新: 2026-08-25
+最終更新: 2026-08-28
 
-状態: **P12-8完了。P12-8bの構造化フォーム化を実装中**
+状態: **P12-17a完了。P12-17bで外部候補の手動登録設計を確定**
 
 この文書は、アシストカード情報基盤の詳細な現在地、設計、依存関係、保留事項、
 実施順を管理する正である。全体の現在地は`docs/PROGRESS.md`、全体計画は
@@ -482,6 +482,47 @@ Firestore write禁止と旧読取表示は、静的移行の確認が終わる�
 - カードフォームへ画像選択・プレビュー・Driveアップロードを追加した。管理者指定の「共有アイテム / ライ徹_画像 / assist-card」をtest・本番で共有し、そのIDを`ASSIST_IMAGE_FOLDER_ID`へ設定する。GASはフォルダやサブフォルダを作成・移動せず、指定先直下へCMSで新規選択・差し替えた画像だけを保存する。モンスターCMSと同じ2MB上限・画像実体検査・同一ID旧版のゴミ箱移動を適用し、既存91画像はDriveへ複製しない。公開サイトはGitHubの`assist-cards/`を読み、Driveからの送信はP12-10以降へ分離した
 - test Apps Scriptの既存ウェブアプリをdeployment v20へ更新。指定DriveフォルダIDのScript Properties設定、初回Drive権限承認、`setup5_createAssistImageFolder`の実行完了、カード画像アップロードUIの有効化を確認した
 - deployment v20からヴィトニル画像1枚を実アップロードし、指定Driveフォルダ直下の`a24j-MR-vitoniru.jpg`保存を確認した。既存91画像の複製、サブフォルダ作成、GitHub・公開DB更新は行っていない
+
+## 外部能力DB連携（P12-17a / P12-17b）
+
+外部`lMfDB`は能力DBの正本ではなく、新規候補を発見する参考フィードとして扱う。
+P12-17aで読取専用監査を実装し、P12-17bで将来の手動登録設計を確定した。
+詳細の正は`docs/lmfdb-integration.md`とする。
+
+確定事項:
+
+- ローカル`abilityId`は外部IDと無関係な`ab-`単調増加番号をScriptLock下で採番する
+- 既存1,079件の`legacyId`は維持し、新規能力は`legacyId: null`とする。能力JSONは将来schemaVersion 2へ上げる
+- 外部参照履歴は公開3DBへ混ぜず、内部専用`ability_external_refs`シートへ保存する
+- 同一候補は`provider + externalNumericId + externalFingerprint`から作るcandidateKeyで識別する。
+  外部数値IDが再利用されても別fingerprintの履歴を別に保持する
+- 新規登録は`api_asstCreateAbilityFromExternalCandidate()`だけが行い、既存能力を更新する分岐を持たない
+- クライアントはID、sortOrder、status、監査情報を指定できない。サーバーが固定SHAの外部原文を再取得して検証する
+- 初期statusは常にdraft。resolvedは管理者がカードを確認した場合だけ、unlinkedはcardId/sortOrderをnullで登録できる。
+  ambiguousは外部候補の新規登録には使わない
+- 能力側の新規許可値はsource=`イベント / 閃き / EXトレ / 伝授`、
+  rarity=`MR / SSR / SR / その他`。カードDBのrarity許可値とは分離する
+- 比較用NFKCは重複検査だけに使い、保存値へ反映しない。効果OCR用の正規化も流用しない
+- 外部候補取得は読取専用。保存時だけScriptLockを取り、能力1行と参照履歴1行を追加する。
+  自動公開・時間トリガー・外部更新トリガーは作らない
+- 公開生成はresolvedに加えてverifiedを要求し、draft能力をページ本文とindexゲートへ含めない
+- 汎用削除UIは作らない。誤登録はabilityIdとfingerprintで追加行だけを特定し、
+  管理者手順でrevertedとして履歴を残す
+
+段階4は、スキーマ検査、読取API、一覧、詳細プレビュー、test追加API、破壊テスト、
+本番移行の7タスクに分割する。一度にGAS画面・保存・本番反映を実装しない。
+
+段階4で既存CMSへ必要になる主な変更:
+
+- `abilities`のlegacyId行変換・検証・exportをnullableへ対応させる
+- abilitiesのsource / rarity許可値を能力専用定数として拡張する
+- `ability_external_refs`のシート定義、検査、バックアップ手順を追加する
+- 現行`api_asstPublish()`もカード・効果・能力保存と同じScriptLockを使うようにする
+- `build-assist-pages.js`と検査を`linkStatus: resolved && status: verified`へ合わせる
+- P12-17aの監査処理はnull legacyIdを外部ID照合・外部欠落観測から除外する
+
+P12-17bでは上記を実装していない。3DB、GAS、シート、Workflow、生成ページ、公開経路、
+本番データは変更していない。
 
 ## 10. 現在の保留・外部確認待ち
 
