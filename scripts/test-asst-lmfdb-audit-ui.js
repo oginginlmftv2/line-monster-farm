@@ -101,6 +101,12 @@ function harness(options = {}) {
     },
     setBusy(value, message) { busy.push({ value, message }); },
     show() {},
+    call(name, args, success) {
+      calls.push({ name, payload: JSON.parse(JSON.stringify(args[0])) });
+      if (name === 'api_asstCreateAbilityFromExternalCandidate') success({ ok: true, abilityId: 'ab-1085', legacyId: null, status: 'draft', linkStatus: 'unlinked', sortOrder: null });
+      else if (name === 'api_asstSetExternalCandidateDisposition') success({ ok: true, disposition: args[0].disposition, version: 1 });
+      else throw new Error(`予期しないcall: ${name}`);
+    },
     confirm() { return true; },
     prompt() { return null; },
     alert() {},
@@ -263,7 +269,7 @@ test('externalSnapshot nullでも描画できる', () => {
   const h = harness({ response: response({ candidates: [missing] }) });
   assert.doesNotThrow(() => h.context.asstOpenExternalAudit());
   assert.match(h.html(), /ローカル能力/);
-  assert.match(h.html(), /監査情報のみ/);
+  assert.match(h.html(), /監査情報/);
 });
 
 test('現在のAPI応答内の候補だけをAPI再取得なしで詳細表示する', () => {
@@ -316,10 +322,10 @@ test('resolvedはカード候補とカード確認を必須にする', () => {
   assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード確認/.test(value)));item.cardIdCandidate=null;assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード候補/.test(value)));
 });
 
-test('最終プレビュー契約は許可キーだけを組み立てAPIへ送らない', () => {
+test('最終プレビュー契約は許可キーだけを組み立てる', () => {
   const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明\r\n続き',source:'イベント',rarity:'MR',tags:['タグ'],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false,draftReviewed:true}};
   const preview=h.context.asstBuildAuditPreview(item,d);assert.deepStrictEqual(Object.keys(preview.registration),['sourceName','name','description','source','rarity','tags','linkStatus','cardId']);assert.strictEqual(preview.registration.description,'説明\n続き');assert.strictEqual(preview.registration.cardId,null);assert.deepStrictEqual(Object.keys(preview.confirmations),['originalCompared','normalizationReviewed','cardReviewed','idReuseReviewed']);assert.strictEqual(h.calls.length,1);
-  const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
+  const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.match(rendered,/新規能力として保存/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
   assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*ASST\.audit\.finalPreview=null/);
 });
 
@@ -348,12 +354,32 @@ test('外部文字列をescし実行可能なHTMLにしない', () => {
   assert.match(h.html(), /&lt;script&gt;/);
 });
 
-test('監査画面に書込み・削除・公開操作を置かない', () => {
-  const h = harness();
-  h.context.asstOpenExternalAudit();
-  const buttonLabels = [...h.html().matchAll(/<button[^>]*>([^<]+)<\/button>/g)].map(match => match[1]);
-  assert(!buttonLabels.some(label => /登録|保存|処置|削除|公開/.test(label)), buttonLabels.join(' / '));
-  assert.deepStrictEqual([...new Set(h.calls.map(call => call.name))], ['api_asstAuditExternalAbilities']);
+test('GASテンプレートを途中終了させるscript終了タグを文字列内に置かない', () => {
+  assert.strictEqual((UI_SOURCE.match(/<\/script/gi) || []).length, 1);
+});
+
+test('最終プレビューから追加専用APIだけを呼び同じ固定SHAで再監査する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];
+  h.context.ASST.audit.finalPreview=h.context.asstBuildAuditPreview(item,{sourceName:'カード',name:'能力',description:'説明',source:'イベント',rarity:'MR',tags:[],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false}});
+  h.context.asstCreateExternalAbility();
+  assert.strictEqual(h.calls[1].name,'api_asstCreateAbilityFromExternalCandidate');
+  assert.deepStrictEqual(Object.keys(h.calls[1].payload),['auditVersion','provider','externalSha','candidateKey','externalNumericId','externalFingerprint','expectedAbilitiesVersion','registration','confirmations']);
+  assert.deepStrictEqual(h.calls[2],{name:'api_asstAuditExternalAbilities',payload:{page:1,pageSize:50,externalSha:FIXED_SHA}});
+  assert.match(h.html(),/abilityId: ab-1085/);assert.match(h.html(),/自動公開されていません/);
+});
+
+test('読取専用候補は処置APIだけを呼びabilities非変更を明示する', () => {
+  const item=candidate('representationOnly',2,'表記',{registrationEligible:false,auditOnly:true,cardIdCandidate:null});
+  const h=harness({response:response({candidates:[item]})});h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
+  assert.match(h.html(),/候補の処置/);assert.doesNotMatch(h.html(),/新規能力として保存/);
+  h.context.el('asst_auditDisposition').value='ignored';h.context.el('asst_auditDispositionNote').value='確認済み';h.context.asstSaveExternalDisposition();
+  assert.strictEqual(h.calls[1].name,'api_asstSetExternalCandidateDisposition');assert.strictEqual(h.calls[1].payload.disposition,'ignored');
+  assert.strictEqual(h.calls[2].payload.externalSha,FIXED_SHA);assert.match(h.html(),/abilitiesは変更していません/);
+});
+
+test('監査画面に削除・公開・既存能力更新操作を置かない', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
+  assert.doesNotMatch(h.html(), /削除|公開ボタン|api_asstSaveAbility/);
   assert.doesNotMatch(h.html(), /abilityId[^<]*<input|sortOrder[^<]*<input/);
 });
 

@@ -213,6 +213,22 @@ ${renderRows(basicRows)}
 `;
 }
 
+function buildCardArtifact(card, effects, allAbilities, cardById) {
+  const abilities = allAbilities.filter(ability =>
+    ability.linkStatus === 'resolved' && ability.status === 'verified' && ability.cardId === card.cardId)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+  const effectChars = effects.reduce((sum, effect) => sum + stripTags(effect.name).length + stripTags(effect.description).length, 0);
+  const abilityChars = abilities.reduce((sum, ability) => sum + stripTags(ability.name).length + stripTags(ability.description).length, 0);
+  const explanationChars = stripTags(card.explanation).length;
+  const visible = effectChars + abilityChars + explanationChars;
+  const indexable = visible >= INDEXABLE_VISIBLE_CHARS
+    && explanationChars >= INDEXABLE_EXPLANATION_CHARS;
+  return {
+    html: renderPage(card, effects, abilities, cardById, indexable),
+    report: { cardId: card.cardId, visible, explanation: explanationChars, indexable },
+  };
+}
+
 function validateInputs(cards, effectsByCard, abilities) {
   const ids = cards.map(card => card.cardId);
   const idSet = new Set(ids);
@@ -248,25 +264,16 @@ function buildAssistPages(options = {}) {
   }
   const cards = cardData.cards;
   const effectsByCard = effectData.cards;
-  const resolvedAbilities = abilityData.abilities.filter(ability => ability.linkStatus === 'resolved');
-  validateInputs(cards, effectsByCard, resolvedAbilities);
+  validateInputs(cards, effectsByCard, abilityData.abilities);
   const cardById = new Map(cards.map(card => [card.cardId, card]));
   const counts = { new: 0, updated: 0, unchanged: 0 };
   const reports = [];
 
   for (const card of cards) {
     const effects = effectsByCard[card.cardId].effects;
-    const abilities = resolvedAbilities.filter(ability => ability.cardId === card.cardId)
-      .sort((a, b) => a.sortOrder - b.sortOrder);
-    const effectChars = effects.reduce((sum, effect) => sum + stripTags(effect.name).length + stripTags(effect.description).length, 0);
-    const abilityChars = abilities.reduce((sum, ability) => sum + stripTags(ability.name).length + stripTags(ability.description).length, 0);
-    const explanationChars = stripTags(card.explanation).length;
-    const visible = effectChars + abilityChars + explanationChars;
-    const indexable = visible >= INDEXABLE_VISIBLE_CHARS
-      && explanationChars >= INDEXABLE_EXPLANATION_CHARS;
-    const html = renderPage(card, effects, abilities, cardById, indexable);
-    counts[writeIfChanged(`cards/${card.cardId}.html`, html, dryRun)]++;
-    reports.push({ cardId: card.cardId, visible, explanation: explanationChars, indexable });
+    const artifact = buildCardArtifact(card, effects, abilityData.abilities, cardById);
+    counts[writeIfChanged(`cards/${card.cardId}.html`, artifact.html, dryRun)]++;
+    reports.push(artifact.report);
   }
 
   const values = reports.map(report => report.visible).sort((a, b) => a - b);
@@ -297,4 +304,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { buildAssistPages };
+module.exports = { buildAssistPages, buildCardArtifact };
