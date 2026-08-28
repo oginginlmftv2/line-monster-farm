@@ -28,6 +28,7 @@ const DATA_FILES = [
 ];
 const LMFDB_CARD_MAP_FILE = 'src/data/lmfdb-card-map.json';
 const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
+const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
 
 const ALLOWED = {
   rarity: new Set(['MR', 'SSR']),
@@ -91,7 +92,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -115,6 +116,8 @@ function validateRoot(root) {
   const auditFunctionNames = [...gas.matchAll(/function\s+(asstAudit[A-Za-z0-9_]*|api_asstAuditExternalAbilities)\s*\(/g)]
     .map(match => match[1]);
   const auditSource = auditFunctionNames.map(name => functionBlock(gas, name)).join('\n');
+  const auditUiFunctionNames = [...html.matchAll(/function\s+(asst[A-Za-z0-9_]*Audit[A-Za-z0-9_]*)\s*\(/g)].map(match => match[1]);
+  const auditUiSource = auditUiFunctionNames.map(name => functionBlock(html, name)).join('\n');
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
   if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
@@ -206,6 +209,35 @@ function validateRoot(root) {
   }
   const auditForbidden = /appendRow\s*\(|setValue(?:s)?\s*\(|clearContent\s*\(|deleteRows\s*\(|PropertiesService|CacheService|LockService|ScriptApp|DriveApp|githubRequest_|api_asstCreateAbilityFromExternalCandidate|api_asstSetExternalCandidateDisposition/;
   if (auditForbidden.test(auditSource)) issues.push('外部能力監査APIの読取専用境界に書込み・ロック・永続化処理が混入');
+  if (!/id="asst_btnExternalAbilityAudit"[^>]*>外部能力DBを確認</.test(html) ||
+      !/api_asstAuditExternalAbilities\(payload\)/.test(auditUiSource) ||
+      !/var payload=\{page:page,pageSize:ASST_AUDIT_PAGE_SIZE\}/.test(auditUiSource) ||
+      !/if\(ASST\.audit\.externalSha\)payload\.externalSha=ASST\.audit\.externalSha/.test(auditUiSource) ||
+      !/if\(latest\)\{ASST\.audit\.externalSha=null/.test(auditUiSource) ||
+      !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=50/.test(html)) {
+    issues.push('外部能力監査UIの入口・固定SHA・50件ページング・ローカル無効化が不足');
+  }
+  if (/localStorage|sessionStorage|document\.cookie|CacheStorage|caches\.|PropertiesService|CacheService/.test(auditUiSource)) {
+    issues.push('外部能力監査UIが結果をブラウザまたはGASへ永続化している');
+  }
+  if (/fetch\s*\(|XMLHttpRequest|raw\.githubusercontent\.com|api\.github\.com/.test(auditUiSource) ||
+      /api_asst(?:Save|Create|Set|Publish|Export|Upload|Ocr)/.test(auditUiSource)) {
+    issues.push('外部能力監査UIが読取API以外の外部取得・書込みAPIを呼んでいる');
+  }
+  const auditUiRequiredText = [
+    '外部コミットSHA', '外部JSON SHA-256', 'auditVersion', 'auditStatus', 'safetyVerdict',
+    'blockReasons', 'reviewReasons', '外部件数', 'ローカル件数', 'カード対応候補数',
+    '未紐付け候補数', 'ID再利用疑い数', '既存内容差分数', '表記違い数',
+    '重複内容一致数', '外部欠落観測数', '処置済み件数', '処置済みを表示',
+    '現在ページ', '総ページ', '総候補数', '登録可能候補（この一覧では操作できません）',
+  ];
+  if (auditUiRequiredText.some(value => !html.includes(value)) ||
+      !/\['representationOnly','表記違い',false\]/.test(html) ||
+      !/\['duplicate_local_content_match','重複内容一致',false\]/.test(html) ||
+      !/\['missing_upstream_observation','外部欠落観測',false\]/.test(html) ||
+      !/esc\(name\|\|'—'\)/.test(auditUiSource) || !/esc\(sourceName\|\|'—'\)/.test(auditUiSource)) {
+    issues.push('外部能力監査UIのサマリー・候補表示・折りたたみ・エスケープが不足');
+  }
   if (!/getDataRange\(\)\.getValues\(\)/.test(functionBlock(gas, 'asstAuditReadLocal_')) ||
       !/\[ASST_SHEET_CARDS, ASST_SHEET_ABILITIES, ASST_SHEET_ABILITY_EXTERNAL_REFS\]/.test(functionBlock(gas, 'asstAuditReadLocal_'))) {
     issues.push('外部能力監査APIがcards/abilities/ability_external_refsを各1回の範囲読取に限定していない');
