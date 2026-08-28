@@ -30,6 +30,8 @@ function candidate(classification, id, name, overrides = {}) {
     priorityOrder: 1,
     externalNumericId: id,
     externalSnapshot: { card: `カード${id}`, name, desc: '説明', source: 'イベント', rarity: 'MR', tags: ['タグ'] },
+    candidateKey: 'd'.repeat(64), externalFingerprint: 'e'.repeat(64), comparisonFingerprint: 'f'.repeat(64),
+    exactMatchAbilityIds: [], nfkcMatchAbilityIds: [], sameIdComparison: null, auditOnly: false,
     cardIdCandidate: `card-${id}`,
     disposition: null,
     processed: false,
@@ -239,8 +241,8 @@ test('低優先3分類は既定で折りたたむ', () => {
   ];
   const h = harness({ response: response({ candidates }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /<details open><summary>カード対応候補/);
-  for (const label of ['表記違い','重複内容一致','外部欠落観測']) assert.match(h.html(), new RegExp(`<details><summary>${label}`));
+  assert.match(h.html(), /<details data-audit-category="card_match_candidate" open><summary>カード対応候補/);
+  for (const [classification, label] of [['representationOnly','表記違い'],['duplicate_local_content_match','重複内容一致'],['missing_upstream_observation','外部欠落観測']]) assert.match(h.html(), new RegExp(`<details data-audit-category="${classification}"><summary>${label}`));
 });
 
 test('処置済み候補はチェック後だけ表示する', () => {
@@ -264,6 +266,71 @@ test('externalSnapshot nullでも描画できる', () => {
   assert.match(h.html(), /監査情報のみ/);
 });
 
+test('現在のAPI応答内の候補だけをAPI再取得なしで詳細表示する', () => {
+  const h = harness();
+  h.context.asstOpenExternalAudit();
+  h.context.asstOpenAuditDetail(0);
+  assert.strictEqual(h.calls.length, 1);
+  assert.match(h.html(), /外部能力候補の詳細/);
+  for (const label of ['外部コミットSHA','外部数値ID','candidateKey','externalFingerprint','sourceName','description','完全一致した既存abilityId','NFKC一致した既存abilityId']) assert(h.html().includes(label), label);
+});
+
+test('読取専用分類・処置済み・auditOnlyは編集プレビューを出さない', () => {
+  for (const item of [
+    candidate('existingContentDifferences', 1, '差分', { registrationEligible: false, auditOnly: true }),
+    candidate('representationOnly', 2, '表記', { registrationEligible: false, auditOnly: true }),
+    candidate('duplicate_local_content_match', 3, '重複', { registrationEligible: false, auditOnly: true }),
+    candidate('card_match_candidate', 4, '処置済み', { processed: true, registrationEligible: false }),
+    candidate('card_match_candidate', 5, '監査のみ', { registrationEligible: true, auditOnly: true }),
+  ]) {
+    const h = harness({ response: response({ candidates: [item] }) });h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
+    assert.match(h.html(), /読取専用/);assert.doesNotMatch(h.html(), /id="asst_btnAuditFinalPreview"/);
+  }
+});
+
+test('外部欠落観測はcandidateKey null・外部原文なしで読取専用詳細を表示する', () => {
+  const missing = candidate('missing_upstream_observation', 1080, 'unused', { candidateKey: null, externalFingerprint: null, externalSnapshot: null, localObservation: { abilityId: 'ab-1080', name: 'ローカル能力', sourceName: '元カード' }, cardIdCandidate: null, registrationEligible: false, auditOnly: true });
+  const h = harness({ response: response({ candidates: [missing] }) });h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
+  assert.match(h.html(), /外部原文なし/);assert.match(h.html(), /読取専用/);
+});
+
+test('ID再利用疑いは強い警告と専用確認を表示する', () => {
+  const reused = candidate('ID_REUSE_SUSPECTED', 1084, '再利用', { registrationEligible: true, requiresIdReuseConfirmation: true, cardIdCandidate: null });
+  const h = harness({ response: response({ candidates: [reused] }) });h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
+  assert.match(h.html(), /同一外部IDが別能力になった疑い/);assert.match(h.html(), /id="asst_audit_idReuseReviewed"/);assert.match(h.html(), /value="resolved" disabled>resolved/);
+});
+
+test('登録予定値は原文を保ちlinkStatusだけ未選択で開始する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);const d=h.context.ASST.audit.detailDraft;
+  assert.strictEqual(d.sourceName, 'カード1200');assert.strictEqual(d.name, '先頭候補');assert.strictEqual(d.linkStatus, '');assert.match(h.html(), /比較用NFKCは表示だけ/);assert.match(h.html(), /保存時にサーバー採番/);assert.match(h.html(), /legacyId/);assert.match(h.html(), /draft/);
+});
+
+test('プレビュー検査が必須値・許可値・タグ・危険文字列・確認漏れを拒否する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const bad={sourceName:'   ',name:'x\t',description:'<b>x</b></ScRiPt>',source:'未知',rarity:'UR',tags:[' ','重複','重複',7],linkStatus:'',confirmations:{originalCompared:false,normalizationReviewed:false,cardReviewed:false,idReuseReviewed:false,draftReviewed:false}};
+  const issues=h.context.asstAuditDraftIssues(item,bad).join(' / ');
+  for (const token of ['sourceNameは必須','制御文字','許可値','空タグ','重複タグ','文字列以外','</script','<br>以外','linkStatus','外部原文','NFKC','カード対応','draft']) assert(issues.includes(token), token);
+});
+
+test('resolvedはカード候補とカード確認を必須にする', () => {
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明<br>続き',source:'伝授',rarity:'その他',tags:[],linkStatus:'resolved',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:false,idReuseReviewed:false,draftReviewed:true}};
+  assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード確認/.test(value)));item.cardIdCandidate=null;assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード候補/.test(value)));
+});
+
+test('最終プレビュー契約は許可キーだけを組み立てAPIへ送らない', () => {
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明\r\n続き',source:'イベント',rarity:'MR',tags:['タグ'],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false,draftReviewed:true}};
+  const preview=h.context.asstBuildAuditPreview(item,d);assert.deepStrictEqual(Object.keys(preview.registration),['sourceName','name','description','source','rarity','tags','linkStatus','cardId']);assert.strictEqual(preview.registration.description,'説明\n続き');assert.strictEqual(preview.registration.cardId,null);assert.deepStrictEqual(Object.keys(preview.confirmations),['originalCompared','normalizationReviewed','cardReviewed','idReuseReviewed']);assert.strictEqual(h.calls.length,1);
+  const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
+  assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*ASST\.audit\.finalPreview=null/);
+});
+
+test('同じページへ戻ると編集・折りたたみ・処置済み表示を保持しページ移動で破棄する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.audit.showProcessed=true;h.context.ASST.audit.foldOpen.representationOnly=true;h.context.asstOpenAuditDetail(0);
+  for (const [id, value] of [['sourceName','カード1200'],['name','手修正'],['description','説明'],['source','イベント'],['rarity','MR'],['tags','タグ'],['linkStatus','unlinked']]) h.context.el('asst_audit_'+id).value=value;
+  h.context.asstReturnFromAuditDetail();h.context.asstOpenAuditDetail(0);
+  assert.strictEqual(h.context.ASST.audit.detailDraft.name,'手修正');assert.strictEqual(h.context.ASST.audit.showProcessed,true);assert.strictEqual(h.context.ASST.audit.foldOpen.representationOnly,true);
+  h.transport.response=response({pagination:{page:2,pageSize:50,totalItems:51,totalPages:2}});h.context.asstLoadExternalAudit(2,false);assert.strictEqual(h.context.ASST.audit.detailIndex,null);assert.strictEqual(h.context.ASST.audit.detailDraft,null);assert.strictEqual(h.context.ASST.audit.externalSha,FIXED_SHA);
+});
+
 test('外部文字列をescし実行可能なHTMLにしない', () => {
   const evil = '<script>globalThis.PWNED=1<\/script><img src=x onerror=globalThis.PWNED=2>';
   const item = candidate('card_match_candidate', 9, evil);
@@ -276,6 +343,9 @@ test('外部文字列をescし実行可能なHTMLにしない', () => {
   assert.match(h.html(), /&lt;script&gt;/);
   assert.match(h.html(), /&lt;img src=x onerror=/);
   assert.strictEqual(h.context.PWNED, undefined);
+  h.context.asstOpenAuditDetail(0);
+  assert.doesNotMatch(h.html(), /<script>|<img/);
+  assert.match(h.html(), /&lt;script&gt;/);
 });
 
 test('監査画面に書込み・削除・公開操作を置かない', () => {

@@ -118,6 +118,10 @@ function validateRoot(root) {
   const auditSource = auditFunctionNames.map(name => functionBlock(gas, name)).join('\n');
   const auditUiFunctionNames = [...html.matchAll(/function\s+(asst[A-Za-z0-9_]*Audit[A-Za-z0-9_]*)\s*\(/g)].map(match => match[1]);
   const auditUiSource = auditUiFunctionNames.map(name => functionBlock(html, name)).join('\n');
+  const auditDetailOpenBlock = functionBlock(html, 'asstOpenAuditDetail');
+  const auditPreviewBlock = functionBlock(html, 'asstBuildAuditPreview');
+  const auditValidationBlock = functionBlock(html, 'asstAuditDraftIssues');
+  const auditReadOnlyBlock = functionBlock(html, 'asstAuditReadOnly');
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
   if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
@@ -237,6 +241,46 @@ function validateRoot(root) {
       !/\['missing_upstream_observation','外部欠落観測',false\]/.test(html) ||
       !/esc\(name\|\|'—'\)/.test(auditUiSource) || !/esc\(sourceName\|\|'—'\)/.test(auditUiSource)) {
     issues.push('外部能力監査UIのサマリー・候補表示・折りたたみ・エスケープが不足');
+  }
+  const auditDetailFunctions = [
+    'asstOpenAuditDetail', 'asstReturnFromAuditDetail', 'asstAuditEditable', 'asstRenderAuditOriginal',
+    'asstRenderAuditComparison', 'asstRenderAuditRegistration', 'asstAuditDraftIssues',
+    'asstBuildAuditPreview', 'asstRenderAuditFinalPreview', 'asstDiscardAuditDetail',
+    'asstBindAuditDetail',
+  ];
+  const auditDetailText = [
+    '詳細を確認', '外部能力候補の詳細', '外部原文なし', '完全一致した既存abilityId',
+    'NFKC一致した既存abilityId', '同一legacyId比較のabilityId', 'changedFields',
+    'normalizedChangedFields', '比較用NFKC', '登録予定値', '保存時にサーバー採番',
+    'なし（null）', 'この段階では公開されない', '明示選択してください',
+    'クライアント検査は将来のサーバー検査の代わりではありません',
+    '最終プレビューを確認', 'まだ保存されていません',
+  ];
+  if (auditDetailFunctions.some(name => !new RegExp(`function\\s+${name}\\s*\\(`).test(html)) ||
+      auditDetailText.some(value => !html.includes(value)) ||
+      !/data-audit-detail/.test(html) || !/data-audit-category/.test(html)) {
+    issues.push('外部能力候補の詳細・比較・編集プレビューが不足');
+  }
+  if (/google\.script|api_asstAuditExternalAbilities|\bcall\s*\(/.test(auditDetailOpenBlock) ||
+      !/response\.candidates\[index\]/.test(auditDetailOpenBlock)) {
+    issues.push('候補詳細が現在のAPI応答だけを使わず再取得している');
+  }
+  if (!/registration:\{sourceName:d\.sourceName,name:d\.name,description:d\.description,source:d\.source,rarity:d\.rarity,tags:d\.tags\.slice\(\),linkStatus:d\.linkStatus,cardId:/.test(auditPreviewBlock) ||
+      !/confirmations:\{originalCompared:/.test(auditPreviewBlock) ||
+      /abilityId|legacyId|sourceOrder|sortOrder|status|flags|version|updatedAt|updatedBy|disposition|comparisonFingerprint/.test(auditPreviewBlock)) {
+    issues.push('外部能力候補の最終プレビュー契約に不足または内部キー混入');
+  }
+  if (!/\['イベント','閃き','EXトレ','伝授'\]/.test(auditValidationBlock) ||
+      !/\['MR','SSR','SR','その他'\]/.test(auditValidationBlock) ||
+      !/\['resolved','unlinked'\]/.test(auditValidationBlock) ||
+      !/制御文字/.test(auditValidationBlock) || !/<br>以外/.test(auditValidationBlock) ||
+      !/ID再利用疑い/.test(auditValidationBlock) || !/draft・未公開/.test(auditValidationBlock)) {
+    issues.push('外部能力候補のクライアントプレビュー検査が不足');
+  }
+  if (!/esc\(label\)/.test(auditReadOnlyBlock) || !/esc\(asstAuditDisplayValue\(value\)\)/.test(auditReadOnlyBlock) ||
+      /id=["']\s*['"]?\+.*candidateKey|id=["']\s*['"]?\+.*external/.test(auditUiSource) ||
+      /<textarea[^>]*(?:json|preview)/i.test(html)) {
+    issues.push('外部能力候補の詳細描画・DOM識別子・JSON編集欄の安全条件が不足');
   }
   if (!/getDataRange\(\)\.getValues\(\)/.test(functionBlock(gas, 'asstAuditReadLocal_')) ||
       !/\[ASST_SHEET_CARDS, ASST_SHEET_ABILITIES, ASST_SHEET_ABILITY_EXTERNAL_REFS\]/.test(functionBlock(gas, 'asstAuditReadLocal_'))) {

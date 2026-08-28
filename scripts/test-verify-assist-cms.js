@@ -598,7 +598,31 @@ expectFailure('外部能力監査結果のlocalStorage永続化を拒否', root 
   fs.writeFileSync(file, source.replace('function asstLoadExternalAudit(page,latest){', "function asstLoadExternalAudit(page,latest){\n  localStorage.setItem('audit', 'bad');"));
 }, /外部能力監査UIが結果をブラウザまたはGASへ永続化/);
 
-console.log('OK 既存66件を含む破壊コピー71ケースをすべて拒否');
+expectFailure('外部能力候補の詳細入口欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replaceAll('data-audit-detail', 'data-removed-detail'));
+}, /外部能力候補の詳細・比較・編集プレビューが不足/);
+
+expectFailure('外部能力候補プレビューへの内部キー混入を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('registration:{sourceName:', 'registration:{abilityId:"bad",sourceName:'));
+}, /最終プレビュー契約に不足または内部キー混入/);
+
+expectFailure('外部能力候補の許可値検査欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("['resolved','unlinked'].indexOf(d.linkStatus)", "['resolved','unlinked','ambiguous'].indexOf(d.linkStatus)"));
+}, /クライアントプレビュー検査が不足/);
+
+expectFailure('外部能力候補の読取値エスケープ欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('esc(asstAuditDisplayValue(value))', 'asstAuditDisplayValue(value)'));
+}, /詳細描画・DOM識別子・JSON編集欄の安全条件が不足/);
+
+console.log('OK 既存66件を含む破壊コピー75ケースをすべて拒否');
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
   cwd: repo,
   stdio: 'inherit',
