@@ -44,10 +44,21 @@ var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
 function asstSourceUrls_() { return { cards: RAW_BASE + 'assist-cards.json', effects: RAW_BASE + 'assist-effects.json', abilities: RAW_BASE + 'assist-abilities.json' }; }
 
+function asstAcquireScriptLock_() {
+  var lock = LockService.getScriptLock();
+  if (!lock.tryLock(1)) {
+    throw new Error('他の保存・公開処理と重なりました。再読み込みしてからやり直してください。');
+  }
+  return lock;
+}
+
+function asstReleaseScriptLock_(lock) {
+  if (lock) lock.releaseLock();
+}
+
 function asstReserveOcrDailyUsage_() {
   var limit = positiveIntProp_('OCR_DAILY_LIMIT');
-  var lock = LockService.getScriptLock();
-  if (!lock.tryLock(20000)) throw new Error('OCR利用回数の確認が他の実行と重なりました。');
+  var lock = asstAcquireScriptLock_();
   try {
     var properties = PropertiesService.getScriptProperties();
     var today = Utilities.formatDate(new Date(), 'Asia/Tokyo', 'yyyy-MM-dd');
@@ -62,7 +73,7 @@ function asstReserveOcrDailyUsage_() {
     properties.setProperty('OCR_DAILY_USAGE', JSON.stringify({ date: today, count: count }));
     return { date: today, count: count, limit: limit, remaining: limit - count };
   } finally {
-    lock.releaseLock();
+    asstReleaseScriptLock_(lock);
   }
 }
 
@@ -322,7 +333,10 @@ function asstAuditFetchBytes_(url, label, maxBytes) {
   var response = UrlFetchApp.fetch(url, {
     muteHttpExceptions: true,
     followRedirects: false,
-    headers: { Accept: 'application/vnd.github+json' }
+    headers: {
+      Accept: 'application/vnd.github+json',
+      'User-Agent': 'line-monster-farm-lmfdb-audit/1.0'
+    }
   });
   var status = response.getResponseCode();
   if (status !== 200) throw new Error(label + ': HTTP ' + status);
@@ -1002,6 +1016,12 @@ function asstBuildDocuments_() {
   };
 }
 
+function asstPublicPageAbilities_(abilities) {
+  return (abilities || []).filter(function (ability) {
+    return ability.linkStatus === 'resolved' && ability.status === 'verified';
+  });
+}
+
 function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   var issues = [];
   if (!cardsDoc || cardsDoc.schemaVersion !== 3 || !Array.isArray(cardsDoc.cards)) {
@@ -1153,8 +1173,7 @@ function api_asstUploadCardImage(payload) {
 
   var fileName = cardId + '.' + extension;
   var imagePath = 'assist-cards/' + fileName;
-  var lock = LockService.getScriptLock();
-  if (!lock.tryLock(20000)) throw new Error('他の画像保存と重なりました。');
+  var lock = asstAcquireScriptLock_();
   var newFile = null;
   var trashedFiles = [];
   try {
@@ -1192,7 +1211,7 @@ function api_asstUploadCardImage(payload) {
     });
     throw error;
   } finally {
-    lock.releaseLock();
+    asstReleaseScriptLock_(lock);
   }
 }
 
@@ -1255,8 +1274,7 @@ function api_asstGetCard(cardId) {
 function api_asstSaveCard(payload) {
   var user = asstRequireUser_();
   payload = payload || {};
-  var lock = LockService.getScriptLock();
-  if (!lock.tryLock(20000)) throw new Error('他の保存と重なりました。');
+  var lock = asstAcquireScriptLock_();
   try {
     var rows = asstRows_(ASST_SHEET_CARDS);
     var row = rows.filter(function (item) { return item.cardId === asstText_(payload.cardId); })[0];
@@ -1303,7 +1321,7 @@ function api_asstSaveCard(payload) {
     asstAppendLog_(user, 'save-card', 'PASS', row.cardId + ' version=' + (currentVersion + 1));
     return { ok: true, version: currentVersion + 1 };
   } finally {
-    lock.releaseLock();
+    asstReleaseScriptLock_(lock);
   }
 }
 
@@ -1312,18 +1330,16 @@ function api_asstSaveEffects(payload) {
   payload = payload || {};
   var cardId = asstText_(payload.cardId);
   var effects = payload.effects;
-  if (!asstRows_(ASST_SHEET_CARDS).some(function (row) { return row.cardId === cardId; })) throw new Error('未知cardIdです。');
-  if (!Array.isArray(effects)) throw new Error('effectsは配列です。');
-  var group = { status: effects.length ? 'verified' : 'draft', effects: effects };
-  var testDocs = asstBuildDocuments_();
-  testDocs.effects.cards[cardId] = group;
-  var issues = asstValidateDocuments_(testDocs.cards, testDocs.effects, testDocs.abilities)
-    .filter(function (issue) { return issue.indexOf(cardId) >= 0 || effects.some(function (effect) { return issue.indexOf(effect.effectId) >= 0; }); });
-  if (issues.length) throw new Error('効果検査FAIL: ' + issues.join(' / '));
-
-  var lock = LockService.getScriptLock();
-  if (!lock.tryLock(20000)) throw new Error('他の保存と重なりました。');
+  var lock = asstAcquireScriptLock_();
   try {
+    if (!asstRows_(ASST_SHEET_CARDS).some(function (row) { return row.cardId === cardId; })) throw new Error('未知cardIdです。');
+    if (!Array.isArray(effects)) throw new Error('effectsは配列です。');
+    var group = { status: effects.length ? 'verified' : 'draft', effects: effects };
+    var testDocs = asstBuildDocuments_();
+    testDocs.effects.cards[cardId] = group;
+    var issues = asstValidateDocuments_(testDocs.cards, testDocs.effects, testDocs.abilities)
+      .filter(function (issue) { return issue.indexOf(cardId) >= 0 || effects.some(function (effect) { return issue.indexOf(effect.effectId) >= 0; }); });
+    if (issues.length) throw new Error('効果検査FAIL: ' + issues.join(' / '));
     var oldRows = asstRows_(ASST_SHEET_EFFECTS).filter(function (row) { return row.cardId !== cardId; });
     var timestamp = nowIso_();
     var replacement = effects.length ? effects.map(function (effect) {
@@ -1337,7 +1353,7 @@ function api_asstSaveEffects(payload) {
     asstAppendLog_(user, 'save-effects', 'PASS', cardId + ' effects=' + effects.length);
     return { ok: true, count: effects.length };
   } finally {
-    lock.releaseLock();
+    asstReleaseScriptLock_(lock);
   }
 }
 
@@ -1352,8 +1368,7 @@ function api_asstSaveAbility(payload) {
   var user = asstRequireUser_();
   payload = payload || {};
   var ability = payload.ability || {};
-  var lock = LockService.getScriptLock();
-  if (!lock.tryLock(20000)) throw new Error('他の保存と重なりました。');
+  var lock = asstAcquireScriptLock_();
   try {
     var row = asstRows_(ASST_SHEET_ABILITIES).filter(function (item) { return item.abilityId === asstText_(ability.abilityId); })[0];
     if (!row) throw new Error('能力が見つかりません。');
@@ -1398,7 +1413,7 @@ function api_asstSaveAbility(payload) {
     asstAppendLog_(user, 'save-ability', 'PASS', ability.abilityId + ' version=' + (currentVersion + 1));
     return { ok: true, version: currentVersion + 1 };
   } finally {
-    lock.releaseLock();
+    asstReleaseScriptLock_(lock);
   }
 }
 

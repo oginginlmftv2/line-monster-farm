@@ -215,6 +215,10 @@ test('SHA省略時だけmainを完全SHAへ解決し固定URLを1回取得', () 
   assert.deepStrictEqual(harness.calls.fetch.map(call => call.url), [
     'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main', harness.rawUrl,
   ]);
+  harness.calls.fetch.forEach(call => {
+    assert.strictEqual(call.request.headers.Accept, 'application/vnd.github+json');
+    assert.strictEqual(call.request.headers['User-Agent'], 'line-monster-farm-lmfdb-audit/1.0');
+  });
 });
 
 test('固定SHA指定時はmainを解決せずabilities.json取得は1回', () => {

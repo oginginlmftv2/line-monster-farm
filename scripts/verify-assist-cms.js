@@ -16,6 +16,7 @@ const SUPPORT_FILES = {
   core: '_cms/gas/00_core.gs',
   monsterGas: '_cms/gas/10_monster.gs',
   publishGas: '_cms/gas/30_publish.gs',
+  lmfdbWriteGas: '_cms/gas/25_lmfdb_write.gs',
   setupGas: '_cms/gas/40_setup.gs',
   shell: '_cms/gas/index.html',
   commonHtml: '_cms/gas/ui_common.html',
@@ -29,6 +30,8 @@ const DATA_FILES = [
 const LMFDB_CARD_MAP_FILE = 'src/data/lmfdb-card-map.json';
 const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
 const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
+const LMFDB_CREATE_API_TEST = 'scripts/test-asst-lmfdb-create-api.js';
+const ASSIST_PAGE_BUILDER = 'scripts/build-assist-pages.js';
 
 const ALLOWED = {
   rarity: new Set(['MR', 'SSR']),
@@ -92,7 +95,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, ASSIST_PAGE_BUILDER]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -104,11 +107,13 @@ function validateRoot(root) {
   const core = read(root, SUPPORT_FILES.core);
   const monsterGas = read(root, SUPPORT_FILES.monsterGas);
   const publishGas = read(root, SUPPORT_FILES.publishGas);
+  const lmfdbWriteGas = read(root, SUPPORT_FILES.lmfdbWriteGas);
   const setupGas = read(root, SUPPORT_FILES.setupGas);
   const shell = read(root, SUPPORT_FILES.shell);
   const commonHtml = read(root, SUPPORT_FILES.commonHtml);
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
-  const allAssistGas = `${core}\n${gas}\n${setupGas}`;
+  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${setupGas}`;
+  const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
   const assistExportBlock = functionBlock(gas, 'api_asstExport');
   const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
@@ -166,6 +171,7 @@ function validateRoot(root) {
     'doGet', 'api_bootstrapShell', 'api_asstBootstrap', 'api_asstGetCard', 'api_asstSaveCard', 'api_asstSaveEffects',
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
+    'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -184,7 +190,7 @@ function validateRoot(root) {
     [/cms\/(?:assist-)?publish/, '公開ブランチ参照'],
     [/git\/refs|actions\/workflows/i, 'GitHub公開処理'],
   ];
-  const domainSource = `${gas}\n${html}\n${monsterGas}\n${monsterHtml}`;
+  const domainSource = `${gas}\n${lmfdbWriteGas}\n${html}\n${monsterGas}\n${monsterHtml}`;
   for (const [pattern, label] of forbiddenDomainSource) {
     if (pattern.test(domainSource)) issues.push(`ドメインソースに禁止対象: ${label}`);
   }
@@ -224,16 +230,19 @@ function validateRoot(root) {
   if (/localStorage|sessionStorage|document\.cookie|CacheStorage|caches\.|PropertiesService|CacheService/.test(auditUiSource)) {
     issues.push('外部能力監査UIが結果をブラウザまたはGASへ永続化している');
   }
+  const auditUiWithoutAllowedWrites = auditUiSource
+    .replaceAll('api_asstCreateAbilityFromExternalCandidate', '')
+    .replaceAll('api_asstSetExternalCandidateDisposition', '');
   if (/fetch\s*\(|XMLHttpRequest|raw\.githubusercontent\.com|api\.github\.com/.test(auditUiSource) ||
-      /api_asst(?:Save|Create|Set|Publish|Export|Upload|Ocr)/.test(auditUiSource)) {
-    issues.push('外部能力監査UIが読取API以外の外部取得・書込みAPIを呼んでいる');
+      /api_asst(?:Save|Create|Set|Publish|Export|Upload|Ocr)/.test(auditUiWithoutAllowedWrites)) {
+    issues.push('外部能力監査UIが許可外の外部取得・書込みAPIを呼んでいる');
   }
   const auditUiRequiredText = [
     '外部コミットSHA', '外部JSON SHA-256', 'auditVersion', 'auditStatus', 'safetyVerdict',
     'blockReasons', 'reviewReasons', '外部件数', 'ローカル件数', 'カード対応候補数',
     '未紐付け候補数', 'ID再利用疑い数', '既存内容差分数', '表記違い数',
     '重複内容一致数', '外部欠落観測数', '処置済み件数', '処置済みを表示',
-    '現在ページ', '総ページ', '総候補数', '登録可能候補（この一覧では操作できません）',
+    '現在ページ', '総ページ', '総候補数', '登録可能候補',
   ];
   if (auditUiRequiredText.some(value => !html.includes(value)) ||
       !/\['representationOnly','表記違い',false\]/.test(html) ||
@@ -281,6 +290,38 @@ function validateRoot(root) {
       /id=["']\s*['"]?\+.*candidateKey|id=["']\s*['"]?\+.*external/.test(auditUiSource) ||
       /<textarea[^>]*(?:json|preview)/i.test(html)) {
     issues.push('外部能力候補の詳細描画・DOM識別子・JSON編集欄の安全条件が不足');
+  }
+  const createApiBlock = functionBlock(lmfdbWriteGas, 'api_asstCreateAbilityFromExternalCandidate');
+  const dispositionApiBlock = functionBlock(lmfdbWriteGas, 'api_asstSetExternalCandidateDisposition');
+  if (!createApiBlock || !dispositionApiBlock ||
+      !/ASST_LMFDB_CREATE_KEYS/.test(lmfdbWriteGas) || !/ASST_LMFDB_REGISTRATION_KEYS/.test(lmfdbWriteGas) ||
+      !/ASST_LMFDB_CONFIRMATION_KEYS/.test(lmfdbWriteGas) || !/asstLmfdbCurrentAudit_\(input\.payload\)/.test(createApiBlock) ||
+      !/asstNextAbilityId_/.test(createApiBlock) || !/status:\s*'draft'/.test(createApiBlock) ||
+      !/legacyId:\s*null/.test(createApiBlock) || !/asstLmfdbRestoreSnapshots_/.test(createApiBlock)) {
+    issues.push('外部候補追加専用APIの入力契約・再監査・採番・draft・補償境界が不足');
+  }
+  if (!/ASST_LMFDB_ALLOWED_DISPOSITIONS\s*=\s*\['ignored','duplicate','unsupported','id_reused'\]/.test(lmfdbWriteGas) ||
+      !/asstLmfdbCurrentAudit_\(input\.payload\)/.test(dispositionApiBlock) ||
+      /ASST_SHEET_ABILITIES[\s\S]*?(?:appendRow|setValues)/.test(dispositionApiBlock)) {
+    issues.push('外部候補処置APIの許可値・再監査・abilities非変更境界が不足');
+  }
+  const assistLockFunctions = [
+    ['api_asstUploadCardImage', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
+    ['api_asstSaveAbility', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
+    ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
+  ];
+  if (!/function\s+asstAcquireScriptLock_\s*\([\s\S]*?tryLock\(1\)/.test(gas) ||
+      assistLockFunctions.some(([name, source]) => !/asstAcquireScriptLock_\(\)/.test(functionBlock(source, name))) ||
+      !/asstAcquireScriptLock_\(\)/.test(functionBlock(gas, 'asstReserveOcrDailyUsage_'))) {
+    issues.push('アシスト保存・OCR予約・公開が共通ScriptLockの即時拒否規則へ統一されていない');
+  }
+  if (!/ability\.linkStatus === 'resolved'\s*&& ability\.status === 'verified'/.test(assistPageBuilder) ||
+      !/buildCardArtifact\(card, effects, abilityData\.abilities/.test(assistPageBuilder)) {
+    issues.push('draft resolved能力が生成HTML・本文量・index判定から除外されていない');
+  }
+  if (!/return ability\.linkStatus === 'resolved' && ability\.status === 'verified'/.test(functionBlock(gas, 'asstPublicPageAbilities_')) ||
+      !/asstPublicPageAbilities_\(docs\.abilities\.abilities\)/.test(assistPublishBlock)) {
+    issues.push('GAS公開前検査がdraft resolved能力を公開ページ対象から除外していない');
   }
   if (!/getDataRange\(\)\.getValues\(\)/.test(functionBlock(gas, 'asstAuditReadLocal_')) ||
       !/\[ASST_SHEET_CARDS, ASST_SHEET_ABILITIES, ASST_SHEET_ABILITY_EXTERNAL_REFS\]/.test(functionBlock(gas, 'asstAuditReadLocal_'))) {

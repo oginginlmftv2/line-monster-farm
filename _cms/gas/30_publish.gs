@@ -391,10 +391,15 @@ function api_monLatestPublishStatus() {
 
 function api_asstPublish() {
   var user = requirePublishable_('assist');
+  var lock = asstAcquireScriptLock_();
   var pushedSha = '';
   try {
     var docs = asstBuildDocuments_();
     var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(asstValidateImageFiles_(docs.cards.cards));
+    var publicPageAbilities = asstPublicPageAbilities_(docs.abilities.abilities);
+    if (publicPageAbilities.some(function (ability) { return ability.linkStatus !== 'resolved' || ability.status !== 'verified'; })) {
+      issues.push('draft resolved能力が公開ページ対象へ混入しています。');
+    }
     if (issues.length) throw new Error('アシスト公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
     prop_('GITHUB_TOKEN');
     var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
@@ -458,6 +463,8 @@ function api_asstPublish() {
         '）は完了しましたが、シート更新に失敗しました。再実行せず管理者へ連絡してください: ' + e.message);
     }
     throw e;
+  } finally {
+    asstReleaseScriptLock_(lock);
   }
 }
 

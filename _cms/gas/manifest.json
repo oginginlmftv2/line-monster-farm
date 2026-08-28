@@ -4,6 +4,7 @@
     "00_core.gs",
     "10_monster.gs",
     "20_assist.gs",
+    "25_lmfdb_write.gs",
     "30_publish.gs",
     "40_setup.gs",
     "index.html",

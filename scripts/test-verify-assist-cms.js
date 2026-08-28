@@ -31,6 +31,8 @@ const targets = [
   'scripts/assist-effect-ocr.js',
   'scripts/test-assist-effect-ocr.js',
   'scripts/test-asst-lmfdb-audit-ui.js',
+  'scripts/test-asst-lmfdb-create-api.js',
+  'scripts/build-assist-pages.js',
 ];
 
 function makeCopy() {
@@ -622,12 +624,41 @@ expectFailure('外部能力候補の読取値エスケープ欠落を拒否', ro
   fs.writeFileSync(file, source.replace('esc(asstAuditDisplayValue(value))', 'asstAuditDisplayValue(value)'));
 }, /詳細描画・DOM識別子・JSON編集欄の安全条件が不足/);
 
-console.log('OK 既存66件を含む破壊コピー75ケースをすべて拒否');
+expectFailure('外部候補追加APIの再監査欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('var audit = asstLmfdbCurrentAudit_(input.payload);', 'var audit = input.payload;'));
+}, /追加専用APIの入力契約・再監査/);
+
+expectFailure('外部候補処置APIの許可値拡張を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("['ignored','duplicate','unsupported','id_reused']", "['ignored','duplicate','unsupported','id_reused','imported']"));
+}, /処置APIの許可値/);
+
+expectFailure('カード保存の共通ScriptLock欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const block = source.match(/function api_asstSaveCard\(payload\)[\s\S]*?(?=\nfunction )/)[0];
+  fs.writeFileSync(file, source.replace(block, block.replace('asstAcquireScriptLock_()', 'LockService.getScriptLock()')));
+}, /共通ScriptLock/);
+
+expectFailure('draft resolved能力の生成対象混入を拒否', root => {
+  const file = path.join(root, 'scripts/build-assist-pages.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("ability.status === 'verified'", "ability.status !== 'removed'"));
+}, /draft resolved能力/);
+
+console.log('OK 既存66件を含む破壊コピー79ケースをすべて拒否');
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
   cwd: repo,
   stdio: 'inherit',
 });
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-audit-ui.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-create-api.js')], {
   cwd: repo,
   stdio: 'inherit',
 });
