@@ -179,33 +179,89 @@ function asstLmfdbNextSortOrder_(cardId, abilityRows) {
   return orders.length + 1;
 }
 
-function asstLmfdbSnapshotSheet_(name) {
-  var sheet = asstSheet_(name);
-  return { name: name, sheet: sheet, lastRow: sheet.getLastRow(), values: sheet.getDataRange().getValues() };
-}
-
 function asstLmfdbSameValues_(left, right) {
   return JSON.stringify(left) === JSON.stringify(right);
 }
 
-function asstLmfdbRestoreSnapshots_(snapshots) {
+function asstLmfdbFailurePoint_(point) {
+  // mock破壊テストだけがこの関数を差し替える。実運用では何もしない。
+}
+
+function asstLmfdbNewJournal_() {
+  return { entries: [] };
+}
+
+function asstLmfdbIdentityMatches_(row, expected, identityColumns) {
+  return identityColumns.every(function (column) { return row[column] === expected[column]; });
+}
+
+function asstLmfdbFindJournalRows_(entry) {
+  var lastRow = entry.sheet.getLastRow();
+  if (lastRow < 2) return [];
+  var rows = entry.sheet.getRange(2, 1, lastRow - 1, entry.values.length).getValues();
+  return rows.reduce(function (matches, row, index) {
+    if (asstLmfdbIdentityMatches_(row, entry.values, entry.identityColumns)) {
+      matches.push({ rowNumber: index + 2, values: row });
+    }
+    return matches;
+  }, []);
+}
+
+function asstLmfdbJournalAppend_(journal, name, values, identityColumns, beforePoint, afterPoint) {
+  var sheet = asstSheet_(name);
+  var entry = {
+    kind: 'append', name: name, sheet: sheet, rowNumber: sheet.getLastRow() + 1,
+    values: values.slice(), identityColumns: identityColumns.slice()
+  };
+  journal.entries.push(entry);
+  if (beforePoint) asstLmfdbFailurePoint_(beforePoint);
+  sheet.appendRow(entry.values);
+  if (afterPoint) asstLmfdbFailurePoint_(afterPoint);
+  return entry;
+}
+
+function asstLmfdbJournalUpdate_(journal, name, rowNumber, beforeValues, afterValues, identityColumns, beforePoint, afterPoint) {
+  var sheet = asstSheet_(name);
+  var entry = {
+    kind: 'update', name: name, sheet: sheet, rowNumber: rowNumber,
+    values: afterValues.slice(), beforeValues: beforeValues.slice(), identityColumns: identityColumns.slice()
+  };
+  journal.entries.push(entry);
+  if (beforePoint) asstLmfdbFailurePoint_(beforePoint);
+  sheet.getRange(rowNumber, 1, 1, afterValues.length).setValues([afterValues]);
+  if (afterPoint) asstLmfdbFailurePoint_(afterPoint);
+  return entry;
+}
+
+function asstLmfdbCompensate_(journal) {
   var errors = [];
-  snapshots.slice().reverse().forEach(function (snapshot) {
+  journal.entries.slice().reverse().forEach(function (entry) {
     try {
-      while (snapshot.sheet.getLastRow() > snapshot.lastRow) snapshot.sheet.deleteRow(snapshot.lastRow + 1);
-      var current = snapshot.sheet.getDataRange().getValues();
-      snapshot.values.forEach(function (row, index) {
-        if (!asstLmfdbSameValues_(current[index], row)) {
-          snapshot.sheet.getRange(index + 1, 1, 1, row.length).setValues([row]);
+      var matches = asstLmfdbFindJournalRows_(entry);
+      if (entry.kind === 'append') {
+        if (!matches.length) return;
+        if (matches.length !== 1 || matches[0].rowNumber !== entry.rowNumber || !asstLmfdbSameValues_(matches[0].values, entry.values)) {
+          throw new Error('追加行を行番号・一意キー・書込み後内容で一意に確認できません。');
         }
-      });
-      var restored = snapshot.sheet.getDataRange().getValues();
-      if (snapshot.sheet.getLastRow() !== snapshot.lastRow || !asstLmfdbSameValues_(restored, snapshot.values)) {
-        errors.push(snapshot.name + 'の件数または内容が保存前へ戻りませんでした。');
+        entry.sheet.deleteRow(entry.rowNumber);
+        if (asstLmfdbFindJournalRows_(entry).length) throw new Error('追加行の除去後検算に失敗しました。');
+        return;
       }
-    } catch (error) { errors.push(snapshot.name + ': ' + error.message); }
+      if (matches.length !== 1 || matches[0].rowNumber !== entry.rowNumber) {
+        throw new Error('更新行を行番号と一意キーで一意に確認できません。');
+      }
+      if (asstLmfdbSameValues_(matches[0].values, entry.beforeValues)) return;
+      if (!asstLmfdbSameValues_(matches[0].values, entry.values)) {
+        throw new Error('更新行が期待した書込み後内容と一致しません。');
+      }
+      entry.sheet.getRange(entry.rowNumber, 1, 1, entry.beforeValues.length).setValues([entry.beforeValues]);
+      var restored = entry.sheet.getRange(entry.rowNumber, 1, 1, entry.beforeValues.length).getValues()[0];
+      if (!asstLmfdbSameValues_(restored, entry.beforeValues)) throw new Error('更新行の復元後検算に失敗しました。');
+    } catch (error) { errors.push(entry.name + ' row ' + entry.rowNumber + ': ' + error.message); }
   });
-  if (errors.length) throw new Error('重大エラー: 補償検算に失敗しました。全保存・公開を停止し、管理者へ連絡してください: ' + errors.join(' / '));
+  if (errors.length) {
+    throw new Error('重大エラー: 補償検算失敗。全保存・公開を停止し、再実行せず、保存前の本番bookコピーと比較してください: ' + errors.join(' / '));
+  }
 }
 
 function asstLmfdbRefValues_(row) {
@@ -236,6 +292,22 @@ function asstLmfdbVerifyCreate_(abilityId, candidateKey, beforeAbilityRows, befo
   var docs = asstBuildDocuments_();
   var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(refIssues);
   if (issues.length) throw new Error('追加直後検証FAIL: ' + issues.slice(0, 10).join(' / '));
+}
+
+function asstLmfdbAssertAllocationAvailable_(abilityId, sourceOrder, cardId, sortOrder, candidateKey, existingRef) {
+  var abilities = asstRows_(ASST_SHEET_ABILITIES);
+  var refs = asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS);
+  asstAssertAbilityIdAvailable_(abilityId, abilities, refs);
+  if (abilities.some(function (row) { return Number(row.sourceOrder) === sourceOrder; })) throw new Error('sourceOrder採番後に衝突しました。再監査してください。');
+  if (cardId && abilities.some(function (row) {
+    return row.linkStatus === 'resolved' && row.cardId === cardId && Number(row.sortOrder) === sortOrder;
+  })) throw new Error('sortOrder採番後に衝突しました。再監査してください。');
+  var candidateRefs = refs.filter(function (row) { return row.candidateKey === candidateKey; });
+  if (!existingRef && candidateRefs.length) throw new Error('同じcandidateKeyが同時に処置されました。再監査してください。');
+  if (existingRef && (candidateRefs.length !== 1 || candidateRefs[0]._row !== existingRef._row ||
+      !asstLmfdbSameValues_(asstLmfdbRefValues_(candidateRefs[0]), asstLmfdbRefValues_(existingRef)))) {
+    throw new Error('id_reused参照が同時に更新されました。再監査してください。');
+  }
 }
 
 function api_asstCreateAbilityFromExternalCandidate(payload) {
@@ -278,11 +350,15 @@ function api_asstCreateAbilityFromExternalCandidate(payload) {
     };
     var abilityIssues = asstValidateAbilityRecord_(ability, true);
     if (abilityIssues.length) throw new Error('新規能力検査FAIL: ' + abilityIssues.join(' / '));
-    var abilitySnapshot = asstLmfdbSnapshotSheet_(ASST_SHEET_ABILITIES);
-    var refSnapshot = asstLmfdbSnapshotSheet_(ASST_SHEET_ABILITY_EXTERNAL_REFS);
-    var logSnapshot = asstLmfdbSnapshotSheet_(ASST_SHEET_LOG);
+    var beforeAbilityRows = audit.localRows.abilities.length;
+    var beforeRefRows = audit.localRows.refs.length;
+    var journal = asstLmfdbNewJournal_();
     try {
-      abilitySnapshot.sheet.appendRow(asstAbilityToSheetRow_(ability, sourceOrder, 1, importedAt, user.nickname));
+      var abilityValues = asstAbilityToSheetRow_(ability, sourceOrder, 1, importedAt, user.nickname);
+      asstLmfdbFailurePoint_('before-abilities-append');
+      asstLmfdbAssertAllocationAvailable_(abilityId, sourceOrder, ability.cardId, sortOrder, candidate.candidateKey, existingRef);
+      asstLmfdbJournalAppend_(journal, ASST_SHEET_ABILITIES, abilityValues,
+        [ASST_HEADERS[ASST_SHEET_ABILITIES].indexOf('abilityId')], null, 'after-abilities-append');
       var reviewFlags = candidate.classification === 'ID_REUSE_SUSPECTED' ? ['id_reused'] : [];
       if (existingRef) {
         var updatedRef = {};
@@ -290,22 +366,34 @@ function api_asstCreateAbilityFromExternalCandidate(payload) {
         updatedRef.lastSeenSha = audit.latestSha; updatedRef.disposition = 'imported'; updatedRef.abilityId = abilityId;
         updatedRef.importedAt = importedAt; updatedRef.importedBy = user.nickname; updatedRef.decidedAt = importedAt; updatedRef.decidedBy = user.nickname;
         updatedRef.reviewFlagsJson = JSON.stringify(reviewFlags); updatedRef.note = ''; updatedRef.version = Number(existingRef.version) + 1;
-        refSnapshot.sheet.getRange(existingRef._row, 1, 1, ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].length).setValues([asstLmfdbRefValues_(updatedRef)]);
+        asstLmfdbJournalUpdate_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS, existingRef._row,
+          asstLmfdbRefValues_(existingRef), asstLmfdbRefValues_(updatedRef),
+          [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+          'before-existing-ref-update', 'after-existing-ref-update');
       } else {
-        refSnapshot.sheet.appendRow(asstLmfdbRefValues_(asstLmfdbCreateRefRow_(audit, abilityId, user, importedAt, reviewFlags)));
+        asstLmfdbJournalAppend_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS,
+          asstLmfdbRefValues_(asstLmfdbCreateRefRow_(audit, abilityId, user, importedAt, reviewFlags)),
+          [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+          'before-new-ref-append', 'after-new-ref-append');
       }
-      asstLmfdbVerifyCreate_(abilityId, candidate.candidateKey, abilitySnapshot.values.length - 1, refSnapshot.values.length - 1, existingRef ? 0 : 1);
+      asstLmfdbFailurePoint_('before-create-verification');
+      asstLmfdbVerifyCreate_(abilityId, candidate.candidateKey, beforeAbilityRows, beforeRefRows, existingRef ? 0 : 1);
       var detail = JSON.stringify({
-        beforeAbilitiesRows: abilitySnapshot.values.length - 1, beforeExternalRefsRows: refSnapshot.values.length - 1,
+        beforeAbilitiesRows: beforeAbilityRows, beforeExternalRefsRows: beforeRefRows,
         abilityId: abilityId, sourceOrder: sourceOrder, externalSha: audit.latestSha,
         externalNumericId: candidate.externalNumericId, candidateKey: candidate.candidateKey,
         externalFingerprint: candidate.externalFingerprint, comparisonFingerprint: candidate.comparisonFingerprint,
         operator: user.nickname, importedAt: importedAt, validation: 'PASS'
       });
-      asstAppendLog_(user, 'create-external-ability', 'PASS', detail);
-      if (logSnapshot.sheet.getLastRow() !== logSnapshot.lastRow + 1) throw new Error('assist_logの追加検算に失敗しました。');
+      var logValues = [importedAt, user.nickname, 'create-external-ability', 'PASS', detail.slice(0, 5000)];
+      asstLmfdbJournalAppend_(journal, ASST_SHEET_LOG, logValues, [0,1,2,3,4],
+        'before-assist-log-append', 'after-assist-log-append');
+      asstLmfdbFailurePoint_('before-final-row-count-check');
+      if (journal.entries[journal.entries.length - 1].sheet.getLastRow() !== journal.entries[journal.entries.length - 1].rowNumber) {
+        throw new Error('assist_logの追加検算に失敗しました。');
+      }
     } catch (error) {
-      try { asstLmfdbRestoreSnapshots_([abilitySnapshot, refSnapshot, logSnapshot]); }
+      try { asstLmfdbCompensate_(journal); }
       catch (compensationError) { throw compensationError; }
       throw error;
     }
@@ -332,38 +420,47 @@ function api_asstSetExternalCandidateDisposition(payload) {
     if (existing.length > 1) throw new Error('同じcandidateKeyの外部参照が重複しています。');
     if (existing[0] && ['imported','reverted'].indexOf(existing[0].disposition) >= 0) throw new Error('imported / reverted済み候補は再処置できません。');
     var decidedAt = nowIso_();
-    var refSnapshot = asstLmfdbSnapshotSheet_(ASST_SHEET_ABILITY_EXTERNAL_REFS);
-    var logSnapshot = asstLmfdbSnapshotSheet_(ASST_SHEET_LOG);
+    var journal = asstLmfdbNewJournal_();
     try {
       if (existing[0]) {
         var updated = {};
         ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].forEach(function (header) { updated[header] = existing[0][header]; });
         updated.lastSeenSha = audit.latestSha; updated.disposition = input.disposition; updated.note = input.note;
         updated.decidedAt = decidedAt; updated.decidedBy = user.nickname; updated.version = Number(existing[0].version) + 1;
-        refSnapshot.sheet.getRange(existing[0]._row, 1, 1, ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].length).setValues([asstLmfdbRefValues_(updated)]);
+        asstLmfdbJournalUpdate_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS, existing[0]._row,
+          asstLmfdbRefValues_(existing[0]), asstLmfdbRefValues_(updated),
+          [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+          'before-existing-ref-update', 'after-existing-ref-update');
       } else {
         var fingerprint = asstAuditFingerprint_(candidate.externalSnapshot);
-        refSnapshot.sheet.appendRow(asstLmfdbRefValues_({
+        asstLmfdbJournalAppend_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS, asstLmfdbRefValues_({
           provider: ASST_LMFDB_PROVIDER, candidateKey: fingerprint.candidateKey, externalNumericId: candidate.externalNumericId,
           firstSeenSha: audit.latestSha, lastSeenSha: audit.latestSha, externalFingerprint: fingerprint.externalFingerprint,
           comparisonFingerprint: fingerprint.comparisonFingerprint, externalSnapshotJson: JSON.stringify(fingerprint.snapshot),
           disposition: input.disposition, abilityId: '', importedAt: decidedAt, importedBy: user.nickname,
           decidedAt: decidedAt, decidedBy: user.nickname,
           reviewFlagsJson: JSON.stringify(input.disposition === 'id_reused' ? ['id_reused'] : []), note: input.note, version: 1
-        }));
+        }), [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+        'before-new-ref-append', 'after-new-ref-append');
       }
       var refs = asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS);
       if (refs.filter(function (row) { return row.candidateKey === candidate.candidateKey; }).length !== 1) throw new Error('処置後のcandidateKey一意検算に失敗しました。');
       var issues = asstValidateExternalRefRows_(refs);
       if (issues.length) throw new Error('処置後検証FAIL: ' + issues.slice(0, 10).join(' / '));
-      asstAppendLog_(user, 'set-external-disposition', 'PASS', JSON.stringify({
+      var detail = JSON.stringify({
         externalSha: audit.latestSha, externalNumericId: candidate.externalNumericId,
         candidateKey: candidate.candidateKey, disposition: input.disposition,
         operator: user.nickname, decidedAt: decidedAt, validation: 'PASS'
-      }));
-      if (logSnapshot.sheet.getLastRow() !== logSnapshot.lastRow + 1) throw new Error('assist_logの追加検算に失敗しました。');
+      });
+      asstLmfdbJournalAppend_(journal, ASST_SHEET_LOG,
+        [decidedAt, user.nickname, 'set-external-disposition', 'PASS', detail.slice(0, 5000)], [0,1,2,3,4],
+        'before-assist-log-append', 'after-assist-log-append');
+      asstLmfdbFailurePoint_('before-final-row-count-check');
+      if (journal.entries[journal.entries.length - 1].sheet.getLastRow() !== journal.entries[journal.entries.length - 1].rowNumber) {
+        throw new Error('assist_logの追加検算に失敗しました。');
+      }
     } catch (error) {
-      try { asstLmfdbRestoreSnapshots_([refSnapshot, logSnapshot]); }
+      try { asstLmfdbCompensate_(journal); }
       catch (compensationError) { throw compensationError; }
       throw error;
     }

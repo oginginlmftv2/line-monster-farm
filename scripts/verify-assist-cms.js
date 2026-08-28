@@ -31,6 +31,7 @@ const LMFDB_CARD_MAP_FILE = 'src/data/lmfdb-card-map.json';
 const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
 const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
 const LMFDB_CREATE_API_TEST = 'scripts/test-asst-lmfdb-create-api.js';
+const LMFDB_WRITE_SAFETY_TEST = 'scripts/test-asst-lmfdb-write-safety.js';
 const ASSIST_PAGE_BUILDER = 'scripts/build-assist-pages.js';
 
 const ALLOWED = {
@@ -95,7 +96,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, ASSIST_PAGE_BUILDER]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, LMFDB_WRITE_SAFETY_TEST, ASSIST_PAGE_BUILDER]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -114,6 +115,7 @@ function validateRoot(root) {
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
   const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${setupGas}`;
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
+  const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
   const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
   const assistExportBlock = functionBlock(gas, 'api_asstExport');
   const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
@@ -293,12 +295,42 @@ function validateRoot(root) {
   }
   const createApiBlock = functionBlock(lmfdbWriteGas, 'api_asstCreateAbilityFromExternalCandidate');
   const dispositionApiBlock = functionBlock(lmfdbWriteGas, 'api_asstSetExternalCandidateDisposition');
+  const compensationBlock = functionBlock(lmfdbWriteGas, 'asstLmfdbCompensate_');
+  const journalAppendBlock = functionBlock(lmfdbWriteGas, 'asstLmfdbJournalAppend_');
+  const journalUpdateBlock = functionBlock(lmfdbWriteGas, 'asstLmfdbJournalUpdate_');
   if (!createApiBlock || !dispositionApiBlock ||
       !/ASST_LMFDB_CREATE_KEYS/.test(lmfdbWriteGas) || !/ASST_LMFDB_REGISTRATION_KEYS/.test(lmfdbWriteGas) ||
       !/ASST_LMFDB_CONFIRMATION_KEYS/.test(lmfdbWriteGas) || !/asstLmfdbCurrentAudit_\(input\.payload\)/.test(createApiBlock) ||
       !/asstNextAbilityId_/.test(createApiBlock) || !/status:\s*'draft'/.test(createApiBlock) ||
-      !/legacyId:\s*null/.test(createApiBlock) || !/asstLmfdbRestoreSnapshots_/.test(createApiBlock)) {
+      !/legacyId:\s*null/.test(createApiBlock) || !/asstLmfdbCompensate_\(journal\)/.test(createApiBlock)) {
     issues.push('外部候補追加専用APIの入力契約・再監査・採番・draft・補償境界が不足');
+  }
+  if (/function\s+asstLmfdb(?:SnapshotSheet_|RestoreSnapshots_)\s*\(/.test(lmfdbWriteGas) ||
+      !journalAppendBlock || !journalUpdateBlock || !compensationBlock ||
+      !/rowNumber:\s*sheet\.getLastRow\(\) \+ 1/.test(journalAppendBlock) ||
+      !/beforeValues:\s*beforeValues\.slice\(\)/.test(journalUpdateBlock) ||
+      !/afterValues\.slice\(\)/.test(journalUpdateBlock) ||
+      !/journal\.entries\.slice\(\)\.reverse\(\)/.test(compensationBlock) ||
+      !/matches\.length !== 1/.test(compensationBlock) ||
+      !/matches\[0\]\.rowNumber !== entry\.rowNumber/.test(compensationBlock) ||
+      (compensationBlock.match(/asstLmfdbSameValues_\(matches\[0\]\.values, entry\.values\)/g) || []).length < 2 ||
+      !/deleteRow\(entry\.rowNumber\)/.test(compensationBlock) ||
+      !/asstLmfdbSameValues_\(matches\[0\]\.values, entry\.beforeValues\)/.test(compensationBlock) ||
+      !/重大エラー: 補償検算失敗。全保存・公開を停止し、再実行せず、保存前の本番bookコピーと比較/.test(compensationBlock)) {
+    issues.push('lMfDB補償が対象行限定の操作ジャーナル・一意確認・重大停止条件を満たさない');
+  }
+  if (compensationBlock && (/getDataRange\(\)\.getValues\(\)/.test(compensationBlock) ||
+      /while[\s\S]{0,120}getLastRow/.test(compensationBlock) || /snapshot/i.test(compensationBlock))) {
+    issues.push('lMfDB補償に全シートsnapshot復元またはgetLastRow超過行の一律削除がある');
+  }
+  const safetyMarkers = [
+    'after-abilities-append', 'after-new-ref-append', 'after-existing-ref-update',
+    'after-assist-log-append', '補償中も別abilityId・candidateKey・log・既存行更新を完全に保持',
+    '追加能力を一意確認できない', '追加refを一意確認できない', '追加logを一意確認できない',
+    'deleteRow失敗', 'ref復元setValues失敗', '補償後検算失敗', '本番bookコピーと比較',
+  ];
+  if (safetyMarkers.some(marker => !lmfdbWriteSafetyTest.includes(marker))) {
+    issues.push('段階4-6の操作ジャーナル・無関係行保全・補償失敗mock破壊テストが不足');
   }
   if (!/ASST_LMFDB_ALLOWED_DISPOSITIONS\s*=\s*\['ignored','duplicate','unsupported','id_reused'\]/.test(lmfdbWriteGas) ||
       !/asstLmfdbCurrentAudit_\(input\.payload\)/.test(dispositionApiBlock) ||
@@ -314,6 +346,13 @@ function validateRoot(root) {
       assistLockFunctions.some(([name, source]) => !/asstAcquireScriptLock_\(\)/.test(functionBlock(source, name))) ||
       !/asstAcquireScriptLock_\(\)/.test(functionBlock(gas, 'asstReserveOcrDailyUsage_'))) {
     issues.push('アシスト保存・OCR予約・公開が共通ScriptLockの即時拒否規則へ統一されていない');
+  }
+  if (assistLockFunctions.some(([name, source]) => {
+    const block = functionBlock(source, name);
+    return (block.match(/asstAcquireScriptLock_\(\)/g) || []).length !== 1 ||
+      (block.match(/asstReleaseScriptLock_\(lock\)/g) || []).length !== 1;
+  })) {
+    issues.push('アシスト保存・候補処理・公開にScriptLockの二重取得・二重解放または解放欠落がある');
   }
   if (!/ability\.linkStatus === 'resolved'\s*&& ability\.status === 'verified'/.test(assistPageBuilder) ||
       !/buildCardArtifact\(card, effects, abilityData\.abilities/.test(assistPageBuilder)) {

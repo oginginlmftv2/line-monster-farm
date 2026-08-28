@@ -32,8 +32,11 @@ const targets = [
   'scripts/test-assist-effect-ocr.js',
   'scripts/test-asst-lmfdb-audit-ui.js',
   'scripts/test-asst-lmfdb-create-api.js',
+  'scripts/test-asst-lmfdb-write-safety.js',
   'scripts/build-assist-pages.js',
 ];
+
+let destructiveCases = 0;
 
 function makeCopy() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'p12-11-assist-cms-'));
@@ -55,6 +58,7 @@ function expectFailure(label, mutate, expected) {
       throw new Error(`${label}: 想定したFAILが出ない: ${issues.join(' / ')}`);
     }
     console.log(`PASS ${label}: ${issues.find(issue => expected.test(issue))}`);
+    destructiveCases++;
   } finally {
     fs.rmSync(root, { recursive: true, force: true });
   }
@@ -630,6 +634,40 @@ expectFailure('外部候補追加APIの再監査欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('var audit = asstLmfdbCurrentAudit_(input.payload);', 'var audit = input.payload;'));
 }, /追加専用APIの入力契約・再監査/);
 
+expectFailure('全シートsnapshot補償の再導入を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('function asstLmfdbCompensate_(journal) {', `function asstLmfdbSnapshotSheet_(name) { return { values: asstSheet_(name).getDataRange().getValues() }; }
+function asstLmfdbCompensate_(journal) {`));
+}, /対象行限定の操作ジャーナル/);
+
+expectFailure('補償へのgetLastRow超過行一律削除を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(
+    'function asstLmfdbCompensate_(journal) {\n  var errors = [];',
+    'function asstLmfdbCompensate_(journal) {\n  var errors = [];\n  while (asstSheet_(ASST_SHEET_ABILITIES).getLastRow() > 1) {}'
+  ));
+}, /全シートsnapshot復元またはgetLastRow超過行/);
+
+expectFailure('追加行の書込み後内容確認欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(' || !asstLmfdbSameValues_(matches[0].values, entry.values)', ''));
+}, /対象行限定の操作ジャーナル/);
+
+expectFailure('補償失敗の重大停止格下げを拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('重大エラー: 補償検算失敗。全保存・公開を停止し、再実行せず、保存前の本番bookコピーと比較', '補償に失敗しました。再実行してください'));
+}, /対象行限定の操作ジャーナル/);
+
+expectFailure('無関係行保全のmock破壊テスト欠落を拒否', root => {
+  const file = path.join(root, 'scripts/test-asst-lmfdb-write-safety.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('補償中も別abilityId・candidateKey・log・既存行更新を完全に保持', '削除した安全条件'));
+}, /mock破壊テストが不足/);
+
 expectFailure('外部候補処置APIの許可値拡張を拒否', root => {
   const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
   const source = fs.readFileSync(file, 'utf8');
@@ -643,13 +681,27 @@ expectFailure('カード保存の共通ScriptLock欠落を拒否', root => {
   fs.writeFileSync(file, source.replace(block, block.replace('asstAcquireScriptLock_()', 'LockService.getScriptLock()')));
 }, /共通ScriptLock/);
 
+expectFailure('候補登録のScriptLock解放欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const block = source.match(/function api_asstCreateAbilityFromExternalCandidate\(payload\)[\s\S]*?(?=\nfunction )/)[0];
+  fs.writeFileSync(file, source.replace(block, block.replace('asstReleaseScriptLock_(lock)', 'removedRelease(lock)')));
+}, /二重取得・二重解放または解放欠落/);
+
+expectFailure('アシスト公開のScriptLock二重取得を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const block = source.match(/function api_asstPublish\(\)[\s\S]*?(?=\nfunction )/)[0];
+  fs.writeFileSync(file, source.replace(block, block.replace('var lock = asstAcquireScriptLock_();', 'var lock = asstAcquireScriptLock_();\n  asstAcquireScriptLock_();')));
+}, /二重取得・二重解放または解放欠落/);
+
 expectFailure('draft resolved能力の生成対象混入を拒否', root => {
   const file = path.join(root, 'scripts/build-assist-pages.js');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace("ability.status === 'verified'", "ability.status !== 'removed'"));
 }, /draft resolved能力/);
 
-console.log('OK 既存66件を含む破壊コピー79ケースをすべて拒否');
+console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
   cwd: repo,
   stdio: 'inherit',
@@ -659,6 +711,10 @@ childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-
   stdio: 'inherit',
 });
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-create-api.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-write-safety.js')], {
   cwd: repo,
   stdio: 'inherit',
 });
