@@ -30,6 +30,7 @@ const targets = [
   'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz',
   'scripts/assist-effect-ocr.js',
   'scripts/test-assist-effect-ocr.js',
+  'scripts/test-asst-lmfdb-audit-ui.js',
 ];
 
 function makeCopy() {
@@ -585,8 +586,24 @@ expectFailure('処理中オーバーレイの欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('class="app-busy-overlay"', 'class="removed-busy-overlay"'));
 }, /処理中表示/);
 
-console.log('OK 既存66件を含む破壊コピー69ケースをすべて拒否');
+expectFailure('外部能力監査UI入口の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('id="asst_btnExternalAbilityAudit"', 'id="removedExternalAbilityAudit"'));
+}, /外部能力監査UIの入口/);
+
+expectFailure('外部能力監査結果のlocalStorage永続化を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('function asstLoadExternalAudit(page,latest){', "function asstLoadExternalAudit(page,latest){\n  localStorage.setItem('audit', 'bad');"));
+}, /外部能力監査UIが結果をブラウザまたはGASへ永続化/);
+
+console.log('OK 既存66件を含む破壊コピー71ケースをすべて拒否');
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-audit-ui.js')], {
   cwd: repo,
   stdio: 'inherit',
 });
