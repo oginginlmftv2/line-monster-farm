@@ -42,6 +42,9 @@ var ASST_LMFDB_PROCESSED_DISPOSITIONS = ['imported','ignored','duplicate','unsup
 var ASST_UNLOCK_RANKS = ['無凸','1凸','2凸','3凸','4凸'];
 var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
+// 既存91件の最大は24文字。将来の命名余地を持たせつつ、Sheet・URLへ過大な値を入れない。
+var ASST_CARD_ID_MAX_LENGTH = 64;
+var ASST_CARD_NAME_MAX_LENGTH = 100;
 function asstSourceUrls_() { return { cards: RAW_BASE + 'assist-cards.json', effects: RAW_BASE + 'assist-effects.json', abilities: RAW_BASE + 'assist-abilities.json' }; }
 
 function asstAcquireScriptLock_() {
@@ -169,6 +172,78 @@ function asstInList_(value, allowed, label, allowBlank) {
   if (allowBlank && (value === '' || value === null || value === undefined)) return null;
   if (allowed.indexOf(value) < 0) throw new Error(label + ' が許可値ではありません: ' + value);
   return value;
+}
+
+function asstCreateCardPayload_(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('payloadはオブジェクトです。');
+  var allowed = ['cardId','name','rarity','aura','cardType','monType'];
+  Object.keys(payload).forEach(function (key) {
+    if (allowed.indexOf(key) < 0) throw new Error('未対応のpayload項目です: ' + key);
+  });
+  var rawCardId = typeof payload.cardId === 'string' ? payload.cardId : '';
+  var rawName = typeof payload.name === 'string' ? payload.name : '';
+  if (/[\u0000-\u001f\u007f-\u009f]/.test(rawCardId)) throw new Error('cardIdに改行・タブ・制御文字は使えません。');
+  if (/[\u0000-\u001f\u007f-\u009f]/.test(rawName)) throw new Error('カード名に改行・タブ・制御文字は使えません。');
+  var cardId = rawCardId.trim();
+  var name = rawName.trim();
+  if (!cardId) throw new Error('cardIdは必須です。');
+  if (!name) throw new Error('カード名は必須です。');
+  if (cardId.length > ASST_CARD_ID_MAX_LENGTH) throw new Error('cardIdは' + ASST_CARD_ID_MAX_LENGTH + '文字以下です。');
+  if (name.length > ASST_CARD_NAME_MAX_LENGTH) throw new Error('カード名は' + ASST_CARD_NAME_MAX_LENGTH + '文字以下です。');
+  var idMatch = cardId.match(/^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$/);
+  if (!idMatch) throw new Error('cardIdは^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$形式です。');
+  var rarity = asstInList_(payload.rarity, ASST_RARITIES, 'rarity', false);
+  if (idMatch[1] !== rarity) throw new Error('cardId内のレアリティとフォームのrarityが一致しません。');
+  var aura = asstInList_(payload.aura, ASST_AURAS, 'aura', false);
+  var cardType = asstInList_(payload.cardType, ASST_CARD_TYPES, 'cardType', false);
+  var monType = asstInList_(payload.monType, ASST_MON_TYPES, 'monType', true);
+  return { cardId: cardId, name: name, rarity: rarity, aura: aura, cardType: cardType, monType: monType };
+}
+
+function asstValidateCardSourceOrders_(rows) {
+  var seen = {}, max = 0;
+  rows.forEach(function (row) {
+    var order = Number(row.sourceOrder);
+    if (!Number.isSafeInteger(order) || order <= 0) throw new Error('cards/sourceOrderは重複のない正の整数です。');
+    if (seen[order]) throw new Error('cards/sourceOrderが重複しています: ' + order);
+    seen[order] = true;
+    if (order > max) max = order;
+  });
+  if (max >= Number.MAX_SAFE_INTEGER) throw new Error('sourceOrderを安全に採番できません。');
+  return max;
+}
+
+function asstAssertNewCardAvailable_(card, rows) {
+  if (rows.some(function (row) { return asstText_(row.cardId) === card.cardId; })) {
+    throw new Error('cardIdが既存カードと重複しています: ' + card.cardId);
+  }
+  if (rows.some(function (row) {
+    return asstText_(row.name).trim() === card.name && asstText_(row.rarity) === card.rarity;
+  })) {
+    throw new Error('同じカード名とレアリティのカードが既にあります: ' + card.name + ' / ' + card.rarity);
+  }
+}
+
+function asstCardCreateRow_(card, sourceOrder, updatedAt, updatedBy) {
+  var row = {
+    sourceOrder: sourceOrder, cardId: card.cardId, name: card.name, rarity: card.rarity,
+    aura: card.aura, cardType: card.cardType, monType: card.monType || '', image: '', event2: '',
+    releasedAt: '', accessoryStatus: 'unknown', statsJson: asstJsonCell_([]), limitBreakJson: asstJsonCell_(null),
+    ratingsJson: asstJsonCell_(null), explanation: '', formationsJson: asstJsonCell_([]),
+    sapoRefJson: asstJsonCell_(null), version: 1, updatedAt: updatedAt, updatedBy: updatedBy
+  };
+  return ASST_HEADERS[ASST_SHEET_CARDS].map(function (header) { return row[header]; });
+}
+
+function asstVerifyCreatedCard_(cardId, sourceOrder, expectedValues) {
+  var matches = asstRows_(ASST_SHEET_CARDS).filter(function (row) { return asstText_(row.cardId) === cardId; });
+  if (matches.length !== 1) throw new Error('保存後のcardId件数が1件ではありません: ' + matches.length);
+  if (Number(matches[0].sourceOrder) !== sourceOrder) throw new Error('保存後のsourceOrderが予定値と一致しません。');
+  var headers = ASST_HEADERS[ASST_SHEET_CARDS];
+  headers.forEach(function (header, index) {
+    if (matches[0][header] !== expectedValues[index]) throw new Error('保存後の内容が予定値と一致しません: ' + header);
+  });
+  return matches[0];
 }
 
 function asstValidateStringArray_(values, label, allowed) {
@@ -1255,6 +1330,41 @@ function api_asstOcrEffectImage(payload) {
   if (body.responses[0].error) throw new Error('Google Cloud Vision OCRに失敗しました: ' + body.responses[0].error.message);
   asstAppendLog_(user, 'effect-ocr', 'PASS', cardId + ' / ' + fileName + ' / daily=' + usage.count + '/' + usage.limit);
   return { fileName: fileName, vision: body, dailyUsage: usage };
+}
+
+function api_asstCreateCard(payload) {
+  var user = asstRequireUser_();
+  if (!asstText_(user.nickname).trim()) throw new Error('membersシートのニックネームが空です。');
+  var card = asstCreateCardPayload_(payload);
+  var lock = asstAcquireScriptLock_();
+  var appendStarted = false;
+  try {
+    // lock取得後に再読込し、並行処理によるID・名前・sourceOrderの競合をここで確定する。
+    var rows = asstRows_(ASST_SHEET_CARDS);
+    var maxSourceOrder = asstValidateCardSourceOrders_(rows);
+    asstAssertNewCardAvailable_(card, rows);
+    var sourceOrder = maxSourceOrder + 1;
+    var updatedAt = nowIso_();
+    var values = asstCardCreateRow_(card, sourceOrder, updatedAt, user.nickname);
+    var created = {
+      cardId: card.cardId, name: card.name, rarity: card.rarity, aura: card.aura,
+      effects: 0, abilities: 0, version: 1
+    };
+
+    appendStarted = true;
+    asstSheet_(ASST_SHEET_CARDS).appendRow(values);
+    asstVerifyCreatedCard_(card.cardId, sourceOrder, values);
+    asstAppendLog_(user, 'create-card', 'PASS', card.cardId + ' sourceOrder=' + sourceOrder);
+    return { ok: true, cardId: card.cardId, sourceOrder: sourceOrder, version: 1, card: created };
+  } catch (error) {
+    if (appendStarted) {
+      throw new Error('新規カード行の追加処理は開始済みです。カードは登録済みとして扱い、再実行しないでください。' +
+        'cardsシートでcardIdを確認し、必要ならassist_logを手動確認してください。詳細: ' + error.message);
+    }
+    throw error;
+  } finally {
+    asstReleaseScriptLock_(lock);
+  }
 }
 
 function api_asstGetCard(cardId) {
