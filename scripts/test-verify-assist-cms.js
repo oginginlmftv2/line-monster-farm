@@ -170,12 +170,48 @@ function runAbilitySchemaUnitTests() {
   console.log('PASS 能力schema v2・nullable往復・採番器・外部参照行の単体検査');
 }
 
+function runDraftPublishExclusionTest() {
+  const verifySource = fs.readFileSync(path.join(repo, 'scripts/verify.js'), 'utf8');
+  const aggregationBlock = verifySource.match(
+    /const resolvedAbilityCounts = new Map\(\);[\s\S]*?(?=\n\s*const expectedPaths =)/,
+  );
+  assert(aggregationBlock, 'verify.jsの静的カード能力集計を抽出できない');
+
+  const abilities = [
+    {
+      abilityId: 'ab-verified', cardId: 'test-card', linkStatus: 'resolved', status: 'verified',
+      name: 'ok', description: 'go',
+    },
+    {
+      abilityId: 'ab-draft', cardId: 'test-card', linkStatus: 'resolved', status: 'draft',
+      name: 'x'.repeat(20), description: 'y'.repeat(20),
+    },
+  ];
+  const result = vm.runInNewContext(`(() => {
+    ${aggregationBlock[0]}
+    const published = resolvedAbilitiesByCard.get('test-card') || [];
+    return {
+      count: resolvedAbilityCounts.get('test-card') || 0,
+      ids: published.map(ability => ability.abilityId),
+      chars: published.reduce((sum, ability) => sum + ability.name.length + ability.description.length, 0),
+    };
+  })()`, { abilities });
+
+  assert.strictEqual(result.count, 1);
+  assert.deepStrictEqual(Array.from(result.ids), ['ab-verified']);
+  assert.strictEqual(result.chars, 4);
+  assert.strictEqual(795 + result.chars < 800, true);
+  assert.strictEqual(795 + abilities.reduce((sum, ability) => sum + ability.name.length + ability.description.length, 0) >= 800, true);
+  console.log('PASS resolved draft能力を公開件数・本文・indexゲートから除外');
+}
+
 const baselineIssues = validateRoot(repo);
 if (baselineIssues.length) {
   throw new Error(`正常系がFAIL: ${baselineIssues.join(' / ')}`);
 }
 console.log('PASS 正常コピーを受理');
 runAbilitySchemaUnitTests();
+runDraftPublishExclusionTest();
 
 expectFailure('環境値検査の欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/00_core.gs');
