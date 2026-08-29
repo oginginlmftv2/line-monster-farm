@@ -1,6 +1,11 @@
 name: verify
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - cms/publish
+      - cms/assist-publish
+  pull_request:
 
 jobs:
   verify:
