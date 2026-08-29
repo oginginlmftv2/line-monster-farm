@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1079,
-    "resolved": 560,
+    "abilities": 1080,
+    "resolved": 561,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19314,6 +19314,26 @@
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
+    },
+    {
+      "abilityId": "ab-1085",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "ディアナチェイサー I",
+      "description": "[前半][自身青]オーラ技命中時、次の効果<br>・命中ステ＜５％＞で追撃＜１回＞<br>・[有利][シールド破壊＜１回＞]付与＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "追撃連撃",
+        "シールド"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "draft"
     }
   ]
 }
