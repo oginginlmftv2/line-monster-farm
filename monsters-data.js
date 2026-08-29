@@ -353,5 +353,5 @@ const monstersData = [
   { name: 'モチビー', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '1354.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
   { name: 'ヤオビクニ', aura: '赤', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '2016.jpg', mon: '幻霊', mainMon: 'ウンディーネ', subMon: 'モッチー' },
   { name: 'エコスライム', aura: '緑', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '1921.jpg', mon: '幻霊', mainMon: 'ゲル', subMon: 'プラント' },
-  { name: 'ルートヴィッヒ', aura: '黄', limited: true, limitedLabel: 'サマー限定', gwImg: null, localImg: null, mon: '怪物', mainMon: 'カワズモー', subMon: 'ノーブル' },
+  { name: 'ルートヴィッヒ', aura: '黄', limited: true, limitedLabel: 'サマー限定', gwImg: null, localImg: '2580.jpg', mon: '怪物', mainMon: 'カワズモー', subMon: 'ノーブル' },
 ];
