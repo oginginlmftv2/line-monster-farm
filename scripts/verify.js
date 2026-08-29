@@ -1368,7 +1368,7 @@ if (!exists('src/data/assist-cards.json')) {
     const resolvedAbilityCounts = new Map();
     const resolvedAbilitiesByCard = new Map();
     for (const ability of abilities) {
-      if (ability.linkStatus !== 'resolved') continue;
+      if (ability.linkStatus !== 'resolved' || ability.status !== 'verified') continue;
       resolvedAbilityCounts.set(ability.cardId, (resolvedAbilityCounts.get(ability.cardId) || 0) + 1);
       if (!resolvedAbilitiesByCard.has(ability.cardId)) resolvedAbilitiesByCard.set(ability.cardId, []);
       resolvedAbilitiesByCard.get(ability.cardId).push(ability);
