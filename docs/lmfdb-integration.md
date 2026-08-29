@@ -1,10 +1,12 @@
 # lMfDB 外部能力候補監査
 
-最終更新: 2026-08-28
+最終更新: 2026-08-30
 
-対象: P12-17a（読取専用候補監査エンジン）/ P12-17b（外部候補の手動登録設計）
+対象: P12-17a（読取専用候補監査エンジン）/ P12-17b（外部候補の手動登録設計）/
+P12-17 段階4-7（本番導入・運用確定）
 
-本番影響: ⚪（3DB、生成ページ、CMS、公開経路を変更しない）
+本番影響: この文書変更は⚪。段階4-7の管理者操作は🟡、既存アシスト公開を実行する場合は🟡🔴。
+Codexは本番GAS、スプレッドシート、Script Properties、deployment、公開を操作しない。
 
 ## 1. 目的と非目的
 
@@ -616,3 +618,254 @@ CMSへ汎用の能力削除ボタンは追加しない。誤操作で既存能�
    test登録、3DB検査、手動公開、カード表示・index影響、復旧手順を確認する
 
 各タスクは独立ブランチ・PRとし、段階6まで本番GAS、シート、公開経路を変更しない。
+
+## 19. 段階4-7 本番導入前監査（2026-08-29）
+
+基準は`origin/main`のマージコミット`87ee245`で、段階4-1〜4-6のマージをすべて含む。
+監査時の作業ツリーはclean、モンスターは352体、カード91件、効果888件、能力1,079件だった。
+
+| 確認項目 | 結果 | リポジトリ上の根拠 |
+|---|---|---|
+| 段階4-1〜4-6 | PASS | PR #71〜#76のマージコミット`38cd56f`、`0d71ac9`、`b128c34`、`051e88d`、`1265455`、`87ee245` |
+| 読取API | PASS | `api_asstAuditExternalAbilities()` |
+| 監査UI・詳細プレビュー | PASS | `ui_assist.html`の「外部能力DBを確認」、候補詳細、左右比較、最終プレビュー |
+| 追加専用登録API・処置API | PASS | `api_asstCreateAbilityFromExternalCandidate()` / `api_asstSetExternalCandidateDisposition()` |
+| 書込み失敗時の復旧 | PASS | 対象行限定の操作ジャーナル、逆順補償、一意確認、補償失敗時の重大停止 |
+| abilityId採番 | PASS | 外部IDを使わず、abilitiesと予約済みIDの最大`ab-####` + 1 |
+| 新規legacyId | PASS | 常に`null`。Sheetでは空セルと往復する |
+| 初期status | PASS | 常に`draft` |
+| resolved | PASS | 実在する確認済みcardIdが必須。sortOrderはサーバー採番 |
+| unlinked | PASS | cardIdとsortOrderは`null` |
+| NFKC | PASS | 比較・重複検査専用。保存値へ適用しない |
+| ID再利用疑い | PASS | `ID_REUSE_SUSPECTED`として分離し、通常候補として自動登録しない。ID 1084は本番最小登録対象外 |
+| draft非公開 | PASS | 生成対象は`linkStatus: resolved && status: verified`だけ |
+| 既存CMS公開フロー | PASS | 既存2 Workflow、公開ブランチ、許可リスト、concurrencyを維持 |
+
+導入前に実行した検査:
+
+```text
+node scripts/test-sync-lmfdb-abilities.js             25件 PASS
+node scripts/test-asst-lmfdb-read-api.js              19件 PASS
+node scripts/test-asst-lmfdb-audit-ui.js              32件 PASS
+node scripts/test-asst-lmfdb-create-api.js            22件 PASS
+node scripts/test-asst-lmfdb-write-safety.js          26件 PASS
+node scripts/test-verify-assist-cms.js                 85破壊ケースをすべて拒否
+node scripts/verify.js                                 PASS 83 / FAIL 0 / WARN 0 / SKIP 0
+```
+
+能力DBは`schemaVersion: 2`、既存1,079件の`abilityId`、legacyId、内容、配列順を
+verifierが固定検査する。監査時点では新規由来の`legacyId: null`と`status: draft`は0件であり、
+本番最小登録後は選択した1件だけが増える想定である。
+
+## 20. 管理者向け本番導入手順
+
+以下は管理者が実施する。秘密値、スプレッドシートID、deployment URL、tokenの一部を含め、
+値そのものをチャット、文書、スクリーンショットへ載せない。項目の不一致、想定外のシート、
+352体以外のモンスター件数、既存3DB件数の不一致が1つでもあれば、その時点で停止する。
+
+### A. 本番操作前の確認
+
+1. 本番スプレッドシートを開き、名称、所有者、既存シート、`members`のA1 noteが
+   `LMF CMS production`であることを確認する。noteは変更しない。
+2. `monsters`のデータ行が352件であることを確認する。名前、ID、配列順、各セルは変更しない。
+3. `cards` 91件、`assist_effects` 888件、`abilities` 1,079件であることを確認する。
+   件数が違えばrehearsalとの差または未公開編集の可能性があるため停止する。
+4. 本番Apps Scriptプロジェクトを開き、所有者、現在のdeployment、実行ユーザー、アクセス範囲が
+   日常運用中の統合CMSであることを確認する。ここではまだ保存しない。
+5. Script Propertiesは値を表示・共有せず、キーの有無と指し先だけを管理画面内で確認する。
+   必須の既存キーは`ENVIRONMENT`、`SPREADSHEET_ID`、`DRIVE_FOLDER_ID`、`GITHUB_TOKEN`、
+   `ASSIST_IMAGE_FOLDER_ID`、`GOOGLE_CLOUD_VISION_API_KEY`、`OCR_DAILY_LIMIT`である。
+   `OCR_DAILY_USAGE`はGASが管理する日次カウンタであり、手入力や移送をしない。
+6. `ENVIRONMENT=production`相当で、`SPREADSHEET_ID`が手順1の本番bookを指すことを確認する。
+   rehearsalのbook ID、`ENVIRONMENT=rehearsal`、一時プロジェクトの設定が混入していれば停止する。
+7. `members`で作業者がactiveであり、`role=admin`、`scopes`に`assist`を含むことを確認する。
+   他メンバーの権限を広げない。
+
+### B. バックアップと復旧点
+
+8. 本番スプレッドシート全体の復旧可能なコピーを作る。コピー名は
+   `YYYY-MM-DD HHmm P12-17導入前 ライ徹CMS`のように、実施日時と導入前であることを含める。
+9. Apps Scriptの「デプロイを管理」と「プロジェクト履歴」で、現在のdeployment ID、version、
+   作成日時、実行ユーザー、アクセス設定を値を公開せず管理者台帳へ記録する。
+10. 復旧対象を次で固定する。
+    - コードまたは画面の不具合: deploymentを手順9の直前versionへ戻す。
+    - `setup1_createSheets`で既存シートへ想定外の変更: CMS操作を止め、手順8のコピーと比較し、
+      管理者の復旧作業として影響したシートだけを導入前へ戻す。破壊的importを再実行しない。
+    - 最小登録の通常失敗: 操作ジャーナルの自動補償結果と行数を確認し、手で行削除しない。
+    - 補償失敗または一意特定不能: 全保存・公開を止め、`abilities`、
+      `ability_external_refs`、`assist_log`をコピーと比較してから別の復旧作業に分ける。
+
+### C. GAS同期とスキーマ導入
+
+11. リポジトリ`_cms/gas/manifest.json`とApps Scriptのファイル名を照合する。
+    Apps Scriptへ同期するのは次の11ファイルで、`README.md`はリポジトリ内の運用文書なので同期しない。
+
+```text
+00_core.gs
+10_monster.gs
+20_assist.gs
+25_lmfdb_write.gs
+30_publish.gs
+40_setup.gs
+index.html
+ui_common.html
+ui_monster.html
+ui_assist.html
+ui_publish.html
+```
+
+12. 上記11ファイルを同名ファイルへ同期する。内容が同じファイルも含め、ファイル名を取り違えない。
+    manifest外の既存ファイルを自己判断で削除せず、余剰や不足があれば保存前に停止する。
+13. 保存し、Apps Scriptエディタに構文エラーや未解決の関数参照が出ないことを確認する。
+14. `abilities`のヘッダーが次の17列と完全一致することを確認する。並べ替え、列追加、既存値変換をしない。
+
+```text
+sourceOrder, abilityId, legacyId, cardId, sourceName, name, description, source,
+rarity, tagsJson, sortOrder, linkStatus, flagsJson, status, version, updatedAt, updatedBy
+```
+
+15. `setup1_createSheets`を1回実行する。期待結果は既存シートの変更なし、
+    `ability_external_refs`が無ければ新規作成、既に正しいヘッダーで存在すれば作成なしである。
+    `要確認`が`なし`以外なら停止する。
+16. `ability_external_refs`のヘッダーが第13章の17列と完全一致し、導入前のデータ行が0件であることを確認する。
+    既存能力1,079件に対する参照行を一括生成しない。
+17. `setup4_checkAll`を実行する。期待するassist結果は
+    `cards=91 / effects=888 / abilities=1079 / issues=[]`である。
+    この確認で能力exportがschemaVersion 2、nullable legacyId対応であることを検査する。
+18. 手順14〜17の前後で`abilities` 1,079件の内容・行順・legacyIdが変わっていないこと、
+    `cards`、`assist_effects`、`monsters`の件数と内容が変わっていないことを確認する。
+
+### D. deployment更新
+
+19. 構文・setup結果に問題がない場合だけ、新しいversionを作成する。
+20. 既存Webアプリdeploymentをそのversionへ更新する。新規の別URLへ切り替えず、
+    実行ユーザーとアクセス設定を手順9の本番契約から変更しない。URLをチャットへ貼らない。
+21. deployment更新に失敗した場合は再保存を繰り返さず、直前versionへ戻して停止する。
+
+### E. 読取専用の本番確認
+
+22. 更新後CMSを開き、通常のモンスター一覧・カード一覧・カード編集・効果・OCR・能力・公開タブが
+    従来どおり見えることを確認する。保存、OCR送信、公開はまだ行わない。
+23. 「外部能力DBを確認」を開き、最初はSHAを指定せず監査する。
+24. `auditStatus=PASS`で最後まで完走することを確認する。`safetyVerdict=BLOCKED`の場合、
+    `blockReasons`が既知の`ID_REUSE_SUSPECTED`だけであることを確認する。
+25. 外部コミットSHA、外部JSON SHA-256、次の分類件数を記録する。
+
+```text
+newCandidates / knownExact / representationOnly / existingContentDifferences /
+idReuseSuspected / missingUpstreamObservations / cardMatchCandidates /
+unlinkedCandidates / duplicateLocalContentMatches / processed
+```
+
+26. ID 1084が`ID_REUSE_SUSPECTED`として分離され、通常のカード対応候補・未紐付け候補に
+    混ざらないことを確認する。本番最小登録の対象には選ばない。
+27. 表記違いと重複内容一致が低優先度の監査情報であり、既存更新や登録を促さないことを確認する。
+28. 監査前後で全シートの最終行、主要件数、更新日時が変わっていないことを確認する。
+29. 過去の118件などとの完全一致は要求しない。外部SHAや分類件数が過去値と違う場合は、
+    新しいSHA、総件数差、分類差を報告する。理由を説明できない差、未知のBLOCK理由、
+    schema差、ID衝突があれば書込み前に停止する。
+
+### F. 本番での最小書込み確認
+
+30. 手順22〜29がすべて正常な場合だけ、管理者が新規候補を1件選ぶ。次をすべて満たすこと。
+    - `registrationEligible=true`、`processed=false`
+    - `ID_REUSE_SUSPECTED`、`duplicate_local_content_match`、既存内容差分、表記違い、外部欠落ではない
+    - 外部原文と登録予定値を人が照合できる
+    - 可能なら最初は確実な未紐付け候補。resolvedを選ぶ場合はカード対応を人が確認できる
+31. 登録直前に`abilities`、`ability_external_refs`、`assist_log`のデータ行数を記録する。
+32. 最終プレビューで、外部原文、保存値、NFKCは比較だけであること、カード対応、
+    `legacyId=null`、`status=draft`、自動公開されないことを確認して1回だけ登録する。
+33. 登録後、次を確認する。
+    - 新しいabilityIdが外部IDと無関係なローカル`ab-`連番
+    - legacyIdはnull（Sheet上は空セル）、statusはdraft
+    - unlinkedならcardId/sortOrderは空、resolvedなら確認済みcardIdとサーバー採番sortOrder
+    - abilitiesは1行だけ、ability_external_refsは1行だけ、assist_logは設計どおり1行だけ増加
+    - 既存能力1,079件、カード91件、効果888件、モンスター352体は不変
+34. 同じcandidateKeyをもう一度登録し、重複として拒否されることを確認する。
+    拒否後に3シートの行数が増えていないことも確認する。
+35. 同じ固定SHAで監査を更新し、対象が登録済み・処置済みとして識別され、通常候補から外れることを確認する。
+36. 能力編集画面では新規能力がdraftであること、公開カード詳細・公開能力一覧には出ていないことを確認する。
+    verifiedへの変更とアシスト公開はこの最小書込み確認では行わない。
+37. 本番で障害注入、途中失敗、補償処理の故意発生、シート破損を試さない。
+    補償安全性は第19章のmock破壊テスト26件を証跡とする。
+
+## 21. 管理者から受け取る本番導入結果
+
+秘密値を含めず、次の票を同じチャットへ返す。成功条件が1つでも未確認・失敗なら、
+Codexはcommit、push、PR、mergeへ進まず、必要なら復旧手順だけを提示する。
+
+```text
+本番前バックアップ作成: 成功 / 失敗
+スキーマ確認・必要な初期化: 成功 / 失敗
+GAS同期・保存: 成功 / 失敗
+deployment更新: 成功 / 失敗
+CMS通常機能: 正常 / 異常
+外部監査: 成功 / 失敗
+auditStatus:
+safetyVerdict:
+blockReasons:
+外部コミットSHA:
+外部JSON SHA-256:
+各分類件数:
+読取監査前後のシート変更なし: 確認済み / 未確認
+最小登録確認: 成功 / 未実施 / 失敗
+登録した候補のexternal IDまたはcandidateKey:
+発行されたローカルabilityId:
+abilities増加数:
+ability_external_refs増加数:
+assist_log増加数:
+status=draft: 確認済み / 未確認
+legacyId=null: 確認済み / 未確認
+既存能力1,079件・カード91件・効果888件・モンスター352体不変: 確認済み / 未確認
+draft非公開: 確認済み / 未確認
+重複登録拒否: 確認済み / 未確認
+想定外事項: なし / 内容
+```
+
+## 22. 成功報告後のリポジトリ作業
+
+管理者報告の全成功条件を確認してから、Codexが次を行う。
+
+1. 本文書、`docs/PROGRESS.md`、必要な場合だけ`docs/ライ徹_開発計画.md`へ結果を最小限追記する
+2. P12-17段階4-7を完了として同期し、運用がCMSからの手動監査・追加登録であることを明記する
+3. 外部データを正本にせず、既存更新・削除・自動同期・自動公開を行わないことを明記する
+4. 本番GAS、Sheet、Script Properties、deployment操作は管理者が実施したと記録する
+5. 関連テストと`node scripts/verify.js`を再実行する
+6. 差分確認後にcommit、push、PRを作成する
+7. GitHub Actions成功後にmainへマージし、Pages deployment成功を確認する
+8. ローカルmainを最新化し、作業ブランチをローカル・リモートから削除する
+
+## 23. 段階4-7 本番導入結果（2026-08-30）
+
+本番GAS、スプレッドシート、Script Properties、deploymentは管理者が操作し、Codexは操作していない。
+導入前バックアップ、schemaVersion 2・nullable legacyId対応、`ability_external_refs`初期化、
+GAS同期・保存、deployment更新、CMS通常機能をすべて成功確認した。
+
+読取監査は外部コミット`dad5d301cc7cf3812a8c3f8ea8616642f505d61f`、外部JSON SHA-256
+`5e7ab00fedd8bef40d0f974a8b8eedaea084b094357d36f1b1deeea1e35df292`でPASSした。
+安全性は既知の`ID_REUSE_SUSPECTED` 1件だけを理由にBLOCKEDで、ID 1084は最小登録対象から除外した。
+監査前後のシート変更が無いことも確認した。
+
+管理者は通常の新規候補1件だけを手動登録した。
+
+| 項目 | 結果 |
+|---|---|
+| candidateKey | `a2d112f802ab5bd620690a28c2247e9e35d4e479a03189fde6ae0730b0353811` |
+| ローカルabilityId | `ab-1085` |
+| legacyId / status | `null` / `draft` |
+| 行数差 | abilities +1 / ability_external_refs +1 / assist_log +1 |
+| 既存データ | 既存能力1,079件、カード91件、効果888件、モンスター352体は不変 |
+| 公開 | draftのため非公開。verified化・アシスト公開は未実施 |
+| 重複確認 | 同じcandidateKeyの再登録を拒否し、拒否後の行数増加なし |
+
+登録後の固定SHA再監査は、外部1,177件、ローカル1,080件、カード対応候補97件、
+未紐付け候補20件、ID再利用疑い1件、既存内容差分42件、表記違い548件、
+重複内容一致22件、外部欠落観測20件だった。`processed=0`は異常ではない。
+登録した候補は新しいローカル能力と完全一致して`knownExact`へ先に分類され、候補配列を対象とする
+processed集計から外れるためである。通常候補から消え、同一candidateKeyの重複登録が拒否されたことで
+登録済み認識を確認した。
+
+以後の運用はCMSからの手動監査と追加専用登録だけとする。外部DBを正本として信頼せず、
+既存能力の更新・削除・無効化、自動同期、時間トリガー、外部更新起点の自動公開を行わない。
+新規能力はdraftで開始し、管理者が別途確認してverifiedへ変更し、既存のアシスト公開を明示実行するまで
+公開ページへ出さない。これをもってP12-17段階4-7の本番導入・運用確定を完了とする。
