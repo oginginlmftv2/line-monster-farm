@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1083,
-    "resolved": 564,
+    "abilities": 1087,
+    "resolved": 568,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19389,6 +19389,86 @@
         "ピクシー種",
         "デバフ",
         "エーテル"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1089",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "ホワイトアウト I",
+      "description": "[前半][自身青]相手技を回避後、技を回避した回数に応じて次の効果を付与＜各１回＞<br>・１回：相手に[衰弱Ｌｖ２＜２０秒＞]<br>・２回：相手に[暗闇Ｌｖ１＜２０秒＞]<br>・３回：自身に[完全回避Ｌｖ２]",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "回避",
+        "デバフ"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1090",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "ホワイトアウト II",
+      "description": "[前半][自身青]相手技を回避後、技を回避した回数に応じて次の効果を付与＜各１回＞<br>・１回：相手に[衰弱Ｌｖ３＜２０秒＞]<br>・２回：相手に[暗闇Ｌｖ２＜２０秒＞]<br>・３回：自身に[完全回避Ｌｖ４]",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "回避",
+        "デバフ"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1091",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "雪花の神秘 I",
+      "description": "[自身青または創造]バトル中、次の効果<br>・相手の移動速度＜－１＞<br>・[前半]自身の回避率に応じて追撃回避<br>・[前半]追撃を回避した回数分、ダメージ＜５％＞の追撃＜最大２回＞、技命中時リセット",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青",
+        "創造",
+        "回避",
+        "追撃連撃"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1092",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "雪花の神秘 II",
+      "description": "[自身青または創造]バトル中、次の効果<br>・相手の移動速度＜－２＞<br>・[前半]自身の回避率に応じて追撃回避<br>・[前半]追撃を回避した回数分、ダメージ＜１０％＞の追撃＜最大４回＞、技命中時リセット",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青",
+        "創造",
+        "回避",
+        "追撃連撃"
       ],
       "sortOrder": 4,
       "linkStatus": "resolved",
