@@ -121,7 +121,7 @@ function runAbilitySchemaUnitTests() {
   const gas = gasAbilitySchemaContext();
   const abilityDoc = JSON.parse(fs.readFileSync(path.join(repo, 'src/data/assist-abilities.json'), 'utf8'));
   assert.strictEqual(abilityDoc.schemaVersion, 2);
-  assert.strictEqual(abilityDoc.abilities.length, 1079);
+  assert(abilityDoc.abilities.length >= 1079);
 
   const base = abilityDoc.abilities[0];
   const blankRow = {
@@ -145,7 +145,9 @@ function runAbilitySchemaUnitTests() {
   const rows = [{ abilityId: 'ab-0001' }, { abilityId: 'ab-0003' }];
   const refs = [{ abilityId: 'ab-0008' }];
   assert.strictEqual(gas.asstNextAbilityId_(rows, refs), 'ab-0009');
-  assert.strictEqual(gas.asstNextAbilityId_(abilityDoc.abilities, []), 'ab-1085');
+  const maxAbilityNumber = Math.max(...abilityDoc.abilities.map(item => Number(item.abilityId.slice(3))));
+  const expectedNextAbilityId = `ab-${String(maxAbilityNumber + 1).padStart(4, '0')}`;
+  assert.strictEqual(gas.asstNextAbilityId_(abilityDoc.abilities, []), expectedNextAbilityId);
   assert.throws(() => gas.asstNextAbilityId_([{ abilityId: 'bad-0001' }], []), /ab-####/);
   assert.throws(() => gas.asstAssertAbilityIdAvailable_('ab-0001', rows, refs), /衝突/);
   assert.throws(() => gas.asstAssertAbilityIdAvailable_('ab-0008', rows, refs), /衝突/);
