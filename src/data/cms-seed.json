@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 800,
-  "count": 351,
+  "count": 352,
   "monsters": [
     {
       "id": "0101",
@@ -7891,8 +7891,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-06-30",
-      "baseline": 227,
-      "current": 1393,
+      "baseline": 243,
+      "current": 1409,
       "indexable": true
     },
     {
@@ -7916,8 +7916,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 208,
-      "current": 208,
+      "baseline": 224,
+      "current": 224,
+      "indexable": false
+    },
+    {
+      "id": "2580",
+      "arrayIndex": 351,
+      "name": "ルートヴィッヒ",
+      "aura": "黄",
+      "mon": "怪物",
+      "mainBlood": "カワズモー",
+      "subBlood": "ノーブル",
+      "limited": true,
+      "limitedLabel": "サマー限定",
+      "image": null,
+      "imageSource": null,
+      "gwImg": null,
+      "url": "/monsters/kaibutsu/kawazumo/2580.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 212,
+      "current": 212,
       "indexable": false
     },
     {

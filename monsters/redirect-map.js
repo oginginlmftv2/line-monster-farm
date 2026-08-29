@@ -350,5 +350,6 @@ window.LMF_REDIRECT_MAP = {
   "347": "genrei/mocchi/1625.html",
   "348": "muki/nyaa/1354.html",
   "349": "genrei/undine/2016.html",
-  "350": "genrei/gel/1921.html"
+  "350": "genrei/gel/1921.html",
+  "351": "kaibutsu/kawazumo/2580.html"
 };

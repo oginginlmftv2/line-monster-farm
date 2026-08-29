@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 351,
+ "count": 352,
  "monsters": [
   {
    "id": "0101",
@@ -5615,6 +5615,25 @@
    "localImg": "S__93200666_0.jpg",
    "url": "/monsters/kaibutsu/kawazumo/2550.html",
    "image": "img/monster/2550.jpg"
+  },
+  {
+   "id": "2580",
+   "sortOrder": 2580,
+   "isNew": true,
+   "name": "ルートヴィッヒ",
+   "arrayIndex": 351,
+   "mon": "怪物",
+   "monSlug": "kaibutsu",
+   "blood": "カワズモー",
+   "bloodSlug": "kawazumo",
+   "subBlood": "ノーブル",
+   "aura": "黄",
+   "limited": true,
+   "limitedLabel": "サマー限定",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/kaibutsu/kawazumo/2580.html",
+   "image": "img/monster/2580.jpg"
   },
   {
    "id": "2608",
