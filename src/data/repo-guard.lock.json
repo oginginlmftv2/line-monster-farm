@@ -1,8 +1,8 @@
 {
  "note": "monsters-data.js の配列順を固定するためのロック。意図して並べ替えた場合のみ --lock で更新すること。",
  "monstersOrder": {
-  "count": 351,
-  "hash": "5887530fe7c0d79f"
+  "count": 352,
+  "hash": "149d341677329e70"
  },
- "lockedAt": "2026-08-22"
+ "lockedAt": "2026-08-29"
 }
