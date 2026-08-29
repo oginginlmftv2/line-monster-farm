@@ -47,6 +47,7 @@
 | P12-17a | 外部能力DBの読取専用候補監査 | `feat/p12-17a-lmfdb-import-dry-run` | **完了** | ⚪ | PR #69をmainへマージ（`0b79fdd`）。ID再利用、表記違い、重複内容一致、新規候補、外部欠落を分類し、ローカルDBは無変更 |
 | P12-17b | 外部候補の手動登録設計 | `docs/p12-17b-lmfdb-manual-import-design` | **完了** | ⚪ | PR #70をmainへマージ（`558c1b0`）。ローカル不変ID、nullable legacyId、外部参照履歴、追加専用API、CMS画面、競合・復旧、段階4の分割を確定 |
 | P12-17 段階4-1〜4-7 | 外部能力DB連携の実装・本番導入・運用確定 | `chore/p12-17-lmfdb-production-rollout`ほか | **完了** | 🟡 | 4-1〜4-6をPR #71〜#76でmainへ反映。本番は管理者がバックアップ、GAS同期、schema導入、deployment、読取監査、draft 1件の最小登録を実施。既存データ不変・draft非公開・重複拒否を確認 |
+| P12-18 | CMS外部能力候補の枠・ボタン簡易改修 | `fix/p12-18-cms-audit-layout` | **完了** | ⚪（GAS反映時🟡） | 候補カード内で編集画面用の固定操作バーが誤適用される表示崩れを修正。本番GASへ反映し、管理者が問題ないことを確認済み |
 
 ## 最新mainの監査値
 

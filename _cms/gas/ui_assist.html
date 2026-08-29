@@ -135,7 +135,7 @@ function asstAuditCandidateHtml(candidate){
   return '<article class="ability-item"><div><strong>'+esc(name||'—')+'</strong><div class="muted">分類: '+esc(asstAuditCategoryLabel(candidate.classification))+' / 外部数値ID: '+esc(candidate.externalNumericId)+'</div>'+
     '<div>sourceName: '+esc(sourceName||'—')+' / source: '+esc(snapshot.source||'—')+' / rarity: '+esc(snapshot.rarity||'—')+'</div>'+
     '<div>cardIdCandidate: '+esc(candidate.cardIdCandidate||'—')+' / 処置状態: '+esc(disposition)+'</div><div><strong>'+esc(eligibility)+'</strong></div>'+
-    '<div class="actions"><button type="button" data-audit-detail="'+esc(index)+'">詳細を確認</button></div></div></article>';
+    '</div><button type="button" data-audit-detail="'+esc(index)+'">詳細を確認</button></article>';
 }
 function asstAuditCategoryLabel(classification){var found=ASST_AUDIT_CATEGORIES.find(function(category){return category[0]===classification;});return found?found[1]:classification;}
 function asstDiscardAuditDetail(){ASST.audit.detailIndex=null;ASST.audit.detailDraftIndex=null;ASST.audit.detailDraft=null;ASST.audit.finalPreview=null;}
