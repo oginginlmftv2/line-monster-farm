@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1080,
-    "resolved": 561,
+    "abilities": 1083,
+    "resolved": 564,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19331,6 +19331,66 @@
         "シールド"
       ],
       "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1086",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "ディアナチェイサー II",
+      "description": "[前半][自身青]オーラ技命中時、次の効果<br>・命中ステ＜５％＞追撃＜２回＞<br>・[有利]命中ステ＜５％＞追撃＜１回＞<br>・[有利][シールド破壊＜１回＞]付与＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "追撃連撃",
+        "シールド"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1087",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "魔鏡の奇跡 I",
+      "description": "[自身青またはピクシー種]バトル中次の効果＜各１回＞<br>・技命中時[ブロック＜－１０％＞]付与<br>・[ピクシー種]技発動時、[エーテル]＜１個＞付与",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青",
+        "ピクシー種",
+        "デバフ",
+        "エーテル"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1088",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "魔鏡の奇跡 II",
+      "description": "[自身青またはピクシー種]バトル中次の効果＜各１回＞<br>・技命中時[ブロック＜－１５％＞]付与<br>・技を外した時[命中率＜＋５％＞]付与<br>・[ピクシー種]技発動時、[エーテル]＜１個＞付与",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青",
+        "ピクシー種",
+        "デバフ",
+        "エーテル"
+      ],
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
