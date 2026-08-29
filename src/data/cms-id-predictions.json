@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-27T06:02:53Z",
-  "count": 351,
+  "exportedAt": "2026-08-29T00:49:43Z",
+  "count": 352,
   "monsters": [
     {
       "id": "1922",
@@ -1757,6 +1757,11 @@
       "id": "1921",
       "name": "エコスライム",
       "arrayIndex": 350
+    },
+    {
+      "id": "2580",
+      "name": "ルートヴィッヒ",
+      "arrayIndex": 351
     }
   ]
 }
