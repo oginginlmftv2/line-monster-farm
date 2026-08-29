@@ -33,6 +33,7 @@ const targets = [
   'scripts/test-asst-lmfdb-audit-ui.js',
   'scripts/test-asst-lmfdb-create-api.js',
   'scripts/test-asst-lmfdb-write-safety.js',
+  'scripts/test-asst-card-create-api.js',
   'scripts/build-assist-pages.js',
 ];
 
@@ -719,6 +720,19 @@ expectFailure('カード保存の共通ScriptLock欠落を拒否', root => {
   fs.writeFileSync(file, source.replace(block, block.replace('asstAcquireScriptLock_()', 'LockService.getScriptLock()')));
 }, /共通ScriptLock/);
 
+expectFailure('新規カードAPIの追加後再検算欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const block = source.match(/function api_asstCreateCard\(payload\)[\s\S]*?(?=\nfunction )/)[0];
+  fs.writeFileSync(file, source.replace(block, block.replace('asstVerifyCreatedCard_(card.cardId, sourceOrder, values);', '')));
+}, /新規カード追加専用API/);
+
+expectFailure('新規カードUIのbootstrap前有効化を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('id="asst_btnCreateCard" disabled', 'id="asst_btnCreateCard"'));
+}, /新規カードUI/);
+
 expectFailure('候補登録のScriptLock解放欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/25_lmfdb_write.gs');
   const source = fs.readFileSync(file, 'utf8');
@@ -753,6 +767,10 @@ childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-
   stdio: 'inherit',
 });
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-write-safety.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-card-create-api.js')], {
   cwd: repo,
   stdio: 'inherit',
 });

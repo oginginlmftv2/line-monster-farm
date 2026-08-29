@@ -48,6 +48,7 @@
 | P12-17b | 外部候補の手動登録設計 | `docs/p12-17b-lmfdb-manual-import-design` | **完了** | ⚪ | PR #70をmainへマージ（`558c1b0`）。ローカル不変ID、nullable legacyId、外部参照履歴、追加専用API、CMS画面、競合・復旧、段階4の分割を確定 |
 | P12-17 段階4-1〜4-7 | 外部能力DB連携の実装・本番導入・運用確定 | `chore/p12-17-lmfdb-production-rollout`ほか | **完了** | 🟡 | 4-1〜4-6をPR #71〜#76でmainへ反映。本番は管理者がバックアップ、GAS同期、schema導入、deployment、読取監査、draft 1件の最小登録を実施。既存データ不変・draft非公開・重複拒否を確認 |
 | P12-18 | CMS外部能力候補の枠・ボタン簡易改修 | `fix/p12-18-cms-audit-layout` | **完了** | ⚪（GAS反映時🟡） | 候補カード内で編集画面用の固定操作バーが誤適用される表示崩れを修正。本番GASへ反映し、管理者が問題ないことを確認済み |
+| P12-19 | CMS新規カード登録UI・追加専用API | `feat/p12-19-assist-card-create` | **レビュー待ち** | ⚪（GAS反映時🟡） | repo内GAS・UI・Node mockテストを実装。GAS同期・Sheet登録・deployment・実機確認は管理者作業として未実施 |
 
 ## 最新mainの監査値
 
@@ -214,16 +215,17 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-17段階4-1〜4-7を完了した。本番操作は管理者が実施し、固定SHA監査PASS、既知の
-`ID_REUSE_SUSPECTED`だけによるBLOCKED、通常候補1件の`ab-1085 / legacyId null / status draft`
-登録、既存データ不変、draft非公開、同一candidateKeyの重複拒否を確認した。
-実施結果と運用境界の正は`docs/lmfdb-integration.md`第23章。
+P12-19で、アシストカード一覧の新規登録UIと`api_asstCreateCard(payload)`をrepo内へ実装した。
+追加専用APIはassist scope、nickname、cardId形式・64文字上限・許可値・重複・sourceOrderを
+サーバーで再検査し、共通ScriptLock下で`cards`末尾へ1行だけ追加する。公開、GitHub送信、画像取得、
+3DB更新は行わない。外部GASへの同期・保存・deployment、Sheetでの最小登録と再読込確認は未実施で、
+管理者の手動反映・確認待ち。
 
 ## 次の作業
 
-P12-17に追加実装の予定はない。外部能力DBはCMSから必要時に手動監査し、管理者が確認した
-新規候補だけを追加専用APIでdraft登録する。既存能力の更新・削除、自動同期、自動公開は行わない。
-将来の仕様変更や復旧は、通常運用と混ぜず独立タスクにする。
+管理者が`_cms/gas/20_assist.gs`と`_cms/gas/ui_assist.html`をGASへ同期し、READMEのP12-19手順で
+bootstrap前後、ローカル禁止、実運用の新規カード1件、末尾sourceOrder、ログ、再読込を確認する。
+P12-20の画像を含む保存・公開経路は、この確認と別承認まで開始しない。
 
 ## 明示的な保留
 

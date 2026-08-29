@@ -32,6 +32,7 @@ const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
 const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
 const LMFDB_CREATE_API_TEST = 'scripts/test-asst-lmfdb-create-api.js';
 const LMFDB_WRITE_SAFETY_TEST = 'scripts/test-asst-lmfdb-write-safety.js';
+const CARD_CREATE_API_TEST = 'scripts/test-asst-card-create-api.js';
 const ASSIST_PAGE_BUILDER = 'scripts/build-assist-pages.js';
 
 const ALLOWED = {
@@ -96,7 +97,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, LMFDB_WRITE_SAFETY_TEST, ASSIST_PAGE_BUILDER]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, LMFDB_WRITE_SAFETY_TEST, CARD_CREATE_API_TEST, ASSIST_PAGE_BUILDER]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -116,6 +117,7 @@ function validateRoot(root) {
   const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${setupGas}`;
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
+  const cardCreateApiTest = read(root, CARD_CREATE_API_TEST);
   const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
   const assistExportBlock = functionBlock(gas, 'api_asstExport');
   const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
@@ -129,6 +131,12 @@ function validateRoot(root) {
   const auditPreviewBlock = functionBlock(html, 'asstBuildAuditPreview');
   const auditValidationBlock = functionBlock(html, 'asstAuditDraftIssues');
   const auditReadOnlyBlock = functionBlock(html, 'asstAuditReadOnly');
+  const cardCreateApiBlock = functionBlock(gas, 'api_asstCreateCard');
+  const cardCreatePayloadBlock = functionBlock(gas, 'asstCreateCardPayload_');
+  const cardCreateSourceOrderBlock = functionBlock(gas, 'asstValidateCardSourceOrders_');
+  const cardCreateUiBlock = [
+    'asstOpenCreateCard', 'asstRenderCreateCardForm', 'asstCollectCreateCard', 'asstCreateCard',
+  ].map(name => functionBlock(html, name)).join('\n');
 
   if (Buffer.byteLength(gas) > 100 * 1024) issues.push('20_assist.gsが100KBを超えている');
   if (!/ENVIRONMENT は production または rehearsal/.test(core)) {
@@ -170,12 +178,52 @@ function validateRoot(root) {
   }
   for (const fn of [
     'setup1_createSheets', 'setup2_registerMe', 'setup3_importAssistFromMain', 'setup4_checkAll', 'setup5_createAssistImageFolder',
-    'doGet', 'api_bootstrapShell', 'api_asstBootstrap', 'api_asstGetCard', 'api_asstSaveCard', 'api_asstSaveEffects',
+    'doGet', 'api_bootstrapShell', 'api_asstBootstrap', 'api_asstCreateCard', 'api_asstGetCard', 'api_asstSaveCard', 'api_asstSaveEffects',
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
     'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
+  }
+  if (!/ASST_CARD_ID_MAX_LENGTH\s*=\s*64/.test(gas) || !/ASST_CARD_ID_MAX_LENGTH=64/.test(html) ||
+      !cardCreatePayloadBlock || !/var allowed = \['cardId','name','rarity','aura','cardType','monType'\]/.test(cardCreatePayloadBlock) ||
+      !/\^\[a-z\]\[a-z0-9\]\*-\(MR\|SSR\)-\[a-z0-9\]\+\$/.test(cardCreatePayloadBlock) ||
+      !/idMatch\[1\] !== rarity/.test(cardCreatePayloadBlock) || !/\\u0000-\\u001f/.test(cardCreatePayloadBlock) ||
+      !/asstInList_\(payload\.rarity, ASST_RARITIES/.test(cardCreatePayloadBlock) ||
+      !/asstInList_\(payload\.aura, ASST_AURAS/.test(cardCreatePayloadBlock) ||
+      !/asstInList_\(payload\.cardType, ASST_CARD_TYPES/.test(cardCreatePayloadBlock) ||
+      !/asstInList_\(payload\.monType, ASST_MON_TYPES/.test(cardCreatePayloadBlock)) {
+    issues.push('新規カードのcardId上限・形式・制御文字・rarity一致・許可値の全面検査が不足');
+  }
+  if (!cardCreateApiBlock || !/asstRequireUser_\(\)/.test(cardCreateApiBlock) || !/user\.nickname/.test(cardCreateApiBlock) ||
+      !/asstCreateCardPayload_\(payload\)/.test(cardCreateApiBlock) || !/asstAcquireScriptLock_\(\)/.test(cardCreateApiBlock) ||
+      !/var rows = asstRows_\(ASST_SHEET_CARDS\)/.test(cardCreateApiBlock) || !/asstValidateCardSourceOrders_\(rows\)/.test(cardCreateApiBlock) ||
+      !/asstAssertNewCardAvailable_\(card, rows\)/.test(cardCreateApiBlock) || !/maxSourceOrder \+ 1/.test(cardCreateApiBlock) ||
+      (cardCreateApiBlock.match(/appendRow\(/g) || []).length !== 1 || /asstRewriteSheet_|githubRequest_|UrlFetchApp|DriveApp/.test(cardCreateApiBlock) ||
+      !/asstVerifyCreatedCard_\(card\.cardId, sourceOrder, values\)/.test(cardCreateApiBlock) ||
+      !/asstAppendLog_\(user, 'create-card', 'PASS'/.test(cardCreateApiBlock) ||
+      !/登録済みとして扱い、再実行しないでください/.test(cardCreateApiBlock) ||
+      !cardCreateSourceOrderBlock || !/Number\.isSafeInteger/.test(cardCreateSourceOrderBlock) || !/seen\[order\]/.test(cardCreateSourceOrderBlock)) {
+    issues.push('新規カード追加専用APIの認証・lock後再検査・末尾1行append・再検算・再実行禁止境界が不足');
+  }
+  if (!/id="asst_btnCreateCard" disabled>＋ 新規カード</.test(html) ||
+      !/el\('asst_btnCreateCard'\)\.disabled=false/.test(html) ||
+      !/ローカルプレビューでは新規カードを登録できません/.test(html) ||
+      !/新規行として保存されますが、サイトにはまだ公開されません/.test(cardCreateUiBlock) ||
+      !/api_asstCreateCard/.test(cardCreateUiBlock) || !/ASST\.cards\.push\(result\.card\)/.test(cardCreateUiBlock) ||
+      !/asst_summary/.test(cardCreateUiBlock) || !/asstOpenCard\(result\.cardId/.test(cardCreateUiBlock) ||
+      !/画像を追加し、必要項目を編集してください/.test(cardCreateUiBlock) ||
+      !/mobile-back/.test(cardCreateUiBlock) || !/cardIdは作成後に変更できません/.test(cardCreateUiBlock)) {
+    issues.push('新規カードUIのbootstrap無効化・ローカル禁止・確認・一覧反映・既存編集導線が不足');
+  }
+  const cardCreateTestMarkers = [
+    '初期値・応答・ログが仕様どおり', 'cardId重複', '同一name+rarity', '同名別rarity',
+    'cardId形式', 'rarity部分不一致', '許可外rarity', '許可外aura', '許可外cardType', '許可外monType',
+    '必須値空欄', 'nickname空欄', 'sourceOrder重複・不正', 'ロック競合', 'ロック取得後の同一cardId追加',
+    '行追加後の再検算失敗', 'ログだけ失敗', '再実行禁止',
+  ];
+  if (cardCreateTestMarkers.some(marker => !cardCreateApiTest.includes(marker))) {
+    issues.push('新規カード追加APIの成功・拒否・競合・追加後失敗mockテストが不足');
   }
   const rewriteSheetBlock = functionBlock(setupGas, 'asstRewriteSheet_');
   if (!rewriteSheetBlock || /deleteRows\s*\(/.test(rewriteSheetBlock)) {
@@ -338,7 +386,7 @@ function validateRoot(root) {
     issues.push('外部候補処置APIの許可値・再監査・abilities非変更境界が不足');
   }
   const assistLockFunctions = [
-    ['api_asstUploadCardImage', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
+    ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
     ['api_asstSaveAbility', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
   ];

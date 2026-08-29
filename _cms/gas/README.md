@@ -12,6 +12,24 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 
 常設のtest環境は作りません。大改修のたびに本番bookのコピーを作り、ENVIRONMENT=rehearsalのプロジェクトでリハーサルしてから本番へ反映します。
 
+## P12-19 新規カード登録の反映と確認
+
+リポジトリ内の実装対象は `20_assist.gs` と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
+
+反映後は次を手動確認します。
+
+1. CMSを開き、bootstrap完了前は「＋ 新規カード」が無効、完了後は有効になる
+2. ローカルプレビューではボタンが無効で、登録できない案内が表示される
+3. 本番bookのコピーを使う場合は、`ENVIRONMENT=rehearsal`と`members!A1`の環境マーカーを確認する
+4. 「＋ 新規カード」から未使用cardIdと必須属性を入力し、確認ダイアログにcardId、カード名、レアリティ、未公開の案内が出る
+5. 登録後に一覧件数が1件増え、作成カードの既存編集画面が開き、画像追加の案内が出る
+6. `cards`末尾に1行だけ追加され、`sourceOrder`が従来最大値+1、`version`が1、画像などの初期値が仕様どおりである
+7. `assist_log`に`create-card / PASS / <cardId> sourceOrder=<値>`が1件ある
+8. ページ再読み込み後も作成カードが一覧に現れ、cardIdが編集画面で変更不可である
+9. 重複cardIdと同じカード名+レアリティが拒否される。確認用データを本番へ作る場合は、実運用で登録する1件だけを使い、試験専用行を追加しない
+
+行追加後に「登録済みとして扱い、再実行しないでください」と表示された場合は、同じ入力を再送しません。`cards`のcardIdと`assist_log`を確認し、曖昧な条件で行を削除しません。新規カードは画像未登録のdraft相当であり、この操作だけでは公開、GitHub送信、静的ページ生成を行いません。
+
 ## セットアップ
 
 setup1_createSheets、setup2_registerMe、対象を明示したsetup3_*、setup4_checkAllの順で実行します。全setupの戻り値1行目でENVIRONMENTとbook名を確認します。

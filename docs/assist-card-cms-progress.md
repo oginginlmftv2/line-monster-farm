@@ -1,8 +1,8 @@
 # アシストカードDB・静的ページ・CMS 設計進捗
 
-最終更新: 2026-08-28
+最終更新: 2026-08-30
 
-状態: **P12-17a完了。P12-17bで外部候補の手動登録設計を確定**
+状態: **P12-19の新規カード追加専用API・UIをrepo内実装。管理者のGAS反映・実機確認待ち**
 
 この文書は、アシストカード情報基盤の詳細な現在地、設計、依存関係、保留事項、
 実施順を管理する正である。全体の現在地は`docs/PROGRESS.md`、全体計画は
@@ -523,6 +523,29 @@ P12-17aで読取専用監査を実装し、P12-17bで将来の手動登録設計
 
 P12-17bでは上記を実装していない。3DB、GAS、シート、Workflow、生成ページ、公開経路、
 本番データは変更していない。
+
+## P12-19 新規カード登録UI・追加専用API
+
+統合CMSのカード一覧へ「＋ 新規カード」を追加し、`api_asstCreateCard(payload)`が`cards`末尾へ
+draft相当の行を1件だけ追加する。cardIdは自動採番せず、管理者入力をtrimしたうえで
+`^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$`と64文字上限を検査する。既存91件の実測最大は24文字。
+cardId内のrarity一致、既存cardId重複、同一name+rarity、許可外属性、nickname空欄、
+sourceOrder不正・重複をサーバー側で拒否する。
+
+保存は共通ScriptLock取得後に`cards`を再読込し、`sourceOrder = 最大値 + 1`を決める。
+`ASST_HEADERS[ASST_SHEET_CARDS]`の列順で1行だけappendし、cardId一意、sourceOrder、全保存値を
+再読込検算してから`create-card`ログを残す。行追加開始後の検算・ログ失敗は再実行禁止の専用エラーにし、
+曖昧な自動削除・並べ替え・`asstRewriteSheet_()`による全体書換えは行わない。
+
+初期値は画像・イベント2・実装日・解説を空欄、accessoryStatusをunknown、stats/formationsを空配列、
+limitBreak/ratings/sapoRefをnull、versionを1、updatedAtを`nowIso_()`、updatedByをnicknameとする。
+UIはbootstrap成功まで登録ボタンを無効化し、ローカルプレビューでは登録不可を明示する。
+成功後は一覧と件数へ反映し、既存カード編集画面を開いて画像・必要項目の追加を案内する。
+
+repo内のNode mockテストは成功・全拒否・lock競合・lock後競合・追加後検算失敗・ログ失敗を検査する。
+本番GAS、Sheet、Drive、deploymentは変更していない。管理者が`_cms/gas/README.md`の手順で
+`20_assist.gs`と`ui_assist.html`を反映し、実運用の新規1件で再読込まで確認する。P12-20の
+画像を含む公開経路はこのタスクに含めない。
 
 ## 10. 現在の保留・外部確認待ち
 
