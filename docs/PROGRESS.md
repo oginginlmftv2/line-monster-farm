@@ -2,7 +2,7 @@
 
 > 作業の型・検証手順・過去の失敗は`docs/agent-handoff.md`を参照。
 
-最終更新: 2026-08-28
+最終更新: 2026-08-30
 
 状態: `未着手` / `進行中` / `レビュー待ち` / `完了` / `保留`
 
@@ -45,23 +45,24 @@
 | P12-15 | 888効果の表記正規化とindexゲートの再判定 | `chore/p12-15-effect-text-normalize` | **レビュー待ち** | 🔴 | 効果・カード解説の既存表記を統一。カードindex対象が1件増加 |
 | P12-16 | `asstRewriteSheet_` の恒久修正 | `fix/p12-16-assist-rewrite-sheet` | **完了** | 🟡 | PR #67をmainへマージ（`f64369e`）。マージ後の管理者作業も完了 |
 | P12-17a | 外部能力DBの読取専用候補監査 | `feat/p12-17a-lmfdb-import-dry-run` | **完了** | ⚪ | PR #69をmainへマージ（`0b79fdd`）。ID再利用、表記違い、重複内容一致、新規候補、外部欠落を分類し、ローカルDBは無変更 |
-| P12-17b | 外部候補の手動登録設計 | `docs/p12-17b-lmfdb-manual-import-design` | **レビュー待ち** | ⚪ | ローカル不変ID、nullable legacyId、外部参照履歴、追加専用API、CMS画面、競合・復旧、段階4の分割を文書化。実装・本番変更なし |
+| P12-17b | 外部候補の手動登録設計 | `docs/p12-17b-lmfdb-manual-import-design` | **完了** | ⚪ | PR #70をmainへマージ（`558c1b0`）。ローカル不変ID、nullable legacyId、外部参照履歴、追加専用API、CMS画面、競合・復旧、段階4の分割を確定 |
+| P12-17 段階4-1〜4-7 | 外部能力DB連携の実装・本番導入・運用確定 | `chore/p12-17-lmfdb-production-rollout`ほか | **完了** | 🟡 | 4-1〜4-6をPR #71〜#76でmainへ反映。本番は管理者がバックアップ、GAS同期、schema導入、deployment、読取監査、draft 1件の最小登録を実施。既存データ不変・draft非公開・重複拒否を確認 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`0b79fdd`
+調査基準: `origin/main`の`87ee245`
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
-| モンスター | 351体 | `src/data/monster-ids.json`をNodeで集計 |
-| CMS予測ID | 351体 | `src/data/cms-id-predictions.json` |
-| ID検算 | PASS 351体 | `node scripts/verify-cms-ids.js` |
-| 生成詳細ページ | 351件 | ID一覧のURL実在をNodeで照合 |
-| index / noindex | 53 / 298 | 生成HTMLのrobots metaをNodeで集計 |
+| モンスター | 352体 | `src/data/monster-ids.json`をNodeで集計 |
+| CMS予測ID | 352体 | `src/data/cms-id-predictions.json` |
+| ID検算 | PASS 352体 | `node scripts/verify-cms-ids.js` |
+| 生成詳細ページ | 352件 | ID一覧のURL実在をNodeで照合 |
+| index / noindex | 54 / 298 | 生成HTMLのrobots metaをNodeで集計 |
 | モン類ページ | 6件 | `monsters/<monSlug>/index.html` |
 | カード詳細ページ | 91件 | `src/data/assist-cards.json`のcardIdと生成HTMLを照合 |
 | カード index / noindex | 55 / 36 | 可視本文800字以上かつ解説50字以上を3DBから再計算 |
-| sitemap | 137URL | `<loc>`を集計。手書き23 + モンスター生成59 + カード生成55 |
+| sitemap | 138URL | `<loc>`を集計。手書き23 + モンスター生成60 + カード生成55 |
 | 公開方式 | main直接配信 | `AGENTS.md`、`CLAUDE.md`、CMS Workflow |
 
 件数はCMS公開で変わるため、次回も固定値を信じずスクリプトで集計する。
@@ -212,32 +213,16 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-17bで、P12-17aが抽出する外部新規候補を将来CMSから手動登録する設計を確定した。
-本番影響は⚪で、文書以外を変更していない。設計の正は`docs/lmfdb-integration.md`第10〜18章。
-
-主な結論:
-
-- `abilityId`は外部IDと無関係な`ab-`単調増加番号をScriptLock下で採番する
-- 新規能力の`legacyId`はnull、初期statusはdraftとする
-- 外部参照履歴は内部専用`ability_external_refs`へ保存する
-- 新規登録APIは追加専用で、既存能力を更新・削除しない
-- resolvedは管理者確認済みcardIdだけ、unlinked登録を許可し、ambiguousは新規登録に使わない
-- 比較用NFKCを保存値へ反映せず、登録後も自動公開しない
+P12-17段階4-1〜4-7を完了した。本番操作は管理者が実施し、固定SHA監査PASS、既知の
+`ID_REUSE_SUSPECTED`だけによるBLOCKED、通常候補1件の`ab-1085 / legacyId null / status draft`
+登録、既存データ不変、draft非公開、同一candidateKeyの重複拒否を確認した。
+実施結果と運用境界の正は`docs/lmfdb-integration.md`第23章。
 
 ## 次の作業
 
-P12-17bのPRレビュー後、段階4を次の7タスクへ分けて進める。**このPRでは開始しない。**
-
-1. ローカルID・legacyId・外部参照のスキーマ検査
-2. GASで外部JSONを取得し監査結果を返す読取API
-3. CMSの監査サマリーと候補一覧
-4. 候補詳細と編集プレビュー
-5. test/rehearsalシートへの追加専用API
-6. 重複・競合・部分書込みの破壊テスト
-7. 管理者承認後の本番移行と公開確認
-
-各タスクを独立ブランチ・PRにし、GAS画面、保存、本番反映を一度に実装しない。
-P12-15の運用注意（マージ後に未公開編集を出し切り、CMSシートをmainの3DBで再同期する）も維持する。
+P12-17に追加実装の予定はない。外部能力DBはCMSから必要時に手動監査し、管理者が確認した
+新規候補だけを追加専用APIでdraft登録する。既存能力の更新・削除、自動同期、自動公開は行わない。
+将来の仕様変更や復旧は、通常運用と混ぜず独立タスクにする。
 
 ## 明示的な保留
 
@@ -285,15 +270,12 @@ P12-15の運用注意（マージ後に未公開編集を出し切り、CMSシ�
 
 ## 現在の引き継ぎ
 
-アシストカード3DB（カード91件 / 効果888件 / 能力1,079件）と統合CMSは運用中である。
-P12-17aはPR #69で完了し、外部能力DBをローカルへ書き込まず候補分類できる。
+アシストカード3DBと統合CMSは運用中で、P12-17の外部能力DB連携も本番導入済みである。
+本番導入時に能力1件を`ab-1085 / legacyId null / status draft`として追加し、既存能力1,079件、
+カード91件、効果888件、モンスター352体の不変とdraft非公開を確認した。
 
-P12-17bでは手動登録設計だけを確定した。実装者は`docs/lmfdb-integration.md`第10〜18章を正とし、
-段階4を7つに分ける。最初はschemaVersion 2、nullable legacyId、ローカルID採番、
-`ability_external_refs`の検査だけを行う。読取API、画面、保存API、本番反映を同じPRへ入れない。
-
-外部DBは参考フィードであり、既存能力の更新・削除、自動登録、自動公開には使わない。
-段階4の本番移行は、段階1〜6のtest/rehearsal確認後に管理者が別途承認する。
+外部DBは参考フィードであり、CMSからの手動監査と追加専用登録だけに使う。既存能力の更新・削除、
+自動登録、自動同期、自動公開には使わない。運用・復旧の正は`docs/lmfdb-integration.md`とする。
 
 ## 管理者確認待ち
 
