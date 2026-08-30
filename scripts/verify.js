@@ -17,6 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const childProcess = require('child_process');
+const { PICKUP_SLOTS, validateGachaData } = require('../build');
 
 const REPO = process.cwd();
 const LOCK = path.join(REPO, 'src', 'data', 'repo-guard.lock.json');
@@ -234,7 +235,7 @@ head('7. ブランチ名');
   } catch { /* gitが無い環境 */ }
 
   const RESERVED = ['main', 'master', 'gh-pages', 'HEAD'];
-  const PATTERN = /^(feat|fix|chore|content|refactor)\/(p\d+(-\d+)?)-[a-z0-9-]+$/;
+  const PATTERN = /^(feat|fix|chore|content|refactor)\/((?:p\d+(?:-\d+)?|g\d+))-[a-z0-9-]+$/;
 
   if (!branch) sk('ブランチを取得できない');
   else if (RESERVED.includes(branch)) {
@@ -1550,6 +1551,34 @@ if (!exists('scripts/test-assist-effect-ocr.js')) {
   });
   if (result.status !== 0) ng(`アシスト効果OCRテストFAIL: ${(result.stderr || result.stdout).trim()}`);
   else ok('効果OCRは背景分類・青丸解放段階・スクロール重複・既存DB差分を検査');
+}
+
+// ---------------------------------------------------------------- 17
+head('17. ガチャDB');
+{
+  const required = [
+    'src/data/gachas.json',
+    'src/data/gacha-types.json',
+    'src/data/monster-ids.json',
+    'src/data/assist-cards.json',
+  ];
+  const missing = required.filter(file => !exists(file));
+  let issues = missing.map(file => `必須ファイルがない: ${file}`);
+  if (!issues.length) {
+    try {
+      issues = validateGachaData({
+        root: REPO,
+        gachaDb: JSON.parse(read('src/data/gachas.json')),
+        typeDb: JSON.parse(read('src/data/gacha-types.json')),
+        monsterDb: JSON.parse(read('src/data/monster-ids.json')).monsters,
+        cardDb: JSON.parse(read('src/data/assist-cards.json')).cards,
+      });
+    } catch (error) {
+      issues = [`検査の実行に失敗: ${error.message}`];
+    }
+  }
+  if (issues.length) ng(`ガチャDB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(', ')}`);
+  else ok(`ガチャDBが整合（ピックアップ上限 ${PICKUP_SLOTS}枠）`);
 }
 
 // ---------------------------------------------------------------- 結果

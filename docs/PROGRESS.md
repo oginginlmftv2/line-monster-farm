@@ -51,6 +51,7 @@
 | P12-18 | CMS外部能力候補の枠・ボタン簡易改修 | `fix/p12-18-cms-audit-layout` | **完了** | ⚪（GAS反映時🟡） | 候補カード内で編集画面用の固定操作バーが誤適用される表示崩れを修正。本番GASへ反映し、管理者が問題ないことを確認済み |
 | P12-19 | CMS新規カード登録UI・追加専用API | `feat/p12-19-assist-card-create` | **完了** | 🟡 | PR #82をmainへマージ（`35de94d`）。管理者がGAS同期・Sheet登録・deployment・実機確認を完了。手順は`docs/assist-card-create-runbook.md` |
 | P12-19b | P12-19の管理者手順書と進捗の同期 | `chore/p12-19-admin-runbook` | **レビュー待ち** | ⚪ | 手順書を新設し、PROGRESS.mdの状態と監査値をmain実測値へ更新 |
+| G1 | ガチャDBとガチャページ生成の基盤 | `feat/g1-gacha-data-foundation` | **レビュー待ち** | ⚪ | 空DB、共通検証、詳細・一覧・sitemap連携、正常10件・破壊10件のfixtureテストを追加。公開出力差分なし |
 
 ## 最新mainの監査値
 
@@ -216,6 +217,10 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 `docs/ライ徹_開発計画.md`のP11-1監査結果を正とする。
 
 ## 現在の作業
+
+G1として、ガチャDBと静的ページ生成の基盤を実装した。本番の`gachas.json`は空で、
+既存HTMLとsitemapの出力を変えず、fixtureだけで詳細・一覧・二軸ゲート・決定性を検証する。
+設計と可視文字数の実測は`docs/gacha-design.md`を正とする。
 
 P12-19は完了した。repo内の追加専用API・UIをマージしたあと、管理者がGAS同期、Sheetでの
 最小登録、deployment、実機確認までを実施した。手順と確認項目は`docs/assist-card-create-runbook.md`
