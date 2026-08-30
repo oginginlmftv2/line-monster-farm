@@ -7,10 +7,12 @@
     "25_lmfdb_write.gs",
     "30_publish.gs",
     "40_setup.gs",
+    "50_gacha.gs",
     "index.html",
     "ui_common.html",
     "ui_monster.html",
     "ui_assist.html",
+    "ui_gacha.html",
     "ui_publish.html",
     "README.md"
   ]

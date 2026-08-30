@@ -1,0 +1,178 @@
+<section class="domain-panel" id="gacha_root"><div class="wrap">
+  <div class="col-list panel">
+    <div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button class="primary" id="gacha_btnNew">＋ 新規作成</button></div>
+    <div class="filters">
+      <input type="text" id="gacha_q" placeholder="名前・IDで絞り込み">
+      <select id="gacha_state"><option value="">状態すべて</option><option value="current">開催中・開始前</option><option value="ended">終了</option><option value="draft">下書き</option></select>
+    </div>
+    <div class="list" id="gacha_list"><div class="center">読み込み中…</div></div>
+  </div>
+  <button type="button" class="mobile-back" id="gacha_btnBack">← 一覧へ戻る</button>
+  <div class="col-edit panel" id="gacha_edit"><div class="center">左の一覧からガチャを選ぶか、新規作成してください。</div></div>
+</div></section><script>
+var GACHA_UI={list:[],types:[],current:null,pendingImage:null,lookupTimers:{},lookupSeq:{}};
+var GACHA_UI_SLOTS=5;
+var GACHA_UI_GATE=300;
+
+function gachaBoot(){
+  call('api_gachaTypes',[],function(types){
+    GACHA_UI.types=types||[];
+    gachaReloadList();
+  });
+}
+
+function gachaReloadList(after){
+  call('api_gachaList',[],function(list){
+    GACHA_UI.list=list||[];
+    gachaRenderList();
+    if(after)after();
+  });
+}
+
+function gachaStateLabel(state){return state==='draft'?'下書き':(state==='ended'?'終了':'開催中・開始前');}
+function gachaFiltered(){
+  var q=el('gacha_q').value.trim().toLowerCase();
+  var state=el('gacha_state').value;
+  return GACHA_UI.list.filter(function(item){
+    if(state&&item.displayState!==state)return false;
+    return !q||(item.gachaId+' '+item.name+' '+item.gachaType).toLowerCase().indexOf(q)>=0;
+  });
+}
+function gachaRenderList(){
+  var list=gachaFiltered();
+  el('gacha_list').innerHTML=list.length?list.map(function(item){
+    return '<button class="row'+(GACHA_UI.current&&GACHA_UI.current.gachaId===item.gachaId?' sel':'')+'" data-gacha-id="'+esc(item.gachaId)+'">'+
+      '<div class="r1"><span class="id">'+esc(item.gachaId)+'</span><span class="nm">'+esc(item.name)+'</span><span class="tag">'+esc(gachaStateLabel(item.displayState))+'</span></div>'+
+      '<div class="cnt">'+esc(item.gachaType)+'　'+esc(item.startAt)+' ～ '+esc(item.endAt)+'</div></button>';
+  }).join(''):'<div class="center">該当なし</div>';
+  Array.prototype.forEach.call(el('gacha_list').querySelectorAll('[data-gacha-id]'),function(button){
+    button.onclick=function(){gachaOpen(button.getAttribute('data-gacha-id'));};
+  });
+}
+
+function gachaShowEdit(){document.body.classList.add('mobile-editing');if(window.matchMedia&&window.matchMedia('(max-width:860px)').matches)window.scrollTo(0,0);}
+function gachaShowList(){document.body.classList.remove('mobile-editing');}
+function gachaOpen(id){
+  gachaShowEdit();
+  el('gacha_edit').innerHTML='<div class="center">読み込み中…</div>';
+  call('api_gachaGet',[id],function(item){GACHA_UI.current=item;gachaRenderEditor(item);gachaRenderList();});
+}
+function gachaNew(){
+  gachaShowEdit();
+  GACHA_UI.current=null;
+  gachaRenderEditor({gachaId:'',name:'',gachaType:'',image:'',startAt:'',endAt:'',explanation:'',rerollPriority:false,status:'draft',updatedAt:''});
+  gachaRenderList();
+}
+function gachaDateInput(value){var match=String(value||'').match(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/);return match?match[0]:'';}
+function gachaTypeOptions(selected){
+  var html='<option value="">（選択）</option>';
+  GACHA_UI.types.forEach(function(type){html+='<option value="'+esc(type)+'"'+(type===selected?' selected':'')+'>'+esc(type)+'</option>';});
+  return html;
+}
+function gachaPickupRow(kind,slot,item){
+  var id=item[kind+slot]||'';
+  var rate=item[kind+'Rate'+slot];
+  if(rate==null)rate='';
+  var label=kind==='monster'?'モンスター':'カード';
+  return '<div class="field"><label>'+label+slot+' ID</label><input type="text" id="gacha_'+kind+slot+'" value="'+esc(id)+'" autocomplete="off">'+
+    '<div class="hint" id="gacha_'+kind+slot+'_lookup">'+(id?'確認中…':'IDを入力すると名前を確認します')+'</div></div>'+
+    '<div class="field"><label>'+label+slot+' 排出率（%）</label><input type="number" id="gacha_'+kind+'Rate'+slot+'" min="0.01" max="100" step="0.01" value="'+esc(rate)+'"></div>';
+}
+function gachaRenderEditor(item){
+  GACHA_UI.pendingImage=null;
+  var html='<div id="gacha_message" aria-live="polite"></div>';
+  html+='<div class="warnbox">保存先はスプレッドシートです。保存してもサイトには公開されません。公開機能はG4で追加します。</div>';
+  html+='<div class="grid"><div class="field"><label>gachaId（保存後は変更不可）</label><input type="text" class="ro" id="gacha_id" readonly value="'+esc(item.gachaId||'（新規保存時に採番）')+'"></div>';
+  html+='<div class="field"><label>状態</label><input type="text" class="ro" readonly value="'+esc(gachaStateLabel(item.status==='published'?'current':'draft'))+'"></div>';
+  html+='<div class="field"><label>名前</label><input type="text" id="gacha_name" value="'+esc(item.name||'')+'"></div>';
+  html+='<div class="field"><label>種別</label><select id="gacha_type">'+gachaTypeOptions(item.gachaType||'')+'</select></div>';
+  html+='<div class="field"><label>開始日時（JST）</label><input type="datetime-local" id="gacha_startAt" value="'+esc(gachaDateInput(item.startAt))+'"></div>';
+  html+='<div class="field"><label>終了日時（JST）</label><input type="datetime-local" id="gacha_endAt" value="'+esc(gachaDateInput(item.endAt))+'"></div></div>';
+  html+='<h3>バナー画像</h3><div class="field"><label>現在の画像</label><input type="text" class="ro" id="gacha_image" readonly value="'+esc(item.image||'（未設定）')+'">';
+  if(item.image)html+='<div style="margin-top:8px"><img src="https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/'+esc(item.image)+'" alt="現在のガチャ画像" style="max-width:100%;max-height:240px"></div>';
+  html+='<div class="image-upload"><input type="file" id="gacha_imageFile" accept="image/jpeg,image/png,image/webp"'+(item.gachaId?'':' disabled')+'><button type="button" id="gacha_btnUpload" disabled>画像をアップロード</button></div>'+
+    '<div class="hint" id="gacha_imageInfo">JPG・PNG・WebP / 2MB以下。新規ガチャは先に保存してください。</div></div>';
+  html+='<h3>解説</h3><div class="progress-big" id="gacha_count"></div><textarea id="gacha_explanation" rows="14">'+esc(item.explanation||'')+'</textarea>';
+  ['monster','card'].forEach(function(kind){
+    html+='<h3>'+(kind==='monster'?'モンスター':'アシストカード')+' ピックアップ</h3><div class="grid">';
+    for(var slot=1;slot<=GACHA_UI_SLOTS;slot++)html+=gachaPickupRow(kind,slot,item);
+    html+='</div>';
+  });
+  html+='<div class="field"><label><input type="checkbox" id="gacha_reroll"'+(item.rerollPriority?' checked':'')+'> リセマラ優先ガチャにする</label></div>';
+  html+='<div class="sticky"><button class="primary" id="gacha_btnSave">保存する</button>'+
+    (item.gachaId?'<button type="button" id="gacha_btnReload">読み込み直す</button>':'')+'<span class="muted">保存だけではサイトに反映されません。</span></div>';
+  el('gacha_edit').innerHTML=html;
+  el('gacha_explanation').oninput=gachaUpdateCount;
+  el('gacha_btnSave').onclick=gachaSave;
+  if(el('gacha_btnReload'))el('gacha_btnReload').onclick=function(){gachaOpen(item.gachaId);};
+  el('gacha_imageFile').onchange=gachaImageSelected;
+  el('gacha_btnUpload').onclick=gachaUploadImage;
+  ['monster','card'].forEach(function(kind){for(var slot=1;slot<=GACHA_UI_SLOTS;slot++){
+    (function(k,s){var input=el('gacha_'+k+s);input.oninput=function(){gachaScheduleLookup(k,s);};if(input.value)gachaScheduleLookup(k,s);})(kind,slot);
+  }});
+  gachaUpdateCount();
+}
+
+function gachaUpdateCount(){
+  var count=String(el('gacha_explanation').value||'').replace(/\s+/g,'').length;
+  el('gacha_count').innerHTML=count>=GACHA_UI_GATE?'<b>'+count+'</b>字　<span style="color:#1a7f37">解説条件を満たしています</span>':'<b>'+count+'</b>字　インデックス対象の解説条件まであと <b>'+(GACHA_UI_GATE-count)+'</b>字';
+}
+function gachaScheduleLookup(kind,slot){
+  var key=kind+slot;
+  if(GACHA_UI.lookupTimers[key])clearTimeout(GACHA_UI.lookupTimers[key]);
+  var id=el('gacha_'+key).value.trim();
+  var output=el('gacha_'+key+'_lookup');
+  var seq=(GACHA_UI.lookupSeq[key]||0)+1;GACHA_UI.lookupSeq[key]=seq;
+  if(!id){output.textContent='IDを入力すると名前を確認します';return;}
+  output.textContent='確認中…';
+  GACHA_UI.lookupTimers[key]=setTimeout(function(){
+    call('api_gachaLookupPickup',[kind,id],function(result){
+      if(GACHA_UI.lookupSeq[key]!==seq)return;
+      if(result.ok)output.textContent=result.name+(result.rarity?'（'+result.rarity+'）':'');
+      else output.innerHTML='<span style="color:#b42318">IDが見つかりません</span>';
+    });
+  },300);
+}
+function gachaCollectPickups(kind){
+  var result=[];
+  for(var slot=1;slot<=GACHA_UI_SLOTS;slot++){
+    var rawRate=el('gacha_'+kind+'Rate'+slot).value;
+    result.push({id:el('gacha_'+kind+slot).value.trim(),rate:rawRate===''?'':Number(rawRate)});
+  }
+  return result;
+}
+function gachaSave(){
+  var payload={
+    gachaId:GACHA_UI.current?GACHA_UI.current.gachaId:'',baseUpdatedAt:GACHA_UI.current?GACHA_UI.current.updatedAt:'',
+    name:el('gacha_name').value.trim(),gachaType:el('gacha_type').value,startAt:el('gacha_startAt').value,endAt:el('gacha_endAt').value,
+    explanation:el('gacha_explanation').value,monsterPickups:gachaCollectPickups('monster'),cardPickups:gachaCollectPickups('card'),rerollPriority:el('gacha_reroll').checked
+  };
+  call('api_gachaSave',[payload],function(result){
+    var message=result.created?'下書きとして新規保存しました。gachaId: '+result.gachaId:'保存しました。サイトにはまだ公開されません。';
+    if(result.renumbered){
+      message='開始日の変更に合わせて、下書きのgachaIdを '+result.previousGachaId+' → '+result.gachaId+' に採番し直しました。';
+      if(result.imageCleared)message+=' 画像は旧IDのまま公開されないよう解除しました。新しいIDで再アップロードしてください。';
+    }
+    show(message);
+    gachaReloadList(function(){gachaOpen(result.gachaId);});
+  });
+}
+function gachaImageSelected(){
+  var input=el('gacha_imageFile');var file=input.files&&input.files[0];GACHA_UI.pendingImage=null;el('gacha_btnUpload').disabled=true;
+  if(!file)return;
+  if(['image/jpeg','image/png','image/webp'].indexOf(file.type)<0||!file.size||file.size>2*1024*1024){input.value='';show('画像はJPG・PNG・WebPの2MB以下にしてください。',true);return;}
+  var reader=new FileReader();reader.onload=function(){var value=String(reader.result||'');var comma=value.indexOf(',');if(comma<0){show('画像を読み込めませんでした。',true);return;}GACHA_UI.pendingImage={mimeType:file.type,base64:value.slice(comma+1),name:file.name,size:file.size};el('gacha_imageInfo').textContent=file.name+'（'+Math.ceil(file.size/1024)+'KB）を選択中';el('gacha_btnUpload').disabled=false;};reader.onerror=function(){show('画像を読み込めませんでした。',true);};reader.readAsDataURL(file);
+}
+function gachaUploadImage(){
+  if(!GACHA_UI.current||!GACHA_UI.pendingImage){show('先に保存して画像を選んでください。',true);return;}
+  if(GACHA_UI.current.image&&!confirm('現在の画像を差し替え、同じgachaIdの旧画像をDriveのゴミ箱へ移動します。よろしいですか？'))return;
+  call('api_gachaUploadImage',[{gachaId:GACHA_UI.current.gachaId,baseUpdatedAt:GACHA_UI.current.updatedAt,mimeType:GACHA_UI.pendingImage.mimeType,base64:GACHA_UI.pendingImage.base64}],function(result){
+    GACHA_UI.current.image=result.image;GACHA_UI.current.updatedAt=result.updatedAt;show('画像を保存しました: '+result.image+'。サイトにはまだ公開されません。');gachaOpen(result.gachaId);
+  });
+}
+
+el('gacha_q').oninput=gachaRenderList;
+el('gacha_state').onchange=gachaRenderList;
+el('gacha_btnNew').onclick=gachaNew;
+el('gacha_btnBack').onclick=gachaShowList;
+</script>

@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** ガチャ生成の正常13ケースと、DB検査の破壊10ケースを確認する。 */
+/** ガチャ生成・統合の正常ケースと、DB検査の破壊ケースを確認する。 */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -392,6 +392,17 @@ try {
   assert(!noCardExcerpt.includes('<div class="pickup-desc"></div>'));
   pass(31, '解説のないカードピックアップに空のpickup-descを出力しない');
 
+  const shiftedStart = gacha({ startAt: '2026-09-08T15:00+09:00' });
+  const shiftedIssues = validateGachaData({
+    root,
+    gachaDb: { schemaVersion: 1, gachas: [shiftedStart] },
+    typeDb,
+    monsterDb: fixtureMonsters,
+    cardDb: cards,
+  });
+  assert.deepStrictEqual(shiftedIssues, []);
+  pass(32, 'publishedはgachaIdの日付部とstartAtがずれていても他の検査を満たせば受理');
+
   for (const [label, monsterCount, cardCount] of [
     ['A', 5, 5],
     ['B', 3, 2],
@@ -449,4 +460,4 @@ for (const [number, label, source] of [
   console.log(`PASS 破壊25: build.jsへのカード後処理差し込み復活を検査17が拒否 → ${postprocessIssues.join(' / ')}`);
 }
 
-console.log('OK 正常31件PASS・破壊15件すべて拒否');
+console.log('OK 正常32件PASS・破壊15件すべて拒否');

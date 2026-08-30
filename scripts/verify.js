@@ -1610,6 +1610,17 @@ head('17. ガチャDB');
     }
     issues.push(...gachaBuildPostprocessIssues(buildSource));
   }
+  if (!exists('scripts/verify-gacha-cms.js')) {
+    issues.push('必須ファイルがない: scripts/verify-gacha-cms.js');
+  } else {
+    try {
+      const { validateRoot } = require('./verify-gacha-cms');
+      const gachaCmsIssues = validateRoot(REPO);
+      issues.push(...gachaCmsIssues.map(issue => `ガチャCMS: ${issue}`));
+    } catch (error) {
+      issues.push(`ガチャCMS検査の実行に失敗: ${error.message}`);
+    }
+  }
   if (issues.length) ng(`ガチャDB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(', ')}`);
   else ok(`ガチャDBが整合（ピックアップ上限 ${PICKUP_SLOTS}枠）`);
 }

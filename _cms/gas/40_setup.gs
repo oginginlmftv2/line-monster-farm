@@ -1,7 +1,7 @@
 /** GASエディタから手で実行するセットアップだけを置く。 */
 function allHeaders_() {
   var all = {};
-  [CORE_HEADERS, MON_HEADERS, ASST_HEADERS].forEach(function (group) {
+  [CORE_HEADERS, MON_HEADERS, ASST_HEADERS, GACHA_HEADERS].forEach(function (group) {
     Object.keys(group).forEach(function (name) {
       if (all[name]) throw new Error('シート名が重複しています: ' + name);
       all[name] = group[name];
