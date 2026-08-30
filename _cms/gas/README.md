@@ -46,7 +46,22 @@ setup1_createSheets、setup2_registerMe、対象を明示したsetup3_*、setup4
 5. `members`シートで自分の`scopes`へ`gacha`を追加する
 6. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
 
-既存シートの削除、全消去、行削除は行いません。ガチャ公開経路はG4まで追加しません。
+既存シートの削除、全消去、行削除は行いません。保存してもサイトは変わりません。
+
+## G4 ガチャ公開経路の反映
+
+G4のリポジトリ変更がmainへマージされた後、管理者が次の順で反映します。CodexはGAS、シート、Drive、GitHub Actionsを操作しません。
+
+1. `_cms/gas/30_publish.gs`、`50_gacha.gs`、`ui_gacha.html`、`ui_publish.html`を同名のGASファイルへ同期して保存する
+2. `setup1_createSheets`を再実行し、既存シートを保持したまま`gacha_publish_log`が追加されたことを確認する。新規シート追加だけなので`ALLOW_DESTRUCTIVE_SETUP`は不要
+3. `gachas`シートの既存画像パスがある場合は`gacha-banner/`形式であることを確認する。G4導入前は画像・Drive利用がないため移行対象はない
+4. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+5. ガチャ編集画面で対象を「公開対象にする」へ切り替えて保存する。これだけではサイトへ反映されない
+6. 公開タブで「ガチャを公開」を押し、送信SHAを控える
+7. 「ガチャ公開結果を確認」で成功を確認し、`gacha_publish_log`の送信済み・公開成功とGitHub Actionsの各検査を確認する
+8. 公開ページ、トップ、リセマラ、該当カード・モンスター詳細の「登場ガチャ」をPC幅・スマートフォン幅で確認する
+
+公開失敗時は再deploymentや連打をせず、画面のメッセージ、`gacha_publish_log`、失敗したGitHub Actions stepを共有します。`publishedAt`はGitHub送信前にシートへ確定するため、送信失敗後も残ります。次回公開でもその日付を変更しません。
 
 ## token更新
 

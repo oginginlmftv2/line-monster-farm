@@ -1,6 +1,8 @@
-<section class="domain-panel" id="app_publish_root"><div class="panel"><h2>公開</h2><p>公開は本番環境・admin・対象scopeの3条件を満たす場合だけ実行できます。</p><button id="app_publishMonster">モンスターを公開</button><button id="app_publishAssist">アシストを公開</button><button id="app_publishMonsterStatus">モンスター公開結果を確認</button><button id="app_publishAssistStatus">アシスト公開結果を確認</button><div id="app_publishMessage" aria-live="polite"></div></div></section><script>
+<section class="domain-panel" id="app_publish_root"><div class="panel"><h2>公開</h2><p>公開は本番環境・admin・対象scopeの3条件を満たす場合だけ実行できます。</p><button id="app_publishMonster">モンスターを公開</button><button id="app_publishAssist">アシストを公開</button><button id="app_publishGacha">ガチャを公開</button><button id="app_publishMonsterStatus">モンスター公開結果を確認</button><button id="app_publishAssistStatus">アシスト公開結果を確認</button><button id="app_publishGachaStatus">ガチャ公開結果を確認</button><div id="app_publishMessage" aria-live="polite"></div></div></section><script>
 el('app_publishMonster').onclick=function(){if(confirm('モンスターを公開しますか？'))call('api_monPublish',[],function(result){show('送信しました: '+result.shortSha,false);});};
 el('app_publishAssist').onclick=function(){if(confirm('アシストを公開しますか？'))call('api_asstPublish',[],function(result){show('送信しました: '+result.shortSha,false);});};
+el('app_publishGacha').onclick=function(){if(confirm('公開対象のガチャを公開しますか？'))call('api_gachaPublish',[],function(result){show('送信しました: '+result.shortSha,false);});};
 el('app_publishMonsterStatus').onclick=function(){call('api_monLatestPublishStatus',[],function(result){show(result.message||result.state,false);});};
 el('app_publishAssistStatus').onclick=function(){call('api_asstLatestPublishStatus',[],function(result){show(result.message||result.state,false);});};
+el('app_publishGachaStatus').onclick=function(){call('api_gachaLatestPublishStatus',[],function(result){show(result.message||result.state,false);});};
 </script>

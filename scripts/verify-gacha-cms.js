@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** G3ガチャCMSが新規2シートだけへ安全に保存することを検証する。 */
+/** ガチャCMSが保存・公開境界を安全に維持することを検証する。 */
 
 const fs = require('fs');
 const path = require('path');
@@ -12,6 +12,10 @@ const FILES = {
   core: '_cms/gas/00_core.gs',
   shell: '_cms/gas/index.html',
   guide: '_cms/gas/README.md',
+  publish: '_cms/gas/30_publish.gs',
+  publishUi: '_cms/gas/ui_publish.html',
+  workflow: '.github/workflows/cms-gacha-publish.yml',
+  sourceGate: 'scripts/verify-gacha-source.js',
 };
 
 function read(root, relative) {
@@ -54,6 +58,10 @@ function validateRoot(root) {
   const core = read(root, FILES.core);
   const shell = read(root, FILES.shell);
   const guide = read(root, FILES.guide);
+  const publish = read(root, FILES.publish);
+  const publishUi = read(root, FILES.publishUi);
+  const workflow = read(root, FILES.workflow);
+  const sourceGate = read(root, FILES.sourceGate);
   let manifest;
   try { manifest = JSON.parse(read(root, FILES.manifest)); }
   catch (error) { issues.push(`manifest.jsonを解析できない: ${error.message}`); return issues; }
@@ -115,16 +123,18 @@ function validateRoot(root) {
     issues.push('50_gacha.gsのシートアクセスがbook_()経由に限定されていない');
   }
   const sheetAccesses = gas.match(/getSheetByName\s*\(/g) || [];
-  if (sheetAccesses.length !== 1 || !/name !== GACHA_SHEET && name !== GACHA_TYPE_SHEET/.test(functionBlock(gas, 'gachaSheet_'))) {
-    issues.push('50_gacha.gsのシートアクセス対象がガチャ2シートに限定されていない');
+  if (sheetAccesses.length !== 1 ||
+      !/name !== GACHA_SHEET && name !== GACHA_TYPE_SHEET && name !== GACHA_SHEET_PUBLISH_LOG/.test(functionBlock(gas, 'gachaSheet_'))) {
+    issues.push('50_gacha.gsのシートアクセス対象がガチャ3シートに限定されていない');
   }
 
   // 7. 画像は2MB、マジックバイト、指定folder、同名旧版のゴミ箱移動を通す。
   const upload = functionBlock(gas, 'api_gachaUploadImage');
+  const imageFolder = functionBlock(gas, 'gachaImageFolder_');
   if (!/GACHA_IMAGE_MAX_BYTES\s*=\s*2\s*\*\s*1024\s*\*\s*1024/.test(gas) ||
       !/bytes\.length\s*>\s*GACHA_IMAGE_MAX_BYTES/.test(upload) ||
       !/isExpectedImage_\(bytes, mimeType\)/.test(upload) ||
-      !/prop_\('GACHA_DRIVE_FOLDER_ID'\)/.test(upload) ||
+      !/gachaImageFolder_\(\)/.test(upload) || !/prop_\('GACHA_DRIVE_FOLDER_ID'\)/.test(imageFolder) ||
       !/setTrashed\(true\)/.test(upload) || !/createFile\(/.test(upload)) {
     issues.push('画像処理の拡張子・2MB・マジックバイト・指定folder・同名上書き境界が不足');
   }
@@ -145,11 +155,11 @@ function validateRoot(root) {
     issues.push('Script Propertiesの値を戻り値・ログへ出す経路がある');
   }
 
-  // 10. G3にはGitHub送信を置かない。raw GETは既存関数をCacheService付きで再利用する。
+  // 10. GitHub送信を50_gacha.gsへ置かない。raw GETは既存関数をCacheService付きで再利用する。
   if (/githubRequest_|UrlFetchApp|api\.github\.com|GITHUB_TOKEN|cms\/gacha-publish/.test(gas) ||
       !/CacheService\.getScriptCache\(\)/.test(gas) ||
       !/asstFetchJson_\(RAW_BASE \+ file\)/.test(gas)) {
-    issues.push('G3にGitHub送信または新規取得方式がある');
+    issues.push('50_gacha.gsにGitHub送信または新規取得方式がある');
   }
 
   if (!/GACHA_DRIVE_FOLDER_ID/.test(guide) || !/ALLOW_DESTRUCTIVE_SETUP.*不要/.test(guide) ||
@@ -157,6 +167,44 @@ function validateRoot(root) {
     issues.push('READMEの管理者向けG3手順が不足');
   }
   if (!/monster \/ assist \/ gacha/.test(core)) issues.push('requireScope_の案内にgachaがない');
+
+  // 11. ガチャ公開Workflowは既存CMS公開と同じconcurrency groupで直列化する。
+  if (!/^\s*group:\s*cms-publish\s*$/m.test(workflow) || !/^\s*cancel-in-progress:\s*false\s*$/m.test(workflow)) {
+    issues.push('ガチャ公開Workflowのconcurrency.groupがcms-publishではない');
+  }
+
+  // 12. 公開branch側ではなくorigin/mainのソース検査器を実行する。
+  if (!/git show origin\/main:scripts\/verify-gacha-source\.js/.test(workflow) ||
+      !/node "\$RUNNER_TEMP\/verify-gacha-source\.js" source "\$GITHUB_SHA" origin\/main/.test(workflow)) {
+    issues.push('ガチャ公開Workflowがorigin/mainのverify-gacha-source.jsを使用していない');
+  }
+
+  // 13. GitHub送信APIは30_publish.gsだけに置き、公開UIから呼ぶ。
+  const publishApi = functionBlock(publish, 'api_gachaPublish');
+  if (!publishApi || functionBlock(gas, 'api_gachaPublish') || !/api_gachaPublish/.test(publishUi)) {
+    issues.push('api_gachaPublishが30_publish.gsと公開UIの正しい境界にない');
+  }
+
+  // 14. 本番環境・admin・gacha scopeを共通ガードで検査する。
+  if (!/requirePublishable_\(\s*['"]gacha['"]\s*\)/.test(publishApi)) {
+    issues.push("api_gachaPublishがrequirePublishable_('gacha')を通っていない");
+  }
+
+  // 15. 画像入力はgacha-banner/へ分離し、gacha/へ画像を書かない。
+  if (!/['"]gacha-banner\/['"]\s*\+\s*fileName/.test(gas) ||
+      /['"]gacha\/['"]\s*\+\s*fileName/.test(gas) ||
+      !/\^gacha-banner\\\//.test(sourceGate) || /IMAGE_PATH\s*=\s*\/\^gacha\\\//.test(sourceGate)) {
+    issues.push('ガチャ画像パスがgacha-banner/へ分離されていない');
+  }
+
+  // 16. publishedAtの初回日付をシートへ書いてからGitHub commit/ref処理へ進む。
+  const stampIndex = publishApi.indexOf('gachaStampInitialPublishedAt_(rows)');
+  const commitIndex = publishApi.indexOf("githubRequest_('post', '/git/commits'");
+  const refIndex = publishApi.indexOf("githubRequest_('patch', '/git/refs/heads/'");
+  if (stampIndex < 0 || commitIndex < 0 || refIndex < 0 || stampIndex > commitIndex || stampIndex > refIndex ||
+      !/setValue\(today\)/.test(functionBlock(gas, 'gachaStampInitialPublishedAt_'))) {
+    issues.push('publishedAtをシートへ書いてからGitHubへpushする順序が不足');
+  }
 
   return issues;
 }

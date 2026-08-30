@@ -1,0 +1,81 @@
+name: CMS gacha publish
+
+on:
+  push:
+    branches:
+      - cms/gacha-publish
+
+concurrency:
+  group: cms-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-verify-publish:
+    name: Build, verify, and publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check publish token
+        env:
+          CMS_PUBLISH_TOKEN: ${{ secrets.CMS_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "$CMS_PUBLISH_TOKEN" ]; then
+            echo "Repository secret CMS_PUBLISH_TOKEN is not configured."
+            exit 1
+          fi
+
+      - name: Check out cms/gacha-publish
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 0
+          token: ${{ secrets.CMS_PUBLISH_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Verify CMS gacha source commit
+        run: |
+          git fetch origin main --no-tags
+          git show origin/main:scripts/verify-gacha-source.js > "$RUNNER_TEMP/verify-gacha-source.js"
+          node "$RUNNER_TEMP/verify-gacha-source.js" source "$GITHUB_SHA" origin/main
+
+      - name: Generate monster IDs
+        run: node generate-ids.js
+
+      - name: Verify CMS predicted IDs
+        run: node scripts/verify-cms-ids.js
+
+      - name: Build public files
+        run: node build.js
+
+      - name: Verify repository rules
+        run: node scripts/verify.js
+
+      - name: Confirm generated-file scope
+        run: node "$RUNNER_TEMP/verify-gacha-source.js" generated
+
+      - name: Commit generated files and publish main
+        shell: bash
+        run: |
+          source_sha="$(git rev-parse HEAD)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m "Build CMS gacha publish ${source_sha:0:7}"
+          fi
+          published_sha="$(git rev-parse HEAD)"
+          git push origin HEAD:main
+          {
+            echo "## CMS gacha publish completed"
+            echo
+            echo "- Source: \`${source_sha}\`"
+            echo "- Main: \`${published_sha}\`"
+          } >> "$GITHUB_STEP_SUMMARY"

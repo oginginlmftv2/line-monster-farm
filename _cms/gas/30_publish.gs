@@ -4,6 +4,7 @@ var GITHUB_REPO = 'line-monster-farm';
 var GITHUB_MAIN_BRANCH = 'main';
 var GITHUB_MON_PUBLISH_BRANCH = 'cms/publish';
 var GITHUB_ASST_PUBLISH_BRANCH = 'cms/assist-publish';
+var GITHUB_GACHA_PUBLISH_BRANCH = 'cms/gacha-publish';
 var GITHUB_API_BASE = 'https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO;
 
 function requirePublishable_(scope) {
@@ -487,5 +488,141 @@ function api_asstLatestPublishStatus() {
     logSheet: ASST_SHEET_PUBLISH_LOG,
     workflow: 'cms-assist-publish.yml',
     branch: GITHUB_ASST_PUBLISH_BRANCH
+  }, sha);
+}
+
+function api_gachaPublish() {
+  var user = requirePublishable_('gacha');
+  var lock = LockService.getScriptLock();
+  if (!lock.tryLock(20000)) {
+    throw new Error('他の保存・公開処理と重なりました。少し待ってからやり直してください。');
+  }
+
+  var pushedSha = '';
+  try {
+    prop_('GITHUB_TOKEN');
+    var rows = gachaReadAll_();
+    var documents = gachaBuildPublishDocuments_(rows);
+    var issues = gachaValidatePublishDocuments_(documents, true);
+    if (issues.length) throw new Error('ガチャ公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
+
+    var referencedImages = documents.gachas.gachas.reduce(function (set, gacha) {
+      var filename = String(gacha.image || '').replace(/^gacha-banner\//, '');
+      if (filename) set[filename] = true;
+      return set;
+    }, {});
+    var imageFiles = [];
+    var driveFiles = gachaImageFolder_().getFiles();
+    while (driveFiles.hasNext()) {
+      var driveFile = driveFiles.next();
+      var filename = driveFile.getName();
+      if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
+        throw new Error('Driveのgacha-bannerフォルダに規則外のファイルがあります: ' + filename);
+      }
+      // ガチャDBから参照されていないファイルは公開コミットへ含めない。
+      if (!referencedImages[filename]) continue;
+      var bytes = driveFile.getBlob().getBytes();
+      if (!bytes.length || bytes.length > GACHA_IMAGE_MAX_BYTES) {
+        throw new Error(filename + ' は空、または2MBを超えています。');
+      }
+      var extension = filename.split('.').pop().toLowerCase();
+      var expectedMime = extension === 'jpg' ? 'image/jpeg' :
+        (extension === 'png' ? 'image/png' : 'image/webp');
+      if (!isExpectedImage_(bytes, expectedMime)) {
+        throw new Error(filename + ' の拡張子と画像データが一致しません。');
+      }
+      imageFiles.push({ filename: filename, bytes: bytes });
+    }
+    var missingImages = Object.keys(referencedImages).filter(function (filename) {
+      return !imageFiles.some(function (file) { return file.filename === filename; });
+    });
+    if (missingImages.length) throw new Error('Driveに参照画像がありません: ' + missingImages.join(', '));
+
+    // 初回公開日はGitHub送信より先に確定し、一度入った値は以後変更しない。
+    gachaStampInitialPublishedAt_(rows);
+    documents = gachaBuildPublishDocuments_(rows);
+    issues = gachaValidatePublishDocuments_(documents, false);
+    if (issues.length) throw new Error('ガチャ公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
+
+    var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
+    var mainSha = mainRef && mainRef.object ? mainRef.object.sha : '';
+    if (!mainSha) throw new Error('mainブランチのコミットSHAを取得できません。');
+    var mainCommit = githubRequest_('get', '/git/commits/' + mainSha, null, false);
+    if (!mainCommit.tree || !mainCommit.tree.sha) throw new Error('mainブランチのtree SHAを取得できません。');
+
+    var tree = [
+      {
+        path: 'src/data/gachas.json', mode: '100644', type: 'blob',
+        sha: githubBlob_(JSON.stringify(documents.gachas, null, 2) + '\n', 'utf-8')
+      },
+      {
+        path: 'src/data/gacha-types.json', mode: '100644', type: 'blob',
+        sha: githubBlob_(JSON.stringify(documents.types, null, 2) + '\n', 'utf-8')
+      }
+    ];
+    imageFiles.forEach(function (file) {
+      tree.push({
+        path: 'gacha-banner/' + file.filename,
+        mode: '100644',
+        type: 'blob',
+        sha: githubBlob_(Utilities.base64Encode(file.bytes), 'base64')
+      });
+    });
+    var newTree = githubRequest_('post', '/git/trees', { base_tree: mainCommit.tree.sha, tree: tree }, false);
+    if (!newTree.sha) throw new Error('GitHubのtree作成結果にSHAがありません。');
+    var commit = githubRequest_('post', '/git/commits', {
+      message: 'CMS gacha publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha]
+    }, false);
+    if (!commit.sha) throw new Error('GitHubのcommit作成結果にSHAがありません。');
+
+    var latestMain = githubRef_(GITHUB_MAIN_BRANCH, false);
+    if (!latestMain.object || latestMain.object.sha !== mainSha) {
+      throw new Error('公開処理中にmainブランチが更新されました。もう一度「ガチャを公開」を押してください。');
+    }
+    var ref = githubRef_(GITHUB_GACHA_PUBLISH_BRANCH, true);
+    if (ref) {
+      githubRequest_('patch', '/git/refs/heads/' + GITHUB_GACHA_PUBLISH_BRANCH, { sha: commit.sha, force: true }, false);
+    } else {
+      githubRequest_('post', '/git/refs', { ref: 'refs/heads/' + GITHUB_GACHA_PUBLISH_BRANCH, sha: commit.sha }, false);
+    }
+    pushedSha = commit.sha;
+    publishLog_(GACHA_SHEET_PUBLISH_LOG, user, pushedSha, '送信済み',
+      GITHUB_GACHA_PUBLISH_BRANCH + ' / ' + tree.length + 'ファイル（画像' + imageFiles.length + '件）');
+    return {
+      ok: true, sha: pushedSha, shortSha: pushedSha.slice(0, 7),
+      branch: GITHUB_GACHA_PUBLISH_BRANCH, fileCount: tree.length, imageCount: imageFiles.length
+    };
+  } catch (e) {
+    var result = pushedSha ? 'GitHub送信済み・後処理失敗' : '失敗';
+    try { publishLog_(GACHA_SHEET_PUBLISH_LOG, user, pushedSha, result, e.message); } catch (ignoreLog) { /* 元のエラーを優先 */ }
+    if (pushedSha) {
+      throw new Error('GitHubへの送信（' + pushedSha.slice(0, 7) +
+        '）は完了しましたが、公開ログの更新に失敗しました。再実行せず管理者へ連絡してください: ' + e.message);
+    }
+    throw e;
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+function api_gachaPublishStatus(sha) {
+  var user = requirePublishable_('gacha');
+  return publishStatus_({
+    logSheet: GACHA_SHEET_PUBLISH_LOG,
+    workflow: 'cms-gacha-publish.yml',
+    branch: GITHUB_GACHA_PUBLISH_BRANCH
+  }, sha);
+}
+
+function api_gachaLatestPublishStatus() {
+  var user = me_();
+  if (!user) throw new Error('権限がありません。画面を開き直してください。');
+  if (user.role !== 'admin') throw new Error('公開結果の確認はadminだけが実行できます。');
+  var sha = latestPublishSha_(GACHA_SHEET_PUBLISH_LOG);
+  if (!sha) return { state: 'none', message: '確認できるガチャ公開送信はまだありません。' };
+  return publishStatus_({
+    logSheet: GACHA_SHEET_PUBLISH_LOG,
+    workflow: 'cms-gacha-publish.yml',
+    branch: GITHUB_GACHA_PUBLISH_BRANCH
   }, sha);
 }
