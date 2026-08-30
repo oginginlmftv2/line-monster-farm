@@ -5,11 +5,12 @@ const assert = require('assert');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const vm = require('vm');
+const { buildAssistPages, buildCardArtifact } = require('./build-assist-pages');
 const {
   PICKUP_SLOTS,
   GACHA_GATE_EXPLANATION,
   buildGachaPages,
-  integrateCardGachaAppearances,
   replaceMarkerBlock,
   resolveBuildNow,
   selectRerollGacha,
@@ -348,14 +349,48 @@ try {
   assert.strictEqual(detA.integratedReroll, detB.integratedReroll);
   pass(26, '同じ入力・同じ基準時刻のページ統合結果がバイト一致');
 
-  const cardRoot = path.join(root, 'card-root');
-  const cardOutput = path.join(root, 'card-output');
-  fs.mkdirSync(path.join(cardRoot, 'cards'), { recursive: true });
-  fs.writeFileSync(path.join(cardRoot, `cards/${cards[0].cardId}.html`), '<main>\n  <section class="section">\n    <h2 class="section-title">アシストカード一覧</h2>\n  </section>\n</main>');
-  integrateCardGachaAppearances({ root: cardRoot, outputRoot: cardOutput, gachas: [gacha()], cardDb: [cards[0]] });
-  const cardLinked = fs.readFileSync(path.join(cardOutput, `cards/${cards[0].cardId}.html`), 'utf8');
+  const cardById = new Map([[cards[0].cardId, { ...cards[0], formations: [] }]]);
+  const cardAppearance = require('../build').renderGachaAppearances([gacha()], 'card', cards[0].cardId, '../');
+  const cardLinked = buildCardArtifact(
+    { ...cards[0], formations: [] }, [], [], cardById, cardAppearance
+  ).html;
   assert(cardLinked.includes('登場ガチャ') && cardLinked.includes('../gacha/20260901-1.html'));
-  pass(27, 'ピックアップされたカード詳細へ登場ガチャ逆リンクを生成');
+  assert(cardLinked.indexOf('登場ガチャ') < cardLinked.indexOf('アシストカード一覧へ戻る'));
+  pass(27, 'カードテンプレート由来の登場ガチャ逆リンクを一覧導線直前へ生成');
+
+  const cardWithoutAppearance = buildCardArtifact(
+    { ...cards[0], formations: [] }, [], [], cardById
+  ).html;
+  assert(!cardWithoutAppearance.includes('登場ガチャ'));
+  pass(28, '該当ガチャ0件のカードには登場ガチャセクションを出力しない');
+
+  assert.strictEqual(buildAssistPages({ dryRun: true }).count, cardDoc.cards.length);
+  pass(29, 'gachaAppearancesFor未指定でもbuild-assist-pagesを空文字扱いで実行');
+
+  const noMonsterExcerpt = buildIntegrated(root, [gacha({
+    pickupMonsters: [{ id: monsterWithoutExplanation.id, rate: 0.5 }],
+    pickupCards: [],
+  })], 'no-monster-excerpt').integratedIndex;
+  assert(!noMonsterExcerpt.includes('<div class="pickup-desc"></div>'));
+  pass(30, '解説のないモンスターピックアップに空のpickup-descを出力しない');
+
+  const blankCard = { ...cards[0], cardId: 'blank-card', name: '解説なしカード', explanation: '' };
+  const noCardExcerpt = buildGachaPages({
+    root,
+    outputRoot: path.join(root, 'no-card-excerpt'),
+    now,
+    gachaDb: { schemaVersion: 1, gachas: [gacha({
+      pickupMonsters: [], pickupCards: [{ cardId: blankCard.cardId, rate: 0.5 }],
+    })] },
+    typeDb,
+    monsterDb: fixtureMonsters,
+    editorialDb: editorial,
+    cardDb: cards.concat(blankCard),
+    indexSource: indexTemplate,
+    rerollSource: rerollTemplate,
+  }).integratedIndex;
+  assert(!noCardExcerpt.includes('<div class="pickup-desc"></div>'));
+  pass(31, '解説のないカードピックアップに空のpickup-descを出力しない');
 
   for (const [label, monsterCount, cardCount] of [
     ['A', 5, 5],
@@ -400,4 +435,18 @@ for (const [number, label, source] of [
   console.log(`PASS 破壊${number}: ${label} → replaceMarkerBlockがthrow`);
 }
 
-console.log('OK 正常27件PASS・破壊14件すべて拒否');
+{
+  const verifySource = fs.readFileSync(path.join(repo, 'scripts/verify.js'), 'utf8');
+  const verifier = verifySource.match(/function gachaBuildPostprocessIssues\(buildSource\) \{[\s\S]*?\n\}/);
+  assert(verifier, 'verify.jsのカード後処理検査を抽出できない');
+  const context = {};
+  vm.createContext(context);
+  vm.runInContext(`${verifier[0]}; this.check = gachaBuildPostprocessIssues;`, context);
+  const brokenBuild = "function integrateCardGachaAppearances(cardId) { return fs.readFileSync('cards/' + cardId + '.html'); }";
+  const postprocessIssues = context.check(brokenBuild);
+  assert(postprocessIssues.some(issue => /後処理差し込み/.test(issue)));
+  assert(postprocessIssues.some(issue => /cards\/\*\.html/.test(issue)));
+  console.log(`PASS 破壊25: build.jsへのカード後処理差し込み復活を検査17が拒否 → ${postprocessIssues.join(' / ')}`);
+}
+
+console.log('OK 正常31件PASS・破壊15件すべて拒否');

@@ -32,6 +32,13 @@ const head = t => console.log(`\n■ ${t}`);
 const exists = p => fs.existsSync(path.join(REPO, p));
 const read = p => fs.readFileSync(path.join(REPO, p), 'utf8');
 
+function gachaBuildPostprocessIssues(buildSource) {
+  const issues = [];
+  if (buildSource.includes('integrateCardGachaAppearances')) issues.push('build.jsにカード詳細の後処理差し込みが残っている');
+  if (/readFileSync\s*\([^;\n]*cards\/[A-Za-z0-9_$'"`{}.+/ -]*\.html/.test(buildSource)) issues.push('build.jsが生成済みcards/*.htmlを読み直している');
+  return issues;
+}
+
 // 本文量（可視テキストと画像のalt。script/style/タグを除外）
 function contentChars(html) {
   const b = html.replace(/<script[\s\S]*?<\/script>/gi, '')
@@ -1601,6 +1608,7 @@ head('17. ガチャDB');
     if (!/function replaceMarkerBlock\s*\(/.test(buildSource) || uses < 6) {
       issues.push('build.jsが共通replaceMarkerBlockを全マーカー置換に使用していない');
     }
+    issues.push(...gachaBuildPostprocessIssues(buildSource));
   }
   if (issues.length) ng(`ガチャDB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(', ')}`);
   else ok(`ガチャDBが整合（ピックアップ上限 ${PICKUP_SLOTS}枠）`);

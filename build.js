@@ -230,7 +230,8 @@ function renderTopMonsterPickups(gachas, context) {
     const monster = context.monstersById.get(pickup.id);
     const editorial = context.editorialById.get(pickup.id);
     const image = gachaMonsterImage(monster);
-    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>\n        <div class="pickup-desc">${escapeHtml(gachaExcerpt(editorial && editorial.explanation))}</div>\n      </a>`;
+    const excerpt = gachaExcerpt(editorial && editorial.explanation);
+    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
   }).join('\n')}\n    </div>`).join('\n');
 }
 
@@ -238,7 +239,8 @@ function renderTopCardPickups(gachas, context) {
   if (!gachas.length) return '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
   return gachas.map(gacha => `    <h3>${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid">\n${gacha.pickupCards.map(pickup => {
     const card = context.cardsById.get(pickup.cardId);
-    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="name">${escapeHtml(card.name)}</div>\n        <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>\n        <div class="pickup-desc">${escapeHtml(gachaExcerpt(card.explanation))}</div>\n      </a>`;
+    const excerpt = gachaExcerpt(card.explanation);
+    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="name">${escapeHtml(card.name)}</div>\n        <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
   }).join('\n')}\n    </div>`).join('\n');
 }
 
@@ -1458,23 +1460,6 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   console.log(`  リンク先が存在しないリンク ${brokenLinks.length}件${brokenLinks.length ? `: ${brokenLinks.join(', ')}` : ''}`);
 }
 
-function integrateCardGachaAppearances({ root = REPO, outputRoot = root, dryRun = false, gachas, cardDb }) {
-  const outputs = [];
-  for (const card of cardDb) {
-    const section = renderGachaAppearances(gachas, 'card', card.cardId, '../');
-    if (!section) continue;
-    const relativePath = `cards/${card.cardId}.html`;
-    const source = fs.readFileSync(path.join(root, relativePath), 'utf8');
-    const anchor = '  <section class="section">\n    <h2 class="section-title">アシストカード一覧</h2>';
-    const first = source.indexOf(anchor);
-    const second = first === -1 ? -1 : source.indexOf(anchor, first + anchor.length);
-    if (first === -1 || second !== -1) throw new Error(`${relativePath}: 関連リンク直前の挿入位置が一意でありません`);
-    const html = source.slice(0, first) + section.slice(1) + '\n' + source.slice(first);
-    outputs.push({ path: relativePath, state: writeIfChangedAt(outputRoot, relativePath, html, dryRun) });
-  }
-  return outputs;
-}
-
 function main() {
   const inputs = loadInputs();
   const detailEntries = createDetailEntries(inputs);
@@ -1540,7 +1525,12 @@ function main() {
       return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
         - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
     }));
-  const assistBuild = buildAssistPages({ dryRun: DRY_RUN });
+  const assistBuild = buildAssistPages({
+    dryRun: DRY_RUN,
+    gachaAppearancesFor: cardId => renderGachaAppearances(
+      publishedGachas(inputs.gachasJson), 'card', cardId, '../'
+    ),
+  });
   const gachaBuild = buildGachaPages({
     root: REPO,
     outputRoot: REPO,
@@ -1554,13 +1544,6 @@ function main() {
     indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
     rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
   });
-  gachaBuild.outputs.push(...integrateCardGachaAppearances({
-    root: REPO,
-    outputRoot: REPO,
-    dryRun: DRY_RUN,
-    gachas: publishedGachas(inputs.gachasJson),
-    cardDb: inputs.assistCards,
-  }));
   const sitemap = renderSitemap(
     inputs.sitemap,
     sitemapPages.concat(assistBuild.sitemapPages, gachaBuild.sitemapPages)
@@ -1619,5 +1602,4 @@ module.exports = {
   replaceMarkerBlock,
   selectRerollGacha,
   renderGachaAppearances,
-  integrateCardGachaAppearances,
 };

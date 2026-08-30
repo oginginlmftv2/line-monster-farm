@@ -120,6 +120,12 @@ fixtureは`src/data/`へ置かず、`scripts/test-gacha-build.js`が一時ディ
 publishedガチャのピックアップは、終了後もモンスター／カード詳細の「登場ガチャ」に残す。
 `startAt`降順で表示し、該当0件ならセクション自体を出さない。
 
+カード詳細は生成後のHTMLを読み直さない。`build.js`から`buildAssistPages()`へ
+`gachaAppearancesFor(cardId)`を渡し、`scripts/build-assist-pages.js`のテンプレートが
+「アシストカード一覧」の直前へ返却文字列を組み込む。コールバック未指定時は空文字とし、
+カードビルドの単体実行を維持する。カードのゲートは従来どおり効果・verified能力・解説だけで
+判定し、登場ガチャの表示文字列を加算しない。
+
 ### 保留
 
 - トップの更新履歴は既存どおりJavaScript配列で描画するため、クローラー向け静的HTML化は別タスクとする。
