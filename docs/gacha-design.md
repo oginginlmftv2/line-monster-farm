@@ -129,3 +129,21 @@ publishedガチャのピックアップは、終了後もモンスター／カ�
 ### 保留
 
 - トップの更新履歴は既存どおりJavaScript配列で描画するため、クローラー向け静的HTML化は別タスクとする。
+
+## 9. G3: ガチャCMS（シート保存まで）
+
+`gachas`と`gacha_types`の2シートだけを既存の`setup1_createSheets()`へ追加する。既存シートは読まず、削除・全消去・行削除を行わない。G3は下書きの新規・編集、競合拒否、ピックアップ照合、バナー画像アップロードまでとし、GitHub公開はG4へ分離する。
+
+GAS側の枠数は`GACHA_PICKUP_SLOTS = 5`を正とし、`monster`、`monsterRate`、`card`、`cardRate`の列名をループ生成する。`gachas`の列順は次のとおり。
+
+```text
+gachaId / name / gachaType / image / startAt / endAt / explanation /
+monster1..5 / monsterRate1..5 / card1..5 / cardRate1..5 /
+rerollPriority / status / publishedAt / author / updatedAt / lastEditor
+```
+
+新規の`gachaId`は`startAt`のJST日付を`YYYYMMDD`へ変換し、同じ日付の既存IDから空いている最小の正整数枝番を選ぶ。編集は既存行が持つIDを維持し、開始日時を変更しても採番し直さない。
+
+ピックアップ照合は`RAW_BASE`の`monster-ids.json`と`assist-cards.json`をCacheService経由で参照する。保存前に名前へ解決できることを確認し、排出率は数値型の`0 < rate <= 100`だけを受け入れる。最終的なDB検査の正は引き続き`build.js`の`validateGachaData()`であり、GAS側ではシート投入前の最低限だけを検査する。
+
+画像はScript Propertyの`GACHA_DRIVE_FOLDER_ID`が指すフォルダへ`<gachaId>.<拡張子>`で保存する。JPG・PNG・WebP、2MB以下、マジックバイト一致を必須とし、新規ファイル作成後に同じIDの旧画像をゴミ箱へ移す。シートには`gacha/<ファイル名>`を保存する。

@@ -106,7 +106,7 @@ function requireScope_(scope) {
   var user = me_();
   if (!user) throw new Error('権限がありません。membersシートを確認してください。');
   if (user.scopes.indexOf(scope) < 0) {
-    throw new Error('この操作の権限がありません（必要な範囲: ' + scope + '）。membersシートのscopes列へ monster / assist / monster,assist のいずれかを設定してください。');
+    throw new Error('この操作の権限がありません（必要な範囲: ' + scope + '）。membersシートのscopes列へ monster / assist / gacha または必要な組み合わせを設定してください。');
   }
   return user;
 }

@@ -35,6 +35,19 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 setup1_createSheets、setup2_registerMe、対象を明示したsetup3_*、setup4_checkAllの順で実行します。全setupの戻り値1行目でENVIRONMENTとbook名を確認します。
 破壊的setupが失敗した場合も一回限りの鍵は消費されるため、再実行前にALLOW_DESTRUCTIVE_SETUPを設定し直します。
 
+## G3 ガチャCMSの反映
+
+ガチャCMSはシート保存とバナー画像アップロードまでです。この段階ではGitHubへ送信せず、保存してもサイトは変わりません。Codexは次の操作を実行せず、管理者が行います。
+
+1. Script Propertiesへ`GACHA_DRIVE_FOLDER_ID`を設定する
+2. `50_gacha.gs`と`ui_gacha.html`をGASエディタへ追加し、`index.html`、`00_core.gs`、`40_setup.gs`を貼り替える
+3. `setup1_createSheets`を実行し、`gachas`と`gacha_types`が新規作成されたことを確認する。新規作成だけなので`ALLOW_DESTRUCTIVE_SETUP`は不要
+4. `gacha_types`シートの`label`列へ、神殿祭、スタフェス、超スタフェス、周年を手で入力する
+5. `members`シートで自分の`scopes`へ`gacha`を追加する
+6. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+
+既存シートの削除、全消去、行削除は行いません。ガチャ公開経路はG4まで追加しません。
+
 ## token更新
 
 新tokenは最小権限で発行し、GitHub secretと本番GASのGITHUB_TOKENを管理者が同一作業で更新します。値を文書・ログ・チャットへ貼りません。rehearsalにはGITHUB_TOKENを設定しません。
