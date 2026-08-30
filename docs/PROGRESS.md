@@ -40,19 +40,21 @@
 | P12-10 | CMS統合の設計 | `chore/p12-10-cms-integration-design` | **完了** | ⚪ | PR #45をmainへマージ（`ab765ea`）。`docs/cms-integration-design.md` にA〜Jの結論を記載 |
 | P12-11 | CMS統合の実装（段階1〜8） | `chore/p12-11-s1-cms-token-scan` / `chore/p12-11-s2-cms-unified-source` / `fix/p12-11-s2b-assist-publish-scope` / `chore/p12-11-s3-assist-db-from-cms` / `feat/p12-11-s4-assist-publish-path` / `docs/p12-11-s4b-route-verified` / `fix/p12-11-s5b-shell-defects` / `fix/p12-11-s5c-shell-layout` / `fix/p12-11-s5d-user-feedback` / `docs/p12-11-s5-rehearsal-verified` / `docs/p12-11-s6-production-cohabitation` / `fix/p12-11-s7-generated-from-transition` / `fix/p12-11-s7-generated-from-tighten` / `chore/p12-11-s7-production-cutover` / `chore/p12-11-s8a-assist-check-retarget` / `chore/p12-11-s8b-remove-legacy-assist` | **完了** | ⚪🔴🟡 | 段階1〜8を完了。P12-11 は完了 |
 | P12-12 | アシスト公開ログの実装 | `feat/p12-11-assist-publish-log` | **完了** | 🟡 | PR #60をmainへマージ（`eedfcf9`）。本番GASへ反映し、公開2回で`assist_publish_log`の送信済み・公開成功を実機確認した |
-| P12-13 | OCRテキスト正規化の是正 | `fix/p12-13-ocr-normalize` | **レビュー待ち** | ⚪ | NFKCによる全角破壊を停止。既存888効果は無変更 |
-| P12-14 | 実運用OCR経路の正規化是正と両実装検査 | `fix/p12-14-ocr-ui-normalize` | **レビュー待ち** | 🟡 | 実運用のOCR経路（ui_assist.html）を是正。GAS再deploymentが必要 |
-| P12-15 | 888効果の表記正規化とindexゲートの再判定 | `chore/p12-15-effect-text-normalize` | **レビュー待ち** | 🔴 | 効果・カード解説の既存表記を統一。カードindex対象が1件増加 |
+| P12-13 | OCRテキスト正規化の是正 | `fix/p12-13-ocr-normalize` | **完了** | ⚪ | PR #64をmainへマージ（`11e4673`）。NFKCによる全角破壊を停止。既存888効果は無変更 |
+| P12-14 | 実運用OCR経路の正規化是正と両実装検査 | `fix/p12-14-ocr-ui-normalize` | **完了** | 🟡 | PR #65をmainへマージ（`e68c105`）。実運用のOCR経路（ui_assist.html）を是正し、本番GASへ反映済み |
+| P12-15 | 888効果の表記正規化とindexゲートの再判定 | `chore/p12-15-effect-text-normalize` | **完了** | 🔴 | PR #66をmainへマージ（`b1338fa`）。効果・カード解説の既存表記を統一し、公開差分ゼロを確認 |
 | P12-16 | `asstRewriteSheet_` の恒久修正 | `fix/p12-16-assist-rewrite-sheet` | **完了** | 🟡 | PR #67をmainへマージ（`f64369e`）。マージ後の管理者作業も完了 |
 | P12-17a | 外部能力DBの読取専用候補監査 | `feat/p12-17a-lmfdb-import-dry-run` | **完了** | ⚪ | PR #69をmainへマージ（`0b79fdd`）。ID再利用、表記違い、重複内容一致、新規候補、外部欠落を分類し、ローカルDBは無変更 |
 | P12-17b | 外部候補の手動登録設計 | `docs/p12-17b-lmfdb-manual-import-design` | **完了** | ⚪ | PR #70をmainへマージ（`558c1b0`）。ローカル不変ID、nullable legacyId、外部参照履歴、追加専用API、CMS画面、競合・復旧、段階4の分割を確定 |
 | P12-17 段階4-1〜4-7 | 外部能力DB連携の実装・本番導入・運用確定 | `chore/p12-17-lmfdb-production-rollout`ほか | **完了** | 🟡 | 4-1〜4-6をPR #71〜#76でmainへ反映。本番は管理者がバックアップ、GAS同期、schema導入、deployment、読取監査、draft 1件の最小登録を実施。既存データ不変・draft非公開・重複拒否を確認 |
+| P12-17c | CMS公開時のverifyノイズとdraft除外の是正 | `fix/p12-17-draft-verify` / `fix/p12-17-dynamic-count` / `fix/p12-17-cms-verify-noise` | **完了** | ⚪🟡 | PR #78〜#80をmainへマージ（`91955b0` / `2d2606e` / `94f16d4`）。draft能力を公開検証の対象から外し、件数を動的化し、CMS公開ブランチで汎用verifyを実行しない |
 | P12-18 | CMS外部能力候補の枠・ボタン簡易改修 | `fix/p12-18-cms-audit-layout` | **完了** | ⚪（GAS反映時🟡） | 候補カード内で編集画面用の固定操作バーが誤適用される表示崩れを修正。本番GASへ反映し、管理者が問題ないことを確認済み |
-| P12-19 | CMS新規カード登録UI・追加専用API | `feat/p12-19-assist-card-create` | **レビュー待ち** | ⚪（GAS反映時🟡） | repo内GAS・UI・Node mockテストを実装。GAS同期・Sheet登録・deployment・実機確認は管理者作業として未実施 |
+| P12-19 | CMS新規カード登録UI・追加専用API | `feat/p12-19-assist-card-create` | **完了** | 🟡 | PR #82をmainへマージ（`35de94d`）。管理者がGAS同期・Sheet登録・deployment・実機確認を完了。手順は`docs/assist-card-create-runbook.md` |
+| P12-19b | P12-19の管理者手順書と進捗の同期 | `chore/p12-19-admin-runbook` | **レビュー待ち** | ⚪ | 手順書を新設し、PROGRESS.mdの状態と監査値をmain実測値へ更新 |
 
 ## 最新mainの監査値
 
-調査基準: `origin/main`の`87ee245`
+調査基準: `origin/main`の`35de94d`
 
 | 項目 | 値 | 根拠 |
 |---|---:|---|
@@ -63,8 +65,8 @@
 | index / noindex | 54 / 298 | 生成HTMLのrobots metaをNodeで集計 |
 | モン類ページ | 6件 | `monsters/<monSlug>/index.html` |
 | カード詳細ページ | 91件 | `src/data/assist-cards.json`のcardIdと生成HTMLを照合 |
-| カード index / noindex | 55 / 36 | 可視本文800字以上かつ解説50字以上を3DBから再計算 |
-| sitemap | 138URL | `<loc>`を集計。手書き23 + モンスター生成60 + カード生成55 |
+| カード index / noindex | 57 / 34 | 可視本文800字以上かつ解説50字以上を3DBから再計算 |
+| sitemap | 140URL | `<loc>`を集計。手書き23 + モンスター生成60（詳細54 + モン類6） + カード生成57 |
 | 公開方式 | main直接配信 | `AGENTS.md`、`CLAUDE.md`、CMS Workflow |
 
 件数はCMS公開で変わるため、次回も固定値を信じずスクリプトで集計する。
@@ -215,17 +217,18 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-P12-19で、アシストカード一覧の新規登録UIと`api_asstCreateCard(payload)`をrepo内へ実装した。
-追加専用APIはassist scope、nickname、cardId形式・64文字上限・許可値・重複・sourceOrderを
-サーバーで再検査し、共通ScriptLock下で`cards`末尾へ1行だけ追加する。公開、GitHub送信、画像取得、
-3DB更新は行わない。外部GASへの同期・保存・deployment、Sheetでの最小登録と再読込確認は未実施で、
-管理者の手動反映・確認待ち。
+P12-19は完了した。repo内の追加専用API・UIをマージしたあと、管理者がGAS同期、Sheetでの
+最小登録、deployment、実機確認までを実施した。手順と確認項目は`docs/assist-card-create-runbook.md`
+を正とし、`_cms/gas/README.md`のP12-19節は概要として残す。
+
+P12-19bとして、PROGRESS.mdの状態（P12-13〜P12-15、P12-17c、P12-19）と最新mainの監査値を
+実測値へ同期した。公開物・データ・GASは変更していない。
 
 ## 次の作業
 
-管理者が`_cms/gas/20_assist.gs`と`_cms/gas/ui_assist.html`をGASへ同期し、READMEのP12-19手順で
-bootstrap前後、ローカル禁止、実運用の新規カード1件、末尾sourceOrder、ログ、再読込を確認する。
-P12-20の画像を含む保存・公開経路は、この確認と別承認まで開始しない。
+P12-20の画像を含む保存・公開経路は、別承認まで開始しない。あわせて、AdSense再申請前の
+Search Consoleでのインデックス状況確認と、解説済み92ページへの著者名一括入力を管理者作業として
+残している。
 
 ## 明示的な保留
 
