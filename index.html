@@ -136,6 +136,8 @@
     const td2 = 'padding:8px 4px;color:#444;display:flex;flex-wrap:wrap;gap:6px;';
     const a   = (href,text) => `<a href="${href}" style="color:#f0a500;text-decoration:none;">${text}</a>`;
     const rows = [
+// GACHA:UPDATES:START
+// GACHA:UPDATES:END
 ['2026.08.24', a('cards/b17h-MR-ruri.html','アシストカード：ルリのカードタイプとステータス表記を修正')],
 ['2026.08.14', a('assist.html','ガチャ更新：ジンゴロウ（MR）追加')+' / '+a('monsters.html','新モンスター：カッパマキ追加')],
 ['2026.08.03', a('assist.html','ガチャ更新：セラフィナ（MR）・モノダス（SSR）追加')+' / '+a('monsters.html','新モンスター：ミカエル・ジハンキ追加')],
@@ -266,6 +268,8 @@
       <a href="assist.html" class="menu-link">
         <span class="icon">🃏</span> アシストカード一覧
       </a>
+      <!-- GACHA:NAV:START -->
+      <!-- GACHA:NAV:END -->
       <div class="menu-link ikusei-toggle-btn" onclick="toggleIkusei(this)">
         <span class="icon">📈</span> 育成方法
         <span class="ikusei-chevron" id="ikusei-chevron">▼</span>
@@ -342,6 +346,7 @@
   <!-- ピックアップモンスター -->
   <div class="section">
     <div class="section-title">モンスター一覧（ピックアップ）</div>
+    <!-- GACHA:PICKUP:MONSTER:START -->
     <div class="card-grid">
       <a href="monsters/genrei/mocchi/1625.html" class="card">
         <img class="card-img" src="monster/S__3637252_0.jpg" alt="カッパマキ">
@@ -349,6 +354,7 @@
         <div class="pickup-desc">・圧倒的ビジュアルで世間を騒がせた<br>　甲羅を背負ったカエル<br>・モッチー×カワズモー<br>・ランク5登録技は弱くはないが微妙<br>・オリジナル技もランク2技のみで<br>　ちょっとさみしい<br>・ただオリジナル技は結構優秀</div>
       </a>
     </div>
+    <!-- GACHA:PICKUP:MONSTER:END -->
   </div>
 
   <!-- モン類一覧 -->
@@ -379,6 +385,7 @@
   <!-- アシストカードピックアップ -->
   <div class="section">
     <div class="section-title">アシストカード一覧（ピックアップ）</div>
+    <!-- GACHA:PICKUP:CARD:START -->
     <div class="card-grid">
       <a href="cards/g3-MR-jingorou.html" class="card">
         <img class="card-img" src="assist-cards/g3-MR-jingorou.jpg" alt="ジンゴロウ">
@@ -387,6 +394,7 @@
         <div class="pickup-desc">・2枚目の幻霊モン類ブリーダー継承<br>・同じモン類ブリーダー継承の<br>　フォールンとモン類効果が被って<br>　いないところがよい<br>・大成功がある分トレ性能はまぁまぁ<br>・良い意味で弱いところがない<br>・無理やり悪く言うなら没個性<br>・チェイサーはインフレが進んできた<br>　今だと、少し性能不足に感じる<br>・アペンドは手動なら破格の強さ<br>　オートバトルでもハマれば強いが<br>　今の環境でうまく生かすのは<br>　かなり難易度が高い</div>
       </a>
     </div>
+    <!-- GACHA:PICKUP:CARD:END -->
   </div>
 
   <!-- このサイトについて -->

@@ -145,7 +145,7 @@ ${card.formations.map(formation => `    <h3 class="assist-subtitle">${escapeHtml
   </section>`;
 }
 
-function renderPage(card, effects, abilities, cardById, indexable) {
+function renderPage(card, effects, abilities, cardById, indexable, gachaAppearances = '') {
   const canonical = `${SITE_URL}/cards/${card.cardId}.html`;
   const title = `${card.name}（${card.rarity}・${card.aura}）| LINEモンスターファーム徹底攻略`;
   const robotsMeta = indexable ? '' : '\n  <meta name="robots" content="noindex,follow">';
@@ -197,7 +197,7 @@ function renderPage(card, effects, abilities, cardById, indexable) {
     <table class="assist-detail-table">
 ${renderRows(basicRows)}
     </table>
-  </section>${renderRatings(card)}${renderStats(card)}${renderEffects(effects)}${renderAbilities(abilities)}${renderExplanation(card)}${renderFormations(card, cardById)}
+  </section>${renderRatings(card)}${renderStats(card)}${renderEffects(effects)}${renderAbilities(abilities)}${renderExplanation(card)}${renderFormations(card, cardById)}${gachaAppearances}
 
   <section class="section">
     <h2 class="section-title">アシストカード一覧</h2>
@@ -213,7 +213,7 @@ ${renderRows(basicRows)}
 `;
 }
 
-function buildCardArtifact(card, effects, allAbilities, cardById) {
+function buildCardArtifact(card, effects, allAbilities, cardById, gachaAppearances = '') {
   const abilities = allAbilities.filter(ability =>
     ability.linkStatus === 'resolved' && ability.status === 'verified' && ability.cardId === card.cardId)
     .sort((a, b) => a.sortOrder - b.sortOrder);
@@ -224,7 +224,7 @@ function buildCardArtifact(card, effects, allAbilities, cardById) {
   const indexable = visible >= INDEXABLE_VISIBLE_CHARS
     && explanationChars >= INDEXABLE_EXPLANATION_CHARS;
   return {
-    html: renderPage(card, effects, abilities, cardById, indexable),
+    html: renderPage(card, effects, abilities, cardById, indexable, gachaAppearances),
     report: { cardId: card.cardId, visible, explanation: explanationChars, indexable },
   };
 }
@@ -256,6 +256,9 @@ function writeIfChanged(relativePath, content, dryRun) {
 
 function buildAssistPages(options = {}) {
   const dryRun = options.dryRun === true;
+  const gachaAppearancesFor = typeof options.gachaAppearancesFor === 'function'
+    ? options.gachaAppearancesFor
+    : () => '';
   const cardData = readJson(INPUTS.cards);
   const effectData = readJson(INPUTS.effects);
   const abilityData = readJson(INPUTS.abilities);
@@ -271,7 +274,7 @@ function buildAssistPages(options = {}) {
 
   for (const card of cards) {
     const effects = effectsByCard[card.cardId].effects;
-    const artifact = buildCardArtifact(card, effects, abilityData.abilities, cardById);
+    const artifact = buildCardArtifact(card, effects, abilityData.abilities, cardById, gachaAppearancesFor(card.cardId));
     counts[writeIfChanged(`cards/${card.cardId}.html`, artifact.html, dryRun)]++;
     reports.push(artifact.report);
   }

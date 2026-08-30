@@ -103,3 +103,29 @@ index対象 = 可視本文800字以上 AND explanation 300字以上
 fixtureは`src/data/`へ置かず、`scripts/test-gacha-build.js`が一時ディレクトリへ生成する。
 既存の`test-verify-assist-cms.js`などが、破壊用コピーをOSの一時ディレクトリへ作り、終了時に消す
 慣行に合わせた。本番DBを書き換えず、正常13件・破壊10件と決定性を同じ入口で検証する。
+
+## 8. G2: 既存ページ統合
+
+`index.html`と`reroll.html`は、`GACHA:<NAME>:START/END`マーカーの内側だけを
+`replaceMarkerBlock()`で置換する。HTMLコメントとJavaScript行コメントは引数で切り替え、
+欠落・逆順・多重定義はファイル名とマーカー名を含むエラーでビルドを停止する。
+
+本番DBが空なら全区間へ触れない。publishedが1件以上ならトップの更新履歴、開催中ガチャ別の
+モンスター／カード、ガチャ一覧導線を生成する。開催中が0件ならトップは一覧リンク付きの案内へ
+置換するが、リセマラ区間は直前のおすすめを残すため更新しない。
+
+リセマラ候補はpublishedかつ`startAt <= now <= endAt`だけとし、`rerollPriority=true`があれば
+その集合、なければ全候補から`startAt`降順・同時刻は`gachaId`昇順の先頭を選ぶ。
+
+publishedガチャのピックアップは、終了後もモンスター／カード詳細の「登場ガチャ」に残す。
+`startAt`降順で表示し、該当0件ならセクション自体を出さない。
+
+カード詳細は生成後のHTMLを読み直さない。`build.js`から`buildAssistPages()`へ
+`gachaAppearancesFor(cardId)`を渡し、`scripts/build-assist-pages.js`のテンプレートが
+「アシストカード一覧」の直前へ返却文字列を組み込む。コールバック未指定時は空文字とし、
+カードビルドの単体実行を維持する。カードのゲートは従来どおり効果・verified能力・解説だけで
+判定し、登場ガチャの表示文字列を加算しない。
+
+### 保留
+
+- トップの更新履歴は既存どおりJavaScript配列で描画するため、クローラー向け静的HTML化は別タスクとする。

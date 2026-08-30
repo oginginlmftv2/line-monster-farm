@@ -184,6 +184,91 @@ function gachaExcerpt(text) {
   return `${normalized.slice(0, GACHA_EXCERPT_CHARS)}…`;
 }
 
+function replaceMarkerBlock(source, markerName, innerHtml, commentStyle = 'html', fileName = '<source>') {
+  const prefix = commentStyle === 'js' ? '// ' : '<!-- ';
+  const suffix = commentStyle === 'js' ? '' : ' -->';
+  const startMarker = `${prefix}GACHA:${markerName}:START${suffix}`;
+  const endMarker = `${prefix}GACHA:${markerName}:END${suffix}`;
+  const starts = [];
+  const ends = [];
+  for (let offset = source.indexOf(startMarker); offset !== -1; offset = source.indexOf(startMarker, offset + startMarker.length)) starts.push(offset);
+  for (let offset = source.indexOf(endMarker); offset !== -1; offset = source.indexOf(endMarker, offset + endMarker.length)) ends.push(offset);
+  if (starts.length !== 1 || ends.length !== 1) {
+    throw new Error(`${fileName}: GACHA:${markerName} マーカーはSTART・END各1個が必要です（START ${starts.length} / END ${ends.length}）`);
+  }
+  if (starts[0] > ends[0]) throw new Error(`${fileName}: GACHA:${markerName} のSTARTがENDより後です`);
+  if (innerHtml === null) return source;
+  const contentStart = starts[0] + startMarker.length;
+  return source.slice(0, contentStart) + `\n${innerHtml}${innerHtml ? '\n' : ''}` + source.slice(ends[0]);
+}
+
+function escapeJsSingleQuoted(value) {
+  return String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'")
+    .replace(/\r/g, '\\r').replace(/\n/g, '\\n').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+}
+
+function publishedGachas(gachaDb) {
+  return gachaDb.gachas.filter(gacha => gacha.status === 'published');
+}
+
+function currentGachas(gachas, now) {
+  const timestamp = Date.parse(now);
+  return gachas.filter(gacha => Date.parse(gacha.startAt) <= timestamp && timestamp <= Date.parse(gacha.endAt))
+    .sort((a, b) => b.startAt.localeCompare(a.startAt) || a.gachaId.localeCompare(b.gachaId));
+}
+
+function selectRerollGacha(gachas, now) {
+  const candidates = currentGachas(gachas, now);
+  if (!candidates.length) return null;
+  const priority = candidates.filter(gacha => gacha.rerollPriority === true);
+  return (priority.length ? priority : candidates)[0];
+}
+
+function renderTopMonsterPickups(gachas, context) {
+  if (!gachas.length) return '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
+  return gachas.map(gacha => `    <h3>${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid">\n${gacha.pickupMonsters.map(pickup => {
+    const monster = context.monstersById.get(pickup.id);
+    const editorial = context.editorialById.get(pickup.id);
+    const image = gachaMonsterImage(monster);
+    const excerpt = gachaExcerpt(editorial && editorial.explanation);
+    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
+  }).join('\n')}\n    </div>`).join('\n');
+}
+
+function renderTopCardPickups(gachas, context) {
+  if (!gachas.length) return '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
+  return gachas.map(gacha => `    <h3>${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid">\n${gacha.pickupCards.map(pickup => {
+    const card = context.cardsById.get(pickup.cardId);
+    const excerpt = gachaExcerpt(card.explanation);
+    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="name">${escapeHtml(card.name)}</div>\n        <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
+  }).join('\n')}\n    </div>`).join('\n');
+}
+
+function renderGachaUpdates(gachas, context) {
+  return [...gachas].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.gachaId.localeCompare(b.gachaId)).map(gacha => {
+    const names = gacha.pickupMonsters.map(item => context.monstersById.get(item.id).name)
+      .concat(gacha.pickupCards.map(item => context.cardsById.get(item.cardId).name));
+    const text = `ガチャ更新：${gacha.name}のピックアップ${names.length ? `（${names.join('・')}）` : ''}情報を掲載`;
+    return `['${escapeJsSingleQuoted(gacha.publishedAt.replace(/-/g, '.'))}', a('gacha/${escapeJsSingleQuoted(gacha.gachaId)}.html','${escapeJsSingleQuoted(text)}')],`;
+  }).join('\n');
+}
+
+function renderReroll(gacha, context) {
+  const cards = gacha.pickupCards.map((pickup, index) => {
+    const card = context.cardsById.get(pickup.cardId);
+    return `    <a href="cards/${escapeHtml(card.cardId)}.html" class="rank-row">\n      <div class="rank-num${index === 0 ? ' gold' : ''}">${index + 1}</div>\n      <img class="rank-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n      <div class="rank-info">\n        <div class="rank-name">${escapeHtml(card.name)} <span class="rarity rarity-${escapeHtml(card.rarity)}" style="font-size:11px;padding:1px 6px;">${escapeHtml(card.rarity)}</span></div>\n        <div class="rank-reason">${escapeHtml(gachaExcerpt(card.explanation))}</div>\n      </div>\n      <div class="rank-arrow">›</div>\n    </a>`;
+  }).join('\n\n');
+  return `    <h3>${escapeHtml(gacha.name)}</h3>\n    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))} ／ <a href="gacha/${escapeHtml(gacha.gachaId)}.html">ガチャ詳細を見る</a></p>${cards ? `\n\n${cards}` : ''}\n\n    ${formatExplanation(gacha.explanation)}`;
+}
+
+function renderGachaAppearances(gachas, kind, id, rootPrefix) {
+  const matched = gachas.filter(gacha => (kind === 'monster' ? gacha.pickupMonsters : gacha.pickupCards)
+    .some(pickup => (kind === 'monster' ? pickup.id : pickup.cardId) === id))
+    .sort((a, b) => b.startAt.localeCompare(a.startAt) || a.gachaId.localeCompare(b.gachaId));
+  if (!matched.length) return '';
+  return `\n  <section class="section">\n    <h2 class="section-title">登場ガチャ</h2>\n    <div class="menu-grid">\n${matched.map(gacha => `      <a class="menu-link" href="${rootPrefix}gacha/${escapeHtml(gacha.gachaId)}.html">${escapeHtml(gacha.name)}</a>`).join('\n')}\n    </div>\n  </section>\n`;
+}
+
 function validJstTimestamp(value) {
   const match = String(value || '').match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})\+09:00$/);
   if (!match || !Number.isFinite(Date.parse(value))) return false;
@@ -439,10 +524,19 @@ function buildGachaPages({
   monsterDb,
   editorialDb = [],
   cardDb,
+  indexSource = null,
+  rerollSource = null,
 }) {
   const issues = validateGachaData({ root, gachaDb, typeDb, monsterDb, cardDb });
   if (issues.length) throw new Error(`ガチャDB検査FAIL:\n${issues.join('\n')}`);
-  const published = gachaDb.gachas.filter(gacha => gacha.status === 'published');
+  if (indexSource !== null) {
+    replaceMarkerBlock(indexSource, 'UPDATES', null, 'js', 'index.html');
+    replaceMarkerBlock(indexSource, 'PICKUP:MONSTER', null, 'html', 'index.html');
+    replaceMarkerBlock(indexSource, 'PICKUP:CARD', null, 'html', 'index.html');
+    replaceMarkerBlock(indexSource, 'NAV', null, 'html', 'index.html');
+  }
+  if (rerollSource !== null) replaceMarkerBlock(rerollSource, 'REROLL', null, 'html', 'reroll.html');
+  const published = publishedGachas(gachaDb);
   if (!published.length) return { pages: [], sitemapPages: [], outputs: [], indexHtml: null };
   if (!now || !Number.isFinite(Date.parse(now))) throw new Error('ガチャ一覧生成には有効な基準時刻 now が必要です');
   const context = {
@@ -463,9 +557,27 @@ function buildGachaPages({
   const indexHtml = renderGachaIndex(published, now);
   const outputs = pages.map(page => ({ path: page.path, state: writeIfChangedAt(outputRoot, page.path, page.html, dryRun) }));
   outputs.push({ path: 'gacha/index.html', state: writeIfChangedAt(outputRoot, 'gacha/index.html', indexHtml, dryRun) });
+  const active = currentGachas(published, now);
+  let integratedIndex = indexSource;
+  let integratedReroll = rerollSource;
+  if (indexSource !== null) {
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'UPDATES', renderGachaUpdates(published, context), 'js', 'index.html');
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:MONSTER', renderTopMonsterPickups(active, context), 'html', 'index.html');
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:CARD', renderTopCardPickups(active, context), 'html', 'index.html');
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'NAV', '      <a href="gacha/" class="menu-link">\n        <span class="icon">🎰</span> ガチャ一覧\n      </a>', 'html', 'index.html');
+    outputs.push({ path: 'index.html', state: writeIfChangedAt(outputRoot, 'index.html', integratedIndex, dryRun) });
+  }
+  const rerollGacha = selectRerollGacha(published, now);
+  if (rerollSource !== null && rerollGacha) {
+    integratedReroll = replaceMarkerBlock(integratedReroll, 'REROLL', renderReroll(rerollGacha, context), 'html', 'reroll.html');
+    outputs.push({ path: 'reroll.html', state: writeIfChangedAt(outputRoot, 'reroll.html', integratedReroll, dryRun) });
+  }
   return {
     pages,
     indexHtml,
+    integratedIndex,
+    integratedReroll,
+    rerollGacha,
     outputs,
     sitemapPages: [
       { canonical: `${SITE_URL}/gacha/`, priority: '0.6' },
@@ -914,6 +1026,9 @@ function renderDetail(entry, context) {
   </div>`
     : '';
   const related = relatedMonsters(monster, context);
+  const gachaAppearances = renderGachaAppearances(
+    publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX
+  );
   const limitedLabel = runtime && runtime.limited
     ? runtime.limitedLabel || '限定'
     : '';
@@ -963,7 +1078,7 @@ ${explanation}${formations}
     <div class="card-grid">
 ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
     </div>
-  </div>
+  </div>${gachaAppearances}
 
   <div class="section-box">
     <div class="section-header">
@@ -1410,7 +1525,12 @@ function main() {
       return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
         - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
     }));
-  const assistBuild = buildAssistPages({ dryRun: DRY_RUN });
+  const assistBuild = buildAssistPages({
+    dryRun: DRY_RUN,
+    gachaAppearancesFor: cardId => renderGachaAppearances(
+      publishedGachas(inputs.gachasJson), 'card', cardId, '../'
+    ),
+  });
   const gachaBuild = buildGachaPages({
     root: REPO,
     outputRoot: REPO,
@@ -1421,6 +1541,8 @@ function main() {
     monsterDb: inputs.monsters,
     editorialDb: inputs.editorial,
     cardDb: inputs.assistCards,
+    indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
+    rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
   });
   const sitemap = renderSitemap(
     inputs.sitemap,
@@ -1477,4 +1599,7 @@ module.exports = {
   visibleChars,
   validateGachaData,
   buildGachaPages,
+  replaceMarkerBlock,
+  selectRerollGacha,
+  renderGachaAppearances,
 };
