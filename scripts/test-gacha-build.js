@@ -55,7 +55,7 @@ function gacha(overrides = {}) {
     gachaId: '20260901-1',
     name: '<神殿祭> & "第1回"',
     gachaType: '神殿祭',
-    image: 'gacha/20260901-1.jpg',
+    image: 'gacha-banner/20260901-1.jpg',
     startAt: '2026-09-01T15:00+09:00',
     endAt: '2026-09-15T14:59+09:00',
     explanation: '解'.repeat(GACHA_GATE_EXPLANATION),
@@ -70,10 +70,10 @@ function gacha(overrides = {}) {
 
 function makeRoot() {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'g1-gacha-build-'));
-  fs.mkdirSync(path.join(root, 'gacha'), { recursive: true });
-  fs.writeFileSync(path.join(root, 'gacha/20260901-1.jpg'), 'fixture');
-  fs.writeFileSync(path.join(root, 'gacha/20260801-1.jpg'), 'fixture');
-  fs.writeFileSync(path.join(root, 'gacha/20261001-1.jpg'), 'fixture');
+  fs.mkdirSync(path.join(root, 'gacha-banner'), { recursive: true });
+  fs.writeFileSync(path.join(root, 'gacha-banner/20260901-1.jpg'), 'fixture');
+  fs.writeFileSync(path.join(root, 'gacha-banner/20260801-1.jpg'), 'fixture');
+  fs.writeFileSync(path.join(root, 'gacha-banner/20261001-1.jpg'), 'fixture');
   for (const monster of fixtureMonsters) {
     const detailPath = path.join(root, String(monster.url).replace(/^\//, ''));
     fs.mkdirSync(path.dirname(detailPath), { recursive: true });
@@ -170,7 +170,7 @@ try {
   const ended = gacha({
     gachaId: '20260801-1',
     name: '終了済みガチャ',
-    image: 'gacha/20260801-1.jpg',
+    image: 'gacha-banner/20260801-1.jpg',
     startAt: '2026-08-01T15:00+09:00',
     endAt: '2026-08-15T14:59+09:00',
     explanation: '',
@@ -238,7 +238,7 @@ try {
 
   const partial = gacha({
     gachaId: '20261001-1',
-    image: 'gacha/20261001-1.jpg',
+    image: 'gacha-banner/20261001-1.jpg',
     startAt: '2026-10-01T15:00+09:00',
     endAt: '2026-10-15T14:59+09:00',
     publishedAt: '2026-10-01',
@@ -308,7 +308,7 @@ try {
   pass(16, 'マーカー外と前後100行が1バイトも変化しない');
 
   const secondCurrent = gacha({
-    gachaId: '20260901-2', name: '同時開催ガチャ', image: 'gacha/20260801-1.jpg', rerollPriority: false,
+    gachaId: '20260901-2', name: '同時開催ガチャ', image: 'gacha-banner/20260801-1.jpg', rerollPriority: false,
   });
   const multiple = buildIntegrated(root, [gacha(), secondCurrent], 'multiple-current');
   assert(multiple.integratedIndex.includes('<h3>&lt;神殿祭&gt; &amp; &quot;第1回&quot;</h3>'));
@@ -323,7 +323,7 @@ try {
 
   assert.strictEqual(selectRerollGacha([gacha({ rerollPriority: false }), { ...secondCurrent, rerollPriority: true }], now).gachaId, secondCurrent.gachaId);
   pass(19, 'rerollPriority=trueが1件ならそのガチャを選定');
-  const olderPriority = gacha({ gachaId: '20260801-1', image: 'gacha/20260801-1.jpg', startAt: '2026-08-01T15:00+09:00', endAt: '2026-09-12T14:59+09:00' });
+  const olderPriority = gacha({ gachaId: '20260801-1', image: 'gacha-banner/20260801-1.jpg', startAt: '2026-08-01T15:00+09:00', endAt: '2026-09-12T14:59+09:00' });
   assert.strictEqual(selectRerollGacha([olderPriority, gacha()], now).gachaId, '20260901-1');
   pass(20, 'rerollPriority=trueが2件ならstartAtが新しい方を選定');
   const noPriority = [gacha({ rerollPriority: false }), secondCurrent];

@@ -333,8 +333,10 @@ function validateGachaData({ root = REPO, gachaDb, typeDb, monsterDb, cardDb }) 
         issues.push(`${label}: カード排出率が0超100以下の数値でない`);
       }
     }
-    if (typeof gacha.image !== 'string' || !gacha.image || !fs.existsSync(path.join(root, gacha.image))) {
-      issues.push(`${label}: imageがリポジトリに実在しない`);
+    if (typeof gacha.image !== 'string'
+        || !/^gacha-banner\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(gacha.image)
+        || !fs.existsSync(path.join(root, gacha.image))) {
+      issues.push(`${label}: imageがgacha-banner/に実在しない`);
     }
     if (gacha.status === 'published' && !String(gacha.publishedAt || '').trim()) {
       issues.push(`${label}: publishedなのにpublishedAtが空`);

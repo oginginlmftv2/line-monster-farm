@@ -12,6 +12,8 @@ const repo = path.resolve(__dirname, '..');
 const targets = [
   '_cms/gas/50_gacha.gs', '_cms/gas/ui_gacha.html', '_cms/gas/manifest.json',
   '_cms/gas/40_setup.gs', '_cms/gas/00_core.gs', '_cms/gas/index.html', '_cms/gas/README.md',
+  '_cms/gas/30_publish.gs', '_cms/gas/ui_publish.html',
+  '.github/workflows/cms-gacha-publish.yml', 'scripts/verify-gacha-source.js',
 ];
 let destructiveCases = 0;
 
@@ -55,13 +57,17 @@ console.log('PASS 無改変');
   const publishedResult = context.gachaSaveIdentity_(published, '2026-09-08T15:00:00+09:00', rows);
   assert.strictEqual(publishedResult.gachaId, '20260901-1');
   assert.strictEqual(publishedResult.renumbered, false);
+  const formerlyPublished = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'draft', publishedAt: '2026-09-01' };
+  const formerlyPublishedResult = context.gachaSaveIdentity_(formerlyPublished, '2026-09-08T15:00:00+09:00', rows);
+  assert.strictEqual(formerlyPublishedResult.gachaId, '20260901-1');
+  assert.strictEqual(formerlyPublishedResult.renumbered, false);
   const sameDate = context.gachaSaveIdentity_(rows[0], '2026-09-01T18:00:00+09:00', rows);
   assert.strictEqual(sameDate.gachaId, '20260901-1');
   assert.strictEqual(sameDate.renumbered, false);
   const shiftedDraft = context.gachaSaveIdentity_(rows[0], '2026-09-08T15:00:00+09:00', rows);
   assert.strictEqual(shiftedDraft.gachaId, '20260908-2');
   assert.strictEqual(shiftedDraft.renumbered, true);
-  console.log('PASS 採番条件: published維持・draft同日維持・draft日付変更時の重複回避再採番');
+  console.log('PASS 採番条件: published・公開履歴ありID維持、draft同日維持、未公開draft日付変更時の重複回避再採番');
 }
 
 expectFailure('必須GAS欠落を拒否', root => fs.unlinkSync(path.join(root, '_cms/gas/50_gacha.gs')), /必須ファイルがない/);
@@ -116,5 +122,35 @@ expectFailure('publishedのgachaId再採番を拒否', root => {
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace("current.status === 'published'", "current.status === 'draft'"));
 }, /publishedのgachaId維持/);
+
+expectFailure('ガチャ公開Workflow欠落を拒否', root => {
+  fs.unlinkSync(path.join(root, '.github/workflows/cms-gacha-publish.yml'));
+}, /必須ファイルがない/);
+expectFailure('concurrency group分離を拒否', root => {
+  const file = path.join(root, '.github/workflows/cms-gacha-publish.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('group: cms-publish', 'group: cms-gacha-publish'));
+}, /concurrency\.group/);
+expectFailure('公開branch版ソース検査器の使用を拒否', root => {
+  const file = path.join(root, '.github/workflows/cms-gacha-publish.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('origin/main:scripts/verify-gacha-source.js', 'HEAD:scripts/verify-gacha-source.js'));
+}, /origin\/main/);
+expectFailure('api_gachaPublishの30_publish外配置を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('function api_gachaPublish()', 'function api_gachaPublishMoved()'));
+}, /30_publish\.gs/);
+expectFailure('gacha公開ガード欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const start = source.indexOf('function api_gachaPublish()');
+  fs.writeFileSync(file, source.slice(0, start) + source.slice(start).replace("requirePublishable_('gacha')", "requireScope_('gacha')"));
+}, /requirePublishable_/);
+expectFailure('gacha配下への画像入力復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(/gacha-banner\//g, 'gacha/'));
+}, /gacha-banner/);
+expectFailure('publishedAt書込み順序欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('gachaStampInitialPublishedAt_(rows);', 'rows = rows;'));
+}, /publishedAt/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);

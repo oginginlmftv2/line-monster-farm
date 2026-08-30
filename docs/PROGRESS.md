@@ -54,6 +54,7 @@
 | G1 | ガチャDBとガチャページ生成の基盤 | `feat/g1-gacha-data-foundation` | **レビュー待ち** | ⚪ | PR #84のレビュー指摘を反映。通常ビルドの現在時刻解決、解説ゲート300字化、解説なしモンスターの詳細リンク、正常13件・破壊10件のfixtureテストを追加。公開出力差分なし |
 | G2 | ガチャ情報の既存ページへの反映（マーカー方式） | `feat/g2-gacha-page-integration` | **レビュー待ち** | 🔴 | 空DBでは既存表示不変。トップ4区間・リセマラ1区間、詳細逆リンク、正常27件・破壊14件のテストを追加 |
 | G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **進行中** | 🟡 | `gachas`・`gacha_types`の新規2シート、ガチャタブ、新規・編集・競合拒否、raw ID照合、バナー画像差し替えを実装。GitHub公開とGAS反映は対象外 |
+| G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **レビュー待ち** | 🔴 | `gacha-banner/`へ画像入力を分離し、公開対象切替、初回公開日確定、`cms/gacha-publish`、origin/main版ソース検査、未参照画像拒否を実装。GAS反映・Actions実行は管理者作業 |
 
 ## 最新mainの監査値
 
@@ -220,7 +221,7 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
-G3として、ガチャCMSの新規2シート、一覧・編集画面、保存、ピックアップID照合、画像アップロードと専用ソース検査を実装する。GAS、シート、Drive、deploymentは管理者がREADMEの手順で別途反映する。G3からGitHubへ送信する処理は追加しない。
+G4として、ガチャ公開対象の切替、`publishedAt`の初回JST日付確定、GitHub送信、公開Workflow、ソース／生成差分検査を実装する。入力画像は`gacha-banner/`、生成ページは`gacha/`へ分離する。GAS、シート、Drive、deployment、GitHub Actionsの実行は管理者がREADMEの手順で別途行う。
 
 G2として、トップとリセマラの手書きHTMLをマーカー区間だけ安全に更新する仕組みと、
 モンスター／カード詳細からガチャへの逆リンクを実装した。本番`gachas.json`は空のままなので、
@@ -239,7 +240,7 @@ P12-19bとして、PROGRESS.mdの状態（P12-13〜P12-15、P12-17c、P12-19）�
 
 ## 次の作業
 
-G4で`cms/gacha-publish`と公開Workflow、公開ソース検査を別タスクとして実装する。G3の保存だけではサイトへ反映されない。
+G4のPRレビュー後、管理者がREADMEに従ってGAS同期、`setup1_createSheets`再実行、再deployment、最小公開と表示確認を行う。
 
 P12-20の画像を含む保存・公開経路は、別承認まで開始しない。あわせて、AdSense再申請前の
 Search Consoleでのインデックス状況確認と、解説済み92ページへの著者名一括入力を管理者作業として

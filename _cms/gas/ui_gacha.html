@@ -81,9 +81,9 @@ function gachaPickupRow(kind,slot,item){
 function gachaRenderEditor(item){
   GACHA_UI.pendingImage=null;
   var html='<div id="gacha_message" aria-live="polite"></div>';
-  html+='<div class="warnbox">保存先はスプレッドシートです。保存してもサイトには公開されません。公開機能はG4で追加します。</div>';
+  html+='<div class="warnbox">「公開対象にする」を保存しただけではサイトには出ません。公開タブでガチャの公開ボタンを押したときに反映されます。</div>';
   html+='<div class="grid"><div class="field"><label>gachaId（保存後は変更不可）</label><input type="text" class="ro" id="gacha_id" readonly value="'+esc(item.gachaId||'（新規保存時に採番）')+'"></div>';
-  html+='<div class="field"><label>状態</label><input type="text" class="ro" readonly value="'+esc(gachaStateLabel(item.status==='published'?'current':'draft'))+'"></div>';
+  html+='<div class="field"><label><input type="checkbox" id="gacha_published"'+(item.status==='published'?' checked':'')+'> 公開対象にする</label><div class="hint">draftへ戻すこともできます。状態変更だけではサイトに反映されません。</div></div>';
   html+='<div class="field"><label>名前</label><input type="text" id="gacha_name" value="'+esc(item.name||'')+'"></div>';
   html+='<div class="field"><label>種別</label><select id="gacha_type">'+gachaTypeOptions(item.gachaType||'')+'</select></div>';
   html+='<div class="field"><label>開始日時（JST）</label><input type="datetime-local" id="gacha_startAt" value="'+esc(gachaDateInput(item.startAt))+'"></div>';
@@ -142,13 +142,15 @@ function gachaCollectPickups(kind){
   return result;
 }
 function gachaSave(){
+  var status=el('gacha_published').checked?'published':'draft';
+  if(status==='published'&&(!GACHA_UI.current||GACHA_UI.current.status!=='published')&&!confirm('このガチャを公開対象にしますか？ 保存後も、公開タブでガチャの公開ボタンを押すまでサイトには出ません。'))return;
   var payload={
     gachaId:GACHA_UI.current?GACHA_UI.current.gachaId:'',baseUpdatedAt:GACHA_UI.current?GACHA_UI.current.updatedAt:'',
     name:el('gacha_name').value.trim(),gachaType:el('gacha_type').value,startAt:el('gacha_startAt').value,endAt:el('gacha_endAt').value,
-    explanation:el('gacha_explanation').value,monsterPickups:gachaCollectPickups('monster'),cardPickups:gachaCollectPickups('card'),rerollPriority:el('gacha_reroll').checked
+    explanation:el('gacha_explanation').value,monsterPickups:gachaCollectPickups('monster'),cardPickups:gachaCollectPickups('card'),rerollPriority:el('gacha_reroll').checked,status:status
   };
   call('api_gachaSave',[payload],function(result){
-    var message=result.created?'下書きとして新規保存しました。gachaId: '+result.gachaId:'保存しました。サイトにはまだ公開されません。';
+    var message=result.created?(result.status==='published'?'公開対象として新規保存しました。':'下書きとして新規保存しました。')+' gachaId: '+result.gachaId:'保存しました。公開ボタンを押すまでサイトには反映されません。';
     if(result.renumbered){
       message='開始日の変更に合わせて、下書きのgachaIdを '+result.previousGachaId+' → '+result.gachaId+' に採番し直しました。';
       if(result.imageCleared)message+=' 画像は旧IDのまま公開されないよう解除しました。新しいIDで再アップロードしてください。';

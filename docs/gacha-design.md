@@ -149,4 +149,14 @@ draftの採番し直し時は`image`列を空にし、新しいIDで画像を再
 
 ピックアップ照合は`RAW_BASE`の`monster-ids.json`と`assist-cards.json`をCacheService経由で参照する。保存前に名前へ解決できることを確認し、排出率は数値型の`0 < rate <= 100`だけを受け入れる。最終的なDB検査の正は引き続き`build.js`の`validateGachaData()`であり、GAS側ではシート投入前の最低限だけを検査する。
 
-画像はScript Propertyの`GACHA_DRIVE_FOLDER_ID`が指すフォルダへ`<gachaId>.<拡張子>`で保存する。JPG・PNG・WebP、2MB以下、マジックバイト一致を必須とし、新規ファイル作成後に同じIDの旧画像をゴミ箱へ移す。シートには`gacha/<ファイル名>`を保存する。
+画像はScript Propertyの`GACHA_DRIVE_FOLDER_ID`が指すフォルダへ`<gachaId>.<拡張子>`で保存する。JPG・PNG・WebP、2MB以下、マジックバイト一致を必須とし、新規ファイル作成後に同じIDの旧画像をゴミ箱へ移す。シートには`gacha-banner/<ファイル名>`を保存する。入力画像と、ビルドが生成する`gacha/*.html`を同じディレクトリへ置かない。
+
+## 10. G4: ガチャ公開経路
+
+編集画面の`status`は`draft`と`published`を相互に切り替えられる。状態保存だけではサイトへ反映せず、公開タブの「ガチャを公開」で初めてGitHubへ送る。公開処理は本番環境・admin・`gacha` scopeを必須とし、`status === "published"`だけを`gachas.json`へ含める。空のピックアップ枠は除外し、排出率は数値のまま出力する。
+
+初回公開時は、空の`publishedAt`へ当日のJST日付をシートへ先に書き、その後にGitHubのblob・tree・commit・ref処理へ進む。一度入った日付は変更しない。日付確定後にGitHub送信が失敗した場合も日付は残り、次回の再送で別の日付へ変わらない。
+
+GASはDrive上のファイル名、2MB上限、マジックバイトを検査し、公開DBから参照される画像だけを`gacha-banner/`へ送る。`scripts/verify-gacha-source.js`はさらに、元コミットで追加・更新された各画像が同じコミットの`gachas.json`から参照されている事実を検査する。
+
+公開Workflowは`cms/gacha-publish`を入口とし、他のCMS公開と同じ`concurrency.group: cms-publish`で直列化する。ソース検査器は公開branchの版ではなく`origin/main`から取り出す。build後の許可差分は`gacha/`、`cards/`、`monsters/`、`index.html`、`reroll.html`、`sitemap.xml`、`src/data/page-baseline.json`、`src/data/cms-seed.json`である。カード・モンスター詳細はpublishedガチャの「登場ガチャ」が変わり、後者2ファイルは全公開ページの生成結果を集約するため、実地確認で変化した範囲だけを許可対象に含める。

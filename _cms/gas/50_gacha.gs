@@ -1,6 +1,7 @@
-/** ガチャドメイン。G3ではシート保存までとし、GitHub公開は行わない。 */
+/** ガチャドメイン。シート保存・画像・公開用データ組み立てを扱う。GitHub送信は30_publish.gsだけに置く。 */
 var GACHA_SHEET = 'gachas';
 var GACHA_TYPE_SHEET = 'gacha_types';
+var GACHA_SHEET_PUBLISH_LOG = 'gacha_publish_log';
 var GACHA_PICKUP_SLOTS = 5;
 var GACHA_EXPLANATION_GATE = 300;
 var GACHA_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
@@ -25,9 +26,10 @@ GACHA_HEADERS[GACHA_SHEET] = GACHA_HEADERS[GACHA_SHEET].concat([
   'rerollPriority', 'status', 'publishedAt', 'author', 'updatedAt', 'lastEditor'
 ]);
 GACHA_HEADERS[GACHA_TYPE_SHEET] = ['label'];
+GACHA_HEADERS[GACHA_SHEET_PUBLISH_LOG] = ['日時', '実行者', 'コミットSHA', '結果', '詳細'];
 
 function gachaSheet_(name) {
-  if (name !== GACHA_SHEET && name !== GACHA_TYPE_SHEET) {
+  if (name !== GACHA_SHEET && name !== GACHA_TYPE_SHEET && name !== GACHA_SHEET_PUBLISH_LOG) {
     throw new Error('ガチャCMSから参照できないシートです: ' + name);
   }
   var sheet = book_().getSheetByName(name);
@@ -193,7 +195,9 @@ function gachaNextId_(startAt, rows) {
 
 function gachaSaveIdentity_(current, startAt, rows) {
   if (!current) return { gachaId: gachaNextId_(startAt, rows), renumbered: false };
-  if (current.status === 'published') return { gachaId: current.gachaId, renumbered: false };
+  if (current.status === 'published' || current.publishedAt) {
+    return { gachaId: current.gachaId, renumbered: false };
+  }
   if (current.startAt.slice(0, 10) === startAt.slice(0, 10)) {
     return { gachaId: current.gachaId, renumbered: false };
   }
@@ -204,6 +208,90 @@ function gachaSaveIdentity_(current, startAt, rows) {
 
 function gachaRowValues_(item) {
   return GACHA_HEADERS[GACHA_SHEET].map(function (header) { return item[header] == null ? '' : item[header]; });
+}
+
+function gachaImageFolder_() {
+  var folderId = prop_('GACHA_DRIVE_FOLDER_ID');
+  return DriveApp.getFolderById(folderId);
+}
+
+function gachaStampInitialPublishedAt_(rows) {
+  var publishedAtColumn = GACHA_HEADERS[GACHA_SHEET].indexOf('publishedAt') + 1;
+  var today = Utilities.formatDate(new Date(), tz_(), 'yyyy-MM-dd');
+  rows.forEach(function (row) {
+    if (row.status !== 'published' || row.publishedAt) return;
+    gachaSheet_(GACHA_SHEET).getRange(row._row, publishedAtColumn).setValue(today);
+    row.publishedAt = today;
+  });
+}
+
+function gachaBuildPublishDocuments_(rows) {
+  var gachas = rows.filter(function (row) { return row.status === 'published'; }).map(function (row) {
+    var pickupMonsters = [];
+    var pickupCards = [];
+    for (var slot = 1; slot <= GACHA_PICKUP_SLOTS; slot++) {
+      if (row['monster' + slot]) {
+        pickupMonsters.push({ id: row['monster' + slot], rate: row['monsterRate' + slot] });
+      }
+      if (row['card' + slot]) {
+        pickupCards.push({ cardId: row['card' + slot], rate: row['cardRate' + slot] });
+      }
+    }
+    return {
+      gachaId: row.gachaId,
+      name: row.name,
+      gachaType: row.gachaType,
+      image: row.image,
+      startAt: row.startAt,
+      endAt: row.endAt,
+      explanation: row.explanation,
+      pickupMonsters: pickupMonsters,
+      pickupCards: pickupCards,
+      rerollPriority: row.rerollPriority,
+      status: 'published',
+      publishedAt: row.publishedAt
+    };
+  });
+  return {
+    gachas: { schemaVersion: 1, gachas: gachas },
+    types: { schemaVersion: 1, types: gachaTypeLabels_() }
+  };
+}
+
+function gachaValidatePublishDocuments_(documents, allowEmptyPublishedAt) {
+  var issues = [];
+  var types = documents.types.types;
+  var ids = {};
+  documents.gachas.gachas.forEach(function (gacha) {
+    var label = gacha.gachaId || '<gachaIdなし>';
+    if (!/^\d{8}-\d+$/.test(gacha.gachaId)) issues.push(label + ': gachaId形式が不正です。');
+    if (ids[gacha.gachaId]) issues.push(label + ': gachaIdが重複しています。');
+    ids[gacha.gachaId] = true;
+    if (!gacha.name || types.indexOf(gacha.gachaType) < 0) issues.push(label + ': 名前または種別が不正です。');
+    if (!/^gacha-banner\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(gacha.image) ||
+        gacha.image.split('/').pop().replace(/\.[^.]+$/, '') !== gacha.gachaId) {
+      issues.push(label + ': バナー画像パスが不正です。');
+    }
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(gacha.startAt) ||
+        !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(gacha.endAt) ||
+        new Date(gacha.startAt).getTime() >= new Date(gacha.endAt).getTime()) {
+      issues.push(label + ': 開始日時または終了日時が不正です。');
+    }
+    if (!(allowEmptyPublishedAt && !gacha.publishedAt) && !/^\d{4}-\d{2}-\d{2}$/.test(gacha.publishedAt)) {
+      issues.push(label + ': publishedAtが不正です。');
+    }
+    gacha.pickupMonsters.forEach(function (pickup) {
+      if (!pickup.id || typeof pickup.rate !== 'number' || !isFinite(pickup.rate) || pickup.rate <= 0 || pickup.rate > 100) {
+        issues.push(label + ': モンスターピックアップが不正です。');
+      }
+    });
+    gacha.pickupCards.forEach(function (pickup) {
+      if (!pickup.cardId || typeof pickup.rate !== 'number' || !isFinite(pickup.rate) || pickup.rate <= 0 || pickup.rate > 100) {
+        issues.push(label + ': カードピックアップが不正です。');
+      }
+    });
+  });
+  return issues;
 }
 
 function api_gachaList() {
@@ -263,6 +351,10 @@ function api_gachaSave(payload) {
   if (gachaTypeLabels_().indexOf(gachaType) < 0) throw new Error('gacha_typesにない種別です: ' + gachaType);
   var monsterPickups = gachaPickupValues_(payload, 'monster');
   var cardPickups = gachaPickupValues_(payload, 'card');
+  var requestedStatusText = payload.status == null ? '' : gachaText_(payload.status);
+  if (requestedStatusText && requestedStatusText !== 'draft' && requestedStatusText !== 'published') {
+    throw new Error('statusはdraftまたはpublishedだけ指定できます。');
+  }
 
   var lock = LockService.getScriptLock();
   if (!lock.tryLock(20000)) throw new Error('他の保存処理と重なりました。少し待ってからやり直してください。');
@@ -274,6 +366,7 @@ function api_gachaSave(payload) {
     if (current && gachaText_(payload.baseUpdatedAt) !== current.updatedAt) {
       throw new Error('他の人がこのガチャを更新しています。画面を読み込み直してください。');
     }
+    var requestedStatus = requestedStatusText || (current ? current.status : 'draft');
 
     // 公開済みIDはURL不変のため維持する。draftは開始日の日付変更時だけ採番し直す。
     var identity = gachaSaveIdentity_(current, startAt, rows);
@@ -289,7 +382,7 @@ function api_gachaSave(payload) {
       endAt: endAt,
       explanation: String(payload.explanation == null ? '' : payload.explanation),
       rerollPriority: payload.rerollPriority === true,
-      status: current ? current.status : 'draft',
+      status: requestedStatus,
       publishedAt: current ? current.publishedAt : '',
       author: current ? current.author : user.nickname,
       updatedAt: updatedAt,
@@ -349,7 +442,7 @@ function api_gachaUploadImage(payload) {
     if (gachaText_(payload.baseUpdatedAt) !== current.updatedAt) {
       throw new Error('他の人がこのガチャを更新しています。画面を読み込み直してください。');
     }
-    var folder = DriveApp.getFolderById(prop_('GACHA_DRIVE_FOLDER_ID'));
+    var folder = gachaImageFolder_();
     var fileName = gachaId + '.' + extension;
     newFile = folder.createFile(Utilities.newBlob(bytes, mimeType, fileName));
     var sameId = new RegExp('^' + gachaId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.[^.]+$', 'i');
@@ -363,11 +456,11 @@ function api_gachaUploadImage(payload) {
 
     var values = gachaRowValues_(current);
     var updatedAt = nowIso_();
-    values[GACHA_HEADERS[GACHA_SHEET].indexOf('image')] = 'gacha/' + fileName;
+    values[GACHA_HEADERS[GACHA_SHEET].indexOf('image')] = 'gacha-banner/' + fileName;
     values[GACHA_HEADERS[GACHA_SHEET].indexOf('updatedAt')] = updatedAt;
     values[GACHA_HEADERS[GACHA_SHEET].indexOf('lastEditor')] = user.nickname;
     gachaSheet_(GACHA_SHEET).getRange(current._row, 1, 1, values.length).setValues([values]);
-    return { ok: true, gachaId: gachaId, image: 'gacha/' + fileName, bytes: bytes.length, updatedAt: updatedAt };
+    return { ok: true, gachaId: gachaId, image: 'gacha-banner/' + fileName, bytes: bytes.length, updatedAt: updatedAt };
   } catch (error) {
     if (newFile) {
       try { newFile.setTrashed(true); } catch (ignoreNew) { /* 復旧は次回手動確認 */ }
