@@ -8,7 +8,13 @@ const TEXT_SOURCE_FILES = new Set([
 ]);
 const IMAGE_PATH = /^gacha-banner\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i;
 const GENERATED_PREFIXES = ['gacha/', 'cards/', 'monsters/'];
-const GENERATED_FILES = new Set(['sitemap.xml', 'index.html', 'reroll.html']);
+const GENERATED_FILES = new Set([
+  'sitemap.xml',
+  'index.html',
+  'reroll.html',
+  'src/data/page-baseline.json',
+  'src/data/cms-seed.json',
+]);
 const SUBJECT = /^CMS gacha publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 function git(args, options = {}) {

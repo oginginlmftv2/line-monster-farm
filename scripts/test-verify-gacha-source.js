@@ -162,6 +162,8 @@ const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xd9]);
   write(repo, 'gacha/index.html', 'generated\n');
   write(repo, 'cards/card.html', 'generated\n');
   write(repo, 'monsters/0001.html', 'generated\n');
+  write(repo, 'src/data/page-baseline.json', 'generated\n');
+  write(repo, 'src/data/cms-seed.json', 'generated\n');
   expect('許可された生成差分', run(repo, ['generated']), true, /PASS:/);
 }
 

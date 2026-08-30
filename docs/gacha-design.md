@@ -159,4 +159,4 @@ draftの採番し直し時は`image`列を空にし、新しいIDで画像を再
 
 GASはDrive上のファイル名、2MB上限、マジックバイトを検査し、公開DBから参照される画像だけを`gacha-banner/`へ送る。`scripts/verify-gacha-source.js`はさらに、元コミットで追加・更新された各画像が同じコミットの`gachas.json`から参照されている事実を検査する。
 
-公開Workflowは`cms/gacha-publish`を入口とし、他のCMS公開と同じ`concurrency.group: cms-publish`で直列化する。ソース検査器は公開branchの版ではなく`origin/main`から取り出す。build後の許可差分は`gacha/`、`cards/`、`monsters/`、`index.html`、`reroll.html`、`sitemap.xml`である。カード・モンスター詳細はpublishedガチャの「登場ガチャ」が変わるため、両詳細ディレクトリを許可対象に含める。
+公開Workflowは`cms/gacha-publish`を入口とし、他のCMS公開と同じ`concurrency.group: cms-publish`で直列化する。ソース検査器は公開branchの版ではなく`origin/main`から取り出す。build後の許可差分は`gacha/`、`cards/`、`monsters/`、`index.html`、`reroll.html`、`sitemap.xml`、`src/data/page-baseline.json`、`src/data/cms-seed.json`である。カード・モンスター詳細はpublishedガチャの「登場ガチャ」が変わり、後者2ファイルは全公開ページの生成結果を集約するため、実地確認で変化した範囲だけを許可対象に含める。
