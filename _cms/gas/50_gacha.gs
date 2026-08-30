@@ -191,6 +191,17 @@ function gachaNextId_(startAt, rows) {
   return datePart + '-' + branch;
 }
 
+function gachaSaveIdentity_(current, startAt, rows) {
+  if (!current) return { gachaId: gachaNextId_(startAt, rows), renumbered: false };
+  if (current.status === 'published') return { gachaId: current.gachaId, renumbered: false };
+  if (current.startAt.slice(0, 10) === startAt.slice(0, 10)) {
+    return { gachaId: current.gachaId, renumbered: false };
+  }
+  var otherRows = rows.filter(function (row) { return row._row !== current._row; });
+  var gachaId = gachaNextId_(startAt, otherRows);
+  return { gachaId: gachaId, renumbered: gachaId !== current.gachaId };
+}
+
 function gachaRowValues_(item) {
   return GACHA_HEADERS[GACHA_SHEET].map(function (header) { return item[header] == null ? '' : item[header]; });
 }
@@ -264,14 +275,16 @@ function api_gachaSave(payload) {
       throw new Error('他の人がこのガチャを更新しています。画面を読み込み直してください。');
     }
 
-    // 新規時だけ開始日のJST日付から採番する。編集時は既存gachaIdを必ず維持する。
-    var gachaId = current ? current.gachaId : gachaNextId_(startAt, rows);
+    // 公開済みIDはURL不変のため維持する。draftは開始日の日付変更時だけ採番し直す。
+    var identity = gachaSaveIdentity_(current, startAt, rows);
+    var gachaId = identity.gachaId;
     var updatedAt = nowIso_();
     var item = {
       gachaId: gachaId,
       name: name,
       gachaType: gachaType,
-      image: current ? current.image : '',
+      // draftのID変更時は旧IDの画像パスを公開データへ残さず、再アップロードを求める。
+      image: identity.renumbered ? '' : (current ? current.image : ''),
       startAt: startAt,
       endAt: endAt,
       explanation: String(payload.explanation == null ? '' : payload.explanation),
@@ -292,7 +305,16 @@ function api_gachaSave(payload) {
     var sheet = gachaSheet_(GACHA_SHEET);
     var rowNumber = current ? current._row : sheet.getLastRow() + 1;
     sheet.getRange(rowNumber, 1, 1, values.length).setValues([values]);
-    return { ok: true, gachaId: gachaId, updatedAt: updatedAt, status: item.status, created: !current };
+    return {
+      ok: true,
+      gachaId: gachaId,
+      previousGachaId: current ? current.gachaId : '',
+      renumbered: identity.renumbered,
+      imageCleared: identity.renumbered && !!current.image,
+      updatedAt: updatedAt,
+      status: item.status,
+      created: !current
+    };
   } finally {
     lock.releaseLock();
   }

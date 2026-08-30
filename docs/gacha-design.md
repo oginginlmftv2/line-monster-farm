@@ -22,12 +22,13 @@ G1では既存ページへの導線や表示を変更しない。GAS、シート
 `src/data/gacha-types.json`の`types`配列順を表示順とする。ガチャ本体は
 `src/data/gachas.json`の`gachas`配列に置く。
 
-主キーは`gachaId`（`YYYYMMDD-連番`）。名前・画像・期間・解説・公開状態をガチャ側に持ち、
+主キーは`gachaId`（`YYYYMMDD-連番`）。採番した時点の予定開始日に由来する一意キーであり、
+開始日の延期・変更後も日付部が`startAt`と一致し続けることは保証しない。名前・画像・期間・解説・公開状態をガチャ側に持ち、
 ピックアップの名前・属性・画像・解説はモンスター4桁IDまたは`cardId`で既存DBから解決する。
 排出率は`0 < rate <= 100`の数値で持ち、表示時だけ`%`を付ける。
 
-`startAt`と`endAt`は`YYYY-MM-DDTHH:mm+09:00`形式に限定する。`gachaId`の日付部は
-`startAt`のJST日付と一致させる。
+`startAt`と`endAt`は`YYYY-MM-DDTHH:mm+09:00`形式に限定する。公開済みURLの不変性を優先するため、
+`gachaId`と現在の`startAt`の日付一致は検査しない。
 
 ## 3. 共通定数と検証
 
@@ -142,7 +143,9 @@ monster1..5 / monsterRate1..5 / card1..5 / cardRate1..5 /
 rerollPriority / status / publishedAt / author / updatedAt / lastEditor
 ```
 
-新規の`gachaId`は`startAt`のJST日付を`YYYYMMDD`へ変換し、同じ日付の既存IDから空いている最小の正整数枝番を選ぶ。編集は既存行が持つIDを維持し、開始日時を変更しても採番し直さない。
+新規の`gachaId`は`startAt`のJST日付を`YYYYMMDD`へ変換し、同じ日付の既存IDから空いている最小の正整数枝番を選ぶ。publishedは公開URLを不変にするため、開始日時を変更しても既存IDを維持する。draftはまだ公開URLが存在しないため、開始日のJST日付が変わったときだけ新しい日付で採番し直す。時刻だけの変更ではIDを変えない。
+
+draftの採番し直し時は`image`列を空にし、新しいIDで画像を再アップロードする。Drive上の旧ファイルを保存処理からリネーム・削除するとシート保存との補償経路が増えるため行わず、参照だけを確実に外す。公開時にIDと画像名が食い違うことを防ぐため、旧画像パスを保持する実装へ戻してはならない。
 
 ピックアップ照合は`RAW_BASE`の`monster-ids.json`と`assist-cards.json`をCacheService経由で参照する。保存前に名前へ解決できることを確認し、排出率は数値型の`0 < rate <= 100`だけを受け入れる。最終的なDB検査の正は引き続き`build.js`の`validateGachaData()`であり、GAS側ではシート投入前の最低限だけを検査する。
 

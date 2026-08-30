@@ -4,6 +4,8 @@
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const assert = require('assert');
+const vm = require('vm');
 const { validateRoot } = require('./verify-gacha-cms');
 
 const repo = path.resolve(__dirname, '..');
@@ -40,6 +42,27 @@ function expectFailure(label, mutate, expected) {
 const cleanIssues = validateRoot(repo);
 if (cleanIssues.length) throw new Error(`無改変がFAIL: ${cleanIssues.join(' / ')}`);
 console.log('PASS 無改変');
+
+{
+  const context = {};
+  vm.createContext(context);
+  vm.runInContext(fs.readFileSync(path.join(repo, '_cms/gas/50_gacha.gs'), 'utf8'), context);
+  const rows = [
+    { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'draft' },
+    { _row: 3, gachaId: '20260908-1', startAt: '2026-09-08T15:00:00+09:00', status: 'draft' },
+  ];
+  const published = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'published' };
+  const publishedResult = context.gachaSaveIdentity_(published, '2026-09-08T15:00:00+09:00', rows);
+  assert.strictEqual(publishedResult.gachaId, '20260901-1');
+  assert.strictEqual(publishedResult.renumbered, false);
+  const sameDate = context.gachaSaveIdentity_(rows[0], '2026-09-01T18:00:00+09:00', rows);
+  assert.strictEqual(sameDate.gachaId, '20260901-1');
+  assert.strictEqual(sameDate.renumbered, false);
+  const shiftedDraft = context.gachaSaveIdentity_(rows[0], '2026-09-08T15:00:00+09:00', rows);
+  assert.strictEqual(shiftedDraft.gachaId, '20260908-2');
+  assert.strictEqual(shiftedDraft.renumbered, true);
+  console.log('PASS 採番条件: published維持・draft同日維持・draft日付変更時の重複回避再採番');
+}
 
 expectFailure('必須GAS欠落を拒否', root => fs.unlinkSync(path.join(root, '_cms/gas/50_gacha.gs')), /必須ファイルがない/);
 expectFailure('manifest登録欠落を拒否', root => {
@@ -88,5 +111,10 @@ expectFailure('UrlFetchApp追加を拒否', root => {
   const file = path.join(root, '_cms/gas/50_gacha.gs');
   fs.appendFileSync(file, '\nfunction gachaBadFetch_(){ return UrlFetchApp.fetch("https://example.invalid"); }\n');
 }, /GitHub送信または新規取得方式/);
+expectFailure('publishedのgachaId再採番を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("current.status === 'published'", "current.status === 'draft'"));
+}, /publishedのgachaId維持/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);

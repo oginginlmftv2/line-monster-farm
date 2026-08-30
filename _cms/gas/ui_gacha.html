@@ -148,7 +148,12 @@ function gachaSave(){
     explanation:el('gacha_explanation').value,monsterPickups:gachaCollectPickups('monster'),cardPickups:gachaCollectPickups('card'),rerollPriority:el('gacha_reroll').checked
   };
   call('api_gachaSave',[payload],function(result){
-    show(result.created?'下書きとして新規保存しました。gachaId: '+result.gachaId:'保存しました。サイトにはまだ公開されません。');
+    var message=result.created?'下書きとして新規保存しました。gachaId: '+result.gachaId:'保存しました。サイトにはまだ公開されません。';
+    if(result.renumbered){
+      message='開始日の変更に合わせて、下書きのgachaIdを '+result.previousGachaId+' → '+result.gachaId+' に採番し直しました。';
+      if(result.imageCleared)message+=' 画像は旧IDのまま公開されないよう解除しました。新しいIDで再アップロードしてください。';
+    }
+    show(message);
     gachaReloadList(function(){gachaOpen(result.gachaId);});
   });
 }

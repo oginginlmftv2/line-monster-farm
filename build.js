@@ -308,10 +308,6 @@ function validateGachaData({ root = REPO, gachaDb, typeDb, monsterDb, cardDb }) 
     if (duplicateIds.has(gacha.gachaId)) issues.push(`${label}: gachaIdが重複`);
     if (!validJstTimestamp(gacha.startAt)) issues.push(`${label}: startAtがJST日時でない`);
     if (!validJstTimestamp(gacha.endAt)) issues.push(`${label}: endAtがJST日時でない`);
-    if (validJstTimestamp(gacha.startAt)
-        && gacha.gachaId.slice(0, 8) !== gacha.startAt.slice(0, 10).replace(/-/g, '')) {
-      issues.push(`${label}: gachaIdの日付とstartAtのJST日付が不一致`);
-    }
     if (Number.isFinite(Date.parse(gacha.startAt)) && Number.isFinite(Date.parse(gacha.endAt))
         && Date.parse(gacha.startAt) >= Date.parse(gacha.endAt)) {
       issues.push(`${label}: startAtがendAtより前でない`);

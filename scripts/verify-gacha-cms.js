@@ -89,6 +89,14 @@ function validateRoot(root) {
   // 3. 保存APIはgacha scopeを必須にする。
   const save = functionBlock(gas, 'api_gachaSave');
   if (!/requireScope_\(\s*['"]gacha['"]\s*\)/.test(save)) issues.push("api_gachaSaveがrequireScope_('gacha')を通っていない");
+  const saveIdentity = functionBlock(gas, 'gachaSaveIdentity_');
+  if (!/current\.status === ['"]published['"][\s\S]{0,100}gachaId:\s*current\.gachaId[\s\S]{0,50}renumbered:\s*false/.test(saveIdentity) ||
+      !/current\.startAt\.slice\(0, 10\) === startAt\.slice\(0, 10\)/.test(saveIdentity) ||
+      !/gachaNextId_\(startAt, otherRows\)/.test(saveIdentity) ||
+      !/image:\s*identity\.renumbered \? ''/.test(save) ||
+      !/renumbered:\s*identity\.renumbered/.test(save)) {
+    issues.push('publishedのgachaId維持、draftの日付変更時だけの再採番、旧画像参照解除が不足');
+  }
 
   // 4. 既存シート名を参照・書込み対象へ持ち込まない。
   const protectedSheets = ['monsters', 'cards', 'effects', 'abilities', 'members', 'edit_log', 'publish_log', 'assist_log'];
