@@ -160,3 +160,11 @@ draftの採番し直し時は`image`列を空にし、新しいIDで画像を再
 GASはDrive上のファイル名、2MB上限、マジックバイトを検査し、公開DBから参照される画像だけを`gacha-banner/`へ送る。`scripts/verify-gacha-source.js`はさらに、元コミットで追加・更新された各画像が同じコミットの`gachas.json`から参照されている事実を検査する。
 
 公開Workflowは`cms/gacha-publish`を入口とし、他のCMS公開と同じ`concurrency.group: cms-publish`で直列化する。ソース検査器は公開branchの版ではなく`origin/main`から取り出す。build後の許可差分は`gacha/`、`cards/`、`monsters/`、`index.html`、`reroll.html`、`sitemap.xml`、`src/data/page-baseline.json`、`src/data/cms-seed.json`である。カード・モンスター詳細はpublishedガチャの「登場ガチャ」が変わり、後者2ファイルは全公開ページの生成結果を集約するため、実地確認で変化した範囲だけを許可対象に含める。
+
+## 11. G5: 終了ガチャの自動取り下げ
+
+静的サイトは時刻の経過だけでは表示が変わらないため、`.github/workflows/gacha-refresh.yml`が1日2回、最新の`main`を再ビルドする。cronはUTCで`0 20 * * *`（翌05:00 JST）と`0 6 * * *`（15:00 JST）である。GitHub Actionsのscheduleは混雑などにより数分から数十分遅延することがあるため、指定時刻ちょうどの切り替えを前提に運用しない。
+
+再ビルド時点で終了したガチャは、`currentGachas()`によりトップのピックアップから外れ、`selectRerollGacha()`によるリセマラ表示の候補からも外れる。一方、ガチャ詳細ページ、ガチャ一覧の終了表示、トップの更新履歴、モンスター／カード詳細の登場ガチャはpublishedの履歴として残す。
+
+Workflowは`generate-ids.js`、`build.js`、`verify.js`、`verify-gacha-source.js generated`がすべて成功した後だけ生成差分をcommitして`main`へpushする。差分がなければ空commitを作らない。いずれかの処理またはpushに失敗した場合は`main`を変更しない。

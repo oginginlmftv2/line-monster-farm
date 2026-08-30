@@ -15,6 +15,8 @@ const FILES = {
   publish: '_cms/gas/30_publish.gs',
   publishUi: '_cms/gas/ui_publish.html',
   workflow: '.github/workflows/cms-gacha-publish.yml',
+  refreshWorkflow: '.github/workflows/gacha-refresh.yml',
+  verifyWorkflow: '.github/workflows/verify.yml',
   sourceGate: 'scripts/verify-gacha-source.js',
 };
 
@@ -61,6 +63,8 @@ function validateRoot(root) {
   const publish = read(root, FILES.publish);
   const publishUi = read(root, FILES.publishUi);
   const workflow = read(root, FILES.workflow);
+  const refreshWorkflow = read(root, FILES.refreshWorkflow);
+  const verifyWorkflow = read(root, FILES.verifyWorkflow);
   const sourceGate = read(root, FILES.sourceGate);
   let manifest;
   try { manifest = JSON.parse(read(root, FILES.manifest)); }
@@ -204,6 +208,35 @@ function validateRoot(root) {
   if (stampIndex < 0 || commitIndex < 0 || refIndex < 0 || stampIndex > commitIndex || stampIndex > refIndex ||
       !/setValue\(today\)/.test(functionBlock(gas, 'gachaStampInitialPublishedAt_'))) {
     issues.push('publishedAtをシートへ書いてからGitHubへpushする順序が不足');
+  }
+
+  // 17. 日次再ビルドは指定時刻・共通直列化・検証後だけmainを更新する。
+  const refreshCrons = [...refreshWorkflow.matchAll(/^\s*-\s+cron:\s*['"]([^'"]+)['"]/gm)]
+    .map(match => match[1]);
+  if (refreshCrons.length !== 2 || !refreshCrons.includes('0 20 * * *') || !refreshCrons.includes('0 6 * * *')) {
+    issues.push('ガチャ自動更新Workflowのcronが05:00 / 15:00 JSTに対応していない');
+  }
+  if (!/^\s*group:\s*cms-publish\s*$/m.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowのconcurrency.groupがcms-publishではない');
+  }
+  if (!/^\s*workflow_dispatch:\s*$/m.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowにworkflow_dispatchがない');
+  }
+  if (!/git commit -m "[^"\n]*\[skip ci\]"/.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowのコミット件名に[skip ci]がない');
+  }
+  if (!/if git diff --cached --quiet; then/.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowに差分ゼロ時のコミット回避がない');
+  }
+  if (!/^\s*run:\s*node build\.js\s*$/m.test(refreshWorkflow) ||
+      !/^\s*run:\s*node scripts\/verify\.js\s*$/m.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowがbuild.jsとverify.jsの両方を実行していない');
+  }
+  if (!/^\s*run:\s*node scripts\/verify-gacha-source\.js generated\s*$/m.test(refreshWorkflow)) {
+    issues.push('ガチャ自動更新Workflowがgenerated差分検査を実行していない');
+  }
+  if (!/branches-ignore:[\s\S]{0,240}^\s*-\s*cms\/gacha-publish\s*$/m.test(verifyWorkflow)) {
+    issues.push('verify.ymlのbranches-ignoreにcms/gacha-publishがない');
   }
 
   return issues;

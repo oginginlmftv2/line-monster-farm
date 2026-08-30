@@ -13,7 +13,8 @@ const targets = [
   '_cms/gas/50_gacha.gs', '_cms/gas/ui_gacha.html', '_cms/gas/manifest.json',
   '_cms/gas/40_setup.gs', '_cms/gas/00_core.gs', '_cms/gas/index.html', '_cms/gas/README.md',
   '_cms/gas/30_publish.gs', '_cms/gas/ui_publish.html',
-  '.github/workflows/cms-gacha-publish.yml', 'scripts/verify-gacha-source.js',
+  '.github/workflows/cms-gacha-publish.yml', '.github/workflows/gacha-refresh.yml',
+  '.github/workflows/verify.yml', 'scripts/verify-gacha-source.js',
 ];
 let destructiveCases = 0;
 
@@ -152,5 +153,45 @@ expectFailure('publishedAt書込み順序欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/30_publish.gs');
   fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('gachaStampInitialPublishedAt_(rows);', 'rows = rows;'));
 }, /publishedAt/);
+
+expectFailure('ガチャ自動更新Workflow欠落を拒否', root => {
+  fs.unlinkSync(path.join(root, '.github/workflows/gacha-refresh.yml'));
+}, /必須ファイルがない/);
+expectFailure('ガチャ自動更新cron違反を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace("cron: '0 20 * * *'", "cron: '0 19 * * *'"));
+}, /cron/);
+expectFailure('ガチャ自動更新concurrency分離を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('group: cms-publish', 'group: gacha-refresh'));
+}, /concurrency\.group/);
+expectFailure('ガチャ自動更新の手動実行欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('  workflow_dispatch:\n', ''));
+}, /workflow_dispatch/);
+expectFailure('ガチャ自動更新のskip ci欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(' [skip ci]', ''));
+}, /\[skip ci\]/);
+expectFailure('ガチャ自動更新の空コミット回避欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('if git diff --cached --quiet; then', 'if false; then'));
+}, /差分ゼロ/);
+expectFailure('ガチャ自動更新のbuild欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('run: node build.js', 'run: node --version'));
+}, /build\.jsとverify\.js/);
+expectFailure('ガチャ自動更新のverify欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('run: node scripts/verify.js', 'run: node --version'));
+}, /build\.jsとverify\.js/);
+expectFailure('ガチャ自動更新のgenerated検査欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/gacha-refresh.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('run: node scripts/verify-gacha-source.js generated', 'run: node scripts/verify-gacha-source.js'));
+}, /generated差分検査/);
+expectFailure('ガチャ公開branchのverify除外欠落を拒否', root => {
+  const file = path.join(root, '.github/workflows/verify.yml');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('      - cms/gacha-publish\n', ''));
+}, /branches-ignore/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
