@@ -13,7 +13,7 @@ const INDEXABLE_THRESHOLD = 800;
 const PICKUP_SLOTS = 5;
 const GACHA_EXCERPT_CHARS = 140;
 const GACHA_GATE_VISIBLE_CHARS = 800;
-const GACHA_GATE_EXPLANATION = 150;
+const GACHA_GATE_EXPLANATION = 300;
 
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
@@ -281,7 +281,7 @@ function gachaMonsterImage(monster) {
 function renderGachaPickupMonster(pickup, monster, editorial, root) {
   const excerpt = gachaExcerpt(editorial && editorial.explanation);
   const detailPath = String(monster.url || '').replace(/^\//, '');
-  const hasDetail = excerpt && detailPath && fs.existsSync(path.join(root, detailPath));
+  const hasDetail = detailPath && fs.existsSync(path.join(root, detailPath));
   const image = gachaMonsterImage(monster);
   return `      <article class="card">
         ${image ? `<img class="card-img" src="../${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
@@ -485,6 +485,10 @@ function createDetailEntries(inputs) {
       formations: [],
     };
   });
+}
+
+function resolveBuildNow() {
+  return process.env.GACHA_BUILD_NOW || new Date().toISOString();
 }
 
 function gateMonTypes(inputs) {
@@ -1411,7 +1415,7 @@ function main() {
     root: REPO,
     outputRoot: REPO,
     dryRun: DRY_RUN,
-    now: process.env.GACHA_BUILD_NOW,
+    now: resolveBuildNow(),
     gachaDb: inputs.gachasJson,
     typeDb: inputs.gachaTypesJson,
     monsterDb: inputs.monsters,
@@ -1469,6 +1473,7 @@ module.exports = {
   GACHA_EXCERPT_CHARS,
   GACHA_GATE_VISIBLE_CHARS,
   GACHA_GATE_EXPLANATION,
+  resolveBuildNow,
   visibleChars,
   validateGachaData,
   buildGachaPages,

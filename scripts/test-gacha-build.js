@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** ガチャ生成の正常10ケースと、DB検査の破壊10ケースを確認する。 */
+/** ガチャ生成の正常13ケースと、DB検査の破壊10ケースを確認する。 */
 
 const assert = require('assert');
 const fs = require('fs');
@@ -7,7 +7,9 @@ const os = require('os');
 const path = require('path');
 const {
   PICKUP_SLOTS,
+  GACHA_GATE_EXPLANATION,
   buildGachaPages,
+  resolveBuildNow,
   validateGachaData,
 } = require('../build');
 
@@ -21,12 +23,16 @@ const monsters = monsterDoc.monsters
   .filter(monster => String(editorialById.get(monster.id)?.explanation || '').trim())
   .slice(0, PICKUP_SLOTS)
   .map((monster, index) => index === 0 ? { ...monster, name: '<モンスター> & "引用"' } : monster);
+const monsterWithoutExplanation = monsterDoc.monsters
+  .find(monster => !String(editorialById.get(monster.id)?.explanation || '').trim());
+const fixtureMonsters = monsters.concat(monsterWithoutExplanation ? [monsterWithoutExplanation] : []);
 const cards = cardDoc.cards
   .filter(card => String(card.explanation || '').trim())
   .slice(0, PICKUP_SLOTS)
   .map((card, index) => index === 0 ? { ...card, name: '<カード> & "引用"' } : card);
 
 assert.strictEqual(monsters.length, PICKUP_SLOTS, '解説つきモンスターのfixtureが不足');
+assert(monsterWithoutExplanation, '解説なしモンスターのfixtureが不足');
 assert.strictEqual(cards.length, PICKUP_SLOTS, '解説つきカードのfixtureが不足');
 
 const typeDb = { schemaVersion: 1, types: ['神殿祭'] };
@@ -48,7 +54,7 @@ function gacha(overrides = {}) {
     image: 'gacha/20260901-1.jpg',
     startAt: '2026-09-01T15:00+09:00',
     endAt: '2026-09-15T14:59+09:00',
-    explanation: '管理者によるガチャ解説です。'.repeat(20),
+    explanation: '解'.repeat(GACHA_GATE_EXPLANATION),
     pickupMonsters: pickupMonsters(PICKUP_SLOTS),
     pickupCards: pickupCards(PICKUP_SLOTS),
     rerollPriority: true,
@@ -64,6 +70,11 @@ function makeRoot() {
   fs.writeFileSync(path.join(root, 'gacha/20260901-1.jpg'), 'fixture');
   fs.writeFileSync(path.join(root, 'gacha/20260801-1.jpg'), 'fixture');
   fs.writeFileSync(path.join(root, 'gacha/20261001-1.jpg'), 'fixture');
+  for (const monster of fixtureMonsters) {
+    const detailPath = path.join(root, String(monster.url).replace(/^\//, ''));
+    fs.mkdirSync(path.dirname(detailPath), { recursive: true });
+    fs.writeFileSync(detailPath, 'fixture');
+  }
   return root;
 }
 
@@ -74,7 +85,7 @@ function build(root, gachas, outputName = 'out') {
     now,
     gachaDb: { schemaVersion: 1, gachas },
     typeDb,
-    monsterDb: monsters,
+    monsterDb: fixtureMonsters,
     editorialDb: editorial,
     cardDb: cards,
   });
@@ -104,7 +115,7 @@ function expectRejected(number, label, mutate, expected) {
     const base = gacha();
     const gachaDb = { schemaVersion: 1, gachas: [base] };
     mutate(gachaDb, base);
-    const issues = validateGachaData({ root, gachaDb, typeDb, monsterDb: monsters, cardDb: cards });
+    const issues = validateGachaData({ root, gachaDb, typeDb, monsterDb: fixtureMonsters, cardDb: cards });
     const hit = issues.find(issue => expected.test(issue));
     assert(hit, `${label}: 想定した拒否がない: ${issues.join(' / ')}`);
     console.log(`PASS 破壊${number}: ${label} → ${hit}`);
@@ -145,13 +156,23 @@ try {
 
   const activePage = fs.readFileSync(path.join(outputRoot, 'gacha/20260901-1.html'), 'utf8');
   const endedPage = fs.readFileSync(path.join(outputRoot, 'gacha/20260801-1.html'), 'utf8');
-  assert(!/name="robots"/.test(activePage));
-  assert(/content="noindex,follow"/.test(endedPage));
+  const belowGate = build(root, [gacha({
+    explanation: '解'.repeat(GACHA_GATE_EXPLANATION - 1),
+  })], 'gate-below');
+  const atGate = build(root, [gacha({
+    explanation: '解'.repeat(GACHA_GATE_EXPLANATION),
+  })], 'gate-at');
+  assert.strictEqual(belowGate.pages[0].indexable, false);
+  assert(/content="noindex,follow"/.test(belowGate.pages[0].html));
+  assert(!/adsbygoogle/.test(belowGate.pages[0].html));
+  assert.strictEqual(atGate.pages[0].indexable, true);
+  assert(!/name="robots"/.test(atGate.pages[0].html));
+  assert(/adsbygoogle/.test(atGate.pages[0].html));
   assert.deepStrictEqual(result.sitemapPages.map(page => page.canonical), [
     'https://line-monster-farm-tetteikouryaku.com/gacha/',
     'https://line-monster-farm-tetteikouryaku.com/gacha/20260901-1.html',
   ]);
-  pass(4, 'ゲート通過はrobotsなし・未通過はnoindex,follow');
+  pass(4, '解説文字数が閾値未満ならnoindex、閾値ちょうどならindex対象');
 
   assert(!/adsbygoogle/.test(endedPage));
   pass(5, '未通過詳細に広告スクリプトなし');
@@ -194,6 +215,35 @@ try {
   assert(!activePage.includes('<神殿祭>'));
   pass(10, 'DB由来の < > & " をHTMLエスケープ');
 
+  const previousBuildNow = process.env.GACHA_BUILD_NOW;
+  const hadBuildNow = Object.prototype.hasOwnProperty.call(process.env, 'GACHA_BUILD_NOW');
+  try {
+    delete process.env.GACHA_BUILD_NOW;
+    const resolved = resolveBuildNow();
+    assert(Number.isFinite(Date.parse(resolved)), `有効なISO日時でない: ${resolved}`);
+    pass(11, '環境変数未設定時は現在時刻のISO文字列を返す');
+
+    const override = '2026-09-12T03:04:05.000Z';
+    process.env.GACHA_BUILD_NOW = override;
+    assert.strictEqual(resolveBuildNow(), override);
+    pass(12, '環境変数設定時は指定値をそのまま返す');
+  } finally {
+    if (hadBuildNow) process.env.GACHA_BUILD_NOW = previousBuildNow;
+    else delete process.env.GACHA_BUILD_NOW;
+  }
+
+  const mixedPickup = gacha({
+    pickupMonsters: [
+      { id: monsters[0].id, rate: 0.5 },
+      { id: monsterWithoutExplanation.id, rate: 0.6 },
+    ],
+    pickupCards: [],
+  });
+  const mixedPage = build(root, [mixedPickup], 'mixed-explanation').pages[0].html;
+  assert(mixedPage.includes(`href="../${String(monsterWithoutExplanation.url).replace(/^\//, '')}"`));
+  assert.strictEqual((mixedPage.match(/>モンスター詳細を見る<\/a>/g) || []).length, 2);
+  pass(13, '解説の有無に関係なく既存モンスター詳細へのリンクを表示');
+
   for (const [label, monsterCount, cardCount] of [
     ['A', 5, 5],
     ['B', 3, 2],
@@ -227,4 +277,4 @@ expectRejected(19, 'ピックアップ6枠', (doc, base) => {
 }, /枠を超過/);
 expectRejected(20, 'publishedAt空欄', (doc, base) => { base.publishedAt = ''; }, /publishedなのにpublishedAtが空/);
 
-console.log('OK 正常10件PASS・破壊10件すべて拒否');
+console.log('OK 正常13件PASS・破壊10件すべて拒否');
