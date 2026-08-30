@@ -9,7 +9,10 @@ const {
   PICKUP_SLOTS,
   GACHA_GATE_EXPLANATION,
   buildGachaPages,
+  integrateCardGachaAppearances,
+  replaceMarkerBlock,
   resolveBuildNow,
+  selectRerollGacha,
   validateGachaData,
 } = require('../build');
 
@@ -88,6 +91,43 @@ function build(root, gachas, outputName = 'out') {
     monsterDb: fixtureMonsters,
     editorialDb: editorial,
     cardDb: cards,
+  });
+}
+
+const indexTemplate = `${Array.from({ length: 100 }, (_, i) => `before-${i}`).join('\n')}
+const rows = [
+// GACHA:UPDATES:START
+old update
+// GACHA:UPDATES:END
+];
+<!-- GACHA:NAV:START -->
+old nav
+<!-- GACHA:NAV:END -->
+<!-- GACHA:PICKUP:MONSTER:START -->
+old monster
+<!-- GACHA:PICKUP:MONSTER:END -->
+<!-- GACHA:PICKUP:CARD:START -->
+old card
+<!-- GACHA:PICKUP:CARD:END -->
+${Array.from({ length: 100 }, (_, i) => `after-${i}`).join('\n')}`;
+const rerollTemplate = `${Array.from({ length: 100 }, (_, i) => `reroll-before-${i}`).join('\n')}
+<!-- GACHA:REROLL:START -->
+old reroll
+<!-- GACHA:REROLL:END -->
+${Array.from({ length: 100 }, (_, i) => `reroll-after-${i}`).join('\n')}`;
+
+function buildIntegrated(root, gachas, outputName) {
+  return buildGachaPages({
+    root,
+    outputRoot: path.join(root, outputName),
+    now,
+    gachaDb: { schemaVersion: 1, gachas },
+    typeDb,
+    monsterDb: fixtureMonsters,
+    editorialDb: editorial,
+    cardDb: cards,
+    indexSource: indexTemplate,
+    rerollSource: rerollTemplate,
   });
 }
 
@@ -244,6 +284,79 @@ try {
   assert.strictEqual((mixedPage.match(/>モンスター詳細を見る<\/a>/g) || []).length, 2);
   pass(13, '解説の有無に関係なく既存モンスター詳細へのリンクを表示');
 
+  const emptyIntegrated = buildIntegrated(root, [], 'integrated-empty');
+  assert.strictEqual(emptyIntegrated.outputs.length, 0);
+  assert.deepStrictEqual(filesUnder(path.join(root, 'integrated-empty')), []);
+  pass(14, '空DBではマーカー区間を1バイトも変更しない');
+
+  const integrated = buildIntegrated(root, [gacha(), ended], 'integrated');
+  assert(integrated.integratedIndex.includes('gacha/20260901-1.html'));
+  assert(integrated.integratedIndex.includes('GACHA:PICKUP:MONSTER:START'));
+  assert(integrated.integratedIndex.includes('GACHA:PICKUP:CARD:START'));
+  assert(integrated.integratedIndex.includes('href="gacha/"'));
+  assert(integrated.integratedReroll.includes('cards/'));
+  pass(15, 'published 1件以上でindexとrerollの各マーカー区間を置換');
+
+  const outsideProbe = replaceMarkerBlock(indexTemplate, 'NAV', 'replacement', 'html', 'index.html');
+  const startMarker = '<!-- GACHA:NAV:START -->';
+  const endMarker = '<!-- GACHA:NAV:END -->';
+  assert.strictEqual(outsideProbe.slice(0, outsideProbe.indexOf(startMarker)), indexTemplate.slice(0, indexTemplate.indexOf(startMarker)));
+  assert.strictEqual(outsideProbe.slice(outsideProbe.indexOf(endMarker)), indexTemplate.slice(indexTemplate.indexOf(endMarker)));
+  assert(outsideProbe.startsWith(Array.from({ length: 100 }, (_, i) => `before-${i}`).join('\n')));
+  assert(outsideProbe.endsWith(Array.from({ length: 100 }, (_, i) => `after-${i}`).join('\n')));
+  pass(16, 'マーカー外と前後100行が1バイトも変化しない');
+
+  const secondCurrent = gacha({
+    gachaId: '20260901-2', name: '同時開催ガチャ', image: 'gacha/20260801-1.jpg', rerollPriority: false,
+  });
+  const multiple = buildIntegrated(root, [gacha(), secondCurrent], 'multiple-current');
+  assert(multiple.integratedIndex.includes('<h3>&lt;神殿祭&gt; &amp; &quot;第1回&quot;</h3>'));
+  assert(multiple.integratedIndex.includes('<h3>同時開催ガチャ</h3>'));
+  pass(17, '複数の開催中ガチャをガチャごとのセクションに分割');
+
+  const endedOnly = buildIntegrated(root, [ended], 'ended-only');
+  assert(endedOnly.integratedIndex.includes('現在開催中のガチャはありません'));
+  assert.strictEqual(endedOnly.integratedReroll, rerollTemplate);
+  assert(endedOnly.integratedIndex.includes('終了済みガチャ'));
+  pass(18, '開催中0件ではピックアップをフォールバックにしrerollは更新せず履歴を保持');
+
+  assert.strictEqual(selectRerollGacha([gacha({ rerollPriority: false }), { ...secondCurrent, rerollPriority: true }], now).gachaId, secondCurrent.gachaId);
+  pass(19, 'rerollPriority=trueが1件ならそのガチャを選定');
+  const olderPriority = gacha({ gachaId: '20260801-1', image: 'gacha/20260801-1.jpg', startAt: '2026-08-01T15:00+09:00', endAt: '2026-09-12T14:59+09:00' });
+  assert.strictEqual(selectRerollGacha([olderPriority, gacha()], now).gachaId, '20260901-1');
+  pass(20, 'rerollPriority=trueが2件ならstartAtが新しい方を選定');
+  const noPriority = [gacha({ rerollPriority: false }), secondCurrent];
+  assert.strictEqual(selectRerollGacha(noPriority, now).gachaId, '20260901-1');
+  pass(21, 'rerollPriorityが全件falseならstartAt最新・同時はgachaId昇順で選定');
+  assert.strictEqual(selectRerollGacha([ended], now), null);
+  pass(22, 'reroll候補0件では選定せず区間を変更しない');
+
+  const historyOrder = buildIntegrated(root, [ended, gacha()], 'history-order').integratedIndex;
+  assert(historyOrder.indexOf('2026.09.01') < historyOrder.indexOf('2026.08.01'));
+  pass(23, '更新履歴をpublishedAt降順にし終了ガチャも残す');
+
+  const appearance = require('../build').renderGachaAppearances([ended, gacha()], 'monster', monsters[0].id, '../../../');
+  assert(appearance.includes('登場ガチャ') && appearance.includes('20260901-1.html') && appearance.includes('20260801-1.html'));
+  assert(appearance.indexOf('20260901-1.html') < appearance.indexOf('20260801-1.html'));
+  pass(24, 'ピックアップされたモンスター詳細向け登場ガチャをstartAt降順で生成');
+  assert.strictEqual(require('../build').renderGachaAppearances([gacha()], 'monster', '9999', '../../../'), '');
+  pass(25, '登場ガチャ0件ではセクションを出力しない');
+
+  const detA = buildIntegrated(root, [gacha(), secondCurrent], 'integrated-det-a');
+  const detB = buildIntegrated(root, [gacha(), secondCurrent], 'integrated-det-b');
+  assert.strictEqual(detA.integratedIndex, detB.integratedIndex);
+  assert.strictEqual(detA.integratedReroll, detB.integratedReroll);
+  pass(26, '同じ入力・同じ基準時刻のページ統合結果がバイト一致');
+
+  const cardRoot = path.join(root, 'card-root');
+  const cardOutput = path.join(root, 'card-output');
+  fs.mkdirSync(path.join(cardRoot, 'cards'), { recursive: true });
+  fs.writeFileSync(path.join(cardRoot, `cards/${cards[0].cardId}.html`), '<main>\n  <section class="section">\n    <h2 class="section-title">アシストカード一覧</h2>\n  </section>\n</main>');
+  integrateCardGachaAppearances({ root: cardRoot, outputRoot: cardOutput, gachas: [gacha()], cardDb: [cards[0]] });
+  const cardLinked = fs.readFileSync(path.join(cardOutput, `cards/${cards[0].cardId}.html`), 'utf8');
+  assert(cardLinked.includes('登場ガチャ') && cardLinked.includes('../gacha/20260901-1.html'));
+  pass(27, 'ピックアップされたカード詳細へ登場ガチャ逆リンクを生成');
+
   for (const [label, monsterCount, cardCount] of [
     ['A', 5, 5],
     ['B', 3, 2],
@@ -277,4 +390,14 @@ expectRejected(19, 'ピックアップ6枠', (doc, base) => {
 }, /枠を超過/);
 expectRejected(20, 'publishedAt空欄', (doc, base) => { base.publishedAt = ''; }, /publishedなのにpublishedAtが空/);
 
-console.log('OK 正常13件PASS・破壊10件すべて拒否');
+for (const [number, label, source] of [
+  [21, 'STARTが無い', '<!-- GACHA:X:END -->'],
+  [22, 'ENDが無い', '<!-- GACHA:X:START -->'],
+  [23, 'STARTとENDの順序が逆', '<!-- GACHA:X:END -->\n<!-- GACHA:X:START -->'],
+  [24, '同じマーカーが2組ある', '<!-- GACHA:X:START -->\n<!-- GACHA:X:END -->\n<!-- GACHA:X:START -->\n<!-- GACHA:X:END -->'],
+]) {
+  assert.throws(() => replaceMarkerBlock(source, 'X', 'new', 'html', 'fixture.html'), /fixture\.html.*GACHA:X/);
+  console.log(`PASS 破壊${number}: ${label} → replaceMarkerBlockがthrow`);
+}
+
+console.log('OK 正常27件PASS・破壊14件すべて拒否');

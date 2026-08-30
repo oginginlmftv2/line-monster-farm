@@ -1577,6 +1577,31 @@ head('17. ガチャDB');
       issues = [`検査の実行に失敗: ${error.message}`];
     }
   }
+  for (const [file, style, names] of [
+    ['index.html', 'html', ['PICKUP:MONSTER', 'PICKUP:CARD', 'NAV']],
+    ['index.html', 'js', ['UPDATES']],
+    ['reroll.html', 'html', ['REROLL']],
+  ]) {
+    if (!exists(file)) {
+      issues.push(`必須ファイルがない: ${file}`);
+      continue;
+    }
+    const source = read(file);
+    for (const name of names) {
+      for (const edge of ['START', 'END']) {
+        const marker = style === 'js' ? `// GACHA:${name}:${edge}` : `<!-- GACHA:${name}:${edge} -->`;
+        const count = source.split(marker).length - 1;
+        if (count !== 1) issues.push(`${file}: ${marker} が${count}個（1個必須）`);
+      }
+    }
+  }
+  if (exists('build.js')) {
+    const buildSource = read('build.js');
+    const uses = (buildSource.match(/replaceMarkerBlock\(/g) || []).length;
+    if (!/function replaceMarkerBlock\s*\(/.test(buildSource) || uses < 6) {
+      issues.push('build.jsが共通replaceMarkerBlockを全マーカー置換に使用していない');
+    }
+  }
   if (issues.length) ng(`ガチャDB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(', ')}`);
   else ok(`ガチャDBが整合（ピックアップ上限 ${PICKUP_SLOTS}枠）`);
 }
