@@ -47,25 +47,56 @@ if (cleanIssues.length) throw new Error(`無改変がFAIL: ${cleanIssues.join(' 
 console.log('PASS 無改変');
 
 {
-  const context = {};
+  const formats = [];
+  const context = {
+    Utilities: {
+      formatDate: function (_date, _timezone, pattern) {
+        formats.push(pattern);
+        return '2026-08-28T15:00:00+09:00';
+      },
+    },
+    tz_: function () { return 'Asia/Tokyo'; },
+  };
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(path.join(repo, '_cms/gas/50_gacha.gs'), 'utf8'), context);
+  assert.strictEqual(context.gachaNormalizeDateTime_('2026-08-28T15:00', '開始日時'), '2026-08-28T15:00+09:00');
+  assert.strictEqual(context.gachaNormalizeDateTime_('2026-08-28T15:00:00+09:00', '開始日時'), '2026-08-28T15:00+09:00');
+  assert.strictEqual(context.gachaDateCell_('2026-08-28T15:00:00+09:00'), '2026-08-28T15:00+09:00');
+  assert.strictEqual(context.gachaDateCell_(new Date('2026-08-28T06:00:00Z')), '2026-08-28T15:00+09:00');
+  assert.throws(() => context.gachaNormalizeDateTime_('2026-08-28T15:00:30+09:00', '開始日時'), /日時を選択/);
+  assert.strictEqual(context.gachaDateCell_('2026-08-28T15:00:30+09:00'), '2026-08-28T15:00:30+09:00');
+  assert(formats.every(pattern => pattern === "yyyy-MM-dd'T'HH:mm:ssXXX"));
+  const publishGacha = {
+    gachaId: '20260828-1', name: '日時契約確認', gachaType: '神殿祭',
+    image: 'gacha-banner/20260828-1.jpg',
+    startAt: context.gachaDateCell_('2026-08-28T15:00:00+09:00'),
+    endAt: context.gachaDateCell_('2026-09-11T14:59:00+09:00'),
+    pickupMonsters: [], pickupCards: [], publishedAt: '2026-08-31',
+  };
+  assert.deepStrictEqual(Array.from(context.gachaValidatePublishDocuments_({
+    gachas: { gachas: [publishGacha] }, types: { types: ['神殿祭'] },
+  }, false)), []);
+  assert(Array.from(context.gachaValidatePublishDocuments_({
+    gachas: { gachas: [{ ...publishGacha, startAt: '2026-08-28T15:00:00+09:00' }] },
+    types: { types: ['神殿祭'] },
+  }, false)).some(issue => /開始日時または終了日時/.test(issue)));
+  console.log('PASS 日時契約: UI入力・既存秒固定値・Sheet Dateを分単位JSTへ正規化');
   const rows = [
-    { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'draft' },
-    { _row: 3, gachaId: '20260908-1', startAt: '2026-09-08T15:00:00+09:00', status: 'draft' },
+    { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00+09:00', status: 'draft' },
+    { _row: 3, gachaId: '20260908-1', startAt: '2026-09-08T15:00+09:00', status: 'draft' },
   ];
-  const published = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'published' };
-  const publishedResult = context.gachaSaveIdentity_(published, '2026-09-08T15:00:00+09:00', rows);
+  const published = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00+09:00', status: 'published' };
+  const publishedResult = context.gachaSaveIdentity_(published, '2026-09-08T15:00+09:00', rows);
   assert.strictEqual(publishedResult.gachaId, '20260901-1');
   assert.strictEqual(publishedResult.renumbered, false);
-  const formerlyPublished = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00:00+09:00', status: 'draft', publishedAt: '2026-09-01' };
-  const formerlyPublishedResult = context.gachaSaveIdentity_(formerlyPublished, '2026-09-08T15:00:00+09:00', rows);
+  const formerlyPublished = { _row: 2, gachaId: '20260901-1', startAt: '2026-09-01T15:00+09:00', status: 'draft', publishedAt: '2026-09-01' };
+  const formerlyPublishedResult = context.gachaSaveIdentity_(formerlyPublished, '2026-09-08T15:00+09:00', rows);
   assert.strictEqual(formerlyPublishedResult.gachaId, '20260901-1');
   assert.strictEqual(formerlyPublishedResult.renumbered, false);
-  const sameDate = context.gachaSaveIdentity_(rows[0], '2026-09-01T18:00:00+09:00', rows);
+  const sameDate = context.gachaSaveIdentity_(rows[0], '2026-09-01T18:00+09:00', rows);
   assert.strictEqual(sameDate.gachaId, '20260901-1');
   assert.strictEqual(sameDate.renumbered, false);
-  const shiftedDraft = context.gachaSaveIdentity_(rows[0], '2026-09-08T15:00:00+09:00', rows);
+  const shiftedDraft = context.gachaSaveIdentity_(rows[0], '2026-09-08T15:00+09:00', rows);
   assert.strictEqual(shiftedDraft.gachaId, '20260908-2');
   assert.strictEqual(shiftedDraft.renumbered, true);
   console.log('PASS 採番条件: published・公開履歴ありID維持、draft同日維持、未公開draft日付変更時の重複回避再採番');
@@ -193,5 +224,23 @@ expectFailure('ガチャ公開branchのverify除外欠落を拒否', root => {
   const file = path.join(root, '.github/workflows/verify.yml');
   fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace('      - cms/gacha-publish\n', ''));
 }, /branches-ignore/);
+expectFailure('ガチャ日時のDate出力秒復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(
+    'return gachaMinuteDateTime_(Utilities.formatDate(value, tz_(), "yyyy-MM-dd\'T\'HH:mm:ssXXX"));',
+    'return Utilities.formatDate(value, tz_(), "yyyy-MM-dd\'T\'HH:mm:ssXXX");'
+  ));
+}, /YYYY-MM-DDTHH:mm/);
+expectFailure('ガチャ日時の保存時秒付与を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace("text += '+09:00'", "text += ':00+09:00'"));
+}, /YYYY-MM-DDTHH:mm/);
+expectFailure('ガチャ公開検査の秒形式復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  const start = source.indexOf('function gachaValidatePublishDocuments_');
+  const changed = source.slice(start).replace(/T\\d\{2\}:\\d\{2\}\\\+09:00/g, 'T\\d{2}:\\d{2}:\\d{2}\\+09:00');
+  fs.writeFileSync(file, source.slice(0, start) + changed);
+}, /YYYY-MM-DDTHH:mm/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
