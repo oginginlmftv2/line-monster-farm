@@ -15,6 +15,7 @@ const INDEXABLE_VISIBLE_CHARS = 800;
 const INDEXABLE_EXPLANATION_CHARS = 50;
 const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>';
 const ASSIST_INDEX = 'assist.html';
+const NEWEST_KEY = '9999-99-99';
 const ASSIST_LIST_START = '<!-- ASSIST_CARD_LIST:START -->';
 const ASSIST_LIST_END = '<!-- ASSIST_CARD_LIST:END -->';
 
@@ -296,6 +297,28 @@ function renderAssistCard(card) {
     </a>`;
 }
 
+// 実装日キー。CMSは YYYY-MM-DD / YYYY-MM / YYYY/MM/DD / YYYY/MM を返しうる。
+function releasedAtKey(value) {
+  const text = String(value || '').trim().replace(/\//g, '-');
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  if (/^\d{4}-\d{2}$/.test(text)) return `${text}-01`;
+  return '';
+}
+
+// 実装日の新しい順。実装日が未設定のカードは直前のカードの日付を引き継ぎ、
+// 現在の並び順での位置を保つ（先頭側の未設定カードは最新扱いのまま先頭に残る）。
+function sortByReleasedAt(baseCards) {
+  let inherited = NEWEST_KEY;
+  const rows = baseCards.map((card, index) => {
+    const key = releasedAtKey(card.releasedAt);
+    if (key) inherited = key;
+    return { card, index, key: inherited };
+  });
+  return rows
+    .sort((a, b) => (a.key === b.key ? a.index - b.index : b.key.localeCompare(a.key)))
+    .map(row => row.card);
+}
+
 function renderAssistIndex(source, cards) {
   const start = source.indexOf(ASSIST_LIST_START);
   const end = source.indexOf(ASSIST_LIST_END);
@@ -321,8 +344,9 @@ function renderAssistIndex(source, cards) {
   }
 
   const currentIdSet = new Set(currentIds);
-  const orderedCards = currentIds.map(id => cardById.get(id))
+  const baseCards = currentIds.map(id => cardById.get(id))
     .concat(cards.filter(card => !currentIdSet.has(card.cardId)));
+  const orderedCards = sortByReleasedAt(baseCards);
   const list = `\n\n${orderedCards.map(renderAssistCard).join('\n\n')}\n\n    `;
   return source.slice(0, start + ASSIST_LIST_START.length) + list + source.slice(end);
 }

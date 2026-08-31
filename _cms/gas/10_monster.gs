@@ -434,7 +434,8 @@ function monBuildPublishTextFiles_(all) {
           throw new Error(monster.id + ' の編成JSONが配列ではありません。');
         }
       }
-      if (!monster.explanation && !formations.length) return;
+      // 解説も編成も無くても、実装日が入っていれば一覧の並び用にエントリを残す。
+      if (!monster.explanation && !formations.length && !monster.releasedAt) return;
 
       var entry = {
         id: monster.id,

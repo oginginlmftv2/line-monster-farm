@@ -797,11 +797,11 @@ expectFailure('draft resolved能力の生成対象混入を拒否', root => {
   fs.writeFileSync(file, source.replace("ability.status === 'verified'", "ability.status !== 'removed'"));
 }, /draft resolved能力/);
 
-expectFailure('assist一覧の新規カード末尾追加欠落を拒否', root => {
+expectFailure('assist一覧の実装日降順ソート欠落を拒否', root => {
   const file = path.join(root, 'scripts/build-assist-pages.js');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('.concat(cards.filter(card => !currentIdSet.has(card.cardId)))', ''));
-}, /assist\.htmlを3DBから既存順維持/);
+  fs.writeFileSync(file, source.replace('const orderedCards = sortByReleasedAt(baseCards);', 'const orderedCards = baseCards;'));
+}, /assist\.htmlを3DBから実装日降順/);
 
 expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
   const file = path.join(root, 'scripts/verify-assist-source.js');
@@ -810,7 +810,7 @@ expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
     "'assist.html', 'index.html', 'reroll.html', 'sitemap.xml',",
     "'index.html', 'reroll.html', 'sitemap.xml',"
   ));
-}, /assist\.htmlを3DBから既存順維持/);
+}, /assist\.htmlを3DBから実装日降順/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {

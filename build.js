@@ -757,7 +757,8 @@ function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
 // releasedAt を比較用キーへ正規化する。YYYY-MM はその月の01日、
 // 空・不正は '' として最後尾に回す。
 function releasedAtKey(value) {
-  const text = String(value || '').trim();
+  // CMSは YYYY-MM-DD / YYYY-MM / YYYY/MM/DD / YYYY/MM のいずれかで実装日を返す。
+  const text = String(value || '').trim().replace(/\//g, '-');
   if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
   if (/^\d{4}-\d{2}$/.test(text)) return `${text}-01`;
   return '';
