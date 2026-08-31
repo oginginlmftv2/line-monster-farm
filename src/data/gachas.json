@@ -38,7 +38,16 @@
           "rate": 1.5
         }
       ],
-      "pickupCards": [],
+      "pickupCards": [
+        {
+          "cardId": "aab-MR-julia",
+          "rate": 0.15
+        },
+        {
+          "cardId": "aaa-MR-aileblanche",
+          "rate": 0.15
+        }
+      ],
       "rerollPriority": true,
       "status": "published",
       "publishedAt": "2026-08-31"
