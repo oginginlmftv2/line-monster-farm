@@ -420,9 +420,11 @@ function validateRoot(root) {
   }
   if (!/renderAssistIndex\(assistIndex, cards\)/.test(assistPageBuilder) ||
       !/currentIds\.map\(id => cardById\.get\(id\)\)[\s\S]*\.concat\(cards\.filter/.test(assistPageBuilder) ||
-      !/既存順を維持して新規カードを末尾へ追加する/.test(assistIndexBuildTest) ||
+      !/const orderedCards = sortByReleasedAt\(baseCards\)/.test(assistPageBuilder) ||
+      !/実装日が無いカードは既存順を維持し新規カードを末尾へ追加する/.test(assistIndexBuildTest) ||
+      !/実装日の新しい順に並べ、未設定カードは直前カードへ追従する/.test(assistIndexBuildTest) ||
       !/const GENERATED_FILES = new Set\(\[[^\]]*'assist\.html'[^\]]*'sitemap\.xml'[^\]]*\]\)/.test(assistSourceVerifier)) {
-    issues.push('assist.htmlを3DBから既存順維持・新規末尾追加で生成する経路が不足');
+    issues.push('assist.htmlを3DBから実装日降順（未設定は直前カードへ追従）で生成する経路が不足');
   }
   if (!/return ability\.linkStatus === 'resolved' && ability\.status === 'verified'/.test(functionBlock(gas, 'asstPublicPageAbilities_')) ||
       !/asstPublicPageAbilities_\(docs\.abilities\.abilities\)/.test(assistPublishBlock)) {
