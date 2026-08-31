@@ -1,0 +1,68 @@
+name: Gacha display refresh
+
+on:
+  schedule:
+    - cron: '0 20 * * *' # 05:00 JST (previous day 20:00 UTC)
+    - cron: '0 6 * * *'  # 15:00 JST (06:00 UTC)
+  workflow_dispatch:
+
+concurrency:
+  group: cms-publish
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  build-verify-publish:
+    name: Build, verify, and refresh
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check publish token
+        env:
+          CMS_PUBLISH_TOKEN: ${{ secrets.CMS_PUBLISH_TOKEN }}
+        run: |
+          if [ -z "$CMS_PUBLISH_TOKEN" ]; then
+            echo "Repository secret CMS_PUBLISH_TOKEN is not configured."
+            exit 1
+          fi
+
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+          token: ${{ secrets.CMS_PUBLISH_TOKEN }}
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Generate monster IDs
+        run: node generate-ids.js
+
+      - name: Build public files
+        run: node build.js
+
+      - name: Verify repository rules
+        run: node scripts/verify.js
+
+      - name: Confirm generated-file scope
+        run: node scripts/verify-gacha-source.js generated
+
+      - name: Commit changed files and refresh main
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "- No gacha display changes." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          git commit -m "Refresh gacha display $(TZ=Asia/Tokyo date +%Y-%m-%d) [skip ci]"
+          git push origin HEAD:main
+          echo "- Gacha display changes were committed and pushed to main." >> "$GITHUB_STEP_SUMMARY"

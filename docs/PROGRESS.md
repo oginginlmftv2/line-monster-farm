@@ -55,6 +55,7 @@
 | G2 | ガチャ情報の既存ページへの反映（マーカー方式） | `feat/g2-gacha-page-integration` | **レビュー待ち** | 🔴 | 空DBでは既存表示不変。トップ4区間・リセマラ1区間、詳細逆リンク、正常27件・破壊14件のテストを追加 |
 | G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **進行中** | 🟡 | `gachas`・`gacha_types`の新規2シート、ガチャタブ、新規・編集・競合拒否、raw ID照合、バナー画像差し替えを実装。GitHub公開とGAS反映は対象外 |
 | G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **レビュー待ち** | 🔴 | `gacha-banner/`へ画像入力を分離し、公開対象切替、初回公開日確定、`cms/gacha-publish`、origin/main版ソース検査、未参照画像拒否を実装。GAS反映・Actions実行は管理者作業 |
+| G5 | 終了ガチャの自動取り下げ（日次2回の再ビルド） | `feat/g5-gacha-auto-refresh` | **レビュー待ち** | 🔴 | 05:00 / 15:00 JSTに再ビルドし、検証済み差分がある場合だけ`main`を更新。Actions実地確認はマージ後の管理者作業 |
 
 ## 最新mainの監査値
 
@@ -221,6 +222,10 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
+G5として、05:00 / 15:00 JSTの日次再ビルドにより、終了ガチャをトップのピックアップと
+リセマラから自動で外す。詳細・一覧・更新履歴は残し、全検証成功かつ差分ありの場合だけ
+`main`へpushする。GAS操作とGitHub Actionsの実行は管理者が別途行う。
+
 G4として、ガチャ公開対象の切替、`publishedAt`の初回JST日付確定、GitHub送信、公開Workflow、ソース／生成差分検査を実装する。入力画像は`gacha-banner/`、生成ページは`gacha/`へ分離する。GAS、シート、Drive、deployment、GitHub Actionsの実行は管理者がREADMEの手順で別途行う。
 
 G2として、トップとリセマラの手書きHTMLをマーカー区間だけ安全に更新する仕組みと、
@@ -239,6 +244,9 @@ P12-19bとして、PROGRESS.mdの状態（P12-13〜P12-15、P12-17c、P12-19）�
 実測値へ同期した。公開物・データ・GASは変更していない。
 
 ## 次の作業
+
+G5のPRマージ後、管理者が`Gacha display refresh`を`workflow_dispatch`で1回実行し、
+差分ゼロで正常終了することとstep summaryを確認する。
 
 G4のPRレビュー後、管理者がREADMEに従ってGAS同期、`setup1_createSheets`再実行、再deployment、最小公開と表示確認を行う。
 

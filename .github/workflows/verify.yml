@@ -5,6 +5,7 @@ on:
     branches-ignore:
       - cms/publish
       - cms/assist-publish
+      - cms/gacha-publish
   pull_request:
 
 jobs:
