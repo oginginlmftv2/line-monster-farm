@@ -241,10 +241,18 @@ head('7. ブランチ名');
       .toString().trim();
   } catch { /* gitが無い環境 */ }
 
+  // Actionsのcheckoutはdetached HEADになるため、実ブランチ名を環境変数から取る。
+  // pull_requestではGITHUB_REF_NAMEが「<PR番号>/merge」になるので、元ブランチのHEAD_REFを優先する。
+  if (branch === 'HEAD') branch = process.env.GITHUB_HEAD_REF || process.env.GITHUB_REF_NAME || branch;
+
   const RESERVED = ['main', 'master', 'gh-pages', 'HEAD'];
+  // cms/* はCMS公開Workflowが機械的に作る運用ブランチで、人の命名規則の対象外。
+  const MACHINE = /^cms\//;
   const PATTERN = /^(feat|fix|chore|content|refactor)\/((?:p\d+(?:-\d+)?|g\d+))-[a-z0-9-]+$/;
 
   if (!branch) sk('ブランチを取得できない');
+  else if (branch === 'HEAD') sk('detached HEAD のためブランチ名を判定しない');
+  else if (MACHINE.test(branch)) ok(`CMS公開ブランチ ${branch}`);
   else if (RESERVED.includes(branch)) {
     wn(`${branch} で作業している。作業ブランチを切ること（docs/branch-naming.md）`);
   } else if (!PATTERN.test(branch)) {
@@ -1211,35 +1219,20 @@ if (!exists('src/data/assist-effects.json') || !exists('src/data/assist-cards.js
       ok('assist-effects.jsonのdraftはeffects空、verifiedはeffects非空');
     }
 
-    const normalizationIssues = [];
+    // 表記チェックは「OCRのUI片が本文へ混入した」もの＝データとして誤りのものだけに限定する。
+    // 括弧の全角半角・+の前後空白・読点後の空白・英字ローマ数字は文字形の揺れにすぎず、
+    // OCR取り込み時に scripts/assist-effect-ocr.js のサニタイザが吸収するため検証では落とさない。
     const invalidEffectText = allEffects.filter(({ effect }) => (
-      /[()]/.test(String(effect.name || ''))
-      || /[()]/.test(String(effect.description || ''))
-      || /(^|[^ ])\+| {2,}\+/.test(String(effect.name || ''))
-      || /\s\+|\+\s/.test(String(effect.description || ''))
-      || /MAX↑/.test(String(effect.name || ''))
+      /MAX↑/.test(String(effect.name || ''))
       || /MAX↑/.test(String(effect.description || ''))
       || /^•/m.test(String(effect.name || ''))
       || /^•/m.test(String(effect.description || ''))
-      || /、 /.test(String(effect.name || ''))
-      || /、 /.test(String(effect.description || ''))
-      || /II|III/.test(String(effect.name || ''))
-      || /II|III/.test(String(effect.description || ''))
     ));
     if (invalidEffectText.length) {
-      normalizationIssues.push(`効果 ${invalidEffectText.length}件: ${invalidEffectText.slice(0, 5)
-        .map(({ cardId, effect }) => `${cardId}.${effect.effectId}`).join(', ')}`);
-    }
-    const invalidCardExplanations = (Array.isArray(assistCards.cards) ? assistCards.cards : [])
-      .filter(card => /[()]/.test(String(card.explanation || '')));
-    if (invalidCardExplanations.length) {
-      normalizationIssues.push(`カード解説 ${invalidCardExplanations.length}件: ${invalidCardExplanations.slice(0, 5)
-        .map(card => card.cardId).join(', ')}`);
-    }
-    if (normalizationIssues.length) {
-      ng(`アシスト効果・カード解説の表記が未正規化（${normalizationIssues.join(' / ')}）`);
+      ng(`アシスト効果にOCR由来のUI片が残っている（${invalidEffectText.length}件: ${invalidEffectText.slice(0, 5)
+        .map(({ cardId, effect }) => `${cardId}.${effect.effectId}`).join(', ')}）`);
     } else {
-      ok('アシスト効果・カード解説の括弧・+・OCR由来表記は正規化済み');
+      ok('アシスト効果にMAX↑・行頭•のOCR由来UI片なし');
     }
   } catch (error) {
     ng(`assist-effects.jsonの検査に失敗: ${error.message}`);

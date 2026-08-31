@@ -524,10 +524,53 @@ function validateRoot(root) {
     { label: 'MAX↑ の除去', block: 'sanitize', present: source => /\.replace\(\/MAX↑\/g,\s*['"]['"]\)/.test(source) },
     { label: '行頭 • の除去', block: 'sanitize', present: source => /\.replace\(\/\^(?:•|\[[^\]]*•[^\]]*\])\\s\*\/,\s*['"]['"]\)/.test(source) },
     { label: '・（U+30FB）を削除対象に含めない', block: 'sanitize', present: source => !/\.replace\(\/[^/\n]*・[^/\n]*\/[a-z]*,\s*['"]['"]\)/i.test(source) },
+    {
+      label: '半角括弧を全角へ統一',
+      block: 'sanitize',
+      present: source => /\.replace\(\/\\\(\/g,\s*['"]（['"]\)/.test(source)
+        && /\.replace\(\/\\\)\/g,\s*['"]）['"]\)/.test(source),
+    },
+    {
+      // IIより先にIIIを置換しないと「Ⅱ I」に壊れるため、出現順も検査する。
+      label: '英字 III / II を Ⅲ / Ⅱ へ（IIIが先）',
+      block: 'sanitize',
+      present: source => /\.replace\(\/III\/g,\s*['"]Ⅲ['"]\)/.test(source)
+        && /\.replace\(\/II\/g,\s*['"]Ⅱ['"]\)/.test(source)
+        && source.indexOf("/III/g") < source.indexOf("/II/g"),
+    },
+    { label: '読点後の半角スペース削除', block: 'sanitize', present: source => /\.replace\(\/、 \+\/g,\s*['"]、['"]\)/.test(source) },
+    { label: '全角括弧前の半角スペース削除', block: 'sanitize', present: source => /\.replace\(\/ \+（\/g,\s*['"]（['"]\)/.test(source) },
+  ];
+  // 効果名と説明文で + の前後規則が逆なので、フィールド別サニタイザも両実装で一致させる。
+  const ocrFieldSanitizeImplementations = [
+    { file: SOURCE_FILES[3], name: functionBlock(effectOcr, 'sanitizeEffectName'), description: functionBlock(effectOcr, 'sanitizeEffectDescription') },
+    { file: SOURCE_FILES[1], name: functionBlock(html, 'asstOcrSanitizeName'), description: functionBlock(html, 'asstOcrSanitizeDescription') },
+  ];
+  const ocrFieldSanitizeRules = [
+    {
+      label: '効果名は + の直前を半角スペース1個にそろえる',
+      block: 'name',
+      present: source => /\.replace\(\/\(\[\^ \]\)\\\+\/g,\s*['"]\$1 \+['"]\)/.test(source)
+        && /\.replace\(\/ \{2,\}\\\+\/g,\s*['"] \+['"]\)/.test(source),
+    },
+    { label: '説明文は + の前後の空白を除去する', block: 'description', present: source => /\.replace\(\/\\s\*\\\+\\s\*\/g,\s*['"]\+['"]\)/.test(source) },
+    {
+      // sanitizeOcrTextは\s+を空白1個へ畳むため、行ごとに掛けないと複数行説明の改行が消える。
+      label: '説明文は行ごとにサニタイズして改行を保つ',
+      block: 'description',
+      present: source => /\.split\(['"]\\n['"]\)/.test(source) && /\.join\(['"]\\n['"]\)/.test(source),
+    },
   ];
   for (const implementation of ocrNormalizationImplementations) {
     for (const rule of ocrNormalizationRules) {
       if (!rule.present(implementation[rule.block])) {
+        issues.push(`${implementation.file}: OCR正規化規則「${rule.label}」が欠けている`);
+      }
+    }
+  }
+  for (const implementation of ocrFieldSanitizeImplementations) {
+    for (const rule of ocrFieldSanitizeRules) {
+      if (!implementation[rule.block] || !rule.present(implementation[rule.block])) {
         issues.push(`${implementation.file}: OCR正規化規則「${rule.label}」が欠けている`);
       }
     }
