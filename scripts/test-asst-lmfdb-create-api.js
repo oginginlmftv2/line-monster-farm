@@ -117,7 +117,6 @@ function makeHarness(options = {}) {
   vm.createContext(context);
   vm.runInContext(ASSIST_SOURCE, context);
   vm.runInContext(WRITE_SOURCE, context);
-  context.ASST_LMFDB_CARD_MAP_SHA256 = digest(JSON.stringify([{ sourceName: 'カードA', rarity: 'MR', cardId: 'card-a' }]));
   if (options.validationFailure) {
     const original = context.asstValidateDocuments_;
     context.asstValidateDocuments_ = function (...args) {
@@ -247,7 +246,6 @@ test('外部原文の完全一致・NFKC一致もID再利用候補で拒否', ()
   // sourceNameのASCIIを全角化した独立fixtureで比較する。
   normalized.state.abilities[2][HEADERS.abilities.indexOf('sourceName')] = 'Ａ';
   normalized.document.abilities.find(item => item.id === 1).card = 'A';
-  normalized.context.ASST_LMFDB_CARD_MAP_SHA256 = digest(JSON.stringify([{ sourceName: 'カードA', rarity: 'MR', cardId: 'card-a' }]));
   assert.throws(() => normalized.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(normalized, 1, {}, { idReuseReviewed: true })), /NFKC/);
 });
 

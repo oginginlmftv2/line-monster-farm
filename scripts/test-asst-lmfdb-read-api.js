@@ -16,6 +16,7 @@ const FIXED_SHA = 'dad5d301cc7cf3812a8c3f8ea8616642f505d61f';
 const FIXTURE = path.join(REPO, 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz');
 const EXTERNAL_BYTES = zlib.gunzipSync(fs.readFileSync(FIXTURE));
 const EXTERNAL_DOCUMENT = JSON.parse(EXTERNAL_BYTES.toString('utf8'));
+const { renderLmfdbCardMap } = require('./lmfdb-card-map');
 const CARDS_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-cards.json'), 'utf8'));
 const ABILITIES_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-abilities.json'), 'utf8'));
 const CARD_MAP_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8'));
@@ -374,13 +375,52 @@ test('API実行前後で全stubデータと外部状態が不変', () => {
   assert.strictEqual(JSON.stringify(harness.state), harness.before);
 });
 
-test('固定対応表はrepo正ファイルとcardsの一致をhashで固定', () => {
-  const mapping = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8')).mappings;
-  assert.strictEqual(digest(JSON.stringify(mapping)), '0d9ddf7a4cc0e0ab69b9fe8eab63b913eae70144148f54da852357826bc1c49f');
-  const harness = makeHarness({ cards: CARDS_DOCUMENT.cards.map(cardRow).map((row, index) => index ? row : { ...row, name: `${row.name}変更` }) });
+test('対応表はrepo正ファイル・cardsシートの双方でカードDBの射影になる', () => {
+  const expected = renderLmfdbCardMap(CARDS_DOCUMENT.cards);
+  assert.strictEqual(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8'), expected);
+  const harness = makeHarness();
+  const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
+  assert.strictEqual(result.auditStatus, 'PASS');
+  assert.strictEqual(result.cardMapSha256, digest(JSON.stringify(JSON.parse(expected).mappings)));
+});
+
+function allCandidates(harness) {
+  const all = [];
+  for (let page = 1; ; page++) {
+    const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA, page, pageSize: 50 }));
+    all.push(...result.candidates);
+    if (page >= result.pagination.totalPages) return all;
+  }
+}
+
+test('カード追加は対応表の手作業更新なしでカード候補になる', () => {
+  const base = plain(makeHarness().context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
+  const unlinked = allCandidates(makeHarness()).find(candidate => candidate.classification === 'unlinked_candidate');
+  assert(unlinked, '未紐付け候補がfixtureに必要');
+  const rows = CARDS_DOCUMENT.cards.map(cardRow);
+  const added = {
+    ...rows[0],
+    cardId: 'zzz-NEW-added',
+    name: unlinked.externalSnapshot.card,
+    rarity: unlinked.externalSnapshot.rarity,
+  };
+  const harness = makeHarness({ cards: rows.concat([added]) });
+  const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
+  assert.strictEqual(result.auditStatus, 'PASS', JSON.stringify(result.validationErrors));
+  assert.notStrictEqual(result.cardMapSha256, base.cardMapSha256);
+  const updated = allCandidates(harness).find(candidate => candidate.candidateKey === unlinked.candidateKey);
+  assert.strictEqual(updated.classification, 'card_match_candidate');
+  assert.strictEqual(updated.cardIdCandidate, 'zzz-NEW-added');
+  assert.strictEqual(result.counts.newCandidates, base.counts.newCandidates);
+  assert.strictEqual(result.counts.cardMatchCandidates, base.counts.cardMatchCandidates + 1);
+});
+
+test('cardsのname + rarity重複は対応表を作らずFAILにする', () => {
+  const rows = CARDS_DOCUMENT.cards.map(cardRow);
+  const harness = makeHarness({ cards: rows.concat([{ ...rows[0], cardId: 'zzz-DUP-card' }]) });
   const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
   assert.strictEqual(result.auditStatus, 'FAIL');
-  assert(/固定対応表/.test(result.validationErrors[0]));
+  assert(/name \+ rarityが重複/.test(result.validationErrors[0]), result.validationErrors[0]);
 });
 
 console.log(`\n${passed} GAS read API tests passed`);

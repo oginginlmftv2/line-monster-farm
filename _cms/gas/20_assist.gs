@@ -33,9 +33,6 @@ var ASST_LMFDB_MAIN_REF_URL = 'https://api.github.com/repos/futsalife24-bot/lMfD
 var ASST_LMFDB_RAW_BASE = 'https://raw.githubusercontent.com/futsalife24-bot/lMfDB/';
 var ASST_LMFDB_RAW_PATH = '/data/abilities.json';
 var ASST_LMFDB_MAX_BYTES = 2 * 1024 * 1024;
-// src/data/lmfdb-card-map.json の mappings を固定キー順JSONにしたSHA-256。
-// scripts/verify-assist-cms.js が正ファイルとの一致を検査し、GAS側で対応表を二重保持しない。
-var ASST_LMFDB_CARD_MAP_SHA256 = '0d9ddf7a4cc0e0ab69b9fe8eab63b913eae70144148f54da852357826bc1c49f';
 var ASST_LMFDB_REQUIRED_FIELDS = ['id','name','desc','card','tags','source','rarity'];
 var ASST_LMFDB_COMPARABLE_FIELDS = ['sourceName','name','description','source','rarity','tags'];
 var ASST_LMFDB_PROCESSED_DISPOSITIONS = ['imported','ignored','duplicate','unsupported'];
@@ -646,20 +643,23 @@ function asstAuditExpectedAbilitiesVersion_(rows) {
   return asstSha256_(JSON.stringify(values));
 }
 
+// 対応表はcardsシートの射影であり、固定hashで凍結しない。
+// カード追加のたびに手作業更新するとCMS公開が止まるため、毎回cardsから作り直す。
+// 同じ規則でbuild.jsがsrc/data/lmfdb-card-map.jsonを生成し、cardMapSha256で照合できる。
 function asstAuditCardMap_(cardRows) {
   var mappings = cardRows.slice().sort(function (left, right) { return Number(left.sourceOrder) - Number(right.sourceOrder); }).map(function (row) {
     return { sourceName: asstText_(row.name), rarity: asstText_(row.rarity), cardId: asstText_(row.cardId) };
   });
-  if (asstSha256_(JSON.stringify(mappings)) !== ASST_LMFDB_CARD_MAP_SHA256) {
-    throw new Error('cardsと固定対応表src/data/lmfdb-card-map.jsonが一致しません。自動補正しません。');
-  }
   var map = new Map();
   mappings.forEach(function (mapping) {
+    if (!mapping.sourceName || !mapping.rarity || !mapping.cardId) {
+      throw new Error('cardsのname / rarity / cardIdが空です。対応表を作れません。');
+    }
     var key = JSON.stringify([mapping.sourceName, mapping.rarity]);
-    if (map.has(key)) throw new Error('固定対応表のsourceName + rarityが重複しています。');
+    if (map.has(key)) throw new Error('cardsのname + rarityが重複しています。対応表を作れません。');
     map.set(key, mapping.cardId);
   });
-  return map;
+  return { map: map, sha256: asstSha256_(JSON.stringify(mappings)) };
 }
 
 function asstAuditHistoryMap_(refRows) {
@@ -746,7 +746,7 @@ function asstAuditAnalyze_(externalDocument, localRows, externalSha, externalSha
     return {
       auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['AUDIT_INPUT_INVALID'],
       reviewReasons: [], counts: counts, warnings: [], candidates: [],
-      validationErrors: validationErrors, expectedAbilitiesVersion: expectedAbilitiesVersion
+      validationErrors: validationErrors, expectedAbilitiesVersion: expectedAbilitiesVersion, cardMapSha256: null
     };
   }
   var localAbilities = asstAuditLocalAbilities_(localRows.abilities);
@@ -811,7 +811,7 @@ function asstAuditAnalyze_(externalDocument, localRows, externalSha, externalSha
       candidate.classification = 'existingContentDifferences'; candidate.priority = 'medium';
       counts.existingContentDifferences++; candidates.push(candidate); return;
     }
-    candidate.cardIdCandidate = cardMap.get(JSON.stringify([external.card, external.rarity])) || null;
+    candidate.cardIdCandidate = cardMap.map.get(JSON.stringify([external.card, external.rarity])) || null;
     candidate.classification = candidate.cardIdCandidate ? 'card_match_candidate' : 'unlinked_candidate';
     candidate.priority = 'high';
     candidate.registrationEligible = !candidate.processed;
@@ -859,7 +859,7 @@ function asstAuditAnalyze_(externalDocument, localRows, externalSha, externalSha
     auditStatus: 'PASS', safetyVerdict: blockReasons.length ? 'BLOCKED' : reviewReasons.length ? 'REVIEW_REQUIRED' : 'SAFE',
     blockReasons: blockReasons, reviewReasons: reviewReasons, counts: counts, warnings: warnings,
     candidates: candidates, validationErrors: [], expectedAbilitiesVersion: expectedAbilitiesVersion,
-    externalSha: externalSha, externalSha256: externalSha256
+    externalSha: externalSha, externalSha256: externalSha256, cardMapSha256: cardMap.sha256
   };
 }
 
@@ -876,7 +876,7 @@ function api_asstAuditExternalAbilities(payload) {
       externalSha256: external.sha256, expectedAbilitiesVersion: null,
       auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['LOCAL_AUDIT_INPUT_INVALID'],
       reviewReasons: [], counts: asstAuditCounts_(external.document && Array.isArray(external.document.abilities) ? external.document.abilities.length : 0, 0),
-      warnings: [], validationErrors: [error.message], candidates: [],
+      warnings: [], validationErrors: [error.message], candidates: [], cardMapSha256: null,
       pagination: { page: input.page, pageSize: input.pageSize, totalItems: 0, totalPages: 0 }
     };
   }
@@ -887,7 +887,7 @@ function api_asstAuditExternalAbilities(payload) {
       auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['LOCAL_AUDIT_INPUT_INVALID'],
       reviewReasons: [], counts: asstAuditCounts_(external.document.abilities.length, localRows.abilities.length),
       warnings: [], validationErrors: [error.message], candidates: [],
-      expectedAbilitiesVersion: asstAuditExpectedAbilitiesVersion_(localRows.abilities)
+      expectedAbilitiesVersion: asstAuditExpectedAbilitiesVersion_(localRows.abilities), cardMapSha256: null
     };
   }
   var totalItems = report.candidates.length;
@@ -898,6 +898,7 @@ function api_asstAuditExternalAbilities(payload) {
     auditStatus: report.auditStatus, safetyVerdict: report.safetyVerdict,
     blockReasons: report.blockReasons, reviewReasons: report.reviewReasons,
     counts: report.counts, warnings: report.warnings, validationErrors: report.validationErrors,
+    cardMapSha256: report.cardMapSha256 || null,
     candidates: report.candidates.slice(start, start + input.pageSize),
     pagination: { page: input.page, pageSize: input.pageSize, totalItems: totalItems, totalPages: totalItems ? Math.ceil(totalItems / input.pageSize) : 0 }
   };

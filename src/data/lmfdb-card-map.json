@@ -455,6 +455,16 @@
       "sourceName": "チャックル",
       "rarity": "SSR",
       "cardId": "f5h-SSR-tyakkuru"
+    },
+    {
+      "sourceName": "エルブランシュ",
+      "rarity": "MR",
+      "cardId": "aaa-MR-aileblanche"
+    },
+    {
+      "sourceName": "ジュリア",
+      "rarity": "MR",
+      "cardId": "aab-MR-julia"
     }
   ]
 }

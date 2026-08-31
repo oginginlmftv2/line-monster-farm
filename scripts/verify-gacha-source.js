@@ -14,6 +14,7 @@ const GENERATED_FILES = new Set([
   'reroll.html',
   'src/data/page-baseline.json',
   'src/data/cms-seed.json',
+  'src/data/lmfdb-card-map.json',
 ]);
 const SUBJECT = /^CMS gacha publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
