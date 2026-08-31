@@ -9,6 +9,8 @@ const path = require('path');
 const vm = require('vm');
 
 const REPO = path.resolve(__dirname, '..');
+const COMMON_UI_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/ui_common.html'), 'utf8');
+const COMMON_SCRIPT = COMMON_UI_SOURCE.match(/<script>([\s\S]*)<\/script>/)[1];
 const UI_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/ui_assist.html'), 'utf8');
 const SCRIPT = UI_SOURCE.match(/<script>([\s\S]*)<\/script>/)[1];
 const FIXED_SHA = 'a'.repeat(40);
@@ -129,7 +131,18 @@ function harness(options = {}) {
     };
     context.google = { script: { run: runner } };
   }
+  const callStub = context.call;
   vm.createContext(context);
+  vm.runInContext(COMMON_SCRIPT, context, { filename: 'ui_common.html' });
+  Object.assign(context, {
+    el: getElement,
+    esc(value) {
+      return String(value == null ? '' : value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+    },
+    setBusy(value, message) { busy.push({ value, message }); },
+    show() {},
+    call: callStub,
+  });
   vm.runInContext(SCRIPT, context, { filename: 'ui_assist.html' });
   return { context, elements, calls, busy, transport, html: () => getElement('asst_editor').innerHTML };
 }
@@ -198,14 +211,17 @@ test('auditStatus FAILでは候補を表示しない', () => {
     validationErrors: ['fixture invalid'], candidates: [], pagination: { page: 1, pageSize: 50, totalItems: 0, totalPages: 0 },
   }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /監査結果: FAIL/);
+  assert.match(h.html(), /監査結果: 監査失敗（FAIL）/);
   assert.doesNotMatch(h.html(), /<h2>候補一覧<\/h2>/);
 });
 
 test('BLOCKEDでも候補を表示しID再利用は監査成功と明示する', () => {
   const h = harness();
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /BLOCKED（安全性の確認が必要）/);
+  assert.match(h.html(), /監査成功（PASS）/);
+  assert.match(h.html(), /停止（BLOCKED）/);
+  assert.match(h.html(), /分類: カード対応候補 \/ 外部数値ID/);
+  assert.doesNotMatch(h.html(), /分類: カード対応候補（card_match_candidate）/);
   assert.match(h.html(), /監査処理自体は成功しています/);
   assert.match(h.html(), /<h2>候補一覧<\/h2>/);
 });
@@ -217,6 +233,7 @@ test('監査サマリーに全分類件数を表示する', () => {
     assert(h.html().includes(label), label);
   }
   assert(!h.html().includes(ABILITIES_VERSION));
+  assert(h.html().includes('EXISTING_CONTENT_DIFFERENCES'));
 });
 
 test('API候補順を変更しない', () => {
@@ -247,8 +264,8 @@ test('低優先3分類は既定で折りたたむ', () => {
   ];
   const h = harness({ response: response({ candidates }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /<details data-audit-category="card_match_candidate" open><summary>カード対応候補/);
-  for (const [classification, label] of [['representationOnly','表記違い'],['duplicate_local_content_match','重複内容一致'],['missing_upstream_observation','外部欠落観測']]) assert.match(h.html(), new RegExp(`<details data-audit-category="${classification}"><summary>${label}`));
+  assert.match(h.html(), /<details data-audit-category="card_match_candidate" open><summary>カード対応候補（card_match_candidate）/);
+  for (const [classification, label] of [['representationOnly','表記違い'],['duplicate_local_content_match','重複内容一致'],['missing_upstream_observation','外部欠落観測']]) assert.match(h.html(), new RegExp(`<details data-audit-category="${classification}"><summary>${label}（${classification}）`));
 });
 
 test('処置済み候補はチェック後だけ表示する', () => {
@@ -259,7 +276,7 @@ test('処置済み候補はチェック後だけ表示する', () => {
   h.context.ASST.audit.showProcessed = true;
   h.context.asstRenderExternalAudit();
   assert.match(h.html(), /処置済み候補/);
-  assert.match(h.html(), /処置済み: ignored/);
+  assert.match(h.html(), /処置済み: 対象外（ignored）/);
 });
 
 test('externalSnapshot nullでも描画できる', () => {
@@ -278,7 +295,7 @@ test('現在のAPI応答内の候補だけをAPI再取得なしで詳細表示�
   h.context.asstOpenAuditDetail(0);
   assert.strictEqual(h.calls.length, 1);
   assert.match(h.html(), /外部能力候補の詳細/);
-  for (const label of ['外部コミットSHA','外部数値ID','candidateKey','externalFingerprint','sourceName','description','完全一致した既存abilityId','NFKC一致した既存abilityId']) assert(h.html().includes(label), label);
+  for (const label of ['外部コミットSHA','外部数値ID','candidateKey','外部指紋（externalFingerprint）','元のカード名（sourceName）','description','完全一致した既存abilityId','NFKC一致した既存abilityId']) assert(h.html().includes(label), label);
 });
 
 test('読取専用分類・処置済み・auditOnlyは編集プレビューを出さない', () => {
@@ -303,12 +320,12 @@ test('外部欠落観測はcandidateKey null・外部原文なしで読取専用
 test('ID再利用疑いは強い警告と専用確認を表示する', () => {
   const reused = candidate('ID_REUSE_SUSPECTED', 1084, '再利用', { registrationEligible: true, requiresIdReuseConfirmation: true, cardIdCandidate: null });
   const h = harness({ response: response({ candidates: [reused] }) });h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
-  assert.match(h.html(), /同一外部IDが別能力になった疑い/);assert.match(h.html(), /id="asst_audit_idReuseReviewed"/);assert.match(h.html(), /value="resolved" disabled>resolved/);
+  assert.match(h.html(), /同一外部IDが別能力になった疑い/);assert.match(h.html(), /id="asst_audit_idReuseReviewed"/);assert.match(h.html(), /value="resolved" disabled>紐付け済み（resolved）/);
 });
 
 test('登録予定値は原文を保ちlinkStatusだけ未選択で開始する', () => {
   const h = harness();h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);const d=h.context.ASST.audit.detailDraft;
-  assert.strictEqual(d.sourceName, 'カード1200');assert.strictEqual(d.name, '先頭候補');assert.strictEqual(d.linkStatus, '');assert.match(h.html(), /比較用NFKCは表示だけ/);assert.match(h.html(), /保存時にサーバー採番/);assert.match(h.html(), /legacyId/);assert.match(h.html(), /draft/);
+  assert.strictEqual(d.sourceName, 'カード1200');assert.strictEqual(d.name, '先頭候補');assert.strictEqual(d.linkStatus, '');assert.match(h.html(), /比較用NFKCは表示だけ/);assert.match(h.html(), /保存時にサーバー採番/);assert.match(h.html(), /legacyId/);assert.match(h.html(), /下書き（draft）/);
 });
 
 test('プレビュー検査が必須値・許可値・タグ・危険文字列・確認漏れを拒否する', () => {
