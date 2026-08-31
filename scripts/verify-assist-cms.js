@@ -415,7 +415,7 @@ function validateRoot(root) {
   if (!/renderAssistIndex\(assistIndex, cards\)/.test(assistPageBuilder) ||
       !/currentIds\.map\(id => cardById\.get\(id\)\)[\s\S]*\.concat\(cards\.filter/.test(assistPageBuilder) ||
       !/既存順を維持して新規カードを末尾へ追加する/.test(assistIndexBuildTest) ||
-      !/new Set\(\['assist\.html', 'sitemap\.xml'\]\)/.test(assistSourceVerifier)) {
+      !/const GENERATED_FILES = new Set\(\[[^\]]*'assist\.html'[^\]]*'sitemap\.xml'[^\]]*\]\)/.test(assistSourceVerifier)) {
     issues.push('assist.htmlを3DBから既存順維持・新規末尾追加で生成する経路が不足');
   }
   if (!/return ability\.linkStatus === 'resolved' && ability\.status === 'verified'/.test(functionBlock(gas, 'asstPublicPageAbilities_')) ||

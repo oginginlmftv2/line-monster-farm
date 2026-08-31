@@ -10,6 +10,8 @@ const TEXT_SOURCE_FILES = new Set([
 const IMAGE_PATH = /^monster\/[0-9]{4}\.(jpg|png|webp)$/i;
 const GENERATED_FILES = new Set([
   'monsters.html',
+  'index.html',
+  'reroll.html',
   'sitemap.xml',
   'src/data/monster-ids.json',
   'src/data/id-availability.json',
@@ -153,7 +155,9 @@ function generatedPaths() {
 
 function verifyGenerated() {
   const paths = generatedPaths();
-  const unexpected = paths.filter(path => !path.startsWith('monsters/') && !GENERATED_FILES.has(path));
+  const unexpected = paths.filter(path => !path.startsWith('monsters/')
+    && !path.startsWith('gacha/')
+    && !GENERATED_FILES.has(path));
   for (const path of unexpected) fail(`build後に許可外の変更があります: ${path}`);
   if (!process.exitCode) console.log(`PASS: build後の生成差分（${paths.length}ファイル）`);
 }

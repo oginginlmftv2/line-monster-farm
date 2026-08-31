@@ -8,8 +8,8 @@ const TEXT_SOURCE_FILES = new Set([
   'src/data/assist-abilities.json',
 ]);
 const IMAGE_PATH = /^assist-cards\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i;
-const GENERATED_PREFIXES = ['cards/'];
-const GENERATED_FILES = new Set(['assist.html', 'sitemap.xml']);
+const GENERATED_PREFIXES = ['cards/', 'gacha/'];
+const GENERATED_FILES = new Set(['assist.html', 'index.html', 'reroll.html', 'sitemap.xml']);
 const SUBJECT = /^CMS assist publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 function git(args, options = {}) {
