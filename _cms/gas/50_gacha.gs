@@ -41,6 +41,11 @@ function gachaText_(value) {
   return String(value == null ? '' : value).trim();
 }
 
+function gachaMonsterId_(value) {
+  var text = gachaText_(value);
+  return /^\d{1,4}$/.test(text) ? ('0000' + text).slice(-4) : text;
+}
+
 function gachaBool_(value) {
   return value === true || String(value).toUpperCase() === 'TRUE';
 }
@@ -99,7 +104,7 @@ function gachaReadAll_() {
     item.updatedAt = gachaDateCell_(item.updatedAt);
     item.lastEditor = gachaText_(item.lastEditor);
     for (var slot = 1; slot <= GACHA_PICKUP_SLOTS; slot++) {
-      item['monster' + slot] = gachaText_(item['monster' + slot]);
+      item['monster' + slot] = gachaMonsterId_(item['monster' + slot]);
       item['monsterRate' + slot] = item['monsterRate' + slot] === '' ? '' : Number(item['monsterRate' + slot]);
       item['card' + slot] = gachaText_(item['card' + slot]);
       item['cardRate' + slot] = item['cardRate' + slot] === '' ? '' : Number(item['cardRate' + slot]);
