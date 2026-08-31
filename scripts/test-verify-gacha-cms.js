@@ -52,6 +52,7 @@ console.log('PASS 無改変');
     Utilities: {
       formatDate: function (_date, _timezone, pattern) {
         formats.push(pattern);
+        if (pattern === 'yyyy-MM-dd') return '2026-08-31';
         return '2026-08-28T15:00:00+09:00';
       },
     },
@@ -65,13 +66,17 @@ console.log('PASS 無改変');
   assert.strictEqual(context.gachaDateCell_(new Date('2026-08-28T06:00:00Z')), '2026-08-28T15:00+09:00');
   assert.throws(() => context.gachaNormalizeDateTime_('2026-08-28T15:00:30+09:00', '開始日時'), /日時を選択/);
   assert.strictEqual(context.gachaDateCell_('2026-08-28T15:00:30+09:00'), '2026-08-28T15:00:30+09:00');
-  assert(formats.every(pattern => pattern === "yyyy-MM-dd'T'HH:mm:ssXXX"));
+  assert.strictEqual(context.gachaDateOnlyCell_(new Date('2026-08-30T15:00:00Z')), '2026-08-31');
+  assert.strictEqual(context.gachaDateOnlyCell_('2026-08-31T00:00:00+09:00'), '2026-08-31');
+  assert(formats.includes("yyyy-MM-dd'T'HH:mm:ssXXX"));
+  assert(formats.includes('yyyy-MM-dd'));
   const publishGacha = {
     gachaId: '20260828-1', name: '日時契約確認', gachaType: '神殿祭',
     image: 'gacha-banner/20260828-1.jpg',
     startAt: context.gachaDateCell_('2026-08-28T15:00:00+09:00'),
     endAt: context.gachaDateCell_('2026-09-11T14:59:00+09:00'),
-    pickupMonsters: [], pickupCards: [], publishedAt: '2026-08-31',
+    pickupMonsters: [], pickupCards: [],
+    publishedAt: context.gachaDateOnlyCell_(new Date('2026-08-30T15:00:00Z')),
   };
   assert.deepStrictEqual(Array.from(context.gachaValidatePublishDocuments_({
     gachas: { gachas: [publishGacha] }, types: { types: ['神殿祭'] },
@@ -242,5 +247,12 @@ expectFailure('ガチャ公開検査の秒形式復帰を拒否', root => {
   const changed = source.slice(start).replace(/T\\d\{2\}:\\d\{2\}\\\+09:00/g, 'T\\d{2}:\\d{2}:\\d{2}\\+09:00');
   fs.writeFileSync(file, source.slice(0, start) + changed);
 }, /YYYY-MM-DDTHH:mm/);
+expectFailure('publishedAtの日時共通変換復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/50_gacha.gs');
+  fs.writeFileSync(file, fs.readFileSync(file, 'utf8').replace(
+    'item.publishedAt = gachaDateOnlyCell_(item.publishedAt)',
+    'item.publishedAt = gachaDateCell_(item.publishedAt)'
+  ));
+}, /publishedAtがSheet Date/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);

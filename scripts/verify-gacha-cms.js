@@ -255,6 +255,15 @@ function validateRoot(root) {
     issues.push('ガチャ日時がbuild.jsと同じYYYY-MM-DDTHH:mm+09:00形式ではない');
   }
 
+  // 19. publishedAtはSheetのDate値でも日付だけを公開する。
+  const dateOnlyCell = functionBlock(gas, 'gachaDateOnlyCell_');
+  const readAll = functionBlock(gas, 'gachaReadAll_');
+  if (!dateOnlyCell.includes("Utilities.formatDate(value, tz_(), 'yyyy-MM-dd')") ||
+      !dateOnlyCell.includes("text.slice(0, 10)") ||
+      !readAll.includes('item.publishedAt = gachaDateOnlyCell_(item.publishedAt)')) {
+    issues.push('publishedAtがSheet DateからYYYY-MM-DDへ正規化されていない');
+  }
+
   return issues;
 }
 

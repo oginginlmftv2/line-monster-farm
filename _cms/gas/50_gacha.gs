@@ -61,6 +61,15 @@ function gachaDateCell_(value) {
   return gachaMinuteDateTime_(value);
 }
 
+function gachaDateOnlyCell_(value) {
+  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, tz_(), 'yyyy-MM-dd');
+  }
+  var text = gachaText_(value);
+  if (/^\d{4}-\d{2}-\d{2}T00:00(?::00)?\+09:00$/.test(text)) return text.slice(0, 10);
+  return text;
+}
+
 function gachaColumnMap_() {
   var map = {};
   GACHA_HEADERS[GACHA_SHEET].forEach(function (name, index) { map[name] = index; });
@@ -85,7 +94,7 @@ function gachaReadAll_() {
     item.explanation = String(item.explanation == null ? '' : item.explanation);
     item.rerollPriority = gachaBool_(item.rerollPriority);
     item.status = gachaText_(item.status) || 'draft';
-    item.publishedAt = gachaDateCell_(item.publishedAt);
+    item.publishedAt = gachaDateOnlyCell_(item.publishedAt);
     item.author = gachaText_(item.author);
     item.updatedAt = gachaDateCell_(item.updatedAt);
     item.lastEditor = gachaText_(item.lastEditor);
