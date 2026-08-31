@@ -219,7 +219,8 @@ test('auditStatus FAILでは候補を表示しない', () => {
   }) });
   h.context.asstOpenExternalAudit();
   assert.match(h.html(), /監査結果: 監査失敗（FAIL）/);
-  assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
+  assert.doesNotMatch(h.html(), /id="asst_auditSummary"[^>]* open/);
+  assert.match(h.html(), /<\/details><div class="message error"><strong>監査結果: 監査失敗（FAIL）/);
   assert.doesNotMatch(h.html(), /<h2>候補一覧<\/h2>/);
 });
 
@@ -231,7 +232,8 @@ test('BLOCKEDでも候補を表示しID再利用は監査成功と明示する',
   assert.match(h.html(), /分類: カード対応候補 \/ 外部数値ID/);
   assert.doesNotMatch(h.html(), /分類: カード対応候補（card_match_candidate）/);
   assert.match(h.html(), /監査処理自体は成功しています/);
-  assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
+  assert.doesNotMatch(h.html(), /id="asst_auditSummary"[^>]* open/);
+  assert.match(h.html(), /<\/details><p><strong>ID_REUSE_SUSPECTED:/);
   assert.match(h.html(), /<h2>候補一覧<\/h2>/);
 });
 
@@ -241,7 +243,7 @@ test('通常の監査サマリーは閉じ、要約へ状態・安全性・総�
   assert.match(h.html(), /<details id="asst_auditSummary" class="asst-audit-summary"><summary>監査サマリー: 監査成功（PASS） \/ 安全性: 問題なし（SAFE） \/ 総候補数 51<\/summary>/);
 });
 
-test('監査サマリーの手動開閉を再描画後も保持し強制条件を優先する', () => {
+test('監査サマリーの手動開閉を再描画後も保持し、BLOCKEDでも強制展開しない', () => {
   const h = harness({ response: response({ safetyVerdict: 'SAFE', blockReasons: [] }) });
   h.context.asstOpenExternalAudit();
   const summary = h.context.el('asst_auditSummary');
@@ -251,8 +253,10 @@ test('監査サマリーの手動開閉を再描画後も保持し強制条件�
   assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
   h.context.ASST.audit.response.safetyVerdict = 'BLOCKED';
   summary.open = false; summary.ontoggle();
-  assert.strictEqual(summary.open, true);
-  assert.strictEqual(h.context.ASST.audit.foldOpen, true);
+  assert.strictEqual(summary.open, false);
+  assert.strictEqual(h.context.ASST.audit.foldOpen, false);
+  h.context.asstRenderExternalAudit();
+  assert.doesNotMatch(h.html(), /id="asst_auditSummary"[^>]* open/);
 });
 
 test('監査サマリーに全分類件数を表示する', () => {

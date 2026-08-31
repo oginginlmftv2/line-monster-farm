@@ -177,7 +177,24 @@ function runAbilitySchemaUnitTests() {
   assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { reviewFlagsJson: '["unknown"]' })]).some(issue => /許可値/.test(issue)));
   assert(gas.asstValidateExternalRefRows_([Object.assign({}, externalRef, { version: 1.5 })]).some(issue => /version不正/.test(issue)));
   assert.strictEqual(base.legacyId > 0, true);
-  console.log('PASS 能力schema v2・nullable往復・採番器・外部参照行の単体検査');
+
+  const plainEffect = gas.asstEffectFromRow_({ effectId: 'c-e01', name: 'n', description: 'd', unlockRank: '無凸', sortOrder: 1, conditional: '', conditionsJson: '' });
+  assert.strictEqual(plainEffect.conditional, 0);
+  assert.strictEqual(plainEffect.conditions, null);
+  const conditionalEffect = gas.asstEffectFromRow_({
+    effectId: 'c-e02', name: 'n', description: 'd', unlockRank: '1凸', sortOrder: 2,
+    conditional: 1, conditionsJson: '{"operator":"or","types":["auraMatch","monTypeMatch"]}',
+  });
+  assert.strictEqual(conditionalEffect.conditional, 1);
+  assert.strictEqual(JSON.stringify(conditionalEffect.conditions), JSON.stringify({ operator: 'or', types: ['auraMatch', 'monTypeMatch'] }));
+  assert.throws(() => gas.asstNormalizeEffectConditions_(1, null, 'c-e03'), /条件が必要/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(0, { operator: 'and', types: ['auraMatch'] }, 'c-e04'), /条件を持てません/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(1, { operator: 'xor', types: ['auraMatch'] }, 'c-e05'), /andかor/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(1, { operator: 'and', types: [] }, 'c-e06'), /1件以上/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(1, { operator: 'and', types: ['unknownMatch'] }, 'c-e07'), /許可値/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(1, { operator: 'and', types: ['auraMatch', 'auraMatch'] }, 'c-e08'), /重複/);
+  assert.throws(() => gas.asstNormalizeEffectConditions_(2, null, 'c-e09'), /0か1/);
+  console.log('PASS 能力schema v2・nullable往復・採番器・外部参照行・効果の一致時限定条件の単体検査');
 }
 
 function runDraftPublishExclusionTest() {
@@ -811,6 +828,36 @@ expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
     "'index.html', 'reroll.html', 'sitemap.xml',"
   ));
 }, /assist\.htmlを3DBから実装日降順/);
+
+expectFailure('効果DBの一致時限定列の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(",'conditional','conditionsJson'];", '];'));
+}, /一致時限定フラグ/);
+
+expectFailure('一致時限定効果の未選択保存を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('if(conditional&&!types.length)throw new Error', 'if(false)throw new Error'));
+}, /一致時限定効果の選択/);
+
+expectFailure('実装日のテキスト入力復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('id="asst_f_releasedAt" type="date"', 'id="asst_f_releasedAt" type="text"'));
+}, /日付選択/);
+
+expectFailure('OCR候補の削除・確認済み操作の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(/data-ocr-remove/g, 'data-ocr-noop'));
+}, /OCR候補を削除/);
+
+expectFailure('再監査ボタンの下部固定.actions復帰を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('\'<div class="asst-audit-toolbar"><button type="button" id="asst_btnAuditLatest"', '\'<div class="actions"><button type="button" id="asst_btnAuditLatest"'));
+}, /再監査ボタン/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {

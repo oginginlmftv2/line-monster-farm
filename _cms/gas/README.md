@@ -63,6 +63,17 @@ G4のリポジトリ変更がmainへマージされた後、管理者が次の�
 
 公開失敗時は再deploymentや連打をせず、画面のメッセージ、`gacha_publish_log`、失敗したGitHub Actions stepを共有します。`publishedAt`はGitHub送信前にシートへ確定するため、送信失敗後も残ります。次回公開でもその日付を変更しません。
 
+## アシスト効果の一致時限定フラグ（conditional / conditionsJson）の反映
+
+`assist_effects`シートへ`conditional`と`conditionsJson`の2列を追加します。管理者が次の順で行います。
+
+1. `_cms/gas/20_assist.gs`、`40_setup.gs`、`ui_assist.html`を同名のGASファイルへ同期して保存する
+2. `setup5_upgradeAssistEffectColumns`を実行し、`conditional / conditionsJson 列を追加しました`と表示されることを確認する。既存列・既存行は変更しないため`ALLOW_DESTRUCTIVE_SETUP`は不要
+3. `setup4_checkAll`でアシスト側のissuesが0件であることを確認する
+4. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+
+この2列を追加するまで、アシスト画面は`assist_effects`の読み書きに失敗します。列追加とGAS同期は同じ作業でまとめて行います。既存行は空欄のままで`conditional=0`（限定なし）として扱われます。`conditionsJson`は`{"operator":"and"|"or","types":[...]}`だけを許可し、`types`は主血統一致・副血統一致・オーラ一致・モン類一致・種族一致の5種です。条件原文は保存しません。
+
 ## token更新
 
 新tokenは最小権限で発行し、GitHub secretと本番GASのGITHUB_TOKENを管理者が同一作業で更新します。値を文書・ログ・チャットへ貼りません。rehearsalにはGITHUB_TOKENを設定しません。

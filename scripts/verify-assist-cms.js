@@ -569,6 +569,37 @@ function validateRoot(root) {
   if (/capture_queue|SHEET_CAPTURE_QUEUE|api_(?:saveEffectOcrCandidates|getEffectOcrCapture|reviewEffectOcrCapture)/.test(gas + html)) {
     issues.push('撤去済みcapture_queueまたは永続化APIが残っている');
   }
+  const effectHeaderLiteral = "['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy','conditional','conditionsJson']";
+  if (!gas.includes(`ASST_HEADERS[ASST_SHEET_EFFECTS] = ${effectHeaderLiteral};`) ||
+      !/ASST_EFFECT_CONDITION_TYPES = \['mainBloodlineMatch','subBloodlineMatch','auraMatch','monTypeMatch','speciesMatch'\]/.test(gas) ||
+      !/ASST_EFFECT_CONDITION_OPERATORS = \['and','or'\]/.test(gas) ||
+      !/function\s+asstNormalizeEffectConditions_\s*\(/.test(gas) ||
+      !/conditional: activation\.conditional/.test(gas) ||
+      !/function\s+asstUpgradeEffectColumns_\s*\(/.test(setupGas)) {
+    issues.push('効果DBに一致時限定フラグ（conditional / conditionsJson）の列・許可値・移行がない');
+  }
+  if (!/data-effect-conditional/.test(html) || !/data-effect-condition\b/.test(html) ||
+      !/data-effect-operator/.test(html) ||
+      !/if\(conditional&&!types\.length\)throw new Error/.test(html) ||
+      !/function\s+asstOcrConditionsToEffect\s*\(/.test(html)) {
+    issues.push('効果編集画面に一致時限定効果の選択またはOCR条件の引き継ぎがない');
+  }
+  if (!/id="asst_f_releasedAt" type="date"/.test(html) ||
+      !/function\s+asstReleasedAtValue\s*\(/.test(html) || !/function\s+asstReleasedAtInputValue\s*\(/.test(html)) {
+    issues.push('カード実装日がモンスターと同じ日付選択になっていない');
+  }
+  if (!/data-ocr-remove/.test(html) || !/data-ocr-resolve/.test(html) ||
+      !/function\s+asstRemoveOcrCandidate\s*\(/.test(html) || !/function\s+asstResolveOcrCandidateIssues\s*\(/.test(html) ||
+      !/candidate\.issues=\[\]/.test(html)) {
+    issues.push('OCR候補を削除または確認済みにできない');
+  }
+  if (/class="asst-audit-summary"'\+\(isOpen/.test(html) && /MustOpen/.test(html)) {
+    issues.push('監査サマリーを強制展開する分岐が残っている');
+  }
+  if (!/id="asst_btnAuditLatest"/.test(html) || /'<div class="actions"><button type="button" id="asst_btnAuditLatest"/.test(html) ||
+      !/asst-audit-toolbar/.test(html)) {
+    issues.push('再監査ボタンが画面下部固定の.actionsのままで他要素と重なる');
+  }
   if (!/if\(!types\.length\)throw new Error/.test(html) ||
       !/if\(!source\)throw new Error/.test(html)) {
     issues.push('黄色背景の条件付き候補を発動条件未選択のまま進行できる');
