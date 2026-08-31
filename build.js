@@ -289,7 +289,8 @@ function renderTopCardPickups(gachas, context) {
 }
 
 function renderGachaUpdates(gachas, context) {
-  return [...gachas].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || a.gachaId.localeCompare(b.gachaId)).map(gacha => {
+  // 同じ公開日はgachaId降順（後から追加した新しいものが上）
+  return [...gachas].sort((a, b) => b.publishedAt.localeCompare(a.publishedAt) || b.gachaId.localeCompare(a.gachaId)).map(gacha => {
     const names = gacha.pickupMonsters.map(item => context.monstersById.get(item.id).name)
       .concat(gacha.pickupCards.map(item => context.cardsById.get(item.cardId).name));
     const text = `ガチャ更新：${gacha.name}のピックアップ${names.length ? `（${names.join('・')}）` : ''}情報を掲載`;

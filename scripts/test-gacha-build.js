@@ -282,7 +282,7 @@ try {
   });
   const mixedPage = build(root, [mixedPickup], 'mixed-explanation').pages[0].html;
   assert(mixedPage.includes(`href="../${String(monsterWithoutExplanation.url).replace(/^\//, '')}"`));
-  assert.strictEqual((mixedPage.match(/>モンスター詳細を見る<\/a>/g) || []).length, 2);
+  assert.strictEqual((mixedPage.match(/<a class="card wide-card" href="\.\.\//g) || []).length, 2);
   pass(13, '解説の有無に関係なく既存モンスター詳細へのリンクを表示');
 
   const emptyIntegrated = buildIntegrated(root, [], 'integrated-empty');
@@ -335,6 +335,10 @@ try {
   const historyOrder = buildIntegrated(root, [ended, gacha()], 'history-order').integratedIndex;
   assert(historyOrder.indexOf('2026.09.01') < historyOrder.indexOf('2026.08.01'));
   pass(23, '更新履歴をpublishedAt降順にし終了ガチャも残す');
+
+  const sameDay = buildIntegrated(root, [{ ...ended, publishedAt: '2026-09-01' }, gacha()], 'history-same-day').integratedIndex;
+  assert(sameDay.indexOf('20260901-1.html') < sameDay.indexOf('20260801-1.html'));
+  pass('23b', '同じpublishedAtはgachaId降順（後から追加した新しいものが上）');
 
   const appearance = require('../build').renderGachaAppearances([ended, gacha()], 'monster', monsters[0].id, '../../../');
   assert(appearance.includes('登場ガチャ') && appearance.includes('20260901-1.html') && appearance.includes('20260801-1.html'));
