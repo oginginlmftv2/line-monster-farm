@@ -53,6 +53,17 @@
   font-size: 14px;
 }
 
+/* 一致時限定効果（ゲーム内の黄色背景に対応） */
+.assist-detail-table tr.is-conditional th {
+  background: #fdf0bf;
+  border-left: 4px solid #d09b22;
+  color: #4b3714;
+}
+
+.assist-detail-table tr.is-conditional td {
+  background: #fff8dd;
+}
+
 .assist-detail-table--pairs th {
   width: 22%;
 }
