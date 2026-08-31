@@ -157,6 +157,120 @@ nav a:hover, nav a.active {
   margin-bottom: 6px;
 }
 
+/* ガチャ一覧・詳細 */
+.gacha-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.gacha-banner,
+.gacha-hero {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 991 / 321;
+  object-fit: cover;
+  display: block;
+}
+
+.gacha-hero {
+  border-radius: 8px;
+}
+
+.gacha-card-info {
+  padding: 12px 14px;
+  text-align: left;
+}
+
+.gacha-name {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.gacha-type {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #8a7a5c;
+  margin: 0 0 6px;
+}
+
+.gacha-period {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #5b4218;
+  margin: 0;
+}
+
+.gacha-meta {
+  margin: 18px 0 0;
+}
+
+.gacha-meta > div {
+  display: flex;
+  gap: 10px;
+  padding: 9px 0;
+  border-bottom: 1px solid #eee4d3;
+}
+
+.gacha-meta > div:last-child {
+  border-bottom: none;
+}
+
+.gacha-meta dt {
+  flex: 0 0 88px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #5b4218;
+}
+
+.gacha-meta dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #333;
+}
+
+.wide-card .card-name.gacha-pickup-name {
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 7px;
+}
+
+.gacha-pickup-blood {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #6b5c42;
+  margin: 7px 0 0;
+}
+
+.gacha-pickup-rate {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: bold;
+  color: #5b4218;
+  margin: 5px 0 0;
+}
+
+@media (max-width: 768px) {
+  .gacha-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gacha-meta > div {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .gacha-meta dt {
+    flex: none;
+    font-size: 12px;
+  }
+}
+
 /* レアリティバッジ */
 .rarity {
   display: inline-block;
