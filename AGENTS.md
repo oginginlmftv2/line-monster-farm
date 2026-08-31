@@ -27,6 +27,7 @@
 | ビルド処理 | `docs/build-spec.md` |
 | CMS統合（構成・命名・公開経路・移行） | `docs/cms-integration-design.md` |
 | 全体計画・各段階の完了条件 | `docs/ライ徹_開発計画.md` |
+| CMS・サイトのUI改善（U0〜U3） | `docs/ライ徹_CMS_UI改善計画.md` |
 | 現在地・次の作業・引き継ぎ | `docs/PROGRESS.md` |
 | 管理者がClaudeへ依頼して開発・公開するとき | `docs/admin-development.md` |
 | 次回のClaude作業を開始するとき | `docs/claude-next-session.md` |
