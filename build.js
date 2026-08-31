@@ -1080,7 +1080,7 @@ function renderDetail(entry, context) {
   const breadcrumbMonType = context.eligibleMonSlugs.has(monster.monSlug)
     ? (() => {
       addLink(context, `monsters/${monster.monSlug}/index.html`);
-      return `<a href="../../index.html">${escapeHtml(monster.mon)}</a>`;
+      return `<a href="../index.html">${escapeHtml(monster.mon)}</a>`;
     })()
     : escapeHtml(monster.mon);
   const navTop = rootLink(context, 'index.html', 'トップ');
