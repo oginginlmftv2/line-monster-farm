@@ -53,9 +53,9 @@
 | P12-19b | P12-19の管理者手順書と進捗の同期 | `chore/p12-19-admin-runbook` | **レビュー待ち** | ⚪ | 手順書を新設し、PROGRESS.mdの状態と監査値をmain実測値へ更新 |
 | G1 | ガチャDBとガチャページ生成の基盤 | `feat/g1-gacha-data-foundation` | **レビュー待ち** | ⚪ | PR #84のレビュー指摘を反映。通常ビルドの現在時刻解決、解説ゲート300字化、解説なしモンスターの詳細リンク、正常13件・破壊10件のfixtureテストを追加。公開出力差分なし |
 | G2 | ガチャ情報の既存ページへの反映（マーカー方式） | `feat/g2-gacha-page-integration` | **レビュー待ち** | 🔴 | 空DBでは既存表示不変。トップ4区間・リセマラ1区間、詳細逆リンク、正常27件・破壊14件のテストを追加 |
-| G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **進行中** | 🟡 | `gachas`・`gacha_types`の新規2シート、ガチャタブ、新規・編集・競合拒否、raw ID照合、バナー画像差し替えを実装。GitHub公開とGAS反映は対象外 |
-| G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **レビュー待ち** | 🔴 | `gacha-banner/`へ画像入力を分離し、公開対象切替、初回公開日確定、`cms/gacha-publish`、origin/main版ソース検査、未参照画像拒否を実装。GAS反映・Actions実行は管理者作業 |
-| G5 | 終了ガチャの自動取り下げ（日次2回の再ビルド） | `feat/g5-gacha-auto-refresh` | **レビュー待ち** | 🔴 | 05:00 / 15:00 JSTに再ビルドし、検証済み差分がある場合だけ`main`を更新。Actions実地確認はマージ後の管理者作業 |
+| G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **完了** | 🟡 | PR #86をmainへマージ（`ebc3c01`）。ガチャCMSのシート・画面・保存・画像経路を導入 |
+| G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **完了** | 🔴 | PR #87をmainへマージ（`7bf9de2`）。`cms/gacha-publish`からmainへの公開実績（`81ae86b`）を確認 |
+| G5 | 終了ガチャの自動取り下げ（日次2回の再ビルド） | `feat/g5-gacha-auto-refresh` | **完了** | 🔴 | PR #88をmainへマージ（`c6803df`）。05:00 / 15:00 JSTの再ビルドWorkflowを導入 |
 | G6 | ガチャ公開日時の形式不一致修正 | `fix/g6-gacha-datetime-format` | **レビュー待ち** | 🟡🔴 | GASの秒付きJST出力とbuildの分単位契約が不一致で初回公開が停止。開始・終了は分単位、publishedAtは日付専用に分離し、再発検査を追加 |
 
 ## 最新mainの監査値
