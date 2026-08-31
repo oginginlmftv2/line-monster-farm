@@ -141,7 +141,34 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 
 ---
 
-## 7. 完了報告の形式
+## 7. 作業後の後始末（必須）
+
+**PRがマージされたら、そのブランチとworktreeを必ず削除する。** 完了報告の前に済ませること。
+放置すると使われないブランチとworktreeが数十個たまり、次の作業でどれが生きているか
+判断できなくなる。これは「ついでに整理」ではなく作業の一部です。
+
+手順（`main` は常に遅れている前提で、比較対象は必ず `origin/main`）。
+
+```bash
+git fetch origin --prune
+gh pr view <PR番号> --json state,headRefOid   # MERGED と、ローカル先端との一致を確認
+git worktree remove .claude/worktrees/<worktree名>   # 未コミット変更があると失敗する＝安全弁
+git branch -D <ブランチ名>
+git push origin --delete <ブランチ名>   # リモートも残っていれば
+```
+
+- `git branch -d` はカレントHEAD基準で判定するため、遅れた `main` 上では
+  マージ済みでも「not fully merged」で落ちる。`origin/main` を基準に判断すること
+- squashマージされたPRのブランチは `git merge-base --is-ancestor` がNGを返す。
+  これは未マージではない。`gh pr view` がMERGEDで、かつローカル先端が
+  `headRefOid` と一致していれば削除してよい
+- **削除前に必ず `git status --porcelain` で未コミット変更ゼロを確認する**
+- 上記に当てはまらないもの（PRが未マージ、ローカルにpush漏れのコミットがある、
+  detached HEADで由来が追えない）は削除せず、第9章に従って止まって報告する
+
+---
+
+## 8. 完了報告の形式
 
 作業完了時に、必ず以下を報告すること。
 
@@ -151,13 +178,14 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 変更していないことを確認したファイル:
   - （指示に含まれていたが触らなかったもの、およびその理由）
 verify.js:  PASS / FAIL（FAILの場合は内容）
+後始末:  ブランチ・worktreeを削除した / まだPR未マージのため保留
 未完了・要判断:
   - （あれば）
 ```
 
 ---
 
-## 8. 迷ったら止まる
+## 9. 迷ったら止まる
 
 以下に該当したら、自己判断で進めずに報告して指示を仰ぐこと。
 
@@ -170,7 +198,7 @@ verify.js:  PASS / FAIL（FAILの場合は内容）
 
 ---
 
-## 9. 環境
+## 10. 環境
 
 - 所有者の環境は Windows。パス区切りとファイル名の大小文字に注意
 - `.gitattributes` で `text=auto`。改行コードの一括変換を発生させないこと
@@ -179,7 +207,7 @@ verify.js:  PASS / FAIL（FAILの場合は内容）
 
 ---
 
-## 10. このルールの育て方
+## 11. このルールの育て方
 
 - **開発環境に関わるルール** → このファイルに追記
 - **ドメイン知識・データの規則**（ID採番、血統、ゲーム仕様など） → `docs/` に新規ファイルを作り、
