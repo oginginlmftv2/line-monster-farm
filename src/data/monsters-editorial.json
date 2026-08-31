@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-08-31T09:22:38Z",
-  "count": 96,
+  "exportedAt": "2026-08-31T10:10:59Z",
+  "count": 112,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -75,6 +75,16 @@
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-06-16"
     },
+    "1151": {
+      "id": "1151",
+      "name": "ハオ",
+      "arrayIndex": 55,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-05-14"
+    },
     "1352": {
       "id": "1352",
       "name": "メタビー",
@@ -86,6 +96,26 @@
       "authorUrl": "/profile.html",
       "createdAt": "2026-05-31",
       "updatedAt": "2026-05-31",
+      "releasedAt": "2026-05-31"
+    },
+    "1353": {
+      "id": "1353",
+      "name": "ロクショウ",
+      "arrayIndex": 341,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-06-14"
+    },
+    "1354": {
+      "id": "1354",
+      "name": "モチビー",
+      "arrayIndex": 348,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
       "releasedAt": "2026-05-31"
     },
     "1380": {
@@ -112,6 +142,16 @@
       "createdAt": "2026-08-24",
       "updatedAt": "2026-08-24",
       "releasedAt": "2026-02-28"
+    },
+    "1553": {
+      "id": "1553",
+      "name": "ベタピン",
+      "arrayIndex": 355,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-31",
+      "releasedAt": "2026-08-31"
     },
     "1625": {
       "id": "1625",
@@ -325,6 +365,16 @@
       "updatedAt": "2026-04-30",
       "releasedAt": "2026-01-31"
     },
+    "1921": {
+      "id": "1921",
+      "name": "エコスライム",
+      "arrayIndex": 350,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-06-30"
+    },
     "1922": {
       "id": "1922",
       "name": "マグマグミ",
@@ -337,6 +387,16 @@
       "createdAt": "2026-03-31",
       "updatedAt": "2026-03-31",
       "releasedAt": "2026-03-31"
+    },
+    "2016": {
+      "id": "2016",
+      "name": "ヤオビクニ",
+      "arrayIndex": 349,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-07-31"
     },
     "2050": {
       "id": "2050",
@@ -469,6 +529,17 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-07-31"
+    },
+    "2256": {
+      "id": "2256",
+      "name": "ジハンキ",
+      "arrayIndex": 346,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "author": "ソラシド",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-07-31"
     },
     "2309": {
       "id": "2309",
@@ -633,6 +704,16 @@
       "updatedAt": "2026-08-29",
       "releasedAt": "2026-08-28"
     },
+    "2613": {
+      "id": "2613",
+      "name": "センリ",
+      "arrayIndex": 354,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-31",
+      "releasedAt": "2026-08-31"
+    },
     "2650": {
       "id": "2650",
       "name": "シュナ・リゾート",
@@ -680,6 +761,16 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-06-30"
+    },
+    "2652": {
+      "id": "2652",
+      "name": "恐山アンナ",
+      "arrayIndex": 57,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-04-30"
     },
     "2690": {
       "id": "2690",
@@ -750,6 +841,16 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-30"
+    },
+    "2809": {
+      "id": "2809",
+      "name": "ウルズ",
+      "arrayIndex": 336,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-04-30"
     },
     "2851": {
       "id": "2851",
@@ -1010,6 +1111,27 @@
       "updatedAt": "2025-05-31",
       "releasedAt": "2025-05-31"
     },
+    "3290": {
+      "id": "3290",
+      "name": "ワルキューレ",
+      "arrayIndex": 352,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-31",
+      "releasedAt": "2026-08-31"
+    },
+    "3314": {
+      "id": "3314",
+      "name": "ミカエル",
+      "arrayIndex": 345,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "author": "ソラシド",
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-07-31"
+    },
     "3317": {
       "id": "3317",
       "name": "イブリース",
@@ -1234,6 +1356,16 @@
       "updatedAt": "2026-06-30",
       "releasedAt": "2026-06-30"
     },
+    "0117": {
+      "id": "0117",
+      "name": "リリム",
+      "arrayIndex": 319,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-31",
+      "releasedAt": "2023-02-28"
+    },
     "0120": {
       "id": "0120",
       "name": "マーキュリー",
@@ -1330,6 +1462,16 @@
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-25"
     },
+    "0190": {
+      "id": "0190",
+      "name": "ティターニア",
+      "arrayIndex": 335,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2026-04-30"
+    },
     "0227": {
       "id": "0227",
       "name": "ギドラス",
@@ -1423,6 +1565,26 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-12-31"
+    },
+    "0353": {
+      "id": "0353",
+      "name": "ゴッドエンペラー",
+      "arrayIndex": 340,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-20",
+      "releasedAt": "2025-06-14"
+    },
+    "0430": {
+      "id": "0430",
+      "name": "ラクシャーガ",
+      "arrayIndex": 353,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-08-31",
+      "releasedAt": "2026-08-31"
     },
     "0450": {
       "id": "0450",
