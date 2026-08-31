@@ -1106,10 +1106,10 @@
    "bloodSlug": "henger",
    "subBlood": "キジン",
    "aura": "黄",
-   "limited": false,
-   "limitedLabel": "",
+   "limited": true,
+   "limitedLabel": "周年限定",
    "gwImg": null,
-   "localImg": null,
+   "localImg": "0430.jpg",
    "url": "/monsters/muki/henger/0430.html",
    "image": "img/monster/0430.jpg"
   },
