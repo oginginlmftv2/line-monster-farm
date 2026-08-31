@@ -494,6 +494,42 @@ expectFailure('UI効果OCRの中黒除去を拒否', root => {
   fs.writeFileSync(file, source.replace(".replace(/^•\\s*/,'')", ".replace(/^[•・]\\s*/,'')"));
 }, /ui_assist\.html: OCR正規化規則「・（U\+30FB）を削除対象に含めない」が欠けている/);
 
+expectFailure('UI側だけ半角括弧の全角化を落とすと拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(".replace(/\\(/g,'（')", ''));
+}, /ui_assist\.html: OCR正規化規則「半角括弧を全角へ統一」が欠けている/);
+
+expectFailure('scripts側だけローマ数字の全角化を落とすと拒否', root => {
+  const file = path.join(root, 'scripts/assist-effect-ocr.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("    .replace(/II/g, 'Ⅱ')\n", ''));
+}, /assist-effect-ocr\.js: OCR正規化規則「英字 III \/ II を Ⅲ \/ Ⅱ へ（IIIが先）」が欠けている/);
+
+expectFailure('IIをIIIより先に置換する順序違反を拒否', root => {
+  const file = path.join(root, 'scripts/assist-effect-ocr.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(
+    "    .replace(/III/g, 'Ⅲ')\n    .replace(/II/g, 'Ⅱ')\n",
+    "    .replace(/II/g, 'Ⅱ')\n    .replace(/III/g, 'Ⅲ')\n",
+  ));
+}, /assist-effect-ocr\.js: OCR正規化規則「英字 III \/ II を Ⅲ \/ Ⅱ へ（IIIが先）」が欠けている/);
+
+expectFailure('UI側だけ効果名の+スペース規則を落とすと拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(".replace(/([^ ])\\+/g,'$1 +')", ''));
+}, /ui_assist\.html: OCR正規化規則「効果名は \+ の直前を半角スペース1個にそろえる」が欠けている/);
+
+expectFailure('説明文サニタイザの行分割欠落を拒否', root => {
+  const file = path.join(root, 'scripts/assist-effect-ocr.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(
+    "  return String(value == null ? '' : value)\n    .split('\\n')\n    .map(line => sanitizeOcrText(line))\n    .join('\\n')\n    .replace(/\\s*\\+\\s*/g, '+');",
+    "  return sanitizeOcrText(value).replace(/\\s*\\+\\s*/g, '+');",
+  ));
+}, /assist-effect-ocr\.js: OCR正規化規則「説明文は行ごとにサニタイズして改行を保つ」が欠けている/);
+
 expectFailure('Vision日本語文書OCRの欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');

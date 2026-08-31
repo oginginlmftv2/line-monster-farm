@@ -62,7 +62,29 @@ function sanitizeOcrText(value) {
   return normalizeText(value)
     .replace(/[|｜]/g, 'Ⅱ')
     .replace(/MAX↑/g, '')
-    .replace(/^•\s*/, '');
+    .replace(/^•\s*/, '')
+    .replace(/III/g, 'Ⅲ')
+    .replace(/II/g, 'Ⅱ')
+    .replace(/\(/g, '（')
+    .replace(/\)/g, '）')
+    .replace(/、 +/g, '、')
+    .replace(/ +（/g, '（');
+}
+
+// 効果名は「半角スペース1個 + 数値」、説明文は「空白なしの+」がAGENTS.mdの表記規約。
+// scripts/verify.js の表記正規化チェックと対になっているため、片方だけ変更しない。
+function sanitizeEffectName(value) {
+  return sanitizeOcrText(value)
+    .replace(/([^ ])\+/g, '$1 +')
+    .replace(/ {2,}\+/g, ' +');
+}
+
+function sanitizeEffectDescription(value) {
+  return String(value == null ? '' : value)
+    .split('\n')
+    .map(line => sanitizeOcrText(line))
+    .join('\n')
+    .replace(/\s*\+\s*/g, '+');
 }
 
 function comparisonKey(value) {
@@ -281,11 +303,11 @@ function parseEffectCandidates(lines, knownEffectNames) {
     const group = content.slice(start, titleIndexes[index + 1] || content.length);
     const title = group[0];
     const descriptionLines = group.slice(1).filter(line => line.bounds.x < title.bounds.x + Math.max(500, title.bounds.width * 5));
-    const description = descriptionLines.map(line => sanitizeOcrText(line.text)).join('');
+    const description = sanitizeEffectDescription(descriptionLines.map(line => sanitizeOcrText(line.text)).join(''));
     const candidateIssues = [];
     if (!description) candidateIssues.push('description-empty-or-cropped');
     return {
-      name: sanitizeOcrText(title.text),
+      name: sanitizeEffectName(title.text),
       description,
       titleBounds: title.bounds,
       activationScope: 'unknown',
@@ -378,6 +400,8 @@ module.exports = {
   mergeScreenshotCandidates,
   normalizeText,
   parseEffectCandidates,
+  sanitizeEffectDescription,
+  sanitizeEffectName,
   sanitizeOcrText,
   visionLines,
 };

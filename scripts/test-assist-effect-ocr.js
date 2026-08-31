@@ -10,6 +10,8 @@ const {
   mergeScreenshotCandidates,
   normalizeText,
   parseEffectCandidates,
+  sanitizeEffectDescription,
+  sanitizeEffectName,
   sanitizeOcrText,
 } = require('./assist-effect-ocr');
 
@@ -50,6 +52,36 @@ test('sanitizeOcrTextはMAX↑を除去する', () => {
 
 test('sanitizeOcrTextは行頭の箇条書き記号を除去する', () => {
   assert.strictEqual(sanitizeOcrText('• 効果名'), '効果名');
+});
+
+test('sanitizeOcrTextは半角括弧を全角へ寄せる', () => {
+  assert.strictEqual(sanitizeOcrText('効果アップ(重複不可)'), '効果アップ（重複不可）');
+});
+
+test('sanitizeOcrTextは英字のローマ数字を全角へ寄せる', () => {
+  assert.strictEqual(sanitizeOcrText('修行効果アップ II'), '修行効果アップ Ⅱ');
+  assert.strictEqual(sanitizeOcrText('修行効果アップ III'), '修行効果アップ Ⅲ');
+});
+
+test('sanitizeOcrTextは読点直後の空白と括弧前の空白を詰める', () => {
+  assert.strictEqual(sanitizeOcrText('一致したとき、 上昇量アップ （重複不可）'), '一致したとき、上昇量アップ（重複不可）');
+});
+
+test('sanitizeEffectNameは+の直前を半角スペース1個にそろえる', () => {
+  assert.strictEqual(sanitizeEffectName('トレ人数効果アップ+100%'), 'トレ人数効果アップ +100%');
+  assert.strictEqual(sanitizeEffectName('アサルトボーナス II  +2'), 'アサルトボーナス Ⅱ +2');
+});
+
+test('sanitizeEffectDescriptionは+の前後の空白を除去する', () => {
+  assert.strictEqual(sanitizeEffectDescription('素質アップ +2%'), '素質アップ+2%');
+  assert.strictEqual(sanitizeEffectDescription('使用上限+ 1'), '使用上限+1');
+});
+
+test('sanitizeEffectDescriptionは複数行の改行を保持する', () => {
+  assert.strictEqual(
+    sanitizeEffectDescription('素質アップ +2%\n上昇量アップ+2'),
+    '素質アップ+2%\n上昇量アップ+2',
+  );
 });
 
 test('sanitizeOcrTextは中黒を保持する', () => {
@@ -200,4 +232,4 @@ test('既存DBの説明・解放段階差分を検出する', () => {
 });
 
 if (process.exitCode) process.exit(process.exitCode);
-console.log('OK アシスト効果OCR 24ケース');
+console.log('OK アシスト効果OCR 30ケース');
