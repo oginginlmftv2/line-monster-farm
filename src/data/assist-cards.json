@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 91,
+    "cards": 93,
     "withStats": 56,
     "withExplanation": 85,
     "withFormations": 5
@@ -3873,6 +3873,42 @@
         "sapoIndex": 138,
         "type": "main"
       }
+    },
+    {
+      "cardId": "aaa-MR-aileblanche",
+      "name": "エルブランシュ",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "フィジカル",
+      "monType": "無機",
+      "image": "assist-cards/aaa-MR-aileblanche.jpg",
+      "event2": null,
+      "releasedAt": "2026/08/31",
+      "accessoryStatus": "yes",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null
+    },
+    {
+      "cardId": "aab-MR-julia",
+      "name": "ジュリア",
+      "rarity": "MR",
+      "aura": "白",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "assist-cards/aab-MR-julia.jpg",
+      "event2": null,
+      "releasedAt": null,
+      "accessoryStatus": "unknown",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null
     }
   ]
 }

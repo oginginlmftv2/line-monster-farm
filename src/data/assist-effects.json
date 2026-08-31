@@ -5,9 +5,9 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 91,
+    "cards": 93,
     "cardsWithEffects": 83,
-    "cardsDraft": 8,
+    "cardsDraft": 10,
     "effects": 888
   },
   "cards": {
@@ -6673,6 +6673,14 @@
           "sortOrder": 12
         }
       ]
+    },
+    "aaa-MR-aileblanche": {
+      "status": "draft",
+      "effects": []
+    },
+    "aab-MR-julia": {
+      "status": "draft",
+      "effects": []
     }
   }
 }
