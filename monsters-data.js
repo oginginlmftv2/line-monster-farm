@@ -355,7 +355,7 @@ const monstersData = [
   { name: 'エコスライム', aura: '緑', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '1921.jpg', mon: '幻霊', mainMon: 'ゲル', subMon: 'プラント' },
   { name: 'ルートヴィッヒ', aura: '黄', limited: true, limitedLabel: 'サマー限定', gwImg: null, localImg: '2580.jpg', mon: '怪物', mainMon: 'カワズモー', subMon: 'ノーブル' },
   { name: 'ワルキューレ', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: '3290.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'ロード種' },
-  { name: 'ラクシャーガ', aura: '黄', limited: false, limitedLabel: '', gwImg: null, localImg: null, mon: '無機', mainMon: 'ヘンガー', subMon: 'キジン' },
+  { name: 'ラクシャーガ', aura: '黄', limited: true, limitedLabel: '周年限定', gwImg: null, localImg: '0430.jpg', mon: '無機', mainMon: 'ヘンガー', subMon: 'キジン' },
   { name: 'センリ', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: '2613.jpg', mon: '獣族', mainMon: 'キュービ', subMon: 'ニャー' },
   { name: 'ベタピン', aura: '白', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '1553.jpg', mon: '魔族', mainMon: 'スエゾー', subMon: 'レアモン' },
 ];
