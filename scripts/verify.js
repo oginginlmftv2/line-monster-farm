@@ -1417,7 +1417,7 @@ if (!exists('src/data/assist-cards.json')) {
       const expectedRatingCount = rawRatingCount ? rawRatingCount + 2 : 0;
       const actualRatingCount = (html.match(/<div class="assist-rating-card(?:\s|\")/g) || []).length;
       const expectedAbilityCount = resolvedAbilityCounts.get(card.cardId) || 0;
-      const actualAbilityCount = (html.match(/<article class="assist-ability-card">/g) || []).length;
+      const actualAbilityCount = (html.match(/<article class="assist-ability-card[\s"]/g) || []).length;
       if (!title || !description || !canonical || !h1) qualityIssues.push(`${relative}: title/description/canonical/h1欠落`);
       else if (canonical !== expectedCanonical) qualityIssues.push(`${relative}: canonicalが自URLでない`);
       if (!html.includes(expectedImage)) qualityIssues.push(`${relative}: カード画像参照がDBと不一致`);

@@ -34,12 +34,10 @@
       <img src="../assist-cards/b21i-MR-rimuru.jpg" alt="リムル・リゾート" width="260">
       <p><span class="rarity rarity-MR">MR</span></p>
     </div>
-    <table class="assist-detail-table">
-      <tr><th>レアリティ</th><td>MR</td></tr>
-      <tr><th>オーラ</th><td>青</td></tr>
-      <tr><th>カードタイプ</th><td>クイック</td></tr>
-      <tr><th>モン類</th><td>魔族</td></tr>
-      <tr><th>イベント2</th><td>零距離</td></tr>
+    <table class="assist-detail-table assist-detail-table--pairs">
+      <tr><th>レアリティ</th><td>MR</td><th>オーラ</th><td>青</td></tr>
+      <tr><th>カードタイプ</th><td>クイック</td><th>モン類</th><td>魔族</td></tr>
+      <tr><th>イベント2</th><td>零距離</td><td colspan="2"></td></tr>
     </table>
   </section>
   <section class="section">
@@ -73,7 +71,7 @@
   </section>
   <section class="section">
     <h2 class="section-title">アシスト効果</h2>
-    <h3 class="assist-subtitle">無凸</h3>
+    <h3 class="assist-subtitle">無凸<span class="unlock-dots" aria-label="解放段階 0 / 4"><i></i><i></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>血統オーラ上限解放 +40</th><td>育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ また主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する</td></tr>
       <tr><th>オーラブリーダー +60%</th><td>育成対象とオーラ一致したとき、ブリーダーがトレーニングに出現する（3人まで）</td></tr>
@@ -81,111 +79,113 @@
       <tr><th>大成功率アップ +8</th><td>一緒にトレーニングしたとき、大成功の確率アップ</td></tr>
       <tr><th>クイック上限アップ +100</th><td>ちからと回避の基礎ステータスを上限アップ</td></tr>
     </table>
-    <h3 class="assist-subtitle">1凸</h3>
+    <h3 class="assist-subtitle">1凸<span class="unlock-dots" aria-label="解放段階 1 / 4"><i class="on"></i><i></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>オーラトレ出現アップ +1</th><td>育成対象とオーラ一致したとき、トレーニングの出現箇所が増える（重複不可）</td></tr>
       <tr><th>クイックボーナスⅡ +1</th><td>ちから、回避の素質アップ+1% 一緒にトレーニングしたとき、ちから、回避の上昇量アップ+1</td></tr>
     </table>
-    <h3 class="assist-subtitle">2凸</h3>
+    <h3 class="assist-subtitle">2凸<span class="unlock-dots" aria-label="解放段階 2 / 4"><i class="on"></i><i class="on"></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>トレ効果アップ +6%</th><td>一緒にトレーニングしたとき、基礎ステータスの上昇量アップ</td></tr>
       <tr><th>忠誠度効果アップ +12%</th><td>忠誠度に応じて基礎ステータスの上昇量アップ</td></tr>
     </table>
-    <h3 class="assist-subtitle">3凸</h3>
+    <h3 class="assist-subtitle">3凸<span class="unlock-dots" aria-label="解放段階 3 / 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>オーラブリーダー・恩恵Ⅱ +</th><td>ブリーダートレ出現率+25％ ブリーダーがトレーニングに出現時、発動中のステータスアップの効果量を1UP、応援効果+25%</td></tr>
     </table>
-    <h3 class="assist-subtitle">4凸</h3>
+    <h3 class="assist-subtitle">4凸<span class="unlock-dots" aria-label="解放段階 4 / 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>オーラブリーダー・継承 +</th><td>ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる</td></tr>
     </table>
   </section>
   <section class="section">
     <h2 class="section-title">能力</h2>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">俺は喰らう者だ III</h3>
       <p class="comment-text">[自身青] R4以上のオーラ技発動時、次の効果が発動<br>・発動技と同じオーラ種の技性能＜４０％＞上昇を付与＜各オーラ種毎に１回＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">俺は喰らう者だ IV</h3>
       <p class="comment-text">[自身青] R4以上のオーラ技発動時、次の効果が発動<br>・発動技と同じオーラ種の技性能＜４０％＞上昇を付与＜各オーラ種毎に１回＞<br>・＜青＞技発動時、[強撃Lv2]を付与＜１回＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">俺は仲間を見捨てない III</h3>
       <p class="comment-text">[自身青または魔族][前半]相手ガッツ５５未満時、次の効果が発動<br>・技命中時、追撃Lv1＜１回＞<br>・＜青＞技命中時、追撃Lv1＜１回＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、追撃、前半、魔族</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">俺は仲間を見捨てない IV</h3>
       <p class="comment-text">[自身青または魔族]相手ガッツ５５未満時、次の効果が発動<br>・技命中時、追撃Lv1＜１回＞<br>・＜青＞技命中時、追撃Lv1＜１回＞<br>・[有利]追撃無効</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、追撃、無効化、魔族、有利時</span>
       </div>
     </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[青]剛将</h3>
-      <p class="comment-text">＜オーラ青＞ちから技発動時、与ダメ上昇Lv4＜２０秒＞＜１回＞</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[魔族]回避＋３%</h3>
-      <p class="comment-text">[魔族]回避ステータスを３％上昇</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：魔族</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[雪山]闘志</h3>
-      <p class="comment-text">[雪山]与ダメ上昇Lv3</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[曇り]回避＋１００</h3>
-      <p class="comment-text">[曇り]回避ステータス＋１００</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[自身青]回避＋３%</h3>
-      <p class="comment-text">[自身青]回避ステータスを３％上昇</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[砂漠]闘志</h3>
-      <p class="comment-text">[砂漠]与ダメ上昇Lv3</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[砂漠]回避＋１００</h3>
-      <p class="comment-text">[砂漠]回避ステータス＋１００</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[魔族]重撃</h3>
-      <p class="comment-text">[魔族]ちから技命中時、連撃Lv1×１回</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：連撃、魔族</span>
-      </div>
-    </article>
+    <div class="assist-abilities-sub">
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[青]剛将</h3>
+        <p class="comment-text">＜オーラ青＞ちから技発動時、与ダメ上昇Lv4＜２０秒＞＜１回＞</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[魔族]回避＋３%</h3>
+        <p class="comment-text">[魔族]回避ステータスを３％上昇</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：魔族</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[雪山]闘志</h3>
+        <p class="comment-text">[雪山]与ダメ上昇Lv3</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[曇り]回避＋１００</h3>
+        <p class="comment-text">[曇り]回避ステータス＋１００</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[自身青]回避＋３%</h3>
+        <p class="comment-text">[自身青]回避ステータスを３％上昇</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[砂漠]闘志</h3>
+        <p class="comment-text">[砂漠]与ダメ上昇Lv3</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[砂漠]回避＋１００</h3>
+        <p class="comment-text">[砂漠]回避ステータス＋１００</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[魔族]重撃</h3>
+        <p class="comment-text">[魔族]ちから技命中時、連撃Lv1×１回</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：連撃、魔族</span>
+        </div>
+      </article>
+    </div>
   </section>
   <section class="section">
     <h2 class="section-title">管理者による解説</h2>
