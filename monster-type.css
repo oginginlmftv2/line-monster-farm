@@ -45,6 +45,11 @@
   margin-top: 16px;
 }
 
+/* 副血統テキスト行。直前のバッジ行との間に余白を持たせる */
+.mon-type-page .mon-type-card-meta {
+  margin-top: 6px;
+}
+
 /* 解説なし: PC 8列の小型カード */
 .mon-type-page .mon-type-grid--compact {
   grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -122,6 +127,7 @@
   }
 
   .mon-type-page .mon-type-grid--compact .mon-type-card .mon-type-card-meta {
+    margin-top: 4px;
     font-size: 9px;
   }
 }
