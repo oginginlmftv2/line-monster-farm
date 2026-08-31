@@ -57,6 +57,11 @@
 | G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **完了** | 🔴 | PR #87をmainへマージ（`7bf9de2`）。`cms/gacha-publish`からmainへの公開実績（`81ae86b`）を確認 |
 | G5 | 終了ガチャの自動取り下げ（日次2回の再ビルド） | `feat/g5-gacha-auto-refresh` | **完了** | 🔴 | PR #88をmainへマージ（`c6803df`）。05:00 / 15:00 JSTの再ビルドWorkflowを導入 |
 | G6 | ガチャ公開日時の形式不一致修正 | `fix/g6-gacha-datetime-format` | **レビュー待ち** | 🟡🔴 | GASの秒付きJST出力とbuildの分単位契約が不一致で初回公開が停止。開始・終了は分単位、publishedAtは日付専用に分離し、再発検査を追加 |
+| P13-1 | サイト側UI改善 S1（共通部品の切り出し） | `feat/p13-1-badge-unification` | **完了** | 🔴 | PR #96をmainへマージ（`e246815`）。バッジと横長カードを`style.css`のページ非依存部品として共有化 |
+| P13-2 | サイト側UI改善 S2（トップ＋一覧・モン類） | `feat/p13-2-top-and-list-ui` | **完了** | 🔴 | PR #97をmainへマージ（`16a209f`）。トップのセクション順とピックアップ枠、一覧・モン類の表示を整えた |
+| P13-3 | サイト側UI改善 S3（アシストカード詳細） | `feat/p13-3-assist-detail-ui` | **完了** | 🔴 | PR #98をmainへマージ（`76ffe6a`）。カード詳細のレイアウトを共通部品へ寄せた |
+| P13-4 | サイト側UI改善の引き継ぎ文書 | `chore/p13-4-site-ui-handoff-doc` | **レビュー待ち** | ⚪ | `docs/site-ui-plan.md`を新設し、S1〜S3の確定判断とS4の仕様をリポジトリへ残した。文書のみで公開物は無変更 |
+| P13-5 | サイト側UI改善 S4（ガチャ一覧・ガチャ詳細） | – | **未着手** | 🔴 | 仕様は`docs/site-ui-plan.md`の6章が正。S1〜S3の共通部品を使い、新しいCSS部品を作らない |
 
 ## 最新mainの監査値
 
@@ -306,6 +311,10 @@ Search Consoleでのインデックス状況確認と、解説済み92ページ�
 - AdSense再申請: Search Consoleのインデックス反映待ち。
   更新利用規約への管理者同意も必要。Claudeは同意操作をしない
 - GASエディタ版とdeployment版の一致: 外部画面未確認
+- **CMS UI改修（U計画）の保留はサイト側UI改善（S1〜S4）をブロックしない。**
+  サイト側UI改善はU計画の保留項目に依存せず、`scripts/verify.js`に保留由来のWARN / FAILは無い。
+  もしWARN / FAILが出た場合は、基点の`origin/main`で同じコマンドを回して切り分ける。
+  基点でも出るならそのPRの原因ではない。手を加えず実測を報告する。
 
 ## 現在の引き継ぎ
 
