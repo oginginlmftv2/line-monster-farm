@@ -34,7 +34,10 @@ const targets = [
   'scripts/test-asst-lmfdb-create-api.js',
   'scripts/test-asst-lmfdb-write-safety.js',
   'scripts/test-asst-card-create-api.js',
+  'scripts/test-asst-card-image-flow.js',
   'scripts/build-assist-pages.js',
+  'scripts/test-assist-index-build.js',
+  'scripts/verify-assist-source.js',
 ];
 
 let destructiveCases = 0;
@@ -543,6 +546,24 @@ expectFailure('カード画像の実体検査欠落を拒否', root => {
   fs.writeFileSync(file, source.replace('if (!isExpectedImage_(bytes, mimeType))', 'if (false)'));
 }, /カード画像を指定Drive/);
 
+expectFailure('新規カード保存のDrive画像fallback欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('var driveImage = driveImages ? driveImages[filename] : asstDriveImageByName_(filename);', 'var driveImage = null;'));
+}, /新規カード画像をDriveから初回保存・公開/);
+
+expectFailure('アシスト公開のDrive画像tree追加欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/30_publish.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('Object.keys(driveImages.byName).forEach(function (filename) {', 'Object.keys({}).forEach(function (filename) {'));
+}, /新規カード画像をDriveから初回保存・公開/);
+
+expectFailure('新規カード画像フローmockテスト欠落を拒否', root => {
+  const file = path.join(root, 'scripts/test-asst-card-image-flow.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('main未公開の新規画像を指定Driveから受理する', '削除した新規画像検査'));
+}, /新規カード画像をDriveから初回保存・公開/);
+
 expectFailure('環境マーカーのnote参照欠落を拒否', root => {
   const file = path.join(root, '_cms/gas/00_core.gs');
   const source = fs.readFileSync(file, 'utf8');
@@ -753,6 +774,18 @@ expectFailure('draft resolved能力の生成対象混入を拒否', root => {
   fs.writeFileSync(file, source.replace("ability.status === 'verified'", "ability.status !== 'removed'"));
 }, /draft resolved能力/);
 
+expectFailure('assist一覧の新規カード末尾追加欠落を拒否', root => {
+  const file = path.join(root, 'scripts/build-assist-pages.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('.concat(cards.filter(card => !currentIdSet.has(card.cardId)))', ''));
+}, /assist\.htmlを3DBから既存順維持/);
+
+expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
+  const file = path.join(root, 'scripts/verify-assist-source.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("['assist.html', 'sitemap.xml']", "['sitemap.xml']"));
+}, /assist\.htmlを3DBから既存順維持/);
+
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
   cwd: repo,
@@ -771,6 +804,14 @@ childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-
   stdio: 'inherit',
 });
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-card-create-api.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-card-image-flow.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-assist-index-build.js')], {
   cwd: repo,
   stdio: 'inherit',
 });

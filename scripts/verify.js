@@ -406,7 +406,12 @@ head('8. 秘密情報');
       if (!source) throw new Error(`${name} がない`);
       const fixed = new Set([...source.matchAll(/\bpath:\s*'([^']+)'\s*,/g)].map(match => match[1]));
       const dynamicPaths = [...source.matchAll(/\bpath:\s*'([^']+)'\s*\+\s*filename/g)];
-      const filenamePattern = source.match(/if\s*\(\s*!\/((?:\\.|[^/])+)\/([a-z]*)\.test\(filename\)\)/);
+      // アシスト画像はP12-20以降、検査済みDrive inventoryを公開関数へ渡す。
+      // 画像名の許可正規表現がhelperへ分離されても、実際に呼ばれる検査から送信範囲を導出する。
+      const imageValidationSource = /driveImages\.byName/.test(source)
+        ? `${source}\n${functionSource('asstDriveImageInventory_')}\n${functionSource('asstValidateDriveImageFile_')}`
+        : source;
+      const filenamePattern = imageValidationSource.match(/if\s*\(\s*!\/((?:\\.|[^/])+)\/([a-z]*)\.test\(filename\)\)/);
       if (dynamicPaths.length !== 1 || !filenamePattern) {
         throw new Error(`${name} の画像送信パスを解析できない`);
       }
@@ -1005,17 +1010,14 @@ if (!exists('src/data/assist-cards.json')) {
     const sourceIds = [...read('cards/cards-data.js').matchAll(/^\s*'([^']+)'\s*:/gm)]
       .map(match => match[1]);
     const databaseIds = cards.map(card => card.cardId);
-    const sourceIdSet = new Set(sourceIds);
     const databaseIdSet = new Set(databaseIds);
     const missingIds = sourceIds.filter(cardId => !databaseIdSet.has(cardId));
-    const unexpectedIds = databaseIds.filter(cardId => !sourceIdSet.has(cardId));
     const duplicateIds = databaseIds.filter((cardId, index) => databaseIds.indexOf(cardId) !== index);
 
-    if (cards.length !== sourceIds.length || databaseIdSet.size !== sourceIdSet.size
-        || missingIds.length || unexpectedIds.length || duplicateIds.length) {
-      ng(`assist-cards.jsonのcardId集合が不一致（DB ${cards.length}件 / 入力 ${sourceIds.length}件 / 欠落 ${missingIds.length}件 / 余分 ${unexpectedIds.length}件 / 重複 ${duplicateIds.length}件）`);
+    if (missingIds.length || duplicateIds.length) {
+      ng(`assist-cards.jsonがcards-data.jsの互換IDを包含していません（DB ${cards.length}件 / 互換入力 ${sourceIds.length}件 / 欠落 ${missingIds.length}件 / 重複 ${duplicateIds.length}件）`);
     } else {
-      ok(`assist-cards.jsonのcardId集合がcards-data.jsと完全一致（${cards.length}件）`);
+      ok(`assist-cards.jsonがcards-data.jsの互換IDを全件包含（DB ${cards.length}件 / 互換入力 ${sourceIds.length}件 / CMS追加 ${cards.length - sourceIds.length}件）`);
     }
 
     const missingImages = cards.filter(card => typeof card.image !== 'string' || !exists(card.image));

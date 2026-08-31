@@ -308,27 +308,99 @@ function asstValidateReleasedAt_(value, label) {
   }
 }
 
-function asstValidateImagePath_(card, checkExists) {
+function asstImageFilename_(imagePath) {
+  return asstText_(imagePath).replace(/^assist-cards\//, '');
+}
+
+function asstValidateDriveImageFile_(file, filename) {
+  if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
+    throw new Error('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
+  }
+  var bytes = file.getBlob().getBytes();
+  if (!bytes.length || bytes.length > ASST_IMAGE_MAX_BYTES) {
+    throw new Error(filename + ' は空、または2MBを超えています。');
+  }
+  var extension = filename.split('.').pop().toLowerCase();
+  var expectedMime = extension === 'jpg' ? 'image/jpeg' :
+    (extension === 'png' ? 'image/png' : 'image/webp');
+  if (!isExpectedImage_(bytes, expectedMime)) {
+    throw new Error(filename + ' の拡張子と画像データが一致しません。');
+  }
+  return { file: file, bytes: bytes, mimeType: expectedMime };
+}
+
+function asstDriveImageByName_(filename) {
+  var folder = asstImageFolder_(true);
+  if (!folder) return null;
+  var files = folder.getFilesByName(filename);
+  var found = null;
+  while (files.hasNext()) {
+    var file = files.next();
+    if (found) throw new Error(filename + ': 指定Driveに同名画像が複数あります。');
+    found = asstValidateDriveImageFile_(file, filename);
+  }
+  return found;
+}
+
+function asstDriveImageInventory_(cards, allowMissingFolder) {
+  var referenced = (cards || []).reduce(function (set, card) {
+    var filename = asstImageFilename_(card.image);
+    if (filename) set[filename] = true;
+    return set;
+  }, {});
+  var result = { byName: {}, issues: [] };
+  var folder;
+  try { folder = asstImageFolder_(allowMissingFolder); }
+  catch (error) { result.issues.push(error.message); return result; }
+  if (!folder) return result;
+  var files = folder.getFiles();
+  while (files.hasNext()) {
+    var file = files.next();
+    var filename = file.getName();
+    if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
+      result.issues.push('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
+      continue;
+    }
+    if (!referenced[filename]) continue;
+    if (result.byName[filename]) {
+      result.issues.push(filename + ': 指定Driveに同名画像が複数あります。');
+      continue;
+    }
+    try { result.byName[filename] = asstValidateDriveImageFile_(file, filename); }
+    catch (error) { result.issues.push(error.message); }
+  }
+  return result;
+}
+
+function asstValidateImagePath_(card, checkExists, driveImages) {
   var imagePath = asstText_(card.image).trim();
   if (!imagePath) throw new Error(card.cardId + ': image空欄');
   var expected = new RegExp('^assist-cards/' + card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.(?:jpg|jpeg|png|webp)$', 'i');
   if (!expected.test(imagePath)) throw new Error(card.cardId + ': imageはcardIdと一致するassist-cards配下の画像パス必須');
   if (!checkExists) return;
+  var filename = asstImageFilename_(imagePath);
+  var driveImage = driveImages ? driveImages[filename] : asstDriveImageByName_(filename);
+  if (driveImage) return;
   var response = UrlFetchApp.fetch(ASST_RAW_REPO_BASE + imagePath, { muteHttpExceptions: true, headers: { Range: 'bytes=0-0' } });
-  if ([200, 206].indexOf(response.getResponseCode()) < 0) throw new Error(card.cardId + ': imageがmainに存在しません（HTTP ' + response.getResponseCode() + '）');
+  if ([200, 206].indexOf(response.getResponseCode()) < 0) {
+    throw new Error(card.cardId + ': imageがmainまたは指定Driveに存在しません（main HTTP ' + response.getResponseCode() + '）');
+  }
 }
 
-function asstValidateImageFiles_(cards) {
+function asstValidateImageFiles_(cards, driveImages) {
   var validCards = cards.filter(function (card) {
     try { asstValidateImagePath_(card, false); return true; } catch (error) { return false; }
   });
-  if (!validCards.length) return [];
-  var responses = UrlFetchApp.fetchAll(validCards.map(function (card) {
+  var mainCards = validCards.filter(function (card) {
+    return !driveImages || !driveImages[asstImageFilename_(card.image)];
+  });
+  if (!mainCards.length) return [];
+  var responses = UrlFetchApp.fetchAll(mainCards.map(function (card) {
     return { url: ASST_RAW_REPO_BASE + card.image, muteHttpExceptions: true, headers: { Range: 'bytes=0-0' } };
   }));
   return responses.reduce(function (issues, response, index) {
     if ([200, 206].indexOf(response.getResponseCode()) < 0) {
-      issues.push(validCards[index].cardId + ': imageがmainに存在しません（HTTP ' + response.getResponseCode() + '）');
+      issues.push(mainCards[index].cardId + ': imageがmainまたは指定Driveに存在しません（main HTTP ' + response.getResponseCode() + '）');
     }
     return issues;
   }, []);
@@ -1196,9 +1268,12 @@ function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   return issues;
 }
 
-function asstImageFolder_() {
+function asstImageFolder_(allowMissing) {
   var folderId = optionalProp_('ASSIST_IMAGE_FOLDER_ID');
-  if (!folderId) throw new Error('Script PropertiesのASSIST_IMAGE_FOLDER_IDが未設定です。');
+  if (!folderId) {
+    if (allowMissing) return null;
+    throw new Error('Script PropertiesのASSIST_IMAGE_FOLDER_IDが未設定です。');
+  }
   var root = DriveApp.getFolderById(folderId);
   return root;
 }
@@ -1531,8 +1606,10 @@ function api_asstSaveAbility(payload) {
 function api_asstExport() {
   var user = asstRequireUser_();
   var docs = asstBuildDocuments_();
+  var driveImages = asstDriveImageInventory_(docs.cards.cards, true);
   var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities)
-    .concat(asstValidateImageFiles_(docs.cards.cards));
+    .concat(driveImages.issues)
+    .concat(asstValidateImageFiles_(docs.cards.cards, driveImages.byName));
   if (issues.length) {
     asstAppendLog_(user, 'export', 'FAIL', issues.slice(0, 20).join(' / '));
     throw new Error('export検査FAIL（' + issues.length + '件）: ' + issues.slice(0, 10).join(' / '));

@@ -14,6 +14,8 @@
   公開導線の切替前のため、全件noindex・広告なし・sitemap非掲載とする。
 - 2026-08-24 改訂：P12-7bでカード詳細のインデックスゲートを公開HTMLへ適用し、
   一覧リンク、sitemap、旧ホリィURLの転送を新しい静的URLへ切り替える。
+- 2026-08-31 改訂：P12-20でCMS追加カードへ件数を動的追従させ、`assist.html`の既存順を
+  維持しながら新規カードを末尾追加する一覧生成と、旧`cards-data.js`の互換境界を明記。
 仕様に書かれていない挙動を追加しないこと。判断が必要な箇所は実装せず報告すること。
 
 ---
@@ -45,7 +47,7 @@
 | `src/data/cards-editorial.json` | カード解説（詳細ページでは未使用） | 90 |
 | `src/data/taxonomy.json` | 集約ページの導入文（**P6-2で作成。無ければ集約ページを生成しない**） | – |
 | `monsters-data.js` | オーラ・限定ラベル・gwImg・localImg | `monster-ids.json`と同数 |
-| `cards/cards-data.js` | カードID→カード名（編成表示に使用） | 91 |
+| `cards/cards-data.js` | 旧一覧の距離・地形filterとfragment URL用の互換データ。既存91件は保持し、CMS追加カードの正にはしない | 91 |
 | `style.css` | 既存スタイル。共通の `page-breadcrumb` を定義 | – |
 
 ### 入力の整合性チェック（起動時に実行し、違反があれば即失敗）
@@ -625,7 +627,7 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 
 ### 12-2. 出力とインデックス制御
 
-`assist-cards.json`の入力順で、全91カードを`cards/<cardId>.html`へ生成してコミットする。
+`assist-cards.json`の入力順で、全カードを`cards/<cardId>.html`へ生成してコミットする。
 canonicalは`https://line-monster-farm-tetteikouryaku.com/cards/<cardId>.html`とする。
 各ページにカード固有のtitle、description、canonical、h1を出力する。
 
@@ -633,12 +635,15 @@ P12-7b以降は12-4のゲートをHTMLへ適用する。
 
 - 通過: robotsメタを出力せず、sitemapへ掲載し、モンスター詳細と同じAdSenseタグを出力する
 - 非通過: `<meta name="robots" content="noindex,follow">`を出力し、sitemap非掲載・広告なしとする
-- `assist.html`の91リンクは`cards/<cardId>.html`へ向ける。文言・順序・画像は変更しない
+- `assist.html`のマーカー内は3DBから生成し、全カードを`cards/<cardId>.html`へ向ける
+- 既存カードの順序は維持し、3DBへ追加されたカードだけを3DB入力順で末尾へ追加する
+- 一覧のカード名・レアリティ・画像は3DBを正とし、既存カードもビルド時に同期する
 - `cards/card.html`は互換入口として削除しない
 - `cards/SSR-hori.html`は`cards/f9-SSR-hori.html`へのcanonical、meta refresh、通常リンクを持つ
   転送ページとし、noindexを付けずsitemapから除外する
 
-2026-08-24の実測はindex 54件、noindex 37件、生成合計91件である。
+2026-08-24の実測はindex 54件、noindex 37件、生成合計91件である。件数は固定値ではなく、
+CMS公開後の3DB件数へ動的に追従する。
 
 ### 12-3. ページ構成
 
@@ -692,8 +697,12 @@ HTMLのrobots、広告、sitemapへ同じ判定を適用し、標準出力にも
 
 ### 12-5. 検証と決定性
 
-`scripts/verify.js`は3DBから導いた91パスだけをカード生成物として検査する。
+`scripts/verify.js`は3DBから導いた全パスだけをカード生成物として検査する。
 `cards/card.html`と`cards/SSR-hori.html`は対象に含めない。
+
+旧`cards/cards-data.js`の91 IDはfragment URLと距離・地形filterの互換入力として全件を3DBへ
+包含させるが、3DB側のCMS追加IDは許可する。新規カードを旧データへ追記するために距離・地形を
+推測してはならない。`assist.html`は生成差分の許可対象に含める。
 
 - DBのcardIdと生成ページが1対1である
 - title、description、canonical、h1が全件にあり、カードごとに固有である
@@ -702,8 +711,8 @@ HTMLのrobots、広告、sitemapへ同じ判定を適用し、標準出力にも
 - noindexページに`adsbygoogle`がない
 - カード画像参照が実在する
 - sitemap掲載ページがゲートを満たしrobotsメタを持たず、広告を持つ
-- `assist.html`の91リンクが静的URLで全件実在し、旧fragment形式が0件である
+- `assist.html`のリンクが3DB全件と1対1で静的URLとして実在し、旧fragment形式が0件である
 - `cards/SSR-hori.html`の転送仕様とsitemap除外を検査する
 
-`node build.js`を2回実行した後、生成HTML91件がバイト単位で一致し、2回目の更新が0件で
+`node build.js`を2回実行した後、生成HTML全件と`assist.html`がバイト単位で一致し、2回目の更新が0件で
 あることを確認する。モンスター生成物と`monsters.html`は変更しない。
