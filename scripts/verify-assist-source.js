@@ -9,7 +9,7 @@ const TEXT_SOURCE_FILES = new Set([
 ]);
 const IMAGE_PATH = /^assist-cards\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i;
 const GENERATED_PREFIXES = ['cards/'];
-const GENERATED_FILES = new Set(['sitemap.xml']);
+const GENERATED_FILES = new Set(['assist.html', 'sitemap.xml']);
 const SUBJECT = /^CMS assist publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
 function git(args, options = {}) {

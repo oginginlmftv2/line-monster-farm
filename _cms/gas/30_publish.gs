@@ -396,7 +396,10 @@ function api_asstPublish() {
   var pushedSha = '';
   try {
     var docs = asstBuildDocuments_();
-    var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(asstValidateImageFiles_(docs.cards.cards));
+    var driveImages = asstDriveImageInventory_(docs.cards.cards, false);
+    var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities)
+      .concat(driveImages.issues)
+      .concat(asstValidateImageFiles_(docs.cards.cards, driveImages.byName));
     var publicPageAbilities = asstPublicPageAbilities_(docs.abilities.abilities);
     if (publicPageAbilities.some(function (ability) { return ability.linkStatus !== 'resolved' || ability.status !== 'verified'; })) {
       issues.push('draft resolved能力が公開ページ対象へ混入しています。');
@@ -412,38 +415,15 @@ function api_asstPublish() {
       { path: 'src/data/assist-abilities.json', value: docs.abilities }
     ];
     var tree = files.map(function (file) { return { path: file.path, mode: '100644', type: 'blob', sha: githubBlob_(JSON.stringify(file.value, null, 2) + '\n', 'utf-8') }; });
-    var referencedImages = docs.cards.cards.reduce(function (set, card) {
-      var filename = String(card.image || '').replace(/^assist-cards\//, '');
-      if (filename) set[filename] = true;
-      return set;
-    }, {});
-    var imageFolder = asstImageFolder_();
-    var driveFiles = imageFolder.getFiles();
-    while (driveFiles.hasNext()) {
-      var driveFile = driveFiles.next();
-      var filename = driveFile.getName();
-      if (!/^[A-Za-z0-9._-]+\.(jpg|png|webp)$/i.test(filename)) {
-        throw new Error('Driveのassist-cardsフォルダに規則外のファイルがあります: ' + filename);
-      }
-      // カードDBから参照されていないファイルは公開コミットへ含めない。
-      if (!referencedImages[filename]) continue;
-      var bytes = driveFile.getBlob().getBytes();
-      if (!bytes.length || bytes.length > ASST_IMAGE_MAX_BYTES) {
-        throw new Error(filename + ' は空、または2MBを超えています。');
-      }
-      var extension = filename.split('.').pop().toLowerCase();
-      var expectedMime = extension === 'jpg' ? 'image/jpeg' :
-        (extension === 'png' ? 'image/png' : 'image/webp');
-      if (!isExpectedImage_(bytes, expectedMime)) {
-        throw new Error(filename + ' の拡張子と画像データが一致しません。');
-      }
+    Object.keys(driveImages.byName).forEach(function (filename) {
+      var driveImage = driveImages.byName[filename];
       tree.push({
         path: 'assist-cards/' + filename,
         mode: '100644',
         type: 'blob',
-        sha: githubBlob_(Utilities.base64Encode(bytes), 'base64')
+        sha: githubBlob_(Utilities.base64Encode(driveImage.bytes), 'base64')
       });
-    }
+    });
     var newTree = githubRequest_('post', '/git/trees', { base_tree: mainCommit.tree.sha, tree: tree }, false);
     var commit = githubRequest_('post', '/git/commits', { message: 'CMS assist publish ' + nowJst_(), tree: newTree.sha, parents: [mainSha] }, false);
     var latestMain = githubRef_(GITHUB_MAIN_BRANCH, false);

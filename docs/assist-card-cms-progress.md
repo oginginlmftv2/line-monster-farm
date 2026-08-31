@@ -1,8 +1,8 @@
 # アシストカードDB・静的ページ・CMS 設計進捗
 
-最終更新: 2026-08-30
+最終更新: 2026-08-31
 
-状態: **P12-19完了。管理者のGAS反映・Sheet登録・deployment・実機確認まで実施済み**
+状態: **P12-20レビュー待ち。本番GASで`aab-MR-julia`の保存成功を確認し、PRマージ後の公開確認待ち**
 
 手順と確認項目は`docs/assist-card-create-runbook.md`を正とする。
 
@@ -546,8 +546,34 @@ UIはbootstrap成功まで登録ボタンを無効化し、ローカルプレビ
 
 repo内のNode mockテストは成功・全拒否・lock競合・lock後競合・追加後検算失敗・ログ失敗を検査する。
 本番GAS、Sheet、Drive、deploymentは変更していない。管理者が`_cms/gas/README.md`の手順で
-`20_assist.gs`と`ui_assist.html`を反映し、実運用の新規1件で再読込まで確認する。P12-20の
-画像を含む公開経路はこのタスクに含めない。
+`20_assist.gs`と`ui_assist.html`を反映し、実運用の新規1件で再読込まで確認した。画像を含む
+初回保存・公開経路はP12-20へ分離した。
+
+## P12-20 新規カード画像の初回保存・公開経路
+
+`aab-MR-julia`の新規登録後、`aab-MR-julia.jpg`は指定Driveへ正常に保存されたが、mainには
+未公開だった。`api_asstSaveCard()`は画像がmainに存在することを必須としていたためHTTP 404で停止し、
+`api_asstPublish()`もDrive画像をGitHub treeへ追加する前に同じmain存在検査を行う循環が判明した。
+
+修正後は、カード保存・export・公開で次の境界を共有する。
+
+- 画像パスは従来どおり`assist-cards/<cardId>.<jpg|jpeg|png|webp>`だけを許可する
+- 指定Driveに同名の検査済み画像があれば、main未公開の新規画像として受理する
+- Driveにない既存画像はmainのHTTP 200 / 206を確認する
+- mainとDriveの両方にない画像、2MB超過、画像実体不一致、同名重複、規則外ファイルは停止する
+- 公開時は検査に使ったDrive画像のbytesを同じ処理内でGitHub treeへ追加する
+- Drive画像があるカードだけmainの事前HTTP検査から外し、既存main画像は従来の検査を維持する
+- 旧`cards/cards-data.js`の91 IDは互換subsetとして保持し、3DBのCMS追加IDを許可する
+- `assist.html`は既存順を維持して3DBから再生成し、新規カードを末尾へ追加する
+
+repo内では新規Drive画像、main fallback、Drive未設定、両方欠落、実体不一致、同名重複、
+一括検査、規則外ファイルの8ケース、一覧生成5ケースと、検査を壊したコピーを追加した。
+本番GAS、Sheet、Drive、deployment、GitHub公開は変更していない。管理者手順は
+`docs/assist-card-create-runbook.md`第6章を正とする。
+
+2026-08-31、管理者が本番GASで`aab-MR-julia`を再登録・画像再アップロードせず保存し、
+main未公開画像を指定Driveから受理できることを実機確認した。GitHub公開と生成ページ確認は
+P12-20のPRマージ後に残す。
 
 ## 10. 現在の保留・外部確認待ち
 

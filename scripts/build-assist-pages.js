@@ -14,6 +14,9 @@ const RANK_ORDER = ['無凸', '1凸', '2凸', '3凸', '4凸'];
 const INDEXABLE_VISIBLE_CHARS = 800;
 const INDEXABLE_EXPLANATION_CHARS = 50;
 const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>';
+const ASSIST_INDEX = 'assist.html';
+const ASSIST_LIST_START = '<!-- ASSIST_CARD_LIST:START -->';
+const ASSIST_LIST_END = '<!-- ASSIST_CARD_LIST:END -->';
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
@@ -286,6 +289,44 @@ function writeIfChanged(relativePath, content, dryRun) {
   return existed ? 'updated' : 'new';
 }
 
+function renderAssistCard(card) {
+  return `    <a class="card" data-rarity="${escapeHtml(card.rarity)}" href="cards/${escapeHtml(card.cardId)}.html">
+      <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">
+      <div class="card-info"><div class="card-name">${escapeHtml(card.name)}</div><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span></div>
+    </a>`;
+}
+
+function renderAssistIndex(source, cards) {
+  const start = source.indexOf(ASSIST_LIST_START);
+  const end = source.indexOf(ASSIST_LIST_END);
+  if (start < 0 || end < 0 || end <= start) {
+    throw new Error('assist.html のカード一覧マーカーがありません');
+  }
+  if (source.indexOf(ASSIST_LIST_START, start + ASSIST_LIST_START.length) >= 0
+      || source.indexOf(ASSIST_LIST_END, end + ASSIST_LIST_END.length) >= 0) {
+    throw new Error('assist.html のカード一覧マーカーが重複しています');
+  }
+
+  const cardById = new Map(cards.map(card => [card.cardId, card]));
+  const currentRegion = source.slice(start + ASSIST_LIST_START.length, end);
+  const currentIds = [...currentRegion.matchAll(/href="cards\/([A-Za-z0-9._-]+)\.html"/g)]
+    .map(match => match[1]);
+  const duplicateIds = currentIds.filter((id, index) => currentIds.indexOf(id) !== index);
+  if (duplicateIds.length) {
+    throw new Error(`assist.html のカード一覧にcardId重複があります: ${[...new Set(duplicateIds)].join(', ')}`);
+  }
+  const unknownIds = currentIds.filter(id => !cardById.has(id));
+  if (unknownIds.length) {
+    throw new Error(`assist.html のカード一覧にDB未登録のcardIdがあります: ${unknownIds.join(', ')}`);
+  }
+
+  const currentIdSet = new Set(currentIds);
+  const orderedCards = currentIds.map(id => cardById.get(id))
+    .concat(cards.filter(card => !currentIdSet.has(card.cardId)));
+  const list = `\n\n${orderedCards.map(renderAssistCard).join('\n\n')}\n\n    `;
+  return source.slice(0, start + ASSIST_LIST_START.length) + list + source.slice(end);
+}
+
 function buildAssistPages(options = {}) {
   const dryRun = options.dryRun === true;
   const gachaAppearancesFor = typeof options.gachaAppearancesFor === 'function'
@@ -304,6 +345,9 @@ function buildAssistPages(options = {}) {
   const counts = { new: 0, updated: 0, unchanged: 0 };
   const reports = [];
 
+  const assistIndex = fs.readFileSync(path.join(REPO, ASSIST_INDEX), 'utf8');
+  const assistIndexState = writeIfChanged(ASSIST_INDEX, renderAssistIndex(assistIndex, cards), dryRun);
+
   for (const card of cards) {
     const effects = effectsByCard[card.cardId].effects;
     const artifact = buildCardArtifact(card, effects, abilityData.abilities, cardById, gachaAppearancesFor(card.cardId));
@@ -314,6 +358,7 @@ function buildAssistPages(options = {}) {
   const values = reports.map(report => report.visible).sort((a, b) => a - b);
   const passed = reports.filter(report => report.indexable);
   console.log('\n=== 静的カード詳細 ===');
+  console.log(`  一覧 ${ASSIST_INDEX}: ${assistIndexState}`);
   console.log(`  生成 ${cards.length}件 / 新規 ${counts.new}件 / 更新 ${counts.updated}件 / 変更なし ${counts.unchanged}件`);
   console.log(`  ゲート通過 ${passed.length}件: ${passed.map(report => report.cardId).join(', ')}`);
   console.log(`  可視本文 最小 ${values[0]} / 中央値 ${values[Math.floor(values.length / 2)]} / 最大 ${values[values.length - 1]} / 800字以上 ${reports.filter(report => report.visible >= 800).length}件`);
@@ -323,6 +368,7 @@ function buildAssistPages(options = {}) {
     counts,
     reports,
     passed: passed.map(report => report.cardId),
+    assistIndexState,
     sitemapPages: passed.map(report => ({
       canonical: `${SITE_URL}/cards/${report.cardId}.html`,
       priority: '0.7',
@@ -339,4 +385,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { buildAssistPages, buildCardArtifact };
+module.exports = { buildAssistPages, buildCardArtifact, renderAssistIndex };

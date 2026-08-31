@@ -33,7 +33,10 @@ const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
 const LMFDB_CREATE_API_TEST = 'scripts/test-asst-lmfdb-create-api.js';
 const LMFDB_WRITE_SAFETY_TEST = 'scripts/test-asst-lmfdb-write-safety.js';
 const CARD_CREATE_API_TEST = 'scripts/test-asst-card-create-api.js';
+const CARD_IMAGE_FLOW_TEST = 'scripts/test-asst-card-image-flow.js';
 const ASSIST_PAGE_BUILDER = 'scripts/build-assist-pages.js';
+const ASSIST_INDEX_BUILD_TEST = 'scripts/test-assist-index-build.js';
+const ASSIST_SOURCE_VERIFIER = 'scripts/verify-assist-source.js';
 
 const ALLOWED = {
   rarity: new Set(['MR', 'SSR']),
@@ -97,7 +100,7 @@ function functionBlock(source, name) {
 
 function validateRoot(root) {
   const issues = [];
-  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, LMFDB_WRITE_SAFETY_TEST, CARD_CREATE_API_TEST, ASSIST_PAGE_BUILDER]) {
+  for (const relative of [...SOURCE_FILES, ...Object.values(SUPPORT_FILES), ...DATA_FILES, LMFDB_CARD_MAP_FILE, LMFDB_FIXED_FIXTURE, LMFDB_AUDIT_UI_TEST, LMFDB_CREATE_API_TEST, LMFDB_WRITE_SAFETY_TEST, CARD_CREATE_API_TEST, CARD_IMAGE_FLOW_TEST, ASSIST_PAGE_BUILDER, ASSIST_INDEX_BUILD_TEST, ASSIST_SOURCE_VERIFIER]) {
     if (!fs.existsSync(path.join(root, relative))) issues.push(`必須ファイルがない: ${relative}`);
   }
   if (issues.length) return issues;
@@ -118,6 +121,9 @@ function validateRoot(root) {
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
   const cardCreateApiTest = read(root, CARD_CREATE_API_TEST);
+  const cardImageFlowTest = read(root, CARD_IMAGE_FLOW_TEST);
+  const assistIndexBuildTest = read(root, ASSIST_INDEX_BUILD_TEST);
+  const assistSourceVerifier = read(root, ASSIST_SOURCE_VERIFIER);
   const abilityBuildBlock = functionBlock(gas, 'asstBuildDocuments_');
   const assistExportBlock = functionBlock(gas, 'api_asstExport');
   const assistPublishBlock = functionBlock(publishGas, 'api_asstPublish');
@@ -406,6 +412,12 @@ function validateRoot(root) {
       !/buildCardArtifact\(card, effects, abilityData\.abilities/.test(assistPageBuilder)) {
     issues.push('draft resolved能力が生成HTML・本文量・index判定から除外されていない');
   }
+  if (!/renderAssistIndex\(assistIndex, cards\)/.test(assistPageBuilder) ||
+      !/currentIds\.map\(id => cardById\.get\(id\)\)[\s\S]*\.concat\(cards\.filter/.test(assistPageBuilder) ||
+      !/既存順を維持して新規カードを末尾へ追加する/.test(assistIndexBuildTest) ||
+      !/new Set\(\['assist\.html', 'sitemap\.xml'\]\)/.test(assistSourceVerifier)) {
+    issues.push('assist.htmlを3DBから既存順維持・新規末尾追加で生成する経路が不足');
+  }
   if (!/return ability\.linkStatus === 'resolved' && ability\.status === 'verified'/.test(functionBlock(gas, 'asstPublicPageAbilities_')) ||
       !/asstPublicPageAbilities_\(docs\.abilities\.abilities\)/.test(assistPublishBlock)) {
     issues.push('GAS公開前検査がdraft resolved能力を公開ページ対象から除外していない');
@@ -568,8 +580,23 @@ function validateRoot(root) {
       !/asstValidateImagePath_\(card,\s*true\)/.test(gas) ||
       !/asstValidateReleasedAt_\(card\.releasedAt/.test(gas) ||
       !/asstValidateRatings_\(card\.ratings/.test(gas) ||
-      !/concat\(asstValidateImageFiles_\(docs\.cards\.cards\)\)/.test(gas)) {
+      !/asstDriveImageInventory_\(docs\.cards\.cards,\s*true\)/.test(assistExportBlock) ||
+      !/asstValidateImageFiles_\(docs\.cards\.cards,\s*driveImages\.byName\)/.test(assistExportBlock)) {
     issues.push('カード保存・exportの必須値検査が不足');
+  }
+  const imagePathBlock = functionBlock(gas, 'asstValidateImagePath_');
+  const driveInventoryBlock = functionBlock(gas, 'asstDriveImageInventory_');
+  if (!/asstDriveImageByName_\(filename\)/.test(imagePathBlock) ||
+      !/ASST_RAW_REPO_BASE \+ imagePath/.test(imagePathBlock) ||
+      !/mainまたは指定Drive/.test(imagePathBlock) ||
+      !/asstDriveImageInventory_\(docs\.cards\.cards,\s*false\)/.test(assistPublishBlock) ||
+      !/asstValidateImageFiles_\(docs\.cards\.cards,\s*driveImages\.byName\)/.test(assistPublishBlock) ||
+      !/Object\.keys\(driveImages\.byName\)/.test(assistPublishBlock) ||
+      !/githubBlob_\(Utilities\.base64Encode\(driveImage\.bytes\),\s*'base64'\)/.test(assistPublishBlock) ||
+      !/同名画像が複数/.test(driveInventoryBlock) ||
+      !/main未公開の新規画像を指定Driveから受理する/.test(cardImageFlowTest) ||
+      !/mainと指定Driveの両方にない画像を拒否する/.test(cardImageFlowTest)) {
+    issues.push('新規カード画像をDriveから初回保存・公開する安全経路が不足');
   }
 
   const calledApis = [...html.matchAll(/call\(['"](api_[A-Za-z0-9_]+)['"]/g)].map(match => match[1]);

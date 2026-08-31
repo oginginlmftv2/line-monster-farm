@@ -51,6 +51,7 @@
 | P12-18 | CMS外部能力候補の枠・ボタン簡易改修 | `fix/p12-18-cms-audit-layout` | **完了** | ⚪（GAS反映時🟡） | 候補カード内で編集画面用の固定操作バーが誤適用される表示崩れを修正。本番GASへ反映し、管理者が問題ないことを確認済み |
 | P12-19 | CMS新規カード登録UI・追加専用API | `feat/p12-19-assist-card-create` | **完了** | 🟡 | PR #82をmainへマージ（`35de94d`）。管理者がGAS同期・Sheet登録・deployment・実機確認を完了。手順は`docs/assist-card-create-runbook.md` |
 | P12-19b | P12-19の管理者手順書と進捗の同期 | `chore/p12-19-admin-runbook` | **レビュー待ち** | ⚪ | 手順書を新設し、PROGRESS.mdの状態と監査値をmain実測値へ更新 |
+| P12-20 | 新規カード画像の初回保存・公開経路 | `fix/p12-20-assist-image-publish` | **レビュー待ち** | ⚪（公開時🟡🔴） | main未公開画像を検査済みDrive画像から保存・公開できるよう修正。本番GASで`aab-MR-julia`の保存成功を確認済み。PRマージ後の公開確認待ち |
 | G1 | ガチャDBとガチャページ生成の基盤 | `feat/g1-gacha-data-foundation` | **レビュー待ち** | ⚪ | PR #84のレビュー指摘を反映。通常ビルドの現在時刻解決、解説ゲート300字化、解説なしモンスターの詳細リンク、正常13件・破壊10件のfixtureテストを追加。公開出力差分なし |
 | G2 | ガチャ情報の既存ページへの反映（マーカー方式） | `feat/g2-gacha-page-integration` | **レビュー待ち** | 🔴 | 空DBでは既存表示不変。トップ4区間・リセマラ1区間、詳細逆リンク、正常27件・破壊14件のテストを追加 |
 | G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **完了** | 🟡 | PR #86をmainへマージ（`ebc3c01`）。ガチャCMSのシート・画面・保存・画像経路を導入 |
@@ -264,9 +265,12 @@ G5のPRマージ後、管理者が`Gacha display refresh`を`workflow_dispatch`�
 
 G4のPRレビュー後、管理者がREADMEに従ってGAS同期、`setup1_createSheets`再実行、再deployment、最小公開と表示確認を行う。
 
-P12-20の画像を含む保存・公開経路は、別承認まで開始しない。あわせて、AdSense再申請前の
-Search Consoleでのインデックス状況確認と、解説済み92ページへの著者名一括入力を管理者作業として
-残している。
+P12-20の本番GAS反映と`aab-MR-julia`のカード保存は管理者確認済み。PRマージ後は再登録・
+画像再アップロードせず、アシスト公開、main画像、生成ページを
+`docs/assist-card-create-runbook.md`第6章の順で確認する。
+
+あわせて、AdSense再申請前のSearch Consoleでのインデックス状況確認と、解説済み92ページへの
+著者名一括入力を管理者作業として残している。
 
 ## 明示的な保留
 
