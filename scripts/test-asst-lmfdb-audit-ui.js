@@ -158,6 +158,13 @@ test('監査入口が存在する', () => {
   assert.match(UI_SOURCE, /id="asst_btnExternalAbilityAudit"[^>]*>外部能力DBを確認</);
 });
 
+test('ui_commonの対訳関数を本番順で読み込む', () => {
+  const h = harness();
+  assert.strictEqual(h.context.cmsLabel('PASS'), '監査成功（PASS）');
+  assert.strictEqual(h.context.cmsLabelShort('card_match_candidate'), 'カード対応候補');
+  assert.strictEqual(h.context.CMS_LABELS.BLOCKED, '停止');
+});
+
 test('初回はSHAなし・page 1・pageSize 50', () => {
   const h = harness();
   h.context.asstOpenExternalAudit();
@@ -212,6 +219,7 @@ test('auditStatus FAILでは候補を表示しない', () => {
   }) });
   h.context.asstOpenExternalAudit();
   assert.match(h.html(), /監査結果: 監査失敗（FAIL）/);
+  assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
   assert.doesNotMatch(h.html(), /<h2>候補一覧<\/h2>/);
 });
 
@@ -223,12 +231,32 @@ test('BLOCKEDでも候補を表示しID再利用は監査成功と明示する',
   assert.match(h.html(), /分類: カード対応候補 \/ 外部数値ID/);
   assert.doesNotMatch(h.html(), /分類: カード対応候補（card_match_candidate）/);
   assert.match(h.html(), /監査処理自体は成功しています/);
+  assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
   assert.match(h.html(), /<h2>候補一覧<\/h2>/);
 });
 
-test('監査サマリーに全分類件数を表示する', () => {
-  const h = harness();
+test('通常の監査サマリーは閉じ、要約へ状態・安全性・総候補数を表示する', () => {
+  const h = harness({ response: response({ safetyVerdict: 'SAFE', blockReasons: [] }) });
   h.context.asstOpenExternalAudit();
+  assert.match(h.html(), /<details id="asst_auditSummary" class="asst-audit-summary"><summary>監査サマリー: 監査成功（PASS） \/ 安全性: 問題なし（SAFE） \/ 総候補数 51<\/summary>/);
+});
+
+test('監査サマリーの手動開閉を再描画後も保持し強制条件を優先する', () => {
+  const h = harness({ response: response({ safetyVerdict: 'SAFE', blockReasons: [] }) });
+  h.context.asstOpenExternalAudit();
+  const summary = h.context.el('asst_auditSummary');
+  summary.open = true; summary.ontoggle();
+  h.context.asstRenderExternalAudit();
+  assert.strictEqual(h.context.ASST.audit.foldOpen, true);
+  assert.match(h.html(), /id="asst_auditSummary"[^>]* open/);
+  h.context.ASST.audit.response.safetyVerdict = 'BLOCKED';
+  summary.open = false; summary.ontoggle();
+  assert.strictEqual(summary.open, true);
+  assert.strictEqual(h.context.ASST.audit.foldOpen, true);
+});
+
+test('監査サマリーに全分類件数を表示する', () => {
+  const h = harness(); h.context.asstOpenExternalAudit();
   for (const label of ['外部件数','ローカル件数','カード対応候補数','未紐付け候補数','ID再利用疑い数','既存内容差分数','表記違い数','重複内容一致数','外部欠落観測数','処置済み件数']) {
     assert(h.html().includes(label), label);
   }
@@ -237,7 +265,7 @@ test('監査サマリーに全分類件数を表示する', () => {
 });
 
 test('API候補順を変更しない', () => {
-  const first = candidate('unlinked_candidate', 1202, 'API先頭');
+  const first = candidate('card_match_candidate', 1202, 'API先頭');
   const second = candidate('card_match_candidate', 1100, 'API後続');
   const h = harness({ response: response({ candidates: [first, second] }) });
   h.context.asstOpenExternalAudit();
@@ -247,25 +275,79 @@ test('API候補順を変更しない', () => {
 test('50件ページングと先頭・最終ボタン制御', () => {
   const first = harness();
   first.context.asstOpenExternalAudit();
+  assert.match(first.html(), /id="asst_auditFirst" disabled/);
   assert.match(first.html(), /id="asst_auditPrev" disabled/);
   assert.doesNotMatch(first.html(), /id="asst_auditNext" disabled/);
+  assert.doesNotMatch(first.html(), /id="asst_auditLast" disabled/);
   const last = harness({ response: response({ pagination: { page: 2, pageSize: 50, totalItems: 51, totalPages: 2 } }) });
   last.context.asstOpenExternalAudit();
-  assert.match(last.html(), /現在ページ 2 \/ 総ページ 2 ・ 総候補数 51/);
+  assert.match(last.html(), />2 \/ 2 ページ ・ 総候補数 51<\/span>/);
+  assert.doesNotMatch(last.html(), /id="asst_auditFirst" disabled/);
+  assert.doesNotMatch(last.html(), /id="asst_auditPrev" disabled/);
   assert.match(last.html(), /id="asst_auditNext" disabled/);
+  assert.match(last.html(), /id="asst_auditLast" disabled/);
 });
 
-test('低優先3分類は既定で折りたたむ', () => {
+test('最初へと最後へは既存読込関数へ境界ページを渡す', () => {
+  const h = harness({ response: response({ pagination: { page: 2, pageSize: 50, totalItems: 120, totalPages: 3 } }) });
+  h.context.asstOpenExternalAudit();
+  const moves = [];
+  h.context.asstLoadExternalAudit = (page, latest) => moves.push({ page, latest });
+  h.context.asstRenderExternalAudit();
+  h.context.el('asst_auditFirst').onclick();
+  h.context.el('asst_auditPrev').onclick();
+  h.context.el('asst_auditNext').onclick();
+  h.context.el('asst_auditLast').onclick();
+  assert.deepStrictEqual(moves, [{ page: 1, latest: false }, { page: 1, latest: false }, { page: 3, latest: false }, { page: 3, latest: false }]);
+});
+
+test('7分類を指定順の5タブへ対応しその他は後半3分類を合算する', () => {
   const candidates = [
-    candidate('card_match_candidate', 1, 'open'),
-    candidate('representationOnly', 2, 'closed-a'),
-    candidate('duplicate_local_content_match', 3, 'closed-b'),
-    candidate('missing_upstream_observation', 4, 'closed-c', { externalSnapshot: null, localObservation: { name: '欠落', sourceName: 'ローカル' }, registrationEligible: false }),
+    candidate('card_match_candidate', 1, 'card'), candidate('unlinked_candidate', 2, 'unlinked'),
+    candidate('ID_REUSE_SUSPECTED', 3, 'reuse'), candidate('existingContentDifferences', 4, 'difference'),
+    candidate('representationOnly', 5, 'other-a'), candidate('duplicate_local_content_match', 6, 'other-b'),
+    candidate('missing_upstream_observation', 7, 'other-c', { externalSnapshot: null, localObservation: { name: '欠落', sourceName: 'ローカル' }, registrationEligible: false }),
   ];
   const h = harness({ response: response({ candidates }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /<details data-audit-category="card_match_candidate" open><summary>カード対応候補（card_match_candidate）/);
-  for (const [classification, label] of [['representationOnly','表記違い'],['duplicate_local_content_match','重複内容一致'],['missing_upstream_observation','外部欠落観測']]) assert.match(h.html(), new RegExp(`<details data-audit-category="${classification}"><summary>${label}（${classification}）`));
+  const labels = ['カード対応候補 (98)','未紐付け候補 (20)','ID再利用疑い (1)','既存内容差分 (2)','その他 (45)'];
+  let previous = -1;
+  for (const label of labels) { const index = h.html().indexOf(label); assert(index > previous, label); previous = index; }
+  h.context.ASST.audit.tab = 'other'; h.context.asstRenderExternalAudit();
+  assert.match(h.html(), /その他 <span class="muted">このページ 3件/);
+  for (const name of ['other-a','other-b','欠落']) assert.match(h.html(), new RegExp(name));
+});
+
+test('件数0のタブはdisabledで残りタブ件数はdata.countsを使う', () => {
+  const h = harness({ response: response({ counts: counts({ idReuseSuspected: 0, cardMatchCandidates: 123 }) }) });
+  h.context.asstOpenExternalAudit();
+  assert.match(h.html(), /カード対応候補 \(123\)/);
+  assert.match(h.html(), /data-audit-tab="ID_REUSE_SUSPECTED"[^>]* disabled/);
+});
+
+test('タブ絞り込み後も元配列indexを詳細へ渡す', () => {
+  const candidates = [candidate('unlinked_candidate', 1, 'index-0'),candidate('card_match_candidate', 2, 'index-1'),candidate('card_match_candidate', 3, 'index-2')];
+  const h = harness({ response: response({ candidates }) });
+  h.context.asstOpenExternalAudit();
+  assert.doesNotMatch(h.html(), /index-0/);
+  assert.match(h.html(), /index-1[\s\S]*data-audit-detail="1"/);
+  assert.match(h.html(), /index-2[\s\S]*data-audit-detail="2"/);
+  h.context.asstOpenAuditDetail(1);
+  assert.strictEqual(h.context.ASST.audit.detailIndex, 1);
+  assert.match(h.html(), /カード2/);
+});
+
+test('ページ移動と再監査の後も選択タブを維持する', () => {
+  const h = harness(); h.context.asstOpenExternalAudit();
+  h.context.ASST.audit.tab = 'other'; h.context.asstRenderExternalAudit();
+  h.transport.response = response({ candidates: [candidate('representationOnly', 4, 'other-page-2')], pagination: { page: 2, pageSize: 50, totalItems: 51, totalPages: 2 } });
+  h.context.asstLoadExternalAudit(2, false);
+  assert.strictEqual(h.context.ASST.audit.tab, 'other');
+  assert.match(h.html(), /data-audit-tab="other" class="active"/);
+  h.transport.response = response({ candidates: [candidate('representationOnly', 5, 'other-latest')] });
+  h.context.asstLoadExternalAudit(1, true);
+  assert.strictEqual(h.context.ASST.audit.tab, 'other');
+  assert.match(h.html(), /other-latest/);
 });
 
 test('処置済み候補はチェック後だけ表示する', () => {
@@ -284,6 +366,7 @@ test('externalSnapshot nullでも描画できる', () => {
     externalSnapshot: null, localObservation: { name: 'ローカル能力', sourceName: '元カード' }, cardIdCandidate: null, registrationEligible: false,
   });
   const h = harness({ response: response({ candidates: [missing] }) });
+  h.context.ASST.audit.tab = 'other';
   assert.doesNotThrow(() => h.context.asstOpenExternalAudit());
   assert.match(h.html(), /ローカル能力/);
   assert.match(h.html(), /監査情報/);
@@ -346,12 +429,31 @@ test('最終プレビュー契約は許可キーだけを組み立てる', () =>
   assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*ASST\.audit\.finalPreview=null/);
 });
 
-test('同じページへ戻ると編集・折りたたみ・処置済み表示を保持しページ移動で破棄する', () => {
-  const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.audit.showProcessed=true;h.context.ASST.audit.foldOpen.representationOnly=true;h.context.asstOpenAuditDetail(0);
+test('同じページ・同じタブへ戻ると編集・サマリー・処置済み表示を保持しページ移動で編集だけ破棄する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.audit.showProcessed=true;h.context.ASST.audit.foldOpen=true;h.context.ASST.audit.tab='card_match_candidate';h.context.asstOpenAuditDetail(0);
   for (const [id, value] of [['sourceName','カード1200'],['name','手修正'],['description','説明'],['source','イベント'],['rarity','MR'],['tags','タグ'],['linkStatus','unlinked']]) h.context.el('asst_audit_'+id).value=value;
-  h.context.asstReturnFromAuditDetail();h.context.asstOpenAuditDetail(0);
-  assert.strictEqual(h.context.ASST.audit.detailDraft.name,'手修正');assert.strictEqual(h.context.ASST.audit.showProcessed,true);assert.strictEqual(h.context.ASST.audit.foldOpen.representationOnly,true);
-  h.transport.response=response({pagination:{page:2,pageSize:50,totalItems:51,totalPages:2}});h.context.asstLoadExternalAudit(2,false);assert.strictEqual(h.context.ASST.audit.detailIndex,null);assert.strictEqual(h.context.ASST.audit.detailDraft,null);assert.strictEqual(h.context.ASST.audit.externalSha,FIXED_SHA);
+  h.context.asstReturnFromAuditDetail();
+  assert.strictEqual(h.context.ASST.audit.response.pagination.page,1);assert.strictEqual(h.context.ASST.audit.tab,'card_match_candidate');
+  h.context.asstOpenAuditDetail(0);
+  assert.strictEqual(h.context.ASST.audit.detailDraft.name,'手修正');assert.strictEqual(h.context.ASST.audit.showProcessed,true);assert.strictEqual(h.context.ASST.audit.foldOpen,true);
+  h.transport.response=response({pagination:{page:2,pageSize:50,totalItems:51,totalPages:2}});h.context.asstLoadExternalAudit(2,false);assert.strictEqual(h.context.ASST.audit.detailIndex,null);assert.strictEqual(h.context.ASST.audit.detailDraft,null);assert.strictEqual(h.context.ASST.audit.externalSha,FIXED_SHA);assert.strictEqual(h.context.ASST.audit.tab,'card_match_candidate');
+});
+
+test('詳細上部のmobile-backを削除し下部で戻るを処置保存の左へ置く', () => {
+  const h = harness(); h.context.asstOpenExternalAudit(); h.context.asstOpenAuditDetail(0);
+  assert.doesNotMatch(h.html(), /mobile-back[^>]*asst_btnBackAuditDetail/);
+  assert.match(h.html(), /id="asst_btnBackAuditDetail"[^>]*>← 戻る<\/button>[\s\S]*id="asst_btnAuditDisposition"[^>]*>処置を保存/);
+  h.context.asstReturnFromAuditDetail();
+  assert.strictEqual(h.calls.length, 1);
+  assert.strictEqual(h.context.ASST.audit.detailIndex, null);
+});
+
+test('監査ページと詳細のスマホgrid・長文字列・操作行を内容側で折り返す', () => {
+  assert.match(UI_SOURCE, /@media\(max-width:860px\)[^{]*\{#asst_editor \.asst-audit-page \.grid,#asst_editor \.asst-audit-detail \.grid\{grid-template-columns:minmax\(0,1fr\)\}/);
+  assert.match(UI_SOURCE, /\.asst-audit-summary \.readonly,#asst_editor \.asst-audit-detail \.readonly\{overflow-wrap:anywhere;max-height:8em;overflow:auto\}/);
+  assert.match(UI_SOURCE, /\.asst-audit-long\{word-break:break-all\}/);
+  assert.match(UI_SOURCE, /\.asst-audit-pagination[^}]*flex-wrap:wrap/);
+  assert.doesNotMatch(UI_SOURCE, /overflow-x\s*:\s*hidden/);
 });
 
 test('外部文字列をescし実行可能なHTMLにしない', () => {
