@@ -1,19 +1,19 @@
 <section class="domain-panel" id="mon_root"><div class="domain-tools"><span id="mon_stats"></span></div><div class="wrap">
   <div class="col-list panel">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+    <div style="display:flex;margin-bottom:10px">
       <button class="primary" id="mon_btnNew" disabled>＋ 新規モンスター</button>
     </div>
     <div class="filters">
       <input type="text" id="mon_q" placeholder="名前・ID・血統で絞り込み">
-      <select id="mon_fMon" style="width:110px"><option value="">モン類すべて</option></select>
-      <select id="mon_fState" style="width:150px">
+      <select id="mon_fMon"><option value="">モン類すべて</option></select>
+      <select id="mon_fState">
         <option value="">状態すべて</option>
         <option value="index">インデックス対象</option>
         <option value="near">あと少し（700字〜）</option>
         <option value="has">解説あり</option>
         <option value="none">解説なし</option>
       </select>
-      <select id="mon_fSort" style="width:150px">
+      <select id="mon_fSort">
         <option value="id">ID順</option>
         <option value="charsDesc">字数が多い順</option>
         <option value="charsAsc">字数が少ない順</option>
@@ -342,8 +342,13 @@ function monRenderEdit(){
     monOptions(MON.boot.mainBloodList, m.mainBlood, '（未設定）') + '</select></div>';
   html += '<div class="field"><label>副血統</label><select id="mon_f_subBlood">' +
     monOptions(MON.boot.subBloodList, m.subBlood, '（未設定）') + '</select></div>';
-  html += '<div class="field"><label>実装日（YYYY-MM-DD / YYYY-MM・空でも可）</label>' +
-    '<input type="text" id="mon_f_releasedAt" value="' + esc(m.releasedAt) + '" placeholder="2025-06-01"></div>';
+  var releasedAt = String(m.releasedAt || '');
+  var releasedAtMonthOnly = /^\d{4}-\d{2}$/.test(releasedAt);
+  html += '<div class="field"><label>実装日（空でも可）</label>' +
+    '<input type="' + (releasedAtMonthOnly ? 'month' : 'date') + '" id="mon_f_releasedAt" value="' +
+    esc(releasedAt) + '">' +
+    '<label style="font-weight:400;margin-top:5px"><input type="checkbox" id="mon_f_releasedAtMonthOnly"' +
+    (releasedAtMonthOnly ? ' checked' : '') + '> 年月のみ（日付不明）</label></div>';
   html += '<div class="field"><label>限定</label>' +
     '<label style="font-weight:400"><input type="checkbox" id="mon_f_limited"' +
     (m.limited ? ' checked' : '') + '> 限定モンスター</label>' +
@@ -406,6 +411,7 @@ function monRenderEdit(){
 
   el('mon_f_explanation').addEventListener('input', monUpdateProgress);
   el('mon_f_imageFile').addEventListener('change', monImageSelected);
+  el('mon_f_releasedAtMonthOnly').addEventListener('change', monToggleReleasedAtType);
   el('mon_btnUpload').addEventListener('click', monUploadImage);
   el('mon_btnSave').addEventListener('click', monSave);
   el('mon_btnReload').addEventListener('click', function(){ monOpenMonster(MON.current.id); });
@@ -419,6 +425,20 @@ function monRenderEdit(){
   });
 
   monUpdateProgress();
+}
+
+function monToggleReleasedAtType(){
+  var input = el('mon_f_releasedAt');
+  var monthOnly = el('mon_f_releasedAtMonthOnly').checked;
+  var value = input.value;
+  if (monthOnly) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) value = value.slice(0, 7);
+    input.type = 'month';
+  } else {
+    if (/^\d{4}-\d{2}$/.test(value)) value += '-01';
+    input.type = 'date';
+  }
+  input.value = value;
 }
 
 function monAuthorMode(){
