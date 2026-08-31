@@ -56,6 +56,7 @@
 | G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **進行中** | 🟡 | `gachas`・`gacha_types`の新規2シート、ガチャタブ、新規・編集・競合拒否、raw ID照合、バナー画像差し替えを実装。GitHub公開とGAS反映は対象外 |
 | G4 | ガチャ公開経路（GitHub送信・Workflow・ソース検査） | `feat/g4-gacha-publish` | **レビュー待ち** | 🔴 | `gacha-banner/`へ画像入力を分離し、公開対象切替、初回公開日確定、`cms/gacha-publish`、origin/main版ソース検査、未参照画像拒否を実装。GAS反映・Actions実行は管理者作業 |
 | G5 | 終了ガチャの自動取り下げ（日次2回の再ビルド） | `feat/g5-gacha-auto-refresh` | **レビュー待ち** | 🔴 | 05:00 / 15:00 JSTに再ビルドし、検証済み差分がある場合だけ`main`を更新。Actions実地確認はマージ後の管理者作業 |
+| G6 | ガチャ公開日時の形式不一致修正 | `fix/g6-gacha-datetime-format` | **レビュー待ち** | 🟡🔴 | GASの秒付きJST出力とbuildの分単位契約が不一致で初回公開が停止。開始・終了は分単位、publishedAtは日付専用に分離し、再発検査を追加 |
 
 ## 最新mainの監査値
 
@@ -222,6 +223,11 @@ GAS → cms/publish → generate-ids.js → verify-cms-ids.js
 
 ## 現在の作業
 
+G6として、初回ガチャ公開で判明したGASの秒付き日時と`build.js`の分単位日時の契約不一致、
+および2回目公開時にSheet Date化した`publishedAt`が日時へ変換される不一致を修正する。
+既存シート値はGAS読取時に正規化し、build側の正規形式は変更しない。
+リポジトリ反映後のGAS同期・deployment・ガチャ再公開は管理者が行う。
+
 G5として、05:00 / 15:00 JSTの日次再ビルドにより、終了ガチャをトップのピックアップと
 リセマラから自動で外す。詳細・一覧・更新履歴は残し、全検証成功かつ差分ありの場合だけ
 `main`へpushする。GAS操作とGitHub Actionsの実行は管理者が別途行う。
@@ -244,6 +250,9 @@ P12-19bとして、PROGRESS.mdの状態（P12-13〜P12-15、P12-17c、P12-19）�
 実測値へ同期した。公開物・データ・GASは変更していない。
 
 ## 次の作業
+
+G6のPRマージ後、管理者が`_cms/gas/50_gacha.gs`を本番GASへ同期して再deploymentし、
+同じガチャを再公開する。送信JSONの`startAt` / `endAt`が秒なしでbuildを通ることを確認する。
 
 G5のPRマージ後、管理者が`Gacha display refresh`を`workflow_dispatch`で1回実行し、
 差分ゼロで正常終了することとstep summaryを確認する。

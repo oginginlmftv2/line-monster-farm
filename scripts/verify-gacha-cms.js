@@ -239,6 +239,31 @@ function validateRoot(root) {
     issues.push('verify.ymlのbranches-ignoreにcms/gacha-publishがない');
   }
 
+  // 18. GASの日時出力はbuild.jsと同じ分単位JSTに固定する。
+  const minuteDateTime = functionBlock(gas, 'gachaMinuteDateTime_');
+  const dateCell = functionBlock(gas, 'gachaDateCell_');
+  const normalizeDateTime = functionBlock(gas, 'gachaNormalizeDateTime_');
+  const validatePublish = functionBlock(gas, 'gachaValidatePublishDocuments_');
+  if (!minuteDateTime.includes("text.replace(/:00\\+09:00$/, '+09:00')") ||
+      !dateCell.includes('gachaMinuteDateTime_(Utilities.formatDate') ||
+      !dateCell.includes("yyyy-MM-dd'T'HH:mm:ssXXX") ||
+      !normalizeDateTime.includes('var text = gachaMinuteDateTime_(value)') ||
+      !normalizeDateTime.includes("text += '+09:00'") ||
+      !normalizeDateTime.includes('gachaMinuteDateTime_(Utilities.formatDate') ||
+      !validatePublish.includes("T\\d{2}:\\d{2}\\+09:00$/.test(gacha.startAt)") ||
+      !validatePublish.includes("T\\d{2}:\\d{2}\\+09:00$/.test(gacha.endAt)")) {
+    issues.push('ガチャ日時がbuild.jsと同じYYYY-MM-DDTHH:mm+09:00形式ではない');
+  }
+
+  // 19. publishedAtはSheetのDate値でも日付だけを公開する。
+  const dateOnlyCell = functionBlock(gas, 'gachaDateOnlyCell_');
+  const readAll = functionBlock(gas, 'gachaReadAll_');
+  if (!dateOnlyCell.includes("Utilities.formatDate(value, tz_(), 'yyyy-MM-dd')") ||
+      !dateOnlyCell.includes("text.slice(0, 10)") ||
+      !readAll.includes('item.publishedAt = gachaDateOnlyCell_(item.publishedAt)')) {
+    issues.push('publishedAtがSheet DateからYYYY-MM-DDへ正規化されていない');
+  }
+
   return issues;
 }
 

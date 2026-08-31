@@ -45,11 +45,29 @@ function gachaBool_(value) {
   return value === true || String(value).toUpperCase() === 'TRUE';
 }
 
+function gachaMinuteDateTime_(value) {
+  var text = gachaText_(value);
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:00\+09:00$/.test(text)) {
+    text = text.replace(/:00\+09:00$/, '+09:00');
+  }
+  return text;
+}
+
 function gachaDateCell_(value) {
   if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
-    return Utilities.formatDate(value, tz_(), "yyyy-MM-dd'T'HH:mm:ssXXX");
+    return gachaMinuteDateTime_(Utilities.formatDate(value, tz_(), "yyyy-MM-dd'T'HH:mm:ssXXX"));
   }
-  return gachaText_(value);
+  // G3〜G5で保存された秒固定の値は、build.jsの正規形へ読取時に移行する。
+  return gachaMinuteDateTime_(value);
+}
+
+function gachaDateOnlyCell_(value) {
+  if (Object.prototype.toString.call(value) === '[object Date]' && !isNaN(value.getTime())) {
+    return Utilities.formatDate(value, tz_(), 'yyyy-MM-dd');
+  }
+  var text = gachaText_(value);
+  if (/^\d{4}-\d{2}-\d{2}T00:00(?::00)?\+09:00$/.test(text)) return text.slice(0, 10);
+  return text;
 }
 
 function gachaColumnMap_() {
@@ -76,7 +94,7 @@ function gachaReadAll_() {
     item.explanation = String(item.explanation == null ? '' : item.explanation);
     item.rerollPriority = gachaBool_(item.rerollPriority);
     item.status = gachaText_(item.status) || 'draft';
-    item.publishedAt = gachaDateCell_(item.publishedAt);
+    item.publishedAt = gachaDateOnlyCell_(item.publishedAt);
     item.author = gachaText_(item.author);
     item.updatedAt = gachaDateCell_(item.updatedAt);
     item.lastEditor = gachaText_(item.lastEditor);
@@ -144,13 +162,13 @@ function gachaLookupPickup_(kind, id) {
 }
 
 function gachaNormalizeDateTime_(value, label) {
-  var text = gachaText_(value);
-  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(text)) text += ':00+09:00';
-  else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(text)) { /* 正規形 */ }
+  var text = gachaMinuteDateTime_(value);
+  if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}$/.test(text)) text += '+09:00';
+  else if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}\+09:00$/.test(text)) { /* 正規形 */ }
   else throw new Error(label + 'は日時を選択してください。');
   var time = new Date(text).getTime();
   if (!isFinite(time)) throw new Error(label + 'が実在する日時ではありません。');
-  if (Utilities.formatDate(new Date(time), tz_(), "yyyy-MM-dd'T'HH:mm:ssXXX") !== text) {
+  if (gachaMinuteDateTime_(Utilities.formatDate(new Date(time), tz_(), "yyyy-MM-dd'T'HH:mm:ssXXX")) !== text) {
     throw new Error(label + 'が実在する日時ではありません。');
   }
   return text;
@@ -272,8 +290,8 @@ function gachaValidatePublishDocuments_(documents, allowEmptyPublishedAt) {
         gacha.image.split('/').pop().replace(/\.[^.]+$/, '') !== gacha.gachaId) {
       issues.push(label + ': バナー画像パスが不正です。');
     }
-    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(gacha.startAt) ||
-        !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\+09:00$/.test(gacha.endAt) ||
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}\+09:00$/.test(gacha.startAt) ||
+        !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}\+09:00$/.test(gacha.endAt) ||
         new Date(gacha.startAt).getTime() >= new Date(gacha.endAt).getTime()) {
       issues.push(label + ': 開始日時または終了日時が不正です。');
     }

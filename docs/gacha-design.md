@@ -30,6 +30,11 @@ G1では既存ページへの導線や表示を変更しない。GAS、シート
 `startAt`と`endAt`は`YYYY-MM-DDTHH:mm+09:00`形式に限定する。公開済みURLの不変性を優先するため、
 `gachaId`と現在の`startAt`の日付一致は検査しない。
 
+GAS管理画面の`datetime-local`入力、シートのDate値、公開JSON、`build.js`の全境界でこの分単位の
+JST形式を共通契約とする。G3〜G5で一時的に出力された秒固定の`HH:mm:00+09:00`は、GASが
+シート読取時に秒を除いて移行する。秒が00以外の値を丸めて受理してはならない。
+`publishedAt`は日時と共通変換せず、SheetのDate値でも`YYYY-MM-DD`の日付だけを公開する。
+
 ## 3. 共通定数と検証
 
 `build.js`だけに次を定義し、`scripts/verify.js`と`test-gacha-build.js`はexportを参照する。
