@@ -265,12 +265,14 @@ function asstImportFromMain_() {
     cardsDoc.cards.forEach(function (card) {
       var group = effectsDoc.cards[card.cardId];
       if (!group.effects.length) {
-        effectRows.push([card.cardId, '', '', '', '', '', '', '']);
+        effectRows.push([card.cardId, '', '', '', '', '', '', '', 0, '']);
       } else {
         group.effects.forEach(function (effect) {
+          var activation = asstNormalizeEffectConditions_(effect.conditional, effect.conditions, effect.effectId);
           effectRows.push([
             card.cardId, effect.effectId, effect.name, effect.description,
-            effect.unlockRank, effect.sortOrder, '', ''
+            effect.unlockRank, effect.sortOrder, '', '',
+            activation.conditional, activation.conditions === null ? '' : asstJsonCell_(activation.conditions)
           ]);
         });
       }
@@ -312,6 +314,28 @@ function asstCreateImageFolder_() {
   var root = DriveApp.getFolderById(folderId);
   asstAppendLog_({ nickname: 'setup' }, 'prepare-assist-image-folder', 'PASS', root.getName());
   return { configured: true, folderName: root.getName() };
+}
+
+// assist_effectsへconditional / conditionsJson列を追加する。既存列と既存行は変更しない。
+function asstUpgradeEffectColumns_() {
+  var sheet = book_().getSheetByName(ASST_SHEET_EFFECTS);
+  if (!sheet) throw new Error(ASST_SHEET_EFFECTS + ' シートがありません。');
+  var expected = ASST_HEADERS[ASST_SHEET_EFFECTS];
+  var width = Math.max(sheet.getLastColumn(), 1);
+  var actual = sheet.getRange(1, 1, 1, width).getValues()[0].map(function (v) { return String(v || '').trim(); });
+  var filled = actual.filter(Boolean);
+  if (filled.join('\0') === expected.join('\0')) return ASST_SHEET_EFFECTS + ': 既に' + expected.length + '列です。変更なし。';
+  if (filled.join('\0') !== expected.slice(0, filled.length).join('\0')) {
+    throw new Error(ASST_SHEET_EFFECTS + ': 既存の列見出しが想定と異なります。変更していません。実際: ' + filled.join(' / '));
+  }
+  if (sheet.getMaxColumns() < expected.length) {
+    sheet.insertColumnsAfter(sheet.getMaxColumns(), expected.length - sheet.getMaxColumns());
+  }
+  var added = expected.slice(filled.length);
+  var range = sheet.getRange(1, filled.length + 1, 1, added.length);
+  range.setValues([added]);
+  range.setFontWeight('bold').setBackground('#f3ead7');
+  return ASST_SHEET_EFFECTS + ': ' + added.join(' / ') + ' 列を追加しました。既存行は空欄のままで、conditional=0として扱います。';
 }
 
 function asstRewriteSheet_(name, values) {
@@ -364,6 +388,12 @@ function setup5_upgradeMonsterEditLog() {
 function setup5_createAssistImageFolder() {
   var target = setupTarget_();
   var result = target + '\n' + JSON.stringify(asstCreateImageFolder_());
+  Logger.log(result);
+  return result;
+}
+function setup5_upgradeAssistEffectColumns() {
+  var target = setupTarget_();
+  var result = target + '\n' + asstUpgradeEffectColumns_();
   Logger.log(result);
   return result;
 }

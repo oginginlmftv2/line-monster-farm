@@ -3,6 +3,8 @@
 #asst_editor .asst-audit-long{word-break:break-all}
 #asst_editor .asst-audit-tabs,#asst_editor .asst-audit-pagination,#asst_editor .asst-audit-detail-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 #asst_editor .asst-audit-tabs{margin:12px 0}
+#asst_editor .asst-audit-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px}
+#asst_editor .asst-ocr-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:10px 0 0}
 #asst_editor .asst-audit-tabs button.active{font-weight:700}
 @media(max-width:860px){#asst_editor .asst-audit-page .grid,#asst_editor .asst-audit-detail .grid{grid-template-columns:minmax(0,1fr)}}
 </style><section class="domain-panel" id="asst_root"><div class="domain-tools"><span id="asst_summary">読み込み中…</span><button id="asst_btnExternalAbilityAudit">外部能力DBを確認</button><button id="asst_btnAbilitySearch">能力ID検索</button><button id="asst_btnExport" disabled>3DBを検証・export</button></div><main>
@@ -136,10 +138,10 @@ function asstAuditReasonText(values){return values.length?values.join('、'):'�
 function asstAuditSafetyText(data){
   return cmsLabel(data.safetyVerdict);
 }
-function asstAuditSummaryMustOpen(data){return data.auditStatus==='FAIL'||data.safetyVerdict==='BLOCKED';}
+// 監査サマリーは常に閉じた状態から描画する。FAIL・BLOCKEDの説明はdetailsの外へ出して隠さない。
 function asstRenderAuditSummary(data){
   var counts=data.counts;
-  var isOpen=asstAuditSummaryMustOpen(data)||ASST.audit.foldOpen;
+  var isOpen=ASST.audit.foldOpen;
   var html='<details id="asst_auditSummary" class="asst-audit-summary"'+(isOpen?' open':'')+'><summary>監査サマリー: '+esc(cmsLabel(data.auditStatus))+' / 安全性: '+esc(cmsLabel(data.safetyVerdict))+' / 総候補数 '+esc(data.pagination.totalItems)+'</summary><div class="grid">'+
     asstAuditSummaryField('外部コミットSHA',data.externalSha)+asstAuditSummaryField('外部JSON SHA-256',data.externalSha256)+
     asstAuditSummaryField('auditVersion',data.auditVersion)+asstAuditSummaryField('auditStatus',cmsLabel(data.auditStatus))+
@@ -149,12 +151,12 @@ function asstRenderAuditSummary(data){
     asstAuditSummaryField('未紐付け候補数',counts.unlinkedCandidates)+asstAuditSummaryField('ID再利用疑い数',counts.idReuseSuspected)+
     asstAuditSummaryField('既存内容差分数',counts.existingContentDifferences)+asstAuditSummaryField('表記違い数',counts.representationOnly)+
     asstAuditSummaryField('重複内容一致数',counts.duplicateLocalContentMatches)+asstAuditSummaryField('外部欠落観測数',counts.missingUpstreamObservations)+
-    asstAuditSummaryField('処置済み件数',counts.processed)+'</div>';
+    asstAuditSummaryField('処置済み件数',counts.processed)+'</div></details>';
   if(data.auditStatus==='PASS'&&data.safetyVerdict==='BLOCKED'&&data.blockReasons.indexOf('ID_REUSE_SUSPECTED')>=0){
     html+='<p><strong>ID_REUSE_SUSPECTED:</strong> 監査処理自体は成功しています。外部数値IDの再利用疑いがあるため、安全性判定がBLOCKEDです。</p>';
   }
   if(data.auditStatus==='FAIL')html+='<div class="message error"><strong>監査結果: '+esc(cmsLabel('FAIL'))+'</strong><br>'+esc(data.validationErrors.length?data.validationErrors.join(' / '):'監査処理が失敗しました。')+'<br>候補一覧は表示しません。</div>';
-  return html+'</details>';
+  return html;
 }
 function asstAuditCandidateHtml(candidate,index){
   var snapshot=candidate.externalSnapshot||{},local=candidate.localObservation||{};
@@ -254,7 +256,7 @@ function asstRenderExternalAudit(){
   if(ASST.audit.detailIndex!==null&&ASST.audit.response&&ASST.audit.response.candidates[ASST.audit.detailIndex]){el('asst_editor').innerHTML=asstRenderAuditDetail(ASST.audit.response.candidates[ASST.audit.detailIndex]);asstBindAuditDetail();return;}
   var html='<button class="mobile-back" id="asst_btnBackAudit">← カード一覧へ戻る</button><h2>外部能力DB監査</h2>'+
     '<p class="muted">監査は読取専用です。明示操作時だけ新規能力をdraft保存、または候補の処置を保存します。自動公開は行いません。</p>'+
-    '<div class="actions"><button type="button" id="asst_btnAuditLatest"'+(APP_LOCAL_PREVIEW||ASST.audit.loading?' disabled':'')+'>最新状態で再監査</button></div>';
+    '<div class="asst-audit-toolbar"><button type="button" id="asst_btnAuditLatest"'+(APP_LOCAL_PREVIEW||ASST.audit.loading?' disabled':'')+'>最新状態で再監査</button></div>';
   if(ASST.audit.lastOperation&&ASST.audit.lastOperation.kind==='create'){var saved=ASST.audit.lastOperation.result;html+='<div class="message show"><strong>新規能力を保存しました。</strong><br>abilityId: '+esc(saved.abilityId)+' / legacyId: なし / 状態（status）: '+esc(cmsLabel(saved.status))+' / '+esc(cmsLabel(saved.linkStatus))+' / sortOrder: '+esc(saved.sortOrder==null?'なし':saved.sortOrder)+'<br>自動公開されていません。同じ固定SHAで再監査しました。</div>';}
   if(ASST.audit.lastOperation&&ASST.audit.lastOperation.kind==='disposition'){html+='<div class="message show">処置「'+esc(cmsLabel(ASST.audit.lastOperation.result.disposition))+'」を保存し、同じ固定SHAで再監査しました。abilitiesは変更していません。</div>';}
   if(APP_LOCAL_PREVIEW)html+='<div class="message error">ローカルプレビューではGAS APIを呼べないため、監査を実行できません。</div>';
@@ -267,7 +269,7 @@ function asstRenderExternalAudit(){
   if(el('asst_btnAuditLatest'))el('asst_btnAuditLatest').onclick=function(){asstLoadExternalAudit(1,true);};
   if(el('asst_btnAuditRetry'))el('asst_btnAuditRetry').onclick=function(){asstLoadExternalAudit(ASST.audit.requestedPage,false);};
   if(el('asst_auditShowProcessed'))el('asst_auditShowProcessed').onchange=function(){ASST.audit.showProcessed=this.checked;asstRenderExternalAudit();};
-  if(el('asst_auditSummary'))el('asst_auditSummary').ontoggle=function(){if(asstAuditSummaryMustOpen(ASST.audit.response)){if(!this.open)this.open=true;return;}ASST.audit.foldOpen=this.open;};
+  if(el('asst_auditSummary'))el('asst_auditSummary').ontoggle=function(){ASST.audit.foldOpen=this.open;};
   el('asst_editor').querySelectorAll('[data-audit-tab]').forEach(function(button){button.onclick=function(){ASST.audit.tab=button.dataset.auditTab;asstRenderExternalAudit();};});
   el('asst_editor').querySelectorAll('[data-audit-detail]').forEach(function(button){button.onclick=function(){asstOpenAuditDetail(Number(button.dataset.auditDetail));};});
   if(el('asst_auditFirst'))el('asst_auditFirst').onclick=function(){asstLoadExternalAudit(1,false);};
@@ -348,13 +350,19 @@ function asstRenderCardForm(d){
     asstSelectField('rarity','レアリティ',['MR','SSR'],c.rarity)+asstSelectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
     asstField('cardType','カードタイプ','text',c.cardType)+asstSelectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
     asstRenderCardImageField(c)+
-    asstField('event2','イベント2','text',c.event2||'')+asstField('releasedAt','実装日','text',c.releasedAt||'')+
+    asstField('event2','イベント2','text',c.event2||'')+asstReleasedAtField(c.releasedAt)+
     asstRenderAccessoryField(c.accessoryStatus)+asstRenderRatingsFields(c.ratings)+asstRenderStatsFields(c.stats)+
     asstSourceManagedField('凸データ','参照専用（元データをそのまま保持）')+
     asstRenderFormationsField(c.formations)+asstSourceManagedField('SAPO参照',c.sapoRef?'参照専用（'+c.sapoRef.type+' / index '+c.sapoRef.sapoIndex+'）':'参照なし')+
     '<div class="asstField wide"><label>管理者解説</label><textarea id="asst_f_explanation" rows="12">'+esc(c.explanation)+'</textarea></div>'+
     '</div><div class="actions"><button class="primary" id="asst_btnSaveCard"'+(APP_LOCAL_PREVIEW?' disabled':'')+'>カードを保存</button><span class="muted">version '+d.version+' / cardIdは変更不可</span></div>';
 }
+// 実装日はモンスター編集と同じ<input type="date">。シートはYYYY/MM/DDなので入出力で変換する。
+function asstReleasedAtInputValue(value){var text=String(value==null?'':value).trim();if(/^\d{4}\/\d{2}\/\d{2}$/.test(text))return text.replace(/\//g,'-');return /^\d{4}-\d{2}-\d{2}$/.test(text)?text:'';}
+function asstReleasedAtField(value){var raw=String(value==null?'':value).trim(),input=asstReleasedAtInputValue(raw);
+  return '<div class="asstField"><label>実装日（空でも可）</label><input id="asst_f_releasedAt" type="date" value="'+esc(input)+'">'+
+    (raw&&!input?'<p class="muted">保存済みの「'+esc(raw)+'」はYYYY/MM/DD形式ではないため表示していません。このまま保存すると空欄になります。</p>':'')+'</div>';}
+function asstReleasedAtValue(){var value=el('asst_f_releasedAt').value.trim();return value?value.replace(/-/g,'/'):null;}
 function asstField(id,label,type,value,readonly){ return '<div class="asstField"><label>'+label+'</label><input id="asst_f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
 function asstSelectField(id,label,values,selected,blank){ return '<div class="asstField"><label>'+label+'</label><select id="asst_f_'+id+'">'+asstOptionList(values,selected,blank)+'</select></div>'; }
 function asstSourceManagedField(label,message){ return '<div class="asstField"><label>'+label+'</label><input class="readonly" readonly value="'+esc(message)+'"></div>'; }
@@ -434,7 +442,7 @@ function asstSaveCard(){
     var card={cardId:c.cardId,name:el('asst_f_name').value,rarity:el('asst_f_rarity').value,aura:el('asst_f_aura').value,
       cardType:el('asst_f_cardType').value,monType:el('asst_f_monType').value||null,image:el('asst_f_image').value,
       event2:el('asst_f_event2').value||null,
-      releasedAt:el('asst_f_releasedAt').value||null,stats:asstCollectStats(),limitBreak:c.limitBreak,
+      releasedAt:asstReleasedAtValue(),stats:asstCollectStats(),limitBreak:c.limitBreak,
       accessoryStatus:el('asst_f_accessoryStatus').value,
       ratings:asstCollectRatings(),explanation:el('asst_f_explanation').value,formations:asstCollectFormations(),
       sapoRef:c.sapoRef};
@@ -443,25 +451,45 @@ function asstSaveCard(){
     });
   }catch(error){show(error.message,true);}
 }
+function asstEffectConditionTypes(effect){return effect.conditions&&Array.isArray(effect.conditions.types)?effect.conditions.types:[];}
+function asstEffectConditionFields(effect,index){
+  var conditional=Number(effect.conditional)?1:0,types=asstEffectConditionTypes(effect),operator=effect.conditions&&effect.conditions.operator||'and';
+  return '<div class="asstField"><label>一致時限定効果</label><select data-effect-conditional id="asst_f_effect_'+index+'_conditional"><option value="0"'+(conditional?'':' selected')+'>限定なし（無条件）</option><option value="1"'+(conditional?' selected':'')+'>オーラ・モン類などの一致時限定</option></select></div>'+
+    '<div class="asstField wide" data-effect-condition-fields'+(conditional?'':' hidden')+'><label>一致条件（一致時限定のみ）</label><div>'+
+    ASST_OCR_CONDITIONS.map(function(item){return '<label><input type="checkbox" data-effect-condition value="'+item[0]+'"'+(types.indexOf(item[0])>=0?' checked':'')+'> '+item[1]+'</label> ';}).join('')+
+    '</div><div class="asstField"><label>複数条件の関係</label><select data-effect-operator><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option></select></div></div>';
+}
 function asstEffectRow(effect,index){
   return '<fieldset data-effect-row><legend>効果 '+(index+1)+'</legend><div class="grid">'+
-    asstField('effect_'+index+'_id','effectId','text',effect.effectId,true)+asstSelectField('effect_'+index+'_rank','解放ランク',['無凸','1凸','2凸','3凸','4凸'],effect.unlockRank)+
-    asstField('effect_'+index+'_name','効果名','text',effect.name)+'<div class="asstField wide"><label>説明</label><textarea id="asst_f_effect_'+index+'_description">'+esc(effect.description)+'</textarea></div></div>'+
+    '<div class="asstField"><label>effectId</label><input data-effect-id id="asst_f_effect_'+index+'_id" type="text" class="readonly" readonly value="'+esc(effect.effectId)+'"></div>'+
+    '<div class="asstField"><label>解放ランク</label><select data-effect-rank id="asst_f_effect_'+index+'_rank">'+asstOptionList(['無凸','1凸','2凸','3凸','4凸'],effect.unlockRank,false)+'</select></div>'+
+    '<div class="asstField"><label>効果名</label><input data-effect-name id="asst_f_effect_'+index+'_name" type="text" value="'+esc(effect.name)+'"></div>'+
+    '<div class="asstField wide"><label>説明</label><textarea data-effect-description id="asst_f_effect_'+index+'_description">'+esc(effect.description)+'</textarea></div>'+
+    asstEffectConditionFields(effect,index)+'</div>'+
     '<button type="button" data-effect-up>↑ 上へ</button> <button type="button" data-effect-down>↓ 下へ</button> <button type="button" data-effect-remove>削除</button></fieldset>';
 }
-function asstRenderEffectsForm(d){ return '<p class="muted">effectIdは変更不可、sortOrderは表示順から自動設定します。</p><div id="asst_effectRows">'+d.effects.map(asstEffectRow).join('')+'</div><button type="button" id="asst_btnAddEffect">効果を追加</button>'+
+function asstRenderEffectsForm(d){ return '<p class="muted">effectIdは変更不可、sortOrderは表示順から自動設定します。一致時限定効果は0/1フラグと一致条件（AND / OR）で記録します。</p><div id="asst_effectRows">'+d.effects.map(asstEffectRow).join('')+'</div><button type="button" id="asst_btnAddEffect">効果を追加</button>'+
   '<div class="actions"><button class="primary" id="asst_btnSaveEffects"'+(APP_LOCAL_PREVIEW?' disabled':'')+'>効果を保存</button><span class="muted">0件で保存するとdraftになります</span></div>'; }
 function asstCollectEffects(validate){
   return Array.from(document.querySelectorAll('[data-effect-row]')).map(function(row,index){
-    var effect={effectId:row.querySelector('input[readonly]').value,name:row.querySelector('input:not([readonly])').value.trim(),description:row.querySelector('textarea').value.trim(),unlockRank:row.querySelector('select').value,sortOrder:index+1};
-    if(validate&&(!effect.effectId||!effect.name||!effect.description))throw new Error('効果 '+(index+1)+'のID・効果名・説明は必須です。');return effect;
+    var conditional=row.querySelector('[data-effect-conditional]').value==='1'?1:0;
+    var types=Array.from(row.querySelectorAll('[data-effect-condition]:checked')).map(function(input){return input.value;});
+    var effect={effectId:row.querySelector('[data-effect-id]').value,name:row.querySelector('[data-effect-name]').value.trim(),
+      description:row.querySelector('[data-effect-description]').value.trim(),unlockRank:row.querySelector('[data-effect-rank]').value,sortOrder:index+1,
+      conditional:conditional,conditions:conditional?{operator:row.querySelector('[data-effect-operator]').value,types:types}:null};
+    if(validate){
+      if(!effect.effectId||!effect.name||!effect.description)throw new Error('効果 '+(index+1)+'のID・効果名・説明は必須です。');
+      if(conditional&&!types.length)throw new Error('効果 '+(index+1)+'の一致条件を1件以上選択してください。');
+    }
+    return effect;
   });
 }
 function asstNextEffectId(effects){ var max=effects.reduce(function(value,effect){var match=effect.effectId.match(/-e(\d+)$/);return Math.max(value,match?Number(match[1]):0);},0);return ASST.selectedId+'-e'+String(max+1).padStart(2,'0'); }
 function asstRerenderEffects(effects){ ASST.detail.effects=effects;asstRenderEditor(); }
 function asstBindEffectsForm(){
   el('asst_btnSaveEffects').onclick=asstSaveEffects;
-  el('asst_btnAddEffect').onclick=function(){var effects=asstCollectEffects(false);effects.push({effectId:asstNextEffectId(effects),name:'',description:'',unlockRank:'無凸',sortOrder:effects.length+1});asstRerenderEffects(effects);};
+  el('asst_btnAddEffect').onclick=function(){var effects=asstCollectEffects(false);effects.push({effectId:asstNextEffectId(effects),name:'',description:'',unlockRank:'無凸',sortOrder:effects.length+1,conditional:0,conditions:null});asstRerenderEffects(effects);};
+  document.querySelectorAll('[data-effect-row]').forEach(function(row){var select=row.querySelector('[data-effect-conditional]');select.onchange=function(){row.querySelector('[data-effect-condition-fields]').hidden=this.value!=='1';};});
   document.querySelectorAll('[data-effect-row]').forEach(function(row,index){
     row.querySelector('[data-effect-up]').onclick=function(){var effects=asstCollectEffects(false);if(index>0){var item=effects.splice(index,1)[0];effects.splice(index-1,0,item);asstRerenderEffects(effects);}};
     row.querySelector('[data-effect-down]').onclick=function(){var effects=asstCollectEffects(false);if(index<effects.length-1){var item=effects.splice(index,1)[0];effects.splice(index+1,0,item);asstRerenderEffects(effects);}};
@@ -584,17 +612,53 @@ function asstRenderOcrCandidate(candidate,index){
     '<div class="asstField wide"><label>効果全体の発動条件（黄色背景のみ）</label><div>'+ASST_OCR_CONDITIONS.map(function(item){return '<label><input type="checkbox" data-ocr-condition value="'+item[0]+'"'+(types.indexOf(item[0])>=0?' checked':'')+'> '+item[1]+'</label> ';}).join('')+'</div>'+
     '<div class="grid"><div class="asstField"><label>複数条件の関係</label><select data-ocr-operator><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option></select></div>'+
     '<div class="asstField"><label>条件原文（自動抽出・OCR照合用）</label><input data-ocr-source value="'+esc(candidate.activationConditions&&candidate.activationConditions.sourceText||'')+'"><span class="muted" data-ocr-basis="'+esc(basis)+'">判定根拠: '+esc(basisLabel)+'</span></div></div></div></div>'+
-    '<p class="muted">元画像: '+esc((candidate.sourceScreenshots||[]).join(' / '))+(candidate.issues&&candidate.issues.length?' ・ 要確認: '+esc(candidate.issues.join(', ')):'')+'</p></fieldset>';
+    '<p class="muted">元画像: '+esc((candidate.sourceScreenshots||[]).join(' / '))+(candidate.issues&&candidate.issues.length?' ・ 要確認: '+esc(candidate.issues.join(', ')):'')+
+    (candidate.resolvedIssues&&candidate.resolvedIssues.length?' ・ 確認済み: '+esc(candidate.resolvedIssues.join(', ')):'')+'</p>'+
+    '<div class="asst-ocr-actions">'+(candidate.issues&&candidate.issues.length?'<button type="button" data-ocr-resolve>要確認を確認済みにする</button>':'')+
+    '<button type="button" data-ocr-remove>この候補を削除</button></div></fieldset>';
 }
 function asstReadOcrFile(file){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onerror=function(){reject(new Error(file.name+'を読み込めません。'));};reader.onload=function(){var image=new Image();image.onerror=function(){reject(new Error(file.name+'は画像として読み込めません。'));};image.onload=function(){resolve({name:file.name,mimeType:file.type,size:file.size,dataUrl:reader.result,base64:String(reader.result).split(',')[1],image:image});};image.src=reader.result;};reader.readAsDataURL(file);});}
 function asstGasPromise(name,args){return new Promise(function(resolve,reject){var runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(function(error){reject(new Error(error&&error.message?error.message:String(error)));});runner[name].apply(runner,args||[]);});}
 function asstBindEffectOcr(){
   el('asst_ocrFiles').onchange=function(){var files=Array.from(this.files||[]);if(files.length>8){show('画像は一度に8枚までです。',true);return;}setBusy(true,'画像を読み込み中…');Promise.all(files.map(asstReadOcrFile)).then(function(items){ASST.ocrFiles=items;setBusy(false);asstRenderEditor();}).catch(function(error){setBusy(false);show(error.message,true);});};
   el('asst_btnOcrDemo').onclick=function(){ASST.ocrCandidates=ASST.detail.effects.map(function(effect){var activation=asstOcrActivationConditions(effect.description,'conditional',effect.name);return{name:effect.name,description:effect.description,activationScope:activation?'conditional':'universal',activationConditions:activation,unlockRank:effect.unlockRank,sourceScreenshots:['画面デモ'],issues:activation?[]:['demo-background-not-available']};});asstRenderEditor();};
+  document.querySelectorAll('[data-ocr-candidate]').forEach(function(row,index){
+    if(row.querySelector('[data-ocr-remove]'))row.querySelector('[data-ocr-remove]').onclick=function(){asstRemoveOcrCandidate(index);};
+    if(row.querySelector('[data-ocr-resolve]'))row.querySelector('[data-ocr-resolve]').onclick=function(){asstResolveOcrCandidateIssues(index);};
+  });
   document.querySelectorAll('[data-ocr-candidate]').forEach(function(row){row.querySelector('[data-ocr-scope]').onchange=function(){row.classList.toggle('conditional',this.value==='conditional');row.classList.toggle('universal',this.value==='universal');if(this.value==='conditional')asstPopulateOcrConditionFields(row);};row.querySelector('[data-ocr-description]').onblur=function(){if(row.querySelector('[data-ocr-scope]').value==='conditional')asstPopulateOcrConditionFields(row);};});
   if(el('asst_btnRunOcr'))el('asst_btnRunOcr').onclick=asstRunEffectOcr;
   if(el('asst_btnApplyOcr'))el('asst_btnApplyOcr').onclick=asstApplyOcrCandidates;
   if(el('asst_btnDiscardOcr'))el('asst_btnDiscardOcr').onclick=function(){if(!confirm('表示中のOCR候補を破棄しますか？'))return;ASST.ocrFiles=[];ASST.ocrCandidates=[];asstRenderEditor();show('OCR候補を破棄しました。',false);};
+}
+// 削除・確認済み操作で再描画するため、検査せずに画面の編集内容を候補へ書き戻す。
+function asstCaptureOcrCandidateEdits(){
+  document.querySelectorAll('[data-ocr-candidate]').forEach(function(row,index){
+    var candidate=ASST.ocrCandidates[index];if(!candidate)return;
+    candidate.name=row.querySelector('[data-ocr-name]').value.trim();
+    candidate.description=row.querySelector('[data-ocr-description]').value.trim();
+    candidate.unlockRank=row.querySelector('[data-ocr-rank]').value;
+    candidate.activationScope=row.querySelector('[data-ocr-scope]').value;
+    if(candidate.activationScope!=='conditional'){candidate.activationConditions=null;return;}
+    var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});
+    if(!types.length){candidate.activationConditions=null;return;}
+    var operands=types.map(function(type){return{type:type};});
+    candidate.activationConditions={sourceText:row.querySelector('[data-ocr-source]').value.trim(),
+      expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},
+      basis:row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual'};
+  });
+}
+function asstRemoveOcrCandidate(index){
+  if(!confirm('OCR候補 '+(index+1)+'を削除しますか？'))return;
+  asstCaptureOcrCandidateEdits();ASST.ocrCandidates.splice(index,1);asstRenderEditor();
+  show('OCR候補 '+(index+1)+'を削除しました。',false);
+}
+function asstResolveOcrCandidateIssues(index){
+  var candidate=ASST.ocrCandidates[index];if(!candidate||!candidate.issues||!candidate.issues.length)return;
+  if(!confirm('OCR候補 '+(index+1)+'の要確認「'+candidate.issues.join(', ')+'」を、原画像と照合済みとして解消しますか？'))return;
+  asstCaptureOcrCandidateEdits();
+  candidate.resolvedIssues=(candidate.resolvedIssues||[]).concat(candidate.issues).filter(function(value,position,array){return array.indexOf(value)===position;});
+  candidate.issues=[];asstRenderEditor();show('OCR候補 '+(index+1)+'の要確認を確認済みにしました。',false);
 }
 function asstPopulateOcrConditionFields(row){
   var activation=asstOcrActivationConditions(row.querySelector('[data-ocr-description]').value.trim(),'conditional',row.querySelector('[data-ocr-name]').value.trim());if(!activation)return;
@@ -611,9 +675,14 @@ function asstCollectOcrCandidates(){return Array.from(document.querySelectorAll(
   if(!name||!description)throw new Error('OCR候補 '+(index+1)+'の効果名・説明は必須です。');if(scope==='unknown')throw new Error('OCR候補 '+(index+1)+'の背景を確認してください。');
   var activation=null,issues=(ASST.ocrCandidates[index].issues||[]).slice();if(scope==='conditional'){var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});var source=row.querySelector('[data-ocr-source]').value.trim();if(!types.length)throw new Error('OCR候補 '+(index+1)+'の条件付き効果は、発動条件を1件以上選択してください。');if(!source)throw new Error('OCR候補 '+(index+1)+'の条件原文を入力してください。');var operands=types.map(function(type){return{type:type};});var basis=row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual';activation={sourceText:source,expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},basis:basis};}
   issues=issues.filter(function(issue){if(issue==='background-unknown')return false;if(issue==='activation-condition-needs-review'&&(scope!=='conditional'||activation))return false;return true;});
-  return{name:name,description:description,activationScope:scope,activationConditions:activation,unlockRank:rank,sourceScreenshots:ASST.ocrCandidates[index].sourceScreenshots||[],issues:issues};
+  return{name:name,description:description,activationScope:scope,activationConditions:activation,unlockRank:rank,sourceScreenshots:ASST.ocrCandidates[index].sourceScreenshots||[],issues:issues,resolvedIssues:ASST.ocrCandidates[index].resolvedIssues||[]};
 });}
-function asstApplyOcrCandidates(){try{if(!el('asst_ocrSourceConfirmed').checked)throw new Error('原画像と全候補を照合し、確認チェックを入れてください。');var candidates=asstCollectOcrCandidates();if(candidates.some(function(candidate){return candidate.issues&&candidate.issues.length;}))throw new Error('要確認項目が残っています。背景・発動条件・OCR文字列を原画像と照合してください。');if(!confirm('照合済みOCR候補 '+candidates.length+'件を効果編集へ反映します。まだ保存はされません。'))return;var existing=ASST.detail.effects.slice(),used={};var effects=candidates.map(function(candidate,index){var match=existing.find(function(effect){return !used[effect.effectId]&&asstOcrComparisonKey(effect.name)===asstOcrComparisonKey(candidate.name);});var id;if(match){id=match.effectId;used[id]=true;}else{id=asstNextEffectId(existing.concat(Object.keys(used).map(function(key){return{effectId:key};})));used[id]=true;}return{effectId:id,name:candidate.name,description:candidate.description,unlockRank:candidate.unlockRank,sortOrder:index+1};});ASST.detail.effects=effects;ASST.ocrFiles=[];ASST.ocrCandidates=[];ASST.tab='effects';asstRenderEditor();show('照合済みOCR候補を効果編集へ反映しました。内容確認後に保存してください。',false);}catch(error){show(error.message,true);}}
+// OCRの発動条件を効果DBの{operator,types}へ変換する。条件原文はどこにも保存しない。
+function asstOcrConditionsToEffect(activation){
+  if(!activation)return null;var expression=activation.expression,types=(expression.operands||[expression]).map(function(item){return item.type;});
+  return types.length?{operator:expression.operator||'and',types:types}:null;
+}
+function asstApplyOcrCandidates(){try{if(!el('asst_ocrSourceConfirmed').checked)throw new Error('原画像と全候補を照合し、確認チェックを入れてください。');var candidates=asstCollectOcrCandidates();if(candidates.some(function(candidate){return candidate.issues&&candidate.issues.length;}))throw new Error('要確認項目が残っています。背景・発動条件・OCR文字列を原画像と照合してください。');if(!confirm('照合済みOCR候補 '+candidates.length+'件を効果編集へ反映します。まだ保存はされません。'))return;var existing=ASST.detail.effects.slice(),used={};var effects=candidates.map(function(candidate,index){var match=existing.find(function(effect){return !used[effect.effectId]&&asstOcrComparisonKey(effect.name)===asstOcrComparisonKey(candidate.name);});var id;if(match){id=match.effectId;used[id]=true;}else{id=asstNextEffectId(existing.concat(Object.keys(used).map(function(key){return{effectId:key};})));used[id]=true;}return{effectId:id,name:candidate.name,description:candidate.description,unlockRank:candidate.unlockRank,sortOrder:index+1,conditional:candidate.activationScope==='conditional'?1:0,conditions:asstOcrConditionsToEffect(candidate.activationConditions)};});ASST.detail.effects=effects;ASST.ocrFiles=[];ASST.ocrCandidates=[];ASST.tab='effects';asstRenderEditor();show('照合済みOCR候補を効果編集へ反映しました。内容確認後に保存してください。',false);}catch(error){show(error.message,true);}}
 function asstRenderAbilities(d){
   return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
     (d.abilities.length?d.abilities.map(asstAbilityItem).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';

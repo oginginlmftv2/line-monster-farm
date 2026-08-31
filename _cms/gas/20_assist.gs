@@ -10,7 +10,7 @@ var ASST_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
 var ASST_IMAGE_MIME_EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 var ASST_HEADERS = {};
 ASST_HEADERS[ASST_SHEET_CARDS] = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'];
-ASST_HEADERS[ASST_SHEET_EFFECTS] = ['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy'];
+ASST_HEADERS[ASST_SHEET_EFFECTS] = ['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy','conditional','conditionsJson'];
 ASST_HEADERS[ASST_SHEET_ABILITIES] = ['sourceOrder','abilityId','legacyId','cardId','sourceName','name','description','source','rarity','tagsJson','sortOrder','linkStatus','flagsJson','status','version','updatedAt','updatedBy'];
 ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS] = ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'];
 ASST_HEADERS[ASST_SHEET_LOG] = ['timestamp','user','action','result','detail'];
@@ -37,6 +37,9 @@ var ASST_LMFDB_REQUIRED_FIELDS = ['id','name','desc','card','tags','source','rar
 var ASST_LMFDB_COMPARABLE_FIELDS = ['sourceName','name','description','source','rarity','tags'];
 var ASST_LMFDB_PROCESSED_DISPOSITIONS = ['imported','ignored','duplicate','unsupported'];
 var ASST_UNLOCK_RANKS = ['無凸','1凸','2凸','3凸','4凸'];
+// 効果の一致時限定フラグ。conditional=0は無条件、1はconditionsの条件をすべて記録する。
+var ASST_EFFECT_CONDITION_TYPES = ['mainBloodlineMatch','subBloodlineMatch','auraMatch','monTypeMatch','speciesMatch'];
+var ASST_EFFECT_CONDITION_OPERATORS = ['and','or'];
 var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
 // 既存91件の最大は24文字。将来の命名余地を持たせつつ、Sheet・URLへ過大な値を入れない。
@@ -292,6 +295,43 @@ function asstValidateRatings_(ratings, label) {
     var value = ratings[key];
     if (value !== null && (value < 0 || value > 5)) throw new Error(label + '.' + key + ' は0〜5です。');
   });
+}
+
+function asstEffectConditionalCell_(value, label) {
+  if (value === '' || value === null || value === undefined || value === false) return 0;
+  if (value === true) return 1;
+  var number = Number(value);
+  if (number !== 0 && number !== 1) throw new Error(label + ' は0か1です。');
+  return number;
+}
+
+// 一致時限定効果は「0/1フラグ」と「条件（and/or + 条件種別）」の2値だけを保持する。
+function asstNormalizeEffectConditions_(conditional, conditions, label) {
+  var flag = asstEffectConditionalCell_(conditional, label + '/conditional');
+  if (!flag) {
+    if (conditions !== null && conditions !== undefined && conditions !== '') {
+      throw new Error(label + ' はconditional=0なので条件を持てません。');
+    }
+    return { conditional: 0, conditions: null };
+  }
+  if (!conditions || typeof conditions !== 'object' || Array.isArray(conditions)) {
+    throw new Error(label + ' はconditional=1なので条件が必要です。');
+  }
+  var extra = Object.keys(conditions).filter(function (key) { return ['operator','types'].indexOf(key) < 0; });
+  if (extra.length) throw new Error(label + ' の条件に未対応項目があります: ' + extra.join(', '));
+  if (ASST_EFFECT_CONDITION_OPERATORS.indexOf(conditions.operator) < 0) {
+    throw new Error(label + ' の条件の関係はandかorです。');
+  }
+  if (!Array.isArray(conditions.types) || !conditions.types.length) {
+    throw new Error(label + ' の条件種別を1件以上選択してください。');
+  }
+  var types = [];
+  conditions.types.forEach(function (type) {
+    if (ASST_EFFECT_CONDITION_TYPES.indexOf(type) < 0) throw new Error(label + ' の条件種別が許可値ではありません: ' + type);
+    if (types.indexOf(type) >= 0) throw new Error(label + ' の条件種別が重複しています: ' + type);
+    types.push(type);
+  });
+  return { conditional: 1, conditions: { operator: conditions.operator, types: types } };
 }
 
 function asstValidateReleasedAt_(value, label) {
@@ -926,12 +966,19 @@ function asstCardFromRow_(row) {
 }
 
 function asstEffectFromRow_(row) {
+  var activation = asstNormalizeEffectConditions_(
+    row.conditional,
+    asstParseJsonCell_(row.conditionsJson, null, row.effectId + '/conditionsJson'),
+    asstText_(row.effectId)
+  );
   return {
     effectId: asstText_(row.effectId),
     name: asstText_(row.name),
     description: asstText_(row.description),
     unlockRank: asstText_(row.unlockRank),
-    sortOrder: asstInteger_(row.sortOrder, row.effectId + '/sortOrder', false)
+    sortOrder: asstInteger_(row.sortOrder, row.effectId + '/sortOrder', false),
+    conditional: activation.conditional,
+    conditions: activation.conditions
   };
 }
 
@@ -1227,6 +1274,8 @@ function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
       if (!effect.name || !effect.description) issues.push(effect.effectId + ': name/description空欄');
       if (ASST_UNLOCK_RANKS.indexOf(effect.unlockRank) < 0) issues.push(effect.effectId + ': unlockRank不正');
       if (effect.sortOrder !== index + 1) issues.push(effect.effectId + ': sortOrder不連続');
+      try { asstNormalizeEffectConditions_(effect.conditional, effect.conditions, effect.effectId); }
+      catch (error) { issues.push(error.message); }
     });
   });
   Object.keys(cardIds).forEach(function (cardId) {
@@ -1530,9 +1579,11 @@ function api_asstSaveEffects(payload) {
     var oldRows = asstRows_(ASST_SHEET_EFFECTS).filter(function (row) { return row.cardId !== cardId; });
     var timestamp = nowIso_();
     var replacement = effects.length ? effects.map(function (effect) {
+      var activation = asstNormalizeEffectConditions_(effect.conditional, effect.conditions, effect.effectId);
       return [cardId, effect.effectId, effect.name, effect.description,
-        effect.unlockRank, effect.sortOrder, timestamp, user.nickname];
-    }) : [[cardId, '', '', '', '', '', timestamp, user.nickname]];
+        effect.unlockRank, effect.sortOrder, timestamp, user.nickname,
+        activation.conditional, activation.conditions === null ? '' : asstJsonCell_(activation.conditions)];
+    }) : [[cardId, '', '', '', '', '', timestamp, user.nickname, 0, '']];
     var preserved = oldRows.map(function (row) {
       return ASST_HEADERS[ASST_SHEET_EFFECTS].map(function (header) { return row[header]; });
     });
