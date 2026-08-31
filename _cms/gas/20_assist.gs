@@ -1223,6 +1223,7 @@ function api_asstBootstrap() {
       return {
         cardId: asstText_(row.cardId), name: asstText_(row.name), rarity: asstText_(row.rarity),
         aura: asstText_(row.aura), version: Number(row.version || 1),
+        monType: asstText_(row.monType),
         effects: effectCounts[row.cardId] || 0, abilities: abilityCounts[row.cardId] || 0
       };
     })

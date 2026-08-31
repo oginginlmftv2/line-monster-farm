@@ -190,8 +190,11 @@
                background:#302a22;color:#fff;box-shadow:0 6px 24px rgba(0,0,0,.3);
                text-align:center;font-weight:700}
   .ability-list{display:grid;gap:8px;margin-top:12px}
-  .ability-item{display:flex;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:7px}
-  .ability-item button{margin-left:auto}
+  .ability-item{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:7px}
+  .ability-item.draft{background:#fff8d6}
+  .ability-item > div:first-child{flex:1;min-width:180px}
+  .ability-item select{width:auto;margin-left:auto}
+  .ability-item button{margin-left:0}
   .export-box{padding:12px;margin-top:14px;border-radius:7px;background:var(--cream)}
   .app-env{background:#fff3cd;padding:8px;text-align:center}
   .app-toast{position:fixed;top:70px;left:50%;z-index:60;width:max-content;max-width:calc(100vw - 28px);
@@ -220,6 +223,20 @@
   }
 </style>
 <script>
+var CMS_LABELS = {
+  resolved:'紐付け済み', ambiguous:'特定不可', unlinked:'未紐付け',
+  draft:'下書き', verified:'確認済み',
+  ignored:'対象外', duplicate:'重複', unsupported:'非対応',
+  id_reused:'ID再利用', imported:'取込済み', reverted:'取消済み',
+  PASS:'監査成功', FAIL:'監査失敗',
+  SAFE:'問題なし', REVIEW_REQUIRED:'要確認', BLOCKED:'停止',
+  card_match_candidate:'カード対応候補', unlinked_candidate:'未紐付け候補',
+  ID_REUSE_SUSPECTED:'ID再利用疑い', existingContentDifferences:'既存内容差分',
+  representationOnly:'表記違い', duplicate_local_content_match:'重複内容一致',
+  missing_upstream_observation:'外部欠落観測'
+};
+function cmsLabel(key){ return CMS_LABELS[key] ? CMS_LABELS[key]+'（'+key+'）' : String(key); }
+function cmsLabelShort(key){ return CMS_LABELS[key] || String(key); }
 var APP={busy:false,currentTab:'',toastTimer:null};
 function el(id){return document.getElementById(id);}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
