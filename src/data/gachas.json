@@ -19,6 +19,29 @@
       "rerollPriority": false,
       "status": "published",
       "publishedAt": "2026-08-31"
+    },
+    {
+      "gachaId": "20260831-1",
+      "name": "周年超スタフェス3.5th",
+      "gachaType": "周年",
+      "image": "gacha-banner/20260831-1.jpg",
+      "startAt": "2026-08-31T15:00+09:00",
+      "endAt": "2026-09-30T14:59+09:00",
+      "explanation": "",
+      "pickupMonsters": [
+        {
+          "id": "3290",
+          "rate": 1.5
+        },
+        {
+          "id": "0430",
+          "rate": 1.5
+        }
+      ],
+      "pickupCards": [],
+      "rerollPriority": true,
+      "status": "published",
+      "publishedAt": "2026-08-31"
     }
   ]
 }
