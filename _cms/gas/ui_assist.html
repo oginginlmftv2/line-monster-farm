@@ -598,6 +598,7 @@ function asstRenderEffectOcr(){
     '<div id="asst_ocrPreviews">'+ASST.ocrFiles.map(function(file){return '<figure style="display:inline-block;margin:10px 10px 10px 0"><img src="'+file.dataUrl+'" alt="'+esc(file.name)+'" style="max-width:180px;max-height:260px;display:block"><figcaption class="muted">'+esc(file.name)+'</figcaption></figure>';}).join('')+'</div>'+
     '<p><button type="button" class="primary" id="asst_btnRunOcr"'+(!ASST.ocrConfigured||!ASST.ocrFiles.length?' disabled':'')+'>選択画像をOCR</button> <button type="button" id="asst_btnOcrDemo">既存効果で画面を試す</button></p>'+
     '<div id="asst_ocrCandidates">'+(ASST.ocrCandidates.length?ASST.ocrCandidates.map(asstRenderOcrCandidate).join(''):'<div class="empty">画像を選択してOCRを実行してください。</div>')+'</div>'+
+    '<div class="asst-ocr-actions"><button type="button" id="asst_btnAddOcrCandidate">候補を追加</button><span class="muted">OCRで拾えなかった効果を手で足せます</span></div>'+
     (ASST.ocrCandidates.length?'<fieldset><legend>原画像確認</legend><label><input type="checkbox" id="asst_ocrSourceConfirmed"> 表示中の原画像と全候補の文字・背景・解放段階・発動条件を照合しました</label><p class="muted">チェック後に効果編集へ反映できます。未反映の候補はブラウザを閉じると破棄されます。</p></fieldset><div class="actions"><button type="button" class="primary" id="asst_btnApplyOcr">効果編集へ反映（未保存）</button><button type="button" id="asst_btnDiscardOcr">候補を破棄</button><span class="muted">反映後に効果タブで再確認・保存</span></div>':'');
 }
 function asstRenderOcrCandidate(candidate,index){
@@ -607,11 +608,11 @@ function asstRenderOcrCandidate(candidate,index){
   return '<fieldset class="ocr-candidate '+esc(candidate.activationScope)+'" data-ocr-candidate><legend>OCR候補 '+(index+1)+'</legend><div class="grid">'+
     '<div class="asstField"><label>背景</label><select data-ocr-scope><option value="unknown"'+(candidate.activationScope==='unknown'?' selected':'')+'>要確認</option><option value="conditional"'+(candidate.activationScope==='conditional'?' selected':'')+'>黄色・条件付き</option><option value="universal"'+(candidate.activationScope==='universal'?' selected':'')+'>白・汎用</option></select></div>'+
     '<div class="asstField"><label>解放ランク</label><select data-ocr-rank>'+asstOptionList(['無凸','1凸','2凸','3凸','4凸'],candidate.unlockRank)+'</select></div>'+
-    '<div class="asstField wide"><label>効果名</label><input data-ocr-name value="'+esc(candidate.name)+'"></div>'+
+    '<div class="asstField wide"><label>効果名</label><input data-ocr-name type="text" value="'+esc(candidate.name)+'"></div>'+
     '<div class="asstField wide"><label>説明</label><textarea data-ocr-description>'+esc(candidate.description)+'</textarea></div>'+
     '<div class="asstField wide"><label>効果全体の発動条件（黄色背景のみ）</label><div>'+ASST_OCR_CONDITIONS.map(function(item){return '<label><input type="checkbox" data-ocr-condition value="'+item[0]+'"'+(types.indexOf(item[0])>=0?' checked':'')+'> '+item[1]+'</label> ';}).join('')+'</div>'+
     '<div class="grid"><div class="asstField"><label>複数条件の関係</label><select data-ocr-operator><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option></select></div>'+
-    '<div class="asstField"><label>条件原文（自動抽出・OCR照合用）</label><input data-ocr-source value="'+esc(candidate.activationConditions&&candidate.activationConditions.sourceText||'')+'"><span class="muted" data-ocr-basis="'+esc(basis)+'">判定根拠: '+esc(basisLabel)+'</span></div></div></div></div>'+
+    '<div class="asstField"><label>条件の判定根拠</label><span class="muted" data-ocr-basis="'+esc(basis)+'">'+esc(basisLabel)+'</span></div></div></div></div>'+
     '<p class="muted">元画像: '+esc((candidate.sourceScreenshots||[]).join(' / '))+(candidate.issues&&candidate.issues.length?' ・ 要確認: '+esc(candidate.issues.join(', ')):'')+
     (candidate.resolvedIssues&&candidate.resolvedIssues.length?' ・ 確認済み: '+esc(candidate.resolvedIssues.join(', ')):'')+'</p>'+
     '<div class="asst-ocr-actions">'+(candidate.issues&&candidate.issues.length?'<button type="button" data-ocr-resolve>要確認を確認済みにする</button>':'')+
@@ -628,6 +629,7 @@ function asstBindEffectOcr(){
   });
   document.querySelectorAll('[data-ocr-candidate]').forEach(function(row){row.querySelector('[data-ocr-scope]').onchange=function(){row.classList.toggle('conditional',this.value==='conditional');row.classList.toggle('universal',this.value==='universal');if(this.value==='conditional')asstPopulateOcrConditionFields(row);};row.querySelector('[data-ocr-description]').onblur=function(){if(row.querySelector('[data-ocr-scope]').value==='conditional')asstPopulateOcrConditionFields(row);};});
   if(el('asst_btnRunOcr'))el('asst_btnRunOcr').onclick=asstRunEffectOcr;
+  if(el('asst_btnAddOcrCandidate'))el('asst_btnAddOcrCandidate').onclick=asstAddOcrCandidate;
   if(el('asst_btnApplyOcr'))el('asst_btnApplyOcr').onclick=asstApplyOcrCandidates;
   if(el('asst_btnDiscardOcr'))el('asst_btnDiscardOcr').onclick=function(){if(!confirm('表示中のOCR候補を破棄しますか？'))return;ASST.ocrFiles=[];ASST.ocrCandidates=[];asstRenderEditor();show('OCR候補を破棄しました。',false);};
 }
@@ -643,10 +645,16 @@ function asstCaptureOcrCandidateEdits(){
     var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});
     if(!types.length){candidate.activationConditions=null;return;}
     var operands=types.map(function(type){return{type:type};});
-    candidate.activationConditions={sourceText:row.querySelector('[data-ocr-source]').value.trim(),
+    candidate.activationConditions={
       expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},
       basis:row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual'};
   });
+}
+function asstAddOcrCandidate(){
+  asstCaptureOcrCandidateEdits();
+  ASST.ocrCandidates.push({name:'',description:'',activationScope:'unknown',activationConditions:null,unlockRank:'無凸',
+    sourceScreenshots:['手動追加'],issues:[],resolvedIssues:[]});
+  asstRenderEditor();show('OCR候補を1件追加しました。効果名・説明・背景を入力してください。',false);
 }
 function asstRemoveOcrCandidate(index){
   if(!confirm('OCR候補 '+(index+1)+'を削除しますか？'))return;
@@ -664,7 +672,7 @@ function asstPopulateOcrConditionFields(row){
   var activation=asstOcrActivationConditions(row.querySelector('[data-ocr-description]').value.trim(),'conditional',row.querySelector('[data-ocr-name]').value.trim());if(!activation)return;
   var expression=activation.expression,types=(expression.operands||[expression]).map(function(item){return item.type;});
   row.querySelectorAll('[data-ocr-condition]').forEach(function(input){input.checked=types.indexOf(input.value)>=0;});
-  if(expression.operator)row.querySelector('[data-ocr-operator]').value=expression.operator;row.querySelector('[data-ocr-source]').value=activation.sourceText;var basis=row.querySelector('[data-ocr-basis]');if(basis){basis.dataset.ocrBasis=activation.basis||'manual';basis.textContent='判定根拠: '+(activation.basis==='breeder-dependency'?'ブリーダー効果への依存から判定':'条件原文から直接判定');}
+  if(expression.operator)row.querySelector('[data-ocr-operator]').value=expression.operator;var basis=row.querySelector('[data-ocr-basis]');if(basis){basis.dataset.ocrBasis=activation.basis||'manual';basis.textContent=activation.basis==='breeder-dependency'?'ブリーダー効果への依存から判定':'説明文から直接判定';}
 }
 function asstRunEffectOcr(){
   if(!ASST.ocrFiles.length)return;setBusy(true,'OCRを開始しています…');var groups=[];var failures=[];var chain=Promise.resolve();ASST.ocrFiles.forEach(function(file,index){chain=chain.then(function(){setBusy(true,'OCR処理中 '+(index+1)+' / '+ASST.ocrFiles.length+'：'+file.name);return asstGasPromise('api_asstOcrEffectImage',[{cardId:ASST.selectedId,fileName:file.name,mimeType:file.mimeType,base64:file.base64}]);}).then(function(result){groups.push(asstOcrParseCandidates(result.vision,file));}).catch(function(error){failures.push({fileName:file.name,reason:error&&error.message?error.message:String(error)});});});
@@ -673,7 +681,7 @@ function asstRunEffectOcr(){
 function asstCollectOcrCandidates(){return Array.from(document.querySelectorAll('[data-ocr-candidate]')).map(function(row,index){
   var scope=row.querySelector('[data-ocr-scope]').value,name=row.querySelector('[data-ocr-name]').value.trim(),description=row.querySelector('[data-ocr-description]').value.trim(),rank=row.querySelector('[data-ocr-rank]').value;
   if(!name||!description)throw new Error('OCR候補 '+(index+1)+'の効果名・説明は必須です。');if(scope==='unknown')throw new Error('OCR候補 '+(index+1)+'の背景を確認してください。');
-  var activation=null,issues=(ASST.ocrCandidates[index].issues||[]).slice();if(scope==='conditional'){var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});var source=row.querySelector('[data-ocr-source]').value.trim();if(!types.length)throw new Error('OCR候補 '+(index+1)+'の条件付き効果は、発動条件を1件以上選択してください。');if(!source)throw new Error('OCR候補 '+(index+1)+'の条件原文を入力してください。');var operands=types.map(function(type){return{type:type};});var basis=row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual';activation={sourceText:source,expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},basis:basis};}
+  var activation=null,issues=(ASST.ocrCandidates[index].issues||[]).slice();if(scope==='conditional'){var types=Array.from(row.querySelectorAll('[data-ocr-condition]:checked')).map(function(input){return input.value;});if(!types.length)throw new Error('OCR候補 '+(index+1)+'の条件付き効果は、発動条件を1件以上選択してください。');var operands=types.map(function(type){return{type:type};});var basis=row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual';activation={expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},basis:basis};}
   issues=issues.filter(function(issue){if(issue==='background-unknown')return false;if(issue==='activation-condition-needs-review'&&(scope!=='conditional'||activation))return false;return true;});
   return{name:name,description:description,activationScope:scope,activationConditions:activation,unlockRank:rank,sourceScreenshots:ASST.ocrCandidates[index].sourceScreenshots||[],issues:issues,resolvedIssues:ASST.ocrCandidates[index].resolvedIssues||[]};
 });}

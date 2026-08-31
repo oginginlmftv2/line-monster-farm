@@ -600,9 +600,13 @@ function validateRoot(root) {
       !/asst-audit-toolbar/.test(html)) {
     issues.push('再監査ボタンが画面下部固定の.actionsのままで他要素と重なる');
   }
-  if (!/if\(!types\.length\)throw new Error/.test(html) ||
-      !/if\(!source\)throw new Error/.test(html)) {
+  if (!/if\(!types\.length\)throw new Error/.test(html)) {
     issues.push('黄色背景の条件付き候補を発動条件未選択のまま進行できる');
+  }
+  if (/data-ocr-source/.test(html)) issues.push('どこにも保存しない条件原文の入力枠が残っている');
+  if (!/id="asst_btnAddOcrCandidate"/.test(html) || !/function\s+asstAddOcrCandidate\s*\(/.test(html) ||
+      !/<input data-ocr-name type="text"/.test(html)) {
+    issues.push('OCR候補の手動追加または効果名の全幅入力がない');
   }
   if (!/id="asst_ocrSourceConfirmed"/.test(html) || !/if\(!el\('asst_ocrSourceConfirmed'\)\.checked\)throw new Error/.test(html) ||
       !/候補を破棄/.test(html) || !/ブラウザ内に保持/.test(html)) {
