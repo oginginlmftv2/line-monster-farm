@@ -458,6 +458,11 @@ td img {
   color: #bbb;
   font-style: italic;
 }
+.expl-body p  { margin:0 0 10px; }
+.expl-body ul { margin:0 0 10px; padding-left:1.4em; }
+.expl-body li { margin:0 0 4px; }
+.expl-body .gap { margin-top:22px; }
+.expl-body > :last-child { margin-bottom:0; }
 .expl-textarea {
   width: 100%;
   font-size: 14px;

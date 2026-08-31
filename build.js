@@ -128,14 +128,17 @@ function formatExplanation(text) {
   const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
   const blocks = [];
   let index = 0;
+  let gap = false;
 
   while (index < lines.length) {
     const line = lines[index];
     if (!line.trim()) {
+      gap = true;
       index++;
       continue;
     }
 
+    const gapClass = gap && blocks.length ? ' class="gap"' : '';
     if (/^[・･]/.test(line)) {
       const bulletLines = [];
       while (index < lines.length && /^[・･]/.test(lines[index])) {
@@ -143,14 +146,16 @@ function formatExplanation(text) {
         index++;
       }
       if (bulletLines.length >= 2) {
-        blocks.push(`<ul>${bulletLines.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`);
+        blocks.push(`<ul${gapClass}>${bulletLines.map(item => `<li>${escapeHtml(item)}</li>`).join('')}</ul>`);
       } else {
-        blocks.push(`<p>${escapeHtml(line)}</p>`);
+        blocks.push(`<p${gapClass}>${escapeHtml(line)}</p>`);
       }
+      gap = false;
       continue;
     }
 
-    blocks.push(`<p>${escapeHtml(line)}</p>`);
+    blocks.push(`<p${gapClass}>${escapeHtml(line)}</p>`);
+    gap = false;
     index++;
   }
 
@@ -258,7 +263,7 @@ function renderReroll(gacha, context) {
     const card = context.cardsById.get(pickup.cardId);
     return `    <a href="cards/${escapeHtml(card.cardId)}.html" class="rank-row">\n      <div class="rank-num${index === 0 ? ' gold' : ''}">${index + 1}</div>\n      <img class="rank-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n      <div class="rank-info">\n        <div class="rank-name">${escapeHtml(card.name)} <span class="rarity rarity-${escapeHtml(card.rarity)}" style="font-size:11px;padding:1px 6px;">${escapeHtml(card.rarity)}</span></div>\n        <div class="rank-reason">${escapeHtml(gachaExcerpt(card.explanation))}</div>\n      </div>\n      <div class="rank-arrow">›</div>\n    </a>`;
   }).join('\n\n');
-  return `    <h3>${escapeHtml(gacha.name)}</h3>\n    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))} ／ <a href="gacha/${escapeHtml(gacha.gachaId)}.html">ガチャ詳細を見る</a></p>${cards ? `\n\n${cards}` : ''}\n\n    ${formatExplanation(gacha.explanation)}`;
+  return `    <h3>${escapeHtml(gacha.name)}</h3>\n    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))} ／ <a href="gacha/${escapeHtml(gacha.gachaId)}.html">ガチャ詳細を見る</a></p>${cards ? `\n\n${cards}` : ''}\n\n    <div class="expl-body">${formatExplanation(gacha.explanation)}</div>`;
 }
 
 function renderGachaAppearances(gachas, kind, id, rootPrefix) {
@@ -405,7 +410,7 @@ function renderGachaBody(gacha, context, includeExcerpts = true) {
     return includeExcerpts ? html : html.replace(/\s*<p data-gacha-excerpt>[\s\S]*?<\/p>/, '');
   }).join('\n');
   const explanation = String(gacha.explanation || '').trim()
-    ? `\n  <section class="section"><h2 class="section-title">ガチャ解説</h2>${formatExplanation(gacha.explanation)}</section>`
+    ? `\n  <section class="section"><h2 class="section-title">ガチャ解説</h2><div class="expl-body">${formatExplanation(gacha.explanation)}</div></section>`
     : '';
   return `<body>
 <header><div class="header-inner"><a href="../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a><nav><a href="../index.html">トップ</a><a href="index.html">ガチャ一覧</a></nav></div></header>
