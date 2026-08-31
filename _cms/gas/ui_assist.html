@@ -460,7 +460,7 @@ function asstEffectConditionFields(effect,index){
     '</div><div class="asstField"><label>複数条件の関係</label><select data-effect-operator><option value="and"'+(operator==='and'?' selected':'')+'>すべて（AND）</option><option value="or"'+(operator==='or'?' selected':'')+'>いずれか（OR）</option></select></div></div>';
 }
 function asstEffectRow(effect,index){
-  return '<fieldset data-effect-row><legend>効果 '+(index+1)+'</legend><div class="grid">'+
+  return '<fieldset data-effect-row class="effect-row'+(Number(effect.conditional)?' conditional':'')+'"><legend>効果 '+(index+1)+'</legend><div class="grid">'+
     '<div class="asstField"><label>effectId</label><input data-effect-id id="asst_f_effect_'+index+'_id" type="text" class="readonly" readonly value="'+esc(effect.effectId)+'"></div>'+
     '<div class="asstField"><label>解放ランク</label><select data-effect-rank id="asst_f_effect_'+index+'_rank">'+asstOptionList(['無凸','1凸','2凸','3凸','4凸'],effect.unlockRank,false)+'</select></div>'+
     '<div class="asstField"><label>効果名</label><input data-effect-name id="asst_f_effect_'+index+'_name" type="text" value="'+esc(effect.name)+'"></div>'+
@@ -489,7 +489,7 @@ function asstRerenderEffects(effects){ ASST.detail.effects=effects;asstRenderEdi
 function asstBindEffectsForm(){
   el('asst_btnSaveEffects').onclick=asstSaveEffects;
   el('asst_btnAddEffect').onclick=function(){var effects=asstCollectEffects(false);effects.push({effectId:asstNextEffectId(effects),name:'',description:'',unlockRank:'無凸',sortOrder:effects.length+1,conditional:0,conditions:null});asstRerenderEffects(effects);};
-  document.querySelectorAll('[data-effect-row]').forEach(function(row){var select=row.querySelector('[data-effect-conditional]');select.onchange=function(){row.querySelector('[data-effect-condition-fields]').hidden=this.value!=='1';};});
+  document.querySelectorAll('[data-effect-row]').forEach(function(row){var select=row.querySelector('[data-effect-conditional]');select.onchange=function(){row.querySelector('[data-effect-condition-fields]').hidden=this.value!=='1';row.classList.toggle('conditional',this.value==='1');};});
   document.querySelectorAll('[data-effect-row]').forEach(function(row,index){
     row.querySelector('[data-effect-up]').onclick=function(){var effects=asstCollectEffects(false);if(index>0){var item=effects.splice(index,1)[0];effects.splice(index-1,0,item);asstRerenderEffects(effects);}};
     row.querySelector('[data-effect-down]').onclick=function(){var effects=asstCollectEffects(false);if(index<effects.length-1){var item=effects.splice(index,1)[0];effects.splice(index+1,0,item);asstRerenderEffects(effects);}};

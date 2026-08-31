@@ -114,6 +114,11 @@ function renderUnlockDots(rank) {
   return `<span class="unlock-dots" aria-label="解放段階 ${filled} / 4">${dots}</span>`;
 }
 
+function renderEffectRow(effect) {
+  const conditional = Boolean(effect.conditional);
+  return `      <tr${conditional ? ' class="is-conditional"' : ''}><th>${escapeHtml(effect.name)}</th><td>${escapeWithBreaks(effect.description)}</td></tr>`;
+}
+
 function renderEffects(effects) {
   if (!effects.length) return '';
   const groups = RANK_ORDER.map(rank => ({
@@ -126,7 +131,7 @@ function renderEffects(effects) {
     <h2 class="section-title">アシスト効果</h2>
 ${groups.map(group => `    <h3 class="assist-subtitle">${escapeHtml(group.rank)}${renderUnlockDots(group.rank)}</h3>
     <table class="assist-detail-table">
-${group.effects.map(effect => `      <tr><th>${escapeHtml(effect.name)}</th><td>${escapeWithBreaks(effect.description)}</td></tr>`).join('\n')}
+${group.effects.map(renderEffectRow).join('\n')}
     </table>`).join('\n')}
   </section>`;
 }
