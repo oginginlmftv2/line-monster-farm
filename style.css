@@ -558,3 +558,170 @@ td img {
     font-size: 11px;
   }
 }
+
+/* 共通バッジ（オーラ / モン類 / 限定）。monster-detail.css から移設 */
+.detail-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.detail-limited-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #e11d48, #f59e0b);
+  color: #fff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.aura-badge-lg {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: #f5f5f5;
+}
+
+.aura-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.aura-赤 .aura-dot {
+  background: #e53e3e;
+}
+
+.aura-青 .aura-dot {
+  background: #3182ce;
+}
+
+.aura-黄 .aura-dot {
+  background: #d69e2e;
+}
+
+.aura-黒 .aura-dot {
+  background: #4a4a4a;
+}
+
+.aura-白 .aura-dot {
+  background: #a0aec0;
+  border: 1px solid #ccc;
+}
+
+.aura-緑 .aura-dot {
+  background: #38a169;
+}
+
+.mon-badge {
+  font-size: 13px;
+  font-weight: bold;
+  padding: 4px 12px;
+  border-radius: 12px;
+  background: #1a1a2e;
+  color: #f0a500;
+}
+
+.limited-badge-inline {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: linear-gradient(135deg,#e11d48,#f59e0b);
+  color: #fff;
+}
+
+/* バッジ行。--sm は一覧・回遊カード用の小サイズ修飾 */
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin: 6px 0 0;
+}
+
+.badge-row--sm .aura-badge-lg,
+.badge-row--sm .mon-badge {
+  font-size: 11px;
+  padding: 3px 9px;
+}
+
+.badge-row--sm .limited-badge-inline {
+  font-size: 10px;
+  padding: 3px 8px;
+}
+
+/* 横長カード。monster-type.css の --editorial 系から移設（数値は同一） */
+.wide-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.wide-card {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  min-height: 150px;
+  text-align: left;
+}
+
+.wide-card .card-img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 1 / 1;
+  align-self: start;
+  object-fit: cover;
+}
+
+.wide-card .card-info {
+  padding: 14px;
+  text-align: left;
+}
+
+.wide-card .card-name {
+  font-size: 13px;
+}
+
+.wide-card .mon-type-card-meta {
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.wide-card-excerpt {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: left;
+}
+
+@media (max-width: 640px) {
+  .wide-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .wide-card {
+    grid-template-columns: 92px minmax(0, 1fr);
+    min-height: 128px;
+  }
+
+  .wide-card .card-info {
+    padding: 10px;
+  }
+
+  .wide-card-excerpt {
+    margin-top: 7px;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+}

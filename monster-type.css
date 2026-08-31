@@ -45,49 +45,6 @@
   margin-top: 16px;
 }
 
-/* 解説あり: PC 2列 */
-.mon-type-page .mon-type-grid--editorial {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.mon-type-page .mon-type-card--editorial {
-  display: grid;
-  grid-template-columns: 132px minmax(0, 1fr);
-  min-height: 150px;
-  text-align: left;
-}
-
-.mon-type-page .mon-type-card--editorial .card-img {
-  width: 100%;
-  height: auto;
-  max-height: none;
-  aspect-ratio: 1 / 1;
-  align-self: start;
-  object-fit: cover;
-}
-
-.mon-type-page .mon-type-card--editorial .card-info {
-  padding: 14px;
-  text-align: left;
-}
-
-.mon-type-page .mon-type-card--editorial .card-name {
-  font-size: 13px;
-}
-
-.mon-type-page .mon-type-card--editorial .mon-type-card-meta {
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.mon-type-page .mon-type-card-excerpt {
-  margin-top: 10px;
-  font-size: 12px;
-  line-height: 1.6;
-  text-align: left;
-}
-
 /* 解説なし: PC 8列の小型カード */
 .mon-type-page .mon-type-grid--compact {
   grid-template-columns: repeat(8, minmax(0, 1fr));
@@ -149,26 +106,6 @@
   .mon-type-page .mon-type-blood-title {
     margin: 28px 0 16px;
     font-size: 14px;
-  }
-
-  .mon-type-page .mon-type-grid--editorial {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 12px;
-  }
-
-  .mon-type-page .mon-type-card--editorial {
-    grid-template-columns: 92px minmax(0, 1fr);
-    min-height: 128px;
-  }
-
-  .mon-type-page .mon-type-card--editorial .card-info {
-    padding: 10px;
-  }
-
-  .mon-type-page .mon-type-card-excerpt {
-    margin-top: 7px;
-    font-size: 11px;
-    line-height: 1.5;
   }
 
   .mon-type-page .mon-type-grid--compact {
