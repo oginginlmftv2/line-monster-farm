@@ -311,8 +311,8 @@ try {
     gachaId: '20260901-2', name: '同時開催ガチャ', image: 'gacha-banner/20260801-1.jpg', rerollPriority: false,
   });
   const multiple = buildIntegrated(root, [gacha(), secondCurrent], 'multiple-current');
-  assert(multiple.integratedIndex.includes('<h3>&lt;神殿祭&gt; &amp; &quot;第1回&quot;</h3>'));
-  assert(multiple.integratedIndex.includes('<h3>同時開催ガチャ</h3>'));
+  assert(multiple.integratedIndex.includes('<h3 class="pickup-gacha-title">&lt;神殿祭&gt; &amp; &quot;第1回&quot;</h3>'));
+  assert(multiple.integratedIndex.includes('<h3 class="pickup-gacha-title">同時開催ガチャ</h3>'));
   pass(17, '複数の開催中ガチャをガチャごとのセクションに分割');
 
   const endedOnly = buildIntegrated(root, [ended], 'ended-only');

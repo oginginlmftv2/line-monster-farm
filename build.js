@@ -18,6 +18,11 @@ const GACHA_GATE_EXPLANATION = 300;
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
 
+// モン類アイコン。トップページの「モン類から探す」と同一。
+const MON_ICONS = {
+  souzou: '✨', genrei: '🐉', mazoku: '👿', kemono: '🐺', kaibutsu: '👹', muki: '💎',
+};
+
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
 }
@@ -248,24 +253,38 @@ function selectRerollGacha(gachas, now) {
   return (priority.length ? priority : candidates)[0];
 }
 
+// トップのピックアップ枠。セクションの器ごとマーカー内へ出力し、
+// 対象0件のときは何も出力しない（セクションごと消える）。
+function renderTopPickupSection(title, body) {
+  return `  <div class="section">\n    <div class="section-title">${title}</div>\n${body}\n  </div>`;
+}
+
+const TOP_PICKUP_EMPTY = '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
+
 function renderTopMonsterPickups(gachas, context) {
-  if (!gachas.length) return '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
-  return gachas.map(gacha => `    <h3>${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid">\n${gacha.pickupMonsters.map(pickup => {
+  const title = '現在のピックアップモンスター一覧';
+  if (!gachas.length) return renderTopPickupSection(title, TOP_PICKUP_EMPTY);
+  const blocks = gachas.filter(gacha => gacha.pickupMonsters.length).map(gacha => `    <h3 class="pickup-gacha-title">${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid wide-grid">\n${gacha.pickupMonsters.map(pickup => {
     const monster = context.monstersById.get(pickup.id);
     const editorial = context.editorialById.get(pickup.id);
     const image = gachaMonsterImage(monster);
     const excerpt = gachaExcerpt(editorial && editorial.explanation);
-    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>\n        ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '        ' })}${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
-  }).join('\n')}\n    </div>`).join('\n');
+    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card wide-card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="card-info">\n          <div class="card-name">${escapeHtml(monster.name)}</div>\n          ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
+  }).join('\n')}\n    </div>`);
+  if (!blocks.length) return '';
+  return renderTopPickupSection(title, blocks.join('\n'));
 }
 
 function renderTopCardPickups(gachas, context) {
-  if (!gachas.length) return '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
-  return gachas.map(gacha => `    <h3>${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid">\n${gacha.pickupCards.map(pickup => {
+  const title = '現在のピックアップアシストカード一覧';
+  if (!gachas.length) return renderTopPickupSection(title, TOP_PICKUP_EMPTY);
+  const blocks = gachas.filter(gacha => gacha.pickupCards.length).map(gacha => `    <h3 class="pickup-gacha-title">${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid wide-grid">\n${gacha.pickupCards.map(pickup => {
     const card = context.cardsById.get(pickup.cardId);
     const excerpt = gachaExcerpt(card.explanation);
-    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="name">${escapeHtml(card.name)}</div>\n        <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
-  }).join('\n')}\n    </div>`).join('\n');
+    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card wide-card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(card.name)}</div>\n          <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
+  }).join('\n')}\n    </div>`);
+  if (!blocks.length) return '';
+  return renderTopPickupSection(title, blocks.join('\n'));
 }
 
 function renderGachaUpdates(gachas, context) {
@@ -728,19 +747,30 @@ function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
   return { url: null, filename: null, source: null };
 }
 
+// releasedAt を比較用キーへ正規化する。YYYY-MM はその月の01日、
+// 空・不正は '' として最後尾に回す。
+function releasedAtKey(value) {
+  const text = String(value || '').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(text)) return text;
+  if (/^\d{4}-\d{2}$/.test(text)) return `${text}-01`;
+  return '';
+}
+
 function renderMonsterCards(context) {
+  // 第1キー: releasedAt 降順（空は最後尾） / 第2キー: arrayIndex 昇順
   const sortedMonsters = context.monsters
     .map(monster => ({
       monster,
       runtime: context.runtimeById.get(monster.id),
+      releasedKey: releasedAtKey((context.editorialById.get(monster.id) || {}).releasedAt),
     }))
     .sort((a, b) => {
-      const av = a.runtime && a.runtime.gwImg != null ? a.runtime.gwImg : Infinity;
-      const bv = b.runtime && b.runtime.gwImg != null ? b.runtime.gwImg : Infinity;
-      if (av === Infinity && bv === Infinity) {
-        return b.monster.arrayIndex - a.monster.arrayIndex;
+      if (a.releasedKey !== b.releasedKey) {
+        if (!a.releasedKey) return 1;
+        if (!b.releasedKey) return -1;
+        return b.releasedKey.localeCompare(a.releasedKey);
       }
-      return bv - av;
+      return a.monster.arrayIndex - b.monster.arrayIndex;
     });
 
   return sortedMonsters.map(({ monster, runtime }) => {
@@ -776,9 +806,26 @@ function renderMonsterIndex(source, context) {
     throw new Error('monsters.html のモンスターカード生成マーカーが重複しています');
   }
   const cards = renderMonsterCards(context);
-  return source.slice(0, start + startMarker.length)
+  const withCards = source.slice(0, start + startMarker.length)
     + `\n${cards}\n`
     + source.slice(end);
+  return renderMonsterCount(withCards, context.monsters.length);
+}
+
+// 説明文中のモンスター総数を実数へ差し替える。
+function renderMonsterCount(source, count) {
+  const startMarker = '<!-- BUILD:MONSTER-COUNT:START -->';
+  const endMarker = '<!-- BUILD:MONSTER-COUNT:END -->';
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error('monsters.html のモンスター総数マーカーが見つかりません');
+  }
+  if (source.indexOf(startMarker, start + startMarker.length) !== -1
+      || source.indexOf(endMarker, end + endMarker.length) !== -1) {
+    throw new Error('monsters.html のモンスター総数マーカーが重複しています');
+  }
+  return source.slice(0, start + startMarker.length) + String(count) + source.slice(end);
 }
 
 function renderRedirectMap(monsters) {
@@ -1242,7 +1289,8 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
   const otherMonTypes = context.eligibleMonTypes.filter(other => other.slug !== monType.slug);
   const otherLinks = otherMonTypes.map(other => {
     addLink(context, `monsters/${other.slug}/index.html`);
-    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html">${escapeHtml(other.name)}のモンスター</a>`;
+    const count = context.monsters.filter(monster => monster.monSlug === other.slug).length;
+    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html"><span class="icon">${MON_ICONS[other.slug] || ''}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
   }).join('\n');
 
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->

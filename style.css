@@ -176,6 +176,20 @@ nav a:hover, nav a.active {
 .name { font-size: 14px; font-weight: bold; padding: 8px 8px 2px; }
 .pickup-desc { font-size: 12px; color: #555; font-weight: bold; line-height: 1.5; padding: 4px 8px 10px; }
 
+/* ピックアップ枠のガチャ名。複数ガチャ同時開催で見出しが繰り返される前提の中見出し */
+.pickup-gacha-title {
+  margin: 22px 0 12px;
+  padding: 0 0 6px;
+  border-bottom: 2px solid #f0a500;
+  font-size: 15px;
+  line-height: 1.5;
+  font-weight: bold;
+  color: #4b3714;
+}
+
+/* セクション見出し直後の1本目だけ上余白を詰める */
+.section-title + .pickup-gacha-title { margin-top: 4px; }
+
 /* セクション */
 .section {
   background: #fff;
@@ -723,5 +737,12 @@ td img {
     margin-top: 7px;
     font-size: 11px;
     line-height: 1.5;
+  }
+}
+
+@media (max-width: 640px) {
+  .pickup-gacha-title {
+    margin: 18px 0 10px;
+    font-size: 14px;
   }
 }

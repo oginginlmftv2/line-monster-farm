@@ -31,6 +31,8 @@
       display: none;
     }
     .ikusei-submenu.open { display: block; }
+    /* .menu-grid の子として、押した行の直下に全幅で差し込む */
+    .menu-grid .ikusei-submenu { grid-column: 1 / -1; }
     .submenu-list {
       display: flex;
       flex-direction: column;
@@ -83,45 +85,6 @@
 </div>
 
 <main>
-
-  <!-- プレイ日記（ファーストビュー） -->
-  <div class="section">
-    <div class="section-title">📝 管理人のプレイ日記</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <a href="diary/medarot-korabo-matome.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
-        <div>
-          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">メダロットコラボカード＆モンスターの使用感まとめ</div>
-          <div style="font-size:12px;color:#999;">2026年6月17日</div>
-        </div>
-        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
-      </a>
-      <a href="diary/saikyo-no-training.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
-        <div>
-          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">最強のトレーニングとは</div>
-          <div style="font-size:12px;color:#999;">2026年5月28日</div>
-        </div>
-        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
-      </a>
-      <a href="diary/sogo-ikusei-7.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
-        <div>
-          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">初心者向け総合力育成方法⑦</div>
-          <div style="font-size:12px;color:#999;">2026年5月26日</div>
-        </div>
-        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
-      </a>
-      <a href="diary/sogo-ikusei-5.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
-        <div>
-          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">初心者向け総合力育成方法⑤</div>
-          <div style="font-size:12px;color:#999;">2026年5月21日</div>
-        </div>
-        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
-      </a>
-    </div>
-    <div style="text-align:right;margin-top:12px;">
-      <a href="diary.html" style="font-size:13px;color:#f0a500;font-weight:bold;text-decoration:none;">日記をもっと見る →</a>
-    </div>
-  </div>
-
   <!-- 更新履歴 -->
   <div class="section" style="margin-bottom:12px;">
     <div class="section-title">🕐 更新履歴</div>
@@ -290,9 +253,6 @@
       <a href="diary.html" class="menu-link">
         <span class="icon">📝</span> 管理人のプレイ日記
       </a>
-    </div>
-
-
     <!-- 初心者サブメニュー -->
     <div class="ikusei-submenu" id="beginner-submenu">
       <div class="submenu-list">
@@ -345,28 +305,33 @@
         </a>
       </div>
     </div>
+    </div>
   </div>
 
   <!-- ピックアップモンスター -->
+  <!-- GACHA:PICKUP:MONSTER:START -->
   <div class="section">
-    <div class="section-title">モンスター一覧（ピックアップ）</div>
-    <!-- GACHA:PICKUP:MONSTER:START -->
-    <h3>周年記念サマーステップアップモンスターガチャ</h3>
-    <div class="card-grid">
-      <a href="monsters/kaibutsu/kawazumo/2580.html" class="card">
+    <div class="section-title">現在のピックアップモンスター一覧</div>
+    <h3 class="pickup-gacha-title">周年記念サマーステップアップモンスターガチャ</h3>
+    <div class="card-grid wide-grid">
+      <a href="monsters/kaibutsu/kawazumo/2580.html" class="card wide-card">
         <img class="card-img" src="monster/2580.jpg" alt="ルートヴィッヒ">
-        <div class="name">ルートヴィッヒ</div>
-        <div class="badge-row badge-row--sm">
-          <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄オーラ</span>
-          <span class="mon-badge">怪物</span>
-          <span class="limited-badge-inline">サマー限定</span>
+        <div class="card-info">
+          <div class="card-name">ルートヴィッヒ</div>
+          <div class="badge-row badge-row--sm">
+            <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄オーラ</span>
+            <span class="mon-badge">怪物</span>
+            <span class="limited-badge-inline">サマー限定</span>
+          </div>
+          <div class="wide-card-excerpt">カワズモー種としては待望の初ガチャ実装モンスターにして、これまた待望の黄色ノーブルモンスター。まだノーブル種を所持していないブリーダーは絶対に欲しいモンスターの一体！ 黄オーラはアシストカード「SSRメタビー」を編成することで、修行→ノラモン勝率アップと、ノラモン勝利時に1度だけ…</div>
         </div>
-        <div class="pickup-desc">カワズモー種としては待望の初ガチャ実装モンスターにして、これまた待望の黄色ノーブルモンスター。まだノーブル種を所持していないブリーダーは絶対に欲しいモンスターの一体！ 黄オーラはアシストカード「SSRメタビー」を編成することで、修行→ノラモン勝率アップと、ノラモン勝利時に1度だけ…</div>
       </a>
     </div>
-<!-- GACHA:PICKUP:MONSTER:END -->
   </div>
-
+<!-- GACHA:PICKUP:MONSTER:END -->
+  <!-- アシストカードピックアップ -->
+  <!-- GACHA:PICKUP:CARD:START -->
+<!-- GACHA:PICKUP:CARD:END -->
   <!-- モン類一覧 -->
   <div class="section">
     <div class="section-title">モン類から探す</div>
@@ -375,7 +340,7 @@
         <span class="icon">✨</span> 創造（37体）
       </a>
       <a href="monsters/genrei/" class="menu-link">
-        <span class="icon">🐉</span> 幻霊（60体）
+        <span class="icon">🐉</span> 幻霊（62体）
       </a>
       <a href="monsters/mazoku/" class="menu-link">
         <span class="icon">👿</span> 魔族（81体）
@@ -384,23 +349,85 @@
         <span class="icon">🐺</span> 獣族（66体）
       </a>
       <a href="monsters/kaibutsu/" class="menu-link">
-        <span class="icon">👹</span> 怪物（49体）
+        <span class="icon">👹</span> 怪物（50体）
       </a>
       <a href="monsters/muki/" class="menu-link">
-        <span class="icon">💎</span> 無機（55体）
+        <span class="icon">💎</span> 無機（56体）
       </a>
     </div>
   </div>
 
-  <!-- アシストカードピックアップ -->
+  <!-- アシストカードランキング -->
   <div class="section">
-    <div class="section-title">アシストカード一覧（ピックアップ）</div>
-    <!-- GACHA:PICKUP:CARD:START -->
-    <h3>周年記念サマーステップアップモンスターガチャ</h3>
-    <div class="card-grid">
+    <div class="section-title">🏆 最強アシストカードランキング</div>
+    <p style="font-size:12px;color:#999;margin:-12px 0 16px 2px;">ユーザー投票（184名） ／ 2026.03.14時点</p>
+    <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
+
+      <!-- 1位 -->
+      <a href="cards/a10j-MR-fureria.html" class="card" style="position:relative;">
+        <div style="position:absolute;top:6px;left:6px;background:#f0a500;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">1位</div>
+        <img class="card-img" src="assist-cards/a10j-MR-fureria.jpg" alt="フレリア">
+        <div class="name">フレリア</div>
+        <span class="rarity rarity-MR">MR</span>
+        <div style="font-size:11px;color:#999;padding:0 0 8px;">153票</div>
+      </a>
+
+      <!-- 2位 -->
+      <a href="cards/b21i-MR-rimuru.html" class="card" style="position:relative;">
+        <div style="position:absolute;top:6px;left:6px;background:#999;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">2位</div>
+        <img class="card-img" src="assist-cards/b21i-MR-rimuru.jpg" alt="リムル">
+        <div class="name">リムル</div>
+        <span class="rarity rarity-MR">MR</span>
+        <div style="font-size:11px;color:#999;padding:0 0 8px;">119票</div>
+      </a>
+
+      <!-- 3位 -->
+      <a href="cards/a24j-MR-vitoniru.html" class="card" style="position:relative;">
+        <div style="position:absolute;top:6px;left:6px;background:#c97030;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">3位</div>
+        <img class="card-img" src="assist-cards/a24j-MR-vitoniru.jpg" alt="ヴィトニル">
+        <div class="name">ヴィトニル</div>
+        <span class="rarity rarity-MR">MR</span>
+        <div style="font-size:11px;color:#999;padding:0 0 8px;">93票</div>
+      </a>
 
     </div>
-<!-- GACHA:PICKUP:CARD:END -->
+  </div>
+  <!-- プレイ日記（ファーストビュー） -->
+  <div class="section">
+    <div class="section-title">📝 管理人のプレイ日記</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="diary/medarot-korabo-matome.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
+        <div>
+          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">メダロットコラボカード＆モンスターの使用感まとめ</div>
+          <div style="font-size:12px;color:#999;">2026年6月17日</div>
+        </div>
+        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
+      </a>
+      <a href="diary/saikyo-no-training.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
+        <div>
+          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">最強のトレーニングとは</div>
+          <div style="font-size:12px;color:#999;">2026年5月28日</div>
+        </div>
+        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
+      </a>
+      <a href="diary/sogo-ikusei-7.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
+        <div>
+          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">初心者向け総合力育成方法⑦</div>
+          <div style="font-size:12px;color:#999;">2026年5月26日</div>
+        </div>
+        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
+      </a>
+      <a href="diary/sogo-ikusei-5.html" style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:#fff;border:1px solid #eee;border-radius:10px;padding:14px 16px;text-decoration:none;color:inherit;transition:border-color 0.2s;" onmouseover="this.style.borderColor='#f0a500'" onmouseout="this.style.borderColor='#eee'">
+        <div>
+          <div style="font-size:15px;font-weight:bold;color:#1a1a2e;margin-bottom:4px;">初心者向け総合力育成方法⑤</div>
+          <div style="font-size:12px;color:#999;">2026年5月21日</div>
+        </div>
+        <span style="color:#f0a500;font-size:18px;flex-shrink:0;">›</span>
+      </a>
+    </div>
+    <div style="text-align:right;margin-top:12px;">
+      <a href="diary.html" style="font-size:13px;color:#f0a500;font-weight:bold;text-decoration:none;">日記をもっと見る →</a>
+    </div>
   </div>
 
   <!-- このサイトについて -->
@@ -451,41 +478,6 @@
   </div>
 
 
-  <!-- アシストカードランキング -->
-  <div class="section">
-    <div class="section-title">🏆 最強アシストカードランキング</div>
-    <p style="font-size:12px;color:#999;margin:-12px 0 16px 2px;">ユーザー投票（184名） ／ 2026.03.14時点</p>
-    <div class="card-grid" style="grid-template-columns: repeat(3, 1fr); gap: 10px;">
-
-      <!-- 1位 -->
-      <a href="cards/a10j-MR-fureria.html" class="card" style="position:relative;">
-        <div style="position:absolute;top:6px;left:6px;background:#f0a500;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">1位</div>
-        <img class="card-img" src="assist-cards/a10j-MR-fureria.jpg" alt="フレリア">
-        <div class="name">フレリア</div>
-        <span class="rarity rarity-MR">MR</span>
-        <div style="font-size:11px;color:#999;padding:0 0 8px;">153票</div>
-      </a>
-
-      <!-- 2位 -->
-      <a href="cards/b21i-MR-rimuru.html" class="card" style="position:relative;">
-        <div style="position:absolute;top:6px;left:6px;background:#999;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">2位</div>
-        <img class="card-img" src="assist-cards/b21i-MR-rimuru.jpg" alt="リムル">
-        <div class="name">リムル</div>
-        <span class="rarity rarity-MR">MR</span>
-        <div style="font-size:11px;color:#999;padding:0 0 8px;">119票</div>
-      </a>
-
-      <!-- 3位 -->
-      <a href="cards/a24j-MR-vitoniru.html" class="card" style="position:relative;">
-        <div style="position:absolute;top:6px;left:6px;background:#c97030;color:#fff;font-size:11px;font-weight:900;padding:2px 7px;border-radius:4px;z-index:1;">3位</div>
-        <img class="card-img" src="assist-cards/a24j-MR-vitoniru.jpg" alt="ヴィトニル">
-        <div class="name">ヴィトニル</div>
-        <span class="rarity rarity-MR">MR</span>
-        <div style="font-size:11px;color:#999;padding:0 0 8px;">93票</div>
-      </a>
-
-    </div>
-  </div>
 
 </main>
 
@@ -521,6 +513,32 @@ function toggleMiniGame(btn) {
     chevron.classList.add('open');
   }
 }
+// 押したボタンを含む行の直後へサブメニューを差し込む。
+// .menu-grid の列数は画面幅で変わるため、実行時に算出する。
+function openSubmenu(btn, submenu) {
+  const grid  = btn.parentElement;
+  if (!grid || !grid.classList.contains('menu-grid')) return;
+  const items = [...grid.children].filter(el => !el.classList.contains('ikusei-submenu'));
+  const cols  = getComputedStyle(grid).gridTemplateColumns.split(' ').length;
+  const idx   = items.indexOf(btn);
+  if (idx === -1 || !cols) return;
+  const after = items[Math.min((Math.floor(idx / cols) + 1) * cols, items.length) - 1];
+  after.after(submenu);
+  submenu.dataset.openerId = btn.id || '';
+  submenu._opener = btn;
+}
+
+// 開いているサブメニューだけ、列数の変化に追従させる
+let submenuResizeTimer = null;
+window.addEventListener('resize', function () {
+  clearTimeout(submenuResizeTimer);
+  submenuResizeTimer = setTimeout(function () {
+    document.querySelectorAll('.menu-grid .ikusei-submenu.open').forEach(function (menu) {
+      if (menu._opener) openSubmenu(menu._opener, menu);
+    });
+  }, 120);
+});
+
 function toggleBeginner(btn) {
   const menu = document.getElementById('beginner-submenu');
   const chevron = document.getElementById('beginner-chevron');
@@ -529,6 +547,7 @@ function toggleBeginner(btn) {
     menu.classList.remove('open');
     chevron.classList.remove('open');
   } else {
+    openSubmenu(btn, menu);
     menu.classList.add('open');
     chevron.classList.add('open');
   }
@@ -553,6 +572,7 @@ function toggleIkusei(btn) {
     menu.classList.remove('open');
     chevron.classList.remove('open');
   } else {
+    openSubmenu(btn, menu);
     menu.classList.add('open');
     chevron.classList.add('open');
   }
