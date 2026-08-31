@@ -6,9 +6,9 @@
   "generatedAt": null,
   "counts": {
     "cards": 93,
-    "cardsWithEffects": 84,
-    "cardsDraft": 9,
-    "effects": 901
+    "cardsWithEffects": 85,
+    "cardsDraft": 8,
+    "effects": 913
   },
   "cards": {
     "g1-MR-serafina": {
@@ -8451,8 +8451,144 @@
       ]
     },
     "aaa-MR-aileblanche": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "aaa-MR-aileblanche-e01",
+          "name": "血統オーラ上限解放 +60",
+          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップまた主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "or",
+            "types": [
+              "mainBloodlineMatch",
+              "subBloodlineMatch",
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e02",
+          "name": "オーラブリーダー +60%",
+          "description": "育成対象とオーラ一致したとき、ブリーダーがトレーニングに出現する(3人まで)",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e03",
+          "name": "トレ効果アップ +11%",
+          "description": "一緒にトレーニングしたとき、 基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e04",
+          "name": "忠誠度効果アップ +23%",
+          "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e05",
+          "name": "フィジカル上限アップ +140",
+          "description": "ちからと丈夫さの基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e06",
+          "name": "オーラ修行アップ +40%",
+          "description": "育成対象とオーラ一致したとき、 修行の基礎ステータス上昇量アップ (重複不可)",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e07",
+          "name": "フィジカルボーナスⅡ +2",
+          "description": "ちから、丈夫さの素質アップ+2%\n一緒にトレーニングしたとき、ちから、丈夫さの上昇量アップ+2",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e08",
+          "name": "大成功率アップ +8",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e12",
+          "name": "忠誠度効果アップ +23%",
+          "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e09",
+          "name": "オーラブリーダー・信頼II",
+          "description": "ブリーダートレ出現率 + 20%\nブリーダーがトレーニングに出現時、 発動中の忠誠度効果アップを+60%、 応援効果+20%",
+          "unlockRank": "無凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e10",
+          "name": "トレ効果アップ +9%",
+          "description": "一緒にトレーニングしたとき、 基礎ステータスの上昇量アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "aaa-MR-aileblanche-e11",
+          "name": "オーラブリーダー・継承",
+          "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        }
+      ]
     },
     "aab-MR-julia": {
       "status": "verified",

@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 93,
-    "withStats": 57,
+    "withStats": 58,
     "withExplanation": 85,
     "withFormations": 5
   },
@@ -3885,7 +3885,20 @@
       "event2": null,
       "releasedAt": "2026/08/31",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+32%",
+          "label": "応援効果"
+        },
+        {
+          "value": "+35%",
+          "label": "得意率"
+        },
+        {
+          "value": "+30",
+          "label": "初期フィジカル"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
