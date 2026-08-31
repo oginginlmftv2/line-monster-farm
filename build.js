@@ -124,6 +124,25 @@ function escapeHtml(value) {
     .replace(/'/g, '&#39;');
 }
 
+// オーラ → モン類 → 限定 の順で共通バッジ行を組み立てる。
+// 限定でないモンスターには限定バッジを出さない（空要素も出さない）。
+function renderBadgeRow({ aura, mon = '', limitedLabel = '', small = false, indent = '' }) {
+  const badges = [
+    `<span class="aura-badge-lg aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${escapeHtml(aura)}オーラ</span>`,
+  ];
+  if (mon) badges.push(`<span class="mon-badge">${escapeHtml(mon)}</span>`);
+  if (limitedLabel) badges.push(`<span class="limited-badge-inline">${escapeHtml(limitedLabel)}</span>`);
+  const rowClass = small ? 'badge-row badge-row--sm' : 'badge-row';
+  const inner = badges.map(badge => `${indent}  ${badge}`).join('\n');
+  return `<div class="${rowClass}">\n${inner}\n${indent}</div>`;
+}
+
+// 限定ラベル。限定なのにラベルが空なら「限定」を使う。
+function limitedLabelOf(source) {
+  if (!source || !source.limited) return '';
+  return source.limitedLabel || '限定';
+}
+
 function formatExplanation(text) {
   const lines = String(text || '').replace(/\r\n?/g, '\n').split('\n');
   const blocks = [];
@@ -236,7 +255,7 @@ function renderTopMonsterPickups(gachas, context) {
     const editorial = context.editorialById.get(pickup.id);
     const image = gachaMonsterImage(monster);
     const excerpt = gachaExcerpt(editorial && editorial.explanation);
-    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
+    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="name">${escapeHtml(monster.name)}</div>\n        ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '        ' })}${excerpt ? `\n        <div class="pickup-desc">${escapeHtml(excerpt)}</div>` : ''}\n      </a>`;
   }).join('\n')}\n    </div>`).join('\n');
 }
 
@@ -737,8 +756,8 @@ function renderMonsterCards(context) {
         ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}" loading="lazy">` : ''}${limited ? '\n        <span class="badge-limited">限定</span>' : ''}
       </div>
       <div class="monster-info">
-        <div class="aura-badge aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${escapeHtml(aura)}</div>
         <div class="monster-name">${escapeHtml(monster.name)}</div>
+        ${renderBadgeRow({ aura, limitedLabel: limitedLabelOf(runtime), small: true, indent: '        ' })}
       </div>
     </a>`;
   }).join('\n');
@@ -975,11 +994,19 @@ function relatedMonsters(monster, context) {
 }
 
 function renderRelatedCard(monster, context) {
+  const runtime = context.runtimeById.get(monster.id);
   const image = resolveImage(monster.id, context).url;
   const content = `${image ? `\n          <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
           <div class="card-info">
             <div class="card-name">${escapeHtml(monster.name)}</div>
-            <div>${escapeHtml(monster.aura)}オーラ / ${escapeHtml(monster.subBlood)}</div>
+            ${renderBadgeRow({
+    aura: runtime ? runtime.aura : monster.aura,
+    mon: monster.mon,
+    limitedLabel: limitedLabelOf(runtime || monster),
+    small: true,
+    indent: '            ',
+  })}
+            <div>${escapeHtml(monster.subBlood)}</div>
           </div>`;
   addLink(context, monster.url.replace(/^\//, ''));
   return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
@@ -1136,19 +1163,23 @@ function renderMonTypeCard(monster, context) {
   const editorial = context.editorialById.get(monster.id);
   const isIndexable = context.indexableDetailIds.has(monster.id);
   const excerpt = isIndexable
-    ? `\n            <p class="mon-type-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
-    : '';
-  const limited = runtime && runtime.limitedLabel
-    ? ` / ${escapeHtml(runtime.limitedLabel)}`
+    ? `\n            <p class="wide-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
     : '';
   const content = `${image ? `
           <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
           <div class="card-info">
             <div class="card-name">${escapeHtml(monster.name)}</div>
-            <div class="mon-type-card-meta">${escapeHtml(runtime ? runtime.aura : monster.aura)}オーラ / 副血統: ${escapeHtml(monster.subBlood)}${limited}</div>${excerpt}
+            ${renderBadgeRow({
+    aura: runtime ? runtime.aura : monster.aura,
+    mon: monster.mon,
+    limitedLabel: limitedLabelOf(runtime || monster),
+    small: true,
+    indent: '            ',
+  })}
+            <div class="mon-type-card-meta">副血統: ${escapeHtml(monster.subBlood)}</div>${excerpt}
           </div>`;
   addLink(context, monster.url.replace(/^\//, ''));
-  const displayClass = isIndexable ? ' mon-type-card--editorial' : ' mon-type-card--compact';
+  const displayClass = isIndexable ? ' wide-card' : ' mon-type-card--compact';
   return `        <a class="card mon-type-card${displayClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
         </a>`;
 }
@@ -1193,7 +1224,7 @@ ${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escape
     });
     const editorialGrid = editorialMembers.length
       ? `
-    <div class="card-grid mon-type-grid mon-type-grid--editorial">
+    <div class="card-grid mon-type-grid wide-grid">
 ${editorialMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
     </div>`
       : '';
