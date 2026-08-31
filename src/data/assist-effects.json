@@ -8555,7 +8555,7 @@
           "effectId": "aaa-MR-aileblanche-e09",
           "name": "オーラブリーダー・信頼II",
           "description": "ブリーダートレ出現率 + 20%\nブリーダーがトレーニングに出現時、 発動中の忠誠度効果アップを+60%、 応援効果+20%",
-          "unlockRank": "無凸",
+          "unlockRank": "3凸",
           "sortOrder": 10,
           "conditional": 1,
           "conditions": {
