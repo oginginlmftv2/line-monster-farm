@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 352,
+ "count": 356,
  "monsters": [
   {
    "id": "0101",
@@ -1093,6 +1093,25 @@
    "localImg": "S__93200679_0.jpg",
    "url": "/monsters/muki/henger/0422.html",
    "image": "img/monster/0422.jpg"
+  },
+  {
+   "id": "0430",
+   "sortOrder": 430,
+   "isNew": true,
+   "name": "ラクシャーガ",
+   "arrayIndex": 353,
+   "mon": "無機",
+   "monSlug": "muki",
+   "blood": "ヘンガー",
+   "bloodSlug": "henger",
+   "subBlood": "キジン",
+   "aura": "黄",
+   "limited": false,
+   "limitedLabel": "",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/muki/henger/0430.html",
+   "image": "img/monster/0430.jpg"
   },
   {
    "id": "0450",
@@ -3335,6 +3354,25 @@
    "localImg": "S__93200563_0.jpg",
    "url": "/monsters/mazoku/suezo/1552.html",
    "image": "img/monster/1552.jpg"
+  },
+  {
+   "id": "1553",
+   "sortOrder": 1553,
+   "isNew": true,
+   "name": "ベタピン",
+   "arrayIndex": 355,
+   "mon": "魔族",
+   "monSlug": "mazoku",
+   "blood": "スエゾー",
+   "bloodSlug": "suezo",
+   "subBlood": "レアモン",
+   "aura": "白",
+   "limited": true,
+   "limitedLabel": "イベント限定",
+   "gwImg": null,
+   "localImg": "1553.jpg",
+   "url": "/monsters/mazoku/suezo/1553.html",
+   "image": "img/monster/1553.jpg"
   },
   {
    "id": "1602",
@@ -5674,6 +5712,25 @@
    "image": "img/monster/2609.jpg"
   },
   {
+   "id": "2613",
+   "sortOrder": 2613,
+   "isNew": true,
+   "name": "センリ",
+   "arrayIndex": 354,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "キュービ",
+   "bloodSlug": "kyubi",
+   "subBlood": "ニャー",
+   "aura": "白",
+   "limited": false,
+   "limitedLabel": "",
+   "gwImg": null,
+   "localImg": "2613.jpg",
+   "url": "/monsters/kemono/kyubi/2613.html",
+   "image": "img/monster/2613.jpg"
+  },
+  {
    "id": "2614",
    "sortOrder": 2614,
    "isNew": false,
@@ -6584,6 +6641,25 @@
    "localImg": "S__111239186_0.jpg",
    "url": "/monsters/muki/illumine/3251.html",
    "image": "img/monster/3251.jpg"
+  },
+  {
+   "id": "3290",
+   "sortOrder": 3290,
+   "isNew": true,
+   "name": "ワルキューレ",
+   "arrayIndex": 352,
+   "mon": "無機",
+   "monSlug": "muki",
+   "blood": "イルミネ",
+   "bloodSlug": "illumine",
+   "subBlood": "ロード種",
+   "aura": "白",
+   "limited": false,
+   "limitedLabel": "",
+   "gwImg": null,
+   "localImg": "3290.jpg",
+   "url": "/monsters/muki/illumine/3290.html",
+   "image": "img/monster/3290.jpg"
   },
   {
    "id": "3314",

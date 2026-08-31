@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 800,
-  "count": 352,
+  "count": 356,
   "monsters": [
     {
       "id": "0101",
@@ -1405,8 +1405,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 250,
-      "current": 250,
+      "baseline": 243,
+      "current": 243,
       "indexable": false
     },
     {
@@ -1430,8 +1430,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 255,
-      "current": 255,
+      "baseline": 247,
+      "current": 247,
+      "indexable": false
+    },
+    {
+      "id": "0430",
+      "arrayIndex": 353,
+      "name": "ラクシャーガ",
+      "aura": "黄",
+      "mon": "無機",
+      "mainBlood": "ヘンガー",
+      "subBlood": "キジン",
+      "limited": false,
+      "limitedLabel": "",
+      "image": null,
+      "imageSource": null,
+      "gwImg": null,
+      "url": "/monsters/muki/henger/0430.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 250,
+      "current": 250,
       "indexable": false
     },
     {
@@ -1467,8 +1492,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-07-31",
-      "baseline": 263,
-      "current": 1831,
+      "baseline": 259,
+      "current": 1827,
       "indexable": true
     },
     {
@@ -1492,8 +1517,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 246,
-      "current": 246,
+      "baseline": 244,
+      "current": 244,
       "indexable": false
     },
     {
@@ -4702,8 +4727,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 227,
-      "current": 227,
+      "baseline": 247,
+      "current": 247,
       "indexable": false
     },
     {
@@ -4727,8 +4752,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 214,
-      "current": 214,
+      "baseline": 234,
+      "current": 234,
+      "indexable": false
+    },
+    {
+      "id": "1553",
+      "arrayIndex": 355,
+      "name": "ベタピン",
+      "aura": "白",
+      "mon": "魔族",
+      "mainBlood": "スエゾー",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "イベント限定",
+      "image": "1553.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/mazoku/suezo/1553.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 216,
+      "current": 216,
       "indexable": false
     },
     {
@@ -7966,8 +8016,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 207,
-      "current": 207,
+      "baseline": 204,
+      "current": 204,
       "indexable": false
     },
     {
@@ -7991,8 +8041,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 224,
-      "current": 224,
+      "baseline": 213,
+      "current": 213,
+      "indexable": false
+    },
+    {
+      "id": "2613",
+      "arrayIndex": 354,
+      "name": "センリ",
+      "aura": "白",
+      "mon": "獣族",
+      "mainBlood": "キュービ",
+      "subBlood": "ニャー",
+      "limited": false,
+      "limitedLabel": "",
+      "image": "2613.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kemono/kyubi/2613.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 234,
+      "current": 234,
       "indexable": false
     },
     {
@@ -8016,8 +8091,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 240,
-      "current": 240,
+      "baseline": 230,
+      "current": 230,
       "indexable": false
     },
     {
@@ -8041,8 +8116,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 245,
-      "current": 245,
+      "baseline": 243,
+      "current": 243,
       "indexable": false
     },
     {
@@ -9387,8 +9462,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-14",
-      "baseline": 234,
-      "current": 1431,
+      "baseline": 250,
+      "current": 1447,
       "indexable": true
     },
     {
@@ -9412,8 +9487,33 @@
       "createdAt": "2025-05-31",
       "updatedAt": "2025-05-31",
       "releasedAt": "2025-05-31",
-      "baseline": 225,
-      "current": 365,
+      "baseline": 241,
+      "current": 381,
+      "indexable": false
+    },
+    {
+      "id": "3290",
+      "arrayIndex": 352,
+      "name": "ワルキューレ",
+      "aura": "白",
+      "mon": "無機",
+      "mainBlood": "イルミネ",
+      "subBlood": "ロード種",
+      "limited": false,
+      "limitedLabel": "",
+      "image": "3290.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/muki/illumine/3290.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "",
+      "releasedAt": "",
+      "baseline": 214,
+      "current": 214,
       "indexable": false
     },
     {

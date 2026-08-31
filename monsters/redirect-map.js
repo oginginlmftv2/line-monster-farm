@@ -351,5 +351,9 @@ window.LMF_REDIRECT_MAP = {
   "348": "muki/nyaa/1354.html",
   "349": "genrei/undine/2016.html",
   "350": "genrei/gel/1921.html",
-  "351": "kaibutsu/kawazumo/2580.html"
+  "351": "kaibutsu/kawazumo/2580.html",
+  "352": "muki/illumine/3290.html",
+  "353": "muki/henger/0430.html",
+  "354": "kemono/kyubi/2613.html",
+  "355": "mazoku/suezo/1553.html"
 };
