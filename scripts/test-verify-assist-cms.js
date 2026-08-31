@@ -859,6 +859,18 @@ expectFailure('再監査ボタンの下部固定.actions復帰を拒否', root =
   fs.writeFileSync(file, source.replace('\'<div class="asst-audit-toolbar"><button type="button" id="asst_btnAuditLatest"', '\'<div class="actions"><button type="button" id="asst_btnAuditLatest"'));
 }, /再監査ボタン/);
 
+expectFailure('条件原文入力枠の復活を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('data-ocr-name type="text"', 'data-ocr-source'));
+}, /条件原文の入力枠/);
+
+expectFailure('OCR候補の手動追加の欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(/asst_btnAddOcrCandidate/g, 'asst_btnNoop'));
+}, /OCR候補の手動追加/);
+
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);
 childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-lmfdb-read-api.js')], {
   cwd: repo,
