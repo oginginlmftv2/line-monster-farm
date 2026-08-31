@@ -783,7 +783,10 @@ expectFailure('assist一覧の新規カード末尾追加欠落を拒否', root 
 expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
   const file = path.join(root, 'scripts/verify-assist-source.js');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace("['assist.html', 'sitemap.xml']", "['sitemap.xml']"));
+  fs.writeFileSync(file, source.replace(
+    "['assist.html', 'index.html', 'reroll.html', 'sitemap.xml']",
+    "['index.html', 'reroll.html', 'sitemap.xml']"
+  ));
 }, /assist\.htmlを3DBから既存順維持/);
 
 console.log(`OK verifier破壊コピー ${destructiveCases}ケースをすべて拒否`);

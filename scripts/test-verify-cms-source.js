@@ -5,7 +5,8 @@ const os = require('os');
 const path = require('path');
 const { execFileSync, spawnSync } = require('child_process');
 
-const SCRIPT = path.join(__dirname, 'verify-cms-source.js');
+const CMS_SCRIPT = path.join(__dirname, 'verify-cms-source.js');
+const ASSIST_SCRIPT = path.join(__dirname, 'verify-assist-source.js');
 let passed = 0;
 const fixtureDirs = [];
 
@@ -42,8 +43,8 @@ function fixture() {
   return { repo, base: commit(repo, 'base') };
 }
 
-function run(repo, args) {
-  return spawnSync(process.execPath, [SCRIPT, ...args], { cwd: repo, encoding: 'utf8' });
+function run(repo, args, script = CMS_SCRIPT) {
+  return spawnSync(process.execPath, [script, ...args], { cwd: repo, encoding: 'utf8' });
 }
 
 function expect(name, result, success, pattern) {
@@ -125,9 +126,23 @@ function expect(name, result, success, pattern) {
   const { repo } = fixture();
   write(repo, 'monsters.html', 'generated\n');
   write(repo, 'monsters/0001.html', 'generated detail\n');
-  expect('許可された生成差分', run(repo, ['generated']), true, /PASS:/);
+  write(repo, 'gacha/20260831-1.html', 'generated gacha detail\n');
+  write(repo, 'index.html', 'generated top\n');
+  write(repo, 'reroll.html', 'generated reroll\n');
+  expect('モンスター更新に伴うガチャ生成差分', run(repo, ['generated']), true, /PASS:/);
   write(repo, 'unexpected.txt', 'blocked\n');
   expect('許可外の生成差分を拒否', run(repo, ['generated']), false, /許可外/);
+}
+
+{
+  const { repo } = fixture();
+  write(repo, 'cards/card-1.html', 'generated card detail\n');
+  write(repo, 'gacha/20260831-1.html', 'generated gacha detail\n');
+  write(repo, 'index.html', 'generated top\n');
+  write(repo, 'reroll.html', 'generated reroll\n');
+  expect('アシスト更新に伴うガチャ生成差分', run(repo, ['generated'], ASSIST_SCRIPT), true, /PASS:/);
+  write(repo, 'gacha-banner/unexpected.jpg', 'blocked input\n');
+  expect('アシスト生成差分の無関係ファイルを拒否', run(repo, ['generated'], ASSIST_SCRIPT), false, /許可外/);
 }
 
 console.log(`CMS source gate tests: PASS ${passed}`);
