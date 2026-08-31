@@ -15,6 +15,7 @@ const GENERATED_FILES = new Set([
   'sitemap.xml',
   'src/data/monster-ids.json',
   'src/data/id-availability.json',
+  'src/data/lmfdb-card-map.json',
   'src/data/page-baseline.json',
   'src/data/cms-seed.json',
 ]);

@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { LMFDB_CARD_MAP_FILE, LMFDB_CARD_MAP_SCHEMA_VERSION, renderLmfdbCardMap } = require('./lmfdb-card-map');
 
 const SOURCE_FILES = [
   '_cms/gas/20_assist.gs',
@@ -27,7 +28,12 @@ const DATA_FILES = [
   'src/data/assist-effects.json',
   'src/data/assist-abilities.json',
 ];
-const LMFDB_CARD_MAP_FILE = 'src/data/lmfdb-card-map.json';
+// 対応表はbuild.jsの生成物なので、公開経路3本が生成物として許可している必要がある。
+const GENERATED_SOURCE_VERIFIERS = [
+  'scripts/verify-assist-source.js',
+  'scripts/verify-cms-source.js',
+  'scripts/verify-gacha-source.js',
+];
 const LMFDB_FIXED_FIXTURE = 'scripts/fixtures/lmfdb-abilities-dad5d301.json.gz';
 const LMFDB_AUDIT_UI_TEST = 'scripts/test-asst-lmfdb-audit-ui.js';
 const LMFDB_CREATE_API_TEST = 'scripts/test-asst-lmfdb-create-api.js';
@@ -428,13 +434,26 @@ function validateRoot(root) {
   }
   try {
     const cardMap = json(root, LMFDB_CARD_MAP_FILE);
-    const expectedMapHash = crypto.createHash('sha256').update(JSON.stringify(cardMap.mappings)).digest('hex');
-    const hashMatch = gas.match(/ASST_LMFDB_CARD_MAP_SHA256\s*=\s*'([0-9a-f]{64})'/);
-    if (!cardMap || cardMap.schemaVersion !== 1 || !Array.isArray(cardMap.mappings) || !hashMatch || hashMatch[1] !== expectedMapHash) {
-      issues.push('GASの固定カード対応表hashがsrc/data/lmfdb-card-map.jsonと不一致');
+    const expected = renderLmfdbCardMap(json(root, 'src/data/assist-cards.json').cards);
+    if (!cardMap || cardMap.schemaVersion !== LMFDB_CARD_MAP_SCHEMA_VERSION || !Array.isArray(cardMap.mappings)) {
+      issues.push('lmfdb-card-map.jsonの構造が不正');
+    } else if (read(root, LMFDB_CARD_MAP_FILE) !== expected) {
+      issues.push('src/data/lmfdb-card-map.jsonがsrc/data/assist-cards.jsonの生成結果と不一致');
+    }
+    // カード追加のたびに人手更新が必要な凍結hashへ戻さない。
+    if (/ASST_LMFDB_CARD_MAP_SHA256/.test(gas)) {
+      issues.push('GASへカード対応表の固定hashが再混入');
+    }
+    if (!/return \{ map: map, sha256: asstSha256_\(JSON\.stringify\(mappings\)\) \};/
+      .test(functionBlock(gas, 'asstAuditCardMap_'))) {
+      issues.push('GASの対応表がcardsシートからの射影とcardMapSha256の報告になっていない');
+    }
+    if (!/LMFDB_CARD_MAP_FILE,\s*\n\s*renderLmfdbCardMap\(inputs\.assistCards\)/.test(read(root, 'build.js'))
+      || !GENERATED_SOURCE_VERIFIERS.every(file => read(root, file).includes(`'${LMFDB_CARD_MAP_FILE}'`))) {
+      issues.push('build.jsが対応表を生成し公開経路が生成物として許可する構成になっていない');
     }
   } catch (error) {
-    issues.push(`lMfDB固定対応表の検査に失敗: ${error.message}`);
+    issues.push(`lMfDBカード対応表の検査に失敗: ${error.message}`);
   }
   const cmsSource = filesUnder(root, '_cms').map(relative => read(root, relative)).join('\n');
   for (const [pattern, label] of [

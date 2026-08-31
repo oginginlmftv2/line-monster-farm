@@ -38,6 +38,10 @@ const targets = [
   'scripts/build-assist-pages.js',
   'scripts/test-assist-index-build.js',
   'scripts/verify-assist-source.js',
+  'scripts/verify-cms-source.js',
+  'scripts/verify-gacha-source.js',
+  'scripts/lmfdb-card-map.js',
+  'build.js',
 ];
 
 let destructiveCases = 0;
@@ -299,11 +303,30 @@ expectFailure('外部能力監査APIへの書込み混入を拒否', root => {
   fs.writeFileSync(file, source.replace('function api_asstAuditExternalAbilities(payload) {', 'function api_asstAuditExternalAbilities(payload) {\n  PropertiesService.getScriptProperties().setProperty("bad", "1");'));
 }, /監査APIの読取専用境界/);
 
-expectFailure('固定カード対応表hashのずれを拒否', root => {
+expectFailure('カード対応表の生成結果ずれを拒否', root => {
+  const file = path.join(root, 'src/data/lmfdb-card-map.json');
+  const document = JSON.parse(fs.readFileSync(file, 'utf8'));
+  document.mappings.pop();
+  fs.writeFileSync(file, JSON.stringify(document, null, 2) + '\n');
+}, /assist-cards\.jsonの生成結果と不一致/);
+
+expectFailure('カード対応表の固定hash再導入を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('0d9ddf7a4cc0e0ab69b9fe8eab63b913eae70144148f54da852357826bc1c49f', 'f'.repeat(64)));
-}, /固定カード対応表hash/);
+  fs.writeFileSync(file, source.replace('var ASST_LMFDB_PROVIDER', "var ASST_LMFDB_CARD_MAP_SHA256 = '" + 'f'.repeat(64) + "';\nvar ASST_LMFDB_PROVIDER"));
+}, /固定hashが再混入/);
+
+expectFailure('対応表のcards射影からの逸脱を拒否', root => {
+  const file = path.join(root, '_cms/gas/20_assist.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('return { map: map, sha256: asstSha256_(JSON.stringify(mappings)) };', 'return { map: map, sha256: null };'));
+}, /cardsシートからの射影/);
+
+expectFailure('対応表の生成経路欠落を拒否', root => {
+  const file = path.join(root, 'build.js');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace('renderLmfdbCardMap(inputs.assistCards)', 'null'));
+}, /生成物として許可する構成/);
 
 expectFailure('Sheets日付の未正規化を拒否', root => {
   const file = path.join(root, '_cms/gas/20_assist.gs');
@@ -784,8 +807,8 @@ expectFailure('assist一覧の生成差分許可欠落を拒否', root => {
   const file = path.join(root, 'scripts/verify-assist-source.js');
   const source = fs.readFileSync(file, 'utf8');
   fs.writeFileSync(file, source.replace(
-    "['assist.html', 'index.html', 'reroll.html', 'sitemap.xml']",
-    "['index.html', 'reroll.html', 'sitemap.xml']"
+    "'assist.html', 'index.html', 'reroll.html', 'sitemap.xml',",
+    "'index.html', 'reroll.html', 'sitemap.xml',"
   ));
 }, /assist\.htmlを3DBから既存順維持/);
 

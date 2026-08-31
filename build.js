@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { buildAssistPages } = require('./scripts/build-assist-pages');
+const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -1645,7 +1646,7 @@ function main() {
     new: 0,
     updated: 0,
     unchanged: 0,
-    total: pages.length + 6 + gachaBuild.outputs.length,
+    total: pages.length + 7 + gachaBuild.outputs.length,
   };
   for (const output of gachaBuild.outputs) outputCounts[output.state]++;
   for (const page of pages) {
@@ -1665,6 +1666,11 @@ function main() {
   outputCounts[writeIfChanged(
     'src/data/cms-seed.json',
     JSON.stringify(cmsSeed, null, 2) + '\n'
+  )]++;
+  // 対応表はカードDBの射影として毎回生成し、カード追加時の手作業を不要にする。
+  outputCounts[writeIfChanged(
+    LMFDB_CARD_MAP_FILE,
+    renderLmfdbCardMap(inputs.assistCards)
   )]++;
   logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
 }

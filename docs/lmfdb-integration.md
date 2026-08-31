@@ -40,6 +40,13 @@ https://raw.githubusercontent.com/futsalife24-bot/lMfDB/<externalSha>/data/abili
 対応表は新規候補に対する`sourceName + rarity → cardId`の完全一致だけを許す。
 trim、括弧除去、部分一致、類似検索、表記補正は行わない。
 
+対応表はカードDBの射影であり、手作業で維持しない。`build.js`が
+`src/data/assist-cards.json`の並び順のまま`name / rarity / cardId`を写して
+`src/data/lmfdb-card-map.json`を生成し、GASの監査APIは同じ規則でcardsシートから
+その場で作る。カード追加のたびに更新が必要な固定hashで凍結しないため、CMSからの
+新規カード追加・公開はそのまま通る。名前とrarityの重複だけを拒否し、
+`cardMapSha256`を監査結果へ返して照合できるようにする。
+
 ## 3. 実行方法
 
 ```bash
@@ -126,7 +133,7 @@ HTTP失敗、15秒タイムアウト、空レスポンス、2MiB超、不正JSON
 ### 5-6. 新規候補
 
 上記のどれにも該当しない外部能力だけを`newCandidates`とする。新規候補だけに
-固定対応表を適用し、完全一致なら`card_match_candidate`、それ以外は
+対応表を適用し、完全一致なら`card_match_candidate`、それ以外は
 `unlinked_candidate`とする。cardIdやresolved状態は実データへ書き込まない。
 
 ## 6. 外部欠落の観測
@@ -526,7 +533,7 @@ cardIdを推測しない。ボス、育成論、師匠版を類似名で自動�
 
 ### 16-3. resolved / unlinked / ambiguous
 
-- 固定対応表`sourceName + rarity → cardId`は候補提示だけに使い、自動保存しない
+- 対応表`sourceName + rarity → cardId`は候補提示だけに使い、自動保存しない
 - `resolved`: 管理者が候補カードを確認した場合だけ選べる。サーバーが対象カード内の
   最大sortOrder+1を採番し、クライアントのsortOrderは受け付けない
 - `unlinked`: カードが無い・確定できない場合に登録できる。cardId / sortOrderはnull
