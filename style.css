@@ -390,8 +390,6 @@ td {
   vertical-align: middle;
 }
 
-tr:hover td { background: #f9f9f9; }
-
 td img {
   width: 50px;
   height: 50px;

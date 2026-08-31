@@ -53,9 +53,12 @@
   font-size: 14px;
 }
 
-.assist-detail-table tr:hover th,
-.assist-detail-table tr:hover td {
-  background: #fffaf1;
+.assist-detail-table--pairs th {
+  width: 22%;
+}
+
+.assist-detail-table--pairs td {
+  width: 28%;
 }
 
 .assist-detail-table tr:last-child th,
@@ -64,12 +67,36 @@
 }
 
 .assist-subtitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
   margin: 26px 0 12px;
   padding: 0 0 7px;
   border-bottom: 2px solid #f0a500;
   color: #4b3714;
   font-size: 16px;
   line-height: 1.5;
+}
+
+.unlock-dots {
+  display: inline-flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.unlock-dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid #d8c7a4;
+  background: #f3ece0;
+}
+
+.unlock-dots i.on {
+  background: radial-gradient(circle at 35% 30%, #7de3b8, #1f9d6b);
+  border-color: #178a5c;
+  box-shadow: 0 0 3px rgba(31, 157, 107, 0.5);
 }
 
 .assist-rating-grid {
@@ -136,6 +163,38 @@
   margin-top: 9px;
 }
 
+.assist-abilities-sub {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.assist-abilities-sub .assist-ability-card {
+  margin-top: 0;
+  padding: 12px 13px;
+  background: #fff;
+  box-shadow: none;
+}
+
+.assist-abilities-sub .assist-ability-title {
+  margin: 0 0 6px;
+  padding-bottom: 5px;
+  border-left-width: 3px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.assist-abilities-sub .comment-text {
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.assist-abilities-sub .comment-meta {
+  margin-top: 6px;
+  font-size: 11px;
+}
+
 @media (max-width: 640px) {
   .assist-detail-page .container {
     padding: 0 14px;
@@ -183,5 +242,29 @@
 
   .assist-ability-title {
     font-size: 14px;
+  }
+
+  .assist-abilities-sub .assist-ability-card {
+    padding: 10px 10px;
+  }
+
+  .assist-abilities-sub .assist-ability-title {
+    font-size: 12.5px;
+  }
+
+  .assist-abilities-sub .comment-text {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .assist-detail-table--pairs th,
+  .assist-detail-table--pairs td {
+    display: block;
+    width: auto;
+  }
+
+  .assist-detail-table--pairs td[colspan] {
+    display: none;
   }
 }

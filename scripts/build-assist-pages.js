@@ -49,6 +49,16 @@ function renderRows(rows) {
   return rows.map(([label, value]) => `      <tr><th>${escapeHtml(label)}</th><td>${displayValue(value)}</td></tr>`).join('\n');
 }
 
+function renderPairRows(rows) {
+  const cells = rows.map(([label, value]) => `<th>${escapeHtml(label)}</th><td>${displayValue(value)}</td>`);
+  const lines = [];
+  for (let i = 0; i < cells.length; i += 2) {
+    const second = cells[i + 1] || '<td colspan="2"></td>';
+    lines.push(`      <tr>${cells[i]}${second}</tr>`);
+  }
+  return lines.join('\n');
+}
+
 function renderRatings(card) {
   const labels = [
     ['ikusei', '総合力育成'],
@@ -93,6 +103,13 @@ ${renderRows(rows)}
   </section>`;
 }
 
+function renderUnlockDots(rank) {
+  const filled = RANK_ORDER.indexOf(rank);
+  if (filled < 0) return '';
+  const dots = Array.from({ length: 4 }, (_, index) => (index < filled ? '<i class="on"></i>' : '<i></i>')).join('');
+  return `<span class="unlock-dots" aria-label="解放段階 ${filled} / 4">${dots}</span>`;
+}
+
 function renderEffects(effects) {
   if (!effects.length) return '';
   const groups = RANK_ORDER.map(rank => ({
@@ -103,25 +120,40 @@ function renderEffects(effects) {
   return `
   <section class="section">
     <h2 class="section-title">アシスト効果</h2>
-${groups.map(group => `    <h3 class="assist-subtitle">${escapeHtml(group.rank)}</h3>
+${groups.map(group => `    <h3 class="assist-subtitle">${escapeHtml(group.rank)}${renderUnlockDots(group.rank)}</h3>
     <table class="assist-detail-table">
 ${group.effects.map(effect => `      <tr><th>${escapeHtml(effect.name)}</th><td>${escapeWithBreaks(effect.description)}</td></tr>`).join('\n')}
     </table>`).join('\n')}
   </section>`;
 }
 
+function renderAbilityCard(ability, indent) {
+  return `${indent}<article class="assist-ability-card${ability.source === 'イベント' ? ' is-event' : ''}" data-source="${escapeHtml(ability.source)}">
+${indent}  <h3 class="assist-ability-title">${escapeHtml(ability.name)}</h3>
+${indent}  <p class="comment-text">${escapeWithBreaks(ability.description)}</p>
+${indent}  <div class="comment-meta">
+${indent}    <span class="comment-date">入手元：${escapeHtml(ability.source)}${ability.tags.length ? ` ／ タグ：${ability.tags.map(escapeHtml).join('、')}` : ''}</span>
+${indent}  </div>
+${indent}</article>`;
+}
+
 function renderAbilities(abilities) {
   if (!abilities.length) return '';
+  const eventAbilities = abilities.filter(ability => ability.source === 'イベント');
+  const otherAbilities = abilities.filter(ability => ability.source !== 'イベント');
+  const blocks = [];
+  if (eventAbilities.length) {
+    blocks.push(eventAbilities.map(ability => renderAbilityCard(ability, '    ')).join('\n'));
+  }
+  if (otherAbilities.length) {
+    blocks.push(`    <div class="assist-abilities-sub">
+${otherAbilities.map(ability => renderAbilityCard(ability, '      ')).join('\n')}
+    </div>`);
+  }
   return `
   <section class="section">
     <h2 class="section-title">能力</h2>
-${abilities.map(ability => `    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">${escapeHtml(ability.name)}</h3>
-      <p class="comment-text">${escapeWithBreaks(ability.description)}</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：${escapeHtml(ability.source)}${ability.tags.length ? ` ／ タグ：${ability.tags.map(escapeHtml).join('、')}` : ''}</span>
-      </div>
-    </article>`).join('\n')}
+${blocks.join('\n')}
   </section>`;
 }
 
@@ -194,8 +226,8 @@ function renderPage(card, effects, abilities, cardById, indexable, gachaAppearan
       <img src="../${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}" width="260">
       <p><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span></p>
     </div>
-    <table class="assist-detail-table">
-${renderRows(basicRows)}
+    <table class="assist-detail-table assist-detail-table--pairs">
+${renderPairRows(basicRows)}
     </table>
   </section>${renderRatings(card)}${renderStats(card)}${renderEffects(effects)}${renderAbilities(abilities)}${renderExplanation(card)}${renderFormations(card, cardById)}${gachaAppearances}
 

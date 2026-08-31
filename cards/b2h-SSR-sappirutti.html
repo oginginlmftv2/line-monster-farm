@@ -34,14 +34,11 @@
       <img src="../assist-cards/b2h-SSR-sappirutti.jpg" alt="サフィルス" width="260">
       <p><span class="rarity rarity-SSR">SSR</span></p>
     </div>
-    <table class="assist-detail-table">
-      <tr><th>レアリティ</th><td>SSR</td></tr>
-      <tr><th>オーラ</th><td>青</td></tr>
-      <tr><th>カードタイプ</th><td>ちから</td></tr>
-      <tr><th>アクセサリー</th><td>○</td></tr>
-      <tr><th>モン類</th><td>幻霊</td></tr>
-      <tr><th>イベント2</th><td>海岸</td></tr>
-      <tr><th>実装日</th><td>2025/08/31</td></tr>
+    <table class="assist-detail-table assist-detail-table--pairs">
+      <tr><th>レアリティ</th><td>SSR</td><th>オーラ</th><td>青</td></tr>
+      <tr><th>カードタイプ</th><td>ちから</td><th>アクセサリー</th><td>○</td></tr>
+      <tr><th>モン類</th><td>幻霊</td><th>イベント2</th><td>海岸</td></tr>
+      <tr><th>実装日</th><td>2025/08/31</td><td colspan="2"></td></tr>
     </table>
   </section>
   <section class="section">
@@ -83,7 +80,7 @@
   </section>
   <section class="section">
     <h2 class="section-title">アシスト効果</h2>
-    <h3 class="assist-subtitle">無凸</h3>
+    <h3 class="assist-subtitle">無凸<span class="unlock-dots" aria-label="解放段階 0 / 4"><i></i><i></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>モン類上限解放 +40</th><td>育成対象とモン類が一致したとき、すべての基礎ステータスを上限アップ</td></tr>
       <tr><th>オーラトレ効果アップ +10%</th><td>育成対象とオーラ一致し一緒にトレーニングしたとき、基礎ステータスの上昇量アップ（重複不可）</td></tr>
@@ -91,111 +88,113 @@
       <tr><th>大会賞金効果アップ +</th><td>獲得賞金額に応じてトレーニング大成功率の確率アップ（最大25%まで）、獲得賞金額アップ+10%</td></tr>
       <tr><th>ちから上限アップ +120</th><td>ちからの基礎ステータスを上限アップ</td></tr>
     </table>
-    <h3 class="assist-subtitle">1凸</h3>
+    <h3 class="assist-subtitle">1凸<span class="unlock-dots" aria-label="解放段階 1 / 4"><i class="on"></i><i></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>ちからアップ +2</th><td>一緒にトレーニングしたとき、ちからの上昇量アップ</td></tr>
       <tr><th>モン類強化 +3</th><td>育成対象とモン類が一致したとき、モン類レベル上限アップ（同効果内で最大Lv5まで）</td></tr>
     </table>
-    <h3 class="assist-subtitle">2凸</h3>
+    <h3 class="assist-subtitle">2凸<span class="unlock-dots" aria-label="解放段階 2 / 4"><i class="on"></i><i class="on"></i><i></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>トレ効果アップ +7%</th><td>一緒にトレーニングしたとき、基礎ステータスの上昇量アップ</td></tr>
       <tr><th>オーラEXトレパワーアップ +30%</th><td>育成対象とモン類が一致したとき、トレーニング時のEXトレパワー上昇量アップ（重複不可）</td></tr>
     </table>
-    <h3 class="assist-subtitle">3凸</h3>
+    <h3 class="assist-subtitle">3凸<span class="unlock-dots" aria-label="解放段階 3 / 4"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>オーラ素質アップ +3%</th><td>育成対象とオーラ一致したとき、素質アップ（重複不可）</td></tr>
     </table>
-    <h3 class="assist-subtitle">4凸</h3>
+    <h3 class="assist-subtitle">4凸<span class="unlock-dots" aria-label="解放段階 4 / 4"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></span></h3>
     <table class="assist-detail-table">
       <tr><th>大成功率アップ +10</th><td>一緒にトレーニングしたとき、大成功の確率アップ</td></tr>
     </table>
   </section>
   <section class="section">
     <h2 class="section-title">能力</h2>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">サファイアディケイ I</h3>
       <p class="comment-text">[自身青または幻霊][前半][後衛]＜ちから＞が相手より高い時、相手のライフ以外のステータスを＜－２０％＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、前半、幻霊</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">サファイアディケイ II</h3>
       <p class="comment-text">[自身青または幻霊][前半][後衛]＜ちから＞が相手より高い時、次の効果が発動<br>・相手のライフ以外のステータスを＜－２０％＞<br>・相手のちからから＜２０％＞で＜１回＞追撃</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、追撃、前半、幻霊</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">ミラージュリジェクト I</h3>
       <p class="comment-text">[自身青または幻霊]間合い適性S以上で＜ちから＞技を受けた時、追撃無効＜２０秒＞＜１回＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、追撃、無効化、幻霊</span>
       </div>
     </article>
-    <article class="assist-ability-card">
+    <article class="assist-ability-card is-event" data-source="イベント">
       <h3 class="assist-ability-title">ミラージュリジェクト II</h3>
       <p class="comment-text">[自身青または幻霊]間合い適性S以上で＜ちから＞技を受けた時、次の効果が発動＜１回＞<br>・追撃無効＜２０秒＞<br>・[自身青]攻撃ステータス＜＋１０％＞＜２０秒＞</p>
       <div class="comment-meta">
         <span class="comment-date">入手元：イベント ／ タグ：オーラ青、追撃、無効化、幻霊</span>
       </div>
     </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[青]剛将</h3>
-      <p class="comment-text">＜オーラ青＞ちから技発動時、与ダメ上昇Lv4＜２０秒＞＜１回＞</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[自身青]ちから＋３%</h3>
-      <p class="comment-text">[自身青]ちからステータスを３％上昇</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[幻霊]ちから＋３%</h3>
-      <p class="comment-text">[幻霊]ちからステータスを３％上昇</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：幻霊</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[砂漠]闘志</h3>
-      <p class="comment-text">[砂漠]与ダメ上昇Lv3</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[海岸]闘志</h3>
-      <p class="comment-text">[海岸]与ダメ上昇Lv3</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[海岸]ちから＋１００</h3>
-      <p class="comment-text">[海岸]ちからステータス＋１００</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[曇り]ちから＋１００</h3>
-      <p class="comment-text">[曇り]ちからステータス＋１００</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き</span>
-      </div>
-    </article>
-    <article class="assist-ability-card">
-      <h3 class="assist-ability-title">[幻霊]重撃</h3>
-      <p class="comment-text">[幻霊]ちから技命中時、連撃Lv1×１回</p>
-      <div class="comment-meta">
-        <span class="comment-date">入手元：閃き ／ タグ：連撃、幻霊</span>
-      </div>
-    </article>
+    <div class="assist-abilities-sub">
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[青]剛将</h3>
+        <p class="comment-text">＜オーラ青＞ちから技発動時、与ダメ上昇Lv4＜２０秒＞＜１回＞</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[自身青]ちから＋３%</h3>
+        <p class="comment-text">[自身青]ちからステータスを３％上昇</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：オーラ青</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[幻霊]ちから＋３%</h3>
+        <p class="comment-text">[幻霊]ちからステータスを３％上昇</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：幻霊</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[砂漠]闘志</h3>
+        <p class="comment-text">[砂漠]与ダメ上昇Lv3</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[海岸]闘志</h3>
+        <p class="comment-text">[海岸]与ダメ上昇Lv3</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[海岸]ちから＋１００</h3>
+        <p class="comment-text">[海岸]ちからステータス＋１００</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[曇り]ちから＋１００</h3>
+        <p class="comment-text">[曇り]ちからステータス＋１００</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き</span>
+        </div>
+      </article>
+      <article class="assist-ability-card" data-source="閃き">
+        <h3 class="assist-ability-title">[幻霊]重撃</h3>
+        <p class="comment-text">[幻霊]ちから技命中時、連撃Lv1×１回</p>
+        <div class="comment-meta">
+          <span class="comment-date">入手元：閃き ／ タグ：連撃、幻霊</span>
+        </div>
+      </article>
+    </div>
   </section>
   <section class="section">
     <h2 class="section-title">管理者による解説</h2>
