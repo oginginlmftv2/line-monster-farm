@@ -409,30 +409,34 @@ function renderGachaPickupMonster(pickup, monster, editorial, root) {
   const detailPath = String(monster.url || '').replace(/^\//, '');
   const hasDetail = detailPath && fs.existsSync(path.join(root, detailPath));
   const image = gachaMonsterImage(monster);
-  return `      <article class="card">
+  const openingTag = hasDetail
+    ? `<a class="card wide-card" href="../${escapeHtml(detailPath)}">`
+    : '<article class="card wide-card">';
+  const closingTag = hasDetail ? '</a>' : '</article>';
+  return `      ${openingTag}
         ${image ? `<img class="card-img" src="../${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
         <div class="card-info">
-          <h3 class="card-name">${escapeHtml(monster.name)}</h3>
-          <p>${escapeHtml(monster.aura)}オーラ / ${escapeHtml(monster.mon)} / ${escapeHtml(monster.blood)}（副血統: ${escapeHtml(monster.subBlood)}）</p>
-          <p>排出率 ${escapeHtml(pickup.rate)}%</p>
-          ${excerpt ? `<p data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
-          ${hasDetail ? `<p><a href="../${escapeHtml(detailPath)}">モンスター詳細を見る</a></p>` : ''}
+          <h3 class="card-name gacha-pickup-name">${escapeHtml(monster.name)}</h3>
+          ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}
+          <p class="gacha-pickup-blood">${escapeHtml(monster.blood)}（副血統: ${escapeHtml(monster.subBlood)}）</p>
+          <p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>
+          ${excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
         </div>
-      </article>`;
+      ${closingTag}`;
 }
 
 function renderGachaPickupCard(pickup, card) {
   const excerpt = gachaExcerpt(card.explanation);
-  return `      <article class="card">
+  return `      <a class="card wide-card" href="../cards/${escapeHtml(card.cardId)}.html">
         <img class="card-img" src="../${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">
         <div class="card-info">
-          <h3 class="card-name">${escapeHtml(card.name)}</h3>
-          <p>${escapeHtml(card.rarity)} / ${escapeHtml(card.aura)}オーラ / ${escapeHtml(card.cardType)}</p>
-          <p>排出率 ${escapeHtml(pickup.rate)}%</p>
-          ${excerpt ? `<p data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
-          <p><a href="../cards/${escapeHtml(card.cardId)}.html">カード詳細を見る</a></p>
+          <h3 class="card-name gacha-pickup-name">${escapeHtml(card.name)}</h3>
+          ${renderBadgeRow({ aura: card.aura, mon: card.monType, small: true, indent: '          ' })}
+          <p class="gacha-pickup-blood">${escapeHtml(card.rarity)} / ${escapeHtml(card.cardType)}</p>
+          <p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>
+          ${excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
         </div>
-      </article>`;
+      </a>`;
 }
 
 function renderGachaBody(gacha, context, includeExcerpts = true) {
@@ -455,17 +459,19 @@ function renderGachaBody(gacha, context, includeExcerpts = true) {
 <main class="container">
   <p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; <a href="index.html">ガチャ一覧</a> &gt; ${escapeHtml(gacha.name)}</p>
   <h1 class="page-title">${escapeHtml(gacha.name)}</h1>
-  <section class="section">
-    <img class="card-img" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}">
-    <p>種別: ${escapeHtml(gacha.gachaType)}</p>
-    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</p>
-  </section>${explanation}
-  <section class="section"><h2 class="section-title">ピックアップモンスター</h2><div class="card-grid">
+  <section class="section gacha-head">
+    <img class="gacha-hero" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}">
+    <dl class="gacha-meta">
+      <div><dt>種別</dt><dd>${escapeHtml(gacha.gachaType)}</dd></div>
+      <div><dt>開催期間</dt><dd>${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</dd></div>
+    </dl>
+  </section>${explanation}${monsterCards ? `
+  <section class="section"><h2 class="section-title">ピックアップモンスター</h2><div class="card-grid wide-grid">
 ${monsterCards}
-  </div></section>
-  <section class="section"><h2 class="section-title">ピックアップアシストカード</h2><div class="card-grid">
+  </div></section>` : ''}${assistCards ? `
+  <section class="section"><h2 class="section-title">ピックアップアシストカード</h2><div class="card-grid wide-grid">
 ${assistCards}
-  </div></section>
+  </div></section>` : ''}
   <section class="section"><h2 class="section-title">関連リンク</h2><div class="menu-grid"><a class="menu-link" href="index.html">ガチャ一覧へ戻る</a></div></section>
 </main>
 <footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer>
@@ -522,10 +528,10 @@ function renderGachaIndex(gachas, now) {
   }
   const rows = list => list.map(gacha => {
     const preStart = Date.parse(now) < Date.parse(gacha.startAt) ? ` / ${gachaStartLabel(gacha.startAt)}` : '';
-    return `      <article class="card"><a href="${escapeHtml(gacha.gachaId)}.html"><img class="card-img" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}"><div class="card-info"><h3 class="card-name">${escapeHtml(gacha.name)}</h3><p>${escapeHtml(gacha.gachaType)}${escapeHtml(preStart)}</p><p>${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</p></div></a></article>`;
+    return `      <a class="card" href="${escapeHtml(gacha.gachaId)}.html"><img class="gacha-banner" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}"><div class="card-info gacha-card-info"><h3 class="card-name gacha-name">${escapeHtml(gacha.name)}</h3><p class="gacha-type">${escapeHtml(gacha.gachaType)}${escapeHtml(preStart)}</p><p class="gacha-period">期間：${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</p></div></a>`;
   }).join('\n');
   const section = (title, list) => list.length
-    ? `\n  <section class="section"><h2 class="section-title">${title}</h2><div class="card-grid">\n${rows(list)}\n  </div></section>`
+    ? `\n  <section class="section"><h2 class="section-title">${title}</h2><div class="gacha-grid">\n${rows(list)}\n  </div></section>`
     : '';
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
 <!-- 元データ: src/data/gachas.json -->
