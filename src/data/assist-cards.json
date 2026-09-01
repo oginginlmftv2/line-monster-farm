@@ -3882,7 +3882,7 @@
       "cardType": "フィジカル",
       "monType": "無機",
       "image": "assist-cards/aaa-MR-aileblanche.jpg",
-      "event2": null,
+      "event2": "中距離",
       "releasedAt": "2026/08/31",
       "accessoryStatus": "yes",
       "stats": [
