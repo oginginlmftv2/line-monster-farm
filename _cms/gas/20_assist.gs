@@ -42,8 +42,9 @@ var ASST_EFFECT_CONDITION_TYPES = ['mainBloodlineMatch','subBloodlineMatch','aur
 var ASST_EFFECT_CONDITION_OPERATORS = ['and','or'];
 var ASST_RATING_KEYS = ['ikusei','karyo','battle','ta'];
 var ASST_ACCESSORY_STATUSES = ['unknown','yes','no'];
-// 既存91件の最大は24文字。将来の命名余地を持たせつつ、Sheet・URLへ過大な値を入れない。
-var ASST_CARD_ID_MAX_LENGTH = 64;
+// 旧形式（手入力・91件）と新形式（自動採番）の両方を受け付ける。既存IDは公開URLなので変更しない。
+var ASST_CARD_ID_PATTERN = /^(?:[a-z][a-z0-9]*-(?:MR|SSR)-[a-z0-9]+|c[0-9]{4}-(?:MR|SSR))$/;
+var ASST_CARD_ID_SERIAL_PATTERN = /^c([0-9]{4})-(?:MR|SSR)$/;
 var ASST_CARD_NAME_MAX_LENGTH = 100;
 function asstSourceUrls_() { return { cards: RAW_BASE + 'assist-cards.json', effects: RAW_BASE + 'assist-effects.json', abilities: RAW_BASE + 'assist-abilities.json' }; }
 
@@ -176,28 +177,35 @@ function asstInList_(value, allowed, label, allowBlank) {
 
 function asstCreateCardPayload_(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('payloadはオブジェクトです。');
-  var allowed = ['cardId','name','rarity','aura','cardType','monType'];
+  var allowed = ['name','rarity','aura','cardType','monType'];
   Object.keys(payload).forEach(function (key) {
     if (allowed.indexOf(key) < 0) throw new Error('未対応のpayload項目です: ' + key);
   });
-  var rawCardId = typeof payload.cardId === 'string' ? payload.cardId : '';
   var rawName = typeof payload.name === 'string' ? payload.name : '';
-  if (/[\u0000-\u001f\u007f-\u009f]/.test(rawCardId)) throw new Error('cardIdに改行・タブ・制御文字は使えません。');
   if (/[\u0000-\u001f\u007f-\u009f]/.test(rawName)) throw new Error('カード名に改行・タブ・制御文字は使えません。');
-  var cardId = rawCardId.trim();
   var name = rawName.trim();
-  if (!cardId) throw new Error('cardIdは必須です。');
   if (!name) throw new Error('カード名は必須です。');
-  if (cardId.length > ASST_CARD_ID_MAX_LENGTH) throw new Error('cardIdは' + ASST_CARD_ID_MAX_LENGTH + '文字以下です。');
   if (name.length > ASST_CARD_NAME_MAX_LENGTH) throw new Error('カード名は' + ASST_CARD_NAME_MAX_LENGTH + '文字以下です。');
-  var idMatch = cardId.match(/^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$/);
-  if (!idMatch) throw new Error('cardIdは^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$形式です。');
   var rarity = asstInList_(payload.rarity, ASST_RARITIES, 'rarity', false);
-  if (idMatch[1] !== rarity) throw new Error('cardId内のレアリティとフォームのrarityが一致しません。');
   var aura = asstInList_(payload.aura, ASST_AURAS, 'aura', false);
   var cardType = asstInList_(payload.cardType, ASST_CARD_TYPES, 'cardType', false);
   var monType = asstInList_(payload.monType, ASST_MON_TYPES, 'monType', true);
-  return { cardId: cardId, name: name, rarity: rarity, aura: aura, cardType: cardType, monType: monType };
+  // cardIdは管理者入力を受け取らない。lock取得後にasstNextCardId_()がシートから採番する。
+  return { name: name, rarity: rarity, aura: aura, cardType: cardType, monType: monType };
+}
+
+// 新形式cardIdはc<4桁連番>-<レアリティ>。旧形式は3セグメントなので衝突しない。
+function asstNextCardId_(rows, rarity) {
+  var max = 0;
+  rows.forEach(function (row) {
+    var match = asstText_(row.cardId).match(ASST_CARD_ID_SERIAL_PATTERN);
+    if (!match) return;
+    var serial = Number(match[1]);
+    if (Number.isSafeInteger(serial) && serial > max) max = serial;
+  });
+  var next = max + 1;
+  if (next > 9999) throw new Error('cardIdの連番が4桁の上限に達しました。桁数の拡張を検討してください。');
+  return 'c' + ('000' + next).slice(-4) + '-' + rarity;
 }
 
 function asstValidateCardSourceOrders_(rows) {
@@ -1234,6 +1242,7 @@ function asstValidateDocuments_(cardsDoc, effectsDoc, abilitiesDoc) {
   cardsDoc.cards.forEach(function (card) {
     if (!card.cardId || cardIds[card.cardId]) issues.push('cardId重複または空欄: ' + card.cardId);
     cardIds[card.cardId] = true;
+    if (card.cardId && !ASST_CARD_ID_PATTERN.test(card.cardId)) issues.push(card.cardId + ': cardId書式不正');
     if (!card.name) issues.push(card.cardId + ': name空欄');
     if (ASST_RARITIES.indexOf(card.rarity) < 0) issues.push(card.cardId + ': rarity不正');
     if (ASST_AURAS.indexOf(card.aura) < 0) issues.push(card.cardId + ': aura不正');
@@ -1468,6 +1477,7 @@ function api_asstCreateCard(payload) {
     // lock取得後に再読込し、並行処理によるID・名前・sourceOrderの競合をここで確定する。
     var rows = asstRows_(ASST_SHEET_CARDS);
     var maxSourceOrder = asstValidateCardSourceOrders_(rows);
+    card.cardId = asstNextCardId_(rows, card.rarity);
     asstAssertNewCardAvailable_(card, rows);
     var sourceOrder = maxSourceOrder + 1;
     var updatedAt = nowIso_();

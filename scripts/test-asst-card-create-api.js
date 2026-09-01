@@ -46,7 +46,7 @@ class Sheet {
 }
 
 function validPayload(overrides = {}) {
-  return Object.assign({ cardId: 'b2-SSR-newcard', name: '新規カード', rarity: 'SSR', aura: '青', cardType: 'ジャッジ', monType: '幻霊' }, overrides);
+  return Object.assign({ name: '新規カード', rarity: 'SSR', aura: '青', cardType: 'ジャッジ', monType: '幻霊' }, overrides);
 }
 
 function makeHarness(options = {}) {
@@ -91,45 +91,45 @@ test('正しい必須属性で末尾へ1行だけ追加し初期値・応答・�
   const h = makeHarness();
   const result = clone(h.context.api_asstCreateCard(validPayload()));
   assert.deepStrictEqual(result, {
-    ok: true, cardId: 'b2-SSR-newcard', sourceOrder: 6, version: 1,
-    card: { cardId: 'b2-SSR-newcard', name: '新規カード', rarity: 'SSR', aura: '青', effects: 0, abilities: 0, version: 1 },
+    ok: true, cardId: 'c0001-SSR', sourceOrder: 6, version: 1,
+    card: { cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR', aura: '青', effects: 0, abilities: 0, version: 1 },
   });
   assert.strictEqual(h.state.cards.length, h.before.cards.length + 1);
   assert.deepStrictEqual(h.state.cards.slice(0, -1), h.before.cards);
   const created = Object.fromEntries(HEADERS.map((key, index) => [key, h.state.cards.at(-1)[index]]));
   assert.deepStrictEqual(created, {
-    sourceOrder: 6, cardId: 'b2-SSR-newcard', name: '新規カード', rarity: 'SSR', aura: '青', cardType: 'ジャッジ', monType: '幻霊',
+    sourceOrder: 6, cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR', aura: '青', cardType: 'ジャッジ', monType: '幻霊',
     image: '', event2: '', releasedAt: '', accessoryStatus: 'unknown', statsJson: '[]', limitBreakJson: 'null', ratingsJson: 'null',
     explanation: '', formationsJson: '[]', sapoRefJson: 'null', version: 1, updatedAt: NOW, updatedBy: 'tester',
   });
   assert.strictEqual(h.state.assist_log.length, 2);
-  assert.deepStrictEqual(h.state.assist_log[1], [NOW, 'tester', 'create-card', 'PASS', 'b2-SSR-newcard sourceOrder=6']);
+  assert.deepStrictEqual(h.state.assist_log[1], [NOW, 'tester', 'create-card', 'PASS', 'c0001-SSR sourceOrder=6']);
   assert.deepStrictEqual(h.calls, { auth: 1, lock: 1, release: 1 });
 });
 
-test('cardId前後空白を除去して保存する', () => {
-  const h = makeHarness();
-  const result = h.context.api_asstCreateCard(validPayload({ cardId: '  b2-SSR-newcard  ' }));
-  assert.strictEqual(result.cardId, 'b2-SSR-newcard');
-  assert.strictEqual(h.state.cards.at(-1)[HEADERS.indexOf('cardId')], 'b2-SSR-newcard');
+test('cardIdは既存連番の最大+1で自動採番し旧形式IDは無視する', () => {
+  const fresh = makeHarness();
+  assert.strictEqual(fresh.context.api_asstCreateCard(validPayload()).cardId, 'c0001-SSR');
+  const serial = makeHarness({ cardRows: [
+    row({ sourceOrder: 1 }),
+    row({ sourceOrder: 2, cardId: 'c0007-MR', name: '自動採番済み' }),
+    row({ sourceOrder: 3, cardId: 'c0003-SSR', name: '自動採番済み2', rarity: 'SSR' }),
+  ] });
+  const created = serial.context.api_asstCreateCard(validPayload({ rarity: 'MR' }));
+  assert.strictEqual(created.cardId, 'c0008-MR');
+  assert.match(created.cardId, /^c[0-9]{4}-(?:MR|SSR)$/);
 });
 
-test('cardId重複と同一name+rarityを拒否し同名別rarityは許可', () => {
-  const duplicateId = makeHarness();
-  assert.throws(() => duplicateId.context.api_asstCreateCard(validPayload({ cardId: 'a1-MR-existing', rarity: 'MR' })), /cardId.*重複/);
+test('cardIdをpayloadで指定できない', () => {
+  const h = makeHarness();
+  assert.throws(() => h.context.api_asstCreateCard(validPayload({ cardId: 'b2-SSR-newcard' })), /未対応/);
+});
+
+test('同一name+rarityを拒否し同名別rarityは許可', () => {
   const duplicateName = makeHarness();
-  assert.throws(() => duplicateName.context.api_asstCreateCard(validPayload({ cardId: 'd4-MR-other', name: '既存カード', rarity: 'MR' })), /カード名とレアリティ/);
+  assert.throws(() => duplicateName.context.api_asstCreateCard(validPayload({ name: '既存カード', rarity: 'MR' })), /カード名とレアリティ/);
   const otherRarity = makeHarness();
   assert.strictEqual(otherRarity.context.api_asstCreateCard(validPayload({ name: '既存カード' })).ok, true);
-});
-
-test('cardId形式・rarity部分不一致・64文字超・制御文字を拒否', () => {
-  for (const [cardId, rarity, expected] of [
-    ['Bad-MR-id', 'MR', /形式/], ['x-MR-id', 'SSR', /一致/], [`x-MR-${'a'.repeat(60)}`, 'MR', /64文字/], ['x-MR-id\n', 'MR', /制御文字|形式/],
-  ]) {
-    const h = makeHarness();
-    assert.throws(() => h.context.api_asstCreateCard(validPayload({ cardId, rarity })), expected);
-  }
 });
 
 test('許可外rarity・許可外aura・許可外cardType・許可外monTypeを拒否', () => {
@@ -140,24 +140,27 @@ test('許可外rarity・許可外aura・許可外cardType・許可外monTypeを�
 });
 
 test('必須値空欄・nickname空欄・未知payload項目を拒否', () => {
-  for (const field of ['cardId','name']) {
-    const h = makeHarness(); assert.throws(() => h.context.api_asstCreateCard(validPayload({ [field]: '   ' })), /必須/);
-  }
+  const blank = makeHarness();
+  assert.throws(() => blank.context.api_asstCreateCard(validPayload({ name: '   ' })), /必須/);
+  const control = makeHarness();
+  assert.throws(() => control.context.api_asstCreateCard(validPayload({ name: '新規\nカード' })), /制御文字/);
   const nickname = makeHarness({ nickname: ' ' }); assert.throws(() => nickname.context.api_asstCreateCard(validPayload()), /ニックネーム/);
   const unknown = makeHarness(); assert.throws(() => unknown.context.api_asstCreateCard(Object.assign(validPayload(), { sourceOrder: 99 })), /未対応/);
 });
 
 test('sourceOrder重複・不正を拒否', () => {
-  for (const rows of [[row({ sourceOrder: 1 }), row({ sourceOrder: 1, cardId: 'c3-SSR-other' })], [row({ sourceOrder: 0 })], [row({ sourceOrder: 'bad' })]]) {
+  for (const rows of [[row({ sourceOrder: 1 }), row({ sourceOrder: 1, cardId: 'c3-SSR-other', name: '別カード' })], [row({ sourceOrder: 0 })], [row({ sourceOrder: 'bad' })]]) {
     const h = makeHarness({ cardRows: rows }); assert.throws(() => h.context.api_asstCreateCard(validPayload()), /sourceOrder/);
   }
 });
 
-test('ロック競合を拒否し、ロック取得後の同一cardId追加も再検査で拒否', () => {
+test('ロック競合を拒否し、ロック取得後に追加された連番も再読込で回避する', () => {
   const locked = makeHarness({ lockAvailable: false });
   assert.throws(() => locked.context.api_asstCreateCard(validPayload()), /重なりました/);assert.strictEqual(locked.cardAppendCount, 0);
-  const raced = makeHarness({ onLock(state) { state.cards.push(row({ sourceOrder: 6, cardId: 'b2-SSR-newcard', name: '並行追加' })); } });
-  assert.throws(() => raced.context.api_asstCreateCard(validPayload()), /cardId.*重複/);assert.strictEqual(raced.cardAppendCount, 0);
+  const raced = makeHarness({ onLock(state) { state.cards.push(row({ sourceOrder: 6, cardId: 'c0001-SSR', name: '並行追加', rarity: 'SSR' })); } });
+  assert.strictEqual(raced.context.api_asstCreateCard(validPayload()).cardId, 'c0002-SSR');
+  const racedName = makeHarness({ onLock(state) { state.cards.push(row({ sourceOrder: 6, cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR' })); } });
+  assert.throws(() => racedName.context.api_asstCreateCard(validPayload()), /カード名とレアリティ/);assert.strictEqual(racedName.cardAppendCount, 0);
 });
 
 test('行追加後の再検算失敗は再実行禁止の専用エラー', () => {
@@ -169,7 +172,7 @@ test('行追加後の再検算失敗は再実行禁止の専用エラー', () =>
 test('行追加後にログだけ失敗しても登録行を残し再実行禁止を案内', () => {
   const h = makeHarness({ failLog: true });
   assert.throws(() => h.context.api_asstCreateCard(validPayload()), /登録済みとして扱い、再実行しない/);
-  assert.strictEqual(h.cardAppendCount, 1);assert.strictEqual(h.state.cards.at(-1)[HEADERS.indexOf('cardId')], 'b2-SSR-newcard');
+  assert.strictEqual(h.cardAppendCount, 1);assert.strictEqual(h.state.cards.at(-1)[HEADERS.indexOf('cardId')], 'c0001-SSR');
 });
 
 console.log(`OK 新規カード追加API ${passed}ケース`);

@@ -197,19 +197,30 @@ function validateRoot(root) {
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
-  if (!/ASST_CARD_ID_MAX_LENGTH\s*=\s*64/.test(gas) || !/ASST_CARD_ID_MAX_LENGTH=64/.test(html) ||
-      !cardCreatePayloadBlock || !/var allowed = \['cardId','name','rarity','aura','cardType','monType'\]/.test(cardCreatePayloadBlock) ||
-      !/\^\[a-z\]\[a-z0-9\]\*-\(MR\|SSR\)-\[a-z0-9\]\+\$/.test(cardCreatePayloadBlock) ||
-      !/idMatch\[1\] !== rarity/.test(cardCreatePayloadBlock) || !/\\u0000-\\u001f/.test(cardCreatePayloadBlock) ||
+  const nextCardIdBlock = functionBlock(gas, 'asstNextCardId_');
+  if (!cardCreatePayloadBlock || !/var allowed = \['name','rarity','aura','cardType','monType'\]/.test(cardCreatePayloadBlock) ||
+      /payload\.cardId/.test(cardCreatePayloadBlock) || !/\\u0000-\\u001f/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.rarity, ASST_RARITIES/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.aura, ASST_AURAS/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.cardType, ASST_CARD_TYPES/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.monType, ASST_MON_TYPES/.test(cardCreatePayloadBlock)) {
-    issues.push('新規カードのcardId上限・形式・制御文字・rarity一致・許可値の全面検査が不足');
+    issues.push('新規カードpayloadがcardId入力拒否・制御文字・許可値の全面検査を満たしていない');
+  }
+  if (!/var ASST_CARD_ID_PATTERN = \/\^\(\?:\[a-z\]\[a-z0-9\]\*-\(\?:MR\|SSR\)-\[a-z0-9\]\+\|c\[0-9\]\{4\}-\(\?:MR\|SSR\)\)\$\//.test(gas) ||
+      !/var ASST_CARD_ID_SERIAL_PATTERN = \/\^c\(\[0-9\]\{4\}\)-\(\?:MR\|SSR\)\$\//.test(gas) ||
+      !/ASST_CARD_ID_PATTERN\.test\(card\.cardId\)/.test(gas) ||
+      !nextCardIdBlock || !/ASST_CARD_ID_SERIAL_PATTERN/.test(nextCardIdBlock) ||
+      !/Number\.isSafeInteger\(serial\)/.test(nextCardIdBlock) || !/max \+ 1/.test(nextCardIdBlock) ||
+      !/next > 9999/.test(nextCardIdBlock) || !/'c' \+ \('000' \+ next\)\.slice\(-4\) \+ '-' \+ rarity/.test(nextCardIdBlock)) {
+    issues.push('cardIdの新旧書式定義または自動採番の実装が仕様と不一致');
+  }
+  if (/asst_create_cardId/.test(html)) {
+    issues.push('新規カードUIにcardId入力欄が残っている');
   }
   if (!cardCreateApiBlock || !/asstRequireUser_\(\)/.test(cardCreateApiBlock) || !/user\.nickname/.test(cardCreateApiBlock) ||
       !/asstCreateCardPayload_\(payload\)/.test(cardCreateApiBlock) || !/asstAcquireScriptLock_\(\)/.test(cardCreateApiBlock) ||
       !/var rows = asstRows_\(ASST_SHEET_CARDS\)/.test(cardCreateApiBlock) || !/asstValidateCardSourceOrders_\(rows\)/.test(cardCreateApiBlock) ||
+      !/card\.cardId = asstNextCardId_\(rows, card\.rarity\)/.test(cardCreateApiBlock) ||
       !/asstAssertNewCardAvailable_\(card, rows\)/.test(cardCreateApiBlock) || !/maxSourceOrder \+ 1/.test(cardCreateApiBlock) ||
       (cardCreateApiBlock.match(/appendRow\(/g) || []).length !== 1 || /asstRewriteSheet_|githubRequest_|UrlFetchApp|DriveApp/.test(cardCreateApiBlock) ||
       !/asstVerifyCreatedCard_\(card\.cardId, sourceOrder, values\)/.test(cardCreateApiBlock) ||
@@ -224,14 +235,16 @@ function validateRoot(root) {
       !/新規行として保存されますが、サイトにはまだ公開されません/.test(cardCreateUiBlock) ||
       !/api_asstCreateCard/.test(cardCreateUiBlock) || !/ASST\.cards\.push\(result\.card\)/.test(cardCreateUiBlock) ||
       !/asst_summary/.test(cardCreateUiBlock) || !/asstOpenCard\(result\.cardId/.test(cardCreateUiBlock) ||
-      !/画像を追加し、必要項目を編集してください/.test(cardCreateUiBlock) ||
-      !/mobile-back/.test(cardCreateUiBlock) || !/cardIdは作成後に変更できません/.test(cardCreateUiBlock)) {
+      !/のファイル名で追加し、必要項目を編集してください/.test(cardCreateUiBlock) ||
+      !/mobile-back/.test(cardCreateUiBlock) ||
+      !/cardIdは登録時にサーバーが自動採番し、作成後は変更できません/.test(cardCreateUiBlock)) {
     issues.push('新規カードUIのbootstrap無効化・ローカル禁止・確認・一覧反映・既存編集導線が不足');
   }
   const cardCreateTestMarkers = [
-    '初期値・応答・ログが仕様どおり', 'cardId重複', '同一name+rarity', '同名別rarity',
-    'cardId形式', 'rarity部分不一致', '許可外rarity', '許可外aura', '許可外cardType', '許可外monType',
-    '必須値空欄', 'nickname空欄', 'sourceOrder重複・不正', 'ロック競合', 'ロック取得後の同一cardId追加',
+    '初期値・応答・ログが仕様どおり', '同一name+rarity', '同名別rarity',
+    '既存連番の最大+1で自動採番', 'cardIdをpayloadで指定できない',
+    '許可外rarity', '許可外aura', '許可外cardType', '許可外monType',
+    '必須値空欄', 'nickname空欄', 'sourceOrder重複・不正', 'ロック競合', 'ロック取得後に追加された連番',
     '行追加後の再検算失敗', 'ログだけ失敗', '再実行禁止',
   ];
   if (cardCreateTestMarkers.some(marker => !cardCreateApiTest.includes(marker))) {
