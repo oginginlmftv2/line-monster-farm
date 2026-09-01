@@ -85,9 +85,12 @@ function countChars_(text) {
   return String(text == null ? '' : text).replace(/\s+/g, '').length;
 }
 
+function activeEmail_() {
+  try { return String(Session.getActiveUser().getEmail() || '').trim().toLowerCase(); } catch (error) { return ''; }
+}
+
 function me_() {
-  var email = '';
-  try { email = String(Session.getActiveUser().getEmail() || '').trim().toLowerCase(); } catch (error) { email = ''; }
+  var email = activeEmail_();
   if (!email) return null;
   var sheet = book_().getSheetByName(SHEET_MEMBERS);
   if (!sheet || sheet.getLastRow() < 2) return null;
@@ -115,7 +118,16 @@ function include_(name) { return HtmlService.createHtmlOutputFromFile(name).getC
 
 function doGet(e) {
   var user = me_();
-  if (!user) return HtmlService.createHtmlOutput('<h2>権限がありません</h2><p>管理者へmembersシートへの登録を依頼してください。</p>');
+  if (!user) {
+    var seen = activeEmail_();
+    var detail = seen
+      ? 'ログイン中のアカウント: <b>' + seen.replace(/[<>&]/g, '') + '</b><br>' +
+        'このアドレスがmembersシートのemail列（active=TRUE）にあるか、管理者へ確認してください。'
+      : 'ログイン中のGoogleアカウントを取得できませんでした。<br>' +
+        'ブラウザで別のGoogleアカウントにログインしていないか確認し、' +
+        'それでも直らない場合は管理者へ「デプロイ設定の実行ユーザー」の確認を依頼してください。';
+    return HtmlService.createHtmlOutput('<h2>権限がありません</h2><p>' + detail + '</p>');
+  }
   var template = HtmlService.createTemplateFromFile('index');
   template.request = e || {};
   return template.evaluate().setTitle('ライ徹CMS').addMetaTag('viewport', 'width=device-width, initial-scale=1');
