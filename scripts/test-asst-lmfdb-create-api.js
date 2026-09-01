@@ -32,10 +32,10 @@ function response(value, status = 200) {
 }
 
 function cardRow() {
-  return [1,'card-a','カードA','MR','赤','ガード','','assist-cards/card-a.jpg','','','unknown','[]','null','{"ikusei":null,"karyo":null,"battle":null,"ta":null}','','[]','null',1,NOW,'seed'];
+  return [1,'c0001-MR','カードA','MR','赤','ガード','','assist-cards/c0001-MR.jpg','','','unknown','[]','null','{"ikusei":null,"karyo":null,"battle":null,"ta":null}','','[]','null',1,NOW,'seed'];
 }
 function abilityRow(overrides = {}) {
-  const value = Object.assign({ sourceOrder: 1, abilityId: 'ab-0001', legacyId: 1, cardId: 'card-a', sourceName: '旧カード', name: '既存能力', description: '既存説明', source: 'イベント', rarity: 'MR', tagsJson: '[]', sortOrder: 1, linkStatus: 'resolved', flagsJson: '[]', status: 'verified', version: 1, updatedAt: NOW, updatedBy: 'seed' }, overrides);
+  const value = Object.assign({ sourceOrder: 1, abilityId: 'ab-0001', legacyId: 1, cardId: 'c0001-MR', sourceName: '旧カード', name: '既存能力', description: '既存説明', source: 'イベント', rarity: 'MR', tagsJson: '[]', sortOrder: 1, linkStatus: 'resolved', flagsJson: '[]', status: 'verified', version: 1, updatedAt: NOW, updatedBy: 'seed' }, overrides);
   return HEADERS.abilities.map(key => value[key] === undefined ? '' : value[key]);
 }
 function externalAbility(id, card, name, overrides = {}) {
@@ -74,7 +74,7 @@ function makeHarness(options = {}) {
   const document = externalDocument(options.external || {});
   const state = {
     cards: [HEADERS.cards, cardRow()],
-    assist_effects: [HEADERS.assist_effects, ['card-a','','','','','','','']],
+    assist_effects: [HEADERS.assist_effects, ['c0001-MR','','','','','','','']],
     abilities: [HEADERS.abilities, ...(options.abilities || [abilityRow()])],
     ability_external_refs: [HEADERS.ability_external_refs, ...(options.refs || [])],
     assist_log: [HEADERS.assist_log, ['sentinel','seed','seed','PASS','unchanged']],
@@ -192,7 +192,7 @@ test('正常なresolved追加と対象カード末尾sortOrder採番', () => {
   const h = makeHarness();
   const result = h.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h, 1200));
   assert.strictEqual(result.abilityId, 'ab-0002'); assert.strictEqual(result.sortOrder, 2);
-  assert.strictEqual(h.state.abilities[2][HEADERS.abilities.indexOf('cardId')], 'card-a');
+  assert.strictEqual(h.state.abilities[2][HEADERS.abilities.indexOf('cardId')], 'c0001-MR');
 });
 
 test('欠番・外部IDを使わずabilitiesと予約済みIDの最大値+1', () => {
@@ -264,7 +264,7 @@ test('確認不足・未知cardId・ambiguous・unlinked cardId・sortOrder不�
   const h1 = makeHarness(); const p1 = candidatePayload(h1, 1201); p1.confirmations.originalCompared = false; assert.throws(() => h1.context.api_asstCreateAbilityFromExternalCandidate(p1), /確認/);
   const h2 = makeHarness(); assert.throws(() => h2.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h2, 1201, { linkStatus: 'resolved', cardId: 'missing' })), /不明/);
   const h3 = makeHarness(); assert.throws(() => h3.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h3, 1201, { linkStatus: 'ambiguous' })), /ambiguous/);
-  const h4 = makeHarness(); assert.throws(() => h4.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h4, 1201, { cardId: 'card-a' })), /null/);
+  const h4 = makeHarness(); assert.throws(() => h4.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h4, 1201, { cardId: 'c0001-MR' })), /null/);
   const h5 = makeHarness({ abilities: [abilityRow({ sortOrder: 2 })] }); assert.throws(() => h5.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h5, 1200)), /連番/);
 });
 
@@ -333,7 +333,7 @@ test('ID再利用処置は一覧対象として残り、後続登録できる', 
 });
 
 test('draft resolved能力は生成HTML・本文量・index判定から除外', () => {
-  const card = { cardId: 'card-a', name: 'カードA', rarity: 'MR', aura: '赤', cardType: 'ガード', accessoryStatus: 'unknown', monType: null, event2: null, releasedAt: null, image: 'assist-cards/card-a.jpg', ratings: null, stats: [], explanation: '管理者解説'.repeat(11), formations: [] };
+  const card = { cardId: 'c0001-MR', name: 'カードA', rarity: 'MR', aura: '赤', cardType: 'ガード', accessoryStatus: 'unknown', monType: null, event2: null, releasedAt: null, image: 'assist-cards/c0001-MR.jpg', ratings: null, stats: [], explanation: '管理者解説'.repeat(11), formations: [] };
   const cardById = new Map([[card.cardId, card]]);
   const draft = { abilityId: 'ab-9999', cardId: card.cardId, name: '公開してはいけない能力', description: '非公開本文'.repeat(300), source: 'イベント', tags: [], sortOrder: 1, linkStatus: 'resolved', status: 'draft' };
   const withoutAbility = buildCardArtifact(card, [], [], cardById);
