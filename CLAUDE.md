@@ -3,7 +3,7 @@
 > **開発ルールは `AGENTS.md` が唯一の正です。作業前に必ず読んでください。**
 > このファイルはガチャ更新・モンスター更新・日記追加など、コンテンツ運用だけを扱います。
 
-**最終更新：2026-09-01（カードIDの自動採番へ同期）**
+**最終更新：2026-09-01（旧URLの恒久インデックス削除 sitemap-legacy.xml を追加）**
 
 Git・ブランチ・PR・マージの管理者向け手順は`docs/admin-development.md`を参照してください。
 
@@ -268,6 +268,17 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 - 新規コメント投稿は停止中です
 - `monster-match.html`、`ability-match.html`は書き込みを伴うため使用しません
 - コメント表示・投稿の再開はAdSense通過後の別タスクです
+
+---
+
+## ℹ️ 旧URLの恒久インデックス削除（一時運用中）
+
+旧URL `monsters/monster.html?id=N` をGoogleのインデックスから消すため、旧URLだけを
+載せた `sitemap-legacy.xml` をGSCへ手動送信しています。**一時的な仕組みです。**
+
+- 生成は `node scripts/gen-legacy-sitemap.js`（手動実行のみ。`build.js` からは呼ばない）
+- `sitemap.xml` に混ぜない・`robots.txt` に `Sitemap:` 行を追加しない
+- 撤去の判断基準・期限・手順は`docs/legacy-url-sitemap-runbook.md`
 
 ---
 
