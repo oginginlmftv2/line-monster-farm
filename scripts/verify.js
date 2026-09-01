@@ -1028,6 +1028,26 @@ if (!exists('src/data/assist-cards.json')) {
       ok(`assist-cards.jsonがcards-data.jsの互換IDを全件包含（DB ${cards.length}件 / 互換入力 ${sourceIds.length}件 / CMS追加 ${cards.length - sourceIds.length}件）`);
     }
 
+    // 旧形式は手入力の3セグメント、新形式はCMSが自動採番するc<4桁連番>-<レアリティ>。
+    const cardIdPattern = /^(?:[a-z][a-z0-9]*-(?:MR|SSR)-[a-z0-9]+|c[0-9]{4}-(?:MR|SSR))$/;
+    const invalidCardIds = databaseIds.filter(cardId => !cardIdPattern.test(cardId));
+    if (invalidCardIds.length) {
+      ng(`assist-cards.jsonのcardId書式が不正: ${invalidCardIds.slice(0, 5).join(', ')}`);
+    } else {
+      ok(`assist-cards.jsonの全cardIdが許可書式（${databaseIds.length}件）`);
+    }
+
+    const serialPattern = /^c([0-9]{4})-(?:MR|SSR)$/;
+    const serialRarityMismatch = cards.filter(card => {
+      const match = serialPattern.exec(card.cardId);
+      return match && !card.cardId.endsWith(`-${card.rarity}`);
+    });
+    if (serialRarityMismatch.length) {
+      ng(`自動採番cardIdのレアリティが本体と不一致: ${serialRarityMismatch.slice(0, 5).map(card => card.cardId).join(', ')}`);
+    } else {
+      ok('自動採番cardIdのレアリティはすべてcard.rarityと一致');
+    }
+
     const missingImages = cards.filter(card => typeof card.image !== 'string' || !exists(card.image));
     if (missingImages.length) {
       ng(`assist-cards.jsonに存在しない画像参照がある: ${missingImages.slice(0, 5).map(card => card.cardId).join(', ')}`);

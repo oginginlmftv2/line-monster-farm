@@ -28,7 +28,7 @@ var APP_LOCAL_PREVIEW=typeof google==='undefined';
 var ASST = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null,
   audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
 var ASST_RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
-var ASST_CARD_ID_MAX_LENGTH=64;
+
 var ASST_CARD_TYPES=['ガード','かしこさ','ジャッジ','アサルト','回避','師匠','ちから','テクニック','友人','丈夫さ','インパクト','フォース','命中','メンタル','フィジカル','クイック','サバイブ','ライバル','ルミナス','バイタル','フォーカス','タフネス','ライフ','アキュメン'];
 var ASST_MON_TYPES=['幻霊','無機','創造','獣族','魔族','怪物'];
 var ASST_ABILITY_TAGS=['オーラ白','オーラ緑','オーラ赤','オーラ青','オーラ黄','オーラ黒','ガッツ回復','ガッツ変化系','クリティカル','シールド','デバフ','不利以外','中盤','前半','創造','命中','命中強化','回避','完全回避','幻霊','序盤','後半','必中','怪物','攻撃','攻撃強化','有利時','無効化','無機','獣族','終盤','被ダメ軽減','追撃','追撃連撃','連撃','魔族'];
@@ -283,34 +283,29 @@ function asstOpenCreateCard(){
 }
 function asstRenderCreateCardForm(){
   el('asst_editor').innerHTML='<button class="mobile-back" id="asst_btnBackCreateCard">← カード一覧</button><div id="asst_createCardMessage" class="message"></div><h2>新規カード登録</h2><p class="muted">cardsシートへdraft相当の新規行を1件追加します。サイトにはまだ公開されません。登録後に画像と残りの項目を編集してください。</p><div class="grid">'+
-    '<div class="asstField"><label>cardId</label><input id="asst_create_cardId" type="text" maxlength="'+ASST_CARD_ID_MAX_LENGTH+'" placeholder="例: g3-MR-jingorou"></div>'+asstField('create_name','カード名','text','')+
+    asstField('create_name','カード名','text','')+
     asstSelectField('create_rarity','レアリティ',['MR','SSR'],'MR')+asstSelectField('create_aura','オーラ',['赤','緑','黄','白','黒','青'],'赤')+
     asstSelectField('create_cardType','カードタイプ',ASST_CARD_TYPES,ASST_CARD_TYPES[0])+asstSelectField('create_monType','モン類',ASST_MON_TYPES,'',true)+
-    '</div><div class="actions"><button class="primary" id="asst_btnSubmitCreateCard">新規カードを登録</button><span class="muted">cardIdは作成後に変更できません</span></div>';
+    '</div><div class="actions"><button class="primary" id="asst_btnSubmitCreateCard">新規カードを登録</button><span class="muted">cardIdは登録時にサーバーが自動採番し、作成後は変更できません</span></div>';
   el('asst_btnBackCreateCard').onclick=function(){document.body.classList.remove('editing');};
   el('asst_btnSubmitCreateCard').onclick=asstCreateCard;
 }
 function asstCollectCreateCard(){
-  var rawCardId=el('asst_create_cardId').value,rawName=el('asst_f_create_name').value,rarity=el('asst_f_create_rarity').value;
-  if(/[\u0000-\u001f\u007f-\u009f]/.test(rawCardId))throw new Error('cardIdに改行・タブ・制御文字は使えません。');
+  var rawName=el('asst_f_create_name').value,rarity=el('asst_f_create_rarity').value;
   if(/[\u0000-\u001f\u007f-\u009f]/.test(rawName))throw new Error('カード名に改行・タブ・制御文字は使えません。');
-  var cardId=rawCardId.trim(),name=rawName.trim();
-  if(!cardId)throw new Error('cardIdは必須です。');if(!name)throw new Error('カード名は必須です。');
-  if(cardId.length>ASST_CARD_ID_MAX_LENGTH)throw new Error('cardIdは'+ASST_CARD_ID_MAX_LENGTH+'文字以下です。');
-  var match=cardId.match(/^[a-z][a-z0-9]*-(MR|SSR)-[a-z0-9]+$/);if(!match)throw new Error('cardIdの形式が不正です。');
-  if(match[1]!==rarity)throw new Error('cardId内のMR/SSRとレアリティが一致しません。');
-  if(ASST.cards.some(function(card){return card.cardId===cardId;}))throw new Error('同じcardIdが既にあります。');
+  var name=rawName.trim();
+  if(!name)throw new Error('カード名は必須です。');
   if(ASST.cards.some(function(card){return card.name.trim()===name&&card.rarity===rarity;}))throw new Error('同じカード名とレアリティのカードが既にあります。');
-  return {cardId:cardId,name:name,rarity:rarity,aura:el('asst_f_create_aura').value,cardType:el('asst_f_create_cardType').value,monType:el('asst_f_create_monType').value||null};
+  return {name:name,rarity:rarity,aura:el('asst_f_create_aura').value,cardType:el('asst_f_create_cardType').value,monType:el('asst_f_create_monType').value||null};
 }
 function asstCreateCard(){
   try{
     var card=asstCollectCreateCard();
-    if(!confirm('新規カードを登録します。\n\ncardId: '+card.cardId+'\nカード名: '+card.name+'\nレアリティ: '+card.rarity+'\n\n新規行として保存されますが、サイトにはまだ公開されません。\nよろしいですか？'))return;
+    if(!confirm('新規カードを登録します。\n\ncardId: 登録時に自動採番（例 c0092-'+card.rarity+'）\nカード名: '+card.name+'\nレアリティ: '+card.rarity+'\n\n新規行として保存されますが、サイトにはまだ公開されません。\nよろしいですか？'))return;
     call('api_asstCreateCard',[card],function(result){
       ASST.cards=ASST.cards.filter(function(item){return item.cardId!==result.cardId;});ASST.cards.push(result.card);
       el('asst_summary').textContent='カード '+ASST.cards.length+'件';asstRenderList();
-      asstOpenCard(result.cardId,'新規カードを登録しました。画像を追加し、必要項目を編集してください。サイトにはまだ公開されていません。');
+      asstOpenCard(result.cardId,'新規カードを登録しました（cardId: '+result.cardId+'）。画像は '+result.cardId+' のファイル名で追加し、必要項目を編集してください。サイトにはまだ公開されていません。');
     });
   }catch(error){show(error.message,true);}
 }
