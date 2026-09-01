@@ -152,6 +152,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/undine/2050.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/undine/2051.html</loc>
     <priority>0.7</priority>
   </url>
@@ -232,6 +236,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/illumine/3290.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/arc/3317.html</loc>
     <priority>0.7</priority>
   </url>
@@ -252,7 +260,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/zan/3406.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/zan/3408.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/zan/3434.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/zan/3490.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -277,6 +297,10 @@
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/0250.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/henger/0430.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -337,6 +361,10 @@
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/liger/0950.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/liger/0990.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
