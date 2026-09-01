@@ -185,6 +185,13 @@ else {
     ng(`Disallow されているが noindex を持つ ${disallowNoindex.length}件: ${disallowNoindex.join(', ')}`);
   } else ok(`Disallow と noindex の矛盾なし（Disallow ${dis.length}件）`);
 
+  // 旧URL（monster.html?id=）は恒久削除の対象。sitemap-legacy.xml 専用で、
+  // 本体のsitemap.xmlへ混ぜるとnoindexページを再度インデックス候補にしてしまう。
+  const legacyInSitemap = locs.filter(u => /monster\.html\?id=/.test(u));
+  if (legacyInSitemap.length) {
+    ng(`sitemap.xml に旧URLが混入している ${legacyInSitemap.length}件: ${legacyInSitemap.slice(0, 5).join(', ')}`);
+  } else ok('sitemap.xml に旧URL（monster.html?id=）の混入なし');
+
   const missingFile = locs.filter(u => u && !exists(u));
   if (missingFile.length) ng(`sitemapのURLに対応するファイルがない: ${missingFile.join(', ')}`);
   else ok('sitemapの全URLにファイルが存在');
