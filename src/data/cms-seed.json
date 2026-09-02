@@ -3209,7 +3209,7 @@
       "mainBlood": "ハム",
       "subBlood": "ピクシー",
       "limited": true,
-      "limitedLabel": "エイプリルフールイベント限定",
+      "limitedLabel": "エイプリルフール限定",
       "image": "S__93200810_0.jpg",
       "imageSource": "localImg",
       "gwImg": 270,
@@ -3221,8 +3221,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 226,
-      "current": 226,
+      "baseline": 218,
+      "current": 218,
       "indexable": false
     },
     {
@@ -3246,8 +3246,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 224,
-      "current": 224,
+      "baseline": 220,
+      "current": 220,
       "indexable": false
     },
     {
@@ -3271,8 +3271,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 235,
-      "current": 235,
+      "baseline": 231,
+      "current": 231,
       "indexable": false
     },
     {
