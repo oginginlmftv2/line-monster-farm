@@ -1565,6 +1565,24 @@ if (!exists('src/data/assist-cards.json')) {
     } else {
       ok(`assist.htmlのカードID取り出しはcardIdFromHrefに集約（定義1・使用${helperUses - 1}箇所、静的URLと旧#形式の両対応）`);
     }
+
+    // 検索・絞り込みのGA4計測（P14-3）。イベント整形はGTM側なので、サイト側は
+    // dataLayerへのpushと、oninputの1文字ごと送信を防ぐデバウンスが崩れていないことを検査する
+    const trackingIssues = [];
+    if (!/function pushAssistEvent\s*\(/.test(assistHtml)) trackingIssues.push('pushAssistEventの定義がない');
+    if (!/function visibleCardCount\s*\(/.test(assistHtml)) trackingIssues.push('visibleCardCountの定義がない');
+    if (!/result_count:/.test(assistHtml)) trackingIssues.push('result_countを同送していない');
+    const pushCalls = (assistHtml.match(/pushAssistEvent\(/g) || []).length - 1;   // 定義行を除く
+    if (pushCalls < 5) trackingIssues.push(`pushAssistEventの呼び出しが${pushCalls}箇所（検索・レアリティ・距離・地形・ソートの5箇所必要）`);
+    if (!/setTimeout\([\s\S]{0,400}?assist_search[\s\S]{0,200}?\}, 1000\)/.test(assistHtml)) {
+      trackingIssues.push('検索イベントの1秒デバウンスがない（oninputごとに送るとデータが汚れる）');
+    }
+    if (!/term\.length < 2/.test(assistHtml)) trackingIssues.push('検索イベントの2文字下限がない');
+    if (trackingIssues.length) {
+      ng(`assist.htmlの検索・絞り込み計測が不正 ${trackingIssues.length}件: ${trackingIssues.join(', ')}`);
+    } else {
+      ok(`assist.htmlの検索・絞り込み計測が整合（dataLayer push ${pushCalls}箇所・result_count同送・1秒デバウンス・2文字下限）`);
+    }
   } catch (error) {
     ng(`静的アシストカード詳細の検査に失敗: ${error.message}`);
   }
