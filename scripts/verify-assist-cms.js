@@ -302,6 +302,15 @@ function validateRoot(root) {
       !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=1000/.test(html)) {
     issues.push('外部能力監査UIの入口・固定SHA・一括取り込みページサイズ・ローカル無効化が不足');
   }
+  if (!/function asstRunPendingAuditSaves\(\)/.test(auditUiSource) ||
+      !/function asstProcessNextAuditPending\(\)/.test(auditUiSource) ||
+      !/function asstAuditQueue\(entry\)/.test(auditUiSource) ||
+      !/function asstScheduleAuditMessageDismiss\(\)/.test(auditUiSource) ||
+      !/ASST_AUDIT_MESSAGE_MS=\d+/.test(html) ||
+      !/id="asst_btnRunPending"/.test(auditUiSource) ||
+      !/id="asst_btnDismissAuditMessage"/.test(auditUiSource)) {
+    issues.push('外部能力監査UIの保存予定・まとめて保存・結果の自動消去が不足');
+  }
   if (!/id="asst_audit_cardId"/.test(auditUiSource) ||
       !/function asstAuditCardOptions\(selected\)/.test(auditUiSource) ||
       !/cardId:d\.linkStatus==='resolved'\?\(d\.cardId\|\|null\):null/.test(auditUiSource) ||
@@ -314,7 +323,7 @@ function validateRoot(root) {
     issues.push('外部能力監査UIがnull項目の正規化なしに応答構造を判定している');
   }
   if (!/ASST_AUDIT_VIEW_SIZE=20/.test(html) ||
-      !/function asstFetchAuditPage\(page,collected\)/.test(auditUiSource) ||
+      !/function asstFetchAuditPage\(page,collected,onDone\)/.test(auditUiSource) ||
       !/function asstAuditFilteredCandidates\(data,tab\)/.test(auditUiSource) ||
       !/function asstAuditCandidateMatches\(candidate,query\)/.test(auditUiSource) ||
       !/id="asst_auditSearch"/.test(auditUiSource) ||

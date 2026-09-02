@@ -71,7 +71,8 @@ function harness(options = {}) {
   const elements = new Map();
   const calls = [];
   const busy = [];
-  const transport = { response: options.response || response(), pages: options.pages || null, error: null, defer: false, pending: null };
+  const timers = [];
+  const transport = { response: options.response || response(), pages: options.pages || null, error: null, defer: false, pending: null, writeError: null, createResult: null };
   const getElement = id => {
     if (!elements.has(id)) elements.set(id, node());
     return elements.get(id);
@@ -90,7 +91,8 @@ function harness(options = {}) {
     Math,
     JSON,
     isFinite,
-    setTimeout(fn) { fn(); },
+    setTimeout(fn) { timers.push(fn); return timers.length; },
+    clearTimeout() {},
     fetch() { throw new Error('テスト中にfetchを直接呼び出した'); },
     document: {
       body: { classList: { add() {}, remove() {}, toggle() {} } },
@@ -122,6 +124,16 @@ function harness(options = {}) {
       failure: null,
       withSuccessHandler(callback) { this.success = callback; return this; },
       withFailureHandler(callback) { this.failure = callback; return this; },
+      api_asstCreateAbilityFromExternalCandidate(payload) {
+        calls.push({ name: 'api_asstCreateAbilityFromExternalCandidate', payload: JSON.parse(JSON.stringify(payload)) });
+        if (transport.writeError) { this.failure(new Error(transport.writeError)); return; }
+        this.success(transport.createResult || { ok: true, abilityId: 'ab-1085', legacyId: null, status: 'draft', linkStatus: payload.registration.linkStatus, sortOrder: payload.registration.linkStatus === 'resolved' ? 1 : null });
+      },
+      api_asstSetExternalCandidateDisposition(payload) {
+        calls.push({ name: 'api_asstSetExternalCandidateDisposition', payload: JSON.parse(JSON.stringify(payload)) });
+        if (transport.writeError) { this.failure(new Error(transport.writeError)); return; }
+        this.success({ ok: true, disposition: payload.disposition, version: 1 });
+      },
       api_asstAuditExternalAbilities(payload) {
         calls.push({ name: 'api_asstAuditExternalAbilities', payload: JSON.parse(JSON.stringify(payload)) });
         if (transport.defer) { transport.pending = { success: this.success, failure: this.failure }; return; }
@@ -145,7 +157,8 @@ function harness(options = {}) {
     call: callStub,
   });
   vm.runInContext(SCRIPT, context, { filename: 'ui_assist.html' });
-  return { context, elements, calls, busy, transport, html: () => getElement('asst_editor').innerHTML };
+  const runTimers = () => { const queued = timers.splice(0, timers.length); queued.forEach(fn => fn()); return queued.length; };
+  return { context, elements, calls, busy, transport, timers, runTimers, html: () => getElement('asst_editor').innerHTML };
 }
 
 let passed = 0;
@@ -615,7 +628,10 @@ test('自動候補がなくても手動でカードを選びresolvedで登録で
   assert.strictEqual(preview.registration.cardId,'aab-MR-julia');
   assert.match(h.html(), /手動で選択/);
   assert.match(h.html(), /ジュリア（MR） \/ aab-MR-julia/);
-  h.context.asstCreateExternalAbility();
+  h.context.asstQueueAuditAbility();
+  assert.strictEqual(h.calls.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  h.context.asstRunPendingAuditSaves();
   assert.strictEqual(h.calls[1].name,'api_asstCreateAbilityFromExternalCandidate');
   assert.strictEqual(h.calls[1].payload.registration.cardId,'aab-MR-julia');
 });
@@ -630,7 +646,7 @@ test('unlinkedを選んだときはcardIdをnullで送る', () => {
 test('最終プレビュー契約は許可キーだけを組み立てる', () => {
   const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明\r\n続き',source:'イベント',rarity:'MR',tags:['タグ'],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false,draftReviewed:true}};
   const preview=h.context.asstBuildAuditPreview(item,d);assert.deepStrictEqual(Object.keys(preview.registration),['sourceName','name','description','source','rarity','tags','linkStatus','cardId']);assert.strictEqual(preview.registration.description,'説明\n続き');assert.strictEqual(preview.registration.cardId,null);assert.deepStrictEqual(Object.keys(preview.confirmations),['originalCompared','normalizationReviewed','cardReviewed','idReuseReviewed']);assert.strictEqual(h.calls.length,1);
-  const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.match(rendered,/新規能力として保存/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
+  const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.match(rendered,/保存予定に追加/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
   assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*ASST\.audit\.finalPreview=null/);
 });
 
@@ -684,22 +700,99 @@ test('GASテンプレートを途中終了させるscript終了タグを文字�
   assert.strictEqual((UI_SOURCE.match(/<\/script/gi) || []).length, 1);
 });
 
-test('最終プレビューから追加専用APIだけを呼び同じ固定SHAで再監査する', () => {
-  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];
-  h.context.ASST.audit.finalPreview=h.context.asstBuildAuditPreview(item,{sourceName:'カード',name:'能力',description:'説明',source:'イベント',rarity:'MR',tags:[],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false}});
-  h.context.asstCreateExternalAbility();
+function queueCreate(h, index = 0) {
+  const item = h.context.ASST.audit.response.candidates[index];
+  h.context.ASST.audit.detailIndex = index;
+  h.context.ASST.audit.finalPreview = h.context.asstBuildAuditPreview(item, { sourceName:'カード', name:'能力'+item.externalNumericId, description:'説明', source:'イベント', rarity:'MR', tags:[], linkStatus:'unlinked', cardId:'', confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false} });
+  h.context.asstQueueAuditAbility();
+}
+
+test('保存予定へ追加した時点ではAPIを呼ばない', () => {
+  const h = harness();h.context.asstOpenExternalAudit();
+  queueCreate(h);
+  assert.strictEqual(h.calls.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  assert.strictEqual(h.context.ASST.audit.detailIndex,null);
+  assert.match(h.html(),/保存予定 1件/);
+  assert.match(h.html(),/まとめて保存（1件）/);
+});
+
+test('まとめて保存で追加専用APIを呼び同じ固定SHAで再監査する', () => {
+  const h = harness();h.context.asstOpenExternalAudit();
+  queueCreate(h);
+  h.context.asstRunPendingAuditSaves();
   assert.strictEqual(h.calls[1].name,'api_asstCreateAbilityFromExternalCandidate');
   assert.deepStrictEqual(Object.keys(h.calls[1].payload),['auditVersion','provider','externalSha','candidateKey','externalNumericId','externalFingerprint','expectedAbilitiesVersion','registration','confirmations']);
   assert.deepStrictEqual(h.calls[2],{name:'api_asstAuditExternalAbilities',payload:{page:1,pageSize:1000,externalSha:FIXED_SHA}});
-  assert.strictEqual(h.calls.length,3);
   assert.match(h.html(),/abilityId: ab-1085/);assert.match(h.html(),/自動公開されていません/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+});
+
+test('処置だけの保存予定は再監査を最後の1回にまとめる', () => {
+  const candidates=[candidate('representationOnly',2,'表記A',{registrationEligible:false,auditOnly:true,candidateKey:'a'.repeat(64)}),candidate('representationOnly',3,'表記B',{registrationEligible:false,auditOnly:true,candidateKey:'b'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.ASST.audit.tab='other';h.context.asstOpenExternalAudit();
+  for (const index of [0,1]) {
+    h.context.asstOpenAuditDetail(index);
+    h.context.el('asst_auditDisposition').value='ignored';
+    h.context.el('asst_auditDispositionNote').value='確認済み';
+    h.context.asstQueueAuditDisposition();
+  }
+  assert.strictEqual(h.context.ASST.audit.pending.length,2);
+  assert.strictEqual(h.calls.length,1);
+  h.context.asstRunPendingAuditSaves();
+  const names=h.calls.map(call => call.name);
+  assert.deepStrictEqual(names,['api_asstAuditExternalAbilities','api_asstSetExternalCandidateDisposition','api_asstSetExternalCandidateDisposition','api_asstAuditExternalAbilities']);
+  assert.match(h.html(),/成功 2件 \/ 失敗 0件/);
+});
+
+test('失敗した保存予定は残し、成功分だけ取り除く', () => {
+  const h = harness();h.context.asstOpenExternalAudit();
+  queueCreate(h);
+  h.transport.writeError='能力DBが更新されています。再監査してください。';
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  assert.match(h.html(),/成功 0件 \/ 失敗 1件/);
+  assert.match(h.html(),/能力DBが更新されています/);
+  assert.match(h.html(),/失敗した分は保存予定に残しています/);
+});
+
+test('保存結果は成功だけなら時間経過で消え、失敗があれば残る', () => {
+  const h = harness();h.context.asstOpenExternalAudit();
+  queueCreate(h);
+  h.context.asstRunPendingAuditSaves();
+  assert.match(h.html(),/まとめて保存: 成功 1件/);
+  assert.strictEqual(h.runTimers(),1);
+  assert.doesNotMatch(h.html(),/まとめて保存: 成功/);
+  const failed = harness();failed.context.asstOpenExternalAudit();
+  queueCreate(failed);
+  failed.transport.writeError='失敗';
+  failed.context.asstRunPendingAuditSaves();
+  assert.strictEqual(failed.runTimers(),0);
+  assert.match(failed.html(),/成功 0件 \/ 失敗 1件/);
+  failed.context.el('asst_btnDismissAuditMessage').onclick();
+  assert.doesNotMatch(failed.html(),/まとめて保存: 成功/);
+});
+
+test('保存予定は取り消しと一括破棄ができる', () => {
+  const h = harness();h.context.asstOpenExternalAudit();
+  queueCreate(h);
+  const id=h.context.ASST.audit.pending[0].id;
+  h.context.asstAuditRemovePending(id);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+  assert.match(h.html(),/保存予定 0件/);
+  queueCreate(h);
+  h.context.el('asst_btnClearPending').onclick();
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
 });
 
 test('読取専用候補は処置APIだけを呼びabilities非変更を明示する', () => {
   const item=candidate('representationOnly',2,'表記',{registrationEligible:false,auditOnly:true,cardIdCandidate:null});
   const h=harness({response:response({candidates:[item]})});h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
-  assert.match(h.html(),/候補の処置/);assert.doesNotMatch(h.html(),/新規能力として保存/);
-  h.context.el('asst_auditDisposition').value='ignored';h.context.el('asst_auditDispositionNote').value='確認済み';h.context.asstSaveExternalDisposition();
+  assert.match(h.html(),/候補の処置/);assert.doesNotMatch(h.html(),/id="asst_btnAuditFinalPreview"/);
+  h.context.el('asst_auditDisposition').value='ignored';h.context.el('asst_auditDispositionNote').value='確認済み';h.context.asstQueueAuditDisposition();
+  assert.strictEqual(h.calls.length,1);
+  h.context.asstRunPendingAuditSaves();
   assert.strictEqual(h.calls[1].name,'api_asstSetExternalCandidateDisposition');assert.strictEqual(h.calls[1].payload.disposition,'ignored');
   assert.strictEqual(h.calls[2].payload.externalSha,FIXED_SHA);assert.match(h.html(),/abilitiesは変更していません/);
 });
