@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1088,
-    "resolved": 569,
+    "abilities": 1091,
+    "resolved": 572,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19491,7 +19491,68 @@
       "sortOrder": 1,
       "linkStatus": "resolved",
       "flags": [],
-      "status": "draft"
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1094",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "高次元の妖精 I",
+      "description": "[自身白]バトル開始時、自身に次の効果<br>・人気度と忠誠度の合計値＜２０％＞をライフ以外の全ステータスに加算<br>・[有利]自身のモン類Ｌｖが１０以上の時、加算する値＜＋１０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "有利時",
+        "忠誠度",
+        "攻撃強化"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1095",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ライラックの花 II",
+      "description": "[自身白]バトル中、自身に次の効果<br>・零または近距離適性がＳ以上の時、全ステータス＜＋３０％＞と[業物Ｌｖ６]<br>・[有利]Ｒ４以上の技発動時、ダメージ＜３０％＞の追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "攻撃強化",
+        "追撃",
+        "有利時"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1096",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "高次元の妖精 II",
+      "description": "[自身白]バトル開始時、自身に次の効果<br>・人気度と忠誠度の合計値＜４０％＞をライフ以外の全ステータスに加算<br>・[有利]自身のモン類Ｌｖが１０以上の時、加算する値＜＋２０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "有利時",
+        "忠誠度",
+        "攻撃強化",
+        "オーラ白"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
     }
   ]
 }
