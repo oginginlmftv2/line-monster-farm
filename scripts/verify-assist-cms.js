@@ -304,6 +304,8 @@ function validateRoot(root) {
   }
   if (!/function asstRunPendingAuditSaves\(\)/.test(auditUiSource) ||
       !/function asstProcessNextAuditPending\(\)/.test(auditUiSource) ||
+      !/function asstReloadAuditForBatch\(\)/.test(auditUiSource) ||
+      !/var remaining=batch\.entries\.slice\(batch\.done\)/.test(auditUiSource) ||
       !/function asstAuditQueue\(entry\)/.test(auditUiSource) ||
       !/function asstScheduleAuditMessageDismiss\(\)/.test(auditUiSource) ||
       !/ASST_AUDIT_MESSAGE_MS=\d+/.test(html) ||

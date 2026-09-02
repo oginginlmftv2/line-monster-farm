@@ -313,7 +313,7 @@ function asstRunAuditWrite(name,payload,onSuccess,onFailure){
 function asstRunPendingAuditSaves(){
   if(!ASST.audit.pending.length||(ASST.audit.batch&&ASST.audit.batch.running)||ASST.audit.loading)return;
   if(!confirm('保存予定 '+ASST.audit.pending.length+'件をまとめて保存しますか？\n新規登録はstatus draftで保存され、自動公開されません。'))return;
-  ASST.audit.batch={running:true,total:ASST.audit.pending.length,done:0,results:[],failed:[]};
+  ASST.audit.batch={running:true,entries:ASST.audit.pending.slice(),total:ASST.audit.pending.length,done:0,results:[],failed:[],reloadRetried:false};
   ASST.audit.lastOperation=null;asstRenderExternalAudit();asstProcessNextAuditPending();
 }
 function asstRecordAuditPendingResult(entry,ok,message){
@@ -325,7 +325,7 @@ function asstRecordAuditPendingResult(entry,ok,message){
 function asstProcessNextAuditPending(){
   var batch=ASST.audit.batch;
   if(batch.done>=batch.total){asstFinishAuditBatch();return;}
-  var entry=ASST.audit.pending[batch.done];
+  var entry=batch.entries[batch.done];
   setBusy(true,'保存中… '+(batch.done+1)+' / '+batch.total+'（'+entry.name+'）');
   var candidate=asstFindAuditCandidate(entry.candidateKey);
   if(!candidate){asstRecordAuditPendingResult(entry,false,'再監査で候補を特定できませんでした。');asstProcessNextAuditPending();return;}
@@ -334,18 +334,25 @@ function asstProcessNextAuditPending(){
   asstRunAuditWrite(name,asstAuditWritePayload(entry,candidate),function(result){
     asstRecordAuditPendingResult(entry,true,entry.kind==='create'?'abilityId: '+result.abilityId+' / '+cmsLabel(result.status)+' / '+cmsLabel(result.linkStatus)+' / sortOrder: '+(result.sortOrder==null?'なし':result.sortOrder):'処置: '+cmsLabel(result.disposition)+'（abilitiesは変更していません）');
     if(entry.kind!=='create'){asstProcessNextAuditPending();return;}
-    asstReloadAuditQuiet(function(ok,message){
-      if(ok){asstProcessNextAuditPending();return;}
-      ASST.audit.batch.results.push({name:'—',kind:'reload',ok:false,message:'保存後の再監査に失敗しました: '+message});
-      asstFinishAuditBatch();
-    });
+    asstReloadAuditForBatch();
   },function(message){
     asstRecordAuditPendingResult(entry,false,message);asstProcessNextAuditPending();
   });
 }
+function asstReloadAuditForBatch(){
+  asstReloadAuditQuiet(function(ok,message){
+    var batch=ASST.audit.batch;
+    if(ok){batch.reloadRetried=false;asstProcessNextAuditPending();return;}
+    if(!batch.reloadRetried){batch.reloadRetried=true;setBusy(true,'保存後の再監査をやり直しています…');asstReloadAuditForBatch();return;}
+    batch.results.push({name:'—',kind:'reload',ok:false,message:'保存後の再監査に失敗したため、残りを保存せずに中断しました: '+message});
+    asstFinishAuditBatch();
+  });
+}
 function asstFinishAuditBatch(){
   var batch=ASST.audit.batch;batch.running=false;
-  ASST.audit.pending=batch.failed.slice();
+  var remaining=batch.entries.slice(batch.done);
+  ASST.audit.pending=batch.failed.concat(remaining);
+  if(remaining.length)batch.results.push({name:'—',kind:'skipped',ok:false,message:'未処理の '+remaining.length+'件は保存予定に残しました。'});
   ASST.audit.lastOperation={kind:'batch',results:batch.results};
   ASST.audit.batch=null;
   asstReloadAuditQuiet(function(ok,message){
