@@ -55,7 +55,7 @@ function response(overrides = {}) {
     validationErrors: [],
     counts: counts(),
     candidates: [candidate('card_match_candidate', 1200, '先頭候補')],
-    pagination: { page: 1, pageSize: 50, totalItems: 51, totalPages: 2 },
+    pagination: { page: 1, pageSize: 1000, totalItems: 1, totalPages: 1 },
   }, overrides);
 }
 
@@ -71,7 +71,7 @@ function harness(options = {}) {
   const elements = new Map();
   const calls = [];
   const busy = [];
-  const transport = { response: options.response || response(), error: null, defer: false, pending: null };
+  const transport = { response: options.response || response(), pages: options.pages || null, error: null, defer: false, pending: null };
   const getElement = id => {
     if (!elements.has(id)) elements.set(id, node());
     return elements.get(id);
@@ -126,6 +126,7 @@ function harness(options = {}) {
         calls.push({ name: 'api_asstAuditExternalAbilities', payload: JSON.parse(JSON.stringify(payload)) });
         if (transport.defer) { transport.pending = { success: this.success, failure: this.failure }; return; }
         if (transport.error) this.failure(transport.error);
+        else if (transport.pages) this.success(transport.pages[(payload.page || 1) - 1]);
         else this.success(transport.response);
       },
     };
@@ -165,34 +166,66 @@ test('ui_commonの対訳関数を本番順で読み込む', () => {
   assert.strictEqual(h.context.CMS_LABELS.BLOCKED, '停止');
 });
 
-test('初回はSHAなし・page 1・pageSize 50', () => {
+test('初回はSHAなし・page 1・pageSize 1000', () => {
   const h = harness();
   h.context.asstOpenExternalAudit();
-  assert.deepStrictEqual(h.calls[0], { name: 'api_asstAuditExternalAbilities', payload: { page: 1, pageSize: 50 } });
+  assert.deepStrictEqual(h.calls[0], { name: 'api_asstAuditExternalAbilities', payload: { page: 1, pageSize: 1000 } });
+  assert.strictEqual(h.calls.length, 1);
   assert.strictEqual(h.context.ASST.audit.externalSha, FIXED_SHA);
   assert.strictEqual(h.context.ASST.audit.expectedAbilitiesVersion, ABILITIES_VERSION);
 });
 
-test('次ページは応答の固定SHAを使う', () => {
-  const h = harness();
+test('全ページを同じ固定SHAで取り込み1つの候補配列へ結合する', () => {
+  const pages = [
+    response({ candidates: [candidate('card_match_candidate', 1, 'p1')], pagination: { page: 1, pageSize: 1000, totalItems: 2, totalPages: 2 } }),
+    response({ candidates: [candidate('card_match_candidate', 2, 'p2')], pagination: { page: 2, pageSize: 1000, totalItems: 2, totalPages: 2 } }),
+  ];
+  const h = harness({ pages });
   h.context.asstOpenExternalAudit();
-  h.transport.response = response({ pagination: { page: 2, pageSize: 50, totalItems: 51, totalPages: 2 } });
-  h.context.asstLoadExternalAudit(2, false);
-  assert.deepStrictEqual(h.calls[1].payload, { page: 2, pageSize: 50, externalSha: FIXED_SHA });
+  assert.deepStrictEqual(h.calls[0].payload, { page: 1, pageSize: 1000 });
+  assert.deepStrictEqual(h.calls[1].payload, { page: 2, pageSize: 1000, externalSha: FIXED_SHA });
+  assert.strictEqual(h.calls.length, 2);
+  assert.strictEqual(h.context.ASST.audit.response.candidates.length, 2);
+  assert.match(h.html(), /p1[\s\S]*p2/);
+});
+
+test('取り込み途中で外部SHAまたはversionが変わったら結合せず停止する', () => {
+  const pages = [
+    response({ candidates: [candidate('card_match_candidate', 1, 'p1')], pagination: { page: 1, pageSize: 1000, totalItems: 2, totalPages: 2 } }),
+    response({ externalSha: 'f'.repeat(40), candidates: [candidate('card_match_candidate', 2, 'p2')], pagination: { page: 2, pageSize: 1000, totalItems: 2, totalPages: 2 } }),
+  ];
+  const h = harness({ pages });
+  h.context.asstOpenExternalAudit();
+  assert.strictEqual(h.context.ASST.audit.response, null);
+  assert.match(h.html(), /取り込み中に外部コミットSHAまたはローカル能力versionが変わりました/);
+});
+
+test('タブ切り替え・検索・ページ送りではAPIを再実行しない', () => {
+  const candidates = [];
+  for (let index = 0; index < 45; index += 1) candidates.push(candidate('card_match_candidate', index + 1, `能力${index + 1}`));
+  candidates.push(candidate('unlinked_candidate', 900, '未紐付け能力'));
+  const h = harness({ response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 46, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  h.context.el('asst_auditNext').onclick();
+  h.context.ASST.audit.tab = 'unlinked_candidate';
+  h.context.asstRenderExternalAudit();
+  h.context.el('asst_auditSearch').value = '未紐付け';
+  h.context.el('asst_auditSearch').oninput();
+  assert.strictEqual(h.calls.length, 1);
 });
 
 test('最新状態で再監査だけが保持SHAを破棄する', () => {
   const h = harness();
   h.context.asstOpenExternalAudit();
-  h.context.asstLoadExternalAudit(1, true);
-  assert.deepStrictEqual(h.calls[1].payload, { page: 1, pageSize: 50 });
+  h.context.asstLoadExternalAudit(true);
+  assert.deepStrictEqual(h.calls[1].payload, { page: 1, pageSize: 1000 });
 });
 
 test('処理中は二重実行を防ぐ', () => {
   const h = harness();
   h.transport.defer = true;
   h.context.asstOpenExternalAudit();
-  h.context.asstLoadExternalAudit(1, false);
+  h.context.asstLoadExternalAudit(false);
   assert.strictEqual(h.calls.length, 1);
   assert.strictEqual(h.context.ASST.audit.loading, true);
 });
@@ -215,7 +248,7 @@ test('構造不正を区別して候補を隠す', () => {
 test('auditStatus FAILでは候補を表示しない', () => {
   const h = harness({ response: response({
     auditStatus: 'FAIL', safetyVerdict: 'BLOCKED', blockReasons: ['AUDIT_INPUT_INVALID'],
-    validationErrors: ['fixture invalid'], candidates: [], pagination: { page: 1, pageSize: 50, totalItems: 0, totalPages: 0 },
+    validationErrors: ['fixture invalid'], candidates: [], pagination: { page: 1, pageSize: 1000, totalItems: 0, totalPages: 0 },
   }) });
   h.context.asstOpenExternalAudit();
   assert.match(h.html(), /監査結果: 監査失敗（FAIL）/);
@@ -240,7 +273,7 @@ test('BLOCKEDでも候補を表示しID再利用は監査成功と明示する',
 test('通常の監査サマリーは閉じ、要約へ状態・安全性・総候補数を表示する', () => {
   const h = harness({ response: response({ safetyVerdict: 'SAFE', blockReasons: [] }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /<details id="asst_auditSummary" class="asst-audit-summary"><summary>監査サマリー: 監査成功（PASS） \/ 安全性: 問題なし（SAFE） \/ 総候補数 51<\/summary>/);
+  assert.match(h.html(), /<details id="asst_auditSummary" class="asst-audit-summary"><summary>監査サマリー: 監査成功（PASS） \/ 安全性: 問題なし（SAFE） \/ 総候補数 1<\/summary>/);
 });
 
 test('監査サマリーの手動開閉を再描画後も保持し、BLOCKEDでも強制展開しない', () => {
@@ -276,33 +309,85 @@ test('API候補順を変更しない', () => {
   assert(h.html().indexOf('API先頭') < h.html().indexOf('API後続'));
 });
 
-test('50件ページングと先頭・最終ボタン制御', () => {
-  const first = harness();
-  first.context.asstOpenExternalAudit();
-  assert.match(first.html(), /id="asst_auditFirst" disabled/);
-  assert.match(first.html(), /id="asst_auditPrev" disabled/);
-  assert.doesNotMatch(first.html(), /id="asst_auditNext" disabled/);
-  assert.doesNotMatch(first.html(), /id="asst_auditLast" disabled/);
-  const last = harness({ response: response({ pagination: { page: 2, pageSize: 50, totalItems: 51, totalPages: 2 } }) });
-  last.context.asstOpenExternalAudit();
-  assert.match(last.html(), />2 \/ 2 ページ ・ 総候補数 51<\/span>/);
-  assert.doesNotMatch(last.html(), /id="asst_auditFirst" disabled/);
-  assert.doesNotMatch(last.html(), /id="asst_auditPrev" disabled/);
-  assert.match(last.html(), /id="asst_auditNext" disabled/);
-  assert.match(last.html(), /id="asst_auditLast" disabled/);
+function manyCandidates(total, classification = 'card_match_candidate', prefix = '能力') {
+  const list = [];
+  for (let index = 0; index < total; index += 1) list.push(candidate(classification, index + 1, `${prefix}${index + 1}`));
+  return list;
+}
+
+test('選択タブ内だけを20件ずつページ送りする', () => {
+  const candidates = manyCandidates(45).concat(manyCandidates(3, 'unlinked_candidate', '未紐付け'));
+  const h = harness({ response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 48, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  assert.match(h.html(), />1 \/ 3 ページ ・ このタブ 45件 ・ 総候補数 48<\/span>/);
+  assert.match(h.html(), /このタブ 45件 ・ このページ 20件/);
+  assert.match(h.html(), /id="asst_auditFirst" disabled/);
+  assert.doesNotMatch(h.html(), /id="asst_auditNext" disabled/);
+  h.context.el('asst_auditLast').onclick();
+  assert.strictEqual(h.context.ASST.audit.viewPage, 3);
+  assert.match(h.html(), />3 \/ 3 ページ/);
+  assert.match(h.html(), /このタブ 45件 ・ このページ 5件/);
+  assert.match(h.html(), /id="asst_auditNext" disabled/);
+  h.context.el('asst_auditPrev').onclick();
+  assert.strictEqual(h.context.ASST.audit.viewPage, 2);
+  h.context.el('asst_auditFirst').onclick();
+  assert.strictEqual(h.context.ASST.audit.viewPage, 1);
 });
 
-test('最初へと最後へは既存読込関数へ境界ページを渡す', () => {
-  const h = harness({ response: response({ pagination: { page: 2, pageSize: 50, totalItems: 120, totalPages: 3 } }) });
+test('タブを切り替えるとページ送りを1ページ目へ戻し他タブと共用しない', () => {
+  const candidates = manyCandidates(45).concat(manyCandidates(3, 'unlinked_candidate', '未紐付け'));
+  const h = harness({ response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 48, totalPages: 1 } }) });
   h.context.asstOpenExternalAudit();
-  const moves = [];
-  h.context.asstLoadExternalAudit = (page, latest) => moves.push({ page, latest });
-  h.context.asstRenderExternalAudit();
-  h.context.el('asst_auditFirst').onclick();
-  h.context.el('asst_auditPrev').onclick();
-  h.context.el('asst_auditNext').onclick();
   h.context.el('asst_auditLast').onclick();
-  assert.deepStrictEqual(moves, [{ page: 1, latest: false }, { page: 1, latest: false }, { page: 3, latest: false }, { page: 3, latest: false }]);
+  assert.strictEqual(h.context.ASST.audit.viewPage, 3);
+  h.context.el('asst_editor').querySelectorAll = () => [];
+  h.context.ASST.audit.tab = 'unlinked_candidate';
+  h.context.ASST.audit.viewPage = 1;
+  h.context.asstRenderExternalAudit();
+  assert.match(h.html(), />1 \/ 1 ページ ・ このタブ 3件/);
+  assert.match(h.html(), /id="asst_auditNext" disabled/);
+});
+
+test('能力名・カード名で検索し件数とページ送りへ反映する', () => {
+  const candidates = [
+    candidate('card_match_candidate', 1, '不屈の闘志'),
+    candidate('card_match_candidate', 2, '鉄壁'),
+    candidate('card_match_candidate', 3, '無関係', { externalSnapshot: { card: '不屈カード', name: '無関係', desc: '説明', source: 'イベント', rarity: 'MR', tags: [] } }),
+  ];
+  const h = harness({ response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 3, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  h.context.ASST.audit.query = '不屈';
+  h.context.asstRenderExternalAudit();
+  assert.match(h.html(), /このタブ 2件 ・ このページ 2件/);
+  assert.match(h.html(), /カード対応候補 \(2\)/);
+  assert.match(h.html(), /不屈の闘志/);
+  assert.doesNotMatch(h.html(), /鉄壁/);
+  h.context.ASST.audit.query = '該当なし';
+  h.context.asstRenderExternalAudit();
+  assert.match(h.html(), /検索条件に一致する候補はありません/);
+});
+
+test('検索はNFKC・大文字小文字・空白差を無視し外部数値IDとcardIdも対象にする', () => {
+  const item = candidate('card_match_candidate', 1234, 'ＡＢＣ 能力', { cardIdCandidate: 'c0092-MR' });
+  const h = harness({ response: response({ candidates: [item], pagination: { page: 1, pageSize: 1000, totalItems: 1, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  for (const query of ['abc能力', 'ABC 能力', '1234', 'c0092']) {
+    h.context.ASST.audit.query = query;
+    h.context.asstRenderExternalAudit();
+    assert.match(h.html(), /このタブ 1件/, query);
+  }
+});
+
+test('検索をクリアするボタンで全件表示へ戻す', () => {
+  const h = harness();
+  h.context.asstOpenExternalAudit();
+  h.context.el('asst_auditSearch').value = '該当なし';
+  h.context.el('asst_auditSearch').oninput();
+  assert.strictEqual(h.context.ASST.audit.query, '該当なし');
+  assert.match(h.html(), /検索条件に一致する候補はありません/);
+  h.context.el('asst_auditSearchClear').onclick();
+  assert.strictEqual(h.context.ASST.audit.query, '');
+  assert.match(h.html(), /先頭候補/);
 });
 
 test('7分類を指定順の5タブへ対応しその他は後半3分類を合算する', () => {
@@ -314,18 +399,21 @@ test('7分類を指定順の5タブへ対応しその他は後半3分類を合�
   ];
   const h = harness({ response: response({ candidates }) });
   h.context.asstOpenExternalAudit();
-  const labels = ['カード対応候補 (98)','未紐付け候補 (20)','ID再利用疑い (1)','既存内容差分 (2)','その他 (45)'];
+  const labels = ['カード対応候補 (1)','未紐付け候補 (1)','ID再利用疑い (1)','既存内容差分 (1)','その他 (3)'];
   let previous = -1;
   for (const label of labels) { const index = h.html().indexOf(label); assert(index > previous, label); previous = index; }
   h.context.ASST.audit.tab = 'other'; h.context.asstRenderExternalAudit();
-  assert.match(h.html(), /その他 <span class="muted">このページ 3件/);
+  assert.match(h.html(), /その他 <span class="muted">このタブ 3件 ・ このページ 3件/);
   for (const name of ['other-a','other-b','欠落']) assert.match(h.html(), new RegExp(name));
 });
 
-test('件数0のタブはdisabledで残りタブ件数はdata.countsを使う', () => {
-  const h = harness({ response: response({ counts: counts({ idReuseSuspected: 0, cardMatchCandidates: 123 }) }) });
+test('タブ件数は取り込み済み候補と絞り込み結果から数え0件はdisabledにする', () => {
+  const candidates = manyCandidates(3).concat([candidate('representationOnly', 90, '表記')]);
+  const h = harness({ response: response({ candidates, counts: counts({ idReuseSuspected: 0, cardMatchCandidates: 123 }), pagination: { page: 1, pageSize: 1000, totalItems: 4, totalPages: 1 } }) });
   h.context.asstOpenExternalAudit();
-  assert.match(h.html(), /カード対応候補 \(123\)/);
+  assert.match(h.html(), /カード対応候補 \(3\)/);
+  assert.doesNotMatch(h.html(), /カード対応候補 \(123\)/);
+  assert.match(h.html(), /その他 \(1\)/);
   assert.match(h.html(), /data-audit-tab="ID_REUSE_SUSPECTED"[^>]* disabled/);
 });
 
@@ -341,15 +429,16 @@ test('タブ絞り込み後も元配列indexを詳細へ渡す', () => {
   assert.match(h.html(), /カード2/);
 });
 
-test('ページ移動と再監査の後も選択タブを維持する', () => {
+test('再取り込みと再監査の後も選択タブと検索語を維持する', () => {
   const h = harness(); h.context.asstOpenExternalAudit();
-  h.context.ASST.audit.tab = 'other'; h.context.asstRenderExternalAudit();
-  h.transport.response = response({ candidates: [candidate('representationOnly', 4, 'other-page-2')], pagination: { page: 2, pageSize: 50, totalItems: 51, totalPages: 2 } });
-  h.context.asstLoadExternalAudit(2, false);
+  h.context.ASST.audit.tab = 'other'; h.context.ASST.audit.query = 'other'; h.context.asstRenderExternalAudit();
+  h.transport.response = response({ candidates: [candidate('representationOnly', 4, 'other-reload')] });
+  h.context.asstLoadExternalAudit(false);
   assert.strictEqual(h.context.ASST.audit.tab, 'other');
+  assert.strictEqual(h.context.ASST.audit.query, 'other');
   assert.match(h.html(), /data-audit-tab="other" class="active"/);
   h.transport.response = response({ candidates: [candidate('representationOnly', 5, 'other-latest')] });
-  h.context.asstLoadExternalAudit(1, true);
+  h.context.asstLoadExternalAudit(true);
   assert.strictEqual(h.context.ASST.audit.tab, 'other');
   assert.match(h.html(), /other-latest/);
 });
@@ -440,7 +529,7 @@ test('同じページ・同じタブへ戻ると編集・サマリー・処置�
   assert.strictEqual(h.context.ASST.audit.response.pagination.page,1);assert.strictEqual(h.context.ASST.audit.tab,'card_match_candidate');
   h.context.asstOpenAuditDetail(0);
   assert.strictEqual(h.context.ASST.audit.detailDraft.name,'手修正');assert.strictEqual(h.context.ASST.audit.showProcessed,true);assert.strictEqual(h.context.ASST.audit.foldOpen,true);
-  h.transport.response=response({pagination:{page:2,pageSize:50,totalItems:51,totalPages:2}});h.context.asstLoadExternalAudit(2,false);assert.strictEqual(h.context.ASST.audit.detailIndex,null);assert.strictEqual(h.context.ASST.audit.detailDraft,null);assert.strictEqual(h.context.ASST.audit.externalSha,FIXED_SHA);assert.strictEqual(h.context.ASST.audit.tab,'card_match_candidate');
+  h.context.asstLoadExternalAudit(false);assert.strictEqual(h.context.ASST.audit.detailIndex,null);assert.strictEqual(h.context.ASST.audit.detailDraft,null);assert.strictEqual(h.context.ASST.audit.externalSha,FIXED_SHA);assert.strictEqual(h.context.ASST.audit.tab,'card_match_candidate');
 });
 
 test('詳細上部のmobile-backを削除し下部で戻るを処置保存の左へ置く', () => {
@@ -487,7 +576,8 @@ test('最終プレビューから追加専用APIだけを呼び同じ固定SHA�
   h.context.asstCreateExternalAbility();
   assert.strictEqual(h.calls[1].name,'api_asstCreateAbilityFromExternalCandidate');
   assert.deepStrictEqual(Object.keys(h.calls[1].payload),['auditVersion','provider','externalSha','candidateKey','externalNumericId','externalFingerprint','expectedAbilitiesVersion','registration','confirmations']);
-  assert.deepStrictEqual(h.calls[2],{name:'api_asstAuditExternalAbilities',payload:{page:1,pageSize:50,externalSha:FIXED_SHA}});
+  assert.deepStrictEqual(h.calls[2],{name:'api_asstAuditExternalAbilities',payload:{page:1,pageSize:1000,externalSha:FIXED_SHA}});
+  assert.strictEqual(h.calls.length,3);
   assert.match(h.html(),/abilityId: ab-1085/);assert.match(h.html(),/自動公開されていません/);
 });
 

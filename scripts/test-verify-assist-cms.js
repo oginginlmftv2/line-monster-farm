@@ -737,7 +737,7 @@ expectFailure('外部能力監査UI入口の欠落を拒否', root => {
 expectFailure('外部能力監査結果のlocalStorage永続化を拒否', root => {
   const file = path.join(root, '_cms/gas/ui_assist.html');
   const source = fs.readFileSync(file, 'utf8');
-  fs.writeFileSync(file, source.replace('function asstLoadExternalAudit(page,latest){', "function asstLoadExternalAudit(page,latest){\n  localStorage.setItem('audit', 'bad');"));
+  fs.writeFileSync(file, source.replace('function asstLoadExternalAudit(latest){', "function asstLoadExternalAudit(latest){\n  localStorage.setItem('audit', 'bad');"));
 }, /外部能力監査UIが結果をブラウザまたはGASへ永続化/);
 
 expectFailure('外部能力候補の詳細入口欠落を拒否', root => {

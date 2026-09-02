@@ -1,6 +1,6 @@
 # lMfDB 外部能力候補監査
 
-最終更新: 2026-08-30
+最終更新: 2026-09-02
 
 対象: P12-17a（読取専用候補監査エンジン）/ P12-17b（外部候補の手動登録設計）/
 P12-17 段階4-7（本番導入・運用確定）
@@ -445,7 +445,9 @@ Google Sheetsには複数シートのトランザクションがないため、8
 ### 14-4. 読取API
 
 候補監査の入口は`api_asstAuditExternalAbilities(payload)`とする。payloadは省略可能な
-40桁の固定SHAと、一覧のpage/pageSizeだけを受け付ける。SHA省略時は外部`main`を完全な
+40桁の固定SHAと、一覧のpage/pageSizeだけを受け付ける。`pageSize`は1〜1000の整数で、
+省略時は50とする（2026-09-02にCMS画面の一括取り込みへ合わせて上限を50から1000へ引き上げた。
+既定値と応答構造は変えていない）。SHA省略時は外部`main`を完全な
 コミットSHAへ解決してから取得し、応答へ`auditVersion / externalSha / externalSha256 /
 expectedAbilitiesVersion / auditStatus / safetyVerdict / counts / candidates`を返す。
 
@@ -490,6 +492,28 @@ tags / cardId候補 / linkStatus / sortOrder / status`を表示する。sortOrde
 
 外部原文と登録予定値は差分を強調し、最終プレビューには、候補取得後にDBが変わっていないか、
 カードリンク、`draft`であること、公開されないことを表示する。登録成功画面から公開を自動実行しない。
+
+### 15-1. 取り込み結果の再利用・タブ内ページ送り・検索（2026-09-02）
+
+読取APIの契約（`externalSha / page / pageSize`だけ、pageSize 50）は変えない。画面側の扱いだけを
+次のとおりにする。
+
+- 「外部能力DBを確認」または「最新状態で再監査」で、`pageSize`1000の1回の呼び出しで
+  全候補を取り込み、1つの配列としてメモリ上に保持する。候補が1000件を超える場合だけ、
+  1ページ目の解決SHAへ固定したまま`page`を進めて残りを取得し、同じ配列へ結合する。
+  途中で`externalSha`または`expectedAbilitiesVersion`が変わったら結合せず停止し、
+  取り込み直しを促す
+- タブ切り替え、検索、ページ送りではAPIを呼ばない。再取得は
+  「最新状態で再監査」「同じ条件で再試行」「登録・処置の保存後の再監査」だけとする
+- ページ送りは選択中のタブだけを対象にし、20件ずつ表示する。タブ切り替え・検索・
+  処置済み表示の切り替えで1ページ目へ戻す。タブ件数は`counts`ではなく、
+  取り込み済み候補へ処置済み表示と検索を適用した実数を表示する
+- 検索は能力名（`name`）、元のカード名（`card / sourceName`）、`cardIdCandidate`、
+  外部数値IDを対象に、NFKC・小文字化・空白除去して部分一致で絞り込む
+
+取り込み結果はメモリだけに置く。`localStorage`・`sessionStorage`・Cookie・GASのCacheServiceへ
+保存しない（`scripts/verify-assist-cms.js`がFAILにする）。画面を離れる・再読み込みすると
+破棄され、次回は再監査からやり直す。固定SHAの監査結果を古いまま再利用しないための制約である。
 
 ## 16. 登録値、状態、カード紐付け
 

@@ -517,7 +517,7 @@ function asstAuditPayload_(payload) {
   return {
     externalSha: payload.externalSha || null,
     page: pageInteger_(payload.page, 1, 'page'),
-    pageSize: pageInteger_(payload.pageSize, 50, 'pageSize', 50)
+    pageSize: pageInteger_(payload.pageSize, 50, 'pageSize', 1000)
   };
 }
 
