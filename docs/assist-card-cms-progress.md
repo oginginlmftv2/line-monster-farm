@@ -530,6 +530,22 @@ P12-17aで読取専用監査を実装し、P12-17bで将来の手動登録設計
 検査は`scripts/test-asst-ability-reorder-api.js`（9ケース）と、
 `scripts/verify-assist-cms.js`のソース境界検査で担保する。
 
+### 能力タブの状態切り替えもまとめ保存にする（2026-09-02）
+
+状態（draft / verified）のselectは切り替えた瞬間に`api_asstGetAbility`→`api_asstSaveAbility`を
+実行していたため、続けて切り替えると保存中の再描画と競合して失敗することがあった。
+並び替えと同じく、画面に貯めてから保存する。
+
+- selectの変更は`ASST.abilityStatusEdits`へ記録するだけで、APIを呼ばない。
+  行には「未保存: 確認済み（verified） → 下書き（draft）」と出す
+- 「変更を保存」で、状態変更を**1件ずつ順番に**（毎回`api_asstGetAbility`で最新versionを取ってから
+  `api_asstSaveAbility`）保存し、そのあとに並び順を1回送る
+- 状態保存に1件でも失敗したら並び順は送らず、失敗内容を表示して保存予定を残さない
+- 保存中はselectと保存ボタンを操作させない。完了後はカードを取得し直す
+- 「変更を取り消す」で状態・並び順の両方を破棄する
+
+検査は`scripts/test-asst-ability-tab-ui.js`（8ケース）で担保する。
+
 段階4は、スキーマ検査、読取API、一覧、詳細プレビュー、test追加API、破壊テスト、
 本番移行の7タスクに分割する。一度にGAS画面・保存・本番反映を実装しない。
 

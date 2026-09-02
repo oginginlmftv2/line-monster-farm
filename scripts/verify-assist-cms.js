@@ -198,6 +198,16 @@ function validateRoot(root) {
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
+  const abilityTabSource = ['asstRenderAbilities','asstAbilityItem','asstBindAbilityRows','asstSetAbilityStatus','asstSaveAbilityChanges','asstResetAbilityChanges','asstAbilityStatusChangedIds']
+    .map(name => functionBlock(html, name)).join('\n');
+  if (!/function asstSaveAbilityChanges\(\)/.test(html) ||
+      !/function asstSetAbilityStatus\(abilityId,status\)/.test(html) ||
+      !/id="asst_btnSaveAbilityChanges"/.test(abilityTabSource) ||
+      !/id="asst_btnResetAbilityChanges"/.test(abilityTabSource) ||
+      /api_asstSaveAbility|api_asstGetAbility/.test(functionBlock(html, 'asstSetAbilityStatus')) ||
+      !/未保存/.test(abilityTabSource)) {
+    issues.push('能力タブの状態切り替えが保存ボタンでのまとめ保存になっていない');
+  }
   const reorderBlock = functionBlock(gas, 'api_asstReorderCardAbilities');
   if (!/var ASST_REORDER_KEYS = \['cardId','abilityIds','expected'\]/.test(gas) ||
       !/asstReorderPayload_\(payload\)/.test(reorderBlock) ||
