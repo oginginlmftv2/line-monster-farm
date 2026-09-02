@@ -534,6 +534,26 @@ changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReu
 
 サーバー側の応答（`api_asstAuditExternalAbilities`）の契約は変更しない。
 
+### 15-3. 自動候補がない候補の手動カード紐付け（2026-09-02）
+
+対応表は`sourceName + rarity`の完全一致だけを見るため、外部側が「ジュリア（ライバル）」の
+ようにカード名へ補足を付けている場合、こちらの「ジュリア（MR）」と一致せず
+`unlinked_candidate`になる。予測精度の改善では限界があるので、候補詳細から管理者が
+紐付け先カードを選べるようにする。
+
+- 候補詳細の「カード対応」に、カードDB（`ASST.cards`）から選ぶ`cardId`のselectを置く。
+  既定値は自動候補があればそれ、無ければ未選択とする
+- `linkStatus: resolved`は、カードDBが読み込めているかぎり自動候補の有無にかかわらず選べる。
+  選択が空、またはカードDBに無い`cardId`のときはクライアント検査で拒否する
+- 画面には「自動候補cardIdCandidate」「選択中のカード」「選択の由来（未選択／自動候補と一致／
+  手動で選択）」を並べ、手動選択であることを最終プレビューでも確認できるようにする
+- `unlinked`を選んだ場合は選択に関係なく`cardId: null`で送る
+
+対応表の照合規則（完全一致のみ、trim・部分一致・類似検索をしない）は変更しない。
+サーバー側も変更しない。`api_asstCreateAbilityFromExternalCandidate`は元から
+`resolved`のcardIdを「cardsシートに実在するか」だけで検査し、自動候補との一致は要求していない。
+`sortOrder`は選んだカードの末尾へサーバーが採番し、statusは`draft`のままである。
+
 ## 16. 登録値、状態、カード紐付け
 
 ### 16-1. 比較用と保存用の正規化

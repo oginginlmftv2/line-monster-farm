@@ -195,6 +195,23 @@ test('正常なresolved追加と対象カード末尾sortOrder採番', () => {
   assert.strictEqual(h.state.abilities[2][HEADERS.abilities.indexOf('cardId')], 'c0001-MR');
 });
 
+test('自動候補のない候補でも管理者が選んだ既存cardIdでresolved登録できる', () => {
+  const h = makeHarness();
+  const audit = clone(h.context.api_asstAuditExternalAbilities({ externalSha: SHA, pageSize: 50 }));
+  const manual = audit.candidates.find(item => item.externalNumericId === 1201);
+  assert.strictEqual(manual.cardIdCandidate, null);
+  assert.strictEqual(manual.classification, 'unlinked_candidate');
+  const result = clone(h.context.api_asstCreateAbilityFromExternalCandidate(
+    candidatePayload(h, 1201, { linkStatus: 'resolved', cardId: 'c0001-MR' })));
+  assert.strictEqual(result.linkStatus, 'resolved');
+  assert.strictEqual(result.cardId === undefined ? 'c0001-MR' : result.cardId, 'c0001-MR');
+  assert.strictEqual(result.sortOrder, 2);
+  const row = h.state.abilities[2];
+  assert.strictEqual(row[HEADERS.abilities.indexOf('cardId')], 'c0001-MR');
+  assert.strictEqual(row[HEADERS.abilities.indexOf('sortOrder')], 2);
+  assert.strictEqual(row[HEADERS.abilities.indexOf('status')], 'draft');
+});
+
 test('欠番・外部IDを使わずabilitiesと予約済みIDの最大値+1', () => {
   const seed = makeHarness();
   const reserved = refRowFor(seed, 1); reserved[HEADERS.ability_external_refs.indexOf('abilityId')] = 'ab-0010';
