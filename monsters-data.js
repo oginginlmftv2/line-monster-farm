@@ -64,7 +64,7 @@ const monstersData = [
   { name: 'キンゾー', aura: '黄', limited: true, limitedLabel: 'GW限定', gwImg: 273, localImg: 'S__93200745_0.jpg', mon: '魔族', mainMon: 'スエゾー', subMon: 'レアモン' },
   { name: 'メロウ', aura: '赤', limited: false, limitedLabel: '', gwImg: 272, localImg: 'S__93200811_0.jpg', mon: '幻霊', mainMon: 'ウンディーネ', subMon: 'ピクシー' },
   { name: 'グジラキング', aura: '白', limited: false, limitedLabel: '', gwImg: 271, localImg: 'S__93200508_0.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'レアモン' },
-  { name: 'ヴァージアハピ', aura: '赤', limited: true, limitedLabel: 'エイプリルフールイベント限定', gwImg: 270, localImg: 'S__93200810_0.jpg', mon: '獣族', mainMon: 'ハム', subMon: 'ピクシー' },
+  { name: 'ヴァージアハピ', aura: '赤', limited: true, limitedLabel: 'エイプリルフール限定', gwImg: 270, localImg: 'S__93200810_0.jpg', mon: '獣族', mainMon: 'ハム', subMon: 'ピクシー' },
   { name: 'キンプンソウ', aura: '白', limited: true, limitedLabel: 'イベント限定', gwImg: 269, localImg: 'S__93200558_0.jpg', mon: '幻霊', mainMon: 'プラント', subMon: 'ガリ' },
   { name: 'ドリーミィ', aura: '白', limited: false, limitedLabel: '', gwImg: 268, localImg: 'S__93200544_0.jpg', mon: '無機', mainMon: 'イルミネ', subMon: 'ニャー' },
   { name: 'ニャースター', aura: '白', limited: true, limitedLabel: '春限定', gwImg: 267, localImg: 'S__93200564_0.jpg', mon: '無機', mainMon: 'ニャー', subMon: 'レアモン' },
