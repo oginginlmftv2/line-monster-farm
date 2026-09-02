@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1087,
-    "resolved": 568,
+    "abilities": 1088,
+    "resolved": 569,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19474,6 +19474,24 @@
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
+    },
+    {
+      "abilityId": "ab-1093",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ライラックの花 I",
+      "description": "[自身白]零または近距離適性がＳ以上の時、自身に全ステータス＜＋２０％＞と[業物Ｌｖ４]",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "攻撃強化"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "draft"
     }
   ]
 }
