@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-09-01T10:49:14Z",
+  "exportedAt": "2026-09-02T03:18:53Z",
   "count": 113,
   "monsters": {
     "1080": {
@@ -1973,8 +1973,11 @@
         }
       ],
       "author": "レオナ",
+      "contributors": [
+        "ソラシド"
+      ],
       "createdAt": "2026-04-30",
-      "updatedAt": "2026-04-30",
+      "updatedAt": "2026-09-02",
       "releasedAt": "2025-12-31"
     },
     "0751": {
