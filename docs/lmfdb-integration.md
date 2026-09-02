@@ -509,7 +509,9 @@ tags / cardId候補 / linkStatus / sortOrder / status`を表示する。sortOrde
   処置済み表示の切り替えで1ページ目へ戻す。タブ件数は`counts`ではなく、
   取り込み済み候補へ処置済み表示と検索を適用した実数を表示する
 - 検索は能力名（`name`）、元のカード名（`card / sourceName`）、`cardIdCandidate`、
-  外部数値IDを対象に、NFKC・小文字化・空白除去して部分一致で絞り込む
+  外部数値IDを対象に、NFKC・小文字化・空白除去して部分一致で絞り込む。
+  入力中は絞り込まず、「検索」ボタンまたは確定後のEnterで適用する（IME変換中のEnterは無視する）。
+  日本語入力の変換前ローマ字で確定してしまうのを避けるため、ライブ検索にしない
 
 取り込み結果はメモリだけに置く。`localStorage`・`sessionStorage`・Cookie・GASのCacheServiceへ
 保存しない（`scripts/verify-assist-cms.js`がFAILにする）。画面を離れる・再読み込みすると

@@ -312,6 +312,9 @@ function validateRoot(root) {
       !/function asstAuditFilteredCandidates\(data,tab\)/.test(auditUiSource) ||
       !/function asstAuditCandidateMatches\(candidate,query\)/.test(auditUiSource) ||
       !/id="asst_auditSearch"/.test(auditUiSource) ||
+      !/id="asst_auditSearchRun"/.test(auditUiSource) ||
+      !/function asstApplyAuditSearch\(value\)/.test(auditUiSource) ||
+      !/el\('asst_auditSearch'\)\.oninput=function\(\)\{ASST\.audit\.queryInput=this\.value;\}/.test(auditUiSource) ||
       /asstLoadExternalAudit\(/.test(auditUiSource.match(/function asstRenderExternalAudit\(\)[\s\S]*?\n\}/)[0].replace(/asstLoadExternalAudit\((?:true|false)\)/g, ''))) {
     issues.push('外部能力監査UIの取り込み結果の再利用・タブ内ページ送り・検索が不足');
   }

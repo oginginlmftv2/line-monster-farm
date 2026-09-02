@@ -211,6 +211,7 @@ test('タブ切り替え・検索・ページ送りではAPIを再実行しな�
   h.context.asstRenderExternalAudit();
   h.context.el('asst_auditSearch').value = '未紐付け';
   h.context.el('asst_auditSearch').oninput();
+  h.context.el('asst_auditSearchRun').onclick();
   assert.strictEqual(h.calls.length, 1);
 });
 
@@ -348,6 +349,49 @@ test('タブを切り替えるとページ送りを1ページ目へ戻し他タ�
   assert.match(h.html(), /id="asst_auditNext" disabled/);
 });
 
+test('入力しただけでは絞り込まず、検索ボタンかEnterで確定する', () => {
+  const candidates = [candidate('card_match_candidate', 1, '不屈の闘志'), candidate('card_match_candidate', 2, '鉄壁')];
+  const h = harness({ response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 2, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  const input = h.context.el('asst_auditSearch');
+  input.value = 'fuku';
+  input.oninput();
+  assert.strictEqual(h.context.ASST.audit.queryInput, 'fuku');
+  assert.strictEqual(h.context.ASST.audit.query, '');
+  assert.match(h.html(), /このタブ 2件/);
+  input.value = '不屈';
+  input.oninput();
+  assert.match(h.html(), /このタブ 2件/);
+  h.context.el('asst_auditSearchRun').onclick();
+  assert.strictEqual(h.context.ASST.audit.query, '不屈');
+  assert.match(h.html(), /このタブ 1件/);
+  const enterInput = h.context.el('asst_auditSearch');
+  enterInput.value = '鉄壁';
+  enterInput.onkeydown({ key: 'Enter', preventDefault() {} });
+  assert.strictEqual(h.context.ASST.audit.query, '鉄壁');
+  assert.match(h.html(), /鉄壁/);
+});
+
+test('IME変換中のEnterでは検索を確定しない', () => {
+  const h = harness();
+  h.context.asstOpenExternalAudit();
+  const input = h.context.el('asst_auditSearch');
+  input.value = 'ふくつ';
+  input.onkeydown({ key: 'Enter', isComposing: true, preventDefault() {} });
+  input.onkeydown({ key: 'Enter', keyCode: 229, preventDefault() {} });
+  assert.strictEqual(h.context.ASST.audit.query, '');
+});
+
+test('再描画しても入力中の検索語を保持する', () => {
+  const h = harness();
+  h.context.asstOpenExternalAudit();
+  h.context.el('asst_auditSearch').value = '入力中';
+  h.context.el('asst_auditSearch').oninput();
+  h.context.asstRenderExternalAudit();
+  assert.match(h.html(), /id="asst_auditSearch" value="入力中"/);
+  assert.doesNotMatch(h.html(), /id="asst_auditSearchClear" disabled/);
+});
+
 test('能力名・カード名で検索し件数とページ送りへ反映する', () => {
   const candidates = [
     candidate('card_match_candidate', 1, '不屈の闘志'),
@@ -383,6 +427,7 @@ test('検索をクリアするボタンで全件表示へ戻す', () => {
   h.context.asstOpenExternalAudit();
   h.context.el('asst_auditSearch').value = '該当なし';
   h.context.el('asst_auditSearch').oninput();
+  h.context.el('asst_auditSearchRun').onclick();
   assert.strictEqual(h.context.ASST.audit.query, '該当なし');
   assert.match(h.html(), /検索条件に一致する候補はありません/);
   h.context.el('asst_auditSearchClear').onclick();
@@ -574,6 +619,8 @@ test('監査ページと詳細のスマホgrid・長文字列・操作行を内�
   assert.match(UI_SOURCE, /\.asst-audit-summary \.readonly,#asst_editor \.asst-audit-detail \.readonly\{overflow-wrap:anywhere;max-height:8em;overflow:auto\}/);
   assert.match(UI_SOURCE, /\.asst-audit-long\{word-break:break-all\}/);
   assert.match(UI_SOURCE, /\.asst-audit-pagination[^}]*flex-wrap:wrap/);
+  assert.match(UI_SOURCE, /\.asst-audit-toolbar\{display:flex;flex-wrap:wrap;align-items:flex-end/);
+  assert.match(UI_SOURCE, /\.asst-audit-toolbar \.asstField\{margin:0/);
   assert.doesNotMatch(UI_SOURCE, /overflow-x\s*:\s*hidden/);
 });
 

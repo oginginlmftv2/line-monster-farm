@@ -3,7 +3,10 @@
 #asst_editor .asst-audit-long{word-break:break-all}
 #asst_editor .asst-audit-tabs,#asst_editor .asst-audit-pagination,#asst_editor .asst-audit-detail-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 #asst_editor .asst-audit-tabs{margin:12px 0}
-#asst_editor .asst-audit-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:0 0 14px}
+#asst_editor .asst-audit-toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin:0 0 14px}
+#asst_editor .asst-audit-toolbar .asstField{margin:0;flex:1 1 18rem;min-width:0}
+#asst_editor .asst-audit-toolbar .asstField input{width:100%}
+#asst_editor .asst-audit-toolbar > label{display:flex;align-items:center;gap:6px;padding-bottom:6px}
 #asst_editor .asst-ocr-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:10px 0 0}
 #asst_editor .asst-audit-tabs button.active{font-weight:700}
 @media(max-width:860px){#asst_editor .asst-audit-page .grid,#asst_editor .asst-audit-detail .grid{grid-template-columns:minmax(0,1fr)}}
@@ -26,7 +29,7 @@
 'use strict';
 var APP_LOCAL_PREVIEW=typeof google==='undefined';
 var ASST = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null,
-  audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,fetchedPages:0,query:'',viewPage:1,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
+  audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,fetchedPages:0,query:'',queryInput:'',viewPage:1,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
 var ASST_RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
 
 var ASST_CARD_TYPES=['ガード','かしこさ','ジャッジ','アサルト','回避','師匠','ちから','テクニック','友人','丈夫さ','インパクト','フォース','命中','メンタル','フィジカル','クイック','サバイブ','ライバル','ルミナス','バイタル','フォーカス','タフネス','ライフ','アキュメン'];
@@ -279,6 +282,7 @@ function asstAuditFilteredCandidates(data,tab){
 }
 function asstAuditViewPage(total){var totalPages=total?Math.ceil(total/ASST_AUDIT_VIEW_SIZE):0;var page=ASST.audit.viewPage;if(!Number.isInteger(page)||page<1)page=1;if(totalPages&&page>totalPages)page=totalPages;if(!totalPages)page=1;ASST.audit.viewPage=page;return{page:page,totalPages:totalPages};}
 function asstMoveAuditViewPage(page){ASST.audit.viewPage=page;asstRenderExternalAudit();}
+function asstApplyAuditSearch(value){ASST.audit.queryInput=String(value==null?'':value);ASST.audit.query=ASST.audit.queryInput;ASST.audit.viewPage=1;asstRenderExternalAudit();asstFocusAuditSearch();}
 function asstFocusAuditSearch(){var input=el('asst_auditSearch');if(!input||typeof input.focus!=='function')return;input.focus();if(typeof input.setSelectionRange==='function'){var end=String(input.value==null?'':input.value).length;input.setSelectionRange(end,end);}}
 function asstAuditResolvedTab(data){var selected=ASST_AUDIT_TABS.find(function(tab){return tab[0]===ASST.audit.tab;});if(selected&&asstAuditTabCount(data,selected)>0)return selected;var available=ASST_AUDIT_TABS.find(function(tab){return asstAuditTabCount(data,tab)>0;});ASST.audit.tab=(available||ASST_AUDIT_TABS[0])[0];return available||ASST_AUDIT_TABS[0];}
 function asstRenderAuditCandidates(data){
@@ -288,8 +292,9 @@ function asstRenderAuditCandidates(data){
   var view=asstAuditViewPage(visible.length),totalLabel=view.totalPages===0?'0':view.totalPages;
   var shown=visible.slice((view.page-1)*ASST_AUDIT_VIEW_SIZE,view.page*ASST_AUDIT_VIEW_SIZE);
   var html='<h2>候補一覧</h2><p class="muted">取り込み済みの候補をブラウザ上で絞り込みます。ページ送りは選択中のタブだけを対象にし、タブ切り替え・検索・ページ送りでAPIを再実行しません。APIが返した優先順は維持します。</p>'+
-    '<div class="asst-audit-toolbar"><label>検索（能力名・カード名）<input type="search" id="asst_auditSearch" value="'+esc(ASST.audit.query)+'" placeholder="能力名・カード名・cardId・外部数値ID"></label>'+
-    '<button type="button" id="asst_auditSearchClear"'+(ASST.audit.query?'':' disabled')+'>検索をクリア</button>'+
+    '<div class="asst-audit-toolbar"><div class="asstField"><label for="asst_auditSearch">検索（能力名・カード名）</label><input type="search" id="asst_auditSearch" value="'+esc(ASST.audit.queryInput)+'" placeholder="能力名・カード名・cardId・外部数値ID"></div>'+
+    '<button type="button" id="asst_auditSearchRun">検索</button>'+
+    '<button type="button" id="asst_auditSearchClear"'+(ASST.audit.query||ASST.audit.queryInput?'':' disabled')+'>検索をクリア</button>'+
     '<label><input type="checkbox" id="asst_auditShowProcessed"'+(ASST.audit.showProcessed?' checked':'')+'> 処置済みを表示</label></div><div class="tabs asst-audit-tabs" role="tablist">';
   ASST_AUDIT_TABS.forEach(function(tab){var count=asstAuditTabCount(data,tab),active=tab[0]===selected[0];html+='<button type="button" role="tab" data-audit-tab="'+esc(tab[0])+'"'+(active?' class="active" aria-selected="true"':' aria-selected="false"')+(count===0?' disabled':'')+'>'+esc(asstAuditTabLabel(tab))+' ('+esc(count)+')</button>';});
   html+='</div><h3>'+esc(asstAuditTabLabel(selected))+' <span class="muted">このタブ '+esc(visible.length)+'件 ・ このページ '+esc(shown.length)+'件</span></h3>';
@@ -318,8 +323,12 @@ function asstRenderExternalAudit(){
   if(el('asst_btnAuditLatest'))el('asst_btnAuditLatest').onclick=function(){asstLoadExternalAudit(true);};
   if(el('asst_btnAuditRetry'))el('asst_btnAuditRetry').onclick=function(){asstLoadExternalAudit(false);};
   if(el('asst_auditShowProcessed'))el('asst_auditShowProcessed').onchange=function(){ASST.audit.showProcessed=this.checked;ASST.audit.viewPage=1;asstRenderExternalAudit();};
-  if(el('asst_auditSearch'))el('asst_auditSearch').oninput=function(){ASST.audit.query=this.value;ASST.audit.viewPage=1;asstRenderExternalAudit();asstFocusAuditSearch();};
-  if(el('asst_auditSearchClear'))el('asst_auditSearchClear').onclick=function(){ASST.audit.query='';ASST.audit.viewPage=1;asstRenderExternalAudit();asstFocusAuditSearch();};
+  if(el('asst_auditSearch')){
+    el('asst_auditSearch').oninput=function(){ASST.audit.queryInput=this.value;};
+    el('asst_auditSearch').onkeydown=function(event){if(!event||event.key!=='Enter'||event.isComposing||event.keyCode===229)return;if(event.preventDefault)event.preventDefault();ASST.audit.queryInput=this.value;asstApplyAuditSearch(this.value);};
+  }
+  if(el('asst_auditSearchRun'))el('asst_auditSearchRun').onclick=function(){var input=el('asst_auditSearch');asstApplyAuditSearch(input?input.value:ASST.audit.queryInput);};
+  if(el('asst_auditSearchClear'))el('asst_auditSearchClear').onclick=function(){asstApplyAuditSearch('');};
   if(el('asst_auditSummary'))el('asst_auditSummary').ontoggle=function(){ASST.audit.foldOpen=this.open;};
   el('asst_editor').querySelectorAll('[data-audit-tab]').forEach(function(button){button.onclick=function(){ASST.audit.tab=button.dataset.auditTab;ASST.audit.viewPage=1;asstRenderExternalAudit();};});
   el('asst_editor').querySelectorAll('[data-audit-detail]').forEach(function(button){button.onclick=function(){asstOpenAuditDetail(Number(button.dataset.auditDetail));};});
