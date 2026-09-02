@@ -692,6 +692,14 @@ function filterCards(rarity, event) {
   applyFilter();
 }
 
+// href から カードID を取り出す（静的URL cards/<id>.html と 旧形式 #<id> の両方に対応）
+function cardIdFromHref(href) {
+  const value = href || '';
+  return value.includes('#')
+    ? value.split('#')[1]
+    : value.replace('cards/', '').replace('.html', '');
+}
+
 function applyFilter() {
   document.querySelectorAll('#cardGrid .card').forEach(card => {
     // レアリティ
@@ -708,7 +716,7 @@ function applyFilter() {
     // 距離適性
     let distOk = true;
     if (currentDist !== 'all') {
-      const id = (card.getAttribute('href') || '').split('#')[1] || '';
+      const id = cardIdFromHref(card.getAttribute('href'));
       const cd = cardsData?.[id];
       distOk = !!(cd && cd.dist === currentDist);
     }
@@ -716,7 +724,7 @@ function applyFilter() {
     // 地形適性
     let terrainOk = true;
     if (currentTerrain !== 'all') {
-      const id = (card.getAttribute('href') || '').split('#')[1] || '';
+      const id = cardIdFromHref(card.getAttribute('href'));
       const cd = cardsData?.[id];
       if (!cd || !cd.terrain) {
         terrainOk = false;
@@ -772,7 +780,7 @@ document.querySelectorAll('.card').forEach(card => {
   if (!nameEl || !rarityEl) return;
 
   // cardsDataから最新名を取得（リムル→リムル・リゾートなどの名前変更に自動対応）
-  const cardId = (card.getAttribute('href') || '').split('#')[1] || '';
+  const cardId = cardIdFromHref(card.getAttribute('href'));
   const displayName = (cardsData?.[cardId]?.name) || nameEl.textContent;
 
   info.dataset.name = displayName;
@@ -807,7 +815,7 @@ function _getCSCache() {
 
     document.querySelectorAll('.card').forEach(card => {
       const href = card.getAttribute('href');
-      const cardId = href.includes('#') ? href.split('#')[1] : href.replace('cards/', '').replace('.html', '');
+      const cardId = cardIdFromHref(href);
       const data = allScores[cardId];
       if (!data || !data.ratings) return;
 
