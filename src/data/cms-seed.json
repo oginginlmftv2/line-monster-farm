@@ -410,8 +410,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-12-31",
-      "baseline": 265,
-      "current": 1198,
+      "baseline": 261,
+      "current": 1194,
       "indexable": true
     },
     {
@@ -435,8 +435,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 264,
-      "current": 264,
+      "baseline": 260,
+      "current": 260,
       "indexable": false
     },
     {
@@ -448,7 +448,7 @@
       "mainBlood": "ピクシー",
       "subBlood": "レアモン",
       "limited": true,
-      "limitedLabel": "エイプリルフールイベント限定",
+      "limitedLabel": "エイプリルフール限定",
       "image": "S__93200799_0.jpg",
       "imageSource": "localImg",
       "gwImg": 201,
@@ -460,8 +460,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 273,
-      "current": 273,
+      "baseline": 265,
+      "current": 265,
       "indexable": false
     },
     {
@@ -485,8 +485,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 262,
-      "current": 262,
+      "baseline": 258,
+      "current": 258,
       "indexable": false
     },
     {
@@ -510,8 +510,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 255,
-      "current": 255,
+      "baseline": 251,
+      "current": 251,
       "indexable": false
     },
     {
@@ -2316,8 +2316,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 247,
-      "current": 732,
+      "baseline": 249,
+      "current": 734,
       "indexable": false
     },
     {
@@ -2341,8 +2341,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 247,
-      "current": 675,
+      "baseline": 249,
+      "current": 677,
       "indexable": false
     },
     {
@@ -2354,7 +2354,7 @@
       "mainBlood": "デュラハン",
       "subBlood": "レアモン",
       "limited": true,
-      "limitedLabel": "超スタフェス",
+      "limitedLabel": "超スタフェス限定",
       "image": "S__93200404_0.jpg",
       "imageSource": "localImg",
       "gwImg": 315,
@@ -2385,12 +2385,14 @@
         }
       ],
       "author": "レオナ",
-      "contributors": [],
+      "contributors": [
+        "ソラシド"
+      ],
       "createdAt": "2026-04-30",
-      "updatedAt": "2026-04-30",
+      "updatedAt": "2026-09-02",
       "releasedAt": "2025-12-31",
-      "baseline": 262,
-      "current": 1640,
+      "baseline": 266,
+      "current": 1652,
       "indexable": true
     },
     {
@@ -2414,8 +2416,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-04-30",
-      "baseline": 250,
-      "current": 603,
+      "baseline": 252,
+      "current": 605,
       "indexable": false
     },
     {
@@ -2439,8 +2441,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-04-30",
-      "baseline": 259,
-      "current": 1054,
+      "baseline": 261,
+      "current": 1056,
       "indexable": true
     },
     {
