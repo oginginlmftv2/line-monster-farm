@@ -837,8 +837,8 @@ td img {
   }
 
   .wide-card {
-    grid-template-columns: 92px minmax(0, 1fr);
-    min-height: 128px;
+    grid-template-columns: 112px minmax(0, 1fr);
+    min-height: 140px;
   }
 
   .wide-card .card-info {
@@ -856,5 +856,126 @@ td img {
   .pickup-gacha-title {
     margin: 18px 0 10px;
     font-size: 14px;
+  }
+}
+
+/* ===== 縦型モンスターカード（共通）=====
+   モン類一覧の解説なしカード・モンスター一覧・詳細の「同じ血統のモンスター」で共有する。
+   PC 8列 / SP 3列。オーラとモン類は必ず1行に収める。 */
+.mon-card-grid {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.mon-card {
+  background: #fff;
+  border-radius: 7px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  text-align: center;
+}
+
+.mon-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.14);
+}
+
+/* 画像。限定バッジのオーバーレイ基準にもなる */
+.mon-card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background: #eee;
+  overflow: hidden;
+}
+
+.mon-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 限定バッジは画像右上のオーバーレイに統一。テキスト列へは出さない */
+.mon-card-limited {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: linear-gradient(135deg, #e11d48, #f59e0b);
+  color: #fff;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 2px 5px;
+  border-radius: 4px;
+  line-height: 1.3;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.mon-card-info {
+  padding: 6px 4px 8px;
+  text-align: center;
+}
+
+.mon-card-name {
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.3;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.mon-card-meta {
+  margin-top: 4px;
+  font-size: 10px;
+  line-height: 1.35;
+}
+
+/* オーラ＋モン類を1行に収める縮小バッジ行。オーラは「●赤」の1文字表記 */
+.badge-row--compact {
+  flex-wrap: nowrap;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+}
+
+.badge-row--compact .aura-badge-lg,
+.badge-row--compact .mon-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.badge-row--compact .aura-badge-lg {
+  gap: 4px;
+}
+
+.badge-row--compact .aura-dot {
+  width: 8px;
+  height: 8px;
+}
+
+@media (max-width: 640px) {
+  .mon-card-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .mon-card-info {
+    padding: 5px 3px 7px;
+  }
+
+  .mon-card-name {
+    font-size: 10px;
+  }
+
+  .mon-card-meta {
+    font-size: 9px;
   }
 }

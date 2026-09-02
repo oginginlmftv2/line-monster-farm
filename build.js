@@ -132,15 +132,34 @@ function escapeHtml(value) {
 
 // オーラ → モン類 → 限定 の順で共通バッジ行を組み立てる。
 // 限定でないモンスターには限定バッジを出さない（空要素も出さない）。
-function renderBadgeRow({ aura, mon = '', limitedLabel = '', small = false, indent = '' }) {
+function renderBadgeRow({ aura, mon = '', limitedLabel = '', small = false, compact = false, indent = '' }) {
+  // compact は縦型カード用。1行に収めるためオーラは色1文字、限定は画像側のオーバーレイへ回す。
+  const auraText = compact ? `${escapeHtml(aura)}` : `${escapeHtml(aura)}オーラ`;
   const badges = [
-    `<span class="aura-badge-lg aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${escapeHtml(aura)}オーラ</span>`,
+    `<span class="aura-badge-lg aura-${escapeHtml(aura)}"><span class="aura-dot"></span>${auraText}</span>`,
   ];
   if (mon) badges.push(`<span class="mon-badge">${escapeHtml(mon)}</span>`);
-  if (limitedLabel) badges.push(`<span class="limited-badge-inline">${escapeHtml(limitedLabel)}</span>`);
-  const rowClass = small ? 'badge-row badge-row--sm' : 'badge-row';
+  if (!compact && limitedLabel) badges.push(`<span class="limited-badge-inline">${escapeHtml(limitedLabel)}</span>`);
+  let rowClass = 'badge-row';
+  if (compact) rowClass = 'badge-row badge-row--compact';
+  else if (small) rowClass = 'badge-row badge-row--sm';
   const inner = badges.map(badge => `${indent}  ${badge}`).join('\n');
   return `<div class="${rowClass}">\n${inner}\n${indent}</div>`;
+}
+
+// 縦型モンスターカード。モン類一覧の解説なし枠・詳細の「同じ血統のモンスター」で共有する。
+function renderMonCard({ href, image, name, aura, mon, subBlood, limitedLabel, indent = '        ', extraClass = '', attrs = '' }) {
+  const inner = `${indent}  `;
+  const imgBlock = image
+    ? `\n${inner}<div class="mon-card-img-wrap">\n${inner}  <img class="mon-card-img" src="${escapeHtml(image)}" alt="${escapeHtml(name)}" loading="lazy">${limitedLabel ? `\n${inner}  <span class="mon-card-limited">${escapeHtml(limitedLabel)}</span>` : ''}\n${inner}</div>`
+    : '';
+  return `${indent}<a class="mon-card${extraClass ? ` ${extraClass}` : ''}" href="${escapeHtml(href)}"${attrs}>${imgBlock}
+${inner}<div class="mon-card-info">
+${inner}  <div class="mon-card-name">${escapeHtml(name)}</div>
+${inner}  ${renderBadgeRow({ aura, mon, compact: true, indent: `${inner}  ` })}
+${inner}  <div class="mon-card-meta">副血統：${escapeHtml(subBlood)}</div>
+${inner}</div>
+${indent}</a>`;
 }
 
 // 限定ラベル。限定なのにラベルが空なら「限定」を使う。
@@ -420,7 +439,7 @@ function renderGachaPickupMonster(pickup, monster, editorial, root) {
         <div class="card-info">
           <h3 class="card-name gacha-pickup-name">${escapeHtml(monster.name)}</h3>
           ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}
-          <p class="gacha-pickup-blood">${escapeHtml(monster.blood)}（副血統: ${escapeHtml(monster.subBlood)}）</p>
+          <p class="gacha-pickup-blood">${escapeHtml(monster.blood)}（副血統：${escapeHtml(monster.subBlood)}）</p>
           <p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>
           ${excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
         </div>
@@ -788,17 +807,18 @@ function renderMonsterCards(context) {
     const mon = runtime && runtime.mon ? runtime.mon : monster.mon;
     const limited = runtime ? !!runtime.limited : !!monster.limited;
     const href = monster.url.replace(/^\//, '');
-    return `    <a class="monster-card" href="${escapeHtml(href)}"
-       data-aura="${escapeHtml(aura)}" data-limited="${limited ? '1' : '0'}" data-mon="${escapeHtml(mon)}"
-       style="text-decoration:none;color:inherit;display:block;">
-      <div class="monster-img-wrap">
-        ${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}" loading="lazy">` : ''}${limited ? '\n        <span class="badge-limited">限定</span>' : ''}
-      </div>
-      <div class="monster-info">
-        <div class="monster-name">${escapeHtml(monster.name)}</div>
-        ${renderBadgeRow({ aura, limitedLabel: limitedLabelOf(runtime), small: true, indent: '        ' })}
-      </div>
-    </a>`;
+    return renderMonCard({
+      href,
+      image,
+      name: monster.name,
+      aura,
+      mon,
+      subBlood: monster.subBlood,
+      limitedLabel: limitedLabelOf(runtime || monster),
+      indent: '    ',
+      extraClass: 'monster-card',
+      attrs: ` data-aura="${escapeHtml(aura)}" data-limited="${limited ? '1' : '0'}" data-mon="${escapeHtml(mon)}"`,
+    });
   }).join('\n');
 }
 
@@ -1052,20 +1072,17 @@ function relatedMonsters(monster, context) {
 function renderRelatedCard(monster, context) {
   const runtime = context.runtimeById.get(monster.id);
   const image = resolveImage(monster.id, context).url;
-  const content = `${image ? `\n          <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
-          <div class="card-info">
-            <div class="card-name">${escapeHtml(monster.name)}</div>
-            ${renderBadgeRow({
+  addLink(context, monster.url.replace(/^\//, ''));
+  return renderMonCard({
+    href: `${monster.id}.html`,
+    image,
+    name: monster.name,
     aura: runtime ? runtime.aura : monster.aura,
     mon: monster.mon,
+    subBlood: monster.subBlood,
     limitedLabel: limitedLabelOf(runtime || monster),
-    small: true,
-    indent: '            ',
-  })}
-            <div>${escapeHtml(monster.subBlood)}</div>
-          </div>`;
-  addLink(context, monster.url.replace(/^\//, ''));
-  return `        <a class="card" href="${monster.id}.html">${content}\n        </a>`;
+    indent: '        ',
+  });
 }
 
 function renderDetail(entry, context) {
@@ -1161,7 +1178,7 @@ ${explanation}${formations}
     <div class="section-header">
       <h2 class="section-title">同じ血統のモンスター</h2>
     </div>
-    <div class="card-grid">
+    <div class="mon-card-grid">
 ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
     </div>
   </div>${gachaAppearances}
@@ -1218,25 +1235,38 @@ function renderMonTypeCard(monster, context) {
   const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX).url;
   const editorial = context.editorialById.get(monster.id);
   const isIndexable = context.indexableDetailIds.has(monster.id);
-  const excerpt = isIndexable
-    ? `\n            <p class="wide-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`
-    : '';
+  const href = `${monster.bloodSlug}/${monster.id}.html`;
+  const aura = runtime ? runtime.aura : monster.aura;
+  const limitedLabel = limitedLabelOf(runtime || monster);
+  addLink(context, monster.url.replace(/^\//, ''));
+  // 解説なしは共通の縦型カード、解説ありは横型カード。
+  if (!isIndexable) {
+    return renderMonCard({
+      href,
+      image,
+      name: monster.name,
+      aura,
+      mon: monster.mon,
+      subBlood: monster.subBlood,
+      limitedLabel,
+      indent: '        ',
+    });
+  }
+  const excerpt = `\n            <p class="wide-card-excerpt">${escapeHtml(descriptionFrom(editorial.explanation))}</p>`;
   const content = `${image ? `
           <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
           <div class="card-info">
             <div class="card-name">${escapeHtml(monster.name)}</div>
             ${renderBadgeRow({
-    aura: runtime ? runtime.aura : monster.aura,
+    aura,
     mon: monster.mon,
-    limitedLabel: limitedLabelOf(runtime || monster),
+    limitedLabel,
     small: true,
     indent: '            ',
   })}
-            <div class="mon-type-card-meta">副血統: ${escapeHtml(monster.subBlood)}</div>${excerpt}
+            <div class="mon-type-card-meta">副血統：${escapeHtml(monster.subBlood)}</div>${excerpt}
           </div>`;
-  addLink(context, monster.url.replace(/^\//, ''));
-  const displayClass = isIndexable ? ' wide-card' : ' mon-type-card--compact';
-  return `        <a class="card mon-type-card${displayClass}" href="${escapeHtml(monster.bloodSlug)}/${monster.id}.html">${content}
+  return `        <a class="card mon-type-card wide-card" href="${escapeHtml(href)}">${content}
         </a>`;
 }
 
@@ -1286,7 +1316,7 @@ ${editorialMembers.map(monster => renderMonTypeCard(monster, context)).join('\n'
       : '';
     const compactGrid = compactMembers.length
       ? `
-    <div class="card-grid mon-type-grid mon-type-grid--compact">
+    <div class="mon-card-grid mon-type-grid">
 ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
     </div>`
       : '';
