@@ -454,6 +454,34 @@ test('処置済み候補はチェック後だけ表示する', () => {
   assert.match(h.html(), /処置済み: 対象外（ignored）/);
 });
 
+test('nullを落として返す応答（undefined）でも構造不正にせず描画する', () => {
+  const dropped = candidate('missing_upstream_observation', 1080, 'unused', {
+    localObservation: { abilityId: 'ab-1080', name: 'ローカル能力', sourceName: '元カード', linkStatus: 'unlinked' },
+    registrationEligible: false, auditOnly: true,
+  });
+  for (const field of ['candidateKey', 'externalFingerprint', 'comparisonFingerprint', 'externalSnapshot', 'sameIdComparison', 'cardIdCandidate', 'disposition']) delete dropped[field];
+  delete dropped.requiresIdReuseConfirmation;
+  const h = harness({ response: response({ candidates: [dropped], pagination: { page: 1, pageSize: 1000, totalItems: 1, totalPages: 1 } }) });
+  h.context.ASST.audit.tab = 'other';
+  h.context.asstOpenExternalAudit();
+  assert.doesNotMatch(h.html(), /応答構造不正/);
+  assert.match(h.html(), /ローカル能力/);
+  const stored = h.context.ASST.audit.response.candidates[0];
+  for (const field of ['candidateKey', 'externalFingerprint', 'externalSnapshot', 'sameIdComparison', 'cardIdCandidate', 'disposition']) assert.strictEqual(stored[field], null, field);
+  assert.strictEqual(stored.requiresIdReuseConfirmation, false);
+  h.context.asstOpenAuditDetail(0);
+  assert.match(h.html(), /外部原文なし/);
+  assert.match(h.html(), /読取専用/);
+});
+
+test('externalSnapshotが文字列などの想定外の型なら件目と外部数値IDを添えて拒否する', () => {
+  const broken = candidate('card_match_candidate', 77, '壊れ', { externalSnapshot: 'not-an-object' });
+  const h = harness({ response: response({ candidates: [broken], pagination: { page: 1, pageSize: 1000, totalItems: 1, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  assert.match(h.html(), /応答構造不正/);
+  assert.match(h.html(), /externalSnapshotが不正です。（0件目 \/ 外部数値ID 77 \/ card_match_candidate）/);
+});
+
 test('externalSnapshot nullでも描画できる', () => {
   const missing = candidate('missing_upstream_observation', 1080, 'unused', {
     externalSnapshot: null, localObservation: { name: 'ローカル能力', sourceName: '元カード' }, cardIdCandidate: null, registrationEligible: false,

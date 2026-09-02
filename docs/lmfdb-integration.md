@@ -515,6 +515,23 @@ tags / cardId候補 / linkStatus / sortOrder / status`を表示する。sortOrde
 保存しない（`scripts/verify-assist-cms.js`がFAILにする）。画面を離れる・再読み込みすると
 破棄され、次回は再監査からやり直す。固定SHAの監査結果を古いまま再利用しないための制約である。
 
+### 15-2. 応答のnull項目の正規化（2026-09-02）
+
+GASの`google.script.run`は、返り値のオブジェクトから値が`null`の項目を落として渡すことがある。
+`missing_upstream_observation`のように`externalSnapshot / candidateKey / cardIdCandidate`などが
+`null`の候補は、画面側で`undefined`として届き、応答構造検査が「externalSnapshotが不正です」で
+止まっていた。50件ページングの間は優先順の低いこれらの候補が1ページ目に載らず表面化しなかったが、
+一括取り込みで全候補を受け取るようになって顕在化した。
+
+画面側では応答を検査する前に、`candidateKey / externalFingerprint / comparisonFingerprint /
+externalSnapshot / sameIdComparison / cardIdCandidate / disposition / localObservation /
+changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReuseConfirmation`の
+未定義を`false`へ、一致abilityId配列の未定義を空配列へそろえてから判定する。
+`processed / registrationEligible / classification / externalNumericId`は必須項目のままで、
+型が違えば従来どおり構造不正として拒否する。構造不正のメッセージには何件目・外部数値ID・分類を添える。
+
+サーバー側の応答（`api_asstAuditExternalAbilities`）の契約は変更しない。
+
 ## 16. 登録値、状態、カード紐付け
 
 ### 16-1. 比較用と保存用の正規化
