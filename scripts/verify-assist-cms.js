@@ -302,6 +302,11 @@ function validateRoot(root) {
       !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=1000/.test(html)) {
     issues.push('外部能力監査UIの入口・固定SHA・一括取り込みページサイズ・ローカル無効化が不足');
   }
+  if (!/function asstNormalizeAuditResponse\(data\)/.test(auditUiSource) ||
+      !/asstAuditResponseIssue\(asstNormalizeAuditResponse\(data\)\)/.test(auditUiSource) ||
+      !/candidate\.externalSnapshot!=null&&typeof candidate\.externalSnapshot!=='object'/.test(auditUiSource)) {
+    issues.push('外部能力監査UIがnull項目の正規化なしに応答構造を判定している');
+  }
   if (!/ASST_AUDIT_VIEW_SIZE=20/.test(html) ||
       !/function asstFetchAuditPage\(page,collected\)/.test(auditUiSource) ||
       !/function asstAuditFilteredCandidates\(data,tab\)/.test(auditUiSource) ||

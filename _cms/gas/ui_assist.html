@@ -111,9 +111,9 @@ function asstAuditResponseIssue(data){
   var allowed=ASST_AUDIT_CATEGORIES.map(function(category){return category[0];});
   for(var index=0;index<data.candidates.length;index++){
     var candidate=data.candidates[index];
-    if(!candidate||typeof candidate!=='object'||allowed.indexOf(candidate.classification)<0)return '候補の分類が不正です。';
-    if(!Number.isInteger(candidate.externalNumericId)||candidate.externalNumericId<=0||typeof candidate.processed!=='boolean'||typeof candidate.registrationEligible!=='boolean')return '候補の必須項目が不正です。';
-    if(candidate.externalSnapshot!==null&&typeof candidate.externalSnapshot!=='object')return 'externalSnapshotが不正です。';
+    if(!candidate||typeof candidate!=='object'||allowed.indexOf(candidate.classification)<0)return '候補の分類が不正です。（'+index+'件目）';
+    if(!Number.isInteger(candidate.externalNumericId)||candidate.externalNumericId<=0||typeof candidate.processed!=='boolean'||typeof candidate.registrationEligible!=='boolean')return '候補の必須項目が不正です。（'+index+'件目 / 外部数値ID '+String(candidate.externalNumericId)+'）';
+    if(candidate.externalSnapshot!=null&&typeof candidate.externalSnapshot!=='object')return 'externalSnapshotが不正です。（'+index+'件目 / 外部数値ID '+String(candidate.externalNumericId)+' / '+String(candidate.classification)+'）';
   }
   return '';
 }
@@ -131,7 +131,7 @@ function asstFetchAuditPage(page,collected){
   var payload={page:page,pageSize:ASST_AUDIT_PAGE_SIZE};
   if(ASST.audit.externalSha)payload.externalSha=ASST.audit.externalSha;
   google.script.run.withSuccessHandler(function(data){
-    var issue=asstAuditResponseIssue(data);
+    var issue=asstAuditResponseIssue(asstNormalizeAuditResponse(data));
     if(issue){asstFailAuditLoad('structure',issue);return;}
     if(page===1){ASST.audit.externalSha=data.externalSha;ASST.audit.expectedAbilitiesVersion=data.expectedAbilitiesVersion;}
     else if(data.externalSha!==ASST.audit.externalSha||data.expectedAbilitiesVersion!==ASST.audit.expectedAbilitiesVersion){asstFailAuditLoad('structure','取り込み中に外部コミットSHAまたはローカル能力versionが変わりました。最初から取り込み直してください。');return;}
@@ -148,6 +148,18 @@ function asstFetchAuditPage(page,collected){
   }).withFailureHandler(function(error){
     asstFailAuditLoad('api',error&&error.message?error.message:String(error));
   }).api_asstAuditExternalAbilities(payload);
+}
+var ASST_AUDIT_NULLABLE_CANDIDATE_FIELDS=['candidateKey','externalFingerprint','comparisonFingerprint','externalSnapshot','sameIdComparison','cardIdCandidate','disposition','localObservation','changedFields','comparison'];
+function asstNormalizeAuditCandidate(candidate){
+  if(!candidate||typeof candidate!=='object')return candidate;
+  ASST_AUDIT_NULLABLE_CANDIDATE_FIELDS.forEach(function(field){if(candidate[field]===undefined)candidate[field]=null;});
+  ['exactMatchAbilityIds','nfkcMatchAbilityIds'].forEach(function(field){if(!Array.isArray(candidate[field]))candidate[field]=[];});
+  ['auditOnly','requiresIdReuseConfirmation'].forEach(function(field){if(candidate[field]===undefined)candidate[field]=false;});
+  return candidate;
+}
+function asstNormalizeAuditResponse(data){
+  if(data&&typeof data==='object'&&Array.isArray(data.candidates))data.candidates.forEach(function(candidate){asstNormalizeAuditCandidate(candidate);});
+  return data;
 }
 function asstAuditLongValue(label){return /SHA|candidateKey|Fingerprint|fingerprint|指紋/.test(label);}
 function asstAuditSummaryField(label,value){return '<div class="asstField"><label>'+esc(label)+'</label><div class="readonly'+(asstAuditLongValue(label)?' asst-audit-long':'')+'">'+esc(value)+'</div></div>';}
