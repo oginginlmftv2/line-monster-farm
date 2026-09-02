@@ -29,7 +29,7 @@
 </section><script>
 'use strict';
 var APP_LOCAL_PREVIEW=typeof google==='undefined';
-var ASST = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null,
+var ASST = { cards:[], selectedId:'', detail:null, abilityOrder:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null,
   audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,fetchedPages:0,query:'',queryInput:'',viewPage:1,pending:[],pendingSeq:0,batch:null,messageTimer:null,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
 var ASST_RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
 
@@ -502,7 +502,7 @@ function asstCreateCard(){
   }catch(error){show(error.message,true);}
 }
 function asstOpenCard(cardId,openedMessage){
-  ASST.selectedId=cardId; ASST.tab='card'; ASST.pendingCardImage=null;ASST.ocrFiles=[];ASST.ocrCandidates=[];asstRenderList();
+  ASST.selectedId=cardId; ASST.tab='card'; ASST.pendingCardImage=null;ASST.ocrFiles=[];ASST.ocrCandidates=[];ASST.abilityOrder=null;asstRenderList();
   if(APP_LOCAL_PREVIEW){var card=ASST.localCardsDoc.cards.find(function(item){return item.cardId===cardId;}),group=ASST.localEffectsDoc.cards[cardId];ASST.detail={card:card,version:1,effects:group.effects||[],abilities:[]};document.body.classList.add('editing');asstRenderEditor();return;}
   call('api_asstGetCard',[cardId],function(detail){ ASST.detail=detail; document.body.classList.add('editing'); asstRenderEditor();if(openedMessage)show(openedMessage,false); });
 }
@@ -881,14 +881,58 @@ function asstOcrConditionsToEffect(activation){
   return types.length?{operator:expression.operator||'and',types:types}:null;
 }
 function asstApplyOcrCandidates(){try{if(!el('asst_ocrSourceConfirmed').checked)throw new Error('原画像と全候補を照合し、確認チェックを入れてください。');var candidates=asstCollectOcrCandidates();if(candidates.some(function(candidate){return candidate.issues&&candidate.issues.length;}))throw new Error('要確認項目が残っています。背景・発動条件・OCR文字列を原画像と照合してください。');if(!confirm('照合済みOCR候補 '+candidates.length+'件を効果編集へ反映します。まだ保存はされません。'))return;var existing=ASST.detail.effects.slice(),used={};var effects=candidates.map(function(candidate,index){var match=existing.find(function(effect){return !used[effect.effectId]&&asstOcrComparisonKey(effect.name)===asstOcrComparisonKey(candidate.name);});var id;if(match){id=match.effectId;used[id]=true;}else{id=asstNextEffectId(existing.concat(Object.keys(used).map(function(key){return{effectId:key};})));used[id]=true;}return{effectId:id,name:candidate.name,description:candidate.description,unlockRank:candidate.unlockRank,sortOrder:index+1,conditional:candidate.activationScope==='conditional'?1:0,conditions:asstOcrConditionsToEffect(candidate.activationConditions)};});ASST.detail.effects=effects;ASST.ocrFiles=[];ASST.ocrCandidates=[];ASST.tab='effects';asstRenderEditor();show('照合済みOCR候補を効果編集へ反映しました。内容確認後に保存してください。',false);}catch(error){show(error.message,true);}}
-function asstRenderAbilities(d){
-  return '<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。</p><div class="ability-list">'+
-    (d.abilities.length?d.abilities.map(asstAbilityItem).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
+function asstAbilityOrder(d){
+  if(!ASST.abilityOrder||ASST.abilityOrder.cardId!==ASST.selectedId)ASST.abilityOrder={cardId:ASST.selectedId,abilityIds:d.abilities.map(function(a){return a.abilityId;})};
+  return ASST.abilityOrder;
 }
-function asstAbilityItem(a){return '<div class="ability-item'+(a.status==='draft'?' draft':'')+'" data-ability-row="'+esc(a.abilityId)+'"><div><strong>'+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div><select data-ability-status="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'の状態">'+asstOptionList(['draft','verified'],a.status,false)+'</select><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';}
+function asstOrderedAbilities(d){
+  var order=asstAbilityOrder(d);
+  return order.abilityIds.map(function(abilityId){
+    return d.abilities.filter(function(a){return a.abilityId===abilityId;})[0];
+  }).filter(function(a){return Boolean(a);});
+}
+function asstAbilityOrderChanged(d){
+  var order=asstAbilityOrder(d);
+  return d.abilities.some(function(a,index){return order.abilityIds[index]!==a.abilityId;});
+}
+function asstMoveAbility(abilityId,step){
+  var order=ASST.abilityOrder,index=order.abilityIds.indexOf(abilityId),next=index+step;
+  if(index<0||next<0||next>=order.abilityIds.length)return;
+  order.abilityIds[index]=order.abilityIds[next];order.abilityIds[next]=abilityId;
+  asstRenderEditor();
+}
+function asstResetAbilityOrder(){ASST.abilityOrder=null;asstRenderEditor();}
+function asstSaveAbilityOrder(){
+  var d=ASST.detail,order=asstAbilityOrder(d);
+  if(!asstAbilityOrderChanged(d))return;
+  var payload={cardId:ASST.selectedId,abilityIds:order.abilityIds.slice(),expected:d.abilities.map(function(a){return {abilityId:a.abilityId,sortOrder:a.sortOrder};})};
+  if(!confirm('この並び順で保存しますか？\nsortOrderは1から連番で振り直されます。'))return;
+  call('api_asstReorderCardAbilities',[payload],function(result){
+    ASST.abilityOrder=null;
+    asstOpenCard(ASST.selectedId,'並び順を保存しました。（'+result.changed+'件更新）');
+  });
+}
+function asstRenderAbilities(d){
+  var items=asstOrderedAbilities(d),changed=asstAbilityOrderChanged(d);
+  var html='<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。並び替えは↑↓で入れ替えて「並び順を保存」を押します。sortOrderは保存時に1から連番で振り直されます。</p>';
+  html+='<div class="ability-list">'+(items.length?items.map(function(a,index){return asstAbilityItem(a,index,items.length);}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
+  if(items.length>1)html+='<div class="actions"><button type="button" id="asst_btnSaveAbilityOrder"'+(changed?'':' disabled')+'>並び順を保存</button><button type="button" id="asst_btnResetAbilityOrder"'+(changed?'':' disabled')+'>並び替えを取り消す</button>'+(changed?'<span class="muted">未保存の並び替えがあります。</span>':'')+'</div>';
+  return html;
+}
+function asstAbilityItem(a,index,total){
+  var position=typeof index==='number'?index+1:a.sortOrder;
+  var up=typeof index==='number'&&index>0,down=typeof index==='number'&&index<total-1;
+  return '<div class="ability-item'+(a.status==='draft'?' draft':'')+'" data-ability-row="'+esc(a.abilityId)+'"><div><strong>'+esc(position)+'. '+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+'</div></div>'+
+    (typeof index==='number'?'<button type="button" data-ability-up="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'を上へ"'+(up?'':' disabled')+'>↑</button><button type="button" data-ability-down="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'を下へ"'+(down?'':' disabled')+'>↓</button>':'')+
+    '<select data-ability-status="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'の状態">'+asstOptionList(['draft','verified'],a.status,false)+'</select><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';
+}
 function asstBindAbilityRows(){
   el('asst_editor').querySelectorAll('[data-ability]').forEach(function(button){button.onclick=function(){asstOpenAbility(button.dataset.ability);};});
   el('asst_editor').querySelectorAll('[data-ability-status]').forEach(function(select){select.onchange=function(){asstUpdateAbilityStatus(select);};});
+  el('asst_editor').querySelectorAll('[data-ability-up]').forEach(function(button){button.onclick=function(){asstMoveAbility(button.dataset.abilityUp,-1);};});
+  el('asst_editor').querySelectorAll('[data-ability-down]').forEach(function(button){button.onclick=function(){asstMoveAbility(button.dataset.abilityDown,1);};});
+  if(el('asst_btnSaveAbilityOrder'))el('asst_btnSaveAbilityOrder').onclick=asstSaveAbilityOrder;
+  if(el('asst_btnResetAbilityOrder'))el('asst_btnResetAbilityOrder').onclick=asstResetAbilityOrder;
 }
 function asstAbilityStatusFailure(select,oldStatus,error){select.value=oldStatus;select.disabled=false;show(error&&error.message?error.message:String(error),true);}
 function asstUpdateAbilityStatus(select){
@@ -898,7 +942,7 @@ function asstUpdateAbilityStatus(select){
     var ability=latest.ability;ability.status=newStatus;
     google.script.run.withSuccessHandler(function(){
       var item=ASST.detail.abilities.find(function(entry){return entry.abilityId===abilityId;});item.status=newStatus;
-      var row=el('asst_editor').querySelector('[data-ability-row="'+abilityId+'"]');row.outerHTML=asstAbilityItem(item);asstBindAbilityRows();
+      asstRenderEditor();
       show('状態を'+cmsLabel(newStatus)+'へ変更しました。',false);
     }).withFailureHandler(function(error){asstAbilityStatusFailure(select,oldStatus,error);}).api_asstSaveAbility({ability:ability,version:latest.version});
   }).withFailureHandler(function(error){asstAbilityStatusFailure(select,oldStatus,error);}).api_asstGetAbility(abilityId);

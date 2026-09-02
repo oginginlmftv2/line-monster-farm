@@ -194,8 +194,19 @@ function validateRoot(root) {
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
     'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
+    'api_asstReorderCardAbilities',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
+  }
+  const reorderBlock = functionBlock(gas, 'api_asstReorderCardAbilities');
+  if (!/var ASST_REORDER_KEYS = \['cardId','abilityIds','expected'\]/.test(gas) ||
+      !/asstReorderPayload_\(payload\)/.test(reorderBlock) ||
+      !/asstValidateDocuments_\(/.test(reorderBlock) ||
+      !/全件を渡してください/.test(reorderBlock) ||
+      !/並び順が変わっています/.test(reorderBlock) ||
+      !/元に戻しました/.test(reorderBlock) ||
+      /appendRow|deleteRow/.test(reorderBlock.replace(/asstAppendLog_\([^)]*\)/g, ''))) {
+    issues.push('能力並び替えAPIの入力限定・全体検査・同時編集検知・巻き戻し境界が不足');
   }
   const nextCardIdBlock = functionBlock(gas, 'asstNextCardId_');
   if (!cardCreatePayloadBlock || !/var allowed = \['name','rarity','aura','cardType','monType'\]/.test(cardCreatePayloadBlock) ||
@@ -445,7 +456,7 @@ function validateRoot(root) {
   }
   const assistLockFunctions = [
     ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
-    ['api_asstSaveAbility', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
+    ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
   ];
   if (!/function\s+asstAcquireScriptLock_\s*\([\s\S]*?tryLock\(1\)/.test(gas) ||

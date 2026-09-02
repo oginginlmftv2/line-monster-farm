@@ -511,6 +511,25 @@ P12-17aで読取専用監査を実装し、P12-17bで将来の手動登録設計
 - 汎用削除UIは作らない。誤登録はabilityIdとfingerprintで追加行だけを特定し、
   管理者手順でrevertedとして履歴を残す
 
+### カード内の能力並び替え（2026-09-02）
+
+`api_asstSaveAbility`は1行だけ保存する一方、保存前に全体検査（カード内のresolved能力の
+`sortOrder`が1..Nの連番）を通すため、単発の書き換えでは重複か欠番が必ず出て
+「能力sortOrder不連続」で落ちる。順序の入れ替えは専用APIで行う。
+
+- `api_asstReorderCardAbilities({cardId, abilityIds, expected})`。payloadはこの3キーだけを受け付ける
+- `abilityIds`は並べ替え後の順で、そのカードのresolved能力**全件**。過不足・重複・他カードのIDは拒否する
+- `expected`は画面が見ていた`{abilityId, sortOrder}`の一覧。現在のシートと1件でも違えば
+  「他の編集で並び順が変わっています」で拒否する（同時編集検知）
+- `sortOrder`はサーバーが1から振り直す。クライアントは番号を指定しない
+- 書込み前に`asstValidateDocuments_`で全体検査を通す。途中状態を永続化しない
+- 複数行を書くため、失敗時は書いた行を逆順で元へ戻す。復旧にも失敗した場合は
+  重大エラーとして止め、`assist_log`へFAILを残す
+- 画面はカード編集の「能力」タブに↑↓と「並び順を保存」を置く。保存前の並びはメモリだけに持つ
+
+検査は`scripts/test-asst-ability-reorder-api.js`（9ケース）と、
+`scripts/verify-assist-cms.js`のソース境界検査で担保する。
+
 段階4は、スキーマ検査、読取API、一覧、詳細プレビュー、test追加API、破壊テスト、
 本番移行の7タスクに分割する。一度にGAS画面・保存・本番反映を実装しない。
 

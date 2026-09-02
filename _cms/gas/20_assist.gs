@@ -1665,6 +1665,116 @@ function api_asstSaveAbility(payload) {
   }
 }
 
+var ASST_REORDER_KEYS = ['cardId','abilityIds','expected'];
+
+function asstReorderPayload_(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('payloadはオブジェクトです。');
+  Object.keys(payload).forEach(function (key) {
+    if (ASST_REORDER_KEYS.indexOf(key) < 0) throw new Error('未対応のpayload項目です: ' + key);
+  });
+  var cardId = asstText_(payload.cardId);
+  if (!cardId) throw new Error('cardIdは必須です。');
+  if (!Array.isArray(payload.abilityIds) || !payload.abilityIds.length) throw new Error('abilityIdsは1件以上の配列です。');
+  if (!Array.isArray(payload.expected)) throw new Error('expectedは配列です。');
+  var seen = {};
+  var abilityIds = payload.abilityIds.map(function (value, index) {
+    var abilityId = asstText_(value);
+    if (!abilityId) throw new Error('abilityIds[' + index + ']が空です。');
+    if (seen[abilityId]) throw new Error('abilityIdsが重複しています: ' + abilityId);
+    seen[abilityId] = true;
+    return abilityId;
+  });
+  var expected = payload.expected.map(function (item, index) {
+    if (!item || typeof item !== 'object' || Array.isArray(item)) throw new Error('expected[' + index + ']が不正です。');
+    Object.keys(item).forEach(function (key) {
+      if (['abilityId','sortOrder'].indexOf(key) < 0) throw new Error('未対応のexpected項目です: ' + key);
+    });
+    var abilityId = asstText_(item.abilityId);
+    if (!abilityId) throw new Error('expected[' + index + '].abilityIdは必須です。');
+    if (typeof item.sortOrder !== 'number' || !Number.isInteger(item.sortOrder) || item.sortOrder < 1) {
+      throw new Error(abilityId + ': expectedのsortOrderが不正です。');
+    }
+    return { abilityId: abilityId, sortOrder: item.sortOrder };
+  });
+  if (expected.length !== abilityIds.length) throw new Error('abilityIdsとexpectedの件数が一致しません。');
+  return { cardId: cardId, abilityIds: abilityIds, expected: expected };
+}
+
+function api_asstReorderCardAbilities(payload) {
+  var user = asstRequireUser_();
+  var input = asstReorderPayload_(payload);
+  var lock = asstAcquireScriptLock_();
+  try {
+    if (!asstRows_(ASST_SHEET_CARDS).some(function (card) { return asstText_(card.cardId) === input.cardId; })) {
+      throw new Error('cardIdが不正です。');
+    }
+    var target = asstRows_(ASST_SHEET_ABILITIES).filter(function (row) {
+      return asstText_(row.linkStatus) === 'resolved' && asstText_(row.cardId) === input.cardId;
+    });
+    if (target.length !== input.abilityIds.length) {
+      throw new Error('このカードのresolved能力は' + target.length + '件です。並び順には全件を渡してください。再読み込みしてからやり直してください。');
+    }
+    var byId = {};
+    target.forEach(function (row) { byId[asstText_(row.abilityId)] = row; });
+    input.abilityIds.forEach(function (abilityId) {
+      if (!byId[abilityId]) throw new Error('このカードのresolved能力ではありません: ' + abilityId);
+    });
+    input.expected.forEach(function (item) {
+      var row = byId[item.abilityId];
+      if (!row) throw new Error('このカードのresolved能力ではありません: ' + item.abilityId);
+      if (Number(row.sortOrder) !== item.sortOrder) {
+        throw new Error('他の編集で並び順が変わっています。再読み込みしてからやり直してください。');
+      }
+    });
+    var order = {};
+    input.abilityIds.forEach(function (abilityId, index) { order[abilityId] = index + 1; });
+    var testDocs = asstBuildDocuments_();
+    testDocs.abilities.abilities.forEach(function (ability) {
+      if (order[ability.abilityId]) ability.sortOrder = order[ability.abilityId];
+    });
+    var issues = asstValidateDocuments_(testDocs.cards, testDocs.effects, testDocs.abilities);
+    if (issues.length) throw new Error('能力検査FAIL: ' + issues.join(' / '));
+    var headers = ASST_HEADERS[ASST_SHEET_ABILITIES];
+    var sheet = asstSheet_(ASST_SHEET_ABILITIES);
+    var updatedAt = nowIso_();
+    var writes = [];
+    input.abilityIds.forEach(function (abilityId, index) {
+      var row = byId[abilityId];
+      if (Number(row.sortOrder) === index + 1) return;
+      var before = headers.map(function (header) { return row[header]; });
+      var after = before.slice();
+      after[headers.indexOf('sortOrder')] = index + 1;
+      after[headers.indexOf('version')] = Number(row.version || 1) + 1;
+      after[headers.indexOf('updatedAt')] = updatedAt;
+      after[headers.indexOf('updatedBy')] = user.nickname;
+      writes.push({ rowNumber: row._row, abilityId: abilityId, sortOrder: index + 1, before: before, after: after });
+    });
+    if (writes.length) {
+      var applied = [];
+      try {
+        writes.forEach(function (write) {
+          sheet.getRange(write.rowNumber, 1, 1, headers.length).setValues([write.after]);
+          applied.push(write);
+        });
+      } catch (error) {
+        for (var index = applied.length - 1; index >= 0; index--) {
+          try { sheet.getRange(applied[index].rowNumber, 1, 1, headers.length).setValues([applied[index].before]); }
+          catch (restoreError) {
+            asstAppendLog_(user, 'reorder-abilities', 'FAIL', input.cardId + ' 復旧失敗 ' + restoreError.message);
+            throw new Error('並び順の書込みに失敗し、復旧にも失敗しました。手動確認が必要です: ' + restoreError.message);
+          }
+        }
+        asstAppendLog_(user, 'reorder-abilities', 'FAIL', input.cardId + ' ' + error.message);
+        throw new Error('並び順の保存に失敗したため元に戻しました: ' + error.message);
+      }
+    }
+    asstAppendLog_(user, 'reorder-abilities', 'PASS', input.cardId + ' 変更' + writes.length + '件');
+    return { ok: true, cardId: input.cardId, changed: writes.length };
+  } finally {
+    asstReleaseScriptLock_(lock);
+  }
+}
+
 function api_asstExport() {
   var user = asstRequireUser_();
   var docs = asstBuildDocuments_();
