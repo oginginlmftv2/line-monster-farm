@@ -302,6 +302,12 @@ function validateRoot(root) {
       !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=1000/.test(html)) {
     issues.push('外部能力監査UIの入口・固定SHA・一括取り込みページサイズ・ローカル無効化が不足');
   }
+  if (!/id="asst_audit_cardId"/.test(auditUiSource) ||
+      !/function asstAuditCardOptions\(selected\)/.test(auditUiSource) ||
+      !/cardId:d\.linkStatus==='resolved'\?\(d\.cardId\|\|null\):null/.test(auditUiSource) ||
+      !/issues\.push\('resolvedでは紐付けるカードを選択してください。'\)/.test(auditUiSource)) {
+    issues.push('外部能力監査UIの手動カード紐付け（選択・検査・プレビュー反映）が不足');
+  }
   if (!/function asstNormalizeAuditResponse\(data\)/.test(auditUiSource) ||
       !/asstAuditResponseIssue\(asstNormalizeAuditResponse\(data\)\)/.test(auditUiSource) ||
       !/candidate\.externalSnapshot!=null&&typeof candidate\.externalSnapshot!=='object'/.test(auditUiSource)) {

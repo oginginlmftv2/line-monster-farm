@@ -583,9 +583,48 @@ test('プレビュー検査が必須値・許可値・タグ・危険文字列�
   for (const token of ['sourceNameは必須','制御文字','許可値','空タグ','重複タグ','文字列以外','</script','<br>以外','linkStatus','外部原文','NFKC','カード対応','draft']) assert(issues.includes(token), token);
 });
 
-test('resolvedはカード候補とカード確認を必須にする', () => {
-  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明<br>続き',source:'伝授',rarity:'その他',tags:[],linkStatus:'resolved',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:false,idReuseReviewed:false,draftReviewed:true}};
-  assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード確認/.test(value)));item.cardIdCandidate=null;assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード候補/.test(value)));
+test('resolvedはカード選択とカード確認を必須にする', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.cards=[{cardId:'card-1200',name:'ジュリア',rarity:'MR'}];
+  const item=h.context.ASST.audit.response.candidates[0];
+  const d={sourceName:'カード',name:'能力',description:'説明<br>続き',source:'伝授',rarity:'その他',tags:[],linkStatus:'resolved',cardId:'card-1200',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:false,idReuseReviewed:false,draftReviewed:true}};
+  assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード確認/.test(value)));
+  d.confirmations.cardReviewed=true;
+  assert.strictEqual(h.context.asstAuditDraftIssues(item,d).length,0);
+  d.cardId='';
+  assert(h.context.asstAuditDraftIssues(item,d).some(value => /紐付けるカードを選択/.test(value)));
+  d.cardId='card-unknown';
+  assert(h.context.asstAuditDraftIssues(item,d).some(value => /カードDBにありません/.test(value)));
+});
+
+test('自動候補がなくても手動でカードを選びresolvedで登録できる', () => {
+  const unlinked = candidate('unlinked_candidate', 1300, 'ジュリア（ライバル）の能力', { cardIdCandidate: null });
+  const h = harness({ response: response({ candidates: [unlinked], pagination: { page: 1, pageSize: 1000, totalItems: 1, totalPages: 1 } }) });
+  h.context.ASST.cards=[{cardId:'aab-MR-julia',name:'ジュリア',rarity:'MR'},{cardId:'aaa-MR-aileblanche',name:'エルブランシュ',rarity:'MR'}];
+  h.context.ASST.audit.tab='unlinked_candidate';
+  h.context.asstOpenExternalAudit();
+  h.context.asstOpenAuditDetail(0);
+  assert.match(h.html(), /id="asst_audit_cardId"/);
+  assert.match(h.html(), /<option value="aab-MR-julia">ジュリア（MR） \/ aab-MR-julia<\/option>/);
+  assert.doesNotMatch(h.html(), /value="resolved"[^>]* disabled/);
+  assert.match(h.html(), /—（自動一致なし）/);
+  for (const [id, value] of [['sourceName','ジュリア'],['name','能力'],['description','説明'],['source','イベント'],['rarity','MR'],['tags',''],['linkStatus','resolved'],['cardId','aab-MR-julia']]) h.context.el('asst_audit_'+id).value=value;
+  for (const id of ['originalCompared','normalizationReviewed','cardReviewed','draftReviewed']) h.context.el('asst_audit_'+id).checked=true;
+  h.context.asstConfirmAuditPreview();
+  const preview=h.context.ASST.audit.finalPreview;
+  assert.strictEqual(preview.registration.linkStatus,'resolved');
+  assert.strictEqual(preview.registration.cardId,'aab-MR-julia');
+  assert.match(h.html(), /手動で選択/);
+  assert.match(h.html(), /ジュリア（MR） \/ aab-MR-julia/);
+  h.context.asstCreateExternalAbility();
+  assert.strictEqual(h.calls[1].name,'api_asstCreateAbilityFromExternalCandidate');
+  assert.strictEqual(h.calls[1].payload.registration.cardId,'aab-MR-julia');
+});
+
+test('unlinkedを選んだときはcardIdをnullで送る', () => {
+  const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.cards=[{cardId:'card-1200',name:'ジュリア',rarity:'MR'}];
+  const item=h.context.ASST.audit.response.candidates[0];
+  const preview=h.context.asstBuildAuditPreview(item,{sourceName:'カード',name:'能力',description:'説明',source:'イベント',rarity:'MR',tags:[],linkStatus:'unlinked',cardId:'card-1200',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false}});
+  assert.strictEqual(preview.registration.cardId,null);
 });
 
 test('最終プレビュー契約は許可キーだけを組み立てる', () => {
