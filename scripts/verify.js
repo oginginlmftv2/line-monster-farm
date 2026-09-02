@@ -1552,6 +1552,19 @@ if (!exists('src/data/assist-cards.json')) {
     } else {
       ok('cards/card.htmlにnoindex,followがありadsbygoogleなし');
     }
+
+    // assist.htmlのカードリンクは静的URLなので、href から # でIDを取り出すと空になり
+    // 距離・地形フィルタが全件不一致になる（P14-2の実障害）。取り出しは cardIdFromHref に集約する
+    const brokenIdExtraction = [...assistHtml.matchAll(/getAttribute\('href'\)[^;\n]*\.split\('#'\)/g)].length;
+    const hasCardIdHelper = /function cardIdFromHref\s*\(/.test(assistHtml);
+    const helperUses = (assistHtml.match(/cardIdFromHref\(/g) || []).length;
+    if (brokenIdExtraction > 0) {
+      ng(`assist.htmlがhrefから#でカードIDを取り出している ${brokenIdExtraction}件（静的URLでは空になり距離・地形フィルタが壊れる）`);
+    } else if (!hasCardIdHelper || helperUses < 4) {
+      ng(`assist.htmlのカードID取り出しがcardIdFromHrefに集約されていない（定義 ${hasCardIdHelper ? 'あり' : 'なし'} / 使用 ${helperUses}箇所）`);
+    } else {
+      ok(`assist.htmlのカードID取り出しはcardIdFromHrefに集約（定義1・使用${helperUses - 1}箇所、静的URLと旧#形式の両対応）`);
+    }
   } catch (error) {
     ng(`静的アシストカード詳細の検査に失敗: ${error.message}`);
   }
