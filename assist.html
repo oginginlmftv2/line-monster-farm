@@ -650,9 +650,35 @@ function fuzzyMatch(query, target) {
   return matched / qArr.length >= 0.6;
 }
 
+// ---- 計測（GA4）----------------------------------------------------------
+// サイト側は dataLayer への push だけを行い、イベント名の整形と送信条件は
+// GTM側で組み立てる。計測項目の変更でこのファイルを触らずに済む。
+function visibleCardCount() {
+  return [...document.querySelectorAll('#cardGrid .card')]
+    .filter(card => card.style.display !== 'none').length;
+}
+
+function pushAssistEvent(event, params) {
+  if (!Array.isArray(window.dataLayer)) return;
+  window.dataLayer.push({ event, result_count: visibleCardCount(), ...params });
+}
+
+// 検索は oninput が1文字ごとに発火するため、入力が止まってから1回だけ送る
+let searchTrackTimer = null;
+let lastTrackedSearch = '';
+function trackSearch(term) {
+  clearTimeout(searchTrackTimer);
+  searchTrackTimer = setTimeout(() => {
+    if (term.length < 2 || term === lastTrackedSearch) return;
+    lastTrackedSearch = term;
+    pushAssistEvent('assist_search', { search_term: term });
+  }, 1000);
+}
+
 function setSearch(val) {
   currentSearch = val.trim();
   applyFilter();
+  trackSearch(currentSearch);
 }
 
 function setDistFilter(btn) {
@@ -660,6 +686,7 @@ function setDistFilter(btn) {
   btn.classList.add('active');
   currentDist = btn.dataset.dist;
   applyFilter();
+  pushAssistEvent('assist_filter', { filter_type: 'dist', filter_value: currentDist });
 }
 
 function setTerrainFilter(btn) {
@@ -667,6 +694,7 @@ function setTerrainFilter(btn) {
   btn.classList.add('active');
   currentTerrain = btn.dataset.terrain;
   applyFilter();
+  pushAssistEvent('assist_filter', { filter_type: 'terrain', filter_value: currentTerrain });
 }
 
 function clearAssistFilter() {
@@ -690,6 +718,7 @@ function filterCards(rarity, event) {
   btns.forEach(btn => btn.classList.remove('active'));
   event.target.classList.add('active');
   applyFilter();
+  pushAssistEvent('assist_filter', { filter_type: 'rarity', filter_value: rarity });
 }
 
 // href から カードID を取り出す（静的URL cards/<id>.html と 旧形式 #<id> の両方に対応）
@@ -750,6 +779,7 @@ function toggleSortScore(btn) {
     applySortByScore();
   }
   applyFilter();
+  pushAssistEvent('assist_sort', { sort_order: currentSort });
 }
 
 function applySortByScore() {
