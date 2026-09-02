@@ -3,6 +3,7 @@
 #asst_editor .asst-audit-long{word-break:break-all}
 #asst_editor .asst-audit-tabs,#asst_editor .asst-audit-pagination,#asst_editor .asst-audit-detail-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
 #asst_editor .asst-audit-tabs{margin:12px 0}
+#asst_editor .asst-audit-pending{margin:0 0 18px;padding:12px 14px;border:1px solid var(--line);border-radius:8px}
 #asst_editor .asst-audit-toolbar{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px;margin:0 0 14px}
 #asst_editor .asst-audit-toolbar .asstField{margin:0;flex:1 1 18rem;min-width:0}
 #asst_editor .asst-audit-toolbar .asstField input{width:100%}
@@ -29,7 +30,7 @@
 'use strict';
 var APP_LOCAL_PREVIEW=typeof google==='undefined';
 var ASST = { cards:[], selectedId:'', detail:null, tab:'card', busy:false, ability:null, abilityVersion:0, ocrConfigured:false, imageUploadConfigured:false, pendingCardImage:null, ocrFiles:[], ocrCandidates:[], localCardsDoc:null, localEffectsDoc:null,
-  audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,fetchedPages:0,query:'',queryInput:'',viewPage:1,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
+  audit:{active:false,externalSha:null,expectedAbilitiesVersion:null,response:null,error:null,loading:false,showProcessed:false,requestedPage:1,fetchedPages:0,query:'',queryInput:'',viewPage:1,pending:[],pendingSeq:0,batch:null,messageTimer:null,detailIndex:null,detailDraftIndex:null,detailDraft:null,finalPreview:null,lastOperation:null,foldOpen:false,tab:'card_match_candidate'} };
 var ASST_RATING_FIELDS=[['ikusei','総合力育成'],['karyo','火力'],['battle','バトル性能'],['ta','他オーラモン類']];
 
 var ASST_CARD_TYPES=['ガード','かしこさ','ジャッジ','アサルト','回避','師匠','ちから','テクニック','友人','丈夫さ','インパクト','フォース','命中','メンタル','フィジカル','クイック','サバイブ','ライバル','ルミナス','バイタル','フォーカス','タフネス','ライフ','アキュメン'];
@@ -72,6 +73,7 @@ function asstRenderList(){
 }
 var ASST_AUDIT_PAGE_SIZE=1000;
 var ASST_AUDIT_VIEW_SIZE=20;
+var ASST_AUDIT_MESSAGE_MS=12000;
 var ASST_AUDIT_CATEGORIES=[
   ['card_match_candidate','カード対応候補',true],['unlinked_candidate','未紐付け候補',true],
   ['ID_REUSE_SUSPECTED','ID再利用疑い',true],['existingContentDifferences','既存内容差分',true],
@@ -128,28 +130,34 @@ function asstLoadExternalAudit(latest){
   ASST.audit.response=null;ASST.audit.loading=true;ASST.audit.error=null;ASST.audit.fetchedPages=0;
   setBusy(true,'外部能力DBを監査中…');asstRenderExternalAudit();asstFetchAuditPage(1,[]);
 }
+function asstEndAuditLoad(type,message,onDone){if(onDone){ASST.audit.loading=false;setBusy(false);onDone(false,message);return;}asstFailAuditLoad(type,message);}
+function asstReloadAuditQuiet(onDone){ASST.audit.loading=true;ASST.audit.fetchedPages=0;asstFetchAuditPage(1,[],onDone);}
 function asstFailAuditLoad(type,message){ASST.audit.loading=false;setBusy(false);ASST.audit.response=null;ASST.audit.error={type:type,message:message};asstRenderExternalAudit();}
-function asstFetchAuditPage(page,collected){
+function asstFetchAuditPage(page,collected,onDone){
   ASST.audit.requestedPage=page;
   var payload={page:page,pageSize:ASST_AUDIT_PAGE_SIZE};
   if(ASST.audit.externalSha)payload.externalSha=ASST.audit.externalSha;
   google.script.run.withSuccessHandler(function(data){
     var issue=asstAuditResponseIssue(asstNormalizeAuditResponse(data));
-    if(issue){asstFailAuditLoad('structure',issue);return;}
+    if(issue){asstEndAuditLoad('structure',issue,onDone);return;}
     if(page===1){ASST.audit.externalSha=data.externalSha;ASST.audit.expectedAbilitiesVersion=data.expectedAbilitiesVersion;}
-    else if(data.externalSha!==ASST.audit.externalSha||data.expectedAbilitiesVersion!==ASST.audit.expectedAbilitiesVersion){asstFailAuditLoad('structure','取り込み中に外部コミットSHAまたはローカル能力versionが変わりました。最初から取り込み直してください。');return;}
+    else if(data.externalSha!==ASST.audit.externalSha||data.expectedAbilitiesVersion!==ASST.audit.expectedAbilitiesVersion){asstEndAuditLoad('structure','取り込み中に外部コミットSHAまたはローカル能力versionが変わりました。最初から取り込み直してください。',onDone);return;}
     var all=collected.concat(data.candidates);
     ASST.audit.fetchedPages=page;
     if(data.auditStatus==='PASS'&&data.candidates.length&&data.pagination.totalPages>page){
       setBusy(true,'外部能力DBを取り込み中… '+all.length+' / '+data.pagination.totalItems+'件');
-      asstFetchAuditPage(page+1,all);return;
+      asstFetchAuditPage(page+1,all,onDone);return;
     }
-    data.candidates=all;
-    data.pagination={page:1,pageSize:all.length,totalItems:data.pagination.totalItems,totalPages:all.length?1:0};
+    var merged={};Object.keys(data).forEach(function(key){merged[key]=data[key];});
+    merged.candidates=all;
+    merged.pagination={page:1,pageSize:all.length,totalItems:data.pagination.totalItems,totalPages:all.length?1:0};
     ASST.audit.loading=false;setBusy(false);
-    ASST.audit.response=data;ASST.audit.error=null;asstRenderExternalAudit();
+    ASST.audit.expectedAbilitiesVersion=merged.expectedAbilitiesVersion;
+    ASST.audit.response=merged;ASST.audit.error=null;
+    if(onDone){onDone(true,'');return;}
+    asstRenderExternalAudit();
   }).withFailureHandler(function(error){
-    asstFailAuditLoad('api',error&&error.message?error.message:String(error));
+    asstEndAuditLoad('api',error&&error.message?error.message:String(error),onDone);
   }).api_asstAuditExternalAbilities(payload);
 }
 var ASST_AUDIT_NULLABLE_CANDIDATE_FIELDS=['candidateKey','externalFingerprint','comparisonFingerprint','externalSnapshot','sameIdComparison','cardIdCandidate','disposition','localObservation','changedFields','comparison'];
@@ -265,17 +273,115 @@ function asstAuditDraftIssues(candidate,draft){
   if(d.linkStatus==='resolved'&&!d.cardId)issues.push('resolvedでは紐付けるカードを選択してください。');if(d.linkStatus==='resolved'&&d.cardId&&!asstAuditFindCard(d.cardId))issues.push('選択したcardIdがカードDBにありません: '+d.cardId);if(d.linkStatus==='resolved'&&!d.confirmations.cardReviewed)issues.push('resolvedではカード確認が必須です。');if(!d.confirmations.originalCompared)issues.push('外部原文との比較確認が必要です。');if(!d.confirmations.normalizationReviewed)issues.push('NFKCの比較専用確認が必要です。');if(!d.confirmations.cardReviewed)issues.push('カード対応またはunlinked判断の確認が必要です。');if(candidate.requiresIdReuseConfirmation&&!d.confirmations.idReuseReviewed)issues.push('ID再利用疑いの確認が必要です。');if(!d.confirmations.draftReviewed)issues.push('draft・未公開の確認が必要です。');return issues;
 }
 function asstBuildAuditPreview(candidate,draft){var d=asstNormalizeAuditDraft(draft);return {auditVersion:3,provider:'lmfdb',externalSha:ASST.audit.externalSha,candidateKey:candidate.candidateKey,externalNumericId:candidate.externalNumericId,externalFingerprint:candidate.externalFingerprint,expectedAbilitiesVersion:ASST.audit.expectedAbilitiesVersion,registration:{sourceName:d.sourceName,name:d.name,description:d.description,source:d.source,rarity:d.rarity,tags:d.tags.slice(),linkStatus:d.linkStatus,cardId:d.linkStatus==='resolved'?(d.cardId||null):null},confirmations:{originalCompared:d.confirmations.originalCompared,normalizationReviewed:d.confirmations.normalizationReviewed,cardReviewed:d.confirmations.cardReviewed,idReuseReviewed:Boolean(d.confirmations.idReuseReviewed)}};}
-function asstRenderAuditFinalPreview(preview){var r=preview.registration;return '<div id="asst_auditFinalPreview"><h3>最終プレビュー</h3><div class="message"><strong>まだ保存されていません。</strong> 保存後もstatusはdraftで、自動公開されません。</div><div class="grid">'+asstAuditReadOnly('登録予定能力',r.name)+asstAuditReadOnly('元のカード名（sourceName）',r.sourceName)+asstAuditReadOnly('description',r.description)+asstAuditReadOnly('source / rarity',r.source+' / '+r.rarity)+asstAuditReadOnly('tags',r.tags)+asstAuditReadOnly('カード対応',cmsLabel(r.linkStatus)+' / cardId: '+(r.cardId||'null'))+asstAuditReadOnly('紐付けるカード',r.linkStatus==='resolved'?asstAuditCardLabel(r.cardId):'なし（unlinked）')+asstAuditReadOnly('状態（status）',cmsLabel('draft'))+asstAuditReadOnly('公開状態','未公開')+'</div><div class="actions"><button type="button" class="primary" id="asst_btnAuditCreateAbility">新規能力として保存</button></div></div>';}
+function asstRenderAuditFinalPreview(preview){var r=preview.registration;return '<div id="asst_auditFinalPreview"><h3>最終プレビュー</h3><div class="message"><strong>まだ保存されていません。</strong> 「保存予定に追加」しても書き込みは行わず、一覧の「まとめて保存」で保存します。保存後もstatusはdraftで、自動公開されません。</div><div class="grid">'+asstAuditReadOnly('登録予定能力',r.name)+asstAuditReadOnly('元のカード名（sourceName）',r.sourceName)+asstAuditReadOnly('description',r.description)+asstAuditReadOnly('source / rarity',r.source+' / '+r.rarity)+asstAuditReadOnly('tags',r.tags)+asstAuditReadOnly('カード対応',cmsLabel(r.linkStatus)+' / cardId: '+(r.cardId||'null'))+asstAuditReadOnly('紐付けるカード',r.linkStatus==='resolved'?asstAuditCardLabel(r.cardId):'なし（unlinked）')+asstAuditReadOnly('状態（status）',cmsLabel('draft'))+asstAuditReadOnly('公開状態','未公開')+'</div><div class="actions"><button type="button" class="primary" id="asst_btnAuditCreateAbility">保存予定に追加</button></div></div>';}
 function asstCaptureAuditDraft(){var d=ASST.audit.detailDraft;if(!d||!el('asst_audit_sourceName'))return d;d.sourceName=el('asst_audit_sourceName').value;d.name=el('asst_audit_name').value;d.description=el('asst_audit_description').value;d.source=el('asst_audit_source').value;d.rarity=el('asst_audit_rarity').value;var tags=el('asst_audit_tags').value.replace(/\r\n?/g,'\n');d.tags=tags===''?[]:tags.split('\n');d.linkStatus=el('asst_audit_linkStatus').value;if(el('asst_audit_cardId'))d.cardId=el('asst_audit_cardId').value;['originalCompared','normalizationReviewed','cardReviewed','idReuseReviewed','draftReviewed'].forEach(function(field){var input=el('asst_audit_'+field);d.confirmations[field]=Boolean(input&&input.checked);});ASST.audit.finalPreview=null;return d;}
 function asstConfirmAuditPreview(){var candidate=ASST.audit.response.candidates[ASST.audit.detailIndex],draft=asstCaptureAuditDraft(),issues=asstAuditDraftIssues(candidate,draft);if(issues.length){var message=el('asst_auditDetailMessage');message.textContent=issues.join(' / ');message.className='message err';return;}ASST.audit.finalPreview=asstBuildAuditPreview(candidate,draft);asstRenderExternalAudit();}
-function asstReloadAuditAfterWrite(result){ASST.audit.lastOperation=result;ASST.audit.detailIndex=null;ASST.audit.detailDraftIndex=null;ASST.audit.detailDraft=null;ASST.audit.finalPreview=null;asstLoadExternalAudit(false);}
-function asstCreateExternalAbility(){if(!ASST.audit.finalPreview)return;var payload=JSON.parse(JSON.stringify(ASST.audit.finalPreview));if(!confirm('この候補を新規能力として保存しますか？\nstatusはdraftで、自動公開されません。'))return;call('api_asstCreateAbilityFromExternalCandidate',[payload],function(result){asstReloadAuditAfterWrite({kind:'create',result:result});});}
-function asstDispositionPayload(candidate){return{auditVersion:3,provider:'lmfdb',externalSha:ASST.audit.externalSha,candidateKey:candidate.candidateKey,externalNumericId:candidate.externalNumericId,externalFingerprint:candidate.externalFingerprint,expectedAbilitiesVersion:ASST.audit.expectedAbilitiesVersion,disposition:el('asst_auditDisposition').value,note:el('asst_auditDispositionNote').value};}
-function asstSaveExternalDisposition(){var candidate=ASST.audit.response.candidates[ASST.audit.detailIndex],payload=asstDispositionPayload(candidate);if(!payload.disposition){show('処置を選択してください。',true);return;}if(!confirm('候補へ「'+payload.disposition+'」を保存しますか？\nabilitiesは変更されません。'))return;call('api_asstSetExternalCandidateDisposition',[payload],function(result){asstReloadAuditAfterWrite({kind:'disposition',result:result});});}
+function asstAuditPendingFor(candidateKey){var found=ASST.audit.pending.filter(function(entry){return entry.candidateKey===candidateKey;});return found.length?found[0]:null;}
+function asstAuditPendingLabel(entry){return entry.kind==='create'?'新規登録（'+(entry.registration.linkStatus==='resolved'?'cardId '+entry.registration.cardId:cmsLabel('unlinked'))+'）':'処置（'+cmsLabel(entry.disposition)+'）';}
+function asstAuditRemovePending(id){ASST.audit.pending=ASST.audit.pending.filter(function(entry){return entry.id!==id;});asstRenderExternalAudit();}
+function asstAuditQueue(entry){
+  var existing=asstAuditPendingFor(entry.candidateKey);
+  if(existing&&!confirm('この候補はすでに保存予定に入っています。新しい内容で置き換えますか？'))return false;
+  if(existing)ASST.audit.pending=ASST.audit.pending.filter(function(item){return item.candidateKey!==entry.candidateKey;});
+  ASST.audit.pendingSeq++;entry.id=ASST.audit.pendingSeq;ASST.audit.pending.push(entry);
+  asstDiscardAuditDetail();asstRenderExternalAudit();return true;
+}
+function asstQueueAuditAbility(){
+  if(!ASST.audit.finalPreview)return;
+  var preview=JSON.parse(JSON.stringify(ASST.audit.finalPreview));
+  asstAuditQueue({kind:'create',candidateKey:preview.candidateKey,externalNumericId:preview.externalNumericId,name:preview.registration.name,registration:preview.registration,confirmations:preview.confirmations});
+}
+function asstQueueAuditDisposition(){
+  var candidate=ASST.audit.response.candidates[ASST.audit.detailIndex],disposition=el('asst_auditDisposition').value,note=el('asst_auditDispositionNote').value;
+  if(!disposition){show('処置を選択してください。',true);return;}
+  var snapshot=candidate.externalSnapshot||{},local=candidate.localObservation||{};
+  asstAuditQueue({kind:'disposition',candidateKey:candidate.candidateKey,externalNumericId:candidate.externalNumericId,name:snapshot.name==null?local.name:snapshot.name,disposition:disposition,note:note});
+}
+function asstFindAuditCandidate(candidateKey){
+  var found=(ASST.audit.response?ASST.audit.response.candidates:[]).filter(function(candidate){return candidate.candidateKey===candidateKey;});
+  return found.length===1?found[0]:null;
+}
+function asstAuditWritePayload(entry,candidate){
+  var base={auditVersion:3,provider:'lmfdb',externalSha:ASST.audit.externalSha,candidateKey:candidate.candidateKey,externalNumericId:candidate.externalNumericId,externalFingerprint:candidate.externalFingerprint,expectedAbilitiesVersion:ASST.audit.expectedAbilitiesVersion};
+  if(entry.kind==='create'){base.registration=JSON.parse(JSON.stringify(entry.registration));base.confirmations=JSON.parse(JSON.stringify(entry.confirmations));return base;}
+  base.disposition=entry.disposition;base.note=entry.note;return base;
+}
+function asstRunAuditWrite(name,payload,onSuccess,onFailure){
+  if(APP_LOCAL_PREVIEW){onFailure('ローカルプレビューではGAS APIを呼べません。');return;}
+  google.script.run.withSuccessHandler(onSuccess).withFailureHandler(function(error){onFailure(error&&error.message?error.message:String(error));})[name](payload);
+}
+function asstRunPendingAuditSaves(){
+  if(!ASST.audit.pending.length||(ASST.audit.batch&&ASST.audit.batch.running)||ASST.audit.loading)return;
+  if(!confirm('保存予定 '+ASST.audit.pending.length+'件をまとめて保存しますか？\n新規登録はstatus draftで保存され、自動公開されません。'))return;
+  ASST.audit.batch={running:true,total:ASST.audit.pending.length,done:0,results:[],failed:[]};
+  ASST.audit.lastOperation=null;asstRenderExternalAudit();asstProcessNextAuditPending();
+}
+function asstRecordAuditPendingResult(entry,ok,message){
+  var batch=ASST.audit.batch;
+  batch.results.push({name:entry.name,kind:entry.kind,ok:ok,message:message});
+  if(!ok)batch.failed.push(entry);
+  batch.done++;
+}
+function asstProcessNextAuditPending(){
+  var batch=ASST.audit.batch;
+  if(batch.done>=batch.total){asstFinishAuditBatch();return;}
+  var entry=ASST.audit.pending[batch.done];
+  setBusy(true,'保存中… '+(batch.done+1)+' / '+batch.total+'（'+entry.name+'）');
+  var candidate=asstFindAuditCandidate(entry.candidateKey);
+  if(!candidate){asstRecordAuditPendingResult(entry,false,'再監査で候補を特定できませんでした。');asstProcessNextAuditPending();return;}
+  if(entry.kind==='create'&&!asstAuditEditable(candidate)){asstRecordAuditPendingResult(entry,false,'この候補は登録できない状態になりました。');asstProcessNextAuditPending();return;}
+  var name=entry.kind==='create'?'api_asstCreateAbilityFromExternalCandidate':'api_asstSetExternalCandidateDisposition';
+  asstRunAuditWrite(name,asstAuditWritePayload(entry,candidate),function(result){
+    asstRecordAuditPendingResult(entry,true,entry.kind==='create'?'abilityId: '+result.abilityId+' / '+cmsLabel(result.status)+' / '+cmsLabel(result.linkStatus)+' / sortOrder: '+(result.sortOrder==null?'なし':result.sortOrder):'処置: '+cmsLabel(result.disposition)+'（abilitiesは変更していません）');
+    if(entry.kind!=='create'){asstProcessNextAuditPending();return;}
+    asstReloadAuditQuiet(function(ok,message){
+      if(ok){asstProcessNextAuditPending();return;}
+      ASST.audit.batch.results.push({name:'—',kind:'reload',ok:false,message:'保存後の再監査に失敗しました: '+message});
+      asstFinishAuditBatch();
+    });
+  },function(message){
+    asstRecordAuditPendingResult(entry,false,message);asstProcessNextAuditPending();
+  });
+}
+function asstFinishAuditBatch(){
+  var batch=ASST.audit.batch;batch.running=false;
+  ASST.audit.pending=batch.failed.slice();
+  ASST.audit.lastOperation={kind:'batch',results:batch.results};
+  ASST.audit.batch=null;
+  asstReloadAuditQuiet(function(ok,message){
+    if(!ok)ASST.audit.error={type:'api',message:'保存後の再監査に失敗しました: '+message};
+    asstScheduleAuditMessageDismiss();asstRenderExternalAudit();
+  });
+}
+function asstDismissAuditMessage(){if(ASST.audit.messageTimer){clearTimeout(ASST.audit.messageTimer);ASST.audit.messageTimer=null;}ASST.audit.lastOperation=null;asstRenderExternalAudit();}
+function asstScheduleAuditMessageDismiss(){
+  if(ASST.audit.messageTimer){clearTimeout(ASST.audit.messageTimer);ASST.audit.messageTimer=null;}
+  var operation=ASST.audit.lastOperation;
+  if(!operation||operation.results.some(function(result){return !result.ok;}))return;
+  ASST.audit.messageTimer=setTimeout(function(){ASST.audit.messageTimer=null;ASST.audit.lastOperation=null;asstRenderExternalAudit();},ASST_AUDIT_MESSAGE_MS);
+}
+function asstRenderAuditPending(){
+  var pending=ASST.audit.pending,running=Boolean(ASST.audit.batch&&ASST.audit.batch.running);
+  if(!pending.length)return '<div class="asst-audit-pending"><h3>保存予定 0件</h3><p class="muted">候補詳細で「保存予定に追加」すると、ここへ貯めて最後にまとめて保存できます。保存予定はメモリだけに持ち、画面を離れると消えます。</p></div>';
+  var html='<div class="asst-audit-pending"><h3>保存予定 '+esc(pending.length)+'件</h3><p class="muted">「まとめて保存」を押すまでデータは変更されません。新規登録は1件ごとに再監査してから次を保存します。</p><div class="ability-list">';
+  pending.forEach(function(entry){
+    html+='<article class="ability-item"><div><strong>'+esc(entry.name||'—')+'</strong><div class="muted">'+esc(asstAuditPendingLabel(entry))+' / 外部数値ID: '+esc(entry.externalNumericId)+'</div></div><button type="button" data-pending-remove="'+esc(entry.id)+'"'+(running?' disabled':'')+'>取り消し</button></article>';
+  });
+  return html+'</div><div class="actions"><button type="button" class="primary" id="asst_btnRunPending"'+(running||APP_LOCAL_PREVIEW?' disabled':'')+'>まとめて保存（'+esc(pending.length)+'件）</button><button type="button" id="asst_btnClearPending"'+(running?' disabled':'')+'>保存予定をすべて破棄</button></div></div>';
+}
+function asstRenderAuditLastOperation(){
+  var operation=ASST.audit.lastOperation;
+  if(!operation)return '';
+  var failed=operation.results.filter(function(result){return !result.ok;}).length,ok=operation.results.length-failed;
+  var html='<div class="message '+(failed?'err':'show')+'"><strong>まとめて保存: 成功 '+esc(ok)+'件 / 失敗 '+esc(failed)+'件</strong><br>';
+  html+=operation.results.map(function(result){return (result.ok?'成功: ':'失敗: ')+esc(result.name)+' — '+esc(result.message);}).join('<br>');
+  html+='<br>自動公開されていません。同じ固定SHAで再監査しました。'+(failed?'<br>失敗した分は保存予定に残しています。':'')+'</div><div class="actions"><button type="button" id="asst_btnDismissAuditMessage">この結果を閉じる</button></div>';
+  return html;
+}
 function asstAuditDispositionBlocked(candidate){return ['imported','reverted'].indexOf(candidate.disposition)>=0;}
-function asstRenderAuditDisposition(candidate){if(!candidate.candidateKey||!candidate.externalSnapshot)return '';var blocked=asstAuditDispositionBlocked(candidate),values=['ignored','duplicate','unsupported'].concat(candidate.classification==='ID_REUSE_SUSPECTED'?['id_reused']:[]);return '<h3>候補の処置</h3><p class="muted">処置保存ではabilitiesを変更しません。id_reusedは確認対象として一覧に残ります。</p><div class="grid"><div class="asstField"><label>処置（disposition）</label><select id="asst_auditDisposition"'+(blocked?' disabled':'')+'><option value="">選択してください</option>'+asstOptionList(values,'',false)+'</select></div><div class="asstField wide"><label>note（任意・500文字以内）</label><textarea id="asst_auditDispositionNote"'+(blocked?' disabled':'')+'></textarea></div></div>'+(blocked?'<div class="message">'+esc(cmsLabel('imported'))+' / '+esc(cmsLabel('reverted'))+'済み候補は再処置できません。</div>':'');}
-function asstRenderAuditDetailActions(candidate){var canSave=Boolean(candidate.candidateKey&&candidate.externalSnapshot),html='<div class="actions asst-audit-detail-actions"><button type="button" id="asst_btnBackAuditDetail">← 戻る</button>';if(canSave)html+='<button type="button" id="asst_btnAuditDisposition"'+(asstAuditDispositionBlocked(candidate)?' disabled':'')+'>処置を保存</button>';return html+'</div>';}
-function asstBindAuditDetail(){el('asst_btnBackAuditDetail').onclick=asstReturnFromAuditDetail;if(el('asst_btnAuditFinalPreview'))el('asst_btnAuditFinalPreview').onclick=asstConfirmAuditPreview;if(el('asst_btnAuditCreateAbility'))el('asst_btnAuditCreateAbility').onclick=asstCreateExternalAbility;if(el('asst_btnAuditDisposition'))el('asst_btnAuditDisposition').onclick=asstSaveExternalDisposition;el('asst_editor').querySelectorAll('#asst_audit_sourceName,#asst_audit_name,#asst_audit_description,#asst_audit_source,#asst_audit_rarity,#asst_audit_tags,#asst_audit_linkStatus,#asst_audit_cardId,#asst_audit_originalCompared,#asst_audit_normalizationReviewed,#asst_audit_cardReviewed,#asst_audit_idReuseReviewed,#asst_audit_draftReviewed').forEach(function(input){var invalidate=function(){ASST.audit.finalPreview=null;var preview=el('asst_auditFinalPreview');if(preview)preview.hidden=true;};input.oninput=invalidate;input.onchange=invalidate;});}
+function asstRenderAuditDisposition(candidate){if(!candidate.candidateKey||!candidate.externalSnapshot)return '';var blocked=asstAuditDispositionBlocked(candidate),values=['ignored','duplicate','unsupported'].concat(candidate.classification==='ID_REUSE_SUSPECTED'?['id_reused']:[]);return '<h3>候補の処置</h3><p class="muted">処置は保存予定へ追加され、「まとめて保存」で書き込みます。処置保存ではabilitiesを変更しません。id_reusedは確認対象として一覧に残ります。</p><div class="grid"><div class="asstField"><label>処置（disposition）</label><select id="asst_auditDisposition"'+(blocked?' disabled':'')+'><option value="">選択してください</option>'+asstOptionList(values,'',false)+'</select></div><div class="asstField wide"><label>note（任意・500文字以内）</label><textarea id="asst_auditDispositionNote"'+(blocked?' disabled':'')+'></textarea></div></div>'+(blocked?'<div class="message">'+esc(cmsLabel('imported'))+' / '+esc(cmsLabel('reverted'))+'済み候補は再処置できません。</div>':'');}
+function asstRenderAuditDetailActions(candidate){var canSave=Boolean(candidate.candidateKey&&candidate.externalSnapshot),html='<div class="actions asst-audit-detail-actions"><button type="button" id="asst_btnBackAuditDetail">← 戻る</button>';if(canSave)html+='<button type="button" id="asst_btnAuditDisposition"'+(asstAuditDispositionBlocked(candidate)?' disabled':'')+'>処置を保存予定に追加</button>';return html+'</div>';}
+function asstBindAuditDetail(){el('asst_btnBackAuditDetail').onclick=asstReturnFromAuditDetail;if(el('asst_btnAuditFinalPreview'))el('asst_btnAuditFinalPreview').onclick=asstConfirmAuditPreview;if(el('asst_btnAuditCreateAbility'))el('asst_btnAuditCreateAbility').onclick=asstQueueAuditAbility;if(el('asst_btnAuditDisposition'))el('asst_btnAuditDisposition').onclick=asstQueueAuditDisposition;el('asst_editor').querySelectorAll('#asst_audit_sourceName,#asst_audit_name,#asst_audit_description,#asst_audit_source,#asst_audit_rarity,#asst_audit_tags,#asst_audit_linkStatus,#asst_audit_cardId,#asst_audit_originalCompared,#asst_audit_normalizationReviewed,#asst_audit_cardReviewed,#asst_audit_idReuseReviewed,#asst_audit_draftReviewed').forEach(function(input){var invalidate=function(){ASST.audit.finalPreview=null;var preview=el('asst_auditFinalPreview');if(preview)preview.hidden=true;};input.oninput=invalidate;input.onchange=invalidate;});}
 function asstRenderAuditDetail(candidate){var editable=asstAuditEditable(candidate),html='<div class="asst-audit-detail"><h2>外部能力候補の詳細</h2>';
   if(candidate.classification==='ID_REUSE_SUSPECTED')html+='<div class="message error"><strong>ID_REUSE_SUSPECTED:</strong> 同一外部IDが別能力になった疑いがあります。通常候補と区別して確認してください。</div>';
   html+=asstRenderAuditOriginal(candidate)+asstRenderAuditComparison(candidate);if(editable)html+=asstRenderAuditRegistration(candidate);else html+='<div class="message">この候補は読取専用です。新規能力としての登録操作はありません。</div>';html+=asstRenderAuditDisposition(candidate)+asstRenderAuditDetailActions(candidate);return html+'</div>';}
@@ -326,16 +432,20 @@ function asstRenderExternalAudit(){
   var html='<button class="mobile-back" id="asst_btnBackAudit">← カード一覧へ戻る</button><h2>外部能力DB監査</h2>'+
     '<p class="muted">監査は読取専用です。明示操作時だけ新規能力をdraft保存、または候補の処置を保存します。自動公開は行いません。</p>'+
     '<div class="asst-audit-toolbar"><button type="button" id="asst_btnAuditLatest"'+(APP_LOCAL_PREVIEW||ASST.audit.loading?' disabled':'')+'>最新状態で再監査</button></div>';
-  if(ASST.audit.lastOperation&&ASST.audit.lastOperation.kind==='create'){var saved=ASST.audit.lastOperation.result;html+='<div class="message show"><strong>新規能力を保存しました。</strong><br>abilityId: '+esc(saved.abilityId)+' / legacyId: なし / 状態（status）: '+esc(cmsLabel(saved.status))+' / '+esc(cmsLabel(saved.linkStatus))+' / sortOrder: '+esc(saved.sortOrder==null?'なし':saved.sortOrder)+'<br>自動公開されていません。同じ固定SHAで再監査しました。</div>';}
-  if(ASST.audit.lastOperation&&ASST.audit.lastOperation.kind==='disposition'){html+='<div class="message show">処置「'+esc(cmsLabel(ASST.audit.lastOperation.result.disposition))+'」を保存し、同じ固定SHAで再監査しました。abilitiesは変更していません。</div>';}
+  html+=asstRenderAuditLastOperation();
+  if(ASST.audit.batch&&ASST.audit.batch.running)html+='<div class="empty">保存中です。'+esc(ASST.audit.batch.done)+' / '+esc(ASST.audit.batch.total)+'件が完了しました。</div>';
   if(APP_LOCAL_PREVIEW)html+='<div class="message error">ローカルプレビューではGAS APIを呼べないため、監査を実行できません。</div>';
   else if(ASST.audit.loading)html+='<div class="empty">監査中です。完了までページ操作と再実行はできません。'+(ASST.audit.fetchedPages?'（取り込み済み '+esc(ASST.audit.fetchedPages)+'ページ目まで）':'')+'</div>';
   else if(ASST.audit.error){var kind=ASST.audit.error.type==='api'?'API例外':ASST.audit.error.type==='structure'?'応答構造不正':'監査失敗';html+='<div class="message error"><strong>'+esc(kind)+'</strong><br>'+esc(ASST.audit.error.message)+'</div><button type="button" id="asst_btnAuditRetry">同じ条件で再試行</button>';}
-  else if(ASST.audit.response)html+='<div class="asst-audit-page">'+asstRenderAuditSummary(ASST.audit.response)+asstRenderAuditCandidates(ASST.audit.response)+'</div>';
+  else if(ASST.audit.response)html+='<div class="asst-audit-page">'+asstRenderAuditSummary(ASST.audit.response)+asstRenderAuditPending()+asstRenderAuditCandidates(ASST.audit.response)+'</div>';
   else html+='<div class="empty">監査を開始します。</div>';
   el('asst_editor').innerHTML=html;
   el('asst_btnBackAudit').onclick=asstReturnFromExternalAudit;
-  if(el('asst_btnAuditLatest'))el('asst_btnAuditLatest').onclick=function(){asstLoadExternalAudit(true);};
+  if(el('asst_btnRunPending'))el('asst_btnRunPending').onclick=asstRunPendingAuditSaves;
+  if(el('asst_btnClearPending'))el('asst_btnClearPending').onclick=function(){if(confirm('保存予定をすべて破棄しますか？')){ASST.audit.pending=[];asstRenderExternalAudit();}};
+  if(el('asst_btnDismissAuditMessage'))el('asst_btnDismissAuditMessage').onclick=asstDismissAuditMessage;
+  el('asst_editor').querySelectorAll('[data-pending-remove]').forEach(function(button){button.onclick=function(){asstAuditRemovePending(Number(button.dataset.pendingRemove));};});
+  if(el('asst_btnAuditLatest'))el('asst_btnAuditLatest').onclick=function(){if(ASST.audit.pending.length&&!confirm('保存予定 '+ASST.audit.pending.length+'件が未保存です。再監査すると保存予定は残りますが、候補が変わると保存できないことがあります。続けますか？'))return;asstLoadExternalAudit(true);};
   if(el('asst_btnAuditRetry'))el('asst_btnAuditRetry').onclick=function(){asstLoadExternalAudit(false);};
   if(el('asst_auditShowProcessed'))el('asst_auditShowProcessed').onchange=function(){ASST.audit.showProcessed=this.checked;ASST.audit.viewPage=1;asstRenderExternalAudit();};
   if(el('asst_auditSearch')){
