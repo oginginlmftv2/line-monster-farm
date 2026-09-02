@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1091,
-    "resolved": 572,
+    "abilities": 1095,
+    "resolved": 576,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19548,6 +19548,88 @@
         "忠誠度",
         "攻撃強化",
         "オーラ白"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1097",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "ワルキューレアペンド I",
+      "description": "[自身白][有利]オーラ技命中時、バトル中に自身が発動した追撃の回数＜１回＞につき攻撃ステ＜＋１％＞＜最大１０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "有利時",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1098",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "ワルキューレアペンド II",
+      "description": "[自身白]オーラ技命中時、次の効果<br>・バトル中に自身が発動した追撃の回数＜１回＞につき攻撃ステ＜＋３％＞＜最大３０％＞<br>・ちからステの＜３０％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1099",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "ワルキューレハント II",
+      "description": "[自身白][前半]自身に次の効果<br>・技命中時、追撃与ダメ＜＋１０％＞、人気度が＜１００＞を超えた場合、さらに追撃与ダメ＜＋３０％＞<br>・＜白＞技命中時、シールド破壊＜１回＞<br>・[無機]クリ率＜＋３０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "前半",
+        "オーラ白",
+        "追撃",
+        "シールド",
+        "無機",
+        "クリティカル"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1100",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "ワルキューレハント I",
+      "description": "[自身白][前半]自身に次の効果<br>・技命中時、追撃与ダメ＜＋１０％＞<br>・[イルミネ種]クリ率＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身白",
+        "前半",
+        "追撃",
+        "クリティカル"
       ],
       "sortOrder": 4,
       "linkStatus": "resolved",
