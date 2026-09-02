@@ -1359,16 +1359,21 @@ if (!exists('src/data/assist-abilities.json') || !exists('src/data/assist-cards.
       ok('assist-abilities.jsonのsourceNameは全件非空');
     }
 
-    const expectedSortOrderByCard = new Map();
+    const sortOrdersByCard = new Map();
     const invalidSortOrders = [];
     for (const ability of abilities) {
       if (ability.linkStatus === 'resolved') {
-        const expected = (expectedSortOrderByCard.get(ability.cardId) || 0) + 1;
-        expectedSortOrderByCard.set(ability.cardId, expected);
-        if (ability.sortOrder !== expected) invalidSortOrders.push(ability.abilityId);
+        if (!sortOrdersByCard.has(ability.cardId)) sortOrdersByCard.set(ability.cardId, []);
+        sortOrdersByCard.get(ability.cardId).push(ability);
       } else if (ability.sortOrder !== null) {
         invalidSortOrders.push(ability.abilityId);
       }
+    }
+    for (const group of sortOrdersByCard.values()) {
+      const sorted = group.slice().sort((a, b) => Number(a.sortOrder) - Number(b.sortOrder));
+      sorted.forEach((ability, index) => {
+        if (ability.sortOrder !== index + 1) invalidSortOrders.push(ability.abilityId);
+      });
     }
     if (invalidSortOrders.length) {
       ng(`assist-abilities.jsonのsortOrderが不正: ${invalidSortOrders.slice(0, 5).join(', ')}`);
