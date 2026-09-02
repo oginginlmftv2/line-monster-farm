@@ -774,6 +774,61 @@ test('保存結果は成功だけなら時間経過で消え、失敗があれ�
   assert.doesNotMatch(failed.html(),/まとめて保存: 成功/);
 });
 
+test('新規登録を複数件まとめて保存し、1件ごとに再監査してから次を送る', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)}),candidate('card_match_candidate',12,'能力C',{candidateKey:'c'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:3,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  for (const index of [0,1,2]) queueCreate(h,index);
+  assert.strictEqual(h.context.ASST.audit.pending.length,3);
+  h.context.asstRunPendingAuditSaves();
+  const writes=h.calls.filter(call => call.name==='api_asstCreateAbilityFromExternalCandidate');
+  assert.strictEqual(writes.length,3);
+  assert.deepStrictEqual(writes.map(call => call.payload.candidateKey),['a'.repeat(64),'b'.repeat(64),'c'.repeat(64)]);
+  assert.match(h.html(),/成功 3件 \/ 失敗 0件/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+});
+
+test('途中の書込み失敗でも残りを処理し、失敗分だけ保存予定に残す', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  queueCreate(h,0);queueCreate(h,1);
+  let sent=0;
+  const runner=h.context.google.script.run;
+  const original=runner.api_asstCreateAbilityFromExternalCandidate;
+  runner.api_asstCreateAbilityFromExternalCandidate=function(payload){
+    sent++;
+    if(sent===1){this.failure(new Error('能力DBが更新されています。'));return;}
+    return original.call(this,payload);
+  };
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(sent,2);
+  assert.match(h.html(),/成功 1件 \/ 失敗 1件/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey,'a'.repeat(64));
+});
+
+test('保存後の再監査に失敗したら1度やり直し、それでも駄目なら未処理分を保存予定へ残す', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  queueCreate(h,0);queueCreate(h,1);
+  let audits=0;
+  const runner=h.context.google.script.run;
+  const originalAudit=runner.api_asstAuditExternalAbilities;
+  runner.api_asstAuditExternalAbilities=function(payload){
+    audits++;
+    if(audits<=2){this.failure(new Error('audit down'));return;}
+    return originalAudit.call(this,payload);
+  };
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(audits,3);
+  assert.match(h.html(),/保存後の再監査に失敗したため、残りを保存せずに中断しました/);
+  assert.match(h.html(),/未処理の 1件は保存予定に残しました/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey,'b'.repeat(64));
+});
+
 test('保存予定は取り消しと一括破棄ができる', () => {
   const h = harness();h.context.asstOpenExternalAudit();
   queueCreate(h);
