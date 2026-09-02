@@ -299,8 +299,16 @@ function validateRoot(root) {
       !/var payload=\{page:page,pageSize:ASST_AUDIT_PAGE_SIZE\}/.test(auditUiSource) ||
       !/if\(ASST\.audit\.externalSha\)payload\.externalSha=ASST\.audit\.externalSha/.test(auditUiSource) ||
       !/if\(latest\)\{ASST\.audit\.externalSha=null/.test(auditUiSource) ||
-      !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=50/.test(html)) {
-    issues.push('外部能力監査UIの入口・固定SHA・50件ページング・ローカル無効化が不足');
+      !/APP_LOCAL_PREVIEW/.test(auditUiSource) || !/ASST_AUDIT_PAGE_SIZE=1000/.test(html)) {
+    issues.push('外部能力監査UIの入口・固定SHA・一括取り込みページサイズ・ローカル無効化が不足');
+  }
+  if (!/ASST_AUDIT_VIEW_SIZE=20/.test(html) ||
+      !/function asstFetchAuditPage\(page,collected\)/.test(auditUiSource) ||
+      !/function asstAuditFilteredCandidates\(data,tab\)/.test(auditUiSource) ||
+      !/function asstAuditCandidateMatches\(candidate,query\)/.test(auditUiSource) ||
+      !/id="asst_auditSearch"/.test(auditUiSource) ||
+      /asstLoadExternalAudit\(/.test(auditUiSource.match(/function asstRenderExternalAudit\(\)[\s\S]*?\n\}/)[0].replace(/asstLoadExternalAudit\((?:true|false)\)/g, ''))) {
+    issues.push('外部能力監査UIの取り込み結果の再利用・タブ内ページ送り・検索が不足');
   }
   if (/localStorage|sessionStorage|document\.cookie|CacheStorage|caches\.|PropertiesService|CacheService/.test(auditUiSource)) {
     issues.push('外部能力監査UIが結果をブラウザまたはGASへ永続化している');
@@ -317,7 +325,7 @@ function validateRoot(root) {
     'blockReasons', 'reviewReasons', '外部件数', 'ローカル件数', 'カード対応候補数',
     '未紐付け候補数', 'ID再利用疑い数', '既存内容差分数', '表記違い数',
     '重複内容一致数', '外部欠落観測数', '処置済み件数', '処置済みを表示',
-    '現在ページ', '総ページ', '総候補数', '登録可能候補',
+    '現在ページ', '総ページ', '総候補数', '登録可能候補', '検索（能力名・カード名）', 'このタブ',
   ];
   if (auditUiRequiredText.some(value => !html.includes(value)) ||
       !/\['representationOnly','表記違い',false\]/.test(html) ||

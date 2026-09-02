@@ -241,7 +241,16 @@ test('payload未知キー・型・SHA・page範囲を厳格に拒否', () => {
   const api = makeHarness().context.api_asstAuditExternalAbilities;
   for (const payload of [null, [], { url: 'https://example.com' }, { externalSha: 'A'.repeat(40) },
     { externalSha: 'a'.repeat(7) }, { page: 0 }, { page: 1.5 }, { page: '1' },
-    { pageSize: 0 }, { pageSize: 51 }, { pageSize: '50' }]) assert.throws(() => api(payload));
+    { pageSize: 0 }, { pageSize: 1001 }, { pageSize: '50' }]) assert.throws(() => api(payload));
+});
+
+test('pageSizeは1〜1000を受け付け1回で全候補を返せる', () => {
+  const harness = makeHarness();
+  const bulk = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA, page: 1, pageSize: 1000 }));
+  assert.strictEqual(bulk.pagination.pageSize, 1000);
+  assert.strictEqual(bulk.pagination.totalPages, 1);
+  assert.strictEqual(bulk.candidates.length, bulk.pagination.totalItems);
+  assert.deepStrictEqual(plain(bulk.candidates), plain(allCandidates(makeHarness())));
 });
 
 test('HTTP失敗・不正JSON・巨大JSONを拒否', () => {
