@@ -14,6 +14,7 @@ const RANK_ORDER = ['無凸', '1凸', '2凸', '3凸', '4凸'];
 const INDEXABLE_VISIBLE_CHARS = 800;
 const INDEXABLE_EXPLANATION_CHARS = 50;
 const ADSENSE_TAG = '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>';
+const GTM_TAG = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');<\/script>`;
 const ASSIST_INDEX = 'assist.html';
 const NEWEST_KEY = '9999-99-99';
 const ASSIST_LIST_START = '<!-- ASSIST_CARD_LIST:START -->';
@@ -206,6 +207,7 @@ function renderPage(card, effects, abilities, cardById, indexable, gachaAppearan
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  ${GTM_TAG}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(descriptionFor(card))}">${robotsMeta}

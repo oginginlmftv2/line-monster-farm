@@ -10,6 +10,7 @@ const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
 const ROOT_PREFIX = '../../../';
 const MON_TYPE_ROOT_PREFIX = '../../';
 const DRY_RUN = process.argv.includes('--dry');
+const GTM_TAG = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');<\/script>`;
 const INDEXABLE_THRESHOLD = 800;
 const PICKUP_SLOTS = 5;
 const GACHA_EXCERPT_CHARS = 140;
@@ -521,6 +522,7 @@ function renderGachaDetail(gacha, context) {
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  ${GTM_TAG}
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(gacha.name)} | LINEモンスターファーム徹底攻略</title>
   <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
@@ -557,7 +559,7 @@ function renderGachaIndex(gachas, now) {
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
 <!-- 元データ: src/data/gachas.json -->
 <!DOCTYPE html>
-<html lang="ja"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="ja"><head><meta charset="UTF-8">${GTM_TAG}<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ガチャ一覧 | LINEモンスターファーム徹底攻略</title>
   <meta name="description" content="開催中と終了済みのガチャ、ピックアップ内容、開催期間を一覧で確認できます。">
   <link rel="canonical" href="${SITE_URL}/gacha/"><link rel="stylesheet" href="../style.css">
@@ -1214,6 +1216,7 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  ${GTM_TAG}
   <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
   <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1338,6 +1341,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
+  ${GTM_TAG}
   <link rel="icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
   <link rel="apple-touch-icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">

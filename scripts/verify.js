@@ -1652,6 +1652,53 @@ head('17. ガチャDB');
   else ok(`ガチャDBが整合（ピックアップ上限 ${PICKUP_SLOTS}枠）`);
 }
 
+// ---------------------------------------------------------------- 18
+head('18. 計測タグ（GTM）');
+{
+  const GTM_ID = 'GTM-PC4NG733';
+  // 休止中スタブ（docs/dormant-files.md）とSearch Console所有権確認ファイルは対象外
+  const EXEMPT = new Set([
+    'google59378bd79752d094.html', 'cards/SSR-hori.html', 'cards/card.html', 'monsters/monster.html',
+    'ability-search.html', 'game-runner.html', 'friend.html', 'assist-card-search.html',
+    'game-2048.html', 'monsuta-shindan.html', 'bbs.html', 'assist-ranking.html',
+    'npc-regen.html', 'ability-ranking.html', 'monster-quiz.html',
+    'abilitypoint/index.html', 'abilitypoint/index2.html', 'ability-db.html',
+    'lMfdb-index-20-23.html',
+  ]);
+  const collect = (dir, out) => {
+    for (const entry of fs.readdirSync(path.join(REPO, dir), { withFileTypes: true })) {
+      const rel = dir ? `${dir}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        if (/^(\.|node_modules$|_cms$|monster$|assist-cards$|assist-abilities$)/.test(entry.name)) continue;
+        collect(rel, out);
+      } else if (entry.name.endsWith('.html')) out.push(rel);
+    }
+    return out;
+  };
+  const targets = collect('', []).filter(rel => !EXEMPT.has(rel));
+  const missing = [];
+  const duplicated = [];
+  const outsideHead = [];
+  for (const rel of targets) {
+    const html = read(rel);
+    const hits = (html.match(new RegExp(GTM_ID, 'g')) || []).length;
+    if (hits === 0) { missing.push(rel); continue; }
+    if (hits > 1) { duplicated.push(rel); continue; }
+    const headEnd = html.search(/<\/head>/i);
+    if (headEnd === -1 || html.indexOf(GTM_ID) > headEnd) outsideHead.push(rel);
+  }
+  if (missing.length) ng(`GTMタグが無いページ ${missing.length}件: ${missing.slice(0, 5).join(', ')}`);
+  else ok(`公開HTML ${targets.length}件すべてにGTMタグ（${GTM_ID}）あり`);
+  if (duplicated.length) ng(`GTMタグが重複するページ ${duplicated.length}件: ${duplicated.slice(0, 5).join(', ')}`);
+  else ok('GTMタグの二重計測なし（全ページ1回のみ）');
+  if (outsideHead.length) ng(`GTMタグが<head>外にあるページ ${outsideHead.length}件: ${outsideHead.slice(0, 5).join(', ')}`);
+  else ok('GTMタグはすべて<head>内');
+  // GA4測定IDはGTM管理画面で設定する。サイト側へ直書きすると二重計測になる
+  const gaHardcoded = targets.filter(rel => /G-J6STLRQ032|www\.googletagmanager\.com\/gtag\/js/.test(read(rel)));
+  if (gaHardcoded.length) ng(`GA4測定IDまたはgtag.jsが直書きされている ${gaHardcoded.length}件: ${gaHardcoded.slice(0, 5).join(', ')}`);
+  else ok('GA4測定ID・gtag.jsの直書きなし（GTM経由のみ）');
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
