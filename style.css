@@ -979,3 +979,15 @@ td img {
     font-size: 9px;
   }
 }
+
+/* 記事の著者情報（モンスター詳細と同トンマナ） */
+.byline {
+  margin: 16px 0 0;
+  color: #888;
+  font-size: 12px;
+  text-align: right;
+}
+
+.byline a {
+  color: inherit;
+}
