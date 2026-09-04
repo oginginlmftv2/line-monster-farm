@@ -205,6 +205,32 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 
 ---
 
+## ⚠️ 技（スキル）DBの追加・更新
+
+技は血統ごとに共通で、血統ページ `monsters/<モン類>/<血統>/index.html` に表示します。
+モンスター詳細ページに全量を出すと重複コンテンツになるため、置き場所は血統ページだけです。
+
+現在はまだCMS対象外で、リポジトリのJSONを直接編集します（CMS化はS3）。
+
+1. `src/data/skill-abilities.json` に技能力を追加（`sab-####`）
+   - `description` の改行は `\n`。HTMLタグは書かない
+2. `src/data/monster-skills.json` に技を追加（`sk-####`）
+   - `range` は技を**発動できる**間合い。`moveTo` は発動後に移動する技だけ書き、
+     移動しない技は `null`（`A→B` の A は `range` と必ず一致するので持たない）
+   - 評価（ダメージ・命中率・ガッツダウン・クリティカル率）は `S+`〜`G`。各段に `+` 付きがある
+   - 固有技は `unique: true` にして `owners` へ使えるモンスターの4桁IDを配列で入れる
+   - `unlockedBy` は技登録の解放元。`{ "monsterId": "2626", "rarity": 4 }` の配列で、
+     `rarity` は登録に必要な★の数（1〜10）。ページには「セイラン（★4以上）」と出る
+3. `node build.js` → 技が1件以上ある血統だけページが生成される
+4. `node scripts/test-skill-build.js` と `node scripts/verify.js` がFAIL 0
+
+技が0件の血統はページを生成しません。**分かる血統から1つずつ入れられます。**
+可視800字未満のうちは `noindex,follow` になり、技が増えれば自動でインデックス対象へ昇格します。
+
+詳細な設計は `docs/skill-design.md`、ページ構成は `docs/build-spec.md` の 3-2 と 5-9 を参照。
+
+---
+
 ## ⚠️ プレイ日記追加時の注意
 
 日記は1記事＝1ページです。`diary.html`へ本文全文を追記しません。
@@ -246,13 +272,14 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 - `src/data/id-availability.json`
 - `src/data/page-baseline.json`
 - `src/data/cms-seed.json`
-- `monsters/**/*.html`
+- `monsters/**/*.html`（血統ページ `monsters/<モン類>/<血統>/index.html` を含む）
 - `monsters/redirect-map.js`
 - `monsters.html`の`BUILD:MONSTER-CARDS`マーカー内
 - sitemapのモンスター・モン類URL部分
 
 ### リポジトリで管理
 
+- `src/data/monster-skills.json`、`src/data/skill-abilities.json`（技DB。現在は手入力）
 - `cards/cards-data.js`、`assist.html`、`reroll.html`
 - `index.html`のピックアップ・日記プレビュー・更新履歴
 - `diary.html`、`diary/*.html`

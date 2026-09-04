@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const childProcess = require('child_process');
-const { PICKUP_SLOTS, validateGachaData } = require('../build');
+const { PICKUP_SLOTS, validateGachaData, validateSkillData, SKILL_RANGES, SKILL_RANKS } = require('../build');
 
 const REPO = process.cwd();
 const LOCK = path.join(REPO, 'src', 'data', 'repo-guard.lock.json');
@@ -1728,6 +1728,166 @@ head('18. 計測タグ（GTM）');
   const gaHardcoded = targets.filter(rel => /G-J6STLRQ032|www\.googletagmanager\.com\/gtag\/js/.test(read(rel)));
   if (gaHardcoded.length) ng(`GA4測定IDまたはgtag.jsが直書きされている ${gaHardcoded.length}件: ${gaHardcoded.slice(0, 5).join(', ')}`);
   else ok('GA4測定ID・gtag.jsの直書きなし（GTM経由のみ）');
+}
+
+// ---------------------------------------------------------------- 19
+head('19. 技DB・血統ページ');
+{
+  const issues = [];
+  const hasSkillDb = exists('src/data/monster-skills.json');
+  const hasAbilityDb = exists('src/data/skill-abilities.json');
+  const hasBuffDb = exists('src/data/skill-buffs.json');
+  if (!hasSkillDb) issues.push('必須ファイルがない: src/data/monster-skills.json');
+  if (!hasAbilityDb) issues.push('必須ファイルがない: src/data/skill-abilities.json');
+  if (!hasBuffDb) issues.push('必須ファイルがない: src/data/skill-buffs.json');
+  if (!exists('blood.css')) issues.push('必須ファイルがない: blood.css');
+
+  // ページに出るのは各技・各技能力の最新版だけ。旧版はロールバック用にDBへ残る。
+  let skills = [];
+  let currentSkills = [];
+  let abilities = [];
+  let buffs = [];
+  if (hasSkillDb && hasAbilityDb && hasBuffDb) {
+    try {
+      // 検査の正は build.js の validateSkillData。ここでは重複実装しない。
+      const result = validateSkillData(
+        JSON.parse(read('src/data/monster-skills.json')),
+        JSON.parse(read('src/data/skill-abilities.json')),
+        JSON.parse(read('src/data/monster-ids.json')),
+        JSON.parse(read('src/data/skill-buffs.json'))
+      );
+      skills = result.skills;
+      currentSkills = result.currentSkills;
+      abilities = result.currentAbilities;
+      buffs = result.buffs;
+    } catch (error) {
+      issues.push(...String(error.message).split('\n'));
+    }
+  }
+
+  // 生成された血統ページと技DBの血統が一致していること
+  if (!issues.length) {
+    const ids = JSON.parse(read('src/data/monster-ids.json'));
+    const relOfBlood = blood => {
+      const monster = ids.monsters.find(entry => entry.blood === blood);
+      return monster ? `monsters/${monster.monSlug}/${ids.bloodSlug[blood]}/index.html` : null;
+    };
+    const expected = new Set(currentSkills.map(skill => relOfBlood(skill.blood)).filter(Boolean));
+    // ページに載る技だけをページ単位で引けるようにする（技能力・バフの突き合わせに使う）
+    const skillsByRel = new Map();
+    for (const skill of currentSkills) {
+      const rel = relOfBlood(skill.blood);
+      if (!rel) continue;
+      if (!skillsByRel.has(rel)) skillsByRel.set(rel, []);
+      skillsByRel.get(rel).push(skill);
+    }
+    const abilityById = new Map(abilities.map(ability => [String(ability.abilityId), ability]));
+    const buffById = new Map(buffs.map(buff => [String(buff.buffId), buff]));
+    const found = new Set();
+    for (const monDir of fs.readdirSync(path.join(REPO, 'monsters'), { withFileTypes: true })) {
+      if (!monDir.isDirectory()) continue;
+      for (const bloodDir of fs.readdirSync(path.join(REPO, 'monsters', monDir.name), { withFileTypes: true })) {
+        if (!bloodDir.isDirectory()) continue;
+        const rel = `monsters/${monDir.name}/${bloodDir.name}/index.html`;
+        if (exists(rel)) found.add(rel);
+      }
+    }
+    for (const rel of expected) if (!found.has(rel)) issues.push(`技データがあるのに血統ページが無い: ${rel}`);
+    for (const rel of found) if (!expected.has(rel)) issues.push(`技データが無いのに血統ページがある: ${rel}`);
+
+    // 技表の骨格。行＝ランク・列＝間合いが崩れていないこと
+    for (const rel of found) {
+      const html = read(rel);
+      const bloodSkills = skillsByRel.get(rel) || [];
+      if (!/<table class="skill-matrix">/.test(html)) issues.push(`${rel}: skill-matrix テーブルが無い`);
+      for (const range of SKILL_RANGES) {
+        if (!new RegExp(`<th scope="col" class="skill-range-head [^"]+">${range}距離</th>`).test(html)) {
+          issues.push(`${rel}: ${range}距離の列が無い`);
+        }
+      }
+      for (const rank of SKILL_RANKS) {
+        if (!html.includes(`>ランク${rank}</th>`)) issues.push(`${rel}: ランク${rank}の行が無い`);
+      }
+      // 技詳細は最初からDOMに存在し hidden で隠れていること（モーダル差し込みにしない）
+      const chips = (html.match(/class="skill-chip[ "]/g) || []).length;
+      const details = (html.match(/class="skill-detail[^"]*" id="sk-\d{4}" hidden/g) || []).length;
+      if (chips !== details) issues.push(`${rel}: 技チップ${chips}件に対し詳細行${details}件（一致必須）`);
+      const closers = (html.match(/class="skill-detail-close"/g) || []).length;
+      if (closers !== details) issues.push(`${rel}: 詳細行${details}件に対し閉じるボタン${closers}件（一致必須）`);
+      // 開閉アニメの入れ子。overflow を持つのは clip 側だけ（inner に置くと sticky が壊れる）
+      const anims = (html.match(/class="skill-detail-anim"><div class="skill-detail-clip"/g) || []).length;
+      if (anims !== details) issues.push(`${rel}: 詳細行${details}件に対し開閉アニメの入れ子${anims}件（一致必須）`);
+      if (!html.includes('<noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>')) {
+        issues.push(`${rel}: JS無効時に技詳細を開くnoscriptが無い`);
+      }
+      // モンスター詳細からのアンカー（index.html#sk-0001）で開けること
+      if (!/if \(!\/\^sk-\\d\{4\}\$\/\.test\(id\)\) return;/.test(html)) {
+        issues.push(`${rel}: アンカーで技を開くスクリプトが壊れている（正規表現のエスケープを確認）`);
+      }
+      if (!/<link rel="stylesheet" href="\.\.\/\.\.\/\.\.\/blood\.css">/.test(html)) {
+        issues.push(`${rel}: blood.css を読み込んでいない`);
+      }
+      // 技能力の見出しは全技に出す。0件の技は見出しの下に「なし」と書く（見出しごと消さない）
+      const subtitles = (html.match(/<h4 class="skill-detail-subtitle">技能力<\/h4>/g) || []).length;
+      if (subtitles !== details) {
+        issues.push(`${rel}: 詳細行${details}件に対し技能力見出し${subtitles}件（0件の技も見出しを出す）`);
+      }
+      const nones = (html.match(/<p class="skill-detail-none">なし<\/p>/g) || []).length;
+      const noAbility = bloodSkills.filter(skill => !(skill.abilities || []).length).length;
+      if (nones !== noAbility) {
+        issues.push(`${rel}: 技能力0件の技${noAbility}件に対し「なし」表示${nones}件（一致必須）`);
+      }
+      // バフ・デバフは、それを起こす技能力のカードの中に出す
+      const expectedBuffs = new Set();
+      for (const skill of bloodSkills) {
+        for (const link of skill.abilities || []) {
+          const ability = abilityById.get(String(link.abilityId));
+          for (const buffId of (ability && ability.buffs) || []) expectedBuffs.add(buffId);
+        }
+      }
+      for (const buffId of expectedBuffs) {
+        const buff = buffById.get(buffId);
+        if (!buff) continue;
+        if (!html.includes(`<span class="skill-buff-name">${buff.name}</span>`)) {
+          issues.push(`${rel}: バフ「${buff.name}」の説明が出ていない`);
+        }
+      }
+      if (/skill-buff[ "]/.test(html) && !/<div class="skill-ability-buffs">/.test(html)) {
+        issues.push(`${rel}: バフ表示が技能力カードの外に出ている`);
+      }
+    }
+  }
+
+  // 血統共通技の全量をモンスター詳細へ出していないこと（重複コンテンツ回避）
+  if (!issues.length && currentSkills.length) {
+    const ids = JSON.parse(read('src/data/monster-ids.json'));
+    const byId = new Map(ids.monsters.map(m => [m.id, m]));
+    for (const skill of currentSkills) {
+      const owners = new Set([
+        ...(skill.unique ? skill.owners : []),
+        ...(skill.unlockedBy || []).map(entry => String(entry.monsterId)),
+        // 技そのものではなく、技についた技能力の解放元になっている場合も掲載する
+        ...(skill.abilities || []).filter(link => link.unlock).map(link => String(link.unlock.monsterId)),
+      ]);
+      for (const monster of ids.monsters.filter(m => m.blood === skill.blood)) {
+        const rel = monster.url.replace(/^\//, '');
+        if (!exists(rel)) continue;
+        const html = read(rel);
+        const shown = html.includes(`index.html#${skill.skillId}`);
+        if (shown && !owners.has(monster.id)) {
+          issues.push(`${rel}: ${skill.name} は固有技でも解放技でもないのに掲載されている`);
+        }
+        if (!shown && owners.has(monster.id)) {
+          issues.push(`${rel}: ${skill.name} が掲載されていない`);
+        }
+      }
+    }
+    void byId;
+  }
+
+  if (issues.length) ng(`技DB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(' / ')}`);
+  else if (!skills.length) sk(`技DBは空（血統ページ0件）。間合い ${SKILL_RANGES.join('/')} × ランク1〜${SKILL_RANKS.length}`);
+  else ok(`技DBが整合（技${skills.length}件・血統ページ${new Set(skills.map(s => s.blood)).size}件）`);
 }
 
 // ---------------------------------------------------------------- 結果

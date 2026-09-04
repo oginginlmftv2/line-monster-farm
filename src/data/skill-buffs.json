@@ -1,0 +1,284 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "手入力"
+  ],
+  "generatedAt": null,
+  "counts": {
+    "buffs": 34
+  },
+  "buffs": [
+    {
+      "buffId": "bf-0001",
+      "name": "精密",
+      "kind": "バフ",
+      "description": "与ダメとクリダメ上昇",
+      "note": "",
+      "sortOrder": 1
+    },
+    {
+      "buffId": "bf-0002",
+      "name": "強襲",
+      "kind": "バフ",
+      "description": "命中率とクリ率上昇",
+      "note": "",
+      "sortOrder": 2
+    },
+    {
+      "buffId": "bf-0003",
+      "name": "幻影",
+      "kind": "バフ",
+      "description": "回避率上昇",
+      "note": "",
+      "sortOrder": 3
+    },
+    {
+      "buffId": "bf-0004",
+      "name": "見切り",
+      "kind": "バフ",
+      "description": "一つの技につき3個目以降の追撃を無効",
+      "note": "",
+      "sortOrder": 4
+    },
+    {
+      "buffId": "bf-0005",
+      "name": "連撃強化",
+      "kind": "バフ",
+      "description": "追撃ダメージ上昇",
+      "note": "",
+      "sortOrder": 5
+    },
+    {
+      "buffId": "bf-0006",
+      "name": "変転",
+      "kind": "バフ",
+      "description": "対象技命中時、有利オーラに変換",
+      "note": "",
+      "sortOrder": 6
+    },
+    {
+      "buffId": "bf-0007",
+      "name": "乱変転",
+      "kind": "バフ",
+      "description": "対象技をランダムな色のオーラに変換",
+      "note": "",
+      "sortOrder": 7
+    },
+    {
+      "buffId": "bf-0008",
+      "name": "追撃",
+      "kind": "バフ",
+      "description": "技命中時、追撃",
+      "note": "",
+      "sortOrder": 8
+    },
+    {
+      "buffId": "bf-0009",
+      "name": "強撃",
+      "kind": "バフ",
+      "description": "攻撃ステータス上昇",
+      "note": "",
+      "sortOrder": 9
+    },
+    {
+      "buffId": "bf-0010",
+      "name": "覇気",
+      "kind": "バフ",
+      "description": "技命中時、ガッツダメージ上昇",
+      "note": "",
+      "sortOrder": 10
+    },
+    {
+      "buffId": "bf-0011",
+      "name": "充填",
+      "kind": "バフ",
+      "description": "技命中時、消費ガッツからレベルに応じた分ガッツ回復",
+      "note": "",
+      "sortOrder": 11
+    },
+    {
+      "buffId": "bf-0012",
+      "name": "狙撃",
+      "kind": "バフ",
+      "description": "すべての技の命中率上昇",
+      "note": "",
+      "sortOrder": 12
+    },
+    {
+      "buffId": "bf-0013",
+      "name": "急所",
+      "kind": "バフ",
+      "description": "技命中時かつクリティカル時、クリティカルダメージ上昇",
+      "note": "",
+      "sortOrder": 13
+    },
+    {
+      "buffId": "bf-0014",
+      "name": "必殺",
+      "kind": "バフ",
+      "description": "技命中時、クリティカル率上昇",
+      "note": "",
+      "sortOrder": 14
+    },
+    {
+      "buffId": "bf-0015",
+      "name": "確撃",
+      "kind": "バフ",
+      "description": "対象技命中時、必ずクリティカル",
+      "note": "",
+      "sortOrder": 15
+    },
+    {
+      "buffId": "bf-0016",
+      "name": "焦熱",
+      "kind": "バフ",
+      "description": "消費ガッツが増加し、すべての技ステータスが上昇、追撃を付与",
+      "note": "",
+      "sortOrder": 16
+    },
+    {
+      "buffId": "bf-0017",
+      "name": "増強",
+      "kind": "バフ",
+      "description": "ライフ以外のステータス上昇",
+      "note": "",
+      "sortOrder": 17
+    },
+    {
+      "buffId": "bf-0018",
+      "name": "昂気",
+      "kind": "バフ",
+      "description": "攻撃ステータスとガッツ回復速度上昇",
+      "note": "",
+      "sortOrder": 18
+    },
+    {
+      "buffId": "bf-0019",
+      "name": "霊魂",
+      "kind": "バフ",
+      "description": "自身の消費ガッツ減少し、相手の消費ガッツ増加",
+      "note": "最大Lv9まで累積",
+      "sortOrder": 19
+    },
+    {
+      "buffId": "bf-0020",
+      "name": "エーテル",
+      "kind": "バフ",
+      "description": "対象技命中時、エーテルを消費して次のうちどちらかを発動\n・ちから技発動時追撃\n・かしこさ技発動時消費ガッツ減少",
+      "note": "",
+      "sortOrder": 20
+    },
+    {
+      "buffId": "bf-0021",
+      "name": "業物",
+      "kind": "バフ",
+      "description": "ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇",
+      "note": "",
+      "sortOrder": 21
+    },
+    {
+      "buffId": "bf-0022",
+      "name": "散華",
+      "kind": "バフ",
+      "description": "自身に次の効果＜15秒＞\n・耐久値＜350＞の【シールド】展開\n・クリティカル率＜+20%＞\n・回避率＜+25%＞",
+      "note": "固有効果で、能力によっては散華中にさらなる追加効果が発生する場合があります",
+      "sortOrder": 22
+    },
+    {
+      "buffId": "bf-0023",
+      "name": "衰弱",
+      "kind": "デバフ",
+      "description": "被ダメージ上昇",
+      "note": "",
+      "sortOrder": 23
+    },
+    {
+      "buffId": "bf-0024",
+      "name": "暗闇",
+      "kind": "デバフ",
+      "description": "命中率減少",
+      "note": "",
+      "sortOrder": 24
+    },
+    {
+      "buffId": "bf-0025",
+      "name": "疲労",
+      "kind": "デバフ",
+      "description": "相手よりもガッツ回復速度が高い時、ガッツ回復速度減少",
+      "note": "",
+      "sortOrder": 25
+    },
+    {
+      "buffId": "bf-0026",
+      "name": "追撃封鎖",
+      "kind": "デバフ",
+      "description": "追撃を減少",
+      "note": "",
+      "sortOrder": 26
+    },
+    {
+      "buffId": "bf-0027",
+      "name": "混乱",
+      "kind": "デバフ",
+      "description": "忠誠度が0になる",
+      "note": "",
+      "sortOrder": 27
+    },
+    {
+      "buffId": "bf-0028",
+      "name": "虚弱",
+      "kind": "デバフ",
+      "description": "丈夫さとガッツ回復速度減少",
+      "note": "",
+      "sortOrder": 28
+    },
+    {
+      "buffId": "bf-0029",
+      "name": "乱心",
+      "kind": "デバフ",
+      "description": "技発動時、意味不明の発生確率が上昇し、効果中は被ダメージ増加",
+      "note": "",
+      "sortOrder": 29
+    },
+    {
+      "buffId": "bf-0030",
+      "name": "火傷",
+      "kind": "デバフ",
+      "description": "技を受けた時、相手の技に対してダメージ上昇と追撃を追加",
+      "note": "",
+      "sortOrder": 30
+    },
+    {
+      "buffId": "bf-0031",
+      "name": "裂傷",
+      "kind": "デバフ",
+      "description": "被ダメージ上昇",
+      "note": "",
+      "sortOrder": 31
+    },
+    {
+      "buffId": "bf-0032",
+      "name": "出血",
+      "kind": "デバフ",
+      "description": "一定時間ごとに継続ダメージと被クリティカル率上昇",
+      "note": "",
+      "sortOrder": 32
+    },
+    {
+      "buffId": "bf-0033",
+      "name": "魅了",
+      "kind": "デバフ",
+      "description": "攻撃ステータスと命中率を減少",
+      "note": "",
+      "sortOrder": 33
+    },
+    {
+      "buffId": "bf-0034",
+      "name": "傷口",
+      "kind": "デバフ",
+      "description": "被クリティカル率上昇",
+      "note": "最大Lv10まで累積",
+      "sortOrder": 34
+    }
+  ]
+}

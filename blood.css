@@ -1,0 +1,455 @@
+/* 血統ページ（monsters/<モン類>/<血統>/index.html）専用。
+   共通の見た目は style.css が正。ここでは技表と技詳細だけを持つ。 */
+
+/* 枠線と角丸はスクロール枠が持つ。表側に overflow を置くと
+   ランク列の position: sticky が無効になるため。 */
+.blood-page .skill-matrix-scroll {
+  margin-top: 16px;
+  background: #fff;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.blood-page .skill-matrix {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.blood-page .skill-matrix-note {
+  margin: 0;
+  color: #7a6a4f;
+  font-size: 13px;
+}
+
+/* 横スクロール中もランク列を残す */
+.blood-page .skill-matrix thead th:first-child,
+.blood-page .skill-matrix .skill-rank {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  border-right: 1px solid #eee4d3;
+}
+
+.blood-page .skill-matrix thead th {
+  padding: 10px 12px;
+  background: #fff;
+  border-bottom: 1px solid #eee4d3;
+  color: #5b4218;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.blood-page .skill-matrix .skill-rank {
+  width: 64px;
+  padding: 10px 12px;
+  background: #fff;
+  border-bottom: 1px solid #eee4d3;
+  color: #5b4218;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.blood-page .skill-cell {
+  min-width: 150px;
+  padding: 6px;
+  border-bottom: 1px solid #eee4d3;
+  border-left: 1px solid #f2ead9;
+  vertical-align: top;
+}
+
+/* 間合いの色。ゲーム内タブと同じ 遠＝青・中＝緑・近＝オレンジ・零＝赤。
+   thead th の指定より詳細度を上げる必要があるため thead を挟む。 */
+.blood-page .skill-matrix thead .skill-range-head {
+  border-bottom-width: 3px;
+  border-bottom-style: solid;
+}
+
+.blood-page .skill-matrix thead .skill-range-far  { color: #2b6cb0; border-bottom-color: #3182ce; }
+.blood-page .skill-matrix thead .skill-range-mid  { color: #226b46; border-bottom-color: #2f9e68; }
+.blood-page .skill-matrix thead .skill-range-near { color: #9c4221; border-bottom-color: #dd6b20; }
+.blood-page .skill-matrix thead .skill-range-zero { color: #c53030; border-bottom-color: #e53e3e; }
+
+/* セルの背景は白。距離の色は見出しだけに閉じ込め、
+   セル内の色は「技種」だけを意味するようにする。 */
+.blood-page .skill-cell { background: #fff; }
+
+/* スクリーンリーダー用。ランク列の見出し文言は視覚的には出さない */
+.blood-page .skill-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 技チップ。押すと同じ行の直下に詳細が開く。 */
+.blood-page .skill-chip {
+  display: block;
+  width: 100%;
+  margin: 0 0 4px;
+  padding: 7px 9px;
+  background: #fffdf8;
+  border: 1px solid #eadfca;
+  border-radius: 6px;
+  color: #333;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: left;
+  cursor: pointer;
+}
+
+.blood-page .skill-chip:last-child { margin-bottom: 0; }
+
+/* 技種の色分け。ちから＝黄系・かしこさ＝緑系。
+   かしこさは中距離の見出し緑と混ざらないよう濃いめにする。 */
+.blood-page .skill-chip--power { background: #fdf0cf; border-color: #dcb861; }
+.blood-page .skill-chip--wits  { background: #cfe6d6; border-color: #5f9f79; }
+
+/* 選択・ホバーは背景を変えず、枠を太くして示す。
+   背景を変えると技種の色分けが消えてしまうため。 */
+.blood-page .skill-chip:hover,
+.blood-page .skill-chip[aria-expanded="true"] { box-shadow: 0 0 0 2px #f0a500; }
+.blood-page .skill-chip--power:hover,
+.blood-page .skill-chip--power[aria-expanded="true"] { box-shadow: 0 0 0 2px #a9741b; }
+.blood-page .skill-chip--wits:hover,
+.blood-page .skill-chip--wits[aria-expanded="true"] { box-shadow: 0 0 0 2px #2f6b48; }
+
+.blood-page .skill-aura {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+  border: 1px solid rgba(0, 0, 0, .18);
+  border-radius: 50%;
+  vertical-align: baseline;
+}
+
+.blood-page .skill-aura-赤 { background: #e53e3e; }
+.blood-page .skill-aura-青 { background: #3182ce; }
+.blood-page .skill-aura-黄 { background: #d69e2e; }
+.blood-page .skill-aura-黒 { background: #4a4a4a; }
+.blood-page .skill-aura-白 { background: #f7f5f0; }
+.blood-page .skill-aura-緑 { background: #38a169; }
+.blood-page .skill-aura-無 { background: transparent; border-style: dashed; }
+
+.blood-page .skill-chip-name { font-weight: bold; }
+
+.blood-page .skill-chip-meta {
+  display: block;
+  color: #7a6a4f;
+  font-size: 12px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+.blood-page .skill-chip-move { margin-left: 4px; color: #b7791f; }
+
+.blood-page .skill-chip-unique {
+  display: block;
+  margin-top: 2px;
+  color: #b7791f;
+  font-size: 11px;
+}
+
+/* 技詳細（行内アコーディオン） */
+/* 表のセルが白なので、開いた詳細は色を付けて境界を作る。
+   色は技種に合わせ、見出し列・チップと同じ意味づけを保つ。 */
+.blood-page .skill-detail > td {
+  padding: 0;
+  background: #f7f3ea;
+  border-bottom: 1px solid #eee4d3;
+}
+
+.blood-page .skill-detail--power > td { background: #fdf6e6; }
+.blood-page .skill-detail--wits > td  { background: #e9f3ec; }
+
+/* 左の色帯。横スクロールしても左端に残り「ここからが詳細」を示す */
+.blood-page .skill-detail-inner { border-left: 4px solid #c9bda6; }
+.blood-page .skill-detail--power .skill-detail-inner { border-left-color: #dcb861; }
+.blood-page .skill-detail--wits .skill-detail-inner  { border-left-color: #5f9f79; }
+
+/* 表を横スクロールしても詳細は読める位置に留める。
+   幅はスクロール枠の可視幅（100cqi）に合わせる。 */
+.blood-page .skill-detail-inner {
+  position: sticky;
+  left: 0;
+  box-sizing: border-box;
+  width: min(100%, calc(100vw - 40px));
+}
+
+/* 開閉のアニメーション。grid-template-rows の 0fr→1fr で実際の高さを展開する。
+   display の切り替えには transition が効かないため keyframes を使う。
+   overflow を持つのは clip だけ。inner に置くと sticky が無効になる。 */
+.blood-page .skill-detail-anim {
+  display: grid;
+  grid-template-rows: 1fr;
+}
+
+.blood-page .skill-detail-clip {
+  min-height: 0;
+  overflow: hidden;
+  /* 左paddingは「色帯の右端からの余白」。border-left の外側には出ない */
+  padding: 14px 16px 18px 16px;
+}
+
+@keyframes skill-detail-open {
+  from { grid-template-rows: 0fr; opacity: 0; }
+  to   { grid-template-rows: 1fr; opacity: 1; }
+}
+
+@keyframes skill-detail-close {
+  from { grid-template-rows: 1fr; opacity: 1; }
+  to   { grid-template-rows: 0fr; opacity: 0; }
+}
+
+.blood-page .skill-detail:not([hidden]) .skill-detail-anim {
+  animation: skill-detail-open 240ms cubic-bezier(.2, .7, .3, 1);
+}
+
+.blood-page .skill-detail:not([hidden]) .skill-detail-anim.is-closing {
+  animation: skill-detail-close 170ms ease-in forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blood-page .skill-detail:not([hidden]) .skill-detail-anim,
+  .blood-page .skill-detail:not([hidden]) .skill-detail-anim.is-closing { animation: none; }
+}
+
+.blood-page .skill-detail-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  background: #fff;
+  border: 1px solid #eadfca;
+  border-radius: 6px;
+  color: #7a6a4f;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.blood-page .skill-detail-close:hover { background: #fff3cd; border-color: #f0a500; color: #5b4218; }
+
+.blood-page .skill-detail-name { padding-right: 34px; }
+
+@supports (container-type: inline-size) {
+  .blood-page .skill-matrix-scroll { container-type: inline-size; }
+  .blood-page .skill-detail-inner { width: 100cqi; }
+}
+
+.blood-page .skill-detail-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  color: #5b4218;
+  font-size: 15px;
+}
+
+.blood-page .skill-detail-name .skill-aura {
+  width: 12px;
+  height: 12px;
+  margin-right: 0;
+  flex: none;
+}
+
+.blood-page .skill-detail-place {
+  color: #7a6a4f;
+  font-size: 12px;
+  font-weight: normal;
+}
+
+/* 4列は均等幅。PC・SPとも列がずれないよう table-layout: fixed で固定する。 */
+.blood-page .skill-detail-table {
+  width: 100%;
+  margin-top: 12px;
+  border: 1px solid #eadfca;
+  border-radius: 8px;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  table-layout: fixed;
+}
+
+.blood-page .skill-detail-table th,
+.blood-page .skill-detail-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #eee4d3;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* 左2列＝技の条件、右2列＝性能の4列組。見出し列は狭くてよい。
+   見出しの色は技種に合わせ、表のチップと同じ意味づけにする。 */
+.blood-page .skill-detail-table th {
+  background: #f4efe4;
+  color: #5b4218;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.blood-page .skill-detail-table--power th { background: #fdf0cf; color: #5b4218; }
+.blood-page .skill-detail-table--wits th  { background: #cfe6d6; color: #204b34; }
+
+/* 4列とも25%。colspan の行だけ残りをまとめて使う */
+.blood-page .skill-detail-table th,
+.blood-page .skill-detail-table td { width: 25%; }
+
+.blood-page .skill-detail-table th + th,
+.blood-page .skill-detail-table td + th { border-left: 1px solid #eee4d3; }
+
+.blood-page .skill-detail-table td { background: #fff; color: #333; }
+
+.blood-page .skill-detail-table tr:last-child th,
+.blood-page .skill-detail-table tr:last-child td { border-bottom: none; }
+
+.blood-page .skill-detail-subtitle {
+  margin: 16px 0 8px;
+  color: #5b4218;
+  font-size: 14px;
+}
+
+/* 技能力は青などの意味を持つ色を使わない。
+   青＝遠距離・緑＝かしこさ と衝突して読み違えるため、無彩色に寄せる。 */
+.blood-page .skill-ability {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #e6e0d5;
+  border-left: 4px solid #b8ac97;
+  border-radius: 6px;
+}
+
+.blood-page .skill-ability-name {
+  margin: 0 0 4px;
+  color: #4a4235;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.blood-page .skill-ability-desc {
+  margin: 0;
+  color: #444;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.blood-page .skill-detail-note {
+  margin: 12px 0 0;
+  color: #7a6a4f;
+  font-size: 13px;
+}
+
+.blood-page .skill-unique-lead {
+  margin: 0 0 8px;
+  color: #7a6a4f;
+  font-size: 14px;
+}
+
+.blood-page .skill-unique-list {
+  margin: 0;
+  padding-left: 1.3em;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+@media (max-width: 600px) {
+  .blood-page .skill-matrix .skill-rank { width: 62px; padding: 8px 4px; font-size: 12px; }
+  .blood-page .skill-cell { min-width: 138px; }
+  .blood-page .skill-chip { padding: 6px 7px; font-size: 12px; }
+  /* 4列均等のまま見出しを1行に収めるため、内側の余白を詰めて列幅を稼ぐ */
+  .blood-page .skill-detail-clip { padding: 12px 8px 16px 10px; }
+  .blood-page .skill-detail-table th,
+  .blood-page .skill-detail-table td { padding: 7px 2px; font-size: 12px; }
+  /* 「クリティカル率」「技登録の解放元」の7文字が1行で入る最大サイズ */
+  .blood-page .skill-detail-table th { font-size: 9px; letter-spacing: -0.2px; }
+  .blood-page .skill-ability { padding: 9px 10px; }
+  .blood-page .skill-ability-name { font-size: 11.5px; }
+  .blood-page .skill-ability-desc { font-size: 11px; line-height: 1.65; }
+  .blood-page .skill-buff { font-size: 11px; }
+  .blood-page .skill-buff-note { font-size: 10.5px; }
+  .blood-page .skill-detail-none { font-size: 11.5px; }
+}
+
+/* バフ・デバフは、それを起こす技能力のカードの中に置く。
+   バフ＝緑・デバフ＝赤で、▲▼ の記号・名前の文字・名前の背景を同系色でそろえる。
+   記号だけでは有利・不利が読み取りにくいため、ここは例外的に色で意味を示す。
+   間合いの色（緑＝中距離・赤＝零距離）とは、名前バッジという小さな面と
+   カード内という文脈で区別する。 */
+.blood-page .skill-ability-buffs {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed #e0d8c8;
+}
+
+.blood-page .skill-buff {
+  position: relative;
+  margin: 0 0 4px;
+  padding-left: 16px;
+  color: #6b6152;
+  font-size: 11.5px;
+  line-height: 1.65;
+}
+
+.blood-page .skill-buff:last-child { margin-bottom: 0; }
+
+.blood-page .skill-buff::before {
+  position: absolute;
+  left: 0;
+  font-size: 10px;
+}
+
+.blood-page .skill-buff-name {
+  margin-right: 6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.blood-page .skill-buff--buff::before { content: "▲"; color: #2f7a50; }
+.blood-page .skill-buff--buff .skill-buff-name { background: #e3f1e8; color: #2f7a50; }
+
+.blood-page .skill-buff--debuff::before { content: "▼"; color: #b23a37; }
+.blood-page .skill-buff--debuff .skill-buff-name { background: #fae9e7; color: #b23a37; }
+
+.blood-page .skill-buff-note {
+  display: block;
+  margin-top: 2px;
+  color: #8c8271;
+  font-size: 11px;
+}
+
+.blood-page .skill-buff-note::before { content: "※"; }
+
+/* 技能力が無い技。見出しは残して「なし」と書く（見出しごと消すと構造が揺れる） */
+.blood-page .skill-detail-none {
+  margin: 0;
+  color: #8c8271;
+  font-size: 12px;
+}
+
+/* 技能力の解放条件（そのモンスターを★Nにすると解放される） */
+.blood-page .skill-ability-unlock {
+  display: block;
+  margin-top: 2px;
+  color: #9c4221;
+  font-size: 11px;
+  font-weight: normal;
+}

@@ -197,3 +197,77 @@
     font-size: 18px;
   }
 }
+
+/* 技セクション（固有技・レア度上昇で解放できる技）。
+   血統共通技の全量は血統ページに置き、ここには出さない。 */
+.monster-detail-page .skill-section-lead {
+  margin: 0 0 10px;
+  color: #7a6a4f;
+  font-size: 13px;
+}
+
+.monster-detail-page .skill-line-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.monster-detail-page .skill-line {
+  margin-bottom: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 1px solid #eadfca;
+  border-left: 4px solid #c9bda6;
+  border-radius: 6px;
+}
+
+.monster-detail-page .skill-line:last-child { margin-bottom: 0; }
+
+/* 技種の色分けは血統ページの技表と揃える */
+.monster-detail-page .skill-line--power { background: #fdf6e6; border-left-color: #dcb861; }
+.monster-detail-page .skill-line--wits  { background: #e9f3ec; border-left-color: #5f9f79; }
+
+.monster-detail-page .skill-line-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.monster-detail-page .skill-line-name:hover { text-decoration: underline; }
+
+.monster-detail-page .skill-line .skill-aura {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border: 1px solid rgba(0, 0, 0, .18);
+  border-radius: 50%;
+  flex: none;
+}
+
+.monster-detail-page .skill-line .skill-aura-赤 { background: #e53e3e; }
+.monster-detail-page .skill-line .skill-aura-青 { background: #3182ce; }
+.monster-detail-page .skill-line .skill-aura-黄 { background: #d69e2e; }
+.monster-detail-page .skill-line .skill-aura-黒 { background: #4a4a4a; }
+.monster-detail-page .skill-line .skill-aura-白 { background: #f7f5f0; }
+.monster-detail-page .skill-line .skill-aura-緑 { background: #38a169; }
+.monster-detail-page .skill-line .skill-aura-無 { background: transparent; border-style: dashed; }
+
+.monster-detail-page .skill-line-req {
+  margin-left: 8px;
+  color: #9c4221;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.monster-detail-page .skill-line-meta,
+.monster-detail-page .skill-line-abilities {
+  display: block;
+  margin-top: 3px;
+  color: #7a6a4f;
+  font-size: 12px;
+  line-height: 1.6;
+}

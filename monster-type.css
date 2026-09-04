@@ -37,6 +37,16 @@
   line-height: 1.5;
 }
 
+/* 血統ページへの導線。見た目はモンスター詳細の血統導線と同じ menu-link に任せ、
+   ここでは位置と余白だけを持つ。見出しの横に並べるとSPで折り返しが乱れるため、
+   PC・SPとも血統名の下の行に置く */
+.mon-type-page .mon-type-blood-skill-nav {
+  /* 1列だけの導線なので、style.css の auto-fill 1fr ではなく内容幅で止める。
+     1fr のままだと列幅が足りずラベルが2行に折り返す */
+  grid-template-columns: minmax(0, max-content);
+  margin: 0 0 24px;
+}
+
 .mon-type-page .mon-type-grid {
   align-items: stretch;
 }
@@ -78,5 +88,9 @@
   .mon-type-page .mon-type-blood-title {
     margin: 28px 0 16px;
     font-size: 14px;
+  }
+
+  .mon-type-page .mon-type-blood-skill-nav {
+    margin-bottom: 20px;
   }
 }
