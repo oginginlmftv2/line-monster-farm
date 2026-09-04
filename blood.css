@@ -388,14 +388,6 @@
   .blood-page .skill-detail-none { font-size: 11.5px; }
 }
 
-/* モン類ページ：血統ページがある血統の見出し */
-.mon-type-page .mon-type-blood-skills {
-  margin-left: 8px;
-  color: #7a6a4f;
-  font-size: 12px;
-  font-weight: normal;
-}
-
 /* バフ・デバフは、それを起こす技能力のカードの中に置く。
    バフ＝緑・デバフ＝赤で、▲▼ の記号・名前の文字・名前の背景を同系色でそろえる。
    記号だけでは有利・不利が読み取りにくいため、ここは例外的に色で意味を示す。

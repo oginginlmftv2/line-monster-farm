@@ -1512,17 +1512,23 @@ ${editorialMembers.map(monster => renderMonTypeCard(monster, context)).join('\n'
 ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
     </div>`
       : '';
-    // 血統ページがある血統だけ見出しをリンクにする
+    // 血統見出しは常にテキストのまま。血統ページがある血統だけ、見出しの下へ技一覧ボタンを置く。
+    // 見出し自体をリンクにすると、体数の表示とリンク先（技一覧）が食い違って読める。
+    // ボタンはモンスター詳細の血統導線と同じ menu-grid + menu-link を使う。
+    // 見出しの横に並べると、SPで血統名とボタンが不格好に折り返すため、必ず下の行へ置く。
     const bloodPage = context.bloodPageByBlood.get(group.blood);
-    let heading = `${escapeHtml(group.blood)}（${group.members.length}体）`;
+    const heading = `${escapeHtml(group.blood)}（${group.members.length}体）`;
+    let skillNav = '';
     if (bloodPage) {
       addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
-      heading = `<a href="${escapeHtml(bloodPage.slug)}/index.html">${escapeHtml(group.blood)}（${group.members.length}体）</a>`
-        + `<span class="mon-type-blood-skills">技${bloodPage.skills.length}件</span>`;
+      skillNav = `
+      <div class="menu-grid mon-type-blood-skill-nav">
+        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/index.html"><span class="icon">${MON_ICONS[bloodPage.monSlug] || ''}</span>${escapeHtml(group.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+      </div>`;
     }
     return `
     <div class="mon-type-blood-group">
-      <h3 class="mon-type-blood-title">${heading}</h3>${editorialGrid}${compactGrid}
+      <h3 class="mon-type-blood-title">${heading}</h3>${skillNav}${editorialGrid}${compactGrid}
     </div>`;
   }).join('');
   const otherMonTypes = context.eligibleMonTypes.filter(other => other.slug !== monType.slug);
