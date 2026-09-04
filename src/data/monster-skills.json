@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 14,
+    "skills": 24,
     "bloods": 1
   },
   "skills": [
@@ -525,6 +525,390 @@
       "unlockedBy": [],
       "note": "",
       "sortOrder": 14,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0015",
+      "name": "超狐火",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 25,
+      "damage": "D",
+      "accuracy": "S",
+      "gutsDown": "F",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0016",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0009",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2609",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2629",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2654",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 15,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0016",
+      "name": "火炎車",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 27,
+      "damage": "A",
+      "accuracy": "C",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0017",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0018",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2614",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2626",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 16,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0017",
+      "name": "なめろう",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "かしこさ",
+      "guts": 25,
+      "damage": "C+",
+      "accuracy": "B",
+      "gutsDown": "A",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0019",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2653",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2652",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2650",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 17,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0018",
+      "name": "ゆうわく",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 3,
+      "moveTo": "中",
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 24,
+      "damage": "F",
+      "accuracy": "B",
+      "gutsDown": "S",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0013",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0020",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0021",
+          "unlock": {
+            "monsterId": "2613",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0022",
+          "unlock": {
+            "monsterId": "2613",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2613",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2620",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 18,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0019",
+      "name": "煙幕",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 3,
+      "moveTo": "中",
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 24,
+      "damage": "F",
+      "accuracy": "B",
+      "gutsDown": "A",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0023",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2614"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 19,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0020",
+      "name": "蝶の舞",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 3,
+      "moveTo": "遠",
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 21,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "A",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0024",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0025",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2628"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 20,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0021",
+      "name": "幻の左",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 15,
+      "damage": "C",
+      "accuracy": "S",
+      "gutsDown": "C",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0026",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2652"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 21,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0022",
+      "name": "蒼炎車",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 24,
+      "damage": "C",
+      "accuracy": "A",
+      "gutsDown": "A",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0027",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0028",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2629"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 22,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0023",
+      "name": "超狐火・星",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 22,
+      "damage": "C",
+      "accuracy": "S",
+      "gutsDown": "F",
+      "critical": "E+",
+      "abilities": [
+        {
+          "abilityId": "sab-0029",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0016",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2651"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 23,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0024",
+      "name": "霊子暴走",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 20,
+      "damage": "C+",
+      "accuracy": "A",
+      "gutsDown": "B",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0030",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2650"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 24,
       "status": "verified"
     }
   ]

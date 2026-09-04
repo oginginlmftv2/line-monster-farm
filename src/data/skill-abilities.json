@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 15
+    "abilities": 30
   },
   "abilities": [
     {
@@ -199,6 +199,196 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 15,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0016",
+      "name": "命中上昇[小]",
+      "version": 1,
+      "baseName": "命中上昇[小]",
+      "level": null,
+      "description": "命中パラ+20",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 16,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0017",
+      "name": "回避上昇[小]",
+      "version": 1,
+      "baseName": "回避上昇[小]",
+      "level": null,
+      "description": "回避パラ+20",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 17,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0018",
+      "name": "疫：火傷Lv2",
+      "version": 1,
+      "baseName": "疫：火傷",
+      "level": 2,
+      "description": "対象技命中時、相手に[火傷Lv2＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 18,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0019",
+      "name": "奪気Lv3",
+      "version": 1,
+      "baseName": "奪気",
+      "level": 3,
+      "description": "対象技命中時、ガッツダメージに応じてガッツ回復＜消費ガッツの30%まで＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 19,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0020",
+      "name": "呪：魅了",
+      "version": 1,
+      "baseName": "呪：魅了",
+      "level": null,
+      "description": "対象技命中時、相手に[魅了＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0033"
+      ],
+      "sortOrder": 20,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0021",
+      "name": "命中上昇[中]",
+      "version": 1,
+      "baseName": "命中上昇[中]",
+      "level": null,
+      "description": "命中パラ+30",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 21,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0022",
+      "name": "オーラインパクト",
+      "version": 1,
+      "baseName": "オーラインパクト",
+      "level": null,
+      "description": "自身のオーラと発動技のオーラ一致、または＜オーラなし＞技発動時、与ダメ上昇/ガッツ回復Lv2",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 22,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0023",
+      "name": "ちから上昇[小]",
+      "version": 1,
+      "baseName": "ちから上昇[小]",
+      "level": null,
+      "description": "ちからパラ+20",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 23,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0024",
+      "name": "[中]命中率上昇",
+      "version": 1,
+      "baseName": "[中]命中率上昇",
+      "level": null,
+      "description": "技が命中したとき中距離の命中上昇Lv3＜10秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 24,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0025",
+      "name": "疫：暗闇Lv2",
+      "version": 1,
+      "baseName": "疫：暗闇",
+      "level": 2,
+      "description": "対象技命中時、[暗闇Lv2＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0024"
+      ],
+      "sortOrder": 25,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0026",
+      "name": "恐怖の許嫁",
+      "version": 1,
+      "baseName": "恐怖の許嫁",
+      "level": null,
+      "description": "対象技発動時、技が命中した場合は一度だけ相手のガッツを0にする＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 26,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0027",
+      "name": "流転：青Lv2",
+      "version": 1,
+      "baseName": "流転：青",
+      "level": 2,
+      "description": "対象技命中時、青オーラ技のすべてのステータス上昇Lv2＜30秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 27,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0028",
+      "name": "充填Lv2",
+      "version": 1,
+      "baseName": "充填",
+      "level": 2,
+      "description": "技命中時、消費ガッツの＜10%＞回復",
+      "tags": [],
+      "buffs": [
+        "bf-0011"
+      ],
+      "sortOrder": 28,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0029",
+      "name": "疫：混乱",
+      "version": 1,
+      "baseName": "疫：混乱",
+      "level": null,
+      "description": "対象技発動時、相手に[混乱＜15秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0027"
+      ],
+      "sortOrder": 29,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0030",
+      "name": "思考加速",
+      "version": 1,
+      "baseName": "思考加速",
+      "level": null,
+      "description": "対象技命中時、相手に次の効果発動＜30秒＞＜1回＞\n・相手の意味不明の発生確率＜+35%＞\n・被ダメージ＜10%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 30,
       "status": "verified"
     }
   ]
