@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 24,
+    "skills": 38,
     "bloods": 1
   },
   "skills": [
@@ -909,6 +909,575 @@
       "unlockedBy": [],
       "note": "",
       "sortOrder": 24,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0025",
+      "name": "神狐蒼火",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 44,
+      "damage": "A",
+      "accuracy": "S",
+      "gutsDown": "D",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0031",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0032",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2620",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 25,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0026",
+      "name": "陽炎",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 34,
+      "damage": "A",
+      "accuracy": "B",
+      "gutsDown": "F",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0033",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0034",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2609",
+          "rarity": 5
+        },
+        {
+          "monsterId": "2614",
+          "rarity": 5
+        },
+        {
+          "monsterId": "2626",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 26,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0027",
+      "name": "神光石火",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 38,
+      "damage": "A",
+      "accuracy": "A",
+      "gutsDown": "F",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0035",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0036",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2654",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 27,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0028",
+      "name": "九重神眼",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 4,
+      "moveTo": "中",
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 38,
+      "damage": "B",
+      "accuracy": "S",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0037",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0038",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0032",
+          "unlock": {
+            "monsterId": "2653",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0039",
+          "unlock": {
+            "monsterId": "2653",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2653",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 28,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0029",
+      "name": "神蛇翠火",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 38,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "A",
+      "critical": "S",
+      "abilities": [
+        {
+          "abilityId": "sab-0032",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0040",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2654"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 29,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0030",
+      "name": "火ノ鳥神楽",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "ちから",
+      "guts": 38,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0041",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0042",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2614"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 30,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0031",
+      "name": "神獣白澤",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 42,
+      "damage": "S",
+      "accuracy": "D",
+      "gutsDown": "F",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0043",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0040",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2653"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 31,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0032",
+      "name": "天叢雲剣",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 38,
+      "damage": "B",
+      "accuracy": "E",
+      "gutsDown": "G",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0044",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0032",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2629"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 32,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0033",
+      "name": "降魔調伏",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 45,
+      "damage": "A",
+      "accuracy": "S",
+      "gutsDown": "F",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0045",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0046",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2652"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 33,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0034",
+      "name": "聖なる福音",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 40,
+      "damage": "B+",
+      "accuracy": "S",
+      "gutsDown": "B+",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0047",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0048",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0032",
+          "unlock": {
+            "monsterId": "2650",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0049",
+          "unlock": {
+            "monsterId": "2650",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2650"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 34,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0035",
+      "name": "炸裂気泡陣",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 45,
+      "damage": "C",
+      "accuracy": "B+",
+      "gutsDown": "C",
+      "critical": "S",
+      "abilities": [
+        {
+          "abilityId": "sab-0050",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0051",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2650",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 35,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0036",
+      "name": "天河天翔",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 41,
+      "damage": "S",
+      "accuracy": "A",
+      "gutsDown": "F",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0052",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0053",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "2651",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "2651",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2651",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 36,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0037",
+      "name": "煉獄九尾陣",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 40,
+      "damage": "B+",
+      "accuracy": "A",
+      "gutsDown": "B",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0054",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0055",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2652",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 37,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0038",
+      "name": "王狐炎衝",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 6,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 49,
+      "damage": "SS",
+      "accuracy": "A",
+      "gutsDown": "E",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0056",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0057",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2690"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 38,
       "status": "verified"
     }
   ]

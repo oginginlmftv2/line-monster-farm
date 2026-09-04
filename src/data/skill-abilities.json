@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 30
+    "abilities": 57
   },
   "abilities": [
     {
@@ -389,6 +389,334 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 30,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0031",
+      "name": "祝：霊魂Lv4",
+      "version": 1,
+      "baseName": "祝：霊魂",
+      "level": 4,
+      "description": "対象技発動時、自身に[霊魂]を付与またはレベルを4上昇＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0019"
+      ],
+      "sortOrder": 31,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0032",
+      "name": "かしこさ上昇[中]",
+      "version": 1,
+      "baseName": "かしこさ上昇[中]",
+      "level": null,
+      "description": "かしこさパラ+30",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 32,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0033",
+      "name": "陽炎[虚]",
+      "version": 1,
+      "baseName": "陽炎[虚]",
+      "level": null,
+      "description": "対象技発動時、自身に[完全回避Lv2＜1回＞]を付与する",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 33,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0034",
+      "name": "陽炎[幻]",
+      "version": 1,
+      "baseName": "陽炎[幻]",
+      "level": null,
+      "description": "対象技命中時、自身に[完全回避Lv2＜15秒＞]を付与する",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 34,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0035",
+      "name": "連撃：神光石火",
+      "version": 1,
+      "baseName": "連撃：神光石火",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 35,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0036",
+      "name": "神光",
+      "version": 1,
+      "baseName": "神光",
+      "level": null,
+      "description": "対象技発動時、消費ガッツを0にする＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 36,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0037",
+      "name": "シールド[小]：九重神眼",
+      "version": 1,
+      "baseName": "シールド[小]：九重神眼",
+      "level": null,
+      "description": "対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 37,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0038",
+      "name": "連撃（持続）：九重神眼",
+      "version": 1,
+      "baseName": "連撃（持続）：九重神眼",
+      "level": null,
+      "description": "対象技命中時、技に追加でダメージLv1を1回与える＜15秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 38,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0039",
+      "name": "ガードディクリーズ",
+      "version": 1,
+      "baseName": "ガードディクリーズ",
+      "level": null,
+      "description": "対象技発動時、相手の回避と丈夫さの基礎ステータス20%低下/ガッツ回復Lv4",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 39,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0040",
+      "name": "[遠]与ダメ上昇",
+      "version": 1,
+      "baseName": "[遠]与ダメ上昇",
+      "level": null,
+      "description": "技が命中したとき遠距離の与ダメ上昇Lv3＜10秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 40,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0041",
+      "name": "連撃：火ノ鳥神楽",
+      "version": 1,
+      "baseName": "連撃：火ノ鳥神楽",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv7を与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 41,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0042",
+      "name": "ちから上昇[中]",
+      "version": 1,
+      "baseName": "ちから上昇[中]",
+      "level": null,
+      "description": "ちからパラ+30",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 42,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0043",
+      "name": "[相手黒]クリ上昇",
+      "version": 1,
+      "baseName": "[相手黒]クリ上昇",
+      "level": null,
+      "description": "相手＜オーラ黒＞かつ技が命中したときクリ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 43,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0044",
+      "name": "連撃：天叢雲剣",
+      "version": 1,
+      "baseName": "連撃：天叢雲剣",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv5を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 44,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0045",
+      "name": "数珠：1080",
+      "version": 1,
+      "baseName": "数珠：1080",
+      "level": null,
+      "description": "対象技命中時、相手がシールドを展開中かつクリティカルだった時はシールド破壊＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 45,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0046",
+      "name": "超・占事略決",
+      "version": 1,
+      "baseName": "超・占事略決",
+      "level": null,
+      "description": "対象技命中時、オーラ技命中時にかしこさステータスの20%を攻撃ステータス加算＜20秒＞＜1回＞\n対象技命中時、自身のライフ以外のステータス上昇10%＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 46,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0047",
+      "name": "法則操作",
+      "version": 1,
+      "baseName": "法則操作",
+      "level": null,
+      "description": "対象技命中時、相手に発動中の能力をランダムで1〜3個、能力解除する＜1回＞\n解除した能力1個につき、自身の消費ガッツ＜-10%＞、相手の消費ガッツ＜+10%＞＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 47,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0048",
+      "name": "森羅万象",
+      "version": 1,
+      "baseName": "森羅万象",
+      "level": null,
+      "description": "対象技命中時、次の効果発動＜1回＞\n・[ガッツ回復100%]\n・回避20%分の【シールド】を展開する＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 48,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0049",
+      "name": "レンジブースト",
+      "version": 1,
+      "baseName": "レンジブースト",
+      "level": null,
+      "description": "対象技の間合い適性効果アップ/ガッツ回復Lv4",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 49,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0050",
+      "name": "炸裂気泡陣",
+      "version": 1,
+      "baseName": "炸裂気泡陣",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ＜30%＞の追撃を＜5回＞\n・バトル中の技発動回数に応じてクリ率が2上昇[最大10まで]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 50,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0051",
+      "name": "疫：火傷Lv3",
+      "version": 1,
+      "baseName": "疫：火傷",
+      "level": 3,
+      "description": "対象技命中時、相手に[火傷Lv3＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 51,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0052",
+      "name": "天の川",
+      "version": 1,
+      "baseName": "天の川",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・すべての技にダメージ＜30%＞の追撃効果を付与\n・すべての技ステータス上昇Lv5",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 52,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0053",
+      "name": "刹那の逢瀬",
+      "version": 1,
+      "baseName": "刹那の逢瀬",
+      "level": null,
+      "description": "バトル開始時次の効果を付与＜1回＞\n・技命中時、命中した数に応じて＜×2＞のガッツ回復",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 53,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0054",
+      "name": "煉獄Lv3",
+      "version": 1,
+      "baseName": "煉獄",
+      "level": 3,
+      "description": "対象技命中時、バトル中相手にかしこさ技を命中させた回数だけ連撃Lv3を追加＜最大3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 54,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0055",
+      "name": "狐の力",
+      "version": 1,
+      "baseName": "狐の力",
+      "level": null,
+      "description": "対象技命中時、ガッツ消費量20につき攻撃ステータス上昇5%[最大20%まで]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 55,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0056",
+      "name": "連撃：王狐炎衝",
+      "version": 1,
+      "baseName": "連撃：王狐炎衝",
+      "level": null,
+      "description": "対象技命中時、与ダメージ＜30%＞の追撃＜3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 56,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0057",
+      "name": "殺生石",
+      "version": 1,
+      "baseName": "殺生石",
+      "level": null,
+      "description": "対象技発動後、相手に＜5秒＞ごとに最大ライフ＜5%＞の継続ダメージ＜15秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 57,
       "status": "verified"
     }
   ]

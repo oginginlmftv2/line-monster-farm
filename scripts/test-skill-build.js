@@ -108,8 +108,9 @@ const passNormal = label => { normal++; console.log(`PASS 正常${normal}: ${lab
 }
 {
   assert(SKILL_GRADE_PATTERN.test('B+') && SKILL_GRADE_PATTERN.test('G'));
-  assert(!SKILL_GRADE_PATTERN.test('SS') && !SKILL_GRADE_PATTERN.test('H') && !SKILL_GRADE_PATTERN.test('++'));
-  passNormal('評価パターンが S+〜G だけを受理する');
+  assert(SKILL_GRADE_PATTERN.test('SS') && SKILL_GRADE_PATTERN.test('SS+'));
+  assert(!SKILL_GRADE_PATTERN.test('SSS') && !SKILL_GRADE_PATTERN.test('H') && !SKILL_GRADE_PATTERN.test('++'));
+  passNormal('評価パターンが SS〜G だけを受理する');
 }
 {
   const skill = { ...baseSkill(), unlockedBy: [{ monsterId: members[0].id, rarity: SKILL_RARITY_MIN }, { monsterId: members[1].id, rarity: SKILL_RARITY_MAX }] };
@@ -175,7 +176,7 @@ const broken = [
   ['範囲外のランク', [{ ...baseSkill(), rank: 7 }], abilityDb(), /rank は1〜6/],
   ['範囲外の間合い', [{ ...baseSkill(), range: '超遠' }], abilityDb(), /range は/],
   ['未知のオーラ', [{ ...baseSkill(), aura: '虹' }], abilityDb(), /aura は/],
-  ['不正な評価', [{ ...baseSkill(), damage: 'SS' }], abilityDb(), /damage は S\+〜G/],
+  ['不正な評価', [{ ...baseSkill(), damage: 'SSS' }], abilityDb(), /damage は SS〜G/],
   ['moveToがrangeと同じ', [{ ...baseSkill(), moveTo: '遠' }], abilityDb(), /moveTo が range と同じ/],
   ['未解決の技能力ID', [{ ...baseSkill(), abilities: [{ abilityId: 'sab-9999', unlock: null }] }], abilityDb(), /未解決の能力ID/],
   ['技能力が文字列のまま', [{ ...baseSkill(), abilities: ['sab-0001'] }], abilityDb(), /\{ abilityId, unlock \}/],

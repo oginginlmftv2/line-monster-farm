@@ -23,7 +23,8 @@ const SKILL_RANKS = [1, 2, 3, 4, 5, 6];
 // 技のオーラはモンスターの6色に「無」を足した7値。
 const SKILL_AURAS = ['赤', '青', '黄', '黒', '白', '緑', '無'];
 // ダメージ・命中率・ガッツダウン・クリティカル率の評価。各段に + 付きが存在する。
-const SKILL_GRADE_PATTERN = /^[SABCDEFG]\+?$/;
+// 評価は SS〜G。SS はランク6の技で初出（キュービ種 王狐炎衝）
+const SKILL_GRADE_PATTERN = /^(?:SS|[SABCDEFG])\+?$/;
 // 技登録に必要なレアリティ（★1〜10）
 const SKILL_RARITY_MIN = 1;
 const SKILL_RARITY_MAX = 10;
@@ -38,6 +39,8 @@ const SKILL_BUFF_KINDS = ['バフ', 'デバフ'];
 const NON_BUFF_TOKENS = [
   '序盤', '中盤', '終盤', '有利', '不利', '同色', '異色',
   'シールド', 'バリア', '固有', '自身', '相手',
+  // 技能力テキストの効果表記。バフ・デバフ一覧には無い（例 [完全回避Lv2＜1回＞]）
+  '完全回避',
   // モン類を指定する発動条件（例 [相手魔族以外]）。バフではない
   '相手魔族以外',
 ];
@@ -1833,7 +1836,7 @@ function validateSkillData(skillDb, abilityDb, idsJson, buffDb) {
     for (const field of ['damage', 'accuracy', 'gutsDown', 'critical']) {
       const value = skill[field];
       if (value !== null && !SKILL_GRADE_PATTERN.test(String(value))) {
-        errors.push(`${where}: ${field} は S+〜G の評価か null です: ${value}`);
+        errors.push(`${where}: ${field} は SS〜G の評価か null です: ${value}`);
       }
     }
     // 技能力は { abilityId, unlock } の組。同じ能力名でも解放条件は技ごとに違うため、
