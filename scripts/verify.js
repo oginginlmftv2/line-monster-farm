@@ -1806,7 +1806,7 @@ head('19. 技DB・血統ページ');
         }
       }
       for (const rank of SKILL_RANKS) {
-        if (!html.includes(`>ランク${rank}</th>`)) issues.push(`${rel}: ランク${rank}の行が無い`);
+        if (!html.includes(`>ランク${rank}</span></th>`)) issues.push(`${rel}: ランク${rank}の行が無い`);
       }
       // 技詳細は最初からDOMに存在し hidden で隠れていること（モーダル差し込みにしない）
       const chips = (html.match(/class="skill-chip[ "]/g) || []).length;
@@ -1817,7 +1817,7 @@ head('19. 技DB・血統ページ');
       // 開閉アニメの入れ子。overflow を持つのは clip 側だけ（inner に置くと sticky が壊れる）
       const anims = (html.match(/class="skill-detail-anim"><div class="skill-detail-clip"/g) || []).length;
       if (anims !== details) issues.push(`${rel}: 詳細行${details}件に対し開閉アニメの入れ子${anims}件（一致必須）`);
-      if (!html.includes('<noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>')) {
+      if (!html.includes('<noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>')) {
         issues.push(`${rel}: JS無効時に技詳細を開くnoscriptが無い`);
       }
       // モンスター詳細からのアンカー（index.html#sk-0001）で開けること

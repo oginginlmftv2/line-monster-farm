@@ -2084,19 +2084,30 @@ function renderSkillTable(skills, context, abilityById) {
       const inCell = sortSkillsInCell(cells.get(`${range}|${rank}`) || []);
       rankSkills.push(...inCell);
       const rangeClass = ` skill-col-${SKILL_RANGE_TONE[range]}`;
+      const uniqueId = `skill-unique-${SKILL_RANGE_TONE[range]}-${rank}`;
       // 未実装の枠は空セル。×を置くと表が読みにくくなる
       if (!inCell.length) {
         return `          <td class="skill-cell skill-cell--empty${rangeClass}"></td>`;
       }
+      // 固有技はセル内でたたむ。共通技だけを常に見せ、横幅と縦の見通しを保つ。
+      const commonSkills = inCell.filter(skill => !skill.unique);
+      const uniqueSkills = inCell.filter(skill => skill.unique);
+      const commonHtml = commonSkills.map(skill => renderSkillChip(skill, context)).join('\n');
+      const uniqueHtml = uniqueSkills.length
+        ? `${commonHtml ? '\n' : ''}            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="${uniqueId}"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">${uniqueSkills.length}</span></button>
+            <div class="skill-unique-wrap" id="${uniqueId}" hidden>
+${uniqueSkills.map(skill => renderSkillChip(skill, context)).join('\n')}
+            </div>`
+        : '';
       return `          <td class="skill-cell${rangeClass}">
-${inCell.map(skill => renderSkillChip(skill, context)).join('\n')}
+${commonHtml}${uniqueHtml}
           </td>`;
     }).join('\n');
     const detailRows = rankSkills
       .map(skill => renderSkillDetailRow(skill, context, abilityById, columnCount))
       .join('\n');
     return `        <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク${rank}</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク${rank}</span></th>
 ${columns}
         </tr>${detailRows ? `\n${detailRows}` : ''}`;
   }).join('\n');
@@ -2283,13 +2294,31 @@ ${memberCards}
     for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
   }
 
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
   function openSkill(id) {
     var row = document.getElementById(id);
     if (!row) return null;
     closeAll();
     row.hidden = false;
     var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
-    if (chip) chip.setAttribute('aria-expanded', 'true');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
     return chip;
   }
 
@@ -2301,6 +2330,17 @@ ${memberCards}
         closeRow(openRow, true);
         var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
         if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
       }
       return;
     }
@@ -2353,7 +2393,7 @@ ${memberCards}
   <script type="application/ld+json">${bloodBreadcrumbJson(bloodGate, hasMonTypePage)}</script>
   <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
   <link rel="stylesheet" href="${ROOT_PREFIX}blood.css">
-  <noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>${adsense}
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>${adsense}
 </head>
 ${body}</html>
 `;

@@ -54,6 +54,9 @@
   white-space: nowrap;
 }
 
+/* ランク列は縦書き。横スクロール中も残る列なので、幅を1文字ぶんまで削る。 */
+.blood-page .skill-rank-label { display: inline-block; }
+
 .blood-page .skill-cell {
   min-width: 150px;
   padding: 6px;
@@ -370,10 +373,59 @@
   line-height: 1.9;
 }
 
+/* 固有技はセル内でたたむ。ボタンは技チップのおよそ3分の1の高さに収め、
+   共通技の下に置く。固有技が無いセルにはボタンごと出さない。 */
+.blood-page .skill-unique-toggle {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 1px 6px;
+  background: #fdf6e6;
+  border: 1px dashed #dcb861;
+  border-radius: 5px;
+  color: #9c6b16;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.35;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.blood-page .skill-unique-toggle:hover { background: #fbecd0; }
+
+.blood-page .skill-unique-count {
+  margin-left: 4px;
+  color: #b7791f;
+  font-size: 10px;
+}
+
+.blood-page .skill-unique-count::before { content: "("; }
+.blood-page .skill-unique-count::after { content: ")"; }
+
+.blood-page .skill-unique-wrap { margin-top: 4px; }
+
+.blood-page .skill-unique-wrap .skill-chip { margin-bottom: 4px; }
+.blood-page .skill-unique-wrap .skill-chip:last-child { margin-bottom: 0; }
+
 @media (max-width: 600px) {
-  .blood-page .skill-matrix .skill-rank { width: 62px; padding: 8px 4px; font-size: 12px; }
-  .blood-page .skill-cell { min-width: 138px; }
-  .blood-page .skill-chip { padding: 6px 7px; font-size: 12px; }
+  /* ランク列を縦書きにして、横スクロールに使える幅をセルへ回す */
+  .blood-page .skill-matrix .skill-rank { width: 24px; padding: 8px 2px; font-size: 12px; }
+  .blood-page .skill-rank-label {
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0;
+  }
+  /* 列幅はチップの中身（技種／ガッツの1行）で決まる。min-width はそれを下回る値にして、
+     余った幅を各列へ配らないようにする */
+  .blood-page .skill-matrix { min-width: 460px; }
+  .blood-page .skill-cell { min-width: 104px; padding: 5px 4px; }
+  .blood-page .skill-unique-toggle { font-size: 10px; padding: 0 4px; }
+  .blood-page .skill-chip { padding: 6px 6px; font-size: 12px; }
+  /* チップの横幅を詰める。ドットと技名の間を狭め、技種／ガッツはボタンと同じ10pxにする */
+  .blood-page .skill-chip .skill-aura { margin-right: 2px; }
+  .blood-page .skill-chip-meta { font-size: 10px; }
+  .blood-page .skill-chip-unique { font-size: 10px; }
   /* 4列均等のまま見出しを1行に収めるため、内側の余白を詰めて列幅を稼ぐ */
   .blood-page .skill-detail-clip { padding: 12px 8px 16px 10px; }
   .blood-page .skill-detail-table th,
