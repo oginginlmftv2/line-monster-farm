@@ -1,0 +1,531 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "手入力"
+  ],
+  "generatedAt": null,
+  "counts": {
+    "skills": 14,
+    "bloods": 1
+  },
+  "skills": [
+    {
+      "skillId": "sk-0001",
+      "name": "神域移動",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 1,
+      "moveTo": "零",
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 16,
+      "damage": "F",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0001",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2613",
+          "rarity": 2
+        },
+        {
+          "monsterId": "2652",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 1,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0002",
+      "name": "八嵐天衝",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 42,
+      "damage": "A",
+      "accuracy": "B",
+      "gutsDown": "F",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0002",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0003",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "2629",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "2629",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2629",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 2,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0003",
+      "name": "狐火",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 15,
+      "damage": "E+",
+      "accuracy": "A",
+      "gutsDown": "G",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0006",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2628",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 3,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0004",
+      "name": "ひのこ",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 19,
+      "damage": "C",
+      "accuracy": "D",
+      "gutsDown": "E",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0007",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2614",
+          "rarity": 2
+        },
+        {
+          "monsterId": "2651",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 4,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0005",
+      "name": "ひっかき",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "零",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 14,
+      "damage": "F",
+      "accuracy": "D",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2608",
+          "rarity": 2
+        },
+        {
+          "monsterId": "2654",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 5,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0006",
+      "name": "狐火・藍",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 21,
+      "damage": "E",
+      "accuracy": "A",
+      "gutsDown": "G",
+      "critical": "F",
+      "abilities": [],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2620"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 6,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0007",
+      "name": "王狐焔",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 18,
+      "damage": "E+",
+      "accuracy": "A",
+      "gutsDown": "E",
+      "critical": "F+",
+      "abilities": [
+        {
+          "abilityId": "sab-0008",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2690"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 7,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0008",
+      "name": "提灯落とし",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 19,
+      "damage": "B",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0009",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0010",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2608",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2613",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2626",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2628",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2650",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 8,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0009",
+      "name": "提灯投げ",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "中",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 20,
+      "damage": "D",
+      "accuracy": "B",
+      "gutsDown": "E",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0009",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0011",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2620",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2653",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 9,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0010",
+      "name": "下駄蹴り",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 17,
+      "damage": "E",
+      "accuracy": "C",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0012",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2609",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2629",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2651",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 10,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0011",
+      "name": "提灯落とし・炎",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "ちから",
+      "guts": 21,
+      "damage": "B",
+      "accuracy": "C",
+      "gutsDown": "G",
+      "critical": "D+",
+      "abilities": [
+        {
+          "abilityId": "sab-0009",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0010",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2614"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 11,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0012",
+      "name": "警戒",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "近",
+      "rank": 2,
+      "moveTo": "遠",
+      "aura": "無",
+      "skillType": "かしこさ",
+      "guts": 16,
+      "damage": "F",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0013",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2628"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 12,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0013",
+      "name": "八塩折之酒",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 21,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0014",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2629"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 13,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0014",
+      "name": "提灯落とし・闇",
+      "version": 1,
+      "blood": "キュービ",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 25,
+      "damage": "C",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0015",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2652"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 14,
+      "status": "verified"
+    }
+  ]
+}

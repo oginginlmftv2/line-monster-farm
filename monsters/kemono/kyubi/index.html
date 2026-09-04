@@ -1,0 +1,859 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../S__94175247.jpg">
+  <link rel="apple-touch-icon" href="../../../S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キュービ種の技一覧（14技）と所属モンスター14体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="キュービ種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"獣族","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/"},{"@type":"ListItem","position":4,"name":"キュービ種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      <a href="../../../index.html">トップ</a>
+      <a href="../../../monsters.html">モンスター一覧</a>
+      <a href="../../../assist.html">アシストカード一覧</a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">獣族</a> &gt; キュービ種</p>
+  <h1 class="page-title">キュービ種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク1</th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0001" aria-controls="sk-0001" aria-expanded="false">
+              <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
+              <span class="skill-chip-name">神域移動</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ16</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0003" aria-controls="sk-0003" aria-expanded="false">
+              <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
+              <span class="skill-chip-name">狐火</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ15</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0006" aria-controls="sk-0006" aria-expanded="false">
+              <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
+              <span class="skill-chip-name">狐火・藍</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ21</span>
+              <span class="skill-chip-unique">固有：ハスタ</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0007" aria-controls="sk-0007" aria-expanded="false">
+              <span class="skill-aura skill-aura-黒" aria-hidden="true"></span>
+              <span class="skill-chip-name">王狐焔</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ18</span>
+              <span class="skill-chip-unique">固有：タマモノマエ</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0004" aria-controls="sk-0004" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">ひのこ</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ19</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0005" aria-controls="sk-0005" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">ひっかき</span>
+              <span class="skill-chip-meta">ちから／ガッツ14</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0001" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>神域移動<span class="skill-detail-place">遠距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>E</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2613.html">センリ</a>（★2以上）・<a href="../../../monsters/kemono/kyubi/2652.html">恐山アンナ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神の呼吸</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果を発動＜1回＞<br>・すべての技ダメージと技命中を＜3＞上昇<br>・15秒経過ごとに＜1＞減少</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0003" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>狐火<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>E+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>15</td><th>クリティカル率</th><td>F</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2628.html">エンキドゥ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：霊魂Lv1</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[霊魂]を付与またはレベルを1上昇＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">霊魂</span>自身の消費ガッツ減少し、相手の消費ガッツ増加<span class="skill-buff-note">最大Lv9まで累積</span></p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0006" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>狐火・藍<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>21</td><th>クリティカル率</th><td>F</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2620.html">ハスタ</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0007" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>王狐焔<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>E+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>F+</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2690.html">タマモノマエ</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">禍炎</p>
+            <p class="skill-ability-desc">対象技命中時、相手に[火傷Lv1＜20秒＞]と[暗闇Lv1＜20秒＞]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">暗闇</span>命中率減少</p>
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">火傷</span>技を受けた時、相手の技に対してダメージ上昇と追撃を追加</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0004" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>ひのこ<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>19</td><th>クリティカル率</th><td>G</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2614.html">アマテラス</a>（★2以上）・<a href="../../../monsters/kemono/kyubi/2651.html">オリヒメ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">疫：火傷Lv1</p>
+            <p class="skill-ability-desc">対象技命中時、相手に[火傷Lv1＜20秒＞]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">火傷</span>技を受けた時、相手の技に対してダメージ上昇と追撃を追加</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0005" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ひっかき<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>14</td><th>クリティカル率</th><td>G</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2608.html">アラクネ</a>（★2以上）・<a href="../../../monsters/kemono/kyubi/2654.html">メデューサ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク2</th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0008" aria-controls="sk-0008" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">提灯落とし</span>
+              <span class="skill-chip-meta">ちから／ガッツ19</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0011" aria-controls="sk-0011" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">提灯落とし・炎</span>
+              <span class="skill-chip-meta">ちから／ガッツ21</span>
+              <span class="skill-chip-unique">固有：アマテラス</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0013" aria-controls="sk-0013" aria-expanded="false">
+              <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
+              <span class="skill-chip-name">八塩折之酒</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ21</span>
+              <span class="skill-chip-unique">固有：オロチ</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0014" aria-controls="sk-0014" aria-expanded="false">
+              <span class="skill-aura skill-aura-黒" aria-hidden="true"></span>
+              <span class="skill-chip-name">提灯落とし・闇</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ25</span>
+              <span class="skill-chip-unique">固有：恐山アンナ</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0009" aria-controls="sk-0009" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">提灯投げ</span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0010" aria-controls="sk-0010" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">下駄蹴り</span>
+              <span class="skill-chip-meta">ちから／ガッツ17</span>
+            </button>
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0012" aria-controls="sk-0012" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">警戒</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ16</span>
+              <span class="skill-chip-unique">固有：エンキドゥ</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0008" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>提灯落とし<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>19</td><th>クリティカル率</th><td>D</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2608.html">アラクネ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2613.html">センリ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2626.html">キュービ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2628.html">エンキドゥ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2650.html">シュナ・リゾート</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：霊魂Lv2</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[霊魂]を付与またはレベルを2上昇＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">霊魂</span>自身の消費ガッツ減少し、相手の消費ガッツ増加<span class="skill-buff-note">最大Lv9まで累積</span></p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：精密Lv2</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[精密Lv2]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">精密</span>与ダメとクリダメ上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0011" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>提灯落とし・炎<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>21</td><th>クリティカル率</th><td>D+</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2614.html">アマテラス</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：霊魂Lv2</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[霊魂]を付与またはレベルを2上昇＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">霊魂</span>自身の消費ガッツ減少し、相手の消費ガッツ増加<span class="skill-buff-note">最大Lv9まで累積</span></p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：精密Lv2</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[精密Lv2]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">精密</span>与ダメとクリダメ上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0013" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>八塩折之酒<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>21</td><th>クリティカル率</th><td>G</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2629.html">オロチ</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[中]与ダメ上昇</p>
+            <p class="skill-ability-desc">技が命中したとき中距離の与ダメ上昇Lv3＜10秒＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0014" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>提灯落とし・闇<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>G</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2652.html">恐山アンナ</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">クチヨセ</p>
+            <p class="skill-ability-desc">対象技命中時、ランダムな技ステータス1つを上昇Lv3＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0009" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>提灯投げ<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>D</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2620.html">ハスタ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2653.html">ハクタク・妖</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：霊魂Lv2</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[霊魂]を付与またはレベルを2上昇＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">霊魂</span>自身の消費ガッツ減少し、相手の消費ガッツ増加<span class="skill-buff-note">最大Lv9まで累積</span></p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[獣族]変転</p>
+            <p class="skill-ability-desc">[相手魔族以外]かつ対象技命中時、有利オーラに変換＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0010" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>下駄蹴り<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>17</td><th>クリティカル率</th><td>D</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2609.html">セイラン</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2629.html">オロチ</a>（★3以上）・<a href="../../../monsters/kemono/kyubi/2651.html">オリヒメ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]</p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0012" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>警戒<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>近→遠</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>B</td></tr>
+                <tr><th>使用モンスター</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2628.html">エンキドゥ</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[小]</p>
+            <p class="skill-ability-desc">かしこさパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク3</th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク4</th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク5</th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0002" aria-controls="sk-0002" aria-expanded="false">
+              <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
+              <span class="skill-chip-name">八嵐天衝</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ42</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0002" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>八嵐天衝<span class="skill-detail-place">中距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>42</td><th>クリティカル率</th><td>D</td></tr>
+                <tr><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/kyubi/2629.html">オロチ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">背水Lv4</p>
+            <p class="skill-ability-desc">[終盤]対象技命中時、残りライフが少ないほど攻撃ステータス上昇[最大40%]、さらに残り10秒の時、技ダメージ上昇Lv3</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：霊魂Lv8</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[霊魂]を付与またはレベルを8上昇＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">霊魂</span>自身の消費ガッツ減少し、相手の消費ガッツ増加<span class="skill-buff-note">最大Lv9まで累積</span></p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/kemono/kyubi/2629.html">オロチ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/kemono/kyubi/2629.html">オロチ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク6</th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">固有技</h2>
+    <p class="skill-unique-lead">キュービ種のうち、特定のモンスターだけが使える技です。</p>
+    <ul class="skill-unique-list">
+      <li><a href="#sk-0006">狐火・藍</a>（中距離ランク1／ハスタ）</li>
+      <li><a href="#sk-0007">王狐焔</a>（中距離ランク1／タマモノマエ）</li>
+      <li><a href="#sk-0011">提灯落とし・炎</a>（遠距離ランク2／アマテラス）</li>
+      <li><a href="#sk-0012">警戒</a>（近距離ランク2／エンキドゥ）</li>
+      <li><a href="#sk-0013">八塩折之酒</a>（遠距離ランク2／オロチ）</li>
+      <li><a href="#sk-0014">提灯落とし・闇</a>（遠距離ランク2／恐山アンナ）</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">キュービ種のモンスター（14体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="2608.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200784_0.jpg" alt="アラクネ" loading="lazy">
+            <span class="mon-card-limited">イベント限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アラクネ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：アローヘッド</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2609.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200596_0.jpg" alt="セイラン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">セイラン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ライガー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2613.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/2613.jpg" alt="センリ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">センリ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ニャー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2614.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200800_0.jpg" alt="アマテラス" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アマテラス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ヒノトリ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2620.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200605_0.jpg" alt="ハスタ" loading="lazy">
+            <span class="mon-card-limited">超スタフェス限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハスタ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ウンディーネ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2626.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200550_0.jpg" alt="キュービ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">キュービ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：キュービ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2628.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200450_0.jpg" alt="エンキドゥ" loading="lazy">
+            <span class="mon-card-limited">イベント限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">エンキドゥ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ユグドラシル</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2629.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200620_0.jpg" alt="オロチ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">オロチ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：シンリュウ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2650.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200816_0.jpg" alt="シュナ・リゾート" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シュナ・リゾート</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2651.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200748_0.jpg" alt="オリヒメ" loading="lazy">
+            <span class="mon-card-limited">夏限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">オリヒメ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2652.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200812_0.jpg" alt="恐山アンナ" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">恐山アンナ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2653.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200549_0.jpg" alt="ハクタク・妖" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハクタク・妖</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2654.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200414_0.jpg" alt="メデューサ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">メデューサ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2690.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200818_0.jpg" alt="タマモノマエ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">タマモノマエ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ロード種</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+      <a class="menu-link" href="../index.html"><span class="icon">🐺</span> 獣族のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) chip.setAttribute('aria-expanded', 'true');
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>

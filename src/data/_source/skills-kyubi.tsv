@@ -1,0 +1,15 @@
+blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critical	ability1	ability1Unlock	ability2	ability2Unlock	ability3	ability3Unlock	ability4	ability4Unlock	unique	owners	unlockedBy	note	skillId	version
+キュービ	遠	1	神域移動	白	かしこさ	16	零	F	C	F	E	神の呼吸										センリ:2,恐山アンナ:2		
+キュービ	中	5	八嵐天衝	青	かしこさ	42		A	B	F	D	背水Lv4		祝：霊魂Lv8		テクニックレイズ	オロチ:6	テクニックオーバー	オロチ:10			オロチ:5		
+キュービ	中	1	狐火	白	かしこさ	15		E+	A	G	F	祝：霊魂Lv1										エンキドゥ:2		
+キュービ	近	1	ひのこ	赤	かしこさ	19		C	D	E	G	疫：火傷Lv1										アマテラス:2,オリヒメ:2		
+キュービ	零	1	ひっかき	無	ちから	14		F	D	G	G											アラクネ:2,メデューサ:2		
+キュービ	中	1	狐火・藍	青	かしこさ	21		E	A	G	F									1	ハスタ				
+キュービ	中	1	王狐焔	黒	かしこさ	18		E+	A	E	F+	禍炎								1	タマモノマエ				
+キュービ	遠	2	提灯落とし	無	ちから	19		B	C	F	D	祝：霊魂Lv2		祝：精密Lv2								アラクネ:3,センリ:3,キュービ:3,エンキドゥ:3,シュナ・リゾート:3			
+キュービ	中	2	提灯投げ	無	ちから	20		D	B	E	D	祝：霊魂Lv2		[獣族]変転								ハスタ:3,ハクタク・妖:3			
+キュービ	近	2	下駄蹴り	無	ちから	17		E	C	C	D	ライフ上昇[小]										セイラン:3,オロチ:3,オリヒメ:3			
+キュービ	遠	2	提灯落とし・炎	赤	ちから	21		B	C	G	D+	祝：霊魂Lv2		祝：精密Lv2						1	アマテラス				
+キュービ	近	2	警戒	無	かしこさ	16	遠	F	C	E	B	かしこさ上昇[小]								1	エンキドゥ				
+キュービ	遠	2	八塩折之酒	黄	かしこさ	21		C	C	G	G	[中]与ダメ上昇								1	オロチ				
+キュービ	遠	2	提灯落とし・闇	黒	かしこさ	25		C	B	G	G	クチヨセ								1	恐山アンナ				

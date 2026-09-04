@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "generatedFrom": [
+    "手入力"
+  ],
+  "generatedAt": null,
+  "counts": {
+    "abilities": 15
+  },
+  "abilities": [
+    {
+      "abilityId": "sab-0001",
+      "name": "神の呼吸",
+      "version": 1,
+      "baseName": "神の呼吸",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・すべての技ダメージと技命中を＜3＞上昇\n・15秒経過ごとに＜1＞減少",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 1,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0002",
+      "name": "背水Lv4",
+      "version": 1,
+      "baseName": "背水",
+      "level": 4,
+      "description": "[終盤]対象技命中時、残りライフが少ないほど攻撃ステータス上昇[最大40%]、さらに残り10秒の時、技ダメージ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 2,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0003",
+      "name": "祝：霊魂Lv8",
+      "version": 1,
+      "baseName": "祝：霊魂",
+      "level": 8,
+      "description": "対象技発動時、自身に[霊魂]を付与またはレベルを8上昇＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0019"
+      ],
+      "sortOrder": 3,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0004",
+      "name": "テクニックレイズ",
+      "version": 1,
+      "baseName": "テクニックレイズ",
+      "level": null,
+      "description": "対象技発動時、技ステータス上昇Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 4,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0005",
+      "name": "テクニックオーバー",
+      "version": 1,
+      "baseName": "テクニックオーバー",
+      "level": null,
+      "description": "対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 5,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0006",
+      "name": "祝：霊魂Lv1",
+      "version": 1,
+      "baseName": "祝：霊魂",
+      "level": 1,
+      "description": "対象技発動時、自身に[霊魂]を付与またはレベルを1上昇＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0019"
+      ],
+      "sortOrder": 6,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0007",
+      "name": "疫：火傷Lv1",
+      "version": 1,
+      "baseName": "疫：火傷",
+      "level": 1,
+      "description": "対象技命中時、相手に[火傷Lv1＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 7,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0008",
+      "name": "禍炎",
+      "version": 1,
+      "baseName": "禍炎",
+      "level": null,
+      "description": "対象技命中時、相手に[火傷Lv1＜20秒＞]と[暗闇Lv1＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0024",
+        "bf-0030"
+      ],
+      "sortOrder": 8,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0009",
+      "name": "祝：霊魂Lv2",
+      "version": 1,
+      "baseName": "祝：霊魂",
+      "level": 2,
+      "description": "対象技発動時、自身に[霊魂]を付与またはレベルを2上昇＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0019"
+      ],
+      "sortOrder": 9,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0010",
+      "name": "祝：精密Lv2",
+      "version": 1,
+      "baseName": "祝：精密",
+      "level": 2,
+      "description": "対象技発動時、自身に[精密Lv2]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0001"
+      ],
+      "sortOrder": 10,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0011",
+      "name": "[獣族]変転",
+      "version": 1,
+      "baseName": "[獣族]変転",
+      "level": null,
+      "description": "[相手魔族以外]かつ対象技命中時、有利オーラに変換＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 11,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0012",
+      "name": "ライフ上昇[小]",
+      "version": 1,
+      "baseName": "ライフ上昇[小]",
+      "level": null,
+      "description": "ライフパラ+20",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 12,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0013",
+      "name": "かしこさ上昇[小]",
+      "version": 1,
+      "baseName": "かしこさ上昇[小]",
+      "level": null,
+      "description": "かしこさパラ+20",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 13,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0014",
+      "name": "[中]与ダメ上昇",
+      "version": 1,
+      "baseName": "[中]与ダメ上昇",
+      "level": null,
+      "description": "技が命中したとき中距離の与ダメ上昇Lv3＜10秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 14,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0015",
+      "name": "クチヨセ",
+      "version": 1,
+      "baseName": "クチヨセ",
+      "level": null,
+      "description": "対象技命中時、ランダムな技ステータス1つを上昇Lv3＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 15,
+      "status": "verified"
+    }
+  ]
+}

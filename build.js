@@ -17,6 +17,31 @@ const GACHA_EXCERPT_CHARS = 140;
 const GACHA_GATE_VISIBLE_CHARS = 800;
 const GACHA_GATE_EXPLANATION = 300;
 
+// 技（スキル）。列＝技を発動できる間合い、行＝ランク。並びはゲーム内表示に合わせる。
+const SKILL_RANGES = ['遠', '中', '近', '零'];
+const SKILL_RANKS = [1, 2, 3, 4, 5, 6];
+// 技のオーラはモンスターの6色に「無」を足した7値。
+const SKILL_AURAS = ['赤', '青', '黄', '黒', '白', '緑', '無'];
+// ダメージ・命中率・ガッツダウン・クリティカル率の評価。各段に + 付きが存在する。
+const SKILL_GRADE_PATTERN = /^[SABCDEFG]\+?$/;
+// 技登録に必要なレアリティ（★1〜10）
+const SKILL_RARITY_MIN = 1;
+const SKILL_RARITY_MAX = 10;
+// 枠の色分け。ちから＝黄系・かしこさ＝緑系（ゲーム内のアイコン色に合わせる）
+const SKILL_TYPE_TONE = { 'ちから': 'power', 'かしこさ': 'wits' };
+// 間合いの色。遠＝青・中＝緑・近＝オレンジ・零＝赤（ゲーム内のタブ色）
+const SKILL_RANGE_TONE = { '遠': 'far', '中': 'mid', '近': 'near', '零': 'zero' };
+// バフ・デバフはゲーム内ヘルプにある共通の状態。技能力テキストの [霊魂] のような表記と結ぶ。
+const SKILL_BUFF_KINDS = ['バフ', 'デバフ'];
+// 技能力テキストの角括弧には、バフ名のほかに発動条件やゲーム用語も入る。
+// バフDBに無いトークンは「未登録候補」として取り込みが報告するので、条件語はここへ足して黙らせる。
+const NON_BUFF_TOKENS = [
+  '序盤', '中盤', '終盤', '有利', '不利', '同色', '異色',
+  'シールド', 'バリア', '固有', '自身', '相手',
+  // モン類を指定する発動条件（例 [相手魔族以外]）。バフではない
+  '相手魔族以外',
+];
+
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
 
@@ -72,6 +97,13 @@ function loadInputs() {
   const gachaTypesJson = readJson('src/data/gacha-types.json');
   const taxonomyPath = path.join(REPO, 'src/data/taxonomy.json');
   const taxonomy = fs.existsSync(taxonomyPath) ? readJson('src/data/taxonomy.json') : null;
+  // 技DBは任意入力。無い・空でも血統ページを1枚も生成せずビルドを通す。
+  const skillsPath = path.join(REPO, 'src/data/monster-skills.json');
+  const skillsJson = fs.existsSync(skillsPath) ? readJson('src/data/monster-skills.json') : null;
+  const skillAbilitiesPath = path.join(REPO, 'src/data/skill-abilities.json');
+  const skillAbilitiesJson = fs.existsSync(skillAbilitiesPath) ? readJson('src/data/skill-abilities.json') : null;
+  const skillBuffsPath = path.join(REPO, 'src/data/skill-buffs.json');
+  const skillBuffsJson = fs.existsSync(skillBuffsPath) ? readJson('src/data/skill-buffs.json') : null;
 
   const monsters = idsJson.monsters;
   const editorial = Object.values(editorialJson.monsters);
@@ -116,6 +148,9 @@ function loadInputs() {
     gachasJson,
     gachaTypesJson,
     taxonomy,
+    skillsJson,
+    skillAbilitiesJson,
+    skillBuffsJson,
     sitemap: fs.readFileSync(path.join(REPO, 'sitemap.xml'), 'utf8'),
     runtimeById,
     monsterById,
@@ -718,12 +753,26 @@ function gateMonTypes(inputs) {
   });
 }
 
-function createBuildContext(inputs, eligibleMonTypes) {
+function createBuildContext(inputs, eligibleMonTypes, eligibleBloods) {
   const eligibleMonSlugs = new Set(eligibleMonTypes.map(monType => monType.slug));
   const generatedPaths = new Set([
     ...inputs.monsters.map(monster => monster.url.replace(/^\//, '')),
     ...eligibleMonTypes.map(monType => `monsters/${monType.slug}/index.html`),
+    ...eligibleBloods.map(blood => `monsters/${blood.monSlug}/${blood.slug}/index.html`),
   ]);
+  // 詳細ページは血統ページより先に描画するため、参照に必要なものを先に用意する。
+  const bloodPageByBlood = new Map(eligibleBloods.map(blood => [blood.blood, blood]));
+  const skillsByBlood = new Map(eligibleBloods.map(blood => [blood.blood, blood.skills]));
+  const abilityById = new Map(
+    selectCurrentVersions(
+      (inputs.skillAbilitiesJson && inputs.skillAbilitiesJson.abilities) || [],
+      abilityVersionKey
+    ).map(ability => [String(ability.abilityId), ability])
+  );
+  const buffById = new Map(
+    ((inputs.skillBuffsJson && inputs.skillBuffsJson.buffs) || [])
+      .map(buff => [String(buff.buffId), buff])
+  );
   const skippedEmptyFormations = inputs.editorial.flatMap(entry => {
     const monster = inputs.monsterById.get(entry.id);
     return (entry.formations || [])
@@ -738,6 +787,11 @@ function createBuildContext(inputs, eligibleMonTypes) {
     ...inputs,
     eligibleMonSlugs,
     eligibleMonTypes,
+    eligibleBloods,
+    bloodPageByBlood,
+    skillsByBlood,
+    abilityById,
+    buffById,
     editorialById: new Map(inputs.editorial.map(entry => [entry.id, entry])),
     indexableDetailIds: new Set(),
     generatedPaths,
@@ -909,6 +963,14 @@ function breadcrumbJson(monster, context) {
       position: 3,
       name: monster.mon,
       item: `${SITE_URL}/monsters/${monster.monSlug}/`,
+    });
+  }
+  if (context.bloodPageByBlood && context.bloodPageByBlood.has(monster.blood)) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: itemListElement.length + 1,
+      name: `${monster.blood}種`,
+      item: `${SITE_URL}/monsters/${monster.monSlug}/${monster.bloodSlug}/`,
     });
   }
   itemListElement.push({
@@ -1087,6 +1149,122 @@ function renderRelatedCard(monster, context) {
   });
 }
 
+// モンスター詳細に出す技。血統共通技の全量は出さない（血統ページと重複するため）。
+// 固有技とそのモンスターが解放できる技だけを出し、詳細は血統ページのアンカーへ送る。
+function skillsForMonster(monster, context) {
+  const skills = context.skillsByBlood.get(monster.blood) || [];
+  const unique = skills.filter(skill => skill.unique && (skill.owners || []).includes(monster.id));
+  const unlocks = skills.filter(skill => (skill.unlockedBy || []).some(entry => String(entry.monsterId) === monster.id));
+  // 技そのものではなく、技についた技能力の解放元になっている場合
+  const abilityUnlocks = [];
+  for (const skill of skills) {
+    for (const link of skill.abilities || []) {
+      if (link.unlock && String(link.unlock.monsterId) === monster.id) {
+        abilityUnlocks.push({ skill, link });
+      }
+    }
+  }
+  return { unique, unlocks, abilityUnlocks };
+}
+
+function skillAnchor(skill) {
+  // 血統ページは詳細ページと同じディレクトリにある
+  return `index.html#${escapeHtml(skill.skillId)}`;
+}
+
+function renderSkillSummaryRow(skill, context) {
+  const tone = SKILL_TYPE_TONE[skill.skillType];
+  const toneClass = tone ? ` skill-line--${tone}` : '';
+  const move = skill.moveTo ? `／${escapeHtml(skill.range)}→${escapeHtml(skill.moveTo)}` : '';
+  const abilities = (skill.abilities || [])
+    .map(link => (context.abilityById.get(String(link.abilityId)) || {}).name)
+    .filter(Boolean)
+    .map(escapeHtml)
+    .join('・');
+  return `      <li class="skill-line${toneClass}">
+        <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>
+        <span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}${move}</span>${abilities ? `
+        <span class="skill-line-abilities">技能力：${abilities}</span>` : ''}
+      </li>`;
+}
+
+function renderMonsterSkillSections(monster, context) {
+  const bloodPage = context.bloodPageByBlood.get(monster.blood);
+  if (!bloodPage) return '';
+  const { unique, unlocks, abilityUnlocks } = skillsForMonster(monster, context);
+  const bloodHref = 'index.html';
+  const uniqueSection = unique.length
+    ? `
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">固有技</h2>
+    </div>
+    <p class="skill-section-lead">${escapeHtml(monster.name)}が使える、${escapeHtml(monster.blood)}種の中でも限られたモンスターだけの技です。</p>
+    <ul class="skill-line-list">
+${unique.map(skill => renderSkillSummaryRow(skill, context)).join('\n')}
+    </ul>
+  </div>`
+    : '';
+  const unlockSection = unlocks.length
+    ? `
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">${escapeHtml(monster.name)}のレア度上昇で解放できる技</h2>
+    </div>
+    <ul class="skill-line-list">
+${unlocks.map(skill => {
+    const entry = (skill.unlockedBy || []).find(item => String(item.monsterId) === monster.id);
+    const owner = skill.unique
+      ? (skill.owners || [])
+        .map(id => (context.monsterById.get(String(id)) || {}).name)
+        .filter(Boolean).map(escapeHtml).join('・')
+      : `${escapeHtml(monster.blood)}種の全モンスター`;
+    return `      <li class="skill-line${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
+        <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>
+        <span class="skill-line-req">★${entry ? entry.rarity : '?'}以上で登録可能</span>
+        <span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}／使えるのは${owner}</span>
+      </li>`;
+  }).join('\n')}
+    </ul>
+  </div>`
+    : '';
+  const abilityUnlockSection = abilityUnlocks.length
+    ? `
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">${escapeHtml(monster.name)}のレア度上昇で解放できる技能力</h2>
+    </div>
+    <p class="skill-section-lead">技そのものではなく、技についた技能力が解放されます。</p>
+    <ul class="skill-line-list">
+${abilityUnlocks.map(({ skill, link }) => {
+    const ability = context.abilityById.get(String(link.abilityId)) || {};
+    return `      <li class="skill-line${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
+        <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(ability.name || link.abilityId)}</a>
+        <span class="skill-line-req">★${link.unlock.level}以上で解放</span>
+        <span class="skill-line-meta">${escapeHtml(skill.name)}（${escapeHtml(skill.range)}距離ランク${skill.rank}）の技能力</span>
+      </li>`;
+  }).join('\n')}
+    </ul>
+  </div>`
+    : '';
+  addLink(context, `monsters/${monster.monSlug}/${monster.bloodSlug}/index.html`);
+  const bloodLink = `
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">${escapeHtml(monster.blood)}種の技</h2>
+    </div>
+    <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
+    <div class="menu-grid">
+      <a class="menu-link" href="${bloodHref}"><span class="icon">${MON_ICONS[monster.monSlug] || ''}</span>${escapeHtml(monster.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+    </div>
+  </div>`;
+  return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
+}
+
 function renderDetail(entry, context) {
   const monster = context.monsterById.get(entry.id);
   const runtime = context.runtimeById.get(entry.id);
@@ -1102,6 +1280,13 @@ function renderDetail(entry, context) {
       return `<a href="../index.html">${escapeHtml(monster.mon)}</a>`;
     })()
     : escapeHtml(monster.mon);
+  // 血統ページがある血統だけパンくずへ挟む
+  const breadcrumbBlood = context.bloodPageByBlood.has(monster.blood)
+    ? (() => {
+      addLink(context, `monsters/${monster.monSlug}/${monster.bloodSlug}/index.html`);
+      return ` &gt; <a href="index.html">${escapeHtml(monster.blood)}種</a>`;
+    })()
+    : '';
   const navTop = rootLink(context, 'index.html', 'トップ');
   const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧');
@@ -1131,6 +1316,7 @@ function renderDetail(entry, context) {
   </div>`
     : '';
   const related = relatedMonsters(monster, context);
+  const skillSections = renderMonsterSkillSections(monster, context);
   const gachaAppearances = renderGachaAppearances(
     publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX
   );
@@ -1152,7 +1338,7 @@ function renderDetail(entry, context) {
 </header>
 
 <main class="container">
-  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(monster.name)}</p>
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType}${breadcrumbBlood} &gt; ${escapeHtml(monster.name)}</p>
   <h1 class="page-title">${escapeHtml(monster.name)}</h1>
 
   <div class="detail-card">
@@ -1174,7 +1360,7 @@ function renderDetail(entry, context) {
     </div>
   </div>
 
-${explanation}${formations}
+${explanation}${formations}${skillSections}
 
   <div class="section-box">
     <div class="section-header">
@@ -1323,9 +1509,17 @@ ${editorialMembers.map(monster => renderMonTypeCard(monster, context)).join('\n'
 ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
     </div>`
       : '';
+    // 血統ページがある血統だけ見出しをリンクにする
+    const bloodPage = context.bloodPageByBlood.get(group.blood);
+    let heading = `${escapeHtml(group.blood)}（${group.members.length}体）`;
+    if (bloodPage) {
+      addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
+      heading = `<a href="${escapeHtml(bloodPage.slug)}/index.html">${escapeHtml(group.blood)}（${group.members.length}体）</a>`
+        + `<span class="mon-type-blood-skills">技${bloodPage.skills.length}件</span>`;
+    }
     return `
     <div class="mon-type-blood-group">
-      <h3 class="mon-type-blood-title">${escapeHtml(group.blood)}（${group.members.length}体）</h3>${editorialGrid}${compactGrid}
+      <h3 class="mon-type-blood-title">${heading}</h3>${editorialGrid}${compactGrid}
     </div>`;
   }).join('');
   const otherMonTypes = context.eligibleMonTypes.filter(other => other.slug !== monType.slug);
@@ -1391,6 +1585,779 @@ ${otherLinks}
 </body>
 </html>
 `;
+}
+
+// 技DBの検査。正はこの関数に一本化し、scripts/verify.js は export を参照する。
+// 技も技能力も、ゲーム側の更新で内容が変わる。上書きすると戻せないので、同名は
+// バージョンとして積み、表示は最新版だけにする。IDはバージョングループ共通で固定なので
+// （skillId は血統ページのアンカー、abilityId は技側からの参照キー）、版が上がってもURLと参照は動かない。
+const skillVersionKey = skill => `${skill.blood}|${skill.name}`;
+const abilityVersionKey = ability => String(ability.name);
+const versionOf = row => (Number.isInteger(row.version) ? row.version : 1);
+
+// グループごとに最大 version の1件だけを返す。元の並び順は保つ。
+function selectCurrentVersions(rows, keyOf) {
+  const best = new Map();
+  for (const row of rows || []) {
+    const key = keyOf(row);
+    const known = best.get(key);
+    if (!known || versionOf(row) > versionOf(known)) best.set(key, row);
+  }
+  const current = new Set(best.values());
+  return (rows || []).filter(row => current.has(row));
+}
+
+// 技能力テキストの [霊魂] ［火傷Lv1＜20秒＞］ 【シールド】 から中身を取り出す。
+function extractBracketTokens(text) {
+  return (String(text || '').match(/[[［【]([^\][］】]*)[\]］】]/g) || [])
+    .map(token => token.replace(/^[[［【]|[\]］】]$/g, ''));
+}
+
+// 「火傷Lv1＜20秒＞」→「火傷」。レベル・持続時間・空白を落として名前だけにする。
+function normalizeBuffToken(token) {
+  return String(token || '')
+    .replace(/[＜<][^＞>]*[＞>]/g, '')
+    .replace(/\s+/g, '')
+    .replace(/Lv\s*\d+$/i, '')
+    .trim();
+}
+
+// 「祝：霊魂Lv8」→「霊魂」。接頭辞（祝：疫：）と末尾のLvを落とす。
+function normalizeAbilityNameForBuff(name) {
+  return normalizeBuffToken(String(name || '').replace(/^[^：:]*[：:]/, ''));
+}
+
+// 技能力に対応するバフ・デバフを、テキストの完全一致だけで拾う。
+// 素の部分一致は取らない（「混乱」「衰弱」のような一般語や条件タグで誤爆するため）。
+// 返り値の unknown は「角括弧にあるがバフDBにも既知の非バフ語にも無い」= 登録漏れの候補。
+function detectBuffs(ability, buffByName) {
+  const found = [];
+  const unknown = [];
+  const push = name => {
+    const buff = buffByName.get(name);
+    if (buff && !found.includes(buff.buffId)) found.push(buff.buffId);
+  };
+  for (const token of extractBracketTokens(ability.description)) {
+    const name = normalizeBuffToken(token);
+    if (!name) continue;
+    if (buffByName.has(name)) push(name);
+    // 数字入りの角括弧は [最大40%] [1回] のような数値注記でバフ名ではない
+    else if (!NON_BUFF_TOKENS.includes(name) && !/[0-9０-９%％]/.test(name) && !unknown.includes(name)) {
+      unknown.push(name);
+    }
+  }
+  const fromName = normalizeAbilityNameForBuff(ability.name);
+  if (buffByName.has(fromName)) push(fromName);
+  // 表示順はバフDBの並び（ゲーム内ヘルプの順）にそろえる
+  found.sort((a, b) => a.localeCompare(b));
+  return { buffs: found, unknown };
+}
+
+// バージョングループの検査。版は1から連番で、隣り合う版で中身が同じなら
+// 意味のないバージョンなので止める（更新でないなら、その行を書き換えるのが正しい）。
+function checkVersionGroups(groups, errors, file, labelOf, bodyOf) {
+  for (const [id, rows] of groups) {
+    const sorted = [...rows].sort((a, b) => versionOf(a) - versionOf(b));
+    const label = labelOf(sorted[sorted.length - 1]) || id;
+    sorted.forEach((row, index) => {
+      if (versionOf(row) !== index + 1) {
+        errors.push(`${file} ${label}: version が1からの連番になっていません（${sorted.map(versionOf).join(', ')}）`);
+      }
+      if (index > 0 && bodyOf(row) === bodyOf(sorted[index - 1])) {
+        errors.push(`${file} ${label}: v${versionOf(sorted[index - 1])} と v${versionOf(row)} の内容が同じです。更新でないなら版を足さずその行を直してください`);
+      }
+    });
+  }
+}
+
+function validateSkillData(skillDb, abilityDb, idsJson, buffDb) {
+  const errors = [];
+  const skills = skillDb && Array.isArray(skillDb.skills) ? skillDb.skills : null;
+  const abilities = abilityDb && Array.isArray(abilityDb.abilities) ? abilityDb.abilities : null;
+  if (skillDb && skills === null) errors.push('monster-skills.json: skills 配列がありません');
+  if (abilityDb && abilities === null) errors.push('skill-abilities.json: abilities 配列がありません');
+  if (errors.length) throw new Error(errors.join('\n'));
+  const buffs = buffDb && Array.isArray(buffDb.buffs) ? buffDb.buffs : null;
+  if (buffDb && buffs === null) errors.push('skill-buffs.json: buffs 配列がありません');
+  if (errors.length) throw new Error(errors.join('\n'));
+  if (!skills && !abilities) return { skills: [], abilities: [], buffs: [], currentSkills: [], currentAbilities: [] };
+  const skillList = skills || [];
+  const abilityList = abilities || [];
+  const buffList = buffs || [];
+
+  // ---------------------------------------------------------------- バフ・デバフ
+  const buffIds = new Set();
+  const buffNames = new Set();
+  buffList.forEach((buff, index) => {
+    const where = `skill-buffs.json[${index}]`;
+    const id = String(buff.buffId || '');
+    if (!/^bf-\d{4}$/.test(id)) errors.push(`${where}: buffId が bf-#### ではありません: ${id}`);
+    else if (buffIds.has(id)) errors.push(`${where}: buffId が重複しています: ${id}`);
+    else buffIds.add(id);
+    const name = String(buff.name || '').trim();
+    if (!name) errors.push(`${where} ${id}: name が空です`);
+    else if (buffNames.has(name)) errors.push(`${where}: バフ名が重複しています: ${name}`);
+    else buffNames.add(name);
+    if (!SKILL_BUFF_KINDS.includes(buff.kind)) {
+      errors.push(`${where} ${name || id}: kind は ${SKILL_BUFF_KINDS.join('/')} です: ${buff.kind}`);
+    }
+    if (!String(buff.description || '').trim()) errors.push(`${where} ${name || id}: description が空です`);
+  });
+
+  // ---------------------------------------------------------------- 技能力
+  // 一意キーは abilityId + version。同名は同じ abilityId を共有し、版だけが増えていく。
+  const abilityIds = new Set();
+  const abilityIdByName = new Map();
+  const abilityNameById = new Map();
+  const abilityVersions = new Map();
+  abilityList.forEach((ability, index) => {
+    const where = `skill-abilities.json[${index}]`;
+    const id = String(ability.abilityId || '');
+    const name = String(ability.name || '').trim();
+    const version = ability.version;
+    if (!/^sab-\d{4}$/.test(id)) errors.push(`${where}: abilityId が sab-#### ではありません: ${id}`);
+    if (!name) errors.push(`${where} ${id}: name が空です`);
+    if (!String(ability.description || '').trim()) errors.push(`${where} ${id}: description が空です`);
+    if (!Number.isInteger(version) || version < 1) {
+      errors.push(`${where} ${name || id}: version は1以上の整数です: ${version}`);
+    }
+    if (ability.level !== null && !Number.isInteger(ability.level)) {
+      errors.push(`${where} ${id}: level は整数か null です: ${ability.level}`);
+    }
+    const idVersion = `${id}|${version}`;
+    if (abilityIds.has(idVersion)) errors.push(`${where}: 同じ abilityId に同じ version が2件あります: ${id} v${version}`);
+    else abilityIds.add(idVersion);
+    // 名前とIDは1対1。片方だけ変えるとバージョングループが割れる。
+    if (name) {
+      const knownId = abilityIdByName.get(name);
+      if (knownId === undefined) abilityIdByName.set(name, id);
+      else if (knownId !== id) errors.push(`${where} ${name}: 同じ名前に abilityId が2つあります（${knownId} と ${id}）。同名はバージョン違いとして同じIDを共有します`);
+      const knownName = abilityNameById.get(id);
+      if (knownName === undefined) abilityNameById.set(id, name);
+      else if (knownName !== name) errors.push(`${where} ${id}: 同じ abilityId に名前が2つあります（${knownName} と ${name}）`);
+    }
+    if (!abilityVersions.has(id)) abilityVersions.set(id, []);
+    abilityVersions.get(id).push(ability);
+    if (Array.isArray(ability.buffs)) {
+      const seen = new Set();
+      for (const buffId of ability.buffs) {
+        if (!buffIds.has(String(buffId))) errors.push(`${where} ${name || id}: 存在しないバフID: ${buffId}`);
+        if (seen.has(String(buffId))) errors.push(`${where} ${name || id}: 同じバフが2回あります: ${buffId}`);
+        seen.add(String(buffId));
+      }
+    } else if (ability.buffs !== undefined) {
+      errors.push(`${where} ${name || id}: buffs は配列です`);
+    }
+  });
+  checkVersionGroups(abilityVersions, errors, 'skill-abilities.json', ability => ability.name, ability => ability.description);
+
+  const bloodOrder = new Set(idsJson.bloodOrder);
+  const monsterById = new Map(idsJson.monsters.map(monster => [monster.id, monster]));
+  const skillIds = new Set();
+  const skillIdByKey = new Map();
+  const skillKeyById = new Map();
+  const skillVersions = new Map();
+  const commonSlots = new Map();
+
+  const checkOwners = (value, where, blood) => {
+    if (!Array.isArray(value)) {
+      errors.push(`${where}: owners は配列です`);
+      return;
+    }
+    for (const id of value) {
+      const monster = monsterById.get(String(id));
+      if (!monster) errors.push(`${where}: owners に存在しないモンスターID: ${id}`);
+      else if (monster.blood !== blood) {
+        errors.push(`${where}: owners の ${id} ${monster.name} は ${monster.blood}種で、技の血統 ${blood} と一致しません`);
+      }
+    }
+  };
+
+  // 技登録の解放元は「どのモンスターを★いくつまで上げると登録できるか」の組。
+  const checkUnlockedBy = (value, where) => {
+    if (!Array.isArray(value)) {
+      errors.push(`${where}: unlockedBy は配列です`);
+      return;
+    }
+    for (const entry of value) {
+      if (!entry || typeof entry !== 'object' || Array.isArray(entry)) {
+        errors.push(`${where}: unlockedBy は { monsterId, rarity } の配列です: ${JSON.stringify(entry)}`);
+        continue;
+      }
+      if (!monsterById.has(String(entry.monsterId))) {
+        errors.push(`${where}: unlockedBy に存在しないモンスターID: ${entry.monsterId}`);
+      }
+      if (!Number.isInteger(entry.rarity) || entry.rarity < SKILL_RARITY_MIN || entry.rarity > SKILL_RARITY_MAX) {
+        errors.push(`${where}: unlockedBy の rarity は★${SKILL_RARITY_MIN}〜${SKILL_RARITY_MAX}の整数です: ${entry.rarity}`);
+      }
+    }
+  };
+
+  // 共通枠の重複や表示は最新版だけで判定する。旧版は必ず同じ枠に居るため。
+  const currentSkills = selectCurrentVersions(skillList, skillVersionKey);
+  const currentSkillSet = new Set(currentSkills);
+  skillList.forEach((skill, index) => {
+    const id = String(skill.skillId || '');
+    const where = `monster-skills.json[${index}] ${skill.name || id} v${skill.version}`;
+    const version = skill.version;
+    if (!/^sk-\d{4}$/.test(id)) errors.push(`${where}: skillId が sk-#### ではありません: ${id}`);
+    if (!Number.isInteger(version) || version < 1) {
+      errors.push(`${where}: version は1以上の整数です: ${version}`);
+    }
+    const idVersion = `${id}|${version}`;
+    if (skillIds.has(idVersion)) errors.push(`${where}: 同じ skillId に同じ version が2件あります: ${id} v${version}`);
+    else skillIds.add(idVersion);
+    if (!String(skill.name || '').trim()) errors.push(`${where}: name が空です`);
+    // 血統＋技名とIDは1対1。片方だけ変えるとバージョングループが割れる。
+    if (String(skill.name || '').trim()) {
+      const key = skillVersionKey(skill);
+      const knownId = skillIdByKey.get(key);
+      if (knownId === undefined) skillIdByKey.set(key, id);
+      else if (knownId !== id) errors.push(`${where}: 同じ ${key} に skillId が2つあります（${knownId} と ${id}）。同名はバージョン違いとして同じIDを共有します`);
+      const knownKey = skillKeyById.get(id);
+      if (knownKey === undefined) skillKeyById.set(id, key);
+      else if (knownKey !== key) errors.push(`${where}: 同じ skillId が別の技を指しています（${knownKey} と ${key}）`);
+    }
+    if (!skillVersions.has(id)) skillVersions.set(id, []);
+    skillVersions.get(id).push(skill);
+    if (!bloodOrder.has(skill.blood)) errors.push(`${where}: blood が未知です: ${skill.blood}`);
+    if (!SKILL_RANGES.includes(skill.range)) errors.push(`${where}: range は ${SKILL_RANGES.join('/')} です: ${skill.range}`);
+    if (!SKILL_RANKS.includes(skill.rank)) errors.push(`${where}: rank は1〜6の整数です: ${skill.rank}`);
+    if (skill.moveTo !== null && !SKILL_RANGES.includes(skill.moveTo)) {
+      errors.push(`${where}: moveTo は ${SKILL_RANGES.join('/')} か null です: ${skill.moveTo}`);
+    }
+    if (skill.moveTo === skill.range) errors.push(`${where}: moveTo が range と同じです。移動しない技は null にします`);
+    if (!SKILL_AURAS.includes(skill.aura)) errors.push(`${where}: aura は ${SKILL_AURAS.join('/')} です: ${skill.aura}`);
+    if (!String(skill.skillType || '').trim()) errors.push(`${where}: skillType が空です`);
+    if (!Number.isInteger(skill.guts) || skill.guts < 0) errors.push(`${where}: guts は0以上の整数です: ${skill.guts}`);
+    for (const field of ['damage', 'accuracy', 'gutsDown', 'critical']) {
+      const value = skill[field];
+      if (value !== null && !SKILL_GRADE_PATTERN.test(String(value))) {
+        errors.push(`${where}: ${field} は S+〜G の評価か null です: ${value}`);
+      }
+    }
+    // 技能力は { abilityId, unlock } の組。同じ能力名でも解放条件は技ごとに違うため、
+    // 条件は能力そのものではなく「技×能力」の線に持たせる。
+    if (!Array.isArray(skill.abilities)) {
+      errors.push(`${where}: abilities は配列です`);
+    } else {
+      const seen = new Set();
+      for (const link of skill.abilities) {
+        if (!link || typeof link !== 'object' || Array.isArray(link)) {
+          errors.push(`${where}: abilities は { abilityId, unlock } の配列です: ${JSON.stringify(link)}`);
+          continue;
+        }
+        const abilityId = String(link.abilityId);
+        if (!abilityNameById.has(abilityId)) errors.push(`${where}: abilities に未解決の能力ID: ${abilityId}`);
+        if (seen.has(abilityId)) errors.push(`${where}: 同じ技に同じ能力が2回あります: ${abilityId}`);
+        seen.add(abilityId);
+        if (link.unlock === undefined) {
+          errors.push(`${where}: abilities の unlock は条件が無ければ null にします: ${abilityId}`);
+        } else if (link.unlock !== null) {
+          const unlock = link.unlock;
+          if (!monsterById.has(String(unlock.monsterId))) {
+            errors.push(`${where}: 技能力${abilityId}の解放条件に存在しないモンスターID: ${unlock.monsterId}`);
+          }
+          if (!Number.isInteger(unlock.level) || unlock.level < SKILL_RARITY_MIN || unlock.level > SKILL_RARITY_MAX) {
+            errors.push(`${where}: 技能力${abilityId}の解放レベルは★${SKILL_RARITY_MIN}〜${SKILL_RARITY_MAX}の整数です: ${unlock.level}`);
+          }
+        }
+      }
+    }
+    if (typeof skill.unique !== 'boolean') errors.push(`${where}: unique は真偽値です: ${skill.unique}`);
+    checkOwners(skill.owners, where, skill.blood);
+    checkUnlockedBy(skill.unlockedBy, where);
+    if (Array.isArray(skill.owners)) {
+      if (skill.unique === true && skill.owners.length === 0) {
+        errors.push(`${where}: 固有技は owners を1件以上必要とします`);
+      }
+      if (skill.unique === false && skill.owners.length > 0) {
+        errors.push(`${where}: 血統共通技の owners は空配列です`);
+      }
+    }
+    if (skill.unique === false && currentSkillSet.has(skill)) {
+      const slot = `${skill.blood}|${skill.range}|${skill.rank}`;
+      if (commonSlots.has(slot)) {
+        errors.push(`${where}: ${skill.blood}種 ${skill.range}距離ランク${skill.rank} に共通技が2件あります（${commonSlots.get(slot)} と重複）`);
+      } else {
+        commonSlots.set(slot, skill.name || id);
+      }
+    }
+  });
+
+  const skillBody = skill => JSON.stringify([
+    skill.range, skill.rank, skill.moveTo, skill.aura, skill.skillType, skill.guts,
+    skill.damage, skill.accuracy, skill.gutsDown, skill.critical, skill.note,
+    (skill.abilities || []).map(link => [link.abilityId, link.unlock]),
+    skill.unique, skill.owners, skill.unlockedBy,
+  ]);
+  checkVersionGroups(skillVersions, errors, 'monster-skills.json', skill => `${skill.blood}種 ${skill.name}`, skillBody);
+
+  if (errors.length) throw new Error(errors.join('\n'));
+  return {
+    skills: skillList,
+    abilities: abilityList,
+    buffs: buffList,
+    currentSkills,
+    currentAbilities: selectCurrentVersions(abilityList, abilityVersionKey),
+  };
+}
+
+// 技データが1件でもある血統だけページを生成する。
+function gateBloods(inputs) {
+  // 血統ページに載せるのは各技の最新版だけ。旧版はロールバック用にDBへ残るが表示しない。
+  const skills = selectCurrentVersions(
+    inputs.skillsJson && Array.isArray(inputs.skillsJson.skills) ? inputs.skillsJson.skills : [],
+    skillVersionKey
+  );
+  const byBlood = new Map();
+  for (const skill of skills) {
+    if (!byBlood.has(skill.blood)) byBlood.set(skill.blood, []);
+    byBlood.get(skill.blood).push(skill);
+  }
+  const bloodSlug = inputs.idsJson.bloodSlug;
+  return inputs.idsJson.bloodOrder
+    .filter(blood => byBlood.has(blood))
+    .map(blood => {
+      const members = inputs.monsters
+        .filter(monster => monster.blood === blood)
+        .sort((a, b) => Number(a.id) - Number(b.id));
+      const reasons = [];
+      if (!bloodSlug[blood]) reasons.push('monster-ids.json に bloodSlug がありません');
+      if (!members.length) reasons.push('所属モンスターが0体です');
+      return {
+        blood,
+        slug: bloodSlug[blood],
+        mon: members.length ? members[0].mon : '',
+        monSlug: members.length ? members[0].monSlug : '',
+        members,
+        skills: byBlood.get(blood),
+        reasons,
+        eligible: reasons.length === 0,
+      };
+    });
+}
+
+function renderSkillAbilityText(text) {
+  return escapeHtml(String(text || '')).replace(/\r?\n/g, '<br>');
+}
+
+// 技の表示順。血統共通技を先に、固有技を後に置く。
+function sortSkillsInCell(skills) {
+  return [...skills].sort((a, b) => {
+    if (a.unique !== b.unique) return a.unique ? 1 : -1;
+    const orderA = Number.isInteger(a.sortOrder) ? a.sortOrder : Number.MAX_SAFE_INTEGER;
+    const orderB = Number.isInteger(b.sortOrder) ? b.sortOrder : Number.MAX_SAFE_INTEGER;
+    if (orderA !== orderB) return orderA - orderB;
+    return String(a.skillId).localeCompare(String(b.skillId));
+  });
+}
+
+// 技チップ。移動先は表に出さず、詳細だけで扱う。
+function renderSkillChip(skill, context) {
+  const ownerNames = (skill.owners || [])
+    .map(id => (context.monsterById.get(String(id)) || {}).name)
+    .filter(Boolean);
+  const uniqueLabel = skill.unique
+    ? `<span class="skill-chip-unique">固有${ownerNames.length ? `：${escapeHtml(ownerNames.join('・'))}` : ''}</span>`
+    : '';
+  const tone = SKILL_TYPE_TONE[skill.skillType];
+  const toneClass = tone ? ` skill-chip--${tone}` : '';
+  return `            <button type="button" class="skill-chip${toneClass}" data-skill="${escapeHtml(skill.skillId)}" aria-controls="${escapeHtml(skill.skillId)}" aria-expanded="false">
+              <span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>
+              <span class="skill-chip-name">${escapeHtml(skill.name)}</span>
+              <span class="skill-chip-meta">${escapeHtml(skill.skillType)}／ガッツ${skill.guts}</span>${uniqueLabel ? `
+              ${uniqueLabel}` : ''}
+            </button>`;
+}
+
+function renderSkillDetailRow(skill, context, abilityById, columnCount) {
+  const monsterLink = id => {
+    const monster = context.monsterById.get(String(id));
+    if (!monster) return '';
+    const target = monster.url.replace(/^\//, '');
+    addLink(context, target);
+    return `<a href="${ROOT_PREFIX}${escapeHtml(target)}">${escapeHtml(monster.name)}</a>`;
+  };
+  const grade = value => (value === null || value === undefined ? '—' : escapeHtml(value));
+  // 見出し列の色は技種に合わせる（ちから＝黄・かしこさ＝緑）
+  const tone = SKILL_TYPE_TONE[skill.skillType];
+  const detailTone = tone ? ` skill-detail-table--${tone}` : '';
+  // 左2列＝技そのものの条件、右2列＝性能。ゲーム内の並びに合わせる。
+  const pairs = [
+    ['技種', escapeHtml(skill.skillType), 'ダメージ', grade(skill.damage)],
+    ['発動間合い', `${escapeHtml(skill.range)}距離`, '命中率', grade(skill.accuracy)],
+    ['移動先', skill.moveTo ? `${escapeHtml(skill.range)}→${escapeHtml(skill.moveTo)}` : '移動なし', 'ガッツダウン', grade(skill.gutsDown)],
+    ['消費ガッツ', String(skill.guts), 'クリティカル率', grade(skill.critical)],
+  ];
+  const wideRows = [];
+  if (skill.unique) {
+    const owners = (skill.owners || []).map(monsterLink).filter(Boolean).join('・');
+    if (owners) wideRows.push(['使用モンスター', owners]);
+  }
+  const unlocks = (skill.unlockedBy || [])
+    .map(entry => {
+      const link = monsterLink(entry.monsterId);
+      return link ? `${link}（★${entry.rarity}以上）` : '';
+    })
+    .filter(Boolean)
+    .join('・');
+  if (unlocks) wideRows.push(['技登録の解放元', unlocks]);
+
+  // バフ・デバフは、それを起こす技能力のカードの中に置く。技単位でまとめると
+  // どの能力が付けるものか分からなくなる。見出しは付けない（カードの文脈で読める）。
+  const renderBuffs = ability => {
+    const items = (ability.buffs || [])
+      .map(buffId => context.buffById.get(String(buffId)))
+      .filter(Boolean)
+      .map(buff => {
+        const kindClass = buff.kind === 'デバフ' ? 'debuff' : 'buff';
+        const note = String(buff.note || '').trim()
+          ? `<span class="skill-buff-note">${escapeHtml(buff.note.trim())}</span>`
+          : '';
+        return `              <p class="skill-buff skill-buff--${kindClass}"><span class="skill-buff-name">${escapeHtml(buff.name)}</span>${renderSkillAbilityText(buff.description)}${note}</p>`;
+      });
+    return items.length ? `
+            <div class="skill-ability-buffs">
+${items.join('\n')}
+            </div>` : '';
+  };
+  const abilityCards = (skill.abilities || [])
+    .map(link => ({ link, ability: abilityById.get(String(link.abilityId)) }))
+    .filter(entry => entry.ability)
+    .map(({ link, ability }) => {
+      const unlock = link.unlock
+        ? `<span class="skill-ability-unlock">${monsterLink(link.unlock.monsterId) || ''}を★${link.unlock.level}以上で解放</span>`
+        : '';
+      return `          <div class="skill-ability">
+            <p class="skill-ability-name">${escapeHtml(ability.name)}${unlock ? `
+              ${unlock}` : ''}</p>
+            <p class="skill-ability-desc">${renderSkillAbilityText(ability.description)}</p>${renderBuffs(ability)}
+          </div>`;
+    })
+    .join('\n');
+  const note = String(skill.note || '').trim()
+    ? `
+        <p class="skill-detail-note">${escapeHtml(skill.note.trim())}</p>`
+    : '';
+  return `        <tr class="skill-detail${tone ? ` skill-detail--${tone}` : ''}" id="${escapeHtml(skill.skillId)}" hidden>
+          <td colspan="${columnCount}">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}<span class="skill-detail-place">${escapeHtml(skill.range)}距離ランク${skill.rank}</span></h3>
+            <table class="skill-detail-table${detailTone}">
+              <tbody>
+${pairs.map(([labelA, valueA, labelB, valueB]) => `                <tr><th>${escapeHtml(labelA)}</th><td>${valueA}</td><th>${escapeHtml(labelB)}</th><td>${valueB}</td></tr>`).join('\n')}
+${wideRows.map(([label, value]) => `                <tr><th>${escapeHtml(label)}</th><td colspan="3">${value}</td></tr>`).join('\n')}
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+${abilityCards || '          <p class="skill-detail-none">なし</p>'}${note}
+            </div></div>
+            </div>
+          </td>
+        </tr>`;
+}
+
+// 行＝ランク1〜6、列＝技を発動できる間合い。技詳細は押した行の直下へ開く。
+function renderSkillTable(skills, context, abilityById) {
+  const columnCount = SKILL_RANGES.length + 1;
+  const cells = new Map();
+  for (const skill of skills) {
+    const key = `${skill.range}|${skill.rank}`;
+    if (!cells.has(key)) cells.set(key, []);
+    cells.get(key).push(skill);
+  }
+  const rows = SKILL_RANKS.map(rank => {
+    const rankSkills = [];
+    const columns = SKILL_RANGES.map(range => {
+      const inCell = sortSkillsInCell(cells.get(`${range}|${rank}`) || []);
+      rankSkills.push(...inCell);
+      const rangeClass = ` skill-col-${SKILL_RANGE_TONE[range]}`;
+      // 未実装の枠は空セル。×を置くと表が読みにくくなる
+      if (!inCell.length) {
+        return `          <td class="skill-cell skill-cell--empty${rangeClass}"></td>`;
+      }
+      return `          <td class="skill-cell${rangeClass}">
+${inCell.map(skill => renderSkillChip(skill, context)).join('\n')}
+          </td>`;
+    }).join('\n');
+    const detailRows = rankSkills
+      .map(skill => renderSkillDetailRow(skill, context, abilityById, columnCount))
+      .join('\n');
+    return `        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank">ランク${rank}</th>
+${columns}
+        </tr>${detailRows ? `\n${detailRows}` : ''}`;
+  }).join('\n');
+  return `    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+${SKILL_RANGES.map(range => `            <th scope="col" class="skill-range-head skill-range-${SKILL_RANGE_TONE[range]}">${escapeHtml(range)}距離</th>`).join('\n')}
+          </tr>
+        </thead>
+        <tbody>
+${rows}
+        </tbody>
+      </table>
+    </div>`;
+}
+
+function bloodBreadcrumbJson(bloodGate, hasMonTypePage) {
+  const itemListElement = [
+    { '@type': 'ListItem', position: 1, name: 'LINEモンスターファーム徹底攻略', item: `${SITE_URL}/` },
+    { '@type': 'ListItem', position: 2, name: 'モンスター一覧', item: `${SITE_URL}/monsters.html` },
+  ];
+  if (hasMonTypePage) {
+    itemListElement.push({
+      '@type': 'ListItem',
+      position: 3,
+      name: bloodGate.mon,
+      item: `${SITE_URL}/monsters/${bloodGate.monSlug}/`,
+    });
+  }
+  itemListElement.push({
+    '@type': 'ListItem',
+    position: itemListElement.length + 1,
+    name: `${bloodGate.blood}種`,
+    item: `${SITE_URL}/monsters/${bloodGate.monSlug}/${bloodGate.slug}/`,
+  });
+  return JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  });
+}
+
+function bloodDescription(bloodGate) {
+  return descriptionFrom(
+    `${bloodGate.blood}種の技を間合い・ランク別にまとめた一覧表です。`
+    + `遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、`
+    + `固有技と技登録の解放元モンスターまで掲載しています。`
+  );
+}
+
+function renderBloodPage(bloodGate, context, abilityById, otherBloodGates) {
+  const skills = bloodGate.skills;
+  const uniqueSkills = skills.filter(skill => skill.unique);
+  const title = `${bloodGate.blood}種の技一覧（${skills.length}技）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
+  const description = bloodDescription(bloodGate);
+  const canonical = `${SITE_URL}/monsters/${bloodGate.monSlug}/${bloodGate.slug}/`;
+  const hasMonTypePage = context.eligibleMonSlugs.has(bloodGate.monSlug);
+  const breadcrumbTop = rootLink(context, 'index.html', 'トップ');
+  const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
+  const breadcrumbMonType = hasMonTypePage
+    ? (() => {
+      addLink(context, `monsters/${bloodGate.monSlug}/index.html`);
+      return `<a href="../index.html">${escapeHtml(bloodGate.mon)}</a>`;
+    })()
+    : escapeHtml(bloodGate.mon);
+  const navTop = rootLink(context, 'index.html', 'トップ');
+  const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
+  const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧');
+  const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー');
+
+  const memberCards = bloodGate.members.map(monster => {
+    addLink(context, monster.url.replace(/^\//, ''));
+    const runtime = context.runtimeById.get(monster.id);
+    return renderMonCard({
+      href: `${monster.id}.html`,
+      image: resolveImage(monster.id, context).url,
+      name: monster.name,
+      aura: runtime ? runtime.aura : monster.aura,
+      mon: monster.mon,
+      subBlood: monster.subBlood,
+      limitedLabel: limitedLabelOf(runtime || monster),
+    });
+  }).join('\n');
+
+  const uniqueList = uniqueSkills.length
+    ? `
+  <section class="section">
+    <h2 class="section-title">固有技</h2>
+    <p class="skill-unique-lead">${escapeHtml(bloodGate.blood)}種のうち、特定のモンスターだけが使える技です。</p>
+    <ul class="skill-unique-list">
+${uniqueSkills.map(skill => {
+    const owners = (skill.owners || [])
+      .map(id => (context.monsterById.get(String(id)) || {}).name)
+      .filter(Boolean)
+      .map(escapeHtml)
+      .join('・');
+    return `      <li><a href="#${escapeHtml(skill.skillId)}">${escapeHtml(skill.name)}</a>（${escapeHtml(skill.range)}距離ランク${skill.rank}／${owners}）</li>`;
+  }).join('\n')}
+    </ul>
+  </section>`
+    : '';
+
+  const siblings = otherBloodGates.filter(other => other.monSlug === bloodGate.monSlug);
+  const siblingLinks = siblings.map(other => {
+    addLink(context, `monsters/${other.monSlug}/${other.slug}/index.html`);
+    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html"><span class="icon">${MON_ICONS[other.monSlug] || ''}</span> ${escapeHtml(other.blood)}種の技</a>`;
+  }).join('\n');
+  const monTypeLink = hasMonTypePage
+    ? `      <a class="menu-link" href="../index.html"><span class="icon">${MON_ICONS[bloodGate.monSlug] || ''}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>`
+    : '';
+  const navLinks = [siblingLinks, monTypeLink].filter(Boolean).join('\n');
+  const relatedSection = navLinks
+    ? `
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+${navLinks}
+    </div>
+  </section>`
+    : '';
+
+  const body = `<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="${ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <nav>
+      ${navTop}
+      ${navMonsters}
+      ${navAssist}
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(bloodGate.blood)}種</p>
+  <h1 class="page-title">${escapeHtml(bloodGate.blood)}種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+${renderSkillTable(skills, context, abilityById)}
+  </section>${uniqueList}
+
+  <section class="section">
+    <h2 class="section-title">${escapeHtml(bloodGate.blood)}種のモンスター（${bloodGate.members.length}体）</h2>
+    <div class="mon-card-grid">
+${memberCards}
+    </div>
+  </section>${relatedSection}
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ ${privacy}
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) chip.setAttribute('aria-expanded', 'true');
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+<\/script>
+
+</body>
+`;
+  const contentCharacters = visibleChars(body);
+  const indexable = contentCharacters >= INDEXABLE_THRESHOLD;
+  const robotsMeta = indexable ? '' : '\n  <meta name="robots" content="noindex,follow">';
+  const adsense = indexable
+    ? '\n  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>'
+    : '';
+  const html = `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  ${GTM_TAG}
+  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${escapeHtml(title)}</title>
+  <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
+  <link rel="canonical" href="${canonical}">
+  <script type="application/ld+json">${bloodBreadcrumbJson(bloodGate, hasMonTypePage)}</script>
+  <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
+  <link rel="stylesheet" href="${ROOT_PREFIX}blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>${adsense}
+</head>
+${body}</html>
+`;
+  return {
+    path: `monsters/${bloodGate.monSlug}/${bloodGate.slug}/index.html`,
+    html,
+    title,
+    description,
+    canonical,
+    priority: '0.6',
+    indexable,
+    contentCharacters,
+  };
 }
 
 function writeIfChanged(relativePath, html) {
@@ -1483,7 +2450,7 @@ function createCmsSeed(context, detailPages) {
 function renderSitemap(existingXml, pages) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
-  const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/(?:monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)|cards\/[^/]+\.html|gacha\/(?:\d{8}-\d+\.html)?)<\/loc>/;
+  const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/(?:monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)|cards\/[^/]+\.html|gacha\/(?:\d{8}-\d+\.html)?)<\/loc>/;
   const existingBlocks = matches
     .map(match => match[0])
     .filter(block => !generatedUrlPattern.test(block));
@@ -1540,7 +2507,7 @@ function linkExists(target, generatedPaths) {
   return generatedPaths.has(target) || fs.existsSync(path.join(REPO, target));
 }
 
-function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLinks) {
+function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks) {
   const taxonomyCounts = countTaxonomyEntries(inputs.taxonomy);
   const noindex = gates.filter(entry => !entry.indexable);
   const indexable = gates.filter(entry => entry.indexable);
@@ -1566,6 +2533,19 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
   }
+  const skippedBloods = bloodGates.filter(bloodGate => !bloodGate.eligible);
+  const skillCount = ((inputs.skillsJson && inputs.skillsJson.skills) || []).length;
+  if (!skillCount) {
+    console.log('  血統ページ   技データが0件のため生成なし');
+  } else {
+    console.log(`  血統ページ  生成 ${bloodPages.length}件 / 技 ${skillCount}件`);
+    for (const page of bloodPages) {
+      console.log(`    ${page.path}  ${page.contentCharacters}字${page.indexable ? '' : `（noindex・あと${INDEXABLE_THRESHOLD - page.contentCharacters}字）`}`);
+    }
+    for (const bloodGate of skippedBloods) {
+      console.log(`    ${bloodGate.blood}: ${bloodGate.reasons.join(' / ')}`);
+    }
+  }
   console.log('');
   console.log('=== 出力 ===');
   console.log(`  新規 ${outputCounts.new}件 / 更新 ${outputCounts.updated}件 / 変更なし ${outputCounts.unchanged}件`);
@@ -1587,10 +2567,13 @@ function logBuild(inputs, gates, monTypeGates, outputCounts, context, brokenLink
 
 function main() {
   const inputs = loadInputs();
+  validateSkillData(inputs.skillsJson, inputs.skillAbilitiesJson, inputs.idsJson, inputs.skillBuffsJson);
   const detailEntries = createDetailEntries(inputs);
   const monTypeGates = gateMonTypes(inputs);
+  const bloodGates = gateBloods(inputs);
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
-  const context = createBuildContext(inputs, eligibleMonTypes);
+  const eligibleBloods = bloodGates.filter(bloodGate => bloodGate.eligible);
+  const context = createBuildContext(inputs, eligibleMonTypes, eligibleBloods);
   const monsterIndex = renderMonsterIndex(
     fs.readFileSync(path.join(REPO, 'monsters.html'), 'utf8'),
     context
@@ -1633,7 +2616,13 @@ function main() {
       contentCharacters: visibleChars(html),
     };
   });
-  const pages = detailPages.concat(monTypePages);
+  const bloodPages = eligibleBloods.map(bloodGate => renderBloodPage(
+    bloodGate,
+    context,
+    context.abilityById,
+    eligibleBloods.filter(other => other.blood !== bloodGate.blood)
+  ));
+  const pages = detailPages.concat(monTypePages, bloodPages);
   const idAvailability = createIdAvailability(inputs.idsJson);
   const pageBaseline = createPageBaseline(detailPages);
   const cmsSeed = createCmsSeed(context, detailPages);
@@ -1669,9 +2658,12 @@ function main() {
     indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
     rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
   });
+  const bloodSitemapPages = bloodPages
+    .filter(page => page.indexable)
+    .map(page => ({ canonical: page.canonical, priority: page.priority }));
   const sitemap = renderSitemap(
     inputs.sitemap,
-    sitemapPages.concat(assistBuild.sitemapPages, gachaBuild.sitemapPages)
+    sitemapPages.concat(bloodSitemapPages, assistBuild.sitemapPages, gachaBuild.sitemapPages)
   );
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
@@ -1708,7 +2700,7 @@ function main() {
     LMFDB_CARD_MAP_FILE,
     renderLmfdbCardMap(inputs.assistCards)
   )]++;
-  logBuild(inputs, detailPages, monTypeGates, outputCounts, context, brokenLinks);
+  logBuild(inputs, detailPages, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks);
 }
 
 if (require.main === module) {
@@ -1721,6 +2713,19 @@ if (require.main === module) {
 }
 
 module.exports = {
+  SKILL_RANGES,
+  SKILL_RANKS,
+  SKILL_AURAS,
+  SKILL_GRADE_PATTERN,
+  SKILL_RARITY_MIN,
+  SKILL_RARITY_MAX,
+  SKILL_BUFF_KINDS,
+  NON_BUFF_TOKENS,
+  validateSkillData,
+  selectCurrentVersions,
+  skillVersionKey,
+  abilityVersionKey,
+  detectBuffs,
   PICKUP_SLOTS,
   GACHA_EXCERPT_CHARS,
   GACHA_GATE_VISIBLE_CHARS,
