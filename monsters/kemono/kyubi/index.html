@@ -14,7 +14,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"獣族","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/"},{"@type":"ListItem","position":4,"name":"キュービ種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/"}]}</script>
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../../blood.css">
-  <noscript><style>.skill-detail[hidden]{display:table-row}</style></noscript>
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head>
 <body class="blood-page">
@@ -50,7 +50,7 @@
         </thead>
         <tbody>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク1</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
           <td class="skill-cell skill-col-far">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0001" aria-controls="sk-0001" aria-expanded="false">
               <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
@@ -64,6 +64,8 @@
               <span class="skill-chip-name">狐火</span>
               <span class="skill-chip-meta">かしこさ／ガッツ15</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-1"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">2</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-1" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0006" aria-controls="sk-0006" aria-expanded="false">
               <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
               <span class="skill-chip-name">狐火・藍</span>
@@ -76,6 +78,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ18</span>
               <span class="skill-chip-unique">固有：タマモノマエ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-near">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0004" aria-controls="sk-0004" aria-expanded="false">
@@ -241,13 +244,15 @@
           </td>
         </tr>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク2</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
           <td class="skill-cell skill-col-far">
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0008" aria-controls="sk-0008" aria-expanded="false">
               <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
               <span class="skill-chip-name">提灯落とし</span>
               <span class="skill-chip-meta">ちから／ガッツ19</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-far-2"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">3</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-far-2" hidden>
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0011" aria-controls="sk-0011" aria-expanded="false">
               <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
               <span class="skill-chip-name">提灯落とし・炎</span>
@@ -266,6 +271,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ25</span>
               <span class="skill-chip-unique">固有：恐山アンナ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-mid">
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0009" aria-controls="sk-0009" aria-expanded="false">
@@ -280,12 +286,15 @@
               <span class="skill-chip-name">下駄蹴り</span>
               <span class="skill-chip-meta">ちから／ガッツ17</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-near-2"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-near-2" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0012" aria-controls="sk-0012" aria-expanded="false">
               <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
               <span class="skill-chip-name">警戒</span>
               <span class="skill-chip-meta">かしこさ／ガッツ16</span>
               <span class="skill-chip-unique">固有：エンキドゥ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-cell--empty skill-col-zero"></td>
         </tr>
@@ -485,19 +494,22 @@
           </td>
         </tr>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク3</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
           <td class="skill-cell skill-col-far">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0015" aria-controls="sk-0015" aria-expanded="false">
               <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
               <span class="skill-chip-name">超狐火</span>
               <span class="skill-chip-meta">かしこさ／ガッツ25</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-far-3"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-far-3" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0023" aria-controls="sk-0023" aria-expanded="false">
               <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
               <span class="skill-chip-name">超狐火・星</span>
               <span class="skill-chip-meta">かしこさ／ガッツ22</span>
               <span class="skill-chip-unique">固有：オリヒメ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-mid">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0016" aria-controls="sk-0016" aria-expanded="false">
@@ -505,6 +517,8 @@
               <span class="skill-chip-name">火炎車</span>
               <span class="skill-chip-meta">かしこさ／ガッツ27</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-3"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">2</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-3" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0020" aria-controls="sk-0020" aria-expanded="false">
               <span class="skill-aura skill-aura-緑" aria-hidden="true"></span>
               <span class="skill-chip-name">蝶の舞</span>
@@ -517,6 +531,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ24</span>
               <span class="skill-chip-unique">固有：オロチ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-near">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0017" aria-controls="sk-0017" aria-expanded="false">
@@ -531,6 +546,8 @@
               <span class="skill-chip-name">ゆうわく</span>
               <span class="skill-chip-meta">かしこさ／ガッツ24</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-zero-3"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">3</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-zero-3" hidden>
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0019" aria-controls="sk-0019" aria-expanded="false">
               <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
               <span class="skill-chip-name">煙幕</span>
@@ -549,6 +566,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ20</span>
               <span class="skill-chip-unique">固有：シュナ・リゾート</span>
             </button>
+            </div>
           </td>
         </tr>
         <tr class="skill-detail skill-detail--wits" id="sk-0015" hidden>
@@ -844,13 +862,15 @@
           </td>
         </tr>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク4</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
           <td class="skill-cell skill-col-far">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0025" aria-controls="sk-0025" aria-expanded="false">
               <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
               <span class="skill-chip-name">神狐蒼火</span>
               <span class="skill-chip-meta">かしこさ／ガッツ44</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-far-4"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">2</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-far-4" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0029" aria-controls="sk-0029" aria-expanded="false">
               <span class="skill-aura skill-aura-緑" aria-hidden="true"></span>
               <span class="skill-chip-name">神蛇翠火</span>
@@ -863,6 +883,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ42</span>
               <span class="skill-chip-unique">固有：ハクタク・妖</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-mid">
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0026" aria-controls="sk-0026" aria-expanded="false">
@@ -870,6 +891,8 @@
               <span class="skill-chip-name">陽炎</span>
               <span class="skill-chip-meta">ちから／ガッツ34</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-4"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">2</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-4" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0033" aria-controls="sk-0033" aria-expanded="false">
               <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
               <span class="skill-chip-name">降魔調伏</span>
@@ -882,6 +905,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ40</span>
               <span class="skill-chip-unique">固有：シュナ・リゾート</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-near">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0027" aria-controls="sk-0027" aria-expanded="false">
@@ -889,6 +913,8 @@
               <span class="skill-chip-name">神光石火</span>
               <span class="skill-chip-meta">かしこさ／ガッツ38</span>
             </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-near-4"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">2</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-near-4" hidden>
             <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0030" aria-controls="sk-0030" aria-expanded="false">
               <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
               <span class="skill-chip-name">火ノ鳥神楽</span>
@@ -901,6 +927,7 @@
               <span class="skill-chip-meta">かしこさ／ガッツ38</span>
               <span class="skill-chip-unique">固有：オロチ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-col-zero">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0028" aria-controls="sk-0028" aria-expanded="false">
@@ -1214,7 +1241,7 @@
           </td>
         </tr>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク5</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
           <td class="skill-cell skill-col-far">
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0035" aria-controls="sk-0035" aria-expanded="false">
               <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
@@ -1383,15 +1410,18 @@
           </td>
         </tr>
         <tr class="skill-rank-row">
-          <th scope="row" class="skill-rank">ランク6</th>
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク6</span></th>
           <td class="skill-cell skill-cell--empty skill-col-far"></td>
           <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-6"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-6" hidden>
             <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0038" aria-controls="sk-0038" aria-expanded="false">
               <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
               <span class="skill-chip-name">王狐炎衝</span>
               <span class="skill-chip-meta">かしこさ／ガッツ49</span>
               <span class="skill-chip-unique">固有：タマモノマエ</span>
             </button>
+            </div>
           </td>
           <td class="skill-cell skill-cell--empty skill-col-near"></td>
           <td class="skill-cell skill-cell--empty skill-col-zero"></td>
@@ -1695,13 +1725,31 @@
     for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
   }
 
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
   function openSkill(id) {
     var row = document.getElementById(id);
     if (!row) return null;
     closeAll();
     row.hidden = false;
     var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
-    if (chip) chip.setAttribute('aria-expanded', 'true');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
     return chip;
   }
 
@@ -1713,6 +1761,17 @@
         closeRow(openRow, true);
         var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
         if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
       }
       return;
     }
