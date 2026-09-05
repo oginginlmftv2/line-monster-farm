@@ -349,7 +349,7 @@ nav a:hover, nav a.active {
 
 /* ヒーローセクション */
 .hero {
-  background: linear-gradient(165deg, #ffd873 0%, #f7ae21 42%, #ef8a12 72%, #c9600d 100%);
+  background: linear-gradient(165deg, #fffbe0 0%, #ffee8a 35%, #ffde4d 70%, #ffcb2b 100%);
   color: #fff;
   padding: 48px 20px 40px;
   text-align: center;
@@ -362,8 +362,8 @@ nav a:hover, nav a.active {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(120% 85% at 50% 32%, rgba(255,255,255,0.28) 0%, rgba(255,255,255,0) 58%),
-    linear-gradient(to bottom, rgba(90,40,0,0) 50%, rgba(90,40,0,0.32) 100%);
+    radial-gradient(120% 85% at 50% 32%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(to bottom, rgba(230,160,0,0) 62%, rgba(230,160,0,0.20) 100%);
   pointer-events: none;
 }
 .hero h1 {
@@ -374,15 +374,15 @@ nav a:hover, nav a.active {
 .hero-logo {
   width: min(100%, 460px);
   height: auto;
-  filter: drop-shadow(0 4px 14px rgba(90,40,0,0.45));
+  filter: drop-shadow(0 4px 12px rgba(150,90,0,0.35));
 }
 .hero p {
   font-size: 14px;
-  color: #fff;
+  color: #6b3d02;
   line-height: 1.7;
   position: relative;
   margin-bottom: 20px;
-  text-shadow: 0 1px 3px rgba(90,40,0,0.9), 0 0 10px rgba(90,40,0,0.7);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.55);
   font-weight: bold;
 }
 .hero-monsters {
