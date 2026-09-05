@@ -276,6 +276,28 @@
   font-weight: normal;
 }
 
+/* 固有技バッジ。チップ側の「固有：〇〇」と同じ意味なので色を揃える。
+   技名の行に並べるとSPで名前が詰まるため、名前の上に単独で置く。 */
+.blood-page .skill-detail-unique {
+  display: inline-block;
+  margin: 0 0 4px;
+  padding: 1px 8px;
+  border: 1px solid #e2c98f;
+  border-radius: 999px;
+  background: #fdf6e3;
+  color: #b7791f;
+  font-size: 11px;
+  font-weight: normal;
+  white-space: nowrap;
+}
+
+/* 技種の色分けは見出し列・チップと揃える（ちから＝黄・かしこさ＝緑）。 */
+.blood-page .skill-detail--wits .skill-detail-unique {
+  border-color: #a9cdb6;
+  background: #eaf5ee;
+  color: #24603f;
+}
+
 /* 4列は均等幅。PC・SPとも列がずれないよう table-layout: fixed で固定する。 */
 .blood-page .skill-detail-table {
   width: 100%;
@@ -307,6 +329,10 @@
   font-weight: bold;
   white-space: nowrap;
 }
+
+/* colspan の行だけ見出しが長い（使用可能モンスター・技登録の解放元）。
+   見出し列は25%固定なので、SPでは折り返さないと値の列へはみ出す。 */
+.blood-page .skill-detail-table .skill-detail-wide th { white-space: normal; }
 
 .blood-page .skill-detail-table--power th { background: #fdf0cf; color: #5b4218; }
 .blood-page .skill-detail-table--wits th  { background: #cfe6d6; color: #204b34; }
