@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 94
+    "abilities": 95
   },
   "abilities": [
     {
@@ -1165,6 +1165,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 94,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0095",
+      "name": "影装・盾",
+      "version": 1,
+      "baseName": "影装・盾",
+      "level": null,
+      "description": "対象技命中時、自身に被ダメ低下Lv3、[プラズマ]中は本効果のLv3がLv5に上昇＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 95,
       "status": "verified"
     }
   ]
