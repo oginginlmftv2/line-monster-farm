@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 65
+    "abilities": 66
   },
   "abilities": [
     {
@@ -813,6 +813,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 65,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0066",
+      "name": "影装・爪",
+      "version": 1,
+      "baseName": "影装・爪",
+      "level": null,
+      "description": "対象技命中時、自身のすべての技の有利オーラ効果アップ20%、[プラズマ]中は本効果の20%が30%に上昇＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 66,
       "status": "verified"
     }
   ]
