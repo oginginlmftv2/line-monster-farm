@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 69
+    "abilities": 71
   },
   "abilities": [
     {
@@ -861,6 +861,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 69,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0070",
+      "name": "連撃：ノクターン",
+      "version": 1,
+      "baseName": "連撃：ノクターン",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 70,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0071",
+      "name": "共振：ノクターン",
+      "version": 1,
+      "baseName": "共振：ノクターン",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・与ガッツダメージ＜+15%＞上昇\n・相手[楔]中、技ガッツダメージステ＜+15＞上昇\n・[プラズマ]中、相手のシールドを破壊",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 71,
       "status": "verified"
     }
   ]
