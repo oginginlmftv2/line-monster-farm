@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 73
+    "abilities": 74
   },
   "abilities": [
     {
@@ -909,6 +909,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 73,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0074",
+      "name": "連撃：クリムゾンノヴァ",
+      "version": 1,
+      "baseName": "連撃：クリムゾンノヴァ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜10回＞与える\n[プラズマ]中、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 74,
       "status": "verified"
     }
   ]
