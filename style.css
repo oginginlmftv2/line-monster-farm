@@ -30,15 +30,15 @@ header {
 }
 
 .logo {
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-  white-space: nowrap;
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
 }
 
-.logo span {
-  color: #f0a500;
+.logo img {
+  display: block;
+  height: 36px;
+  width: auto;
 }
 
 nav {
@@ -349,46 +349,40 @@ nav a:hover, nav a.active {
 
 /* ヒーローセクション */
 .hero {
-  background: url('アイチャッチ.png') center center / cover no-repeat;
+  background: linear-gradient(165deg, #fffbe0 0%, #ffee8a 35%, #ffde4d 70%, #ffcb2b 100%);
   color: #fff;
   padding: 48px 20px 40px;
   text-align: center;
   position: relative;
   overflow: hidden;
 }
+/* 中央を少し明るく、下端を落としてロゴと説明文を浮かせる */
 .hero::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(10,10,30,0.55) 0%,
-    rgba(10,10,30,0.45) 50%,
-    rgba(10,10,30,0.7) 100%
-  );
+  background:
+    radial-gradient(120% 85% at 50% 32%, rgba(255,255,255,0.45) 0%, rgba(255,255,255,0) 60%),
+    linear-gradient(to bottom, rgba(230,160,0,0) 62%, rgba(230,160,0,0.20) 100%);
   pointer-events: none;
 }
 .hero h1 {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  line-height: 1.4;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-  text-shadow: 0 0 8px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 4px 16px rgba(0,0,0,0.9);
+  margin: 0 0 14px;
+  line-height: 0;
   position: relative;
 }
-.hero h1 .gold {
-  color: #f0c040;
-  text-shadow: 0 0 12px rgba(240,165,0,0.8), 0 0 8px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1);
+.hero-logo {
+  width: min(100%, 460px);
+  height: auto;
+  filter: drop-shadow(0 4px 12px rgba(150,90,0,0.35));
 }
 .hero p {
   font-size: 14px;
-  color: #fff;
+  color: #6b3d02;
   line-height: 1.7;
   position: relative;
   margin-bottom: 20px;
-  text-shadow: 0 1px 4px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,1);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.55);
   font-weight: bold;
 }
 .hero-monsters {
@@ -431,26 +425,36 @@ main {
 
 /* モバイル対応 */
 @media (max-width: 640px) {
-  .header-inner {
-    gap: 8px;
+  header {
+    padding: 0 10px;
   }
-  .logo {
-    font-size: 13px;
-    flex-shrink: 1;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .header-inner {
+    height: auto;
+    min-height: 56px;
+    gap: 6px;
+  }
+  .logo img {
+    height: 30px;
   }
   nav {
-    flex-shrink: 0;
-    gap: 2px;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 10px;
   }
+  /* 語中で切れないよう、「一覧」だけを確実に2行目へ落とす。
+     さらに詰まったときの折り返しは line-break: strict で行頭の「ー」「ャ」を避ける */
   nav a {
     font-size: 12px;
-    padding: 5px 8px;
+    padding: 4px 6px;
+    line-height: 1.3;
+    text-align: left;
+    line-break: strict;
   }
-  .hero h1 {
-    font-size: 18px;
+  nav a .nav-sub {
+    display: block;
+  }
+  .hero-logo {
+    width: min(100%, 300px);
   }
   .page-title {
     font-size: 20px;
@@ -990,4 +994,28 @@ td img {
 
 .byline a {
   color: inherit;
+}
+
+/* 幅の狭い端末でもヘッダーを1段に保つ。
+   ロゴ・文字・間隔を2段階で詰めて、ナビが3行に割れるのを防ぐ */
+@media (max-width: 359px) {
+  .logo img {
+    height: 28px;
+  }
+  nav {
+    gap: 6px;
+  }
+  nav a {
+    padding: 4px 4px;
+  }
+}
+
+@media (max-width: 340px) {
+  .logo img {
+    height: 26px;
+  }
+  nav a {
+    font-size: 11px;
+    padding: 4px 3px;
+  }
 }
