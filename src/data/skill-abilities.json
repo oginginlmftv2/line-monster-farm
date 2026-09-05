@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 82
+    "abilities": 83
   },
   "abilities": [
     {
@@ -1017,6 +1017,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 82,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0083",
+      "name": "影装・蒼爪",
+      "version": 1,
+      "baseName": "影装・蒼爪",
+      "level": null,
+      "description": "対象技命中時、自身のすべての技の有利オーラ効果アップ20%、[プラズマ]中は本効果の20%が30%に上昇＜1回＞\n[有利]時、さらに有利オーラ効果10%上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 83,
       "status": "verified"
     }
   ]
