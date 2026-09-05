@@ -180,8 +180,11 @@ src/data/_source/skill-abilities-<血統slug>.tsv
 既存ファイルへは**追記**する。転記ミスの訂正はその行を書き換え、
 ゲーム側の更新は新しい行を追記する（上の「バージョン」を参照）。
 
+取り込みは**引数を取らない。**技DBをまるごと書き直すため、`src/data/_source` の
+`skills-*.tsv` と `skill-abilities-*.tsv` を毎回全血統ぶん読む。
+
 ```bash
-node scripts/import-skills-tsv.js src/data/_source/skills-<slug>.tsv src/data/_source/skill-abilities-<slug>.tsv --dry
+node scripts/import-skills-tsv.js --dry
 ```
 
 `--dry` で検査だけ通してから、外して本実行。そのあと必ず両方を通す。

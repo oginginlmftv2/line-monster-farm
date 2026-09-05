@@ -9345,8 +9345,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-08-31",
-      "baseline": 193,
-      "current": 1443,
+      "baseline": 264,
+      "current": 1514,
       "indexable": true
     },
     {
@@ -9370,8 +9370,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 214,
-      "current": 214,
+      "baseline": 285,
+      "current": 285,
       "indexable": false
     },
     {
@@ -9395,8 +9395,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 236,
-      "current": 236,
+      "baseline": 376,
+      "current": 376,
       "indexable": false
     },
     {
@@ -9420,8 +9420,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 247,
-      "current": 247,
+      "baseline": 318,
+      "current": 318,
       "indexable": false
     },
     {
@@ -9468,8 +9468,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-14",
-      "baseline": 254,
-      "current": 1451,
+      "baseline": 325,
+      "current": 1522,
       "indexable": true
     },
     {
@@ -9493,8 +9493,8 @@
       "createdAt": "2025-05-31",
       "updatedAt": "2025-05-31",
       "releasedAt": "2025-05-31",
-      "baseline": 244,
-      "current": 384,
+      "baseline": 315,
+      "current": 455,
       "indexable": false
     },
     {
@@ -9518,8 +9518,8 @@
       "createdAt": "2026-09-01",
       "updatedAt": "2026-09-01",
       "releasedAt": "2026-08-31",
-      "baseline": 234,
-      "current": 1488,
+      "baseline": 305,
+      "current": 1559,
       "indexable": true
     },
     {

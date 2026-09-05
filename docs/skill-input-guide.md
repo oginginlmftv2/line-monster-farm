@@ -105,14 +105,18 @@ IDへの変換は取り込みスクリプトが行う。
 ## 4. 取り込む
 
 ```bash
-node scripts/import-skills-tsv.js <技.tsv> <技能力.tsv> --dry
+node scripts/import-skills-tsv.js --dry
 ```
 
-`--dry` は書き込まずに検査だけする。エラーは行番号つきで全件出るので、
+**引数は取らない。**技DBはまるごと書き直すので、`src/data/_source` の
+`skills-<血統>.tsv` と `skill-abilities-<血統>.tsv` を毎回**全血統ぶん**読む
+（1血統だけ渡すと他の血統が消えるため）。読んだファイルは実行時に一覧で出る。
+
+`--dry` は書き込まずに検査だけする。エラーはファイル名と行番号つきで全件出るので、
 シートを直してから `--dry` を外して実行する。
 
 ```bash
-node scripts/import-skills-tsv.js <技.tsv> <技能力.tsv>
+node scripts/import-skills-tsv.js
 node build.js && node scripts/verify.js
 ```
 
