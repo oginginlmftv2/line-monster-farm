@@ -1543,14 +1543,32 @@ if (!exists('src/data/assist-cards.json')) {
       ok('cards/SSR-hori.htmlは新URLへcanonical・meta refresh・通常リンクで誘導しsitemap非掲載');
     }
 
-    const legacyCardPath = 'cards/card.html';
-    const legacyCardHtml = exists(legacyCardPath) ? read(legacyCardPath) : '';
-    const legacyCardNoindex = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["']noindex,follow["'])[^>]*>/i.test(legacyCardHtml);
-    const legacyCardHasAds = /adsbygoogle/i.test(legacyCardHtml);
-    if (!exists(legacyCardPath) || !legacyCardNoindex || legacyCardHasAds) {
-      ng(`cards/card.htmlのnoindex・広告が不正（存在 ${exists(legacyCardPath) ? 'あり' : 'なし'} / noindex,follow ${legacyCardNoindex ? 'あり' : 'なし'} / adsbygoogle ${legacyCardHasAds ? 'あり' : 'なし'}）`);
+    // 旧URL共通ページ（cards/card.html・monsters/monster.html）は本文を持たないJSリダイレクトの
+    // 踏み台である。広告を載せるとAdSenseの「コンテンツのないページ」に触れ、無効IDで本文なしの
+    // 200を返すとソフト404になる（GSCでcards/card.htmlを検出）。2ファイルを同じ観点で検査する
+    const legacyStubs = [
+      { path: 'cards/card.html', robots: 'noindex,follow', dest: '../assist.html' },
+      { path: 'monsters/monster.html', robots: 'noindex,nofollow', dest: '../monsters.html' },
+    ];
+    const legacyStubIssues = [];
+    for (const stub of legacyStubs) {
+      if (!exists(stub.path)) { legacyStubIssues.push(`${stub.path} が不在`); continue; }
+      const html = read(stub.path);
+      const robotsRe = new RegExp(
+        `<meta\\b(?=[^>]*\\bname=["']robots["'])(?=[^>]*\\bcontent=["']${stub.robots}["'])[^>]*>`, 'i');
+      if (!robotsRe.test(html)) legacyStubIssues.push(`${stub.path} に ${stub.robots} が無い`);
+      if (/adsbygoogle/i.test(html)) legacyStubIssues.push(`${stub.path} に adsbygoogle がある`);
+      // 誘導先は card.html が即値、monster.html は変数経由（map未収録時のフォールバック）なので、
+      // location.replace の存在と誘導先リテラルの存在を別々に検査する
+      const destLiteral = new RegExp(`['"]${stub.dest.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}['"]`);
+      if (!/location\.replace\(/.test(html) || !destLiteral.test(html)) {
+        legacyStubIssues.push(`${stub.path} が無効IDで ${stub.dest} へ location.replace しない`);
+      }
+    }
+    if (legacyStubIssues.length) {
+      ng(`旧URL共通ページの検査FAIL: ${legacyStubIssues.join(' / ')}`);
     } else {
-      ok('cards/card.htmlにnoindex,followがありadsbygoogleなし');
+      ok(`旧URL共通ページ ${legacyStubs.length}件はnoindex・adsbygoogleなし・無効IDで一覧へリダイレクト`);
     }
 
     // assist.htmlのカードリンクは静的URLなので、href から # でIDを取り出すと空になり
