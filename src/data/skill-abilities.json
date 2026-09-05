@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 66
+    "abilities": 69
   },
   "abilities": [
     {
@@ -825,6 +825,42 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 66,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0067",
+      "name": "共振：アルスマグナ",
+      "version": 1,
+      "baseName": "共振：アルスマグナ",
+      "level": null,
+      "description": "対象技命中時、自身のライフ以外のステータス上昇10%、相手[楔]中、本効果が20%に上昇＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 67,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0068",
+      "name": "回避上昇[中]",
+      "version": 1,
+      "baseName": "回避上昇[中]",
+      "level": null,
+      "description": "回避パラ+30",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 68,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0069",
+      "name": "オーラブースト",
+      "version": 1,
+      "baseName": "オーラブースト",
+      "level": null,
+      "description": "対象技の有利オーラ効果アップ/ガッツ回復Lv4",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 69,
       "status": "verified"
     }
   ]
