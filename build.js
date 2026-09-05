@@ -2028,7 +2028,7 @@ function renderSkillDetailRow(skill, context, abilityById, columnCount) {
   const wideRows = [];
   if (skill.unique) {
     const owners = (skill.owners || []).map(monsterLink).filter(Boolean).join('・');
-    if (owners) wideRows.push(['使用モンスター', owners]);
+    if (owners) wideRows.push(['使用可能モンスター', owners]);
   }
   const unlocks = (skill.unlockedBy || [])
     .map(entry => {
@@ -2037,7 +2037,10 @@ function renderSkillDetailRow(skill, context, abilityById, columnCount) {
     })
     .filter(Boolean)
     .join('・');
+  // 固有技に技登録は無いので枠ごと出さない。共通技は解放元が未入力でも
+  // 枠を出して「なし」と書く（枠が消えると、調査漏れなのか本当に無いのか読めない）。
   if (unlocks) wideRows.push(['技登録の解放元', unlocks]);
+  else if (!skill.unique) wideRows.push(['技登録の解放元', 'なし']);
 
   // バフ・デバフは、それを起こす技能力のカードの中に置く。技単位でまとめると
   // どの能力が付けるものか分からなくなる。見出しは付けない（カードの文脈で読める）。
@@ -2080,11 +2083,12 @@ ${items.join('\n')}
             <div class="skill-detail-inner">
             <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
             <div class="skill-detail-anim"><div class="skill-detail-clip">
-            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}<span class="skill-detail-place">${escapeHtml(skill.range)}距離ランク${skill.rank}</span></h3>
+${skill.unique ? `            <p class="skill-detail-unique">固有技</p>
+` : ''}            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}<span class="skill-detail-place">${escapeHtml(skill.range)}距離ランク${skill.rank}</span></h3>
             <table class="skill-detail-table${detailTone}">
               <tbody>
 ${pairs.map(([labelA, valueA, labelB, valueB]) => `                <tr><th>${escapeHtml(labelA)}</th><td>${valueA}</td><th>${escapeHtml(labelB)}</th><td>${valueB}</td></tr>`).join('\n')}
-${wideRows.map(([label, value]) => `                <tr><th>${escapeHtml(label)}</th><td colspan="3">${value}</td></tr>`).join('\n')}
+${wideRows.map(([label, value]) => `                <tr class="skill-detail-wide"><th>${escapeHtml(label)}</th><td colspan="3">${value}</td></tr>`).join('\n')}
               </tbody>
             </table>
         <h4 class="skill-detail-subtitle">技能力</h4>
