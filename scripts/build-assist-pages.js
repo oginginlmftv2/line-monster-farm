@@ -218,11 +218,11 @@ function renderPage(card, effects, abilities, cardById, indexable, gachaAppearan
 <body class="assist-detail-page">
 <header>
   <div class="header-inner">
-    <a href="../index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a>
+    <a href="../index.html" class="logo"><img src="../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
     <nav>
-      <a href="../monsters.html">モンスター一覧</a>
-      <a href="../assist.html" class="active">アシストカード一覧</a>
-      <a href="../gacha/">開催中ガチャ一覧</a>
+      <a href="../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../assist.html" class="active">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
     </nav>
   </div>
 </header>

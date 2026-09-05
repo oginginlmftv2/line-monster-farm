@@ -30,20 +30,15 @@ header {
 }
 
 .logo {
-  color: #fff;
-  font-size: 18px;
-  font-weight: bold;
-  text-decoration: none;
-  white-space: nowrap;
+  display: block;
+  flex-shrink: 0;
+  line-height: 0;
 }
 
-.logo span {
-  color: #f0a500;
-}
-
-/* スマホでは「徹底攻略」を2行目へ落とす（PCは1行のまま） */
-.logo .logo-sub {
-  color: #fff;
+.logo img {
+  display: block;
+  height: 36px;
+  width: auto;
 }
 
 nav {
@@ -374,18 +369,14 @@ nav a:hover, nav a.active {
   pointer-events: none;
 }
 .hero h1 {
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  line-height: 1.4;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-  text-shadow: 0 0 8px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1), 0 4px 16px rgba(0,0,0,0.9);
+  margin: 0 0 14px;
+  line-height: 0;
   position: relative;
 }
-.hero h1 .gold {
-  color: #f0c040;
-  text-shadow: 0 0 12px rgba(240,165,0,0.8), 0 0 8px rgba(0,0,0,1), 0 2px 4px rgba(0,0,0,1);
+.hero-logo {
+  width: min(100%, 460px);
+  height: auto;
+  filter: drop-shadow(0 4px 16px rgba(0,0,0,0.6));
 }
 .hero p {
   font-size: 14px;
@@ -437,39 +428,35 @@ main {
 /* モバイル対応 */
 @media (max-width: 640px) {
   header {
-    padding: 0 12px;
+    padding: 0 10px;
   }
-  /* タイトルとナビを上下2段に。タイトルを省略せず全部見せるため */
   .header-inner {
-    flex-direction: column;
-    align-items: stretch;
     height: auto;
-    padding: 6px 0;
-    gap: 4px;
+    min-height: 56px;
+    gap: 6px;
   }
-  /* 「LINEモンスターファーム／徹底攻略」の2行で見せる */
-  .logo {
-    font-size: 14px;
-    white-space: normal;
-    line-height: 1.3;
-  }
-  .logo .logo-sub {
-    display: block;
+  .logo img {
+    height: 30px;
   }
   nav {
-    justify-content: space-between;
-    gap: 2px;
+    flex: 0 1 auto;
+    min-width: 0;
+    gap: 10px;
   }
-  /* 行頭に「ー」「ャ」が来る折り返しを禁止する */
+  /* 語中で切れないよう、「一覧」だけを確実に2行目へ落とす。
+     さらに詰まったときの折り返しは line-break: strict で行頭の「ー」「ャ」を避ける */
   nav a {
     font-size: 12px;
     padding: 4px 6px;
     line-height: 1.3;
-    text-align: center;
+    text-align: left;
     line-break: strict;
   }
-  .hero h1 {
-    font-size: 18px;
+  nav a .nav-sub {
+    display: block;
+  }
+  .hero-logo {
+    width: min(100%, 300px);
   }
   .page-title {
     font-size: 20px;
@@ -1009,4 +996,28 @@ td img {
 
 .byline a {
   color: inherit;
+}
+
+/* 幅の狭い端末でもヘッダーを1段に保つ。
+   ロゴ・文字・間隔を2段階で詰めて、ナビが3行に割れるのを防ぐ */
+@media (max-width: 359px) {
+  .logo img {
+    height: 28px;
+  }
+  nav {
+    gap: 6px;
+  }
+  nav a {
+    padding: 4px 4px;
+  }
+}
+
+@media (max-width: 340px) {
+  .logo img {
+    height: 26px;
+  }
+  nav a {
+    font-size: 11px;
+    padding: 4px 3px;
+  }
 }
