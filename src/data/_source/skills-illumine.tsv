@@ -21,3 +21,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 イルミネ	近	2	朱の新星	赤	ちから	35		A	B	C	D	祝：強撃Lv3		祝：精密Lv3						1	シャルティア				
 イルミネ	中	4	清浄投擲槍	白	ちから	34		A	S	F	A	シールド破壊＜1回＞		貫通Lv3						1	シャルティア				
 イルミネ	遠	3	ファイトFC	黄	ちから	34	近	E+	C	B	D	症状：メルト		フルチャージ						1	シュシュポップ3				
+イルミネ	近	5	エミットハンマー	黒	ちから	42		A	A+	B	S	ショックギター		未来まで届くシャウト		テクニックレイズ	シュシュポップ3:6	テクニックオーバー	シュシュポップ3:10	1	シュシュポップ3				

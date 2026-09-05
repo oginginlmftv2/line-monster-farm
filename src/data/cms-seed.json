@@ -9493,9 +9493,9 @@
       "createdAt": "2025-05-31",
       "updatedAt": "2025-05-31",
       "releasedAt": "2025-05-31",
-      "baseline": 519,
-      "current": 659,
-      "indexable": false
+      "baseline": 708,
+      "current": 848,
+      "indexable": true
     },
     {
       "id": "3290",
