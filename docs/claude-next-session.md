@@ -1,66 +1,80 @@
 # 次回Claude作業 引き継ぎ
 
-最終更新: 2026-08-23
+最終更新: 2026-09-05
 
 この文書の「管理者からClaudeへ渡す文面」を、そのまま次回のClaudeへ渡す。
 
 ## 管理者からClaudeへ渡す文面
 
 ```text
-line-monster-farm リポジトリでP12-3「アシストカードデータ監査と読取export」を行ってください。
+line-monster-farm リポジトリで、イルミネ種の技登録の続きを行ってください。
+共通技14件は登録済みで、残りは固有技です。スクショは私が1技ずつ送ります。
 
-作業ブランチ: chore/p12-3-assist-data-audit
-本番影響: ⚪
+作業ブランチ: content/p14-1-skill-illumine（既存。継続して使う）
+本番影響: 🔴（血統ページは既にインデックス対象。マージ＝本番公開）
 
-最初にAGENTS.mdを最後まで読み、docs/dormant-files.md、
-docs/assist-card-cms-progress.md、docs/PROGRESS.md、docs/ライ徹_開発計画.md、
-docs/build-spec.md、CLAUDE.mdの関連箇所を読んでください。
+最初にAGENTS.mdを最後まで読み、CLAUDE.mdの「技（スキル）DBの追加・更新」、
+docs/skill-input-guide.md、docs/skill-design.md、docs/build-spec.mdの3-2と5-9を
+読んでください。取り込み手順はスキル monster-skill-capture が正です。
 
 git status --shortを確認し、未保存変更があれば破棄・退避せず停止してください。
-問題がなければgit switch main、git pull --ff-only origin mainを行い、
-chore/p12-3-assist-data-auditを作成してください。
-編集前に変更予定ファイルと本番影響区分を宣言してください。
+問題がなければ git fetch origin --prune のうえ content/p14-1-skill-illumine を
+チェックアウトしてください。mainへ切り替えたり、新しいブランチを作ったりしないでください。
 
-このタスクでは公開HTML、カードデータの値、画像、自動生成物、GAS、Sheets、Drive、
-Firestore rules・document、GitHub設定を変更しません。
+固有技はモンスター詳細の技タブから読みます。技タブには固有技と血統共通技が
+両方並び、名前では区別できません。「登録済みの共通技名＋接尾辞」の形以外は
+必ず私に聞いてください。共通技だった場合は血統技図鑑側のキャプチャが別途必要です。
 
-休止中ファイルを直接読まないでください。100KB超のファイルは内容を展開せず、
-Nodeスクリプトで件数、SHA-256、項目名、型、重複、参照関係、不一致だけを抽出してください。
+1技につき2ステップ（ステップ1=技の基本画面、ステップ2=技能力の詳細）で進め、
+読み取り結果は毎回すべて表で書き戻して確認を取ってください。読めない値は
+推測せず空欄にし、読めなかったと報告してください。
 
-次を推測せず監査してください。
+技能力は4つとも必ずタップして解放条件の有無を確かめてください。
+グレーアウトしていなくても条件が出ることがあります（レクイエムエンドで実測）。
+同じ技能力でも技ごとに条件が違うので、他の技の条件を流用しないでください。
 
-1. cards/cards-data.jsの現行cardId、基本属性、カード画像の一致
-2. src/data/cards-editorial.jsonとFirestore cards collectionの差
-3. assist-effect-data.jsのカード別効果件数、項目、未登録カード
-4. lMfDB_abilities.jsonと旧lmfdb_abilities_data.jsonの差、重複、source、tags
-5. 能力の表示名・rarityから現行cardIdへ対応できる件、候補、未解決
-6. Firestore cardAbilities/assignmentsとassist-abilities画像の対応、未参照・欠落
-7. 旧assistEffects collectionまたはcards.assistEffectsが残る場合の読取状態
+1技ごとに次を通し、FAIL 0を確認してからコミットしてください。
 
-Firestoreの値が必要な場合は読取exportだけを行い、保存・削除・rules変更をしないでください。
-Claudeから外部状態を確認できない場合は完了扱いにせず、管理者が画面で確認する手順を示してください。
+  node scripts/import-skills-tsv.js --dry
+  node scripts/import-skills-tsv.js
+  node build.js && node scripts/test-skill-build.js && node scripts/verify.js
 
-成果物には次を含めてください。
-
-- 入力ファイルごとのSHA-256と件数
-- 現行91カードをcardId基準にした対応表
-- 自動確定、候補、未解決の区分と理由
-- P12-4カードDB、P12-5効果DB、P12-6能力DBが独立して変換できる入力一覧
-- 移行前バックアップと復旧方法
-- docs/assist-card-cms-progress.mdとdocs/PROGRESS.mdの同期
-
-node scripts/verify.jsでFAIL 0、git diff --check、差分確認を行ってください。
-commit・push・PR・mergeは、管理者が明示するまで行わないでください。
-
-最後はAGENTS.md第7章の形式で、確認できた事実、確認できなかった外部状態、
-管理者確認項目、次の作業1件を報告してください。
+commit は1技1コミットで行ってください。push・PR・mergeは私が明示するまで
+行わないでください。CSS・レイアウト・色・余白は範囲外です。気づいても報告だけして
+直さないでください。
 ```
 
-## 現在地
+## 現在地（2026-09-05時点）
 
-- P12-1リセマラ記事刷新はPR #30でmain反映・Pages公開済み
-- P12-2でアシストカードの3DB、静的詳細、OCRレビュー、専用CMSを設計
-- P11-7〜9はGitHub管理権限待ちで保留。main Rulesetを先に有効化しない
-- AdSense再申請は更新利用規約への管理者同意待ちで保留
-- Firestoreはread許可・write全面禁止を維持し、P12-3では読取だけを行う
-- 詳細設計と実施順はdocs/assist-card-cms-progress.mdを正とする
+- ブランチ `content/p14-1-skill-illumine`、`origin/main`（`bd423fd`）から作成。未push
+- 技DB52件（キュービ38・イルミネ14）。技能力78件。バフ34件
+- イルミネ種の血統共通技14件を登録済み。順に
+  ヴェノムエッジ／プラズマ／エーテルアイス／モーニングスター／アサルトアロー／
+  アルカナフレア／ストレート／アサシンクロウ／アルスマグナ／ノクターン／
+  ブレードダンス／クリムゾンノヴァ／レクイエムエンド／ミラージュクロウ
+- `monsters/muki/illumine/index.html` は可視3692字で**インデックス対象**。
+  sitemapに `/monsters/muki/illumine/` が載っている。マージ＝本番公開
+- `index.html` の更新履歴へ「イルミネ種の血統技ページを公開」を追記済み
+- `node scripts/verify.js` は PASS 94 / FAIL 0 / WARN 0
+
+## このタスク中に直した仕組み
+
+- **取り込みの全血統読み込み化。** `import-skills-tsv.js` は渡された2枚だけでDBを
+  書き直していたため、血統ごとのTSVを1枚渡すと他の血統の技が消えた。
+  引数を取らず `_source` の `skills-*.tsv` を全部読む形へ変更した
+- **技能力シートの1枚化。** 技能力DBは血統をまたぐ共通の名前空間なのに、シートだけ
+  血統ごとに分かれていて二重登録が起きた。`skill-abilities.tsv` の1枚へ統合し、
+  血統別の古いシートが残っていたら取り込みが停止するようにした
+- **同名・別内容の技能力は確認してから書く規則を追加。** 版を積むと、その名前を参照する
+  全血統のページが切り替わる。「ゲーム側の更新」か「血統ごとに内容が違う」かは
+  画面から区別できないため、入力者に必ず聞く
+- **解放条件の記述を実測に合わせた。** 解放済み（グレーアウトなし）でも条件が出る
+
+## 未解決・要判断
+
+- **血統によって技能力の内容が違った場合の持ち方が未設計。** 現在のDBは
+  「同名＝同一能力」の前提。遭遇したら止まって相談すること
+- イルミネ種の固有技は未登録。所有モンスターは
+  セリアン3209／ドリーミィ3213／ジェリーヌ3219／イルミネ3232／シャルティア3250／
+  シュシュポップ3 3251／ワルキューレ3290 の7体
+- 技が0件の血統はページを生成しない。34血統ぶん同じ作業が残っている

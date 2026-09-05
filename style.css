@@ -430,24 +430,28 @@ main {
   }
   .header-inner {
     height: auto;
-    min-height: 56px;
-    gap: 6px;
+    min-height: 64px;
+    gap: 14px;
   }
+  /* ロゴは高さではなく幅で指定する（高さ指定だと横幅が読めず、
+     ナビに残る幅を段階ごとに計算できない）。以下の段階は
+     「ナビ3リンクが2行に収まる幅」を実測して決めている */
   .logo img {
-    height: 30px;
+    height: auto;
+    width: 78px;
   }
   nav {
     flex: 0 1 auto;
     min-width: 0;
-    gap: 10px;
+    gap: 8px;
   }
   /* 語中で切れないよう、「一覧」だけを確実に2行目へ落とす。
      さらに詰まったときの折り返しは line-break: strict で行頭の「ー」「ャ」を避ける */
   nav a {
     font-size: 12px;
-    padding: 4px 6px;
+    padding: 4px 5px;
     line-height: 1.3;
-    text-align: left;
+    text-align: center;
     line-break: strict;
   }
   nav a .nav-sub {
@@ -997,10 +1001,14 @@ td img {
 }
 
 /* 幅の狭い端末でもヘッダーを1段に保つ。
-   ロゴ・文字・間隔を2段階で詰めて、ナビが3行に割れるのを防ぐ */
-@media (max-width: 359px) {
+   ロゴ・文字・間隔を3段階で詰めて、ナビが3行に割れるのを防ぐ。
+   実測（2行に収まる上限）: 375px→78px / 360px→68px / 344px→60px / 320px→56px */
+@media (max-width: 374px) {
   .logo img {
-    height: 28px;
+    width: 68px;
+  }
+  .header-inner {
+    gap: 10px;
   }
   nav {
     gap: 6px;
@@ -1010,9 +1018,18 @@ td img {
   }
 }
 
+@media (max-width: 355px) {
+  .logo img {
+    width: 60px;
+  }
+  .header-inner {
+    gap: 8px;
+  }
+}
+
 @media (max-width: 340px) {
   .logo img {
-    height: 26px;
+    width: 56px;
   }
   nav a {
     font-size: 11px;
