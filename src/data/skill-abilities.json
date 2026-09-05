@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 91
+    "abilities": 93
   },
   "abilities": [
     {
@@ -1129,6 +1129,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 91,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0092",
+      "name": "王武天覇",
+      "version": 1,
+      "baseName": "王武天覇",
+      "level": null,
+      "description": "バトル中、自身に次の効果\n・対象技命中時、[武天]1つにつきクリティカル率＜+10%＞\n・すべての技命中時、[武天（連撃与ダメ＜+10%＞）]を付与＜最大5まで＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 92,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0093",
+      "name": "連撃：王武天覇",
+      "version": 1,
+      "baseName": "連撃：王武天覇",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ダメージ＜20%＞の追撃を＜4回＞与える\n・[プラズマ]中、ダメージ＜20%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 93,
       "status": "verified"
     }
   ]
