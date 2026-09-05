@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 79
+    "abilities": 81
   },
   "abilities": [
     {
@@ -981,6 +981,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 79,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0080",
+      "name": "共振：バスターソード",
+      "version": 1,
+      "baseName": "共振：バスターソード",
+      "level": null,
+      "description": "対象技命中時、与ダメLv4、相手[楔]中、本効果のLv4がLv6に上昇、[プラズマ]中、相手のシールドを破壊",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 80,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0081",
+      "name": "連撃：バスターソード",
+      "version": 1,
+      "baseName": "連撃：バスターソード",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv9を2回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 81,
       "status": "verified"
     }
   ]
