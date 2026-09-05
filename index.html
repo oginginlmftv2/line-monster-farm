@@ -71,17 +71,17 @@
 
 <header>
   <div class="header-inner">
-    <a href="index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <a href="index.html" class="logo"><img src="img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
     <nav>
-      <a href="index.html" class="active">トップ</a>
-      <a href="monsters.html">モンスター一覧</a>
-      <a href="assist.html">アシストカード一覧</a>
+      <a href="monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
     </nav>
   </div>
 </header>
 
 <div class="hero">
-  <h1><span class="gold">LINEモンスターファーム</span><br>徹底攻略</h1>
+  <h1><img class="hero-logo" src="img/site/logo-hero.png" alt="LINEモンスターファーム徹底攻略" width="920" height="442"></h1>
   <p>モンスター一覧・アシストカード評価・育成方法など<br>プレイヤー向け攻略情報を掲載</p>
 </div>
 
@@ -105,6 +105,9 @@
 ['2026.08.31', a('gacha/20260828-1.html','ガチャ更新：周年記念サマーステップアップモンスターガチャのピックアップ（ルートヴィッヒ）情報を掲載')],
 // GACHA:UPDATES:END
 ['2026.09.05', a('monsters/muki/illumine/index.html','イルミネ種の血統技ページを公開（ヴェノムエッジ・プラズマ・エーテルアイスの3技を登録）')],
+['2026.09.05', a('index.html','サイトロゴを作成し、トップのメインビジュアルとヘッダー左上に掲載（メインビジュアルの背景もロゴに合わせた黄系グラデーションへ変更）')],
+['2026.09.05', a('gacha/','ヘッダーに「開催中ガチャ一覧」を追加（「トップ」はロゴのタップに集約、スマホは「一覧」を2行目へ折り返して1段に収める）')],
+['2026.09.05', a('monsters/kaibutsu/kawazumo/2580.html','モンスター・アシストカード詳細の「登場ガチャ」を、ガチャ一覧と同じカード（バナー・種別・開催期間つき）に変更')],
 ['2026.09.05', a('monsters/kemono/kyubi/index.html','血統ページの技表をスマホ向けに調整（ランク列を縦書きにして横幅を節約、固有技は「固有技を見る」で開閉）')],
 ['2026.09.03', a('diary/mr-rival-julia-ikusei.html','プレイ日記更新（MRライバル「ジュリア」でドリーミーを総合力育成してみた）')],
 ['2026.09.02', a('assist.html','アシストカード一覧：検索・絞り込みの利用状況をアクセス解析で計測するよう対応')],
@@ -245,7 +248,7 @@
       </a>
       <!-- GACHA:NAV:START -->
       <a href="gacha/" class="menu-link">
-        <span class="icon">🎰</span> ガチャ一覧
+        <span class="icon">🎰</span> 開催中ガチャ一覧
       </a>
 <!-- GACHA:NAV:END -->
       <div class="menu-link ikusei-toggle-btn" onclick="toggleIkusei(this)">
