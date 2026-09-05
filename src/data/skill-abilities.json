@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 87
+    "abilities": 89
   },
   "abilities": [
     {
@@ -1081,6 +1081,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 87,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0088",
+      "name": "症状：メルト",
+      "version": 1,
+      "baseName": "症状：メルト",
+      "level": null,
+      "description": "対象技命中時、自身に次の効果＜20秒＞＜1回＞\n・＜5秒＞ごとに自身の最大ライフ＜2%＞の継続ダメージ\n・攻撃ステータスと命中率＜+25%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 88,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0089",
+      "name": "フルチャージ",
+      "version": 1,
+      "baseName": "フルチャージ",
+      "level": null,
+      "description": "技発動後、ガッツ回復＜+70＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 89,
       "status": "verified"
     }
   ]
