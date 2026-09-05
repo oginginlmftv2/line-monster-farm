@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 64
+    "abilities": 65
   },
   "abilities": [
     {
@@ -801,6 +801,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 64,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0065",
+      "name": "影装・拳",
+      "version": 1,
+      "baseName": "影装・拳",
+      "level": null,
+      "description": "対象技命中時、自身のすべての技の消費ガッツ減少10%、[プラズマ]中は本効果の10%が20%に上昇＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 65,
       "status": "verified"
     }
   ]
