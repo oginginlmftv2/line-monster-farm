@@ -49,7 +49,7 @@ GAS・シート・Workflowも変更しない。
 | `aura` | `赤` `青` `黄` `黒` `白` `緑` `無` の7値 |
 | `skillType` | 技種（`ちから` `かしこさ` など） |
 | `guts` | 消費ガッツ（0以上の整数） |
-| `damage` / `accuracy` / `gutsDown` / `critical` | `S+`〜`G` の評価または `null` |
+| `damage` / `accuracy` / `gutsDown` / `critical` | `SS`〜`G` の評価または `null`。4項目とも `SS` を取りうる |
 | `abilities` | `{ abilityId, unlock }` の配列。`unlock` は `{ monsterId, level }` または `null` |
 | `icon` | 技アイコンのファイル名。S1では未使用で常に `null` |
 | `unique` | 固有技なら `true` |
@@ -166,7 +166,9 @@ ID・血統・間合い・ランク・オーラ・評価・参照先・固有技
 - `buffId` の書式・一意性、バフ名の一意性、`kind` が `バフ`/`デバフ` であること
 - 技能力の `buffs[]` が実在の `buffId` を指し、重複しないこと
 - `blood` が `bloodOrder` にある / `range` 4値 / `rank` 1〜6 / `aura` 7値
-- 評価は `/^[SABCDEFG]\+?$/`。**各段に `+` 付きが存在する**
+- 評価は `/^(?:SS|[SABCDEFG])\+?$/`。**各段に `+` 付きが存在する**。
+  最上位は `SS` で、**ダメージ・命中率・ガッツダウン・クリティカル率の4項目すべてに存在する**
+  （初出はキュービ種 王狐炎衝、2件目がイルミネ種 王武天覇のクリティカル率）
 - `moveTo` が `range` と同じ値でないこと（移動しない技は `null`）
 - `abilities[]` の `abilityId` が `skill-abilities.json` に実在し、同じ技に重複しないこと
 - `abilities[].unlock` が `null` か、実在モンスター＋★1〜10であること
