@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 93
+    "abilities": 94
   },
   "abilities": [
     {
@@ -1153,6 +1153,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 93,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0094",
+      "name": "王武星",
+      "version": 1,
+      "baseName": "王武星",
+      "level": null,
+      "description": "[王者覚醒]発動中かつ、自身のライフが相手より少ない時、[プラズマ]中が条件の効果を発動可能にする",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 94,
       "status": "verified"
     }
   ]

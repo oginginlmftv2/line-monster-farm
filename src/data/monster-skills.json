@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 62,
+    "skills": 63,
     "bloods": 2
   },
   "skills": [
@@ -972,6 +972,41 @@
       "status": "verified"
     },
     {
+      "skillId": "sk-0063",
+      "name": "王武星",
+      "version": 1,
+      "blood": "イルミネ",
+      "range": "中",
+      "rank": 2,
+      "moveTo": "零",
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 23,
+      "damage": "B",
+      "accuracy": "D+",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0094",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0059",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "3290"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 25,
+      "status": "verified"
+    },
+    {
       "skillId": "sk-0001",
       "name": "神域移動",
       "version": 1,
@@ -1006,7 +1041,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 25,
+      "sortOrder": 26,
       "status": "verified"
     },
     {
@@ -1058,7 +1093,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 26,
+      "sortOrder": 27,
       "status": "verified"
     },
     {
@@ -1092,7 +1127,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 27,
+      "sortOrder": 28,
       "status": "verified"
     },
     {
@@ -1130,7 +1165,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 28,
+      "sortOrder": 29,
       "status": "verified"
     },
     {
@@ -1163,7 +1198,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 29,
+      "sortOrder": 30,
       "status": "verified"
     },
     {
@@ -1189,7 +1224,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 30,
+      "sortOrder": 31,
       "status": "verified"
     },
     {
@@ -1220,7 +1255,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 31,
+      "sortOrder": 32,
       "status": "verified"
     },
     {
@@ -1274,7 +1309,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 32,
+      "sortOrder": 33,
       "status": "verified"
     },
     {
@@ -1316,7 +1351,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 33,
+      "sortOrder": 34,
       "status": "verified"
     },
     {
@@ -1358,7 +1393,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 34,
+      "sortOrder": 35,
       "status": "verified"
     },
     {
@@ -1393,7 +1428,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 35,
+      "sortOrder": 36,
       "status": "verified"
     },
     {
@@ -1424,7 +1459,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 36,
+      "sortOrder": 37,
       "status": "verified"
     },
     {
@@ -1455,7 +1490,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 37,
+      "sortOrder": 38,
       "status": "verified"
     },
     {
@@ -1486,7 +1521,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 38,
+      "sortOrder": 39,
       "status": "verified"
     },
     {
@@ -1532,7 +1567,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 39,
+      "sortOrder": 40,
       "status": "verified"
     },
     {
@@ -1574,7 +1609,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 40,
+      "sortOrder": 41,
       "status": "verified"
     },
     {
@@ -1616,7 +1651,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 41,
+      "sortOrder": 42,
       "status": "verified"
     },
     {
@@ -1672,7 +1707,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 42,
+      "sortOrder": 43,
       "status": "verified"
     },
     {
@@ -1703,7 +1738,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 43,
+      "sortOrder": 44,
       "status": "verified"
     },
     {
@@ -1738,7 +1773,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 44,
+      "sortOrder": 45,
       "status": "verified"
     },
     {
@@ -1769,7 +1804,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 45,
+      "sortOrder": 46,
       "status": "verified"
     },
     {
@@ -1804,7 +1839,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 46,
+      "sortOrder": 47,
       "status": "verified"
     },
     {
@@ -1839,7 +1874,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 47,
+      "sortOrder": 48,
       "status": "verified"
     },
     {
@@ -1870,7 +1905,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 48,
+      "sortOrder": 49,
       "status": "verified"
     },
     {
@@ -1908,7 +1943,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 49,
+      "sortOrder": 50,
       "status": "verified"
     },
     {
@@ -1954,7 +1989,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 50,
+      "sortOrder": 51,
       "status": "verified"
     },
     {
@@ -1992,7 +2027,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 51,
+      "sortOrder": 52,
       "status": "verified"
     },
     {
@@ -2044,7 +2079,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 52,
+      "sortOrder": 53,
       "status": "verified"
     },
     {
@@ -2079,7 +2114,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 53,
+      "sortOrder": 54,
       "status": "verified"
     },
     {
@@ -2114,7 +2149,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 54,
+      "sortOrder": 55,
       "status": "verified"
     },
     {
@@ -2149,7 +2184,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 55,
+      "sortOrder": 56,
       "status": "verified"
     },
     {
@@ -2184,7 +2219,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 56,
+      "sortOrder": 57,
       "status": "verified"
     },
     {
@@ -2219,7 +2254,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 57,
+      "sortOrder": 58,
       "status": "verified"
     },
     {
@@ -2268,7 +2303,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 58,
+      "sortOrder": 59,
       "status": "verified"
     },
     {
@@ -2306,7 +2341,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 59,
+      "sortOrder": 60,
       "status": "verified"
     },
     {
@@ -2358,7 +2393,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 60,
+      "sortOrder": 61,
       "status": "verified"
     },
     {
@@ -2396,7 +2431,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 61,
+      "sortOrder": 62,
       "status": "verified"
     },
     {
@@ -2439,7 +2474,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 62,
+      "sortOrder": 63,
       "status": "verified"
     }
   ]
