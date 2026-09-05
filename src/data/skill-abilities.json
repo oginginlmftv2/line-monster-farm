@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 81
+    "abilities": 82
   },
   "abilities": [
     {
@@ -1005,6 +1005,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 81,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0082",
+      "name": "影装・蒼盾",
+      "version": 1,
+      "baseName": "影装・蒼盾",
+      "level": null,
+      "description": "対象技命中時、自身に被ダメ低下Lv3、[プラズマ]中は本効果のLv3がLv5に上昇＜1回＞\n[有利]時、本効果がさらにLv＜+1＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 82,
       "status": "verified"
     }
   ]
