@@ -9370,8 +9370,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 578,
-      "current": 578,
+      "baseline": 630,
+      "current": 630,
       "indexable": false
     },
     {
@@ -9493,8 +9493,8 @@
       "createdAt": "2025-05-31",
       "updatedAt": "2025-05-31",
       "releasedAt": "2025-05-31",
-      "baseline": 696,
-      "current": 836,
+      "baseline": 748,
+      "current": 888,
       "indexable": true
     },
     {
