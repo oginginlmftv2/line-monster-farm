@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 78
+    "abilities": 79
   },
   "abilities": [
     {
@@ -969,6 +969,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 78,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0079",
+      "name": "影装・爆",
+      "version": 1,
+      "baseName": "影装・爆",
+      "level": null,
+      "description": "対象技命中時、自身のすべての技にガッツ消費量に応じた与ダメ上昇Lv2、[プラズマ]中は本効果のLv2がLv4に上昇＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 79,
       "status": "verified"
     }
   ]
