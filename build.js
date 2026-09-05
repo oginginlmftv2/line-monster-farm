@@ -361,11 +361,18 @@ function renderGachaUpdates(gachas, context) {
 }
 
 function renderReroll(gacha, context) {
-  const cards = gacha.pickupCards.map((pickup, index) => {
+  // 見た目はガチャ一覧のガチャ枠＋トップのピックアップ一覧に合わせる（順位は付けない）
+  const banner = `    <div class="gacha-grid">\n${renderGachaCard(gacha, {
+    href: `gacha/${gacha.gachaId}.html`,
+    imageSrc: gacha.image,
+  })}\n    </div>`;
+  const cards = gacha.pickupCards.map(pickup => {
     const card = context.cardsById.get(pickup.cardId);
-    return `    <a href="cards/${escapeHtml(card.cardId)}.html" class="rank-row">\n      <div class="rank-num${index === 0 ? ' gold' : ''}">${index + 1}</div>\n      <img class="rank-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n      <div class="rank-info">\n        <div class="rank-name">${escapeHtml(card.name)} <span class="rarity rarity-${escapeHtml(card.rarity)}" style="font-size:11px;padding:1px 6px;">${escapeHtml(card.rarity)}</span></div>\n        <div class="rank-reason">${escapeHtml(gachaExcerpt(card.explanation))}</div>\n      </div>\n      <div class="rank-arrow">›</div>\n    </a>`;
-  }).join('\n\n');
-  return `    <h3>${escapeHtml(gacha.name)}</h3>\n    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))} ／ <a href="gacha/${escapeHtml(gacha.gachaId)}.html">ガチャ詳細を見る</a></p>${cards ? `\n\n${cards}` : ''}\n\n    <div class="expl-body">${formatExplanation(gacha.explanation)}</div>`;
+    const excerpt = gachaExcerpt(card.explanation);
+    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card wide-card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(card.name)}</div>\n          <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
+  }).join('\n');
+  const grid = cards ? `\n\n    <div class="card-grid wide-grid reroll-pickup-grid">\n${cards}\n    </div>` : '';
+  return `${banner}${grid}\n\n    <div class="expl-body">${formatExplanation(gacha.explanation)}</div>`;
 }
 
 // ガチャ一覧と同じカード（バナー・タイトル・種別・期間）。一覧・モンスター・カード各ページで共用する
