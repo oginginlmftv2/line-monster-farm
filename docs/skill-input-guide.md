@@ -9,15 +9,20 @@ CMS化（S3）のときも同じ列構成をシートのヘッダにするので
 
 2枚のシートを用意する。テンプレートのヘッダ行をそのまま貼り付ける。
 
-| シート | テンプレート |
-|---|---|
-| 技 | `src/data/_source/skills-template.tsv` |
-| 技能力 | `src/data/_source/skill-abilities-template.tsv` |
+| シート | ファイル | 単位 | テンプレート |
+|---|---|---|---|
+| 技 | `src/data/_source/skills-<血統slug>.tsv` | **血統ごと** | `skills-template.tsv` |
+| 技能力 | `src/data/_source/skill-abilities.tsv` | **全血統で1枚** | `skill-abilities-template.tsv` |
+| バフ・デバフ | `src/data/_source/buffs.tsv` | **全血統で1枚** | `buffs-template.tsv` |
 
-バフ・デバフは血統をまたぐ共通の状態なので、血統ごとには作らない。
-`src/data/_source/buffs.tsv` の1枚だけを全血統で共有する（列は `name` / `kind` /
-`description` / `note` / `buffId`）。技能力への紐づけは取り込みが自動で行うので、
-技能力シートに書く欄は無い。
+技は `血統＋技名` で区別するので、血統が違えば同名でも別の技になる。
+**技能力とバフ・デバフは名前だけが鍵で、血統をまたいで共通**なので分冊しない。
+すでに他の血統で登録した技能力は書き足さず、技シートから名前で参照するだけでよい
+（解放条件は技ごとに違うので技シートの `abilityNUnlock` へ書く）。
+同じ名前で同じ内容の行を足すと、取り込みが「v1 と v2 の内容が同じです」で止まる。
+
+バフ・デバフの列は `name` / `kind` / `description` / `note` / `buffId`。
+技能力への紐づけは取り込みが自動で行うので、技能力シートに書く欄は無い。
 
 **モンスターは名前で書く。**356体すべて名前が一意なので、4桁IDを調べる必要はない。
 IDへの変換は取り込みスクリプトが行う。
@@ -109,8 +114,9 @@ node scripts/import-skills-tsv.js --dry
 ```
 
 **引数は取らない。**技DBはまるごと書き直すので、`src/data/_source` の
-`skills-<血統>.tsv` と `skill-abilities-<血統>.tsv` を毎回**全血統ぶん**読む
-（1血統だけ渡すと他の血統が消えるため）。読んだファイルは実行時に一覧で出る。
+`skills-<血統>.tsv` を毎回**全血統ぶん**読む（1血統だけ渡すと他の血統が消えるため）。
+技能力は `skill-abilities.tsv`、バフ・デバフは `buffs.tsv` の1枚ずつを読む。
+読んだファイルは実行時に一覧で出る。
 
 `--dry` は書き込まずに検査だけする。エラーはファイル名と行番号つきで全件出るので、
 シートを直してから `--dry` を外して実行する。

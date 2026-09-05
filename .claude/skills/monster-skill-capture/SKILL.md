@@ -168,20 +168,28 @@ sips -z 270 900 crop.png --out crop-big.png  # 3倍に拡大してから読む
 
 ## 出力と取り込み
 
-血統ごとに2ファイル。無ければヘッダ行から作る（`src/data/_source/skills-template.tsv` を複製）。
+**技シートだけが血統ごと。技能力とバフ・デバフは全血統で1枚を共有する。**
 
 ```
-src/data/_source/skills-<血統slug>.tsv
-src/data/_source/skill-abilities-<血統slug>.tsv
+src/data/_source/skills-<血統slug>.tsv     血統ごと（無ければ skills-template.tsv を複製）
+src/data/_source/skill-abilities.tsv        全血統共通の1枚
+src/data/_source/buffs.tsv                  全血統共通の1枚
 ```
 
 血統slugは `monster-ids.json` の `bloodSlug`（キュービ→kyubi）。
+
+技は `血統＋技名` で区別するので、血統が違えば同名でも別の技になる。
+**技能力は名前だけが鍵で、血統をまたいで共通。**
+だから**他の血統で登録済みの技能力は書き足さない。**技シートから名前で参照するだけでよく、
+技ごとに違う解放条件は技シートの `abilityNUnlock` へ書く。
+同じ名前・同じ内容の行を足すと、取り込みが
+「v1 と v2 の内容が同じです」で止まる（＝二重登録を防いでいる）。
 
 既存ファイルへは**追記**する。転記ミスの訂正はその行を書き換え、
 ゲーム側の更新は新しい行を追記する（上の「バージョン」を参照）。
 
 取り込みは**引数を取らない。**技DBをまるごと書き直すため、`src/data/_source` の
-`skills-*.tsv` と `skill-abilities-*.tsv` を毎回全血統ぶん読む。
+`skills-*.tsv` を毎回全血統ぶん読み、技能力は `skill-abilities.tsv` を読む。
 
 ```bash
 node scripts/import-skills-tsv.js --dry

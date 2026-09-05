@@ -5,8 +5,9 @@
  *   node scripts/import-skills-tsv.js
  *   node scripts/import-skills-tsv.js --dry
  *
- * 技DBはまるごと書き直すので、src/data/_source の skills-<血統>.tsv と
- * skill-abilities-<血統>.tsv を常に全血統ぶん読む（引数を渡しても範囲は変わらない）。
+ * 技DBはまるごと書き直すので、src/data/_source の skills-<血統>.tsv を常に全血統ぶん読む
+ * （引数を渡しても範囲は変わらない）。技能力とバフ・デバフは血統をまたぐ共通の名前空間なので、
+ * skill-abilities.tsv / buffs.tsv の1枚ずつを全血統で共有する。
  *
  * シートにはモンスター名で書く（356体すべて名前が一意）。IDへの変換はここで行う。
  * skillId / abilityId は空欄でよい。既存DBに同じ技・能力があればそのIDを引き継ぎ、
@@ -24,7 +25,10 @@ const SKILL_DB = 'src/data/monster-skills.json';
 const ABILITY_DB = 'src/data/skill-abilities.json';
 const BUFF_DB = 'src/data/skill-buffs.json';
 const SOURCE_DIR = 'src/data/_source';
-const BUFF_TSV = 'src/data/_source/buffs.tsv';   // バフ・デバフは血統をまたぐので1枚
+// 技能力とバフ・デバフは血統をまたいで共通の名前空間なので、血統ごとに分けず1枚にする。
+// 技だけが「血統＋技名」で区別されるため、血統ごとのシートになっている。
+const ABILITY_TSV = 'src/data/_source/skill-abilities.tsv';
+const BUFF_TSV = 'src/data/_source/buffs.tsv';
 const ABILITY_SLOTS = 4;   // ability1〜4 と ability1Unlock〜4Unlock
 
 function readTsv(file) {
@@ -41,13 +45,13 @@ function readTsv(file) {
 }
 
 // 技DBはこのスクリプトが毎回まるごと書き直す。血統ごとのTSVを1枚だけ渡すと
-// 他の血統が消えるので、_source の同じ種類のTSVを常に全部読む。
+// 他の血統が消えるので、_source の技シートを常に全部読む。
 // 引数は「いま編集した血統」を示すだけで、取り込む範囲は変わらない。
-function collectTsvs(prefix) {
+function collectSkillTsvs() {
   const dir = path.join(REPO, SOURCE_DIR);
   return fs.readdirSync(dir)
-    .filter(name => name.startsWith(`${prefix}-`) && name.endsWith('.tsv'))
-    .filter(name => name !== `${prefix}-template.tsv`)
+    .filter(name => name.startsWith('skills-') && name.endsWith('.tsv'))
+    .filter(name => name !== 'skills-template.tsv')
     .sort()
     .map(name => path.join(dir, name));
 }
@@ -116,14 +120,23 @@ function main() {
   const dryRun = process.argv.includes('--dry');
   // 引数はあってもなくてもよい。血統ごとのTSVを渡す従来の呼び方も受けるが、
   // 取り込むのは常に _source にある全血統ぶん（1血統だけ渡して他が消えるのを防ぐ）。
-  const skillFiles = collectTsvs('skills');
-  const abilityFiles = collectTsvs('skill-abilities');
-  if (!skillFiles.length || !abilityFiles.length) {
-    throw new Error(`${SOURCE_DIR} に skills-<血統>.tsv と skill-abilities-<血統>.tsv がありません`);
+  const skillFiles = collectSkillTsvs();
+  if (!skillFiles.length) {
+    throw new Error(`${SOURCE_DIR} に skills-<血統>.tsv がありません`);
   }
-  const listFiles = files => files.map(file => path.relative(REPO, file)).join(' / ');
-  console.log(`技: ${listFiles(skillFiles)}`);
-  console.log(`技能力: ${listFiles(abilityFiles)}`);
+  if (!fs.existsSync(path.join(REPO, ABILITY_TSV))) {
+    throw new Error(`${ABILITY_TSV} がありません（技能力は血統をまたぐので1枚にまとめる）`);
+  }
+  // 血統ごとに分けた古い技能力シートが残っていると、同じ能力が二重に登録される
+  const strayAbilityTsvs = fs.readdirSync(path.join(REPO, SOURCE_DIR))
+    .filter(name => name.startsWith('skill-abilities-') && name !== 'skill-abilities-template.tsv');
+  if (strayAbilityTsvs.length) {
+    throw new Error(`技能力シートは ${ABILITY_TSV} の1枚だけです。`
+      + `${strayAbilityTsvs.join(' / ')} の中身をそこへ移して削除してください`);
+  }
+  const abilityFiles = [path.join(REPO, ABILITY_TSV)];
+  console.log(`技: ${skillFiles.map(file => path.relative(REPO, file)).join(' / ')}`);
+  console.log(`技能力: ${ABILITY_TSV}`);
 
   const ids = readJson('src/data/monster-ids.json');
   const monsterByName = new Map(ids.monsters.map(monster => [monster.name, monster]));
