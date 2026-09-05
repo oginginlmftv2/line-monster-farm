@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 76
+    "abilities": 78
   },
   "abilities": [
     {
@@ -945,6 +945,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 76,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0077",
+      "name": "キシン",
+      "version": 1,
+      "baseName": "キシン",
+      "level": null,
+      "description": "対象技命中時、クリティカル率上昇＜15%＞、相手[楔]中、ダメージ＜20%＞の追撃を＜1回＞、[プラズマ]中、クリティカル率上昇＜15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 77,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0078",
+      "name": "連撃：ミラージュクロウ",
+      "version": 1,
+      "baseName": "連撃：ミラージュクロウ",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動\n・ダメージ＜20%＞の追撃を＜3回＞与える\n・[オーラ有利]ダメージ＜15%＞の追撃を＜1回＞与える\n・[モン類有利]ダメージ＜15%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 78,
       "status": "verified"
     }
   ]
