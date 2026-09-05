@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 83
+    "abilities": 85
   },
   "abilities": [
     {
@@ -1029,6 +1029,34 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 83,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0084",
+      "name": "祝：強撃Lv3",
+      "version": 1,
+      "baseName": "祝：強撃",
+      "level": 3,
+      "description": "対象技命中時、自身に[強撃Lv3]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0009"
+      ],
+      "sortOrder": 84,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0085",
+      "name": "祝：精密Lv3",
+      "version": 1,
+      "baseName": "祝：精密",
+      "level": 3,
+      "description": "対象技発動時、自身に[精密Lv3]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0001"
+      ],
+      "sortOrder": 85,
       "status": "verified"
     }
   ]
