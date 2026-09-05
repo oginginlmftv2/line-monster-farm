@@ -663,6 +663,19 @@
 
 <script src="cards-data.js"></script>
 <script src="../assist-effect-data.js"></script>
+
+<script>
+  // 無効・未指定IDのまま「カードが見つかりませんでした。」を200で描画すると
+  // ソフト404になる（GSC 2026-07-21クロールで検出）。
+  // URLフラグメントはクロール対象外なので、Googlebotは常にこの経路へ入る。
+  // 描画とFirestore接続の前に一覧ページへ送る。
+  (function () {
+    var id = location.hash.replace('#', '') || new URLSearchParams(location.search).get('id');
+    if (!id || typeof cardsData === 'undefined' || !cardsData[id]) {
+      location.replace('../assist.html');
+    }
+  })();
+</script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyDQ7JiSAs8wozZPoh4esXnYjOPvexcMfKs",
@@ -686,7 +699,7 @@
   let cardData = { ratings: null, formations: [], explanation: '' };
 
   if (!id || !cardsData[id]) {
-    container.innerHTML = '<div class="not-found">カードが見つかりませんでした。</div>';
+    location.replace('../assist.html');
   } else {
     const c = cardsData[id];
     const imgSrc = `../assist-cards/${id}.${c.ext}`;
