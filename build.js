@@ -318,7 +318,7 @@ function renderTopPickupSection(title, body) {
   return `  <div class="section">\n    <div class="section-title">${title}</div>\n${body}\n  </div>`;
 }
 
-const TOP_PICKUP_EMPTY = '    <p>現在開催中のガチャはありません。<a href="gacha/">ガチャ一覧を見る</a></p>';
+const TOP_PICKUP_EMPTY = '    <p>現在開催中のガチャはありません。<a href="gacha/">開催中ガチャ一覧を見る</a></p>';
 
 function renderTopMonsterPickups(gachas, context) {
   const title = '現在のピックアップモンスター一覧';
@@ -364,12 +364,26 @@ function renderReroll(gacha, context) {
   return `    <h3>${escapeHtml(gacha.name)}</h3>\n    <p>開催期間: ${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))} ／ <a href="gacha/${escapeHtml(gacha.gachaId)}.html">ガチャ詳細を見る</a></p>${cards ? `\n\n${cards}` : ''}\n\n    <div class="expl-body">${formatExplanation(gacha.explanation)}</div>`;
 }
 
-function renderGachaAppearances(gachas, kind, id, rootPrefix) {
+// ガチャ一覧と同じカード（バナー・タイトル・種別・期間）。一覧・モンスター・カード各ページで共用する
+function renderGachaCard(gacha, { href, imageSrc, typeSuffix = '' }) {
+  return `      <a class="card" href="${escapeHtml(href)}"><img class="gacha-banner" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(gacha.name)}"><div class="card-info gacha-card-info"><h3 class="card-name gacha-name">${escapeHtml(gacha.name)}</h3><p class="gacha-type">${escapeHtml(gacha.gachaType)}${escapeHtml(typeSuffix)}</p><p class="gacha-period">期間：${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</p></div></a>`;
+}
+
+// variant: 'box' はモンスター詳細の .section-box、'section' はその他ページの .section
+function renderGachaAppearances(gachas, kind, id, rootPrefix, variant = 'section') {
   const matched = gachas.filter(gacha => (kind === 'monster' ? gacha.pickupMonsters : gacha.pickupCards)
     .some(pickup => (kind === 'monster' ? pickup.id : pickup.cardId) === id))
     .sort((a, b) => b.startAt.localeCompare(a.startAt) || a.gachaId.localeCompare(b.gachaId));
   if (!matched.length) return '';
-  return `\n  <section class="section">\n    <h2 class="section-title">登場ガチャ</h2>\n    <div class="menu-grid">\n${matched.map(gacha => `      <a class="menu-link" href="${rootPrefix}gacha/${escapeHtml(gacha.gachaId)}.html">${escapeHtml(gacha.name)}</a>`).join('\n')}\n    </div>\n  </section>\n`;
+  const cards = matched.map(gacha => renderGachaCard(gacha, {
+    href: `${rootPrefix}gacha/${gacha.gachaId}.html`,
+    imageSrc: `${rootPrefix}${gacha.image}`,
+  })).join('\n');
+  const grid = `    <div class="gacha-grid">\n${cards}\n    </div>`;
+  if (variant === 'box') {
+    return `\n  <div class="section-box">\n    <div class="section-header">\n      <h2 class="section-title">登場ガチャ</h2>\n    </div>\n${grid}\n  </div>\n`;
+  }
+  return `\n  <section class="section">\n    <h2 class="section-title">登場ガチャ</h2>\n${grid}\n  </section>\n`;
 }
 
 function validJstTimestamp(value) {
@@ -515,9 +529,9 @@ function renderGachaBody(gacha, context, includeExcerpts = true) {
     ? `\n  <section class="section"><h2 class="section-title">ガチャ解説</h2><div class="expl-body">${formatExplanation(gacha.explanation)}</div></section>`
     : '';
   return `<body>
-<header><div class="header-inner"><a href="../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a><nav><a href="../index.html">トップ</a><a href="index.html">ガチャ一覧</a></nav></div></header>
+<header><div class="header-inner"><a href="../index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a><nav><a href="../monsters.html">モンスター一覧</a><a href="../assist.html">アシストカード一覧</a><a href="index.html" class="active">開催中ガチャ一覧</a></nav></div></header>
 <main class="container">
-  <p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; <a href="index.html">ガチャ一覧</a> &gt; ${escapeHtml(gacha.name)}</p>
+  <p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; <a href="index.html">開催中ガチャ一覧</a> &gt; ${escapeHtml(gacha.name)}</p>
   <h1 class="page-title">${escapeHtml(gacha.name)}</h1>
   <section class="section gacha-head">
     <img class="gacha-hero" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}">
@@ -532,7 +546,7 @@ ${monsterCards}
   <section class="section"><h2 class="section-title">ピックアップアシストカード</h2><div class="card-grid wide-grid">
 ${assistCards}
   </div></section>` : ''}
-  <section class="section"><h2 class="section-title">関連リンク</h2><div class="menu-grid"><a class="menu-link" href="index.html">ガチャ一覧へ戻る</a></div></section>
+  <section class="section"><h2 class="section-title">関連リンク</h2><div class="menu-grid"><a class="menu-link" href="index.html">開催中ガチャ一覧へ戻る</a></div></section>
 </main>
 <footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer>
 </body>`;
@@ -587,10 +601,11 @@ function renderGachaIndex(gachas, now) {
   for (const gacha of [...gachas].sort((a, b) => b.startAt.localeCompare(a.startAt) || a.gachaId.localeCompare(b.gachaId))) {
     (Date.parse(now) <= Date.parse(gacha.endAt) ? current : ended).push(gacha);
   }
-  const rows = list => list.map(gacha => {
-    const preStart = Date.parse(now) < Date.parse(gacha.startAt) ? ` / ${gachaStartLabel(gacha.startAt)}` : '';
-    return `      <a class="card" href="${escapeHtml(gacha.gachaId)}.html"><img class="gacha-banner" src="../${escapeHtml(gacha.image)}" alt="${escapeHtml(gacha.name)}"><div class="card-info gacha-card-info"><h3 class="card-name gacha-name">${escapeHtml(gacha.name)}</h3><p class="gacha-type">${escapeHtml(gacha.gachaType)}${escapeHtml(preStart)}</p><p class="gacha-period">期間：${escapeHtml(formatGachaPeriod(gacha.startAt))} ～ ${escapeHtml(formatGachaPeriod(gacha.endAt))}</p></div></a>`;
-  }).join('\n');
+  const rows = list => list.map(gacha => renderGachaCard(gacha, {
+    href: `${gacha.gachaId}.html`,
+    imageSrc: `../${gacha.image}`,
+    typeSuffix: Date.parse(now) < Date.parse(gacha.startAt) ? ` / ${gachaStartLabel(gacha.startAt)}` : '',
+  })).join('\n');
   const section = (title, list) => list.length
     ? `\n  <section class="section"><h2 class="section-title">${title}</h2><div class="gacha-grid">\n${rows(list)}\n  </div></section>`
     : '';
@@ -598,12 +613,12 @@ function renderGachaIndex(gachas, now) {
 <!-- 元データ: src/data/gachas.json -->
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8">${GTM_TAG}<meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ガチャ一覧 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="開催中と終了済みのガチャ、ピックアップ内容、開催期間を一覧で確認できます。">
+  <title>開催中ガチャ一覧 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="開催中のガチャのピックアップ内容と開催期間を一覧で確認できます。終了済みのガチャもまとめています。">
   <link rel="canonical" href="${SITE_URL}/gacha/"><link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
-</head><body><header><div class="header-inner"><a href="../index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a></div></header>
-<main class="container"><p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; ガチャ一覧</p><h1 class="page-title">ガチャ一覧</h1>${section('開催中', current)}${section('終了', ended)}</main>
+</head><body><header><div class="header-inner"><a href="../index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a><nav><a href="../monsters.html">モンスター一覧</a><a href="../assist.html">アシストカード一覧</a><a href="index.html" class="active">開催中ガチャ一覧</a></nav></div></header>
+<main class="container"><p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; 開催中ガチャ一覧</p><h1 class="page-title">開催中ガチャ一覧</h1>${section('開催中', current)}${section('終了', ended)}</main>
 <footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer></body></html>
 `;
 }
@@ -672,7 +687,7 @@ function buildGachaPages({
     integratedIndex = replaceMarkerBlock(integratedIndex, 'UPDATES', renderGachaUpdates(published, context), 'js', 'index.html');
     integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:MONSTER', renderTopMonsterPickups(active, context), 'html', 'index.html');
     integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:CARD', renderTopCardPickups(active, context), 'html', 'index.html');
-    integratedIndex = replaceMarkerBlock(integratedIndex, 'NAV', '      <a href="gacha/" class="menu-link">\n        <span class="icon">🎰</span> ガチャ一覧\n      </a>', 'html', 'index.html');
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'NAV', '      <a href="gacha/" class="menu-link">\n        <span class="icon">🎰</span> 開催中ガチャ一覧\n      </a>', 'html', 'index.html');
     outputs.push({ path: 'index.html', state: writeIfChangedAt(outputRoot, 'index.html', integratedIndex, dryRun) });
   }
   const rerollGacha = selectRerollGacha(published, now);
@@ -1290,9 +1305,9 @@ function renderDetail(entry, context) {
       return ` &gt; <a href="index.html">${escapeHtml(monster.blood)}種</a>`;
     })()
     : '';
-  const navTop = rootLink(context, 'index.html', 'トップ');
   const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧');
+  const navGacha = rootLink(context, 'gacha/', '開催中ガチャ一覧');
   const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー');
   const nonEmptyFormations = (entry.formations || []).filter(formation => {
     return !isEmptyFormation(formation);
@@ -1321,7 +1336,7 @@ function renderDetail(entry, context) {
   const related = relatedMonsters(monster, context);
   const skillSections = renderMonsterSkillSections(monster, context);
   const gachaAppearances = renderGachaAppearances(
-    publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX
+    publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX, 'box'
   );
   const limitedLabel = runtime && runtime.limited
     ? runtime.limitedLabel || '限定'
@@ -1331,11 +1346,11 @@ function renderDetail(entry, context) {
 
 <header>
   <div class="header-inner">
-    <a href="${ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <a href="${ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a>
     <nav>
-      ${navTop}
       ${navMonsters}
       ${navAssist}
+      ${navGacha}
     </nav>
   </div>
 </header>
@@ -1484,9 +1499,9 @@ function renderMonType(monType, context) {
   const canonical = `${SITE_URL}/monsters/${monType.slug}/`;
   const breadcrumbTop = rootLink(context, 'index.html', 'トップ', MON_TYPE_ROOT_PREFIX);
   const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
-  const navTop = rootLink(context, 'index.html', 'トップ', MON_TYPE_ROOT_PREFIX);
   const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
   const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧', MON_TYPE_ROOT_PREFIX);
+  const navGacha = rootLink(context, 'gacha/', '開催中ガチャ一覧', MON_TYPE_ROOT_PREFIX);
   const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー', MON_TYPE_ROOT_PREFIX);
   const editorialSections = monType.entry.sections.map(section => `
   <section class="section">
@@ -1560,11 +1575,11 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 
 <header>
   <div class="header-inner">
-    <a href="${MON_TYPE_ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <a href="${MON_TYPE_ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a>
     <nav>
-      ${navTop}
       ${navMonsters}
       ${navAssist}
+      ${navGacha}
     </nav>
   </div>
 </header>
@@ -2176,9 +2191,9 @@ function renderBloodPage(bloodGate, context, abilityById, otherBloodGates) {
       return `<a href="../index.html">${escapeHtml(bloodGate.mon)}</a>`;
     })()
     : escapeHtml(bloodGate.mon);
-  const navTop = rootLink(context, 'index.html', 'トップ');
   const navMonsters = rootLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = rootLink(context, 'assist.html', 'アシストカード一覧');
+  const navGacha = rootLink(context, 'gacha/', '開催中ガチャ一覧');
   const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー');
 
   const memberCards = bloodGate.members.map(monster => {
@@ -2237,11 +2252,11 @@ ${navLinks}
 
 <header>
   <div class="header-inner">
-    <a href="${ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span>徹底攻略</a>
+    <a href="${ROOT_PREFIX}index.html" class="logo">LINE<span>モンスターファーム</span><span class="logo-sub">徹底攻略</span></a>
     <nav>
-      ${navTop}
       ${navMonsters}
       ${navAssist}
+      ${navGacha}
     </nav>
   </div>
 </header>

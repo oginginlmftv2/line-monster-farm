@@ -73,15 +73,15 @@
   margin-bottom: 16px;
 }
 
+/* 見出し下の余白は見出し自身に持たせる（直後にどの要素が来ても同じ間隔になる） */
 .monster-detail-page .section-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 14px;
 }
 
 .monster-detail-page .section-title {
-  margin: 0;
+  margin: 0 0 14px;
   font-size: 17px;
   font-weight: bold;
   color: #1a1a2e;
