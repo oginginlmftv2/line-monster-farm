@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 61
+    "abilities": 62
   },
   "abilities": [
     {
@@ -57,6 +57,18 @@
       "status": "verified"
     },
     {
+      "abilityId": "sab-0062",
+      "name": "影装・槌",
+      "version": 1,
+      "baseName": "影装・槌",
+      "level": null,
+      "description": "対象技命中時、自身のすべての技のクリティカルダメージ上昇Lv2、[プラズマ]中は本効果のLv2がLv3に上昇＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 5,
+      "status": "verified"
+    },
+    {
       "abilityId": "sab-0001",
       "name": "神の呼吸",
       "version": 1,
@@ -65,7 +77,7 @@
       "description": "対象技命中時、次の効果を発動＜1回＞\n・すべての技ダメージと技命中を＜3＞上昇\n・15秒経過ごとに＜1＞減少",
       "tags": [],
       "buffs": [],
-      "sortOrder": 5,
+      "sortOrder": 6,
       "status": "verified"
     },
     {
@@ -77,7 +89,7 @@
       "description": "[終盤]対象技命中時、残りライフが少ないほど攻撃ステータス上昇[最大40%]、さらに残り10秒の時、技ダメージ上昇Lv3",
       "tags": [],
       "buffs": [],
-      "sortOrder": 6,
+      "sortOrder": 7,
       "status": "verified"
     },
     {
@@ -91,7 +103,7 @@
       "buffs": [
         "bf-0019"
       ],
-      "sortOrder": 7,
+      "sortOrder": 8,
       "status": "verified"
     },
     {
@@ -103,7 +115,7 @@
       "description": "対象技発動時、技ステータス上昇Lv1",
       "tags": [],
       "buffs": [],
-      "sortOrder": 8,
+      "sortOrder": 9,
       "status": "verified"
     },
     {
@@ -115,7 +127,7 @@
       "description": "対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4",
       "tags": [],
       "buffs": [],
-      "sortOrder": 9,
+      "sortOrder": 10,
       "status": "verified"
     },
     {
@@ -129,7 +141,7 @@
       "buffs": [
         "bf-0019"
       ],
-      "sortOrder": 10,
+      "sortOrder": 11,
       "status": "verified"
     },
     {
@@ -143,7 +155,7 @@
       "buffs": [
         "bf-0030"
       ],
-      "sortOrder": 11,
+      "sortOrder": 12,
       "status": "verified"
     },
     {
@@ -158,7 +170,7 @@
         "bf-0024",
         "bf-0030"
       ],
-      "sortOrder": 12,
+      "sortOrder": 13,
       "status": "verified"
     },
     {
@@ -172,7 +184,7 @@
       "buffs": [
         "bf-0019"
       ],
-      "sortOrder": 13,
+      "sortOrder": 14,
       "status": "verified"
     },
     {
@@ -186,7 +198,7 @@
       "buffs": [
         "bf-0001"
       ],
-      "sortOrder": 14,
+      "sortOrder": 15,
       "status": "verified"
     },
     {
@@ -198,7 +210,7 @@
       "description": "[相手魔族以外]かつ対象技命中時、有利オーラに変換＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 15,
+      "sortOrder": 16,
       "status": "verified"
     },
     {
@@ -210,7 +222,7 @@
       "description": "ライフパラ+20",
       "tags": [],
       "buffs": [],
-      "sortOrder": 16,
+      "sortOrder": 17,
       "status": "verified"
     },
     {
@@ -222,7 +234,7 @@
       "description": "かしこさパラ+20",
       "tags": [],
       "buffs": [],
-      "sortOrder": 17,
+      "sortOrder": 18,
       "status": "verified"
     },
     {
@@ -234,7 +246,7 @@
       "description": "技が命中したとき中距離の与ダメ上昇Lv3＜10秒＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 18,
+      "sortOrder": 19,
       "status": "verified"
     },
     {
@@ -246,7 +258,7 @@
       "description": "対象技命中時、ランダムな技ステータス1つを上昇Lv3＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 19,
+      "sortOrder": 20,
       "status": "verified"
     },
     {
@@ -258,7 +270,7 @@
       "description": "命中パラ+20",
       "tags": [],
       "buffs": [],
-      "sortOrder": 20,
+      "sortOrder": 21,
       "status": "verified"
     },
     {
@@ -270,7 +282,7 @@
       "description": "回避パラ+20",
       "tags": [],
       "buffs": [],
-      "sortOrder": 21,
+      "sortOrder": 22,
       "status": "verified"
     },
     {
@@ -284,7 +296,7 @@
       "buffs": [
         "bf-0030"
       ],
-      "sortOrder": 22,
+      "sortOrder": 23,
       "status": "verified"
     },
     {
@@ -296,7 +308,7 @@
       "description": "対象技命中時、ガッツダメージに応じてガッツ回復＜消費ガッツの30%まで＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 23,
+      "sortOrder": 24,
       "status": "verified"
     },
     {
@@ -310,7 +322,7 @@
       "buffs": [
         "bf-0033"
       ],
-      "sortOrder": 24,
+      "sortOrder": 25,
       "status": "verified"
     },
     {
@@ -322,7 +334,7 @@
       "description": "命中パラ+30",
       "tags": [],
       "buffs": [],
-      "sortOrder": 25,
+      "sortOrder": 26,
       "status": "verified"
     },
     {
@@ -334,7 +346,7 @@
       "description": "自身のオーラと発動技のオーラ一致、または＜オーラなし＞技発動時、与ダメ上昇/ガッツ回復Lv2",
       "tags": [],
       "buffs": [],
-      "sortOrder": 26,
+      "sortOrder": 27,
       "status": "verified"
     },
     {
@@ -346,7 +358,7 @@
       "description": "ちからパラ+20",
       "tags": [],
       "buffs": [],
-      "sortOrder": 27,
+      "sortOrder": 28,
       "status": "verified"
     },
     {
@@ -358,7 +370,7 @@
       "description": "技が命中したとき中距離の命中上昇Lv3＜10秒＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 28,
+      "sortOrder": 29,
       "status": "verified"
     },
     {
@@ -372,7 +384,7 @@
       "buffs": [
         "bf-0024"
       ],
-      "sortOrder": 29,
+      "sortOrder": 30,
       "status": "verified"
     },
     {
@@ -384,7 +396,7 @@
       "description": "対象技発動時、技が命中した場合は一度だけ相手のガッツを0にする＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 30,
+      "sortOrder": 31,
       "status": "verified"
     },
     {
@@ -396,7 +408,7 @@
       "description": "対象技命中時、青オーラ技のすべてのステータス上昇Lv2＜30秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 31,
+      "sortOrder": 32,
       "status": "verified"
     },
     {
@@ -410,7 +422,7 @@
       "buffs": [
         "bf-0011"
       ],
-      "sortOrder": 32,
+      "sortOrder": 33,
       "status": "verified"
     },
     {
@@ -424,7 +436,7 @@
       "buffs": [
         "bf-0027"
       ],
-      "sortOrder": 33,
+      "sortOrder": 34,
       "status": "verified"
     },
     {
@@ -436,7 +448,7 @@
       "description": "対象技命中時、相手に次の効果発動＜30秒＞＜1回＞\n・相手の意味不明の発生確率＜+35%＞\n・被ダメージ＜10%＞上昇",
       "tags": [],
       "buffs": [],
-      "sortOrder": 34,
+      "sortOrder": 35,
       "status": "verified"
     },
     {
@@ -450,7 +462,7 @@
       "buffs": [
         "bf-0019"
       ],
-      "sortOrder": 35,
+      "sortOrder": 36,
       "status": "verified"
     },
     {
@@ -462,7 +474,7 @@
       "description": "かしこさパラ+30",
       "tags": [],
       "buffs": [],
-      "sortOrder": 36,
+      "sortOrder": 37,
       "status": "verified"
     },
     {
@@ -474,7 +486,7 @@
       "description": "対象技発動時、自身に[完全回避Lv2＜1回＞]を付与する",
       "tags": [],
       "buffs": [],
-      "sortOrder": 37,
+      "sortOrder": 38,
       "status": "verified"
     },
     {
@@ -486,7 +498,7 @@
       "description": "対象技命中時、自身に[完全回避Lv2＜15秒＞]を付与する",
       "tags": [],
       "buffs": [],
-      "sortOrder": 38,
+      "sortOrder": 39,
       "status": "verified"
     },
     {
@@ -498,7 +510,7 @@
       "description": "対象技命中時、追加でダメージLv3を1回与える",
       "tags": [],
       "buffs": [],
-      "sortOrder": 39,
+      "sortOrder": 40,
       "status": "verified"
     },
     {
@@ -510,7 +522,7 @@
       "description": "対象技発動時、消費ガッツを0にする＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 40,
+      "sortOrder": 41,
       "status": "verified"
     },
     {
@@ -522,7 +534,7 @@
       "description": "対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 41,
+      "sortOrder": 42,
       "status": "verified"
     },
     {
@@ -534,7 +546,7 @@
       "description": "対象技命中時、技に追加でダメージLv1を1回与える＜15秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 42,
+      "sortOrder": 43,
       "status": "verified"
     },
     {
@@ -546,7 +558,7 @@
       "description": "対象技発動時、相手の回避と丈夫さの基礎ステータス20%低下/ガッツ回復Lv4",
       "tags": [],
       "buffs": [],
-      "sortOrder": 43,
+      "sortOrder": 44,
       "status": "verified"
     },
     {
@@ -558,7 +570,7 @@
       "description": "技が命中したとき遠距離の与ダメ上昇Lv3＜10秒＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 44,
+      "sortOrder": 45,
       "status": "verified"
     },
     {
@@ -570,7 +582,7 @@
       "description": "対象技命中時、追加でダメージLv7を与える",
       "tags": [],
       "buffs": [],
-      "sortOrder": 45,
+      "sortOrder": 46,
       "status": "verified"
     },
     {
@@ -582,7 +594,7 @@
       "description": "ちからパラ+30",
       "tags": [],
       "buffs": [],
-      "sortOrder": 46,
+      "sortOrder": 47,
       "status": "verified"
     },
     {
@@ -594,7 +606,7 @@
       "description": "相手＜オーラ黒＞かつ技が命中したときクリ上昇Lv3",
       "tags": [],
       "buffs": [],
-      "sortOrder": 47,
+      "sortOrder": 48,
       "status": "verified"
     },
     {
@@ -606,7 +618,7 @@
       "description": "対象技命中時、追加でダメージLv5を1回与える",
       "tags": [],
       "buffs": [],
-      "sortOrder": 48,
+      "sortOrder": 49,
       "status": "verified"
     },
     {
@@ -618,7 +630,7 @@
       "description": "対象技命中時、相手がシールドを展開中かつクリティカルだった時はシールド破壊＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 49,
+      "sortOrder": 50,
       "status": "verified"
     },
     {
@@ -630,7 +642,7 @@
       "description": "対象技命中時、オーラ技命中時にかしこさステータスの20%を攻撃ステータス加算＜20秒＞＜1回＞\n対象技命中時、自身のライフ以外のステータス上昇10%＜20秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 50,
+      "sortOrder": 51,
       "status": "verified"
     },
     {
@@ -642,7 +654,7 @@
       "description": "対象技命中時、相手に発動中の能力をランダムで1〜3個、能力解除する＜1回＞\n解除した能力1個につき、自身の消費ガッツ＜-10%＞、相手の消費ガッツ＜+10%＞＜20秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 51,
+      "sortOrder": 52,
       "status": "verified"
     },
     {
@@ -654,7 +666,7 @@
       "description": "対象技命中時、次の効果発動＜1回＞\n・[ガッツ回復100%]\n・回避20%分の【シールド】を展開する＜20秒＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 52,
+      "sortOrder": 53,
       "status": "verified"
     },
     {
@@ -666,7 +678,7 @@
       "description": "対象技の間合い適性効果アップ/ガッツ回復Lv4",
       "tags": [],
       "buffs": [],
-      "sortOrder": 53,
+      "sortOrder": 54,
       "status": "verified"
     },
     {
@@ -678,7 +690,7 @@
       "description": "対象技命中時、次の効果発動\n・ダメージ＜30%＞の追撃を＜5回＞\n・バトル中の技発動回数に応じてクリ率が2上昇[最大10まで]",
       "tags": [],
       "buffs": [],
-      "sortOrder": 54,
+      "sortOrder": 55,
       "status": "verified"
     },
     {
@@ -692,7 +704,7 @@
       "buffs": [
         "bf-0030"
       ],
-      "sortOrder": 55,
+      "sortOrder": 56,
       "status": "verified"
     },
     {
@@ -704,7 +716,7 @@
       "description": "対象技命中時、次の効果を発動＜1回＞\n・すべての技にダメージ＜30%＞の追撃効果を付与\n・すべての技ステータス上昇Lv5",
       "tags": [],
       "buffs": [],
-      "sortOrder": 56,
+      "sortOrder": 57,
       "status": "verified"
     },
     {
@@ -716,7 +728,7 @@
       "description": "バトル開始時次の効果を付与＜1回＞\n・技命中時、命中した数に応じて＜×2＞のガッツ回復",
       "tags": [],
       "buffs": [],
-      "sortOrder": 57,
+      "sortOrder": 58,
       "status": "verified"
     },
     {
@@ -728,7 +740,7 @@
       "description": "対象技命中時、バトル中相手にかしこさ技を命中させた回数だけ連撃Lv3を追加＜最大3回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 58,
+      "sortOrder": 59,
       "status": "verified"
     },
     {
@@ -740,7 +752,7 @@
       "description": "対象技命中時、ガッツ消費量20につき攻撃ステータス上昇5%[最大20%まで]",
       "tags": [],
       "buffs": [],
-      "sortOrder": 59,
+      "sortOrder": 60,
       "status": "verified"
     },
     {
@@ -752,7 +764,7 @@
       "description": "対象技命中時、与ダメージ＜30%＞の追撃＜3回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 60,
+      "sortOrder": 61,
       "status": "verified"
     },
     {
@@ -764,7 +776,7 @@
       "description": "対象技発動後、相手に＜5秒＞ごとに最大ライフ＜5%＞の継続ダメージ＜15秒＞＜1回＞",
       "tags": [],
       "buffs": [],
-      "sortOrder": 61,
+      "sortOrder": 62,
       "status": "verified"
     }
   ]
