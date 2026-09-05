@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 85
+    "abilities": 87
   },
   "abilities": [
     {
@@ -1057,6 +1057,30 @@
         "bf-0001"
       ],
       "sortOrder": 85,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0086",
+      "name": "シールド破壊＜1回＞",
+      "version": 1,
+      "baseName": "シールド破壊＜1回＞",
+      "level": null,
+      "description": "対象技命中時、【シールド】を破壊＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 86,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0087",
+      "name": "貫通Lv3",
+      "version": 1,
+      "baseName": "貫通",
+      "level": 3,
+      "description": "対象技命中時、相手の丈夫さ＜30%＞無視",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 87,
       "status": "verified"
     }
   ]
