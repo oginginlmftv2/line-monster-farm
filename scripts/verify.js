@@ -1908,6 +1908,52 @@ head('19. 技DB・血統ページ');
   else ok(`技DBが整合（技${skills.length}件・血統ページ${new Set(skills.map(s => s.blood)).size}件）`);
 }
 
+// ---------------------------------------------------------------- 20
+head('20. 広告タグの配置');
+{
+  // AdSenseは「本文の乏しいページに広告枠を置くこと」を禁じている。
+  // このリポジトリでは可視800字未満のページに noindex が付くため、
+  // noindex を「本文が乏しい」の代理指標として使い、広告タグとの同居を禁止する。
+  // 旧URL共通ページ（cards/card.html・monsters/monster.html）は検査14でも個別に見ている。
+  const AD_MARK = /adsbygoogle|pagead2\.googlesyndication\.com/i;
+  const NOINDEX = /<meta\b(?=[^>]*\bname=["']robots["'])(?=[^>]*\bcontent=["'][^"']*noindex)[^>]*>/i;
+  const walk = (dir, out) => {
+    for (const entry of fs.readdirSync(path.join(REPO, dir), { withFileTypes: true })) {
+      const rel = dir ? `${dir}/${entry.name}` : entry.name;
+      if (entry.isDirectory()) {
+        if (/^(\.|node_modules$|_cms$|monster$|assist-cards$|assist-abilities$)/.test(entry.name)) continue;
+        walk(rel, out);
+      } else if (entry.name.endsWith('.html')) out.push(rel);
+    }
+    return out;
+  };
+  const all = walk('', []);
+  const adPages = all.filter(rel => AD_MARK.test(read(rel)));
+  const adOnNoindex = adPages.filter(rel => NOINDEX.test(read(rel)));
+  // エラーページへの広告掲載も禁止されている
+  const adOn404 = exists('404.html') && AD_MARK.test(read('404.html'));
+
+  if (adOnNoindex.length) {
+    ng(`noindexページに広告タグがある ${adOnNoindex.length}件: ${adOnNoindex.slice(0, 8).join(', ')}`);
+  } else {
+    ok(`広告タグを持つ ${adPages.length}件はすべてindex対象（noindexページへの掲載0件）`);
+  }
+  if (adOn404) ng('404.htmlに広告タグがある（エラーページへの広告掲載は禁止）');
+  else ok('404.htmlに広告タグなし');
+
+  // ads.txt のパブリッシャーIDと、ページ側 client の一致
+  const adsTxt = exists('ads.txt') ? read('ads.txt') : '';
+  const adsPub = adsTxt.match(/pub-\d+/)?.[0] || '';
+  const clients = new Set();
+  for (const rel of adPages) {
+    for (const m of read(rel).matchAll(/ca-(pub-\d+)/g)) clients.add(m[1]);
+  }
+  const mismatched = [...clients].filter(c => c !== adsPub);
+  if (!adsPub) ng('ads.txt にパブリッシャーIDが無い');
+  else if (mismatched.length) ng(`ads.txt(${adsPub})と一致しない広告client: ${mismatched.join(', ')}`);
+  else ok(`広告clientがads.txtのID（${adsPub}）と一致（client ${clients.size}種）`);
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
