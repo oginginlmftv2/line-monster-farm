@@ -358,6 +358,6 @@ const monstersData = [
   { name: 'ラクシャーガ', aura: '黄', limited: true, limitedLabel: '周年限定', gwImg: null, localImg: '0430.jpg', mon: '無機', mainMon: 'ヘンガー', subMon: 'キジン' },
   { name: 'センリ', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: '2613.jpg', mon: '獣族', mainMon: 'キュービ', subMon: 'ニャー' },
   { name: 'ベタピン', aura: '白', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '1553.jpg', mon: '魔族', mainMon: 'スエゾー', subMon: 'レアモン' },
-  { name: 'メレンゲ', aura: '赤', limited: false, limitedLabel: '超神殿祭限定', gwImg: null, localImg: '3151.jpg', mon: '怪物', mainMon: 'ゴースト', subMon: 'レアモン' },
+  { name: 'メレンゲ', aura: '赤', limited: true, limitedLabel: '超神殿祭限定', gwImg: null, localImg: '3151.jpg', mon: '怪物', mainMon: 'ゴースト', subMon: 'レアモン' },
   { name: 'アストロガール', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: '3027.jpg', mon: '怪物', mainMon: 'キジン', subMon: 'メタルナー' },
 ];
