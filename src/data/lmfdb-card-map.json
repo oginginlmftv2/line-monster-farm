@@ -465,6 +465,16 @@
       "sourceName": "ジュリア",
       "rarity": "MR",
       "cardId": "aab-MR-julia"
+    },
+    {
+      "sourceName": "デコレイ",
+      "rarity": "MR",
+      "cardId": "c0001-MR"
+    },
+    {
+      "sourceName": "コスモス",
+      "rarity": "SSR",
+      "cardId": "c0002-SSR"
     }
   ]
 }
