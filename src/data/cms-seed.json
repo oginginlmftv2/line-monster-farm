@@ -9285,8 +9285,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 582,
-      "current": 582,
+      "baseline": 588,
+      "current": 588,
       "indexable": false
     },
     {
@@ -9322,8 +9322,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-15",
-      "baseline": 707,
-      "current": 1952,
+      "baseline": 713,
+      "current": 1958,
       "indexable": true
     },
     {
@@ -9334,7 +9334,7 @@
       "mon": "怪物",
       "mainBlood": "ゴースト",
       "subBlood": "レアモン",
-      "limited": false,
+      "limited": true,
       "limitedLabel": "超神殿祭限定",
       "image": "3151.jpg",
       "imageSource": "localImg",
@@ -9347,8 +9347,8 @@
       "createdAt": "",
       "updatedAt": "2026-09-14",
       "releasedAt": "2026-09-14",
-      "baseline": 587,
-      "current": 587,
+      "baseline": 599,
+      "current": 599,
       "indexable": false
     },
     {
