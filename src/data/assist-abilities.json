@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1095,
-    "resolved": 576,
+    "abilities": 1099,
+    "resolved": 580,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19632,6 +19632,87 @@
         "クリティカル"
       ],
       "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1101",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "デコレートマジック I",
+      "description": "[怪物]オーラ技命中時、次の効果<br>・与ガッツダメージ分ガッツ吸収＜消費ガッツ２５％まで＞<br>・[有利][ゴースト種]クリティカル時、ガッツダメ＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "怪物",
+        "有利時",
+        "ガッツ回復",
+        "ガッツ変化系",
+        "クリティカル"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1102",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "デコレートチェイサー I",
+      "description": "[怪物]オーラ技命中時、次の効果<br>・ダメージ＜５％＞の追撃＜１回＞<br>・自身が与えた累計ガッツダメに応じて攻撃ステ上昇＜最大＋１５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "怪物",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1103",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "デコレートチェイサー II",
+      "description": "[怪物]オーラ技命中時、次の効果<br>・ダメージ＜１５％＞の追撃＜１回＞<br>・自身が与えた累計ガッツダメに応じて攻撃ステ上昇＜最大＋３０％＞<br>・[後半]技命中時、かしこさステ＜１５％＞の追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "後半",
+        "怪物",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1104",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "デコレートマジック II",
+      "description": "[怪物]オーラ技命中時、次の効果<br>・[業物Ｌｖ５]<br>・与ガッツダメージ分ガッツ吸収＜消費ガッツ５０％まで＞<br>・[有利]クリティカル時、ガッツダメ＜＋３０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "怪物",
+        "有利時",
+        "ガッツ回復",
+        "ガッツ変化系",
+        "クリティカル"
+      ],
+      "sortOrder": 2,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
