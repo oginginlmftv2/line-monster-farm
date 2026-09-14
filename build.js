@@ -1441,8 +1441,9 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 <head>
   <meta charset="UTF-8">
   ${GTM_TAG}
-  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <link rel="icon" href="${ROOT_PREFIX}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="${ROOT_PREFIX}img/site/favicon.png">
+  <link rel="apple-touch-icon" href="${ROOT_PREFIX}img/site/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
@@ -1580,8 +1581,9 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 <head>
   <meta charset="UTF-8">
   ${GTM_TAG}
-  <link rel="icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
-  <link rel="apple-touch-icon" href="${MON_TYPE_ROOT_PREFIX}S__94175247.jpg">
+  <link rel="icon" href="${MON_TYPE_ROOT_PREFIX}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="${MON_TYPE_ROOT_PREFIX}img/site/favicon.png">
+  <link rel="apple-touch-icon" href="${MON_TYPE_ROOT_PREFIX}img/site/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">
@@ -2423,8 +2425,9 @@ ${memberCards}
 <head>
   <meta charset="UTF-8">
   ${GTM_TAG}
-  <link rel="icon" href="${ROOT_PREFIX}S__94175247.jpg">
-  <link rel="apple-touch-icon" href="${ROOT_PREFIX}S__94175247.jpg">
+  <link rel="icon" href="${ROOT_PREFIX}favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="${ROOT_PREFIX}img/site/favicon.png">
+  <link rel="apple-touch-icon" href="${ROOT_PREFIX}img/site/apple-touch-icon.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(title)}</title>
   <meta name="description" content="${escapeHtml(description)}">${robotsMeta}
