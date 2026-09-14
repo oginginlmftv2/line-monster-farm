@@ -51,6 +51,29 @@
       "rerollPriority": true,
       "status": "published",
       "publishedAt": "2026-08-31"
+    },
+    {
+      "gachaId": "20260914-1",
+      "name": "周年超神殿祭3.5th",
+      "gachaType": "周年",
+      "image": "gacha-banner/20260914-1.jpg",
+      "startAt": "2026-09-14T15:00+09:00",
+      "endAt": "2026-09-30T14:59+09:00",
+      "explanation": "",
+      "pickupMonsters": [
+        {
+          "id": "3151",
+          "rate": 1.5
+        },
+        {
+          "id": "3027",
+          "rate": 1.5
+        }
+      ],
+      "pickupCards": [],
+      "rerollPriority": false,
+      "status": "published",
+      "publishedAt": "2026-09-14"
     }
   ]
 }
