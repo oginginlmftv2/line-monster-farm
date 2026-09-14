@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 93,
-    "withStats": 58,
+    "cards": 95,
+    "withStats": 60,
     "withExplanation": 86,
     "withFormations": 5
   },
@@ -85,7 +85,7 @@
       "image": "assist-cards/g3-MR-jingorou.jpg",
       "event2": "調査中",
       "releasedAt": "2026/08/14",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -97,7 +97,12 @@
         "4a": null,
         "4b": null
       },
-      "ratings": null,
+      "ratings": {
+        "ikusei": 3,
+        "battle": 1.2,
+        "karyo": 1.5,
+        "ta": 1.1
+      },
       "explanation": "",
       "formations": [],
       "sapoRef": null
@@ -3933,6 +3938,68 @@
       "limitBreak": null,
       "ratings": null,
       "explanation": "非常に強力な「ぶっ壊れ」性能となっており、他のオーラやリソースの使い道に迷っている人でも迷わず獲得・リソースを突っ込んでいいレベルのおすすめカード。\n特に3凸（3段階上限解放）まで育成すると真価を発揮し、総合力・バトル面の両方で破格の性能を発揮する。\n\nオーラ効果が計6個ついており、師匠キャラと一緒に編成すると開始時の修行チケットが増加するなどの恩恵がある。\n師匠が未実装のモン類でも単体で強く育成できるようになり、不一致の師匠と合わせても強力。\nトレ人数効果アップが100%（SSRの完全上位互換）、さらに3凸時のトレレベルアップ+2などにより、トレーニング性能も大幅に強化してくれる。\n\n強力な専用能力「ライラックの花」は自身が白かつ、零距離または近距離の適性がS以上のときに、全ステータス+30%＆業物6が得られるぶっ壊れ級の強力な能力。\n\nその他イベントキャラの初期親密度が+50、総当たり戦での勝率や体力管理、手鏡の使用上限アップ（+1）など、育成を優位に進める要素が多数備わっている。",
+      "formations": [],
+      "sapoRef": null
+    },
+    {
+      "cardId": "c0001-MR",
+      "name": "デコレイ",
+      "rarity": "MR",
+      "aura": "赤",
+      "cardType": "アキュメン",
+      "monType": "怪物",
+      "image": "assist-cards/c0001-MR.jpg",
+      "event2": "超必死",
+      "releasedAt": "2026/09/14",
+      "accessoryStatus": "yes",
+      "stats": [
+        {
+          "value": "+34%",
+          "label": "応援効果"
+        },
+        {
+          "value": "+35%",
+          "label": "得意率"
+        },
+        {
+          "value": "+28",
+          "label": "初期アキュメン"
+        }
+      ],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null
+    },
+    {
+      "cardId": "c0002-SSR",
+      "name": "コスモス",
+      "rarity": "SSR",
+      "aura": "白",
+      "cardType": "命中",
+      "monType": "怪物",
+      "image": "assist-cards/c0002-SSR.jpg",
+      "event2": "超根性",
+      "releasedAt": "2026/09/14",
+      "accessoryStatus": "yes",
+      "stats": [
+        {
+          "label": "応援効果",
+          "value": "+30%"
+        },
+        {
+          "label": "得意率",
+          "value": "+30%"
+        },
+        {
+          "value": "+23",
+          "label": "初期命中"
+        }
+      ],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
       "formations": [],
       "sapoRef": null
     }
