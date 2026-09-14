@@ -3985,12 +3985,12 @@
       "accessoryStatus": "yes",
       "stats": [
         {
-          "label": "応援効果",
-          "value": "+30%"
+          "value": "+30%",
+          "label": "応援効果"
         },
         {
-          "label": "得意率",
-          "value": "+30%"
+          "value": "+30%",
+          "label": "得意率"
         },
         {
           "value": "+23",
