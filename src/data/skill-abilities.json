@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 143
+    "abilities": 144
   },
   "abilities": [
     {
@@ -1753,6 +1753,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 143,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0144",
+      "name": "ホイップハンマー",
+      "version": 1,
+      "baseName": "ホイップハンマー",
+      "level": null,
+      "description": "対象技命中時、技の消費ガッツ＜－5＞＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 144,
       "status": "verified"
     }
   ]
