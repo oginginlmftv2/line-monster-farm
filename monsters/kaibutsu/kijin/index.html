@@ -1,0 +1,1179 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>キジン種の技一覧（24技）と所属モンスター7体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="キジン種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kijin/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"怪物","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/"},{"@type":"ListItem","position":4,"name":"キジン種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kijin/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">怪物</a> &gt; キジン種</p>
+  <h1 class="page-title">キジン種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0101" aria-controls="sk-0101" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">威圧</span>
+              <span class="skill-chip-meta">ちから／ガッツ13</span>
+            </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-1"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-1" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0108" aria-controls="sk-0108" aria-expanded="false">
+              <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
+              <span class="skill-chip-name">ネビュラ</span>
+              <span class="skill-chip-meta">ちから／ガッツ16</span>
+              <span class="skill-chip-unique">固有：アストロガール</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0085" aria-controls="sk-0085" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">強打</span>
+              <span class="skill-chip-meta">ちから／ガッツ15</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0086" aria-controls="sk-0086" aria-expanded="false">
+              <span class="skill-aura skill-aura-黒" aria-hidden="true"></span>
+              <span class="skill-chip-name">殴打</span>
+              <span class="skill-chip-meta">ちから／ガッツ18</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0101" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>威圧<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>中→遠</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>13</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3">なし</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+        <p class="skill-detail-note">血統技図鑑に未掲載（技登録不可）</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0108" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>ネビュラ<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>中→遠</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ネビュラ</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果＜30秒＞＜1回＞<br>・技の消費ガッツ＜+10%＞<br>・技の消費ガッツに応じて与ダメ上昇</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0085" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>強打<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>15</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a>（★2以上）・<a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0086" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>殴打<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3024.html">ラミア</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3024.html">ラミア</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">アディッショナルダメージ
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3024.html">ラミア</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ダメージ+10/ガッツ回復Lv1</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0087" aria-controls="sk-0087" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">羅刹</span>
+              <span class="skill-chip-meta">ちから／ガッツ25</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0088" aria-controls="sk-0088" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">殴りかかり</span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0089" aria-controls="sk-0089" aria-expanded="false">
+              <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
+              <span class="skill-chip-name">雷鳴</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ27</span>
+            </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-near-2"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-near-2" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0103" aria-controls="sk-0103" aria-expanded="false">
+              <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
+              <span class="skill-chip-name">硬質化パンチ</span>
+              <span class="skill-chip-meta">ちから／ガッツ24</span>
+              <span class="skill-chip-unique">固有：女型の巨人</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0090" aria-controls="sk-0090" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">投げ飛ばし</span>
+              <span class="skill-chip-meta">ちから／ガッツ22</span>
+            </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-zero-2"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-zero-2" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0102" aria-controls="sk-0102" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">回し蹴り</span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+              <span class="skill-chip-unique">固有：女型の巨人</span>
+            </button>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0087" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>羅刹<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3016.html">ハナヨリダンゴ</a>（★3以上）・<a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]</p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0088" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>殴りかかり<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>中→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0089" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>雷鳴<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>27</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3051.html">フラン</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0103" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>硬質化パンチ<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>近→中</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>24</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0090" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>投げ飛ばし<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>零→中</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3030.html">キジン</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0102" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>回し蹴り<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D+</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>E+</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits" data-skill="sk-0091" aria-controls="sk-0091" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">大焦熱</span>
+              <span class="skill-chip-meta">かしこさ／ガッツ32</span>
+            </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-far-3"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-far-3" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0106" aria-controls="sk-0106" aria-expanded="false">
+              <span class="skill-aura skill-aura-無" aria-hidden="true"></span>
+              <span class="skill-chip-name">闘魔解放</span>
+              <span class="skill-chip-meta">ちから／ガッツ24</span>
+              <span class="skill-chip-unique">固有：シオン・リゾート</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-mid-3"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-mid-3" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0104" aria-controls="sk-0104" aria-expanded="false">
+              <span class="skill-aura skill-aura-緑" aria-hidden="true"></span>
+              <span class="skill-chip-name">硬質化キック</span>
+              <span class="skill-chip-meta">ちから／ガッツ30</span>
+              <span class="skill-chip-unique">固有：女型の巨人</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0092" aria-controls="sk-0092" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">阿修羅</span>
+              <span class="skill-chip-meta">ちから／ガッツ35</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0093" aria-controls="sk-0093" aria-expanded="false">
+              <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
+              <span class="skill-chip-name">金棒</span>
+              <span class="skill-chip-meta">ちから／ガッツ26</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0091" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>大焦熱<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>32</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3024.html">ラミア</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">大焦熱</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果＜30秒＞＜1回＞<br>・命中率＜+10%＞<br>・相手のちからステータス＜-20%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・遠</p>
+            <p class="skill-ability-desc">バトル開始時、[遠距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0106" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>闘魔解放<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>24</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">闘魔解放</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果発動＜20秒＞<br>・与ダメ＜30%＞上昇<br>・被ダメ＜30%＞低下<br>・消費ガッツ＜-10%＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0104" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>硬質化キック<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[中]</p>
+            <p class="skill-ability-desc">丈夫さパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">クリダメ上昇[中]</p>
+            <p class="skill-ability-desc">技が命中したときクリダメ上昇Lv2＜10秒＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0092" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>阿修羅<span class="skill-detail-place">近距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>35</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3030.html">キジン</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・近</p>
+            <p class="skill-ability-desc">バトル開始時、[近距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：阿修羅</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv2を4回与える</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0093" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>金棒<span class="skill-detail-place">零距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C+</td></tr>
+                <tr><th>移動先</th><td>零→遠</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>26</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3016.html">ハナヨリダンゴ</a>（★4以上）・<a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a>（★4以上）・<a href="../../../monsters/kaibutsu/kijin/3051.html">フラン</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・零</p>
+            <p class="skill-ability-desc">バトル開始時、[零距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[全距離]クリ上昇</p>
+            <p class="skill-ability-desc">技が命中したときクリ率上昇Lv2＜10秒＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0094" aria-controls="sk-0094" aria-expanded="false">
+              <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
+              <span class="skill-chip-name">羅生門</span>
+              <span class="skill-chip-meta">ちから／ガッツ38</span>
+            </button>
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-far-4"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-far-4" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0105" aria-controls="sk-0105" aria-expanded="false">
+              <span class="skill-aura skill-aura-緑" aria-hidden="true"></span>
+              <span class="skill-chip-name">ウォール</span>
+              <span class="skill-chip-meta">ちから／ガッツ36</span>
+              <span class="skill-chip-unique">固有：女型の巨人</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0095" aria-controls="sk-0095" aria-expanded="false">
+              <span class="skill-aura skill-aura-青" aria-hidden="true"></span>
+              <span class="skill-chip-name">不動明王</span>
+              <span class="skill-chip-meta">ちから／ガッツ27</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-unique-toggle" aria-expanded="false" aria-controls="skill-unique-near-4"><span class="skill-unique-label">固有技を見る</span><span class="skill-unique-count">1</span></button>
+            <div class="skill-unique-wrap" id="skill-unique-near-4" hidden>
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0107" aria-controls="sk-0107" aria-expanded="false">
+              <span class="skill-aura skill-aura-黒" aria-hidden="true"></span>
+              <span class="skill-chip-name">断頭鬼刃</span>
+              <span class="skill-chip-meta">ちから／ガッツ50</span>
+              <span class="skill-chip-unique">固有：シオン・リゾート</span>
+            </button>
+            </div>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0096" aria-controls="sk-0096" aria-expanded="false">
+              <span class="skill-aura skill-aura-赤" aria-hidden="true"></span>
+              <span class="skill-chip-name">天網恢恢</span>
+              <span class="skill-chip-meta">ちから／ガッツ30</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0094" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>羅生門<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>38</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3030.html">キジン</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・遠</p>
+            <p class="skill-ability-desc">バトル開始時、[遠距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">シールド[小]：羅生門</p>
+            <p class="skill-ability-desc">対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3030.html">キジン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3030.html">キジン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の有利オーラ効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0105" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>ウォール<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>36</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">シールド[小]：ウォール</p>
+            <p class="skill-ability-desc">対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手大]被ダメ低下</p>
+            <p class="skill-ability-desc">自分が技を発動したとき相手サイズ[大きい]だと被ダメ低下Lv3＜20秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0095" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>不動明王<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>27</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">恵：ブロックLv6</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[ブロックLv6＜20秒＞]を付与＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・中</p>
+            <p class="skill-ability-desc">バトル開始時、[中距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0107" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <p class="skill-detail-unique">固有技</p>
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>断頭鬼刃<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>50</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>使用可能モンスター</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a></td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">一刀両断</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果発動<br>・バトル中にガッツを20消費した分だけ攻撃ステータス上昇5%[最大20%]<br>・対象技の消費ガッツに応じて与ダメ上昇</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">魂喰い</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果発動＜1回＞<br>・有利オーラに変換<br>・【シールド】を破壊<br>・[有利]有利効果＜100%＞上昇</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ライフパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">フィールドブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、地形適性効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0096" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>天網恢恢<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>S+</td></tr>
+                <tr><th>移動先</th><td>零→遠</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3016.html">ハナヨリダンゴ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・零</p>
+            <p class="skill-ability-desc">バトル開始時、[零距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[全距離]与ダメ上昇</p>
+            <p class="skill-ability-desc">技が命中したとき与ダメ上昇Lv2＜10秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3016.html">ハナヨリダンゴ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">命中パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ガードディクリーズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3016.html">ハナヨリダンゴ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、相手の回避と丈夫さの基礎ステータス20%低下/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0097" aria-controls="sk-0097" aria-expanded="false">
+              <span class="skill-aura skill-aura-白" aria-hidden="true"></span>
+              <span class="skill-chip-name">帝釈崩天</span>
+              <span class="skill-chip-meta">ちから／ガッツ45</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0098" aria-controls="sk-0098" aria-expanded="false">
+              <span class="skill-aura skill-aura-黄" aria-hidden="true"></span>
+              <span class="skill-chip-name">倶利伽羅剣</span>
+              <span class="skill-chip-meta">ちから／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0099" aria-controls="sk-0099" aria-expanded="false">
+              <span class="skill-aura skill-aura-緑" aria-hidden="true"></span>
+              <span class="skill-chip-name">阿鼻地獄</span>
+              <span class="skill-chip-meta">ちから／ガッツ37</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power" data-skill="sk-0100" aria-controls="sk-0100" aria-expanded="false">
+              <span class="skill-aura skill-aura-黒" aria-hidden="true"></span>
+              <span class="skill-chip-name">天地返し</span>
+              <span class="skill-chip-meta">ちから／ガッツ45</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0097" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>帝釈崩天<span class="skill-detail-place">遠距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B+</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>45</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">鬼撃：帝釈崩天</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果<br>・ちからステータスの＜10%＞で追撃を＜1回＞与える<br>・ライフステータスの＜10%＞で追撃を＜1回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：帝釈崩天</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜40%＞の追撃を＜2回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3027.html">アストロガール</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0098" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>倶利伽羅剣<span class="skill-detail-place">中距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3050.html">女型の巨人</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：倶利伽羅剣</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜30%＞の追撃を＜1回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥怪力・中</p>
+            <p class="skill-ability-desc">バトル開始時、[中距離]適性に応じて次の効果<br>・B以上：ちからステータス＜+50＞<br>・S以上：ちからステータス＜+50＞<br>・SS以上：ちからステータス＜+50＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0099" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>阿鼻地獄<span class="skill-detail-place">近距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>37</td><th>クリティカル率</th><td>A+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3051.html">フラン</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：阿鼻地獄</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜20%＞の追撃を＜4回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">阿鼻叫喚</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果を発動<br>・[オーラ有利]ダメージ＜10%＞の追撃を＜1回＞与える<br>・[モン類有利]ダメージ＜10%＞の追撃を＜1回＞与える<br>・クリティカル時、ダメージ＜10%＞の追撃を＜1回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3051.html">フラン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/kaibutsu/kijin/3051.html">フラン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0100" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>天地返し<span class="skill-detail-place">零距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>零→遠</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>45</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kaibutsu/kijin/3052.html">シオン・リゾート</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">天地返し</p>
+            <p class="skill-ability-desc">被ダメ時に、この技の命中率＜+20%＞<br>対象技発動時、次の効果発動<br>・自身ライフ50%以上：消費ガッツ＜-30%＞<br>・自身ライフ50%未満：ダメージ＜50%＞の＜1回＞追撃</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク6</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+  <section class="section">
+    <h2 class="section-title">固有技</h2>
+    <p class="skill-unique-lead">キジン種のうち、特定のモンスターだけが使える技です。</p>
+    <ul class="skill-unique-list">
+      <li><a href="#sk-0102">回し蹴り</a>（零距離ランク2／女型の巨人）</li>
+      <li><a href="#sk-0103">硬質化パンチ</a>（近距離ランク2／女型の巨人）</li>
+      <li><a href="#sk-0104">硬質化キック</a>（中距離ランク3／女型の巨人）</li>
+      <li><a href="#sk-0105">ウォール</a>（遠距離ランク4／女型の巨人）</li>
+      <li><a href="#sk-0106">闘魔解放</a>（遠距離ランク3／シオン・リゾート）</li>
+      <li><a href="#sk-0107">断頭鬼刃</a>（近距離ランク4／シオン・リゾート）</li>
+      <li><a href="#sk-0108">ネビュラ</a>（中距離ランク1／アストロガール）</li>
+    </ul>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">キジン種のモンスター（7体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="3016.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200802_0.jpg" alt="ハナヨリダンゴ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハナヨリダンゴ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：モッチー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3024.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200726_0.jpg" alt="ラミア" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ラミア</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：ナーガ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3027.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/3027.jpg" alt="アストロガール" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アストロガール</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：メタルナー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3030.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200731_0.jpg" alt="キジン" loading="lazy">
+            <span class="mon-card-limited">超スタフェス限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">キジン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：キジン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3050.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200395_0.jpg" alt="女型の巨人" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">女型の巨人</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3051.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200389_0.jpg" alt="フラン" loading="lazy">
+            <span class="mon-card-limited">秋限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">フラン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="3052.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200402_0.jpg" alt="シオン・リゾート" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シオン・リゾート</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">怪物</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+      <a class="menu-link" href="../ghost/index.html"><span class="icon">👹</span> ゴースト種の技</a>
+      <a class="menu-link" href="../index.html"><span class="icon">👹</span> 怪物のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>
