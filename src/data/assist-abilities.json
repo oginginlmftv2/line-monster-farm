@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1099,
-    "resolved": 580,
+    "abilities": 1103,
+    "resolved": 584,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19711,6 +19711,86 @@
         "ガッツ回復",
         "ガッツ変化系",
         "クリティカル"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1105",
+      "legacyId": null,
+      "cardId": "c0002-SSR",
+      "sourceName": "コスモス",
+      "name": "コスモスマキシマ I",
+      "description": "[怪物]バトル開始時、モン類Ｌｖ１毎に全ステータス＜＋５＞＜最大＋１００＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "怪物",
+        "攻撃強化",
+        "命中強化",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1106",
+      "legacyId": null,
+      "cardId": "c0002-SSR",
+      "sourceName": "コスモス",
+      "name": "コスモスマキシマ II",
+      "description": "[怪物]バトル開始時、次の効果<br>・モン類Ｌｖ１毎に全ステータス＜＋１５＞＜最大＋３００＞<br>・[モン類有利]技を受けた時、相手のいずれかの間合いの技が使用不可＜２０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "怪物",
+        "有利時",
+        "攻撃強化",
+        "命中強化",
+        "丈夫さ強化",
+        "デバフ"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1107",
+      "legacyId": null,
+      "cardId": "c0002-SSR",
+      "sourceName": "コスモス",
+      "name": "コスモスシールド I",
+      "description": "[怪物]相手が技使用・移動のいずれか不可の時、次の効果<br>・耐久値＜３５０＞の【シールド】展開＜２０秒＞＜１回＞<br>・このシールド展開中、攻撃ステータス＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "怪物",
+        "シールド",
+        "攻撃強化"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1108",
+      "legacyId": null,
+      "cardId": "c0002-SSR",
+      "sourceName": "コスモス",
+      "name": "コスモスシールド II",
+      "description": "[怪物]相手が技使用・移動のいずれか不可の時、次の効果<br>・耐久値＜４００＞の【シールド】展開＜２０秒＞＜１回＞<br>・このシールド展開中、攻撃ステータス＜＋２５％＞と[業物Ｌｖ６]",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "怪物",
+        "シールド",
+        "攻撃強化"
       ],
       "sortOrder": 2,
       "linkStatus": "resolved",

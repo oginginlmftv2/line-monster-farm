@@ -6,9 +6,9 @@
   "generatedAt": null,
   "counts": {
     "cards": 95,
-    "cardsWithEffects": 85,
-    "cardsDraft": 10,
-    "effects": 913
+    "cardsWithEffects": 86,
+    "cardsDraft": 9,
+    "effects": 925
   },
   "cards": {
     "g1-MR-serafina": {
@@ -8747,8 +8747,142 @@
       "effects": []
     },
     "c0002-SSR": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "c0002-SSR-e01",
+          "name": "モン類上限解放 +60",
+          "description": "育成対象とモン類が一致したとき、すべての基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0002-SSR-e11",
+          "name": "オーラスキルアップ",
+          "description": "育成対象とオーラが一致し、修行によって技が強化された時、獲得する技能力が1段階アップ（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0002-SSR-e02",
+          "name": "修行効果アップ +8%",
+          "description": "修行したとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e03",
+          "name": "大成功率アップ +11",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e04",
+          "name": "命中上限アップ +180",
+          "description": "命中の基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e05",
+          "name": "命中アップⅡ +3",
+          "description": "命中の素質アップ +3%\n一緒にトレーニングしたとき、命中の上昇量アップ+3",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e06",
+          "name": "モン類強化 +4",
+          "description": "育成対象とモン類が一致したとき、モン類レベル上限アップ（同効果内で最大Lv5まで）",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0002-SSR-e07",
+          "name": "トレ効果アップ + +8%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ+8%と失敗率ダウン-8%",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e08",
+          "name": "オーラEXトレパワーアップ +50%",
+          "description": "育成対象とオーラが一致したとき、トレーニング時のEXトレパワー上昇量アップ（重複不可）",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0002-SSR-e12",
+          "name": "オーラ超ワイルド",
+          "description": "育成対象とオーラが一致した時、修行時のノラモン遭遇率+50%アップとノラモン勝率アップ\nさらに、ボスモン遭遇率が上昇し、ノラモンに勝利時一度だけボスモンが確定で出現（重複不可）",
+          "unlockRank": "3凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0002-SSR-e09",
+          "name": "大成功率アップ +9",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0002-SSR-e10",
+          "name": "トレ効果アップ +11%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 0,
+          "conditions": null
+        }
+      ]
     }
   }
 }
