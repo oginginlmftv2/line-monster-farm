@@ -19,3 +19,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 ゴースト	遠	2	カード・クラブ	緑	かしこさ	26		D+	B	D	C	丈夫さ上昇[小]		ランダムドロー						1	スプーキー				
 ゴースト	零	4	グリンネーション	緑	ちから	46		C+	S+	B	B+	連撃：グリンネーション		ちから上昇[中]						1	スプーキー				
 ゴースト	近	5	RSF	赤	かしこさ	35		B	S	B	A	RSF・サーチ		RSF・ヒット		テクニックレイズ	メレンゲ:6	テクニックオーバー	メレンゲ:10			メレンゲ:5			
+ゴースト	零	1	ホイップハンマー	白	かしこさ	17		C	C	G	G	ホイップハンマー								1	メレンゲ				
