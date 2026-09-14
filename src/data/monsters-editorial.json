@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-09-02T03:54:25Z",
-  "count": 113,
+  "exportedAt": "2026-09-14T07:03:47Z",
+  "count": 115,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -952,6 +952,16 @@
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-09-12"
     },
+    "3027": {
+      "id": "3027",
+      "name": "アストロガール",
+      "arrayIndex": 357,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-09-14",
+      "releasedAt": "2026-09-14"
+    },
     "3051": {
       "id": "3051",
       "name": "フラン",
@@ -1033,6 +1043,16 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-15"
+    },
+    "3151": {
+      "id": "3151",
+      "name": "メレンゲ",
+      "arrayIndex": 356,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-09-14",
+      "releasedAt": "2026-09-14"
     },
     "3209": {
       "id": "3209",
