@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 356,
+ "count": 358,
  "monsters": [
   {
    "id": "0101",
@@ -6377,6 +6377,25 @@
    "image": "img/monster/3024.jpg"
   },
   {
+   "id": "3027",
+   "sortOrder": 3027,
+   "isNew": true,
+   "name": "アストロガール",
+   "arrayIndex": 357,
+   "mon": "怪物",
+   "monSlug": "kaibutsu",
+   "blood": "キジン",
+   "bloodSlug": "kijin",
+   "subBlood": "メタルナー",
+   "aura": "白",
+   "limited": false,
+   "limitedLabel": "",
+   "gwImg": null,
+   "localImg": "3027.jpg",
+   "url": "/monsters/kaibutsu/kijin/3027.html",
+   "image": "img/monster/3027.jpg"
+  },
+  {
    "id": "3030",
    "sortOrder": 3030,
    "isNew": true,
@@ -6527,6 +6546,25 @@
    "localImg": "S__93200456_0.jpg",
    "url": "/monsters/kaibutsu/ghost/3150.html",
    "image": "img/monster/3150.jpg"
+  },
+  {
+   "id": "3151",
+   "sortOrder": 3151,
+   "isNew": true,
+   "name": "メレンゲ",
+   "arrayIndex": 356,
+   "mon": "怪物",
+   "monSlug": "kaibutsu",
+   "blood": "ゴースト",
+   "bloodSlug": "ghost",
+   "subBlood": "レアモン",
+   "aura": "赤",
+   "limited": false,
+   "limitedLabel": "超神殿祭限定",
+   "gwImg": null,
+   "localImg": "3151.jpg",
+   "url": "/monsters/kaibutsu/ghost/3151.html",
+   "image": "img/monster/3151.jpg"
   },
   {
    "id": "3209",

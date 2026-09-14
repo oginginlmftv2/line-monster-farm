@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 800,
-  "count": 356,
+  "count": 358,
   "monsters": [
     {
       "id": "0101",
@@ -9025,8 +9025,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 194,
-      "current": 194,
+      "baseline": 192,
+      "current": 192,
       "indexable": false
     },
     {
@@ -9050,8 +9050,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 207,
-      "current": 207,
+      "baseline": 205,
+      "current": 205,
+      "indexable": false
+    },
+    {
+      "id": "3027",
+      "arrayIndex": 357,
+      "name": "アストロガール",
+      "aura": "白",
+      "mon": "怪物",
+      "mainBlood": "キジン",
+      "subBlood": "メタルナー",
+      "limited": false,
+      "limitedLabel": "",
+      "image": "3027.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kaibutsu/kijin/3027.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-09-14",
+      "releasedAt": "2026-09-14",
+      "baseline": 234,
+      "current": 234,
       "indexable": false
     },
     {
@@ -9075,8 +9100,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 232,
-      "current": 232,
+      "baseline": 233,
+      "current": 233,
       "indexable": false
     },
     {
@@ -9100,8 +9125,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 239,
-      "current": 239,
+      "baseline": 245,
+      "current": 245,
       "indexable": false
     },
     {
@@ -9260,8 +9285,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 567,
-      "current": 567,
+      "baseline": 582,
+      "current": 582,
       "indexable": false
     },
     {
@@ -9297,9 +9322,34 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-15",
-      "baseline": 692,
-      "current": 1937,
+      "baseline": 707,
+      "current": 1952,
       "indexable": true
+    },
+    {
+      "id": "3151",
+      "arrayIndex": 356,
+      "name": "メレンゲ",
+      "aura": "赤",
+      "mon": "怪物",
+      "mainBlood": "ゴースト",
+      "subBlood": "レアモン",
+      "limited": false,
+      "limitedLabel": "超神殿祭限定",
+      "image": "3151.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kaibutsu/ghost/3151.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-09-14",
+      "releasedAt": "2026-09-14",
+      "baseline": 262,
+      "current": 262,
+      "indexable": false
     },
     {
       "id": "3209",
