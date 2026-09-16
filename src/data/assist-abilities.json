@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1178,
-    "resolved": 659,
+    "abilities": 1182,
+    "resolved": 663,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -21132,6 +21132,86 @@
         "有利時"
       ],
       "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1184",
+      "legacyId": null,
+      "cardId": "d24k-SSR-rupinasu",
+      "sourceName": "ルピナス",
+      "name": "ルピナスリカバー I",
+      "description": "[自身緑または獣族]バトル開始時、次の効果<br>・自身の回避ステ＜＋２００＞<br>・[前半]技回避時、ガッツ回復＜＋２５＞＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "オーラ緑",
+        "獣族",
+        "回避",
+        "ガッツ回復"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1185",
+      "legacyId": null,
+      "cardId": "d24k-SSR-rupinasu",
+      "sourceName": "ルピナス",
+      "name": "ルピナスリカバー II",
+      "description": "[自身緑または獣族]バトル開始時、回避ステ＜＋４００＞、技回避時、次の効果<br>・[前半]ガッツ回復＜＋３０＞＜１回＞<br>・[後半]ガッツ回復＜＋４０＞＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "後半",
+        "オーラ緑",
+        "獣族",
+        "回避",
+        "ガッツ回復"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1186",
+      "legacyId": null,
+      "cardId": "d24k-SSR-rupinasu",
+      "sourceName": "ルピナス",
+      "name": "ルピナスメンタル I",
+      "description": "[自身緑]残りガッツ５０以下の時、次の効果発動<br>・ガッツ回復速度＜＋１５％＞<br>・技命中時、ガッツ回復＜＋１０＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ緑",
+        "ガッツ回復"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1187",
+      "legacyId": null,
+      "cardId": "d24k-SSR-rupinasu",
+      "sourceName": "ルピナス",
+      "name": "ルピナスメンタル II",
+      "description": "[自身緑]残りガッツ６０以下の時、次の効果発動<br>・ガッツ回復速度＜＋３０％＞<br>・技命中時、与ガッツダメ上昇＜＋１０＞とガッツ回復＜＋２０＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ緑",
+        "ガッツ回復",
+        "ガッツ変化系"
+      ],
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
