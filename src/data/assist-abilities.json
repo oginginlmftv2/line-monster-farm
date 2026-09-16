@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1111,
-    "resolved": 592,
+    "abilities": 1123,
+    "resolved": 604,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19922,6 +19922,217 @@
       "rarity": "MR",
       "tags": [],
       "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1117",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "マキズシアペンド I",
+      "description": "[前半][幻霊]バトル開始時、次の効果<br>・同じ技を連続で発動時、与ダメ上昇＜＋１０％＞＜累積３回まで＞、違う技を使うと効果リセット<br>・[相手魔族]追撃の与ダメ上昇＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "幻霊",
+        "追撃",
+        "魔族"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1118",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "マキズシアペンド II",
+      "description": "[前半][幻霊]バトル開始時、次の効果<br>・同じ技を連続で発動時、与ダメ上昇＜＋２０％＞＜累積３回まで＞、違う技を使うと効果リセット<br>・[オーラ有利]追撃与ダメ＜＋２５％＞<br>・[相手魔族]追撃与ダメ＜＋２５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "幻霊",
+        "追撃",
+        "魔族",
+        "有利時"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1119",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "ジンゴロウチェイサー I",
+      "description": "[前半][幻霊]技命中時、次の効果<br>・ダメージ＜１０％＞の追撃＜１回＞<br>・[有利]かしこさステの＜５％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "幻霊",
+        "追撃",
+        "有利時"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1120",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "ジンゴロウチェイサー II",
+      "description": "[前半][幻霊]技命中時、次の効果<br>・ダメージ＜２０％＞の追撃＜１回＞<br>・回避ステの＜５％＞で追撃＜１回＞<br>・[有利]かしこさステの＜１０％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "幻霊",
+        "追撃",
+        "有利時",
+        "回避"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1121",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[緑]智将",
+      "description": "＜オーラ緑＞かしこさ技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ緑"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1122",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[自身緑]回避＋３%",
+      "description": "[自身緑]回避ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ緑"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1123",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[幻霊]回避＋３%",
+      "description": "[幻霊]回避ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "幻霊"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1124",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[森林]闘志",
+      "description": "[森林]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1125",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[海岸]闘志",
+      "description": "[海岸]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1126",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[海岸]回避＋１００",
+      "description": "[海岸]回避ステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1127",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[幻霊]重術",
+      "description": "[幻霊]かしこさ技命中時、連撃Ｌｖ１×１回",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "連撃",
+        "幻霊"
+      ],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1128",
+      "legacyId": null,
+      "cardId": "g3-MR-jingorou",
+      "sourceName": "ジンゴロウ",
+      "name": "[悪天候]回避＋１００",
+      "description": "[悪天候]回避ステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 12,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
