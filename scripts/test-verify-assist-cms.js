@@ -936,3 +936,11 @@ childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-assis
   cwd: repo,
   stdio: 'inherit',
 });
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-ability-reorder-api.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});
+childProcess.execFileSync(process.execPath, [path.join(repo, 'scripts/test-asst-ability-tab-ui.js')], {
+  cwd: repo,
+  stdio: 'inherit',
+});

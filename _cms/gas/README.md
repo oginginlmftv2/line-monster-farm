@@ -14,7 +14,7 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 
 ## P12-19 新規カード登録の反映と確認
 
-リポジトリ内の実装対象は `20_assist.gs` と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
+リポジトリ内の実装対象は `20_assist.gs`、`22_assist_status.gs`（能力の状態まとめ更新API）、`25_lmfdb_write.gs`（lMfDB追加・処置API）と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
 
 反映後は次を手動確認します。
 

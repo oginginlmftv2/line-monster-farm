@@ -565,12 +565,43 @@ function asstAuditResolveExternalSha_(specifiedSha) {
   var cache = CacheService.getScriptCache();
   var cached = cache.get(ASST_LMFDB_MAIN_SHA_CACHE_KEY);
   if (asstIsSha_(cached, 40)) return cached;
-  var resolved = asstAuditFetchBytes_(ASST_LMFDB_MAIN_REF_URL, 'lMfDB main解決', 256 * 1024);
-  var document = asstAuditParseJson_(resolved.text, 'lMfDB main解決');
-  var sha = document && document.object && document.object.sha;
-  if (!asstIsSha_(sha, 40)) throw new Error('lMfDB mainを完全なコミットSHAへ解決できません。');
+  var sha;
+  try {
+    var resolved = asstAuditFetchBytes_(ASST_LMFDB_MAIN_REF_URL, 'lMfDB main解決', 256 * 1024);
+    var document = asstAuditParseJson_(resolved.text, 'lMfDB main解決');
+    sha = document && document.object && document.object.sha;
+    if (!asstIsSha_(sha, 40)) throw new Error('lMfDB mainを完全なコミットSHAへ解決できません。');
+  } catch (error) {
+    if (!error || !error.rateLimited) throw error;
+    sha = asstAuditResolveMainShaWithoutApi_(error);
+  }
   cache.put(ASST_LMFDB_MAIN_SHA_CACHE_KEY, sha, ASST_LMFDB_MAIN_SHA_CACHE_SECONDS);
   return sha;
+}
+
+// GitHub APIがレート制限のときのmain解決。過去の取り込みが記録したコミットSHA（ability_external_refsの
+// lastSeenSha / firstSeenSha）を新しい順に試し、rawの固定SHA版とrawのmain版の内容SHA-256が一致するSHAを
+// 「mainと同内容の完全なコミットSHA」として返す。どれも一致しなければ（lMfDBが更新されている）元の403をそのまま投げる。
+var ASST_LMFDB_MAIN_FALLBACK_TRIES = 3;
+function asstAuditResolveMainShaWithoutApi_(limitedError) {
+  var seen = {};
+  var candidates = [];
+  asstAuditReadLocal_().refs.slice().sort(function (a, b) {
+    return String(b.decidedAt || b.importedAt || '').localeCompare(String(a.decidedAt || a.importedAt || ''));
+  }).forEach(function (row) {
+    [row.lastSeenSha, row.firstSeenSha].forEach(function (value) {
+      var candidate = asstText_(value);
+      if (asstIsSha_(candidate, 40) && !seen[candidate]) { seen[candidate] = true; candidates.push(candidate); }
+    });
+  });
+  if (!candidates.length) throw limitedError;
+  var main = asstAuditFetchBytes_(ASST_LMFDB_RAW_BASE + 'main' + ASST_LMFDB_RAW_PATH, 'lMfDB main内容確認', ASST_LMFDB_MAX_BYTES);
+  var mainSha256 = asstSha256Bytes_(main.bytes);
+  for (var index = 0; index < candidates.length && index < ASST_LMFDB_MAIN_FALLBACK_TRIES; index++) {
+    var fixed = asstAuditFetchBytes_(ASST_LMFDB_RAW_BASE + candidates[index] + ASST_LMFDB_RAW_PATH, 'lMfDB abilities.json', ASST_LMFDB_MAX_BYTES);
+    if (asstSha256Bytes_(fixed.bytes) === mainSha256) return candidates[index];
+  }
+  throw new Error(limitedError.message + ' 既知のコミットSHAはどれもmainと内容が一致しませんでした（lMfDBが更新されています）。');
 }
 
 function asstAuditExternal_(externalSha) {
@@ -581,26 +612,6 @@ function asstAuditExternal_(externalSha) {
     document: asstAuditParseJson_(fetched.text, 'lMfDB abilities.json'),
     sha256: asstSha256Bytes_(fetched.bytes)
   };
-}
-
-// 書込み前の「外部mainは固定SHAのまま動いていないか」確認。
-// 1. キャッシュ済みのmain SHAがあればそれと比較（GitHub APIを叩かない）
-// 2. なければGitHub APIでmainを解決して比較
-// 3. APIがレート制限（403/429）なら、rawのmain版abilities.jsonを取り、固定SHA版と内容SHA-256が一致するかで判定する。
-//    rawはCDN配信でレート制限にほぼ当たらない。内容が同じなら登録の安全性はコミットSHA一致と同じ。
-//    一致しなければ従来どおり「外部mainが更新されています」で止める。
-function asstLmfdbAssertExternalCurrent_(externalSha, externalSha256) {
-  var latestSha;
-  try { latestSha = asstAuditResolveExternalSha_(null); }
-  catch (error) {
-    if (!error || !error.rateLimited) throw error;
-    var mainUrl = ASST_LMFDB_RAW_BASE + 'main' + ASST_LMFDB_RAW_PATH;
-    var current = asstAuditFetchBytes_(mainUrl, 'lMfDB main内容確認', ASST_LMFDB_MAX_BYTES);
-    if (asstSha256Bytes_(current.bytes) !== externalSha256) throw new Error('外部mainが更新されています。再監査してください。（レート制限のためraw内容で確認）');
-    return { latestSha: externalSha, verifiedBy: 'raw-content' };
-  }
-  if (latestSha !== externalSha) throw new Error('外部mainが更新されています。再監査してください。');
-  return { latestSha: latestSha, verifiedBy: 'ref' };
 }
 
 function asstAuditDangerousStrings_(value, location, found) {
@@ -1554,7 +1565,7 @@ function api_asstGetCard(cardId) {
     .map(asstEffectFromRow_);
   var abilities = asstRows_(ASST_SHEET_ABILITIES).filter(function (item) { return item.cardId === cardId; })
     .sort(function (a, b) { return Number(a.sortOrder) - Number(b.sortOrder); })
-    .map(asstAbilityFromRow_);
+    .map(function (item) { var ability = asstAbilityFromRow_(item); ability.version = Number(item.version || 1); return ability; });
   return { card: asstCardFromRow_(row), version: Number(row.version || 1), effects: effects, abilities: abilities };
 }
 
@@ -1653,13 +1664,32 @@ function api_asstGetAbility(abilityId) {
   return { ability: asstAbilityFromRow_(row), version: Number(row.version || 1) };
 }
 
+// 能力1件の変更検査。asstValidateDocuments_ の能力部分のうち、この能力と同じカードの能力だけで判定できる項目。
+function asstValidateAbilityChange_(ability, abilityRows) {
+  var issues = asstValidateAbilityRecord_(ability, false);
+  if (!ability.sourceName || !ability.name || !ability.description) issues.push(ability.abilityId + ': 必須文字列空欄');
+  if (ASST_LINK_STATUSES.indexOf(ability.linkStatus) < 0) issues.push(ability.abilityId + ': linkStatus不正');
+  if (ASST_ABILITY_STATUSES.indexOf(ability.status) < 0) issues.push(ability.abilityId + ': status不正');
+  try { asstValidateStringArray_(ability.tags, ability.abilityId + '/tags'); } catch (error) { issues.push(error.message); }
+  if (ability.linkStatus === 'resolved') {
+    var orders = abilityRows.filter(function (row) {
+      return row.abilityId !== ability.abilityId && asstText_(row.linkStatus) === 'resolved' && asstText_(row.cardId) === ability.cardId;
+    }).map(function (row) { return Number(row.sortOrder); }).concat([Number(ability.sortOrder)]).sort(function (a, b) { return a - b; });
+    if (orders.some(function (order, index) { return order !== index + 1; })) issues.push(ability.cardId + ': 能力sortOrder不連続');
+  } else if (ability.cardId !== null || ability.sortOrder !== null) {
+    issues.push(ability.abilityId + ': resolved以外はcardId/sortOrder null必須');
+  }
+  return issues;
+}
+
 function api_asstSaveAbility(payload) {
   var user = asstRequireUser_();
   payload = payload || {};
   var ability = payload.ability || {};
   var lock = asstAcquireScriptLock_();
   try {
-    var row = asstRows_(ASST_SHEET_ABILITIES).filter(function (item) { return item.abilityId === asstText_(ability.abilityId); })[0];
+    var abilityRows = asstRows_(ASST_SHEET_ABILITIES);
+    var row = abilityRows.filter(function (item) { return item.abilityId === asstText_(ability.abilityId); })[0];
     if (!row) throw new Error('能力が見つかりません。');
     var currentVersion = Number(row.version || 1);
     if (Number(payload.version) !== currentVersion) throw new Error('他の編集が保存済みです。');
@@ -1677,16 +1707,9 @@ function api_asstSaveAbility(payload) {
       throw new Error('resolved以外はcardIdとsortOrderをnullにしてください。');
     }
 
-    var testDocs = asstBuildDocuments_();
-    var abilityIndex = testDocs.abilities.abilities.findIndex(function (item) {
-      return item.abilityId === ability.abilityId;
-    });
-    testDocs.abilities.abilities[abilityIndex] = ability;
-    var abilityIssues = asstValidateDocuments_(testDocs.cards, testDocs.effects, testDocs.abilities)
-      .filter(function (issue) {
-        return issue.indexOf(ability.abilityId) >= 0 ||
-          (ability.cardId && issue.indexOf(ability.cardId) >= 0);
-      });
+    // 1件の保存で全シートを組み立てて全件検証すると数十秒かかるため、この能力とその紐付け先カードの
+    // sortOrder連番だけを検査する。全件の整合は公開（api_asstPublish）で従来どおり検証する。
+    var abilityIssues = asstValidateAbilityChange_(ability, abilityRows);
     if (abilityIssues.length) throw new Error('能力検査FAIL: ' + abilityIssues.join(' / '));
 
     var values = ASST_HEADERS[ASST_SHEET_ABILITIES].map(function (header) { return row[header]; });
