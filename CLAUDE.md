@@ -3,7 +3,7 @@
 > **開発ルールは `AGENTS.md` が唯一の正です。作業前に必ず読んでください。**
 > このファイルはガチャ更新・モンスター更新・日記追加など、コンテンツ運用だけを扱います。
 
-**最終更新：2026-09-16（アシスト一覧の評価・距離地形を生成時埋め込みへ変更）**
+**最終更新：2026-09-16（アシスト効果のスクショ読取をClaudeスキル化・CMSへJSON貼り付け導線を追加）**
 
 Git・ブランチ・PR・マージの管理者向け手順は`docs/admin-development.md`を参照してください。
 
@@ -193,6 +193,13 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 `assist-abilities/`への画像配置はできますが、カードとの対応はFirestoreの
 `cardAbilities/assignments`に保存されています。`ability-match.html`は現在書き込めないため、
 新規割り当てが必要になったら止まって相談してください。Firestoreルールは緩めません。
+
+### アシスト効果の登録はClaudeのスキルで読む
+
+カード詳細の「アシスト効果」タブのスクショは、スキル `assist-effect-capture` で読み取り、
+`scripts/check-assist-effect-payload.js --emit` が出したJSONをCMS「効果OCR」タブの
+「候補JSONを貼り付け」へ貼って保存します。DBの正はCMSのシートなので、
+`src/data/assist-effects.json`を直接編集しません。CMSのVision OCRは精度が低いため補助扱いです。
 
 モンスター編成で新カードを使う場合は、先に`cards/cards-data.js`へカードIDを登録します。
 未登録IDは`build.js`の警告に出るため0件にしてください。

@@ -1,0 +1,90 @@
+{
+  "cardId": "c20k-MR-teosu",
+  "sourceScreenshots": ["teosu-1.png", "teosu-2.png", "teosu-3.png", "teosu-4.png"],
+  "effects": [
+    {
+      "name": "血統オーラ上限解放 +60",
+      "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ\nまた主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
+      "unlockRank": "無凸",
+      "conditional": 1,
+      "conditions": { "operator": "or", "types": ["mainBloodlineMatch", "subBloodlineMatch", "auraMatch"] }
+    },
+    {
+      "name": "モン類ブリーダー +60%",
+      "description": "育成対象とモン類が一致したとき、ブリーダーがトレーニングに出現する（最大3人まで）",
+      "unlockRank": "無凸",
+      "conditional": 1,
+      "conditions": { "operator": "and", "types": ["monTypeMatch"] }
+    },
+    {
+      "name": "トレ効果アップ +10%",
+      "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+      "unlockRank": "無凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "忠誠度効果アップ +25%",
+      "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+      "unlockRank": "無凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "アサルト上限アップ +120",
+      "description": "ちからとかしこさの基礎ステータスを上限アップ",
+      "unlockRank": "無凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "モン類名声ボーナス +20%",
+      "description": "育成対象とモン類一致したとき、人気度、忠誠度の上昇量アップ\n人気度、忠誠度に応じて大会勝利イベントの効果量アップ（最大50%）（重複不可）",
+      "unlockRank": "1凸",
+      "conditional": 1,
+      "conditions": { "operator": "and", "types": ["monTypeMatch"] }
+    },
+    {
+      "name": "アサルトボーナスⅡ +1",
+      "description": "ちから、かしこさの素質アップ+1%\n一緒にトレーニングしたとき、ちから、かしこさの上昇量アップ+1",
+      "unlockRank": "1凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "モン類トレ共鳴・創造 +3%",
+      "description": "育成対象とモン類が一致したとき、育成対象と一緒にトレーニングする創造の数に応じて、基礎ステータスの上昇量アップ（最大10%）（重複不可）",
+      "unlockRank": "2凸",
+      "conditional": 1,
+      "conditions": { "operator": "and", "types": ["monTypeMatch"] }
+    },
+    {
+      "name": "忠誠度効果アップ +20%",
+      "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+      "unlockRank": "2凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "モン類ブリーダー・鍛錬",
+      "description": "ブリーダートレ出現率+15%\nブリーダーがトレーニングに出現時、発動中のトレ効果を25%上昇、応援効果+15%",
+      "unlockRank": "3凸",
+      "conditional": 1,
+      "conditions": { "operator": "and", "types": ["monTypeMatch"] }
+    },
+    {
+      "name": "トレ効果アップ +8%",
+      "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+      "unlockRank": "3凸",
+      "conditional": 0,
+      "conditions": null
+    },
+    {
+      "name": "モン類ブリーダー・継承",
+      "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
+      "unlockRank": "4凸",
+      "conditional": 1,
+      "conditions": { "operator": "and", "types": ["monTypeMatch"] }
+    }
+  ]
+}

@@ -897,6 +897,8 @@ function asstOcrMergeCandidates(groups){
 function asstRenderEffectOcr(){
   var status=APP_LOCAL_PREVIEW?'ローカル画面確認：OCR実行はGAS版で行います':ASST.ocrConfigured?'Google Cloud Vision接続設定済み':'未設定：Script PropertiesへGOOGLE_CLOUD_VISION_API_KEYが必要';
   return '<h2>アシスト効果OCR</h2><p class="muted">画像とOCR候補はこの画面を開いている間だけブラウザ内に保持します。Driveやスプレッドシートには保存せず、ページの再読み込み・カード切替・候補破棄で消えます。</p><div class="message show">'+esc(status)+'</div>'+
+    '<fieldset><legend>候補JSONを貼り付け（Claude読取）</legend><p class="muted">スクショをClaudeのスキル assist-effect-capture で読み取り、scripts/check-assist-effect-payload.js の --emit が出したJSONを貼ります。貼り付けただけでは保存されず、下のOCR候補と同じ確認・反映・保存の手順を通ります。</p>'+
+    '<div class="asstField wide"><textarea id="asst_ocrPasteText" rows="6" placeholder=\'{"schemaVersion":1,"cardId":"'+esc(ASST.selectedId)+'","effects":[...]}\'></textarea></div><p><button type="button" id="asst_btnPasteOcrJson">貼り付けたJSONを候補にする</button> <span class="muted">表示中の候補は置き換わります</span></p></fieldset>'+
     '<div class="asstField"><label>スクロール画像（JPEG / PNG / WebP、複数可、1枚8MB以下）</label><input id="asst_ocrFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple></div>'+
     '<div id="asst_ocrPreviews">'+ASST.ocrFiles.map(function(file){return '<figure style="display:inline-block;margin:10px 10px 10px 0"><img src="'+file.dataUrl+'" alt="'+esc(file.name)+'" style="max-width:180px;max-height:260px;display:block"><figcaption class="muted">'+esc(file.name)+'</figcaption></figure>';}).join('')+'</div>'+
     '<p><button type="button" class="primary" id="asst_btnRunOcr"'+(!ASST.ocrConfigured||!ASST.ocrFiles.length?' disabled':'')+'>選択画像をOCR</button> <button type="button" id="asst_btnOcrDemo">既存効果で画面を試す</button></p>'+
@@ -907,7 +909,7 @@ function asstRenderEffectOcr(){
 function asstRenderOcrCandidate(candidate,index){
   var types=candidate.activationConditions?(candidate.activationConditions.expression.operands||[candidate.activationConditions.expression]).map(function(item){return item.type;}):[];
   var operator=candidate.activationConditions&&candidate.activationConditions.expression.operator||'or';
-  var basis=candidate.activationConditions&&candidate.activationConditions.basis||'';var basisLabel=basis==='breeder-dependency'?'ブリーダー効果への依存から判定':basis==='direct-text'?'条件原文から直接判定':basis==='manual'?'手動指定':'未判定';
+  var basis=candidate.activationConditions&&candidate.activationConditions.basis||'';var basisLabel=basis==='breeder-dependency'?'ブリーダー効果への依存から判定':basis==='direct-text'?'条件原文から直接判定':basis==='manual'?'手動指定':basis==='claude-vision'?'読取JSONで指定':'未判定';
   return '<fieldset class="ocr-candidate '+esc(candidate.activationScope)+'" data-ocr-candidate><legend>OCR候補 '+(index+1)+'</legend><div class="grid">'+
     '<div class="asstField"><label>背景</label><select data-ocr-scope><option value="unknown"'+(candidate.activationScope==='unknown'?' selected':'')+'>要確認</option><option value="conditional"'+(candidate.activationScope==='conditional'?' selected':'')+'>黄色・条件付き</option><option value="universal"'+(candidate.activationScope==='universal'?' selected':'')+'>白・汎用</option></select></div>'+
     '<div class="asstField"><label>解放ランク</label><select data-ocr-rank>'+asstOptionList(['無凸','1凸','2凸','3凸','4凸'],candidate.unlockRank)+'</select></div>'+
@@ -931,6 +933,7 @@ function asstBindEffectOcr(){
     if(row.querySelector('[data-ocr-resolve]'))row.querySelector('[data-ocr-resolve]').onclick=function(){asstResolveOcrCandidateIssues(index);};
   });
   document.querySelectorAll('[data-ocr-candidate]').forEach(function(row){row.querySelector('[data-ocr-scope]').onchange=function(){row.classList.toggle('conditional',this.value==='conditional');row.classList.toggle('universal',this.value==='universal');if(this.value==='conditional')asstPopulateOcrConditionFields(row);};row.querySelector('[data-ocr-description]').onblur=function(){if(row.querySelector('[data-ocr-scope]').value==='conditional')asstPopulateOcrConditionFields(row);};});
+  if(el('asst_btnPasteOcrJson'))el('asst_btnPasteOcrJson').onclick=asstPasteOcrJson;
   if(el('asst_btnRunOcr'))el('asst_btnRunOcr').onclick=asstRunEffectOcr;
   if(el('asst_btnAddOcrCandidate'))el('asst_btnAddOcrCandidate').onclick=asstAddOcrCandidate;
   if(el('asst_btnApplyOcr'))el('asst_btnApplyOcr').onclick=asstApplyOcrCandidates;
@@ -952,6 +955,53 @@ function asstCaptureOcrCandidateEdits(){
       expression:operands.length===1?operands[0]:{operator:row.querySelector('[data-ocr-operator]').value,operands:operands},
       basis:row.querySelector('[data-ocr-basis]').dataset.ocrBasis||'manual'};
   });
+}
+// Claude読取JSON（scripts/check-assist-effect-payload.js --emit の出力）をOCR候補と同じ形へ変換する。
+// 検査はCMS側でもやり直し、cardIdが表示中カードと違えば拒否する。effectIdは反映時に既存名から引くか採番する。
+var ASST_OCR_PASTE_KEYS=['name','description','unlockRank','conditional','conditions'];
+function asstParseOcrPastePayload(text,cardId){
+  var payload;try{payload=JSON.parse(String(text||''));}catch(error){throw new Error('JSONとして読めません: '+error.message);}
+  if(!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error('JSONの最上位はオブジェクトです。');
+  if(payload.schemaVersion!==1)throw new Error('schemaVersionは1です。');
+  if(String(payload.cardId||'')!==cardId)throw new Error('JSONのcardId（'+String(payload.cardId||'')+'）が表示中のカード（'+cardId+'）と違います。');
+  if(!Array.isArray(payload.effects)||!payload.effects.length)throw new Error('effectsが空です。');
+  var sources=Array.isArray(payload.sourceScreenshots)?payload.sourceScreenshots.map(String):[];
+  var ranks=['無凸','1凸','2凸','3凸','4凸'],previousRank=-1,types=ASST_OCR_CONDITIONS.map(function(item){return item[0];});
+  return payload.effects.map(function(effect,index){
+    var label='効果 '+(index+1);
+    if(!effect||typeof effect!=='object'||Array.isArray(effect))throw new Error(label+'がオブジェクトではありません。');
+    var extra=Object.keys(effect).filter(function(key){return ASST_OCR_PASTE_KEYS.indexOf(key)<0;});
+    if(extra.length)throw new Error(label+'に未対応の項目があります: '+extra.join(', '));
+    var name=asstOcrSanitizeName(String(effect.name||'')),description=asstOcrSanitizeDescription(String(effect.description||''));
+    if(!name||!description)throw new Error(label+'の効果名・説明は必須です。');
+    if(/^[✿❀✾❁]/.test(name))throw new Error(label+'の効果名に花マークが残っています。');
+    var rankIndex=ranks.indexOf(effect.unlockRank);
+    if(rankIndex<0)throw new Error(label+'の解放ランクが許可値ではありません: '+String(effect.unlockRank));
+    if(rankIndex<previousRank)throw new Error(label+'の解放ランクが前の効果より下がっています（画面は無凸→4凸の順）。');
+    previousRank=rankIndex;
+    var conditional=effect.conditional;if(conditional!==0&&conditional!==1)throw new Error(label+'のconditionalは0か1です。');
+    var activation=null;
+    if(conditional){
+      var conditions=effect.conditions;
+      if(!conditions||typeof conditions!=='object'||Array.isArray(conditions))throw new Error(label+'はconditional=1なので条件が必要です。');
+      if(['and','or'].indexOf(conditions.operator)<0)throw new Error(label+'の条件の関係はandかorです。');
+      if(!Array.isArray(conditions.types)||!conditions.types.length)throw new Error(label+'の条件種別を1件以上入れてください。');
+      var seen={};conditions.types.forEach(function(type){if(types.indexOf(type)<0)throw new Error(label+'の条件種別が許可値ではありません: '+type);if(seen[type])throw new Error(label+'の条件種別が重複しています: '+type);seen[type]=true;});
+      var operands=conditions.types.map(function(type){return{type:type};});
+      activation={expression:operands.length===1?operands[0]:{operator:conditions.operator,operands:operands},basis:'claude-vision'};
+    }else if(effect.conditions!==null&&effect.conditions!==undefined){throw new Error(label+'はconditional=0なので条件を持てません。');}
+    return{name:name,description:description,activationScope:conditional?'conditional':'universal',activationConditions:activation,unlockRank:effect.unlockRank,
+      sourceScreenshots:sources.length?sources:['読取JSON'],issues:[],resolvedIssues:[]};
+  });
+}
+function asstPasteOcrJson(){
+  try{
+    var text=el('asst_ocrPasteText').value.trim();if(!text)throw new Error('JSONを貼り付けてください。');
+    var candidates=asstParseOcrPastePayload(text,ASST.selectedId);
+    if(ASST.ocrCandidates.length&&!confirm('表示中のOCR候補 '+ASST.ocrCandidates.length+'件を、貼り付けたJSONの '+candidates.length+'件で置き換えますか？'))return;
+    ASST.ocrFiles=[];ASST.ocrCandidates=candidates;asstRenderEditor();
+    show('読取JSONから候補 '+candidates.length+'件を作成しました。原画像と照合してから効果編集へ反映してください。',false);
+  }catch(error){show(error.message,true);}
 }
 function asstAddOcrCandidate(){
   asstCaptureOcrCandidateEdits();
