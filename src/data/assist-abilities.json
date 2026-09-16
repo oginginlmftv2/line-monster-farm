@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1132,
-    "resolved": 613,
+    "abilities": 1141,
+    "resolved": 622,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19652,7 +19652,7 @@
         "ガッツ変化系",
         "クリティカル"
       ],
-      "sortOrder": 1,
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -19671,7 +19671,7 @@
         "追撃",
         "攻撃強化"
       ],
-      "sortOrder": 3,
+      "sortOrder": 2,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -19691,7 +19691,7 @@
         "追撃",
         "攻撃強化"
       ],
-      "sortOrder": 4,
+      "sortOrder": 3,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -19712,7 +19712,7 @@
         "ガッツ変化系",
         "クリティカル"
       ],
-      "sortOrder": 2,
+      "sortOrder": 5,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -20290,6 +20290,158 @@
       "rarity": "SSR",
       "tags": [
         "ライフ低下時"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1138",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[赤]智将",
+      "description": "＜オーラ赤＞かしこさ技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1139",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[自身赤]命中＋３%",
+      "description": "[自身赤]命中ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "命中強化"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1140",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[怪物]命中＋３%",
+      "description": "[怪物]命中ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "怪物",
+        "命中強化"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1141",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[雪山]闘志",
+      "description": "[雪山]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1142",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[火山]闘志",
+      "description": "[火山]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1143",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[雪山]命中＋１００",
+      "description": "[雪山]命中ステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "命中強化"
+      ],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1144",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[曇り]命中＋１００",
+      "description": "[曇り]命中ステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "命中強化"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1145",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "[怪物]重術",
+      "description": "[怪物]かしこさ技命中時、連撃Ｌｖ１×１回",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "連撃",
+        "怪物"
+      ],
+      "sortOrder": 13,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1146",
+      "legacyId": null,
+      "cardId": "c0001-MR",
+      "sourceName": "デコレイ",
+      "name": "超必死",
+      "description": "[状態変化][終盤]劣勢のときクリ率大上昇",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "終盤",
+        "クリティカル"
       ],
       "sortOrder": 1,
       "linkStatus": "resolved",
