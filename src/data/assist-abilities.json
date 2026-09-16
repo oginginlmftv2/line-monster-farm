@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1182,
-    "resolved": 663,
+    "abilities": 1213,
+    "resolved": 694,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -13778,7 +13778,7 @@
       "sortOrder": 1,
       "linkStatus": "resolved",
       "flags": [],
-      "status": "verified"
+      "status": "draft"
     },
     {
       "abilityId": "ab-0783",
@@ -13795,7 +13795,7 @@
       "sortOrder": 2,
       "linkStatus": "resolved",
       "flags": [],
-      "status": "verified"
+      "status": "draft"
     },
     {
       "abilityId": "ab-0784",
@@ -13813,7 +13813,7 @@
       "sortOrder": 3,
       "linkStatus": "resolved",
       "flags": [],
-      "status": "verified"
+      "status": "draft"
     },
     {
       "abilityId": "ab-0785",
@@ -21212,6 +21212,620 @@
         "ガッツ変化系"
       ],
       "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1188",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "名医の教え・序",
+      "description": "バトル開始時、次の効果発動<br>・ライフ以外のステータス＜＋５％＞<br>・全技のガッツダメ性能＜＋５＞、＜緑＞技時さらに技のガッツダメ性能＜＋５＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ緑",
+        "攻撃強化",
+        "全技強化",
+        "ガッツ変化系"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1189",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "名医の教え・破",
+      "description": "[創造]バトル開始時、次の効果<br>・相手の攻撃ステータス＜－１０％＞<br>・[モン類Ｌｖ１０以上]自身のガッツ５０以上で技を受けた時、退場ダメ低下＜－４０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "デバフ",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1190",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "名医の教え・急",
+      "description": "バトル開始時、ライフ＜＋２００＞、[創造]次の効果発動<br>・[前半][同名能力・序]中に技命中時、相手移動不可＜１０秒＞＜１回＞<br>・[後半][同名能力・破]中に技命中時、相手移動不可＜１０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "前半",
+        "後半",
+        "デバフ"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1191",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "愛情を忘れずに II",
+      "description": "[前半][緑または創造]次の効果<br>・被ダメブロック＜－２０％＞<br>・自身にかかる被ダメ低下の効果％と同じ分だけ被ガッツダメ低下",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ緑",
+        "創造",
+        "被ダメ軽減",
+        "ガッツ変化系"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1192",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "優雅なオフ I",
+      "description": "[創造][有利]バトル開始時、次の効果<br>・自身が編成しているオーラ技の数だけ全ステータス＜＋１５＞（最大＋１５０）<br>・技命中時、シールド破壊＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "有利時",
+        "攻撃強化",
+        "シールド"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1193",
+      "legacyId": null,
+      "cardId": "d23k-MR-eiru",
+      "sourceName": "エイル(師匠)",
+      "name": "優雅なオフ II",
+      "description": "[創造]バトル開始時、次の効果<br>・自身が編成しているオーラ技の数だけ全ステータス＜＋１５＞（最大＋１５０）<br>・[有利]ステ上昇量と最大上昇量を２倍<br>・[有利]技命中時、シールド破壊＜２回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "有利時",
+        "攻撃強化",
+        "シールド"
+      ],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1194",
+      "legacyId": null,
+      "cardId": "a13i-MR-nishiki",
+      "sourceName": "ニシキ",
+      "name": "超逆上",
+      "description": "[状態変化]ガッツダメを受けたとき稀に発動し、一定時間ガッツダメ大上昇、ガッツ速度大上昇、回避低下",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "ガッツ回復"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1195",
+      "legacyId": null,
+      "cardId": "a13i-MR-nishiki",
+      "sourceName": "ニシキ",
+      "name": "ニシキチェイサー I",
+      "description": "[後半][魔族]オーラ技命中時次の効果<br>・バトル中の技命中回数分ダメージ＜１０％＞の追撃＜最大３回＞<br>・相手に[暗闇Ｌｖ２＜２０秒＞]付与＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "後半",
+        "魔族",
+        "追撃",
+        "デバフ"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1196",
+      "legacyId": null,
+      "cardId": "a13i-MR-nishiki",
+      "sourceName": "ニシキ",
+      "name": "ニシキチェイサー II",
+      "description": "[後半][魔族]オーラ技命中時次の効果<br>・バトル中の技命中回数分ダメージ＜１０％＞の追撃＜最大５回＞<br>・相手に[暗闇Ｌｖ４＜２０秒＞]付与＜１回＞<br>・＜赤＞技時、シールド破壊＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "後半",
+        "魔族",
+        "オーラ赤",
+        "追撃",
+        "デバフ",
+        "シールド"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1197",
+      "legacyId": null,
+      "cardId": "a13i-MR-nishiki",
+      "sourceName": "ニシキ",
+      "name": "ニシキスマッシュ I",
+      "description": "[前半][魔族]次の効果発動<br>・命中と回避ステ＜＋５％＞<br>・技命中時、自身に[命中率＜＋５％＞]付与＜１回＞<br>・[有利]オーラ技発動時、必中Ｌｖ１＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "魔族",
+        "命中強化",
+        "回避",
+        "必中",
+        "有利時"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1198",
+      "legacyId": null,
+      "cardId": "a13i-MR-nishiki",
+      "sourceName": "ニシキ",
+      "name": "ニシキスマッシュ II",
+      "description": "[前半][魔族]次の効果発動<br>・命中と回避ステ＜＋１０％＞<br>・技命中時、自身に[命中率＜＋１０％＞]付与＜１回＞<br>・[有利]オーラ技発動時、必中Ｌｖ３＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "魔族",
+        "命中強化",
+        "回避",
+        "必中",
+        "有利時"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1199",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "花嫁の祝福 I",
+      "description": "[自身白][序盤]間合い適性Ｓ以上の時<br>最大ライフ＜３０％＞以上の被ダメ軽減",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "被ダメ軽減",
+        "序盤"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1200",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "花嫁の祝福 II",
+      "description": "[自身白][序盤]間合い適性Ｓ以上の時、次の効果が発動<br>・最大ライフ＜３０％＞以上の被ダメ軽減<br>・ＳＳ以上かつ[相手黒]の時、追撃無効",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "追撃",
+        "被ダメ軽減",
+        "無効化",
+        "序盤"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1201",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ナデシコアジリティ I",
+      "description": "[白または魔族][前半]次の効果を発動<br>・自身の回避率に応じて連撃回避",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "連撃",
+        "前半",
+        "魔族"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1202",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ナデシコアジリティ II",
+      "description": "[白または魔族]次の効果を発動<br>・[前半]自身の回避率に応じて連撃回避<br>・[後半]前半に連撃含め回避した回数分命中率＜＋５％＞＜最大５０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "連撃",
+        "命中強化",
+        "前半",
+        "後半",
+        "魔族"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1203",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ナデシコチェイサー I",
+      "description": "[自身白][序盤]技命中時、次の効果を発動<br>・回避の＜１０％＞で追撃＜１回＞<br>・＜白＞技命中時、ライフの＜５％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "追撃",
+        "序盤"
+      ],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1204",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ナデシコチェイサー II",
+      "description": "[自身白]技命中時、次の効果を発動<br>・回避の＜１０％＞で追撃＜１回＞<br>・[前半]＜白＞技命中時、ライフの＜５％＞で追撃＜１回＞<br>・[後半][有利]与ダメージの＜２０％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "追撃",
+        "前半",
+        "後半",
+        "有利時"
+      ],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1205",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "神秘の力 I",
+      "description": "[前半]＜白＞技命中時、【シールド】破壊＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ白",
+        "シールド"
+      ],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1206",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "神秘の力 II",
+      "description": "[前半]＜白＞技命中時、次の効果<br>・【シールド】破壊<br>・ライフステ＜１０％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ白",
+        "シールド",
+        "追撃"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1207",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "底知れぬ実力 I",
+      "description": "＜白＞技命中時、次の効果<br>・丈夫さステの＜１０％＞を攻撃ステに加算<br>・[有利]丈夫さステの＜５％＞を攻撃ステに加算",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "攻撃強化",
+        "有利時"
+      ],
+      "sortOrder": 13,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1208",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "底知れぬ実力 II",
+      "description": "バトル中、次の効果<br>・丈夫さステ＜＋１００＞<br>・＜白＞技命中時、丈夫さステ＜１０％＞を攻撃ステに加算<br>・[有利]＜白＞技命中時、丈夫さステ＜１５％＞を攻撃ステに加算",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "丈夫さ強化",
+        "攻撃強化",
+        "有利時"
+      ],
+      "sortOrder": 14,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1209",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "本気の装い I",
+      "description": "[有利]＜白＞技発動時、完全回避Ｌｖ２＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "有利時",
+        "オーラ白",
+        "完全回避"
+      ],
+      "sortOrder": 15,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1210",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "本気の装い II",
+      "description": "[有利]＜白＞技発動時、次の効果<br>・完全回避Ｌｖ２＜１回＞<br>・追撃無効＜２０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "有利時",
+        "オーラ白",
+        "完全回避",
+        "追撃",
+        "無効化"
+      ],
+      "sortOrder": 16,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1211",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "サムライアディション I",
+      "description": "[序盤][自身白]ちから技発動時、かしこさの＜１５％＞を攻撃ステータスに加算＜何回でも＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "攻撃強化",
+        "序盤"
+      ],
+      "sortOrder": 17,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1212",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "サムライアディション II",
+      "description": "[序盤][自身白]ちから技発動時、かしこさの＜３０％＞を攻撃ステータスに加算＜何回でも＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "攻撃強化",
+        "序盤"
+      ],
+      "sortOrder": 18,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1213",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "スペースアディション I",
+      "description": "[自身白または主血統メタルナー][前衛]オーラ技発動時、丈夫さ＋回避の＜１０％＞を攻撃ステに加算",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "攻撃強化"
+      ],
+      "sortOrder": 19,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1214",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "スペースアディション II",
+      "description": "[自身白または主血統メタルナー][前衛]オーラ技発動時、丈夫さ＋回避の＜１０％＞を攻撃ステに加算、さらに初回発動時、被ダメ＜２０％＞減少＜２０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "攻撃強化",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 20,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1215",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "キャトルスタイル I",
+      "description": "[自身白][序盤]技発動時、ガッツ消費量＜１０％＞上昇、ガッツ消費量に応じて与ダメ上昇",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "序盤"
+      ],
+      "sortOrder": 21,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1216",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "キャトルスタイル II",
+      "description": "[自身白][序盤]技発動時、ガッツ消費量＜１０％＞上昇、ガッツ消費量に応じて与ダメ上昇、技命中時、ガッツ回復Ｌｖ５",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "ガッツ回復",
+        "命中強化",
+        "序盤"
+      ],
+      "sortOrder": 22,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1217",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ミルフィーシールド I",
+      "description": "[自身白]オーラ技発動時、回避＜３０％＞分の【シールド】を展開する＜２０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白",
+        "シールド",
+        "回避"
+      ],
+      "sortOrder": 23,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1218",
+      "legacyId": null,
+      "cardId": "aab-MR-julia",
+      "sourceName": "ジュリア(ライバル)",
+      "name": "ミルフィーシールド II",
+      "description": "[無機または自身白]オーラ技発動時、回避＜３０％＞分の【シールド】を展開する＜２０秒＞＜１回＞、この能力の【シールド】破壊までガッツ回復速度上昇Ｌｖ６",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "無機",
+        "オーラ白",
+        "シールド",
+        "回避",
+        "ガッツ変化系"
+      ],
+      "sortOrder": 24,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"

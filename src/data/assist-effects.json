@@ -6,9 +6,9 @@
   "generatedAt": null,
   "counts": {
     "cards": 95,
-    "cardsWithEffects": 91,
-    "cardsDraft": 4,
-    "effects": 985
+    "cardsWithEffects": 94,
+    "cardsDraft": 1,
+    "effects": 1023
   },
   "cards": {
     "g1-MR-serafina": {
@@ -577,16 +577,458 @@
       ]
     },
     "d23k-MR-eiru": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "d23k-MR-eiru-e01",
+          "name": "モン類編成ボーナス:友人 +100",
+          "description": "育成対象とモン類一致したとき、編成にあるカードタイプによって次の効果\n友人タイプ編成時:ステ上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e02",
+          "name": "モン類編成ボーナス:ライバル +4%",
+          "description": "育成対象とモン類一致したとき、編成にあるカードタイプによって次の効果\nライバルタイプ編成時:トレーニングと修行の体力消費減少",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e03",
+          "name": "モン類技習得効果アップ +2%",
+          "description": "育成対象とモン類が一致した時、技の習得数と強化数に応じて、修行時のステ上昇量アップ（1つにつき2%上昇）（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e04",
+          "name": "ガードボーナス +1",
+          "description": "一緒にトレーニングしたとき、回避と丈夫さの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "d23k-MR-eiru-e05",
+          "name": "初期ステータスアップ +50",
+          "description": "初期ライフ・初期ちから・初期かしこさ・初期命中・初期回避・初期丈夫さアップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "d23k-MR-eiru-e06",
+          "name": "モン類EXトレブースト +10%",
+          "description": "育成対象とモン類が一致したとき、EXトレーニングの基礎ステータス上昇量アップ（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 6,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e07",
+          "name": "トレ人数効果アップ +50%",
+          "description": "一緒にトレーニングしたとき、アシスト人数効果アップ（重複不可）",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "d23k-MR-eiru-e08",
+          "name": "全距離技習得率アップⅡ +10%",
+          "description": "修行時、すべての距離技の技習得率アップ、育成開始時修行チケット1枚獲得",
+          "unlockRank": "1凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "d23k-MR-eiru-e09",
+          "name": "モン類超修行 +1",
+          "description": "育成対象とモン類一致したとき、超修行の上限回数を1回増加",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e10",
+          "name": "修行特別効果アップ・誉 +3",
+          "description": "修行時、上昇する対象ステータス上昇量アップ\n賞金ランク「はながた」以上でさらに上昇量アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 10,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "d23k-MR-eiru-e11",
+          "name": "モン類編成ボーナス:友人 +100",
+          "description": "育成対象とモン類一致したとき、編成にあるカードタイプによって次の効果\n友人タイプ編成時:ステ上限アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e12",
+          "name": "モン類編成ボーナス:ライバル +4%",
+          "description": "育成対象とモン類一致したとき、編成にあるカードタイプによって次の効果\nライバルタイプ編成時:トレーニングと修行の体力消費減少",
+          "unlockRank": "3凸",
+          "sortOrder": 12,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e13",
+          "name": "モン類チャレンジ・幸運",
+          "description": "育成対象とモン類一致したとき、目標達成数に応じて1.5%ずつ大成功率アップ",
+          "unlockRank": "4凸",
+          "sortOrder": 13,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "d23k-MR-eiru-e14",
+          "name": "トレ人数効果アップ +50%",
+          "description": "一緒にトレーニングしたとき、アシスト人数効果アップ（重複不可）",
+          "unlockRank": "4凸",
+          "sortOrder": 14,
+          "conditional": 0,
+          "conditions": null
+        }
+      ]
     },
     "c28j-SSR-rokusho": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "c28j-SSR-rokusho-e01",
+          "name": "モン類上限解放 +60",
+          "description": "育成対象とモン類が一致したとき、すべての基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e02",
+          "name": "オーラトレブースト +30%",
+          "description": "育成対象とオーラが一致したとき、同じオーラのトレ効果アップの効果量をアップ（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e03",
+          "name": "トレ効果アップ +11%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e04",
+          "name": "大成功率アップ +11",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e05",
+          "name": "ちから上限アップ +150",
+          "description": "ちからの基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e06",
+          "name": "ちからアップ +3",
+          "description": "一緒にトレーニングしたとき、ちからの上昇量アップ",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e07",
+          "name": "モン類強化 +4",
+          "description": "育成対象とモン類が一致したとき、モン類レベル上限アップ（同効果内で最大Lv5まで）",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e08",
+          "name": "トレ効果アップ + +6%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ+6%と失敗率ダウン-6%",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e09",
+          "name": "オーラEXトレパワーアップ +40%",
+          "description": "育成対象とオーラが一致したとき、トレーニング時のEXトレパワー上昇量アップ（重複不可）",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e10",
+          "name": "オーラ素質アップ +4%",
+          "description": "育成対象とオーラ一致したとき、素質アップ（重複不可）",
+          "unlockRank": "3凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e11",
+          "name": "大成功率アップ +8",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c28j-SSR-rokusho-e12",
+          "name": "忠誠度効果アップ +25%",
+          "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 0,
+          "conditions": null
+        }
+      ]
     },
     "c27j-MR-godemperor": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "c27j-MR-godemperor-e01",
+          "name": "血統オーラ上限解放 +60",
+          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ\nまた主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "or",
+            "types": [
+              "mainBloodlineMatch",
+              "subBloodlineMatch",
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e02",
+          "name": "モン類ブリーダー +60%",
+          "description": "育成対象とモン類が一致したとき、ブリーダーがトレーニングに出現する（最大3人まで）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e03",
+          "name": "トレ効果アップ +10%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e04",
+          "name": "大成功率アップ +10",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e05",
+          "name": "テクニック上限アップ +120",
+          "description": "命中と回避の基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e06",
+          "name": "モン類忠誠度効果アップ・獣族 +10%",
+          "description": "育成対象とモン類が一致したとき、育成対象と一緒にトレーニングする獣族の数に応じて忠誠度効果アップ（最大30%）（重複不可）",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e07",
+          "name": "テクニックボーナスⅡ +1",
+          "description": "命中、回避の素質アップ+1%\n一緒にトレーニングしたとき、命中、回避の上昇量アップ+1",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e08",
+          "name": "モン類トレ共鳴・獣族 +3%",
+          "description": "育成対象とモン類が一致したとき、育成対象と一緒にトレーニングする獣族の数に応じて、基礎ステータスの上昇量アップ（最大10%）（重複不可）",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e09",
+          "name": "大成功率アップ +8",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e10",
+          "name": "モン類ブリーダー・鍛錬",
+          "description": "ブリーダートレ出現率+15%\nブリーダーがトレーニングに出現時、発動中のトレ効果を25%上昇、応援効果+15%",
+          "unlockRank": "3凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e11",
+          "name": "トレ効果アップ +8%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c27j-MR-godemperor-e12",
+          "name": "モン類ブリーダー・継承",
+          "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
+        }
+      ]
     },
     "c26j-SSR-ikki": {
       "status": "verified",
