@@ -1659,6 +1659,15 @@ if (!exists('scripts/test-assist-effect-ocr.js')) {
   if (result.status !== 0) ng(`アシスト効果OCRテストFAIL: ${(result.stderr || result.stdout).trim()}`);
   else ok('効果OCRは背景分類・青丸解放段階・スクロール重複・既存DB差分を検査');
 }
+if (!exists('scripts/test-assist-effect-payload.js')) {
+  ng('アシスト効果読取JSON（Claude読取→CMS貼り付け）のテストがない');
+} else {
+  const result = childProcess.spawnSync(process.execPath, ['scripts/test-assist-effect-payload.js'], {
+    cwd: REPO, encoding: 'utf8',
+  });
+  if (result.status !== 0) ng(`アシスト効果読取JSONテストFAIL: ${(result.stderr || result.stdout).trim()}`);
+  else ok('効果読取JSONは表記規約・解放ランク順・条件整合・既存DB差分を検査し、CMS貼り付けで同じ形へ変換');
+}
 
 // ---------------------------------------------------------------- 17
 head('17. ガチャDB');

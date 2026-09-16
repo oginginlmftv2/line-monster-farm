@@ -92,6 +92,24 @@ G4のリポジトリ変更がmainへマージされた後、管理者が次の�
 表記を自動的に揃えるためのものです。未反映の間はOCR結果に半角括弧や英字ローマ数字が
 残りますが、公開は失敗しません。
 
+## 効果OCRタブ「候補JSONを貼り付け」（Claude読取）の反映
+
+Vision OCRの精度が低いため、スクショの読み取りはClaude Codeのスキル `assist-effect-capture`
+（`.claude/skills/assist-effect-capture/SKILL.md`）で行い、その出力JSONをCMSへ貼る導線です。
+対象は`ui_assist.html`の1ファイルだけで、シートの列追加・setup関数・Script Propertiesの変更は不要です。
+サーバー側（`20_assist.gs`）は変更せず、保存は従来の`api_asstSaveEffects`を通ります。
+
+1. `_cms/gas/ui_assist.html`を同名のGASファイルへ同期して保存する
+2. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+3. カードを開き「効果OCR」タブの先頭に「候補JSONを貼り付け（Claude読取）」があることを確認する
+4. `node scripts/check-assist-effect-payload.js .claude/skills/assist-effect-capture/examples/c20k-MR-teosu.json --emit /tmp/teosu.json`
+   の出力を、テオス（`c20k-MR-teosu`）以外のカードで貼ると「表示中のカードと違います」で拒否されることを確認する
+5. テオスで貼ると候補12件になり、黄背景の候補に条件がチェック済み・判定根拠が「読取JSONで指定」になることを確認する
+6. 以後は従来どおり「原画像確認」→「効果編集へ反映（未保存）」→「効果」タブで「効果を保存」
+
+貼り付けたJSONはOCR候補と同じくブラウザ内だけに持ち、Driveやシートへは保存しません。
+Vision OCRの導線はそのまま残しています。
+
 ## token更新
 
 新tokenは最小権限で発行し、GitHub secretと本番GASのGITHUB_TOKENを管理者が同一作業で更新します。値を文書・ログ・チャットへ貼りません。rehearsalにはGITHUB_TOKENを設定しません。
