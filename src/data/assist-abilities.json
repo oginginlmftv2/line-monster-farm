@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1153,
-    "resolved": 634,
+    "abilities": 1165,
+    "resolved": 646,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -20649,6 +20649,213 @@
       "rarity": "MR",
       "tags": [
         "幻霊"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1159",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "モノダスチェイサー I",
+      "description": "[自身赤]＜赤＞技命中時、次の効果を発動<br>・かしこさステの＜５％＞で追撃＜１回＞<br>・＜４０％＞の確率でダメージ＜１０％＞の追撃＜２回＞、[有利]時、追撃の確率＜＋２０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ赤",
+        "追撃",
+        "有利時"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1160",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "モノダスチェイサー II",
+      "description": "[自身赤]＜赤＞技命中時、次の効果を発動<br>・かしこさステの＜５％＞で追撃＜３回＞<br>・＜５０％＞の確率でダメージ＜１０％＞の追撃＜２回＞、[有利]時、追撃の確率＜＋５０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ赤",
+        "追撃",
+        "有利時"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1161",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "モノダスアボイド I",
+      "description": "[後半][自身赤またはモノリス種]次の効果<br>・完全回避Ｌｖ２＜１回＞<br>・相手のかしこさステ＜－１０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "後半",
+        "オーラ赤",
+        "回避",
+        "デバフ"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1162",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "モノダスアボイド II",
+      "description": "[後半][自身赤またはモノリス種]次の効果<br>・完全回避Ｌｖ４＜１回＞<br>・相手のかしこさステ＜－３０％＞<br>・[モノリス種]いずれかの間合いの技がすべて使用不可＜１０秒＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "後半",
+        "オーラ赤",
+        "回避",
+        "デバフ"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1163",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[赤]智将",
+      "description": "＜オーラ赤＞かしこさ技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ赤"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1164",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[自身赤]かしこさ＋３%",
+      "description": "[自身赤]かしこさステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ赤"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1165",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[無機]かしこさ＋３%",
+      "description": "[無機]かしこさステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "無機"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1166",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[海岸]闘志",
+      "description": "[海岸]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1167",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[雪山]闘志",
+      "description": "[雪山]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1168",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[海岸]かしこさ＋１００",
+      "description": "[海岸]かしこさステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1169",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[晴れ]かしこさ＋１００",
+      "description": "[晴れ]かしこさステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1170",
+      "legacyId": null,
+      "cardId": "g2-SSR-monodasu",
+      "sourceName": "モノダス",
+      "name": "[無機]重術",
+      "description": "[無機]かしこさ技命中時、連撃Ｌｖ１×１回",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "連撃",
+        "無機"
       ],
       "sortOrder": 12,
       "linkStatus": "resolved",
