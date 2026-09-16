@@ -620,6 +620,47 @@ changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReu
   Bearerを付けて認証済み枠（1時間5,000回）を使う。固定SHAのraw取得には付けない。
   公開用tokenとは別のプロパティで、読取API側で参照してよいのはこの1件だけ（`verify-assist-cms.js`で固定）
 
+### 15-6. まとめて追加API（2026-09-16）
+
+1件APIを N回呼ぶと「外部JSON取得 → 全件再分類 → 書込み → 全件検証」を N回繰り返し、9件で数分かかっていた。
+`api_asstCreateAbilitiesFromExternalCandidates` を追加し、画面は連続する新規登録を最大20件ずつ
+1回で送る（`ASST_AUDIT_BATCH_CREATE_SIZE`）。処置（disposition）は従来どおり1件ずつ。
+
+payload:
+
+```json
+{
+  "auditVersion": 3, "provider": "lmfdb",
+  "externalSha": "<40hex>", "expectedAbilitiesVersion": "<64hex>",
+  "items": [
+    { "candidateKey": "<64hex>", "externalNumericId": 1200, "externalFingerprint": "<64hex>",
+      "registration": { "...1件APIと同じ..." }, "confirmations": { "...1件APIと同じ..." } }
+  ]
+}
+```
+
+応答: `{ ok, results: [{ candidateKey, ok, abilityId, status, linkStatus, sortOrder, sourceOrder } | { candidateKey, ok:false, error }],
+created, failed, externalSha, expectedAbilitiesVersion }`
+
+サーバー側の境界:
+
+- 各itemは `asstLmfdbCreatePayload_` で1件APIと同じ入力検査を通す。`items` は1〜20件、candidateKey重複は拒否。
+  検査はロック取得前に行い、1件でも不正なら何も書かない
+- ScriptLock 1回、`asstLmfdbCurrentAuditBase_`（外部main再解決・外部JSON再取得・ローカル再読込・再分類・
+  `expectedAbilitiesVersion` 検算）1回。1件API（`asstLmfdbCurrentAudit_`）も同じ関数を共有する
+- 1件ごとの検査（分類・確認・重複・採番・`asstValidateAbilityRecord_`）は1件APIと同じ。ロック中に1回読んだ行を
+  メモリ上で進めながら順に書くため、同じカードへ続けて紐付けても `sortOrder` は末尾から連番になる
+- 1件の失敗（検査・書込み例外）はその件のjournalだけ補償して次へ進み、`results` に理由を返す
+- 全件が終わったら `asstLmfdbVerifyBatch_` で行数検算・追加行の一意確認・外部参照検査・全ドキュメント検証を
+  1回行う。失敗したら成功分のjournalを逆順にすべて補償し、全件を失敗として返す（1件APIの
+  「追加直後検証FAIL」と同じ安全側）。補償検算に失敗した場合だけ `重大エラー` を投げる
+- 応答の `expectedAbilitiesVersion` は書込み後の値で、画面は次のチャンクにそのまま使う
+
+画面側: `asstProcessAuditCreateChunk` が `batch.entries` の先頭から連続する新規登録を集める。事前検査
+（候補が見つからない・保存済み・登録不可）に当たる項目でチャンクを切り、その項目は1件処理側の事前検査に
+任せる。呼び出し全体の失敗（version不一致・外部更新）は再監査して同じチャンクを1回だけやり直し、
+個別失敗はその件だけ保存予定に残す。旧サーバー（まとめてAPI未配備）では自動的に1件APIへ戻る。
+
 ## 16. 登録値、状態、カード紐付け
 
 ### 16-1. 比較用と保存用の正規化

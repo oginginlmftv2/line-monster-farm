@@ -194,7 +194,7 @@ function validateRoot(root) {
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
     'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
-    'api_asstReorderCardAbilities',
+    'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstReorderCardAbilities',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -378,6 +378,7 @@ function validateRoot(root) {
     issues.push('外部能力監査UIが結果をブラウザまたはGASへ永続化している');
   }
   const auditUiWithoutAllowedWrites = auditUiSource
+    .replaceAll('api_asstCreateAbilitiesFromExternalCandidates', '')
     .replaceAll('api_asstCreateAbilityFromExternalCandidate', '')
     .replaceAll('api_asstSetExternalCandidateDisposition', '');
   if (/fetch\s*\(|XMLHttpRequest|raw\.githubusercontent\.com|api\.github\.com/.test(auditUiSource) ||
@@ -460,6 +461,24 @@ function validateRoot(root) {
       !/legacyId:\s*null/.test(createApiBlock) || !/asstLmfdbCompensate_\(journal\)/.test(createApiBlock)) {
     issues.push('外部候補追加専用APIの入力契約・再監査・採番・draft・補償境界が不足');
   }
+  // まとめて追加API: 監査1回・1件ごとの補償・最終検証失敗時の全件補償・件数上限・重複candidateKey拒否
+  const batchApiBlock = functionBlock(lmfdbWriteGas, 'api_asstCreateAbilitiesFromExternalCandidates');
+  const batchPayloadBlock = functionBlock(lmfdbWriteGas, 'asstLmfdbBatchPayload_');
+  const batchOneBlock = functionBlock(lmfdbWriteGas, 'asstLmfdbCreateOneInBatch_');
+  if (!batchApiBlock || !batchPayloadBlock || !batchOneBlock ||
+      !/ASST_LMFDB_BATCH_MAX_ITEMS = 20/.test(lmfdbWriteGas) ||
+      !/asstLmfdbCreatePayload_\(/.test(batchPayloadBlock) || !/candidateKeyが重複/.test(batchPayloadBlock) ||
+      (batchApiBlock.match(/asstLmfdbCurrentAuditBase_\(/g) || []).length !== 1 ||
+      !/asstLmfdbVerifyBatch_\(succeeded/.test(batchApiBlock) ||
+      !/succeeded\.slice\(\)\.reverse\(\)\.forEach\(function \(item\) \{ asstLmfdbCompensate_\(item\.journal\); \}\)/.test(batchApiBlock) ||
+      !/\/重大エラー\/\.test/.test(batchApiBlock) ||
+      !/asstLmfdbLocateCandidate_\(base\.report, input\.payload\)/.test(batchOneBlock) ||
+      !/asstLmfdbAssertNoDuplicate_\(/.test(batchOneBlock) || !/asstNextAbilityId_\(rows\.abilities, rows\.refs\)/.test(batchOneBlock) ||
+      !/status:\s*'draft'/.test(batchOneBlock) || !/legacyId:\s*null/.test(batchOneBlock) ||
+      !/asstLmfdbCompensate_\(journal\)/.test(batchOneBlock) ||
+      /asstRows_\(|getDataRange|UrlFetchApp/.test(batchOneBlock)) {
+    issues.push('まとめて追加APIの監査1回・件数上限・1件補償・最終検証時の全件補償の境界が不足');
+  }
   if (/function\s+asstLmfdb(?:SnapshotSheet_|RestoreSnapshots_)\s*\(/.test(lmfdbWriteGas) ||
       !journalAppendBlock || !journalUpdateBlock || !compensationBlock ||
       !/rowNumber:\s*sheet\.getLastRow\(\) \+ 1/.test(journalAppendBlock) ||
@@ -495,6 +514,7 @@ function validateRoot(root) {
   const assistLockFunctions = [
     ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
     ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
+    ['api_asstCreateAbilitiesFromExternalCandidates', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
   ];
   if (!/function\s+asstAcquireScriptLock_\s*\([\s\S]*?tryLock\(1\)/.test(gas) ||
