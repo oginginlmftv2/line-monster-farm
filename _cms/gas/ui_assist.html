@@ -1034,6 +1034,13 @@ function asstSetAbilityStatus(abilityId,status){
   asstRenderEditor();
 }
 function asstAbilityChangesPending(d){return asstAbilityStatusChangedIds(d).length>0||asstAbilityOrderChanged(d);}
+// 一覧の全能力の状態を画面上でまとめて切り替える（保存は「変更を保存」）。1件ずつselectを触る手間をなくす
+function asstSetAllAbilityStatus(status){
+  var d=ASST.detail;if(!d||ASST.abilitySaving)return;
+  var edits=asstAbilityStatusEdits();
+  d.abilities.forEach(function(a){if(status===a.status)delete edits.status[a.abilityId];else edits.status[a.abilityId]=status;});
+  asstRenderEditor();
+}
 function asstResetAbilityChanges(){ASST.abilityOrder=null;ASST.abilityStatusEdits=null;asstRenderEditor();}
 function asstResetAbilityOrder(){asstResetAbilityChanges();}
 function asstAbilityGasPromise(name,args){
@@ -1042,6 +1049,14 @@ function asstAbilityGasPromise(name,args){
     var runner=google.script.run.withSuccessHandler(resolve).withFailureHandler(function(error){reject(error&&error.message?error:new Error(String(error)));});
     runner[name].apply(runner,args||[]);
   });
+}
+function asstAbilityStatusBatchAvailable(){return !APP_LOCAL_PREVIEW&&typeof google!=='undefined'&&google.script&&google.script.run&&typeof google.script.run.api_asstSetAbilityStatuses==='function';}
+// 状態だけの変更は1回の呼び出しでまとめて保存する（1件ずつのGET+SAVEは1件あたり数秒×2往復かかった）。
+// カード取得時のversionをそのまま送り、サーバーが1件でもversion不一致なら何も書かない
+function asstSaveAbilityStatusesBatch(d,statusIds){
+  var edits=asstAbilityStatusEdits();
+  var items=statusIds.map(function(abilityId){var a=d.abilities.filter(function(item){return item.abilityId===abilityId;})[0];return {abilityId:abilityId,version:Number(a&&a.version||1),status:edits.status[abilityId]};});
+  return asstAbilityGasPromise('api_asstSetAbilityStatuses',[{items:items}]).then(function(result){return (result&&result.updated?result.updated.length:0)+(result&&result.skipped?result.skipped:0);});
 }
 function asstSaveAbilityStatusOne(abilityId,status){
   return asstAbilityGasPromise('api_asstGetAbility',[abilityId]).then(function(latest){
@@ -1061,7 +1076,13 @@ function asstSaveAbilityChanges(){
   ASST.abilitySaving=true;asstRenderEditor();
   var failures=[],statusSaved=0,orderChangedCount=0;
   var chain=Promise.resolve();
-  statusIds.forEach(function(abilityId){
+  if(statusIds.length&&asstAbilityStatusBatchAvailable()){
+    chain=chain.then(function(){
+      setBusy(true,'能力の状態を保存中… '+statusIds.length+'件をまとめて送信');
+      return asstSaveAbilityStatusesBatch(d,statusIds).then(function(count){statusSaved=count;})
+        .catch(function(error){failures.push('状態 '+statusIds.length+'件: '+(error&&error.message?error.message:String(error)));});
+    });
+  }else statusIds.forEach(function(abilityId){
     chain=chain.then(function(){
       setBusy(true,'能力の状態を保存中… '+(statusSaved+failures.length+1)+' / '+statusIds.length);
       return asstSaveAbilityStatusOne(abilityId,asstAbilityStatusEdits().status[abilityId]).then(function(){statusSaved++;})
@@ -1089,6 +1110,8 @@ function asstRenderAbilities(d){
   var items=asstOrderedAbilities(d),statusIds=asstAbilityStatusChangedIds(d),orderChanged=asstAbilityOrderChanged(d),pending=statusIds.length>0||orderChanged;
   var html='<p class="muted">resolved能力のみカードに紐づきます。ambiguous / unlinkedは能力ID検索から開けます。状態の切り替えと↑↓の並び替えはこの画面に貯まり、「変更を保存」を押したときにまとめて保存します。sortOrderは保存時に1から連番で振り直されます。</p>';
   html+='<div class="ability-list">'+(items.length?items.map(function(a,index){return asstAbilityItem(a,index,items.length);}).join(''):'<div class="empty">紐づく能力なし</div>')+'</div>';
+  var draftCount=items.filter(function(a){return asstAbilityStatusOf(a)==='draft';}).length,verifiedCount=items.length-draftCount;
+  if(items.length)html+='<div class="actions asst-ability-bulk"><button type="button" id="asst_btnVerifyAllAbilities"'+(draftCount&&!ASST.abilitySaving?'':' disabled')+'>すべて確認済みにする（下書き '+esc(draftCount)+'件）</button><button type="button" id="asst_btnDraftAllAbilities"'+(verifiedCount&&!ASST.abilitySaving?'':' disabled')+'>すべて下書きに戻す</button><span class="muted">画面上で切り替えるだけです。「変更を保存」で保存します。</span></div>';
   if(items.length)html+='<div class="actions"><button type="button" id="asst_btnSaveAbilityChanges"'+(pending&&!ASST.abilitySaving?'':' disabled')+'>変更を保存</button>'+
     '<button type="button" id="asst_btnResetAbilityChanges"'+(pending&&!ASST.abilitySaving?'':' disabled')+'>変更を取り消す</button>'+
     (pending?'<span class="muted">未保存: '+(statusIds.length?'状態 '+esc(statusIds.length)+'件':'')+(statusIds.length&&orderChanged?' / ':'')+(orderChanged?'並び順':'')+'</span>':'')+
@@ -1110,6 +1133,8 @@ function asstBindAbilityRows(){
   el('asst_editor').querySelectorAll('[data-ability-down]').forEach(function(button){button.onclick=function(){asstMoveAbility(button.dataset.abilityDown,1);};});
   if(el('asst_btnSaveAbilityChanges'))el('asst_btnSaveAbilityChanges').onclick=asstSaveAbilityChanges;
   if(el('asst_btnResetAbilityChanges'))el('asst_btnResetAbilityChanges').onclick=asstResetAbilityChanges;
+  if(el('asst_btnVerifyAllAbilities'))el('asst_btnVerifyAllAbilities').onclick=function(){asstSetAllAbilityStatus('verified');};
+  if(el('asst_btnDraftAllAbilities'))el('asst_btnDraftAllAbilities').onclick=function(){asstSetAllAbilityStatus('draft');};
 }
 function asstOpenAbility(id){ call('api_asstGetAbility',[id],function(result){ ASST.ability=result.ability;ASST.abilityVersion=result.version;ASST.tab='abilities';asstRenderAbilityForm(); }); }
 function asstRenderTagFields(tags){

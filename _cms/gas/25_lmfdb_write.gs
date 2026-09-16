@@ -102,6 +102,26 @@ function asstLmfdbDispositionPayload_(payload) {
   return { payload: payload, disposition: payload.disposition, note: note };
 }
 
+// 書込み前の「外部mainは固定SHAのまま動いていないか」確認。
+// 1. キャッシュ済みのmain SHAがあればそれと比較（GitHub APIを叩かない）
+// 2. なければGitHub APIでmainを解決して比較
+// 3. APIがレート制限（403/429）なら、rawのmain版abilities.jsonを取り、固定SHA版と内容SHA-256が一致するかで判定する。
+//    rawはCDN配信でレート制限にほぼ当たらない。内容が同じなら登録の安全性はコミットSHA一致と同じ。
+//    一致しなければ従来どおり「外部mainが更新されています」で止める。
+function asstLmfdbAssertExternalCurrent_(externalSha, externalSha256) {
+  var latestSha;
+  try { latestSha = asstAuditResolveExternalSha_(null); }
+  catch (error) {
+    if (!error || !error.rateLimited) throw error;
+    var mainUrl = ASST_LMFDB_RAW_BASE + 'main' + ASST_LMFDB_RAW_PATH;
+    var current = asstAuditFetchBytes_(mainUrl, 'lMfDB main内容確認', ASST_LMFDB_MAX_BYTES);
+    if (asstSha256Bytes_(current.bytes) !== externalSha256) throw new Error('外部mainが更新されています。再監査してください。（レート制限のためraw内容で確認）');
+    return { latestSha: externalSha, verifiedBy: 'raw-content' };
+  }
+  if (latestSha !== externalSha) throw new Error('外部mainが更新されています。再監査してください。');
+  return { latestSha: latestSha, verifiedBy: 'ref' };
+}
+
 // ScriptLock取得後に呼ぶ。外部mainの再解決・外部JSON再取得・ローカル再読込・再分類・version検算までを行い、
 // 候補の特定はしない（1件APIとまとめてAPIで共有する）。
 function asstLmfdbCurrentAuditBase_(payload) {

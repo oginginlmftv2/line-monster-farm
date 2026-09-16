@@ -624,6 +624,11 @@ changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReu
   APIがレート制限のときだけ `raw.githubusercontent.com/.../main/data/abilities.json` を取り、
   固定SHA版と内容SHA-256が一致すれば「mainは動いていない」とみなして書き込む。
   一致しなければ従来どおり「外部mainが更新されています」で止める。403/429以外のAPI失敗はfallbackせずそのまま失敗
+- **監査側（最新解決）のAPIなしfallback**（同日追記）: 「外部能力DBを確認」の初回・「最新状態で再監査」も
+  同じAPIに依存していた。`asstAuditResolveMainShaWithoutApi_`は403/429のとき、`ability_external_refs`の
+  `lastSeenSha / firstSeenSha`を新しい順に最大3件試し、rawの固定SHA版とrawのmain版の内容SHA-256が一致する
+  SHAを「mainと同内容の完全なコミットSHA」として返してキャッシュする。どれも一致しない（lMfDBが更新済み）なら
+  403の理由に添えて失敗する。読取APIの境界（シート書込みなし）は変えない
 
 ### 15-6. まとめて追加API（2026-09-16）
 

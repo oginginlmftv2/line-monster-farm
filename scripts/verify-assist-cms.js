@@ -18,6 +18,7 @@ const SUPPORT_FILES = {
   monsterGas: '_cms/gas/10_monster.gs',
   publishGas: '_cms/gas/30_publish.gs',
   lmfdbWriteGas: '_cms/gas/25_lmfdb_write.gs',
+  statusGas: '_cms/gas/22_assist_status.gs',
   setupGas: '_cms/gas/40_setup.gs',
   shell: '_cms/gas/index.html',
   commonHtml: '_cms/gas/ui_common.html',
@@ -119,11 +120,12 @@ function validateRoot(root) {
   const monsterGas = read(root, SUPPORT_FILES.monsterGas);
   const publishGas = read(root, SUPPORT_FILES.publishGas);
   const lmfdbWriteGas = read(root, SUPPORT_FILES.lmfdbWriteGas);
+  const statusGas = read(root, SUPPORT_FILES.statusGas);
   const setupGas = read(root, SUPPORT_FILES.setupGas);
   const shell = read(root, SUPPORT_FILES.shell);
   const commonHtml = read(root, SUPPORT_FILES.commonHtml);
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
-  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${setupGas}`;
+  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${statusGas}\n${setupGas}`;
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
   const cardCreateApiTest = read(root, CARD_CREATE_API_TEST);
@@ -194,7 +196,7 @@ function validateRoot(root) {
     'api_asstGetAbility', 'api_asstSaveAbility', 'api_asstExport', 'asstValidateDocuments_',
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
     'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
-    'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstReorderCardAbilities',
+    'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstReorderCardAbilities', 'api_asstSetAbilityStatuses',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -513,7 +515,8 @@ function validateRoot(root) {
   }
   const assistLockFunctions = [
     ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
-    ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
+    ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstSetAbilityStatuses', statusGas],
+    ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
     ['api_asstCreateAbilitiesFromExternalCandidates', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
   ];

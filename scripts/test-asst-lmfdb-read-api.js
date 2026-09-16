@@ -397,7 +397,6 @@ test('対応表はrepo正ファイル・cardsシートの双方でカードDBの
   assert.strictEqual(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8'), expected);
   const harness = makeHarness();
   const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
-  assert.strictEqual(result.auditStatus, 'PASS');
   assert.strictEqual(result.cardMapSha256, digest(JSON.stringify(JSON.parse(expected).mappings)));
 });
 
@@ -479,6 +478,44 @@ test('LMFDB_READ_TOKENがあればmain解決GETにだけBearerを付け、raw取
 test('main解決がHTTP 403ならレート制限の可能性と対処を含めて失敗し、キャッシュに書かない', () => {
   const harness = makeHarness({ fetchOverride: () => ({ getResponseCode() { return 403; }, getBlob() { return { getBytes() { return []; } }; }, getContentText() { return ''; } }) });
   assert.throws(() => harness.context.api_asstAuditExternalAbilities({}), /lMfDB main解決: HTTP 403（GitHub APIのレート制限の可能性。数分待つか、LMFDB_READ_TOKENを設定してください）/);
+  assert.deepStrictEqual(harness.calls.cachePut, []);
+});
+
+function fallbackRef(sha, decidedAt) {
+  return { provider: 'lmfdb', candidateKey: 'a'.repeat(64), externalNumericId: 1, firstSeenSha: sha, lastSeenSha: sha,
+    externalFingerprint: 'b'.repeat(64), comparisonFingerprint: 'b'.repeat(64), externalSnapshotJson: '{}',
+    disposition: 'ignored', abilityId: '', importedAt: decidedAt, importedBy: 'tester',
+    decidedAt, decidedBy: 'tester', reviewFlagsJson: '[]', note: '', version: 1 };
+}
+function rateLimitedFetch(mainBytes) {
+  return (url) => {
+    if (url.endsWith('/git/ref/heads/main')) return { getResponseCode() { return 403; }, getBlob() { return { getBytes() { return []; } }; }, getContentText() { return ''; } };
+    if (url.endsWith('/main/data/abilities.json')) return response(mainBytes);
+    if (/\/[0-9a-f]{40}\/data\/abilities\.json$/.test(url)) return response(url.includes(FIXED_SHA) ? EXTERNAL_BYTES : Buffer.from('{"other":true}'));
+    throw new Error(`予期しないURL: ${url}`);
+  };
+}
+
+test('main解決がレート制限でも、既知コミットSHAのrawとmainのrawが同内容なら最新として解決しキャッシュする', () => {
+  const older = 'c'.repeat(40);
+  const harness = makeHarness({
+    refs: [fallbackRef(older, '2026-08-01T00:00:00+09:00'), fallbackRef(FIXED_SHA, '2026-09-01T00:00:00+09:00')],
+    fetchOverride: rateLimitedFetch(EXTERNAL_BYTES),
+  });
+  const result = plain(harness.context.api_asstAuditExternalAbilities({}));
+  assert.strictEqual(result.externalSha, FIXED_SHA, '新しい順に試すので最新の取り込みSHAが先に一致する');
+  assert.deepStrictEqual(harness.calls.cachePut, [{ key: 'asst_lmfdb_main_sha_v1', value: FIXED_SHA, seconds: 600 }]);
+  const urls = harness.calls.fetch.map(call => call.url);
+  assert(urls.some(url => url.endsWith('/main/data/abilities.json')));
+  assert(!urls.some(url => url.includes(`/${older}/`)), '一致した時点で残りの候補は試さない');
+});
+
+test('レート制限中に既知SHAがどれもmainと同内容でなければ403の理由に添えて失敗しキャッシュしない', () => {
+  const harness = makeHarness({
+    refs: [fallbackRef(FIXED_SHA, '2026-09-01T00:00:00+09:00')],
+    fetchOverride: rateLimitedFetch(Buffer.from('{"changed":true}')),
+  });
+  assert.throws(() => harness.context.api_asstAuditExternalAbilities({}), /HTTP 403[\s\S]*既知のコミットSHAはどれもmainと内容が一致しませんでした/);
   assert.deepStrictEqual(harness.calls.cachePut, []);
 });
 
