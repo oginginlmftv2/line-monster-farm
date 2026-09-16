@@ -383,4 +383,100 @@ test('draft resolved能力は生成HTML・本文量・index判定から除外', 
   assert(verified.html.includes(draft.name)); assert(verified.report.visible > withDraft.report.visible); assert.strictEqual(verified.report.indexable, true);
 });
 
+// ---------------------------------------------------------------- まとめて追加API
+function batchPayload(h, ids, overrides = {}) {
+  const items = ids.map(id => {
+    const single = candidatePayload(h, id);
+    return { candidateKey: single.candidateKey, externalNumericId: single.externalNumericId, externalFingerprint: single.externalFingerprint, registration: single.registration, confirmations: single.confirmations };
+  });
+  const audit = h.context.api_asstAuditExternalAbilities({ externalSha: SHA, pageSize: 50 });
+  return Object.assign({ auditVersion: 3, provider: 'lmfdb', externalSha: SHA, expectedAbilitiesVersion: audit.expectedAbilitiesVersion, items }, overrides);
+}
+
+test('まとめて追加は監査1回・ロック1回で順に採番し、応答に次のversionを含む', () => {
+  const h = makeHarness();
+  const payload = batchPayload(h, [1200, 1201]);
+  const fetchesBefore = h.calls.fetch.length;
+  const result = clone(h.context.api_asstCreateAbilitiesFromExternalCandidates(payload));
+  assert.strictEqual(h.calls.lock, 1); assert.strictEqual(h.calls.release, 1);
+  assert.strictEqual(h.calls.fetch.length - fetchesBefore, 2, 'main解決とabilities.json取得が1回ずつ');
+  assert.strictEqual(result.created, 2); assert.strictEqual(result.failed, 0);
+  assert.deepStrictEqual(result.results.map(item => [item.ok, item.abilityId, item.sourceOrder, item.linkStatus, item.sortOrder]),
+    [[true, 'ab-0002', 2, 'resolved', 2], [true, 'ab-0003', 3, 'unlinked', null]]);
+  assert.strictEqual(h.state.abilities.length, 4, 'ヘッダー + seed + 2件');
+  assert.strictEqual(h.state.ability_external_refs.length, 3, 'ヘッダー + 2件');
+  assert.strictEqual(h.state.assist_log.length, 4, 'ヘッダー + sentinel + 2件');
+  assert.match(result.expectedAbilitiesVersion, /^[0-9a-f]{64}$/);
+  assert.strictEqual(result.expectedAbilitiesVersion, h.context.api_asstAuditExternalAbilities({ externalSha: SHA }).expectedAbilitiesVersion);
+  // 同じカードへ続けて紐付けるとsortOrderが末尾から連番になる
+  const again = h.context.api_asstAuditExternalAbilities({ externalSha: SHA, pageSize: 50 });
+  assert(!again.candidates.some(item => item.externalNumericId === 1200 && !item.processed));
+});
+
+test('まとめて追加の1件失敗はその件だけ補償し、残りは保存する', () => {
+  const h = makeHarness();
+  const payload = batchPayload(h, [1200, 1201]);
+  payload.items[0].registration.name = '既存能力';
+  payload.items[0].registration.sourceName = '旧カード';
+  payload.items[0].registration.description = '既存説明';
+  const result = clone(h.context.api_asstCreateAbilitiesFromExternalCandidates(payload));
+  assert.strictEqual(result.created, 1); assert.strictEqual(result.failed, 1);
+  assert.strictEqual(result.results[0].ok, false); assert.match(result.results[0].error, /既存能力と完全一致/);
+  assert.strictEqual(result.results[1].ok, true); assert.strictEqual(result.results[1].abilityId, 'ab-0002');
+  assert.strictEqual(h.state.abilities.length, 3);
+  assert.strictEqual(h.state.ability_external_refs.length, 2);
+});
+
+test('まとめて追加の途中で書込みが落ちた件だけ補償し、後続は続ける', () => {
+  const h = makeHarness();
+  const payload = batchPayload(h, [1200, 1201]);
+  let seen = 0;
+  h.context.asstLmfdbFailurePoint_ = point => { if (point === 'after-abilities-append' && ++seen === 1) throw new Error('injected after-abilities-append'); };
+  const result = clone(h.context.api_asstCreateAbilitiesFromExternalCandidates(payload));
+  assert.strictEqual(result.results[0].ok, false); assert.match(result.results[0].error, /injected/);
+  assert.strictEqual(result.results[1].ok, true); assert.strictEqual(result.results[1].abilityId, 'ab-0002');
+  assert.strictEqual(h.state.abilities.length, 3);
+  assert.strictEqual(h.state.abilities[2][HEADERS.abilities.indexOf('abilityId')], 'ab-0002');
+  assert.strictEqual(h.state.ability_external_refs.length, 2);
+});
+
+test('まとめて追加の最終検証に失敗したら成功分もすべて補償して状態を戻す', () => {
+  const h = makeHarness({ validationFailure: true });
+  const payload = batchPayload(h, [1200, 1201]);
+  const before = clone(h.state);
+  const result = clone(h.context.api_asstCreateAbilitiesFromExternalCandidates(payload));
+  assert.strictEqual(result.created, 0); assert.strictEqual(result.failed, 2);
+  for (const item of result.results) { assert.strictEqual(item.ok, false); assert.match(item.error, /最終検証に失敗したため[\s\S]*injected validation failure/); }
+  assert.deepStrictEqual(h.state, before);
+  assert.strictEqual(h.calls.release, 1);
+});
+
+test('まとめて追加はversion不一致・外部更新なら1件も書かずに拒否する', () => {
+  const stale = makeHarness();
+  const payload = batchPayload(stale, [1200, 1201]);
+  payload.expectedAbilitiesVersion = 'f'.repeat(64);
+  const before = clone(stale.state);
+  assert.throws(() => stale.context.api_asstCreateAbilitiesFromExternalCandidates(payload), /能力DBが更新されています/);
+  assert.deepStrictEqual(stale.state, before);
+  const moved = makeHarness({ latestSha: 'b'.repeat(40) });
+  assert.throws(() => moved.context.api_asstCreateAbilitiesFromExternalCandidates(batchPayload(moved, [1200])), /外部mainが更新されています/);
+});
+
+test('まとめて追加のpayload検査: 未知キー・空・上限・candidateKey重複・項目不正を拒否', () => {
+  const h = makeHarness();
+  const base = () => batchPayload(h, [1200, 1201]);
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(Object.assign(base(), { extra: 1 })), /未知の項目/);
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(Object.assign(base(), { items: [] })), /1件以上/);
+  const many = base(); many.items = Array.from({ length: 21 }, (_, index) => Object.assign({}, many.items[index % 2]));
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(many), /20件まで/);
+  const dup = base(); dup.items = [dup.items[0], dup.items[0]];
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(dup), /candidateKeyが重複/);
+  const bad = base(); bad.items[1].registration.linkStatus = 'ambiguous';
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(bad), /ambiguousは登録できません/);
+  const unknownItemKey = base(); unknownItemKey.items[0].note = 'x';
+  assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(unknownItemKey), /items\[0\]に未知の項目/);
+  assert.strictEqual(h.state.abilities.length, 2, 'ヘッダー + seed のまま');
+  assert.strictEqual(h.calls.lock, 0, 'payload検査はロック前に落ちる');
+});
+
 console.log(`OK 外部候補追加・処置API ${passed}ケース`);

@@ -102,7 +102,9 @@ function asstLmfdbDispositionPayload_(payload) {
   return { payload: payload, disposition: payload.disposition, note: note };
 }
 
-function asstLmfdbCurrentAudit_(payload) {
+// ScriptLock取得後に呼ぶ。外部mainの再解決・外部JSON再取得・ローカル再読込・再分類・version検算までを行い、
+// 候補の特定はしない（1件APIとまとめてAPIで共有する）。
+function asstLmfdbCurrentAuditBase_(payload) {
   var latestSha = asstAuditResolveExternalSha_(null);
   if (latestSha !== payload.externalSha) throw new Error('外部mainが更新されています。再監査してください。');
   var external = asstAuditExternal_(latestSha);
@@ -110,6 +112,18 @@ function asstLmfdbCurrentAudit_(payload) {
   var report = asstAuditAnalyze_(external.document, localRows, latestSha, external.sha256);
   if (report.auditStatus !== 'PASS') throw new Error('外部能力監査がFAILです。登録・処置できません。');
   if (report.expectedAbilitiesVersion !== payload.expectedAbilitiesVersion) throw new Error('能力DBが更新されています。再監査してください。');
+  var writableRows = {
+    cards: asstRows_(ASST_SHEET_CARDS),
+    abilities: asstRows_(ASST_SHEET_ABILITIES),
+    refs: asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS)
+  };
+  if (asstAuditExpectedAbilitiesVersion_(writableRows.abilities) !== payload.expectedAbilitiesVersion) {
+    throw new Error('能力DBが更新されています。再監査してください。');
+  }
+  return { latestSha: latestSha, external: external, localRows: writableRows, report: report };
+}
+
+function asstLmfdbLocateCandidate_(report, payload) {
   var matches = report.candidates.filter(function (candidate) { return candidate.candidateKey === payload.candidateKey; });
   if (matches.length !== 1) throw new Error('対象候補を一意に再監査できません。再監査してください。');
   var candidate = matches[0];
@@ -124,15 +138,13 @@ function asstLmfdbCurrentAudit_(payload) {
   asstLmfdbValidateText_(snapshot.source, '外部原文.source', 50, false);
   asstLmfdbValidateText_(snapshot.rarity, '外部原文.rarity', 50, false);
   asstLmfdbValidateTags_(snapshot.tags, '外部原文.tags');
-  var writableRows = {
-    cards: asstRows_(ASST_SHEET_CARDS),
-    abilities: asstRows_(ASST_SHEET_ABILITIES),
-    refs: asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS)
-  };
-  if (asstAuditExpectedAbilitiesVersion_(writableRows.abilities) !== payload.expectedAbilitiesVersion) {
-    throw new Error('能力DBが更新されています。再監査してください。');
-  }
-  return { latestSha: latestSha, external: external, localRows: writableRows, report: report, candidate: candidate };
+  return candidate;
+}
+
+function asstLmfdbCurrentAudit_(payload) {
+  var base = asstLmfdbCurrentAuditBase_(payload);
+  var candidate = asstLmfdbLocateCandidate_(base.report, payload);
+  return { latestSha: base.latestSha, external: base.external, localRows: base.localRows, report: base.report, candidate: candidate };
 }
 
 function asstLmfdbAssertNoDuplicate_(registration, candidate, abilityRows) {
@@ -468,5 +480,184 @@ function api_asstSetExternalCandidateDisposition(payload) {
       throw error;
     }
     return { ok: true, candidateKey: candidate.candidateKey, disposition: input.disposition, version: existing[0] ? Number(existing[0].version) + 1 : 1, validation: 'PASS' };
+  } finally { asstReleaseScriptLock_(lock); }
+}
+
+// ---------------------------------------------------------------- まとめて追加API
+// 1件APIを N回呼ぶと、外部JSON取得・全件再分類・全件検証を N回繰り返す。まとめてAPIはロック・監査・
+// 最終検証を1回にし、シートは1回読んだ行をメモリ上で更新しながら順に書く。安全側の境界は変えない:
+// - 書く前に外部mainを再解決・再取得・再分類し、expectedAbilitiesVersionを検算する（1回）
+// - 1件ごとの検査（分類・確認・重複・採番・レコード検査）は1件APIと同じ
+// - 1件の失敗はその件だけ補償して次へ進む。最終の全件検証に失敗したら成功分もすべて補償する
+var ASST_LMFDB_BATCH_KEYS = ['auditVersion','provider','externalSha','expectedAbilitiesVersion','items'];
+var ASST_LMFDB_BATCH_ITEM_KEYS = ['candidateKey','externalNumericId','externalFingerprint','registration','confirmations'];
+var ASST_LMFDB_BATCH_MAX_ITEMS = 20;
+
+function asstLmfdbBatchPayload_(payload) {
+  asstLmfdbAssertObjectKeys_(payload, ASST_LMFDB_BATCH_KEYS, 'payload');
+  if (!Array.isArray(payload.items) || !payload.items.length) throw new Error('itemsは1件以上の配列です。');
+  if (payload.items.length > ASST_LMFDB_BATCH_MAX_ITEMS) throw new Error('itemsは' + ASST_LMFDB_BATCH_MAX_ITEMS + '件までです。');
+  var seen = {};
+  var items = payload.items.map(function (item, index) {
+    asstLmfdbAssertObjectKeys_(item, ASST_LMFDB_BATCH_ITEM_KEYS, 'items[' + index + ']');
+    var input = asstLmfdbCreatePayload_({
+      auditVersion: payload.auditVersion, provider: payload.provider, externalSha: payload.externalSha,
+      expectedAbilitiesVersion: payload.expectedAbilitiesVersion,
+      candidateKey: item.candidateKey, externalNumericId: item.externalNumericId, externalFingerprint: item.externalFingerprint,
+      registration: item.registration, confirmations: item.confirmations
+    });
+    if (seen[input.payload.candidateKey]) throw new Error('itemsにcandidateKeyが重複しています。');
+    seen[input.payload.candidateKey] = true;
+    return input;
+  });
+  return { externalSha: payload.externalSha, expectedAbilitiesVersion: payload.expectedAbilitiesVersion, items: items };
+}
+
+function asstLmfdbRowFromValues_(name, values, rowNumber) {
+  var row = { _row: rowNumber };
+  ASST_HEADERS[name].forEach(function (header, column) { row[header] = values[column]; });
+  return row;
+}
+
+// 1件ぶんの検査と書込み。rows はメモリ上の現在行で、成功時にこの関数が更新する。
+function asstLmfdbCreateOneInBatch_(base, user, input, rows, importedAt) {
+  var candidate = asstLmfdbLocateCandidate_(base.report, input.payload);
+  if (['card_match_candidate','unlinked_candidate','ID_REUSE_SUSPECTED'].indexOf(candidate.classification) < 0 || !candidate.registrationEligible || candidate.auditOnly) {
+    throw new Error('対象は新規候補またはID再利用確認候補ではありません。');
+  }
+  if (candidate.classification === 'ID_REUSE_SUSPECTED' && !input.confirmations.idReuseReviewed) {
+    throw new Error('ID再利用疑いの確認が必要です。');
+  }
+  var existingRefs = rows.refs.filter(function (row) { return row.candidateKey === candidate.candidateKey; });
+  if (existingRefs.length > 1) throw new Error('同じcandidateKeyの外部参照が重複しています。');
+  var existingRef = existingRefs[0] || null;
+  if (existingRef && existingRef.disposition !== 'id_reused') throw new Error('この候補はすでに処置済みです: ' + existingRef.disposition);
+  if (existingRef && candidate.classification !== 'ID_REUSE_SUSPECTED') throw new Error('id_reused履歴と現在の候補分類が一致しません。');
+  asstLmfdbAssertNoDuplicate_(input.registration, candidate, rows.abilities);
+  var sortOrder = null;
+  if (input.registration.linkStatus === 'resolved') {
+    if (!input.confirmations.cardReviewed) throw new Error('resolvedではカード確認が必要です。');
+    if (!rows.cards.some(function (row) { return row.cardId === input.registration.cardId; })) throw new Error('resolvedのcardIdが不明です。');
+    sortOrder = asstLmfdbNextSortOrder_(input.registration.cardId, rows.abilities);
+  }
+  var abilityId = asstNextAbilityId_(rows.abilities, rows.refs);
+  var sourceOrder = asstLmfdbNextSourceOrder_(rows.abilities);
+  asstAssertAbilityIdAvailable_(abilityId, rows.abilities, rows.refs);
+  var ability = {
+    abilityId: abilityId, legacyId: null,
+    cardId: input.registration.linkStatus === 'resolved' ? input.registration.cardId : null,
+    sourceName: input.registration.sourceName, name: input.registration.name, description: input.registration.description,
+    source: input.registration.source, rarity: input.registration.rarity, tags: input.registration.tags,
+    sortOrder: sortOrder, linkStatus: input.registration.linkStatus, flags: [], status: 'draft'
+  };
+  var abilityIssues = asstValidateAbilityRecord_(ability, true);
+  if (abilityIssues.length) throw new Error('新規能力検査FAIL: ' + abilityIssues.join(' / '));
+  var journal = asstLmfdbNewJournal_();
+  var auditShim = { latestSha: base.latestSha, candidate: candidate };
+  try {
+    var abilityValues = asstAbilityToSheetRow_(ability, sourceOrder, 1, importedAt, user.nickname);
+    asstLmfdbFailurePoint_('before-abilities-append');
+    var abilityEntry = asstLmfdbJournalAppend_(journal, ASST_SHEET_ABILITIES, abilityValues,
+      [ASST_HEADERS[ASST_SHEET_ABILITIES].indexOf('abilityId')], null, 'after-abilities-append');
+    var reviewFlags = candidate.classification === 'ID_REUSE_SUSPECTED' ? ['id_reused'] : [];
+    var refRowAfter;
+    if (existingRef) {
+      var updatedRef = {};
+      ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].forEach(function (header) { updatedRef[header] = existingRef[header]; });
+      updatedRef.lastSeenSha = base.latestSha; updatedRef.disposition = 'imported'; updatedRef.abilityId = abilityId;
+      updatedRef.importedAt = importedAt; updatedRef.importedBy = user.nickname; updatedRef.decidedAt = importedAt; updatedRef.decidedBy = user.nickname;
+      updatedRef.reviewFlagsJson = JSON.stringify(reviewFlags); updatedRef.note = ''; updatedRef.version = Number(existingRef.version) + 1;
+      asstLmfdbJournalUpdate_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS, existingRef._row,
+        asstLmfdbRefValues_(existingRef), asstLmfdbRefValues_(updatedRef),
+        [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+        'before-existing-ref-update', 'after-existing-ref-update');
+      refRowAfter = asstLmfdbRowFromValues_(ASST_SHEET_ABILITY_EXTERNAL_REFS, asstLmfdbRefValues_(updatedRef), existingRef._row);
+    } else {
+      var refEntry = asstLmfdbJournalAppend_(journal, ASST_SHEET_ABILITY_EXTERNAL_REFS,
+        asstLmfdbRefValues_(asstLmfdbCreateRefRow_(auditShim, abilityId, user, importedAt, reviewFlags)),
+        [ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS].indexOf('candidateKey')],
+        'before-new-ref-append', 'after-new-ref-append');
+      refRowAfter = asstLmfdbRowFromValues_(ASST_SHEET_ABILITY_EXTERNAL_REFS, refEntry.values, refEntry.rowNumber);
+    }
+    var detail = JSON.stringify({
+      batch: true, abilityId: abilityId, sourceOrder: sourceOrder, externalSha: base.latestSha,
+      externalNumericId: candidate.externalNumericId, candidateKey: candidate.candidateKey,
+      externalFingerprint: candidate.externalFingerprint, comparisonFingerprint: candidate.comparisonFingerprint,
+      operator: user.nickname, importedAt: importedAt, validation: 'PASS'
+    });
+    asstLmfdbJournalAppend_(journal, ASST_SHEET_LOG, [importedAt, user.nickname, 'create-external-ability', 'PASS', detail.slice(0, 5000)], [0,1,2,3,4],
+      'before-assist-log-append', 'after-assist-log-append');
+  } catch (error) {
+    asstLmfdbCompensate_(journal);
+    throw error;
+  }
+  // 成功したのでメモリ上の行を進める（次の件の採番・重複検査・sortOrderに効く）
+  rows.abilities.push(asstLmfdbRowFromValues_(ASST_SHEET_ABILITIES, abilityValues, abilityEntry.rowNumber));
+  if (existingRef) {
+    rows.refs = rows.refs.map(function (row) { return row._row === existingRef._row ? refRowAfter : row; });
+  } else rows.refs.push(refRowAfter);
+  return {
+    journal: journal, abilityId: abilityId, sourceOrder: sourceOrder, sortOrder: sortOrder,
+    linkStatus: ability.linkStatus, candidateKey: candidate.candidateKey, newRef: !existingRef
+  };
+}
+
+function asstLmfdbVerifyBatch_(succeeded, beforeAbilityRows, beforeRefRows) {
+  var abilities = asstRows_(ASST_SHEET_ABILITIES);
+  var refs = asstRows_(ASST_SHEET_ABILITY_EXTERNAL_REFS);
+  var newRefs = succeeded.filter(function (item) { return item.newRef; }).length;
+  if (abilities.length !== beforeAbilityRows + succeeded.length || refs.length !== beforeRefRows + newRefs) throw new Error('追加直後の行数検算に失敗しました。');
+  succeeded.forEach(function (item) {
+    if (abilities.filter(function (row) { return row.abilityId === item.abilityId; }).length !== 1) throw new Error('追加能力を一意に確認できません: ' + item.abilityId);
+    if (refs.filter(function (row) { return row.candidateKey === item.candidateKey && row.disposition === 'imported' && row.abilityId === item.abilityId; }).length !== 1) {
+      throw new Error('外部参照履歴を一意に確認できません: ' + item.abilityId);
+    }
+  });
+  var refIssues = asstValidateExternalRefRows_(refs);
+  var docs = asstBuildDocuments_();
+  var issues = asstValidateDocuments_(docs.cards, docs.effects, docs.abilities).concat(refIssues);
+  if (issues.length) throw new Error('追加直後検証FAIL: ' + issues.slice(0, 10).join(' / '));
+}
+
+function api_asstCreateAbilitiesFromExternalCandidates(payload) {
+  var input = asstLmfdbBatchPayload_(payload);
+  var lock = asstAcquireScriptLock_();
+  try {
+    var user = asstRequireUser_();
+    var base = asstLmfdbCurrentAuditBase_({ externalSha: input.externalSha, expectedAbilitiesVersion: input.expectedAbilitiesVersion });
+    var rows = { cards: base.localRows.cards, abilities: base.localRows.abilities.slice(), refs: base.localRows.refs.slice() };
+    var beforeAbilityRows = rows.abilities.length;
+    var beforeRefRows = rows.refs.length;
+    var importedAt = nowIso_();
+    var results = [];
+    var succeeded = [];
+    input.items.forEach(function (item) {
+      var key = item.payload.candidateKey;
+      try {
+        var created = asstLmfdbCreateOneInBatch_(base, user, item, rows, importedAt);
+        succeeded.push(created);
+        results.push({ candidateKey: key, ok: true, abilityId: created.abilityId, legacyId: null, status: 'draft',
+          linkStatus: created.linkStatus, sortOrder: created.sortOrder, sourceOrder: created.sourceOrder });
+      } catch (error) {
+        if (/重大エラー/.test(String(error && error.message))) throw error;
+        results.push({ candidateKey: key, ok: false, error: error && error.message ? error.message : String(error) });
+      }
+    });
+    if (succeeded.length) {
+      try {
+        asstLmfdbFailurePoint_('before-batch-verification');
+        asstLmfdbVerifyBatch_(succeeded, beforeAbilityRows, beforeRefRows);
+      } catch (error) {
+        succeeded.slice().reverse().forEach(function (item) { asstLmfdbCompensate_(item.journal); });
+        var message = '最終検証に失敗したため、このまとめて保存の成功分をすべて取り消しました: ' + (error && error.message ? error.message : String(error));
+        results = results.map(function (result) { return result.ok ? { candidateKey: result.candidateKey, ok: false, error: message } : result; });
+        succeeded = [];
+      }
+    }
+    return {
+      ok: true, results: results, created: succeeded.length, failed: results.length - succeeded.length,
+      externalSha: base.latestSha, validation: 'PASS',
+      expectedAbilitiesVersion: asstAuditExpectedAbilitiesVersion_(asstRows_(ASST_SHEET_ABILITIES))
+    };
   } finally { asstReleaseScriptLock_(lock); }
 }

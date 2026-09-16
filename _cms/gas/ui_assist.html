@@ -371,9 +371,48 @@ function asstRecordAuditPendingResult(entry,ok,message){
   if(!ok)batch.failed.push(entry);
   batch.done++;
 }
+var ASST_AUDIT_BATCH_CREATE_SIZE=20;
+function asstAuditBatchCreateAvailable(){return !APP_LOCAL_PREVIEW&&typeof google!=='undefined'&&google.script&&google.script.run&&typeof google.script.run.api_asstCreateAbilitiesFromExternalCandidates==='function';}
 function asstProcessNextAuditPending(){
   var batch=ASST.audit.batch;
   if(batch.done>=batch.total){asstFinishAuditBatch();return;}
+  if(batch.entries[batch.done].kind==='create'&&asstAuditBatchCreateAvailable()){asstProcessAuditCreateChunk();return;}
+  asstProcessSingleAuditPending();
+}
+// 新規登録は連続する分を最大20件ずつ1回の呼び出しにまとめる（サーバー側の監査・最終検証が1回で済む）。
+// 事前検査で送れない項目に当たったらそこでチャンクを切り、その項目は1件処理側の事前検査に任せる。
+function asstProcessAuditCreateChunk(){
+  var batch=ASST.audit.batch,items=[];
+  while(batch.done+items.length<batch.total&&items.length<ASST_AUDIT_BATCH_CREATE_SIZE){
+    var entry=batch.entries[batch.done+items.length];if(entry.kind!=='create')break;
+    var candidate=asstFindAuditCandidate(entry.candidateKey);
+    if(!candidate||asstAuditAlreadySaved(entry,candidate)||!asstAuditEditable(candidate))break;
+    items.push({entry:entry,candidate:candidate});
+  }
+  if(!items.length){asstProcessSingleAuditPending();return;}
+  setBusy(true,'保存中… '+(batch.done+1)+'〜'+(batch.done+items.length)+' / '+batch.total+'件をまとめて送信');
+  var payload={auditVersion:3,provider:'lmfdb',externalSha:ASST.audit.externalSha,expectedAbilitiesVersion:ASST.audit.expectedAbilitiesVersion,items:items.map(function(item){
+    return {candidateKey:item.candidate.candidateKey,externalNumericId:item.candidate.externalNumericId,externalFingerprint:item.candidate.externalFingerprint,registration:JSON.parse(JSON.stringify(item.entry.registration)),confirmations:JSON.parse(JSON.stringify(item.entry.confirmations))};
+  })};
+  asstRunAuditWrite('api_asstCreateAbilitiesFromExternalCandidates',payload,function(result){
+    var byKey={};((result&&result.results)||[]).forEach(function(row){byKey[row.candidateKey]=row;});
+    items.forEach(function(item){
+      var row=byKey[item.candidate.candidateKey];
+      if(!row)asstRecordAuditPendingResult(item.entry,false,'サーバー応答にこの候補の結果がありません。');
+      else if(row.ok)asstRecordAuditPendingResult(item.entry,true,'abilityId: '+row.abilityId+' / '+cmsLabel(row.status)+' / '+cmsLabel(row.linkStatus)+' / sortOrder: '+(row.sortOrder==null?'なし':row.sortOrder));
+      else asstRecordAuditPendingResult(item.entry,false,row.error||'不明なエラー');
+    });
+    var version=result&&result.expectedAbilitiesVersion;
+    if(/^[0-9a-f]{64}$/.test(String(version||''))){ASST.audit.expectedAbilitiesVersion=version;asstProcessNextAuditPending();return;}
+    asstReloadAuditForBatch();
+  },function(message){
+    // 呼び出し全体の失敗（version不一致・外部更新など）は、再監査してからこのチャンクを1回だけやり直す
+    if(!batch.retried[items[0].entry.id]){items.forEach(function(item){batch.retried[item.entry.id]=true;batch.firstErrors[item.entry.id]=message;});asstRetryAuditPendingAfterReload(items[0].entry,message);return;}
+    items.forEach(function(item){asstRecordAuditPendingResult(item.entry,false,message);});asstProcessNextAuditPending();
+  });
+}
+function asstProcessSingleAuditPending(){
+  var batch=ASST.audit.batch;
   var entry=batch.entries[batch.done];
   setBusy(true,'保存中… '+(batch.done+1)+' / '+batch.total+'（'+entry.name+'）');
   var candidate=asstFindAuditCandidate(entry.candidateKey);
@@ -439,7 +478,7 @@ function asstScheduleAuditMessageDismiss(){
 function asstRenderAuditPending(){
   var pending=ASST.audit.pending,running=Boolean(ASST.audit.batch&&ASST.audit.batch.running);
   if(!pending.length)return '<div class="asst-audit-pending"><h3>保存予定 0件</h3><p class="muted">カード対応候補の一覧でチェックして追加するか、候補詳細で「保存予定に追加」すると、ここへ貯めて最後にまとめて保存できます。保存予定はメモリだけに持ち、画面を離れると消えます。</p></div>';
-  var html='<div class="asst-audit-pending"><h3>保存予定 '+esc(pending.length)+'件</h3><p class="muted">「まとめて保存」を押すまでデータは変更されません。新規登録は保存後のversionをサーバー応答から引き継いで続けて送り、最後に1回だけ再監査します。</p><div class="ability-list">';
+  var html='<div class="asst-audit-pending"><h3>保存予定 '+esc(pending.length)+'件</h3><p class="muted">「まとめて保存」を押すまでデータは変更されません。新規登録は最大20件ずつ1回の呼び出しでまとめて送り、サーバーが1回だけ監査・最終検証してから順に書きます。最後に1回だけ再監査します。</p><div class="ability-list">';
   pending.forEach(function(entry){
     html+='<article class="ability-item"><div><strong>'+esc(entry.name||'—')+'</strong><div class="muted">'+esc(asstAuditPendingLabel(entry))+' / 外部数値ID: '+esc(entry.externalNumericId)+'</div></div><button type="button" data-pending-remove="'+esc(entry.id)+'"'+(running?' disabled':'')+'>取り消し</button></article>';
   });

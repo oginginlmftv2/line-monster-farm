@@ -142,6 +142,18 @@ function harness(options = {}) {
         else this.success(transport.response);
       },
     };
+    // まとめて追加APIは新サーバーだけが持つ。既定は旧サーバー（1件API）として振る舞い、batchApi:true で新サーバーにする
+    if (options.batchApi) {
+      runner.api_asstCreateAbilitiesFromExternalCandidates = function (payload) {
+        calls.push({ name: 'api_asstCreateAbilitiesFromExternalCandidates', payload: JSON.parse(JSON.stringify(payload)) });
+        if (transport.writeError) { this.failure(new Error(transport.writeError)); return; }
+        const failKeys = transport.batchFailKeys || [];
+        const results = payload.items.map((item, index) => failKeys.includes(item.candidateKey)
+          ? { candidateKey: item.candidateKey, ok: false, error: 'item failed: ' + item.candidateKey.slice(0, 4) }
+          : { candidateKey: item.candidateKey, ok: true, abilityId: 'ab-' + (1085 + index), legacyId: null, status: 'draft', linkStatus: item.registration.linkStatus, sortOrder: item.registration.linkStatus === 'resolved' ? index + 1 : null, sourceOrder: 100 + index });
+        this.success({ ok: true, results, created: results.filter(r => r.ok).length, failed: results.filter(r => !r.ok).length, externalSha: FIXED_SHA, validation: 'PASS', expectedAbilitiesVersion: transport.batchVersion || 'e'.repeat(64) });
+      };
+    }
     context.google = { script: { run: runner } };
   }
   const callStub = context.call;
@@ -969,6 +981,74 @@ test('再監査を始めると一覧の選択は消えるが保存予定は残�
   h.context.asstToggleAuditSelection(0,true);
   h.context.asstLoadExternalAudit(false);
   assert.strictEqual(h.context.asstAuditSelectedCount(),0);
+});
+
+test('新サーバーでは新規登録を最大20件ずつまとめて1回で送り、最後に1回だけ再監査する', () => {
+  const candidates = Array.from({ length: 23 }, (_, index) => candidate('card_match_candidate', 100 + index, '能力' + index, { candidateKey: String.fromCharCode(97 + index).repeat(64) }));
+  const h = harness({ batchApi: true, response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 23, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  for (let index = 0; index < 23; index++) queueCreate(h, index);
+  h.context.asstRunPendingAuditSaves();
+  const names = h.calls.map(call => call.name);
+  assert.deepStrictEqual(names, ['api_asstAuditExternalAbilities', 'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstAuditExternalAbilities']);
+  assert.strictEqual(h.calls[1].payload.items.length, 20);
+  assert.strictEqual(h.calls[2].payload.items.length, 3);
+  assert.deepStrictEqual(Object.keys(h.calls[1].payload), ['auditVersion', 'provider', 'externalSha', 'expectedAbilitiesVersion', 'items']);
+  assert.deepStrictEqual(Object.keys(h.calls[1].payload.items[0]), ['candidateKey', 'externalNumericId', 'externalFingerprint', 'registration', 'confirmations']);
+  assert.strictEqual(h.calls[1].payload.expectedAbilitiesVersion, ABILITIES_VERSION);
+  assert.strictEqual(h.calls[2].payload.expectedAbilitiesVersion, 'e'.repeat(64), '2チャンク目は1チャンク目の応答versionを使う');
+  assert.match(h.html(), /成功 23件 \/ 失敗 0件/);
+  assert.strictEqual(h.context.ASST.audit.pending.length, 0);
+});
+
+test('まとめて送信の個別失敗はその件だけ保存予定に残し、処置は従来どおり1件ずつ送る', () => {
+  const candidates = [
+    candidate('card_match_candidate', 10, '能力A', { candidateKey: 'a'.repeat(64) }),
+    candidate('card_match_candidate', 11, '能力B', { candidateKey: 'b'.repeat(64) }),
+    candidate('representationOnly', 12, '表記', { registrationEligible: false, auditOnly: true, candidateKey: 'c'.repeat(64) }),
+  ];
+  const h = harness({ batchApi: true, response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 3, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  queueCreate(h, 0); queueCreate(h, 1);
+  h.context.asstOpenAuditDetail(2);
+  h.context.el('asst_auditDisposition').value = 'ignored'; h.context.el('asst_auditDispositionNote').value = '';
+  h.context.asstQueueAuditDisposition();
+  h.transport.batchFailKeys = ['b'.repeat(64)];
+  h.context.asstRunPendingAuditSaves();
+  const names = h.calls.map(call => call.name);
+  assert.deepStrictEqual(names, ['api_asstAuditExternalAbilities', 'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstSetExternalCandidateDisposition', 'api_asstAuditExternalAbilities']);
+  assert.match(h.html(), /成功 2件 \/ 失敗 1件/);
+  assert.match(h.html(), /item failed: bbbb/);
+  assert.strictEqual(h.context.ASST.audit.pending.length, 1);
+  assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey, 'b'.repeat(64));
+});
+
+test('まとめて送信の呼び出し全体が失敗したら再監査して同じチャンクを1回だけやり直す', () => {
+  const candidates = [candidate('card_match_candidate', 10, '能力A', { candidateKey: 'a'.repeat(64) }), candidate('card_match_candidate', 11, '能力B', { candidateKey: 'b'.repeat(64) })];
+  const h = harness({ batchApi: true, response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 2, totalPages: 1 } }) });
+  h.context.asstOpenExternalAudit();
+  queueCreate(h, 0); queueCreate(h, 1);
+  let sent = 0;
+  const runner = h.context.google.script.run;
+  const original = runner.api_asstCreateAbilitiesFromExternalCandidates;
+  runner.api_asstCreateAbilitiesFromExternalCandidates = function (payload) {
+    sent++;
+    if (sent === 1) { this.failure(new Error('能力DBが更新されています。再監査してください。')); return; }
+    return original.call(this, payload);
+  };
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(sent, 2);
+  const names = h.calls.map(call => call.name);
+  assert.deepStrictEqual(names, ['api_asstAuditExternalAbilities', 'api_asstAuditExternalAbilities', 'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstAuditExternalAbilities']);
+  assert.match(h.html(), /成功 2件 \/ 失敗 0件 \/ やり直しで成功 2件/);
+  assert.strictEqual(h.context.ASST.audit.pending.length, 0);
+  const again = harness({ batchApi: true, response: response({ candidates, pagination: { page: 1, pageSize: 1000, totalItems: 2, totalPages: 1 } }) });
+  again.context.asstOpenExternalAudit();
+  queueCreate(again, 0); queueCreate(again, 1);
+  again.transport.writeError = '外部mainが更新されています。再監査してください。';
+  again.context.asstRunPendingAuditSaves();
+  assert.match(again.html(), /成功 0件 \/ 失敗 2件/);
+  assert.strictEqual(again.context.ASST.audit.pending.length, 2);
 });
 
 test('保存予定は取り消しと一括破棄ができる', () => {
