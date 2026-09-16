@@ -294,6 +294,53 @@ expectNoIssue('既存移行能力のstatus変更（CMSのまとめ更新）は�
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /既存移行能力1,079件/);
 
+expectNoIssue('既存移行能力の紐付け解除（cardId/sortOrder null・unlinked）は許可', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  const cardId = doc.abilities[0].cardId;
+  doc.abilities[0].cardId = null; doc.abilities[0].sortOrder = null; doc.abilities[0].linkStatus = 'unlinked';
+  let order = 0;
+  for (const ability of doc.abilities) if (ability.linkStatus === 'resolved' && ability.cardId === cardId) ability.sortOrder = ++order;
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /既存移行能力1,079件|sortOrder不連続|resolved以外/);
+
+expectFailure('既存移行能力の説明文変更を拒否', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.abilities[5].description += '追記';
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /既存移行能力1,079件/);
+
+expectFailure('紐付け解除APIのresolved限定を落とすと拒否', root => {
+  const file = path.join(root, '_cms/gas/22_assist_status.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("if (asstText_(target.linkStatus) !== 'resolved') throw", "if (false) throw"));
+}, /紐付け解除が/);
+
+expectFailure('紐付け解除APIのsortOrder繰上げを落とすと拒否', root => {
+  const file = path.join(root, '_cms/gas/22_assist_status.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(/siblings\.forEach\(function \(row, index\) \{[\s\S]*?\}\);\n/, ''));
+}, /紐付け解除が/);
+
+expectFailure('紐付け解除APIでstatusを書き換えると拒否', root => {
+  const file = path.join(root, '_cms/gas/22_assist_status.gs');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("{ cardId: '', sortOrder: '', linkStatus: 'unlinked' }", "{ cardId: '', sortOrder: '', linkStatus: 'unlinked', status: 'draft' }"));
+}, /紐付け解除が/);
+
+expectFailure('紐付け解除UIの確認ダイアログ欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace("if(!confirm('「'+a.name+'」（'+abilityId+'）をこのカード", "if(false&&confirm('「'+a.name+'」（'+abilityId+'）をこのカード"));
+}, /紐付け解除が/);
+
+expectFailure('紐付け解除ボタンの欠落を拒否', root => {
+  const file = path.join(root, '_cms/gas/ui_assist.html');
+  const source = fs.readFileSync(file, 'utf8');
+  fs.writeFileSync(file, source.replace(/data-ability-unlink=/g, 'data-ability-noop='));
+}, /紐付け解除が/);
+
 expectFailure('非null legacyId重複を拒否', root => {
   const file = path.join(root, 'src/data/assist-abilities.json');
   const doc = JSON.parse(fs.readFileSync(file, 'utf8'));

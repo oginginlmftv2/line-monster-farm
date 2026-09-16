@@ -67,6 +67,11 @@ function harness(options = {}) {
     },
   };
   // 状態まとめ更新APIは新サーバーだけが持つ。既定は旧サーバー（1件ずつ）として振る舞い、batchApi:true で新サーバーにする
+  runner.api_asstUnlinkAbility = function (payload) {
+    calls.push({ name: 'api_asstUnlinkAbility', payload: JSON.parse(JSON.stringify(payload)) });
+    if (options.unlinkError) { this.failure(new Error(options.unlinkError)); return; }
+    this.success({ ok: true, abilityId: payload.abilityId, cardId: 'aab-MR-julia', version: payload.version + 1, renumbered: 1 });
+  };
   if (options.batchApi) {
     runner.api_asstSetAbilityStatuses = function (payload) {
       calls.push({ name: 'api_asstSetAbilityStatuses', payload: JSON.parse(JSON.stringify(payload)) });
@@ -245,6 +250,47 @@ test('まとめ更新が失敗したら並び順を送らず、失敗を表示�
   const shown = h.calls.filter(call => call.name === 'show').pop();
   assert.match(shown.payload.message, /状態 1件: ab-1093: 他の編集が保存済みです/);
   assert.strictEqual(shown.payload.isError, true);
+});
+
+test('紐付け解除は確認後にカード取得時のversion付きで1件だけ送り、カードを開き直す', async () => {
+  const h = harness({ abilities: [ability('ab-1090', 'A', 1, 'verified', 5), ability('ab-1091', 'B', 2)] });
+  assert.match(h.html(), /data-ability-unlink="ab-1090"/);
+  h.context.asstUnlinkAbility('ab-1090');
+  await h.settle();
+  const names = h.calls.map(call => call.name).filter(name => name !== 'show');
+  assert.deepStrictEqual(names, ['api_asstUnlinkAbility', 'api_asstGetCard']);
+  assert.deepStrictEqual(h.calls[0].payload, { abilityId: 'ab-1090', version: 5 });
+  assert.strictEqual(h.context.ASST.abilitySaving, false);
+});
+
+test('紐付け解除は確認キャンセル・未保存の変更あり・保存中には送らない', async () => {
+  const cancelled = harness({ confirm: false });
+  cancelled.context.asstUnlinkAbility('ab-1090');
+  await cancelled.settle();
+  assert.strictEqual(cancelled.calls.length, 0);
+  const pending = harness();
+  pending.context.asstSetAbilityStatus('ab-1090', 'draft');
+  assert.match(pending.html(), /data-ability-unlink="ab-1090" aria-label="[^"]*" disabled/);
+  pending.context.asstUnlinkAbility('ab-1090');
+  await pending.settle();
+  assert.strictEqual(pending.calls.length, 0);
+  const saving = harness();
+  saving.context.ASST.abilitySaving = true;
+  saving.context.asstUnlinkAbility('ab-1090');
+  await saving.settle();
+  assert.strictEqual(saving.calls.length, 0);
+});
+
+test('紐付け解除が失敗したら失敗を表示し、カードは開き直さない', async () => {
+  const h = harness({ unlinkError: 'ab-1090: 他の編集が保存済みです。カードを開き直してください。' });
+  h.context.asstUnlinkAbility('ab-1090');
+  await h.settle();
+  const names = h.calls.map(call => call.name).filter(name => name !== 'show');
+  assert.deepStrictEqual(names, ['api_asstUnlinkAbility']);
+  const shown = h.calls.filter(call => call.name === 'show').pop();
+  assert.match(shown.payload.message, /紐付け解除に失敗しました: ab-1090: 他の編集が保存済みです/);
+  assert.strictEqual(shown.payload.isError, true);
+  assert.strictEqual(h.context.ASST.abilitySaving, false);
 });
 
 (async () => {

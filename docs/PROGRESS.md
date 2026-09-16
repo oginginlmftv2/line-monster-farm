@@ -53,6 +53,8 @@
 | P12-19b | P12-19の管理者手順書と進捗の同期 | `chore/p12-19-admin-runbook` | **レビュー待ち** | ⚪ | 手順書を新設し、PROGRESS.mdの状態と監査値をmain実測値へ更新 |
 | P12-20 | 新規カード画像の初回保存・公開経路 | `fix/p12-20-assist-image-publish` | **レビュー待ち** | ⚪（公開時🟡🔴） | main未公開画像を検査済みDrive画像から保存・公開できるよう修正。本番GASで`aab-MR-julia`の保存成功を確認済み。PRマージ後の公開確認待ち |
 | P12-21 | アシスト効果スクショの読取をClaudeスキル化・CMSへ候補JSON貼り付け | `feat/p12-21-assist-effect-capture-skill` | **完了** | ⚪（GAS反映時🟡） | Vision OCRの精度不足の代替。スキル`assist-effect-capture`と`scripts/check-assist-effect-payload.js`を追加し、CMS「効果OCR」タブに候補JSON貼り付けを追加。保存・公開の経路は従来どおり。`ui_assist.html`の本番GAS反映は管理者作業 |
+| P12-22 | 既存移行能力ロックからstatusを除外 | `fix/p12-22-ability-status-lock` | **完了** | ⚪ | PR #160。CMSで移行能力をdraftへ変えると`cms/assist-publish`がFAILしていた不具合を修正 |
+| P12-23 | 能力のカード紐付け解除 | `feat/p12-23-ability-unlink` | **レビュー待ち** | ⚪（GAS反映時🟡） | 誤って紐づけた能力（エイルMR/SSR）をCMSからunlinkedへ戻す`api_asstUnlinkAbility`と能力タブの「紐付け解除」ボタン。残る能力のsortOrderはサーバーが繰り上げ。ロックから`cardId / sortOrder / linkStatus`も除外。`22_assist_status.gs`・`ui_assist.html`・`ui_common.html`の本番GAS反映は管理者作業 |
 | G1 | ガチャDBとガチャページ生成の基盤 | `feat/g1-gacha-data-foundation` | **レビュー待ち** | ⚪ | PR #84のレビュー指摘を反映。通常ビルドの現在時刻解決、解説ゲート300字化、解説なしモンスターの詳細リンク、正常13件・破壊10件のfixtureテストを追加。公開出力差分なし |
 | G2 | ガチャ情報の既存ページへの反映（マーカー方式） | `feat/g2-gacha-page-integration` | **レビュー待ち** | 🔴 | 空DBでは既存表示不変。トップ4区間・リセマラ1区間、詳細逆リンク、正常27件・破壊14件のテストを追加 |
 | G3 | ガチャCMS（シート・画面・保存・画像） | `feat/g3-gacha-cms` | **完了** | 🟡 | PR #86をmainへマージ（`ebc3c01`）。ガチャCMSのシート・画面・保存・画像経路を導入 |
