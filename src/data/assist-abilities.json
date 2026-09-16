@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1165,
-    "resolved": 646,
+    "abilities": 1169,
+    "resolved": 650,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -20858,6 +20858,86 @@
         "無機"
       ],
       "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1171",
+      "legacyId": null,
+      "cardId": "c20k-MR-teosu",
+      "sourceName": "テオス",
+      "name": "テオスフォーム I",
+      "description": "[創造]各間合いにいるとき、その間合いの技デッキのオーラ枚数に応じて次の効果<br>１つ以上：ダメブロック＜－５％＞<br>２つ以上：ガッツ回復速度＜＋１０％＞<br>３つ以上：攻撃ステの＜５％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "被ダメ軽減",
+        "ガッツ回復",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1172",
+      "legacyId": null,
+      "cardId": "c20k-MR-teosu",
+      "sourceName": "テオス",
+      "name": "テオスフォーム II",
+      "description": "[創造]各間合いにいるとき、その間合いの技デッキのオーラ枚数に応じて次の効果<br>１つ以上：ダメブロック＜－１０％＞<br>２つ以上：ガッツ回復速度＜＋２０％＞<br>３つ以上：攻撃ステの＜１０％＞で追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "被ダメ軽減",
+        "ガッツ回復",
+        "追撃",
+        "攻撃強化"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1173",
+      "legacyId": null,
+      "cardId": "c20k-MR-teosu",
+      "sourceName": "テオス",
+      "name": "テオスアディション I",
+      "description": "[創造]バトル中、技デッキに編成されたオーラ技の数に応じて次の効果<br>１つ以上：攻撃ステータス＜＋５％＞<br>２つ以上：技命中時、シールド破壊＜１回＞<br>３つ以上：[業物Ｌｖ３]",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "攻撃強化",
+        "シールド"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1174",
+      "legacyId": null,
+      "cardId": "c20k-MR-teosu",
+      "sourceName": "テオス",
+      "name": "テオスアディション II",
+      "description": "[創造]バトル中、技デッキに編成されたオーラ技の数に応じて次の効果<br>１つ以上：攻撃ステータス＜＋１０％＞<br>２つ以上：技命中時、シールド破壊＜１回＞<br>３つ以上：[業物Ｌｖ６]",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "創造",
+        "攻撃強化",
+        "シールド"
+      ],
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
