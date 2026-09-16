@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1245,
-    "resolved": 723,
+    "abilities": 1248,
+    "resolved": 726,
     "ambiguous": 7,
     "unlinked": 515,
     "duplicateCandidates": 44
@@ -22408,6 +22408,65 @@
         "被ダメ軽減"
       ],
       "sortOrder": 13,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1251",
+      "legacyId": null,
+      "cardId": "c26j-SSR-ikki",
+      "sourceName": "イッキ(SSR)",
+      "name": "ロボトルファイト！II",
+      "description": "[自身黄]次の効果付与＜１回＞<br>・[装甲Ｌｖ３（ブロック＜－４５％＞、技を受けた時＜１５％＞ずつ減少）]<br>・オーラ技発動時、[充填Ｌｖ２]付与",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身黄",
+        "装甲",
+        "充填"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1252",
+      "legacyId": null,
+      "cardId": "c26j-SSR-ikki",
+      "sourceName": "イッキ(SSR)",
+      "name": "熱い魂 I",
+      "description": "[終盤][自身黄]忠誠度＜９０＞以上で技発動時、次の効果<br>・ガッツ回復速度＜＋１０％＞<br>・忠誠度９０を超えた分ガッツ回復＜最大２０＞＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "終盤",
+        "自身黄",
+        "ガッツ回復",
+        "忠誠度"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1253",
+      "legacyId": null,
+      "cardId": "c26j-SSR-ikki",
+      "sourceName": "イッキ(SSR)",
+      "name": "熱い魂 II",
+      "description": "[終盤][自身黄]忠誠度＜９０＞以上で技発動時、次の効果<br>・ガッツ回復速度＜＋１５％＞<br>・忠誠度９０を超えた分ガッツ回復＜最大３０＞＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "終盤",
+        "自身黄",
+        "ガッツ回復",
+        "忠誠度"
+      ],
+      "sortOrder": 3,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
