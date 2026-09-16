@@ -255,4 +255,73 @@ test('能力保存は全件検証せず、この能力と同じカードのsortO
   assert.throws(() => h.context.api_asstSaveAbility({ ability: bad, version: 1 }), /resolved以外はcardIdとsortOrderをnullにしてください/);
 });
 
-console.log(`\nOK 能力並び替えAPI ${passed}ケース`);
+// ---------------------------------------------------------------- 紐付け解除API
+function linkOf(harness, abilityId) {
+  const row = harness.state.abilities.slice(1).find(row => row[HEADERS.abilities.indexOf('abilityId')] === abilityId);
+  const pick = key => row[HEADERS.abilities.indexOf(key)];
+  return { cardId: pick('cardId'), sortOrder: pick('sortOrder'), linkStatus: pick('linkStatus'), status: pick('status'), version: pick('version'), updatedBy: pick('updatedBy') };
+}
+
+test('紐付け解除は対象をunlinkedへ戻し、残る能力のsortOrderを繰り上げる', () => {
+  const h = makeHarness({ abilities: [
+    abilityRow({ sourceOrder: 1, abilityId: 'ab-0001', sortOrder: 1 }),
+    abilityRow({ sourceOrder: 2, abilityId: 'ab-0002', sortOrder: 2, status: 'draft', version: 3 }),
+    abilityRow({ sourceOrder: 3, abilityId: 'ab-0003', sortOrder: 3 }),
+    abilityRow({ sourceOrder: 4, abilityId: 'ab-0004', cardId: 'c0002-SSR', sortOrder: 1 }),
+  ] });
+  h.state.cards.push(cardRow('c0002-SSR', 2));
+  const result = clone(h.context.api_asstUnlinkAbility({ abilityId: 'ab-0002', version: 3 }));
+  assert.deepStrictEqual(result, { ok: true, abilityId: 'ab-0002', cardId: 'c0001-MR', version: 4, renumbered: 1 });
+  assert.deepStrictEqual(linkOf(h, 'ab-0002'), { cardId: '', sortOrder: '', linkStatus: 'unlinked', status: 'draft', version: 4, updatedBy: 'tester' });
+  assert.deepStrictEqual(linkOf(h, 'ab-0001'), { cardId: 'c0001-MR', sortOrder: 1, linkStatus: 'resolved', status: 'verified', version: 1, updatedBy: 'seed' });
+  assert.deepStrictEqual(linkOf(h, 'ab-0003'), { cardId: 'c0001-MR', sortOrder: 2, linkStatus: 'resolved', status: 'verified', version: 2, updatedBy: 'tester' });
+  assert.deepStrictEqual(linkOf(h, 'ab-0004').sortOrder, 1, '他カードの能力には触れない');
+  assert.strictEqual(h.calls.lock, 1); assert.strictEqual(h.calls.release, 1);
+  assert.strictEqual(h.state.assist_log.length, 2);
+  assert.match(h.state.assist_log[1][4], /ab-0002 c0001-MR から解除 繰上げ1件/);
+  // 名前・説明・legacyId・tagsは変えない
+  const before = h.before.abilities[2], after = h.state.abilities[2];
+  for (const key of ['abilityId','legacyId','sourceName','name','description','source','rarity','tagsJson','flagsJson']) {
+    assert.strictEqual(after[HEADERS.abilities.indexOf(key)], before[HEADERS.abilities.indexOf(key)], key);
+  }
+});
+
+test('末尾の能力を解除しても繰上げ0件で他の行は書かない', () => {
+  const h = makeHarness();
+  const result = h.context.api_asstUnlinkAbility({ abilityId: 'ab-0003', version: 1 });
+  assert.strictEqual(result.renumbered, 0);
+  assert.deepStrictEqual(h.state.abilities[1], h.before.abilities[1]);
+  assert.deepStrictEqual(h.state.abilities[2], h.before.abilities[2]);
+  assert.strictEqual(linkOf(h, 'ab-0003').linkStatus, 'unlinked');
+});
+
+test('紐付け解除はversion不一致・未知ID・resolved以外・未対応キーを拒否して何も書かない', () => {
+  for (const [payload, pattern] of [
+    [{ abilityId: 'ab-0001', version: 9 }, /他の編集が保存済み/],
+    [{ abilityId: 'ab-9999', version: 1 }, /能力が見つかりません/],
+    [{ abilityId: 'ab-0001', version: 1, note: 'x' }, /未対応のpayload項目/],
+    [{ abilityId: 'ab-0001', version: '1' }, /versionが不正/],
+    [{ abilityId: '', version: 1 }, /abilityIdは必須/],
+    [null, /payloadはオブジェクト/],
+  ]) {
+    const h = makeHarness();
+    assert.throws(() => h.context.api_asstUnlinkAbility(payload), pattern);
+    assert.deepStrictEqual(h.state, h.before);
+  }
+  const h = makeHarness({ abilities: [abilityRow({ abilityId: 'ab-0001', cardId: '', sortOrder: '', linkStatus: 'unlinked' })] });
+  assert.throws(() => h.context.api_asstUnlinkAbility({ abilityId: 'ab-0001', version: 1 }), /resolved.*だけ解除できます/);
+  assert.deepStrictEqual(h.state, h.before);
+});
+
+test('紐付け解除はロック競合では何も書かず、途中の書込み失敗は元に戻す', () => {
+  const locked = makeHarness({ lockAvailable: false });
+  assert.throws(() => locked.context.api_asstUnlinkAbility({ abilityId: 'ab-0001', version: 1 }), /重なりました/);
+  assert.deepStrictEqual(locked.state, locked.before);
+  const h = makeHarness({ failure: { sheet: 'abilities', op: 'setValues', after: 1 } });
+  assert.throws(() => h.context.api_asstUnlinkAbility({ abilityId: 'ab-0001', version: 1 }), /元に戻しました/);
+  assert.deepStrictEqual(clone(h.state.abilities), h.before.abilities);
+  assert.strictEqual(h.state.assist_log[1][3], 'FAIL');
+  assert.strictEqual(h.calls.release, 1);
+});
+
+console.log(`\nOK 能力並び替え・紐付け解除API ${passed}ケース`);

@@ -1174,13 +1174,29 @@ function asstAbilityItem(a,index,total){
   var status=asstAbilityStatusOf(a),statusChanged=status!==a.status;
   return '<div class="ability-item'+(status==='draft'?' draft':'')+'" data-ability-row="'+esc(a.abilityId)+'"><div><strong>'+esc(position)+'. '+esc(a.name)+'</strong><div class="muted">'+esc(a.abilityId)+' / '+esc(a.source)+(statusChanged?' / 未保存: '+esc(cmsLabel(a.status))+' → '+esc(cmsLabel(status)):'')+'</div></div>'+
     (typeof index==='number'?'<button type="button" data-ability-up="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'を上へ"'+(up?'':' disabled')+'>↑</button><button type="button" data-ability-down="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'を下へ"'+(down?'':' disabled')+'>↓</button>':'')+
-    '<select data-ability-status="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'の状態"'+(ASST.abilitySaving?' disabled':'')+'>'+asstOptionList(['draft','verified'],status,false)+'</select><button data-ability="'+esc(a.abilityId)+'">編集</button></div>';
+    '<select data-ability-status="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'の状態"'+(ASST.abilitySaving?' disabled':'')+'>'+asstOptionList(['draft','verified'],status,false)+'</select><button data-ability="'+esc(a.abilityId)+'">編集</button>'+
+    (typeof index==='number'?'<button type="button" class="danger" data-ability-unlink="'+esc(a.abilityId)+'" aria-label="'+esc(a.name)+'の紐付けを解除"'+(ASST.abilitySaving||asstAbilityPending()?' disabled title="未保存の変更を保存または取り消してから解除してください"':'')+'>紐付け解除</button>':'')+'</div>';
+}
+function asstAbilityPending(){var d=ASST.detail;return Boolean(d&&(asstAbilityStatusChangedIds(d).length||asstAbilityOrderChanged(d)));}
+// 誤ったカードへ紐づけた能力をresolved → unlinkedへ戻す。1件ずつ即時保存し、残る能力のsortOrderはサーバーが繰り上げる。
+// 内容・状態（draft/verified）は変えない。解除後は能力ID検索から開き直して正しいカードへ紐づけ直せる
+function asstUnlinkAbility(abilityId){
+  var d=ASST.detail,a=d&&d.abilities.filter(function(item){return item.abilityId===abilityId;})[0];
+  if(!a||ASST.abilitySaving||asstAbilityPending())return;
+  if(!confirm('「'+a.name+'」（'+abilityId+'）をこのカード（'+(d.card.name||ASST.selectedId)+'）から紐付け解除しますか？\n'+
+    '能力は「未紐付け（unlinked）」になり、公開ページから外れます。残る能力のsortOrderは1から振り直されます。\n'+
+    '能力の内容と状態は変わりません。解除後は能力ID検索から開いて、正しいカードへ紐づけ直せます。'))return;
+  ASST.abilitySaving=true;asstRenderEditor();setBusy(true,'紐付けを解除中… '+abilityId);
+  asstAbilityGasPromise('api_asstUnlinkAbility',[{abilityId:abilityId,version:Number(a.version||1)}])
+    .then(function(result){setBusy(false);ASST.abilitySaving=false;asstOpenCard(ASST.selectedId,'紐付けを解除しました。'+abilityId+' / 繰上げ '+result.renumbered+'件');})
+    .catch(function(error){setBusy(false);ASST.abilitySaving=false;asstRenderEditor();show('紐付け解除に失敗しました: '+(error&&error.message?error.message:String(error)),true);});
 }
 function asstBindAbilityRows(){
   el('asst_editor').querySelectorAll('[data-ability]').forEach(function(button){button.onclick=function(){asstOpenAbility(button.dataset.ability);};});
   el('asst_editor').querySelectorAll('[data-ability-status]').forEach(function(select){select.onchange=function(){asstSetAbilityStatus(select.dataset.abilityStatus,select.value);};});
   el('asst_editor').querySelectorAll('[data-ability-up]').forEach(function(button){button.onclick=function(){asstMoveAbility(button.dataset.abilityUp,-1);};});
   el('asst_editor').querySelectorAll('[data-ability-down]').forEach(function(button){button.onclick=function(){asstMoveAbility(button.dataset.abilityDown,1);};});
+  el('asst_editor').querySelectorAll('[data-ability-unlink]').forEach(function(button){button.onclick=function(){asstUnlinkAbility(button.dataset.abilityUnlink);};});
   if(el('asst_btnSaveAbilityChanges'))el('asst_btnSaveAbilityChanges').onclick=asstSaveAbilityChanges;
   if(el('asst_btnResetAbilityChanges'))el('asst_btnResetAbilityChanges').onclick=asstResetAbilityChanges;
   if(el('asst_btnVerifyAllAbilities'))el('asst_btnVerifyAllAbilities').onclick=function(){asstSetAllAbilityStatus('verified');};

@@ -64,12 +64,18 @@ const ALLOWED = {
 };
 const RATING_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
 const MIGRATED_ABILITY_COUNT = 1079;
-// 既存移行能力の内容・ID・配列順のロック。status（draft / verified）はCMSの
-// api_asstSetAbilityStatuses で運用上変わる作業状態なのでハッシュから除く。
-const MIGRATED_ABILITY_RECORDS_SHA256 = '1f4cf492cd594664aebf8357b7cb69428da4a919bb0bf6e8eef28e419ca6da59';
+// 既存移行能力の内容（abilityId / legacyId / sourceName / name / description / source / rarity / tags / flags）と
+// 配列順のロック。カード紐付け（cardId / sortOrder / linkStatus）はapi_asstUnlinkAbility・並び替え・
+// 再紐付けで、status（draft / verified）はapi_asstSetAbilityStatusesで運用上変わるためハッシュから除く。
+const MIGRATED_ABILITY_RECORDS_SHA256 = '9375731afea921779dae348afb159005039f744c6968498e87c52506b36bfd1e';
+const MIGRATED_ABILITY_UNLOCKED_KEYS = ['cardId', 'sortOrder', 'linkStatus', 'status'];
 
 function migratedAbilityRecordsSha256(abilities) {
-  const locked = abilities.slice(0, MIGRATED_ABILITY_COUNT).map(({ status, ...record }) => record);
+  const locked = abilities.slice(0, MIGRATED_ABILITY_COUNT).map(record => {
+    const copy = { ...record };
+    for (const key of MIGRATED_ABILITY_UNLOCKED_KEYS) delete copy[key];
+    return copy;
+  });
   return crypto.createHash('sha256').update(JSON.stringify(locked)).digest('hex');
 }
 
@@ -204,6 +210,7 @@ function validateRoot(root) {
     'api_asstOcrEffectImage', 'api_asstUploadCardImage', 'api_asstAuditExternalAbilities',
     'api_asstCreateAbilityFromExternalCandidate', 'api_asstSetExternalCandidateDisposition',
     'api_asstCreateAbilitiesFromExternalCandidates', 'api_asstReorderCardAbilities', 'api_asstSetAbilityStatuses',
+    'api_asstUnlinkAbility',
   ]) {
     if (!new RegExp(`function\\s+${fn}\\s*\\(`).test(allAssistGas)) issues.push(`必須関数がない: ${fn}`);
   }
@@ -520,9 +527,26 @@ function validateRoot(root) {
       /ASST_SHEET_ABILITIES[\s\S]*?(?:appendRow|setValues)/.test(dispositionApiBlock)) {
     issues.push('外部候補処置APIの許可値・再監査・abilities非変更境界が不足');
   }
+  // 紐付け解除: サーバーはresolvedだけを受け、cardId/sortOrderを空にしてlinkStatusをunlinkedへ戻し、
+  // 残る能力のsortOrderを繰り上げる。UIは確認ダイアログを経て1件ずつ即時保存し、未保存の変更があるときは押せない
+  const unlinkApiBlock = functionBlock(statusGas, 'api_asstUnlinkAbility');
+  const unlinkUiBlock = functionBlock(html, 'asstUnlinkAbility');
+  if (!/asstText_\(target\.linkStatus\) !== 'resolved'/.test(unlinkApiBlock) ||
+      !/\{ cardId: '', sortOrder: '', linkStatus: 'unlinked' \}/.test(unlinkApiBlock) ||
+      !/siblings\.forEach\(function \(row, index\)/.test(unlinkApiBlock) ||
+      !/'unlink-ability'/.test(unlinkApiBlock) ||
+      /\bstatus\b/.test(unlinkApiBlock) ||
+      !/data-ability-unlink=/.test(functionBlock(html, 'asstAbilityItem')) ||
+      !/\[data-ability-unlink\]/.test(functionBlock(html, 'asstBindAbilityRows')) ||
+      !/if\(!confirm\(/.test(unlinkUiBlock) ||
+      !/asstAbilityPending\(\)\)return;/.test(unlinkUiBlock) ||
+      !/'api_asstUnlinkAbility'/.test(unlinkUiBlock)) {
+    issues.push('能力の紐付け解除がresolved限定・sortOrder繰上げ・確認ダイアログ・未保存時無効の境界を満たさない');
+  }
   const assistLockFunctions = [
     ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
     ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstSetAbilityStatuses', statusGas],
+    ['api_asstUnlinkAbility', statusGas],
     ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
     ['api_asstCreateAbilitiesFromExternalCandidates', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],
@@ -853,7 +877,7 @@ function validateRoot(root) {
   }
   if (abilitiesDoc.abilities.length < MIGRATED_ABILITY_COUNT ||
       migratedAbilityRecordsSha256(abilitiesDoc.abilities) !== MIGRATED_ABILITY_RECORDS_SHA256) {
-    issues.push('既存移行能力1,079件の内容・値・ID・配列順（statusを除く）が基準から変化');
+    issues.push('既存移行能力1,079件の内容・値・ID・配列順（紐付け・statusを除く）が基準から変化');
   }
 
   const cardIds = cardsDoc.cards.map(card => card.cardId);
