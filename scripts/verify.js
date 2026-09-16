@@ -1571,17 +1571,41 @@ if (!exists('src/data/assist-cards.json')) {
       ok(`旧URL共通ページ ${legacyStubs.length}件はnoindex・adsbygoogleなし・無効IDで一覧へリダイレクト`);
     }
 
-    // assist.htmlのカードリンクは静的URLなので、href から # でIDを取り出すと空になり
-    // 距離・地形フィルタが全件不一致になる（P14-2の実障害）。取り出しは cardIdFromHref に集約する
-    const brokenIdExtraction = [...assistHtml.matchAll(/getAttribute\('href'\)[^;\n]*\.split\('#'\)/g)].length;
-    const hasCardIdHelper = /function cardIdFromHref\s*\(/.test(assistHtml);
-    const helperUses = (assistHtml.match(/cardIdFromHref\(/g) || []).length;
-    if (brokenIdExtraction > 0) {
-      ng(`assist.htmlがhrefから#でカードIDを取り出している ${brokenIdExtraction}件（静的URLでは空になり距離・地形フィルタが壊れる）`);
-    } else if (!hasCardIdHelper || helperUses < 4) {
-      ng(`assist.htmlのカードID取り出しがcardIdFromHrefに集約されていない（定義 ${hasCardIdHelper ? 'あり' : 'なし'} / 使用 ${helperUses}箇所）`);
+    // assist.htmlの評価（総合・一致）と距離・地形はビルド時にdata属性へ埋め込む。
+    // 実行時にFirestoreや旧cards-data.jsを読むとCMS公開が一覧へ反映されない（実障害）ので、
+    // 一覧HTMLに実行時取得が残っていないこと、フィルタがdata属性を見ていることを検査する
+    const listRegion = assistHtml.slice(
+      assistHtml.indexOf('<!-- ASSIST_CARD_LIST:START -->'),
+      assistHtml.indexOf('<!-- ASSIST_CARD_LIST:END -->'),
+    );
+    const assistListIssues = [];
+    if (/firebase|firestore|cards\/cards-data\.js|cardsData/.test(assistHtml)) {
+      assistListIssues.push('Firestore・cards-data.jsを実行時に読んでいる');
+    }
+    if (!/card\.dataset\.dist === currentDist/.test(assistHtml) || !/card\.dataset\.terrain/.test(assistHtml)) {
+      assistListIssues.push('距離・地形フィルタがdata-dist / data-terrainを見ていない');
+    }
+    if (!/parseFloat\(a\.dataset\.score\)/.test(assistHtml)) {
+      assistListIssues.push('評価順ソートがdata-scoreを見ていない');
+    }
+    const assistDb = JSON.parse(read('src/data/assist-cards.json')).cards;
+    const ratedInDb = assistDb.filter(card => card.ratings && Object.values(card.ratings).some(v => v !== null && v !== undefined));
+    const scoredInHtml = (listRegion.match(/data-score="\d\.\d"/g) || []).length;
+    if (scoredInHtml !== ratedInDb.length) {
+      assistListIssues.push(`評価付きカード数が不一致（3DB ${ratedInDb.length}件 / 一覧data-score ${scoredInHtml}件）`);
+    }
+    const aptitudeCards = JSON.parse(read('src/data/assist-aptitudes.json')).cards || {};
+    const distInHtml = (listRegion.match(/ data-dist="/g) || []).length;
+    const terrainInHtml = (listRegion.match(/ data-terrain="/g) || []).length;
+    const distInJson = Object.values(aptitudeCards).filter(a => a.dist).length;
+    const terrainInJson = Object.values(aptitudeCards).filter(a => Array.isArray(a.terrain) && a.terrain.length).length;
+    if (distInHtml !== distInJson || terrainInHtml !== terrainInJson) {
+      assistListIssues.push(`距離・地形の埋め込み数が不一致（JSON 距離${distInJson}/地形${terrainInJson} / 一覧 距離${distInHtml}/地形${terrainInHtml}）`);
+    }
+    if (assistListIssues.length) {
+      ng(`assist.htmlの評価・適性の静的埋め込みに問題: ${assistListIssues.join(' / ')}`);
     } else {
-      ok(`assist.htmlのカードID取り出しはcardIdFromHrefに集約（定義1・使用${helperUses - 1}箇所、静的URLと旧#形式の両対応）`);
+      ok(`assist.htmlの評価・適性は生成時埋め込み（評価${scoredInHtml}件・距離${distInHtml}件・地形${terrainInHtml}件、実行時のFirestore/cards-data.js参照なし）`);
     }
 
     // 検索・絞り込みのGA4計測（P14-3）。イベント整形はGTM側なので、サイト側は

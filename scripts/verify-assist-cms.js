@@ -533,7 +533,7 @@ function validateRoot(root) {
       !/buildCardArtifact\(card, effects, abilityData\.abilities/.test(assistPageBuilder)) {
     issues.push('draft resolved能力が生成HTML・本文量・index判定から除外されていない');
   }
-  if (!/renderAssistIndex\(assistIndex, cards\)/.test(assistPageBuilder) ||
+  if (!/renderAssistIndex\(assistIndex, cards, aptitudes\)/.test(assistPageBuilder) ||
       !/currentIds\.map\(id => cardById\.get\(id\)\)[\s\S]*\.concat\(cards\.filter/.test(assistPageBuilder) ||
       !/const orderedCards = sortByReleasedAt\(baseCards\)/.test(assistPageBuilder) ||
       !/実装日が無いカードは既存順を維持し新規カードを末尾へ追加する/.test(assistIndexBuildTest) ||
