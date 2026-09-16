@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require('assert');
-const { renderAssistIndex } = require('./build-assist-pages');
+const { renderAssistIndex, validateAptitudes, summaryScores } = require('./build-assist-pages');
 
 const cards = [
   { cardId: 'a-MR-one', name: '新しい&名前', rarity: 'MR', image: 'assist-cards/a-MR-one.jpg' },
@@ -82,4 +82,38 @@ assert.deepStrictEqual(
 );
 console.log('PASS assist一覧: 実装日の新しい順に並べ替える');
 
-console.log('assist一覧生成テスト: 6ケース PASS');
+// 評価と距離・地形をdata属性へ埋め込む（Firestoreや旧cards-data.jsを実行時に読まない）
+const ratedCards = [
+  { cardId: 'r1-MR-full', name: '全項目', rarity: 'MR', image: 'assist-cards/r1-MR-full.jpg',
+    ratings: { ikusei: 3, karyo: 1.5, battle: 1.2, ta: 1.1 } },
+  { cardId: 'r2-MR-partial', name: '一部null', rarity: 'MR', image: 'assist-cards/r2-MR-partial.jpg',
+    ratings: { ikusei: 4, karyo: null, battle: 2.5, ta: null } },
+  { cardId: 'r3-MR-none', name: '未評価', rarity: 'MR', image: 'assist-cards/r3-MR-none.jpg', ratings: null },
+];
+const ratedAptitudes = {
+  'r1-MR-full': { dist: '零距離' },
+  'r2-MR-partial': { terrain: ['海岸', '砂漠'] },
+};
+const ratedSource = `<main>
+<!-- ASSIST_CARD_LIST:START -->
+    <!-- ASSIST_CARD_LIST:END -->
+</main>\n`;
+const ratedRendered = renderAssistIndex(ratedSource, ratedCards, ratedAptitudes);
+assert.deepStrictEqual(summaryScores(ratedCards[0]).sogo, 1.7, '総合評価は4項目平均の小数1桁切り捨て');
+assert.deepStrictEqual(summaryScores(ratedCards[0]).itti, 1.9, '一致評価は他オーラモン類を除く3項目平均');
+assert(ratedRendered.includes('data-score="1.7" data-dist="零距離" href="cards/r1-MR-full.html"'), '総合評価と距離をdata属性へ埋め込む');
+assert(ratedRendered.includes('総合評価 <span class="score-val">1.7</span>') && ratedRendered.includes('一致評価 <span class="itti-val">1.9</span>'), '評価を静的に表示する');
+assert(ratedRendered.includes('data-score="3.2" data-terrain="海岸 砂漠" href="cards/r2-MR-partial.html"'), 'nullの項目は平均から除き、地形は空白区切りで埋め込む');
+assert(ratedRendered.includes('<a class="card" data-rarity="MR" href="cards/r3-MR-none.html">'), '未評価・未登録のカードにはdata属性を付けない');
+assert((ratedRendered.match(/<span class="score-val">-<\/span>/g) || []).length === 1, '未評価カードは「-」表示');
+assert(ratedRendered.includes('<span class="rarity rarity-MR">MR</span><span class="card-name">全項目</span>'), 'レアリティ＋カード名を1行で生成する');
+console.log('PASS assist一覧: 評価と距離・地形をdata属性へ埋め込む');
+
+const cardById = new Map(ratedCards.map(card => [card.cardId, card]));
+assert.throws(() => validateAptitudes({ schemaVersion: 1, cards: { 'zz-MR-unknown': { dist: '零距離' } } }, cardById), /DB未登録のcardId/, 'DB未登録の適性を拒否する');
+assert.throws(() => validateAptitudes({ schemaVersion: 1, cards: { 'r1-MR-full': { dist: '超距離' } } }, cardById), /距離が不正/, '不正な距離を拒否する');
+assert.throws(() => validateAptitudes({ schemaVersion: 1, cards: { 'r1-MR-full': { terrain: '海岸' } } }, cardById), /地形が不正/, '配列でない地形を拒否する');
+assert.throws(() => validateAptitudes({ schemaVersion: 2, cards: {} }, cardById), /schemaVersion 1/, 'schemaVersion違いを拒否する');
+console.log('PASS assist一覧: 適性JSONの不正値を拒否する');
+
+console.log('assist一覧生成テスト: 8ケース PASS');

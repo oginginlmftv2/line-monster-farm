@@ -1,0 +1,168 @@
+{
+  "schemaVersion": 1,
+  "note": "assist.htmlの距離・地形フィルタ用。CMSに項目が無いため手入力。推測で埋めない",
+  "cards": {
+    "c20k-MR-teosu": {
+      "dist": "零距離"
+    },
+    "b16i-MR-diana": {
+      "dist": "遠距離"
+    },
+    "a24j-MR-vitoniru": {
+      "dist": "中距離"
+    },
+    "f14g-MR-darasu": {
+      "dist": "近距離"
+    },
+    "f2k-SSR-shionresort": {
+      "terrain": [
+        "海岸"
+      ]
+    },
+    "b5i-SSR-rimurugurasan": {
+      "dist": "零距離"
+    },
+    "b21i-MR-rimuru": {
+      "dist": "零距離"
+    },
+    "e20i-MR-nadeshiko": {
+      "dist": "近距離"
+    },
+    "c12l-MR-gifton": {
+      "terrain": [
+        "雪山"
+      ]
+    },
+    "f5l-SSR-sharutia": {
+      "dist": "遠距離"
+    },
+    "d14k-MR-sukeakurou": {
+      "terrain": [
+        "砂漠"
+      ]
+    },
+    "b2h-SSR-sappirutti": {
+      "terrain": [
+        "海岸"
+      ]
+    },
+    "b22h-MR-noa": {
+      "dist": "近距離"
+    },
+    "e6l-SSR-arukadiasu": {
+      "terrain": [
+        "火山"
+      ]
+    },
+    "a25i-MR-borusyakku": {
+      "terrain": [
+        "火山"
+      ]
+    },
+    "c23i-MR-naiara": {
+      "terrain": [
+        "雪山"
+      ]
+    },
+    "d22g-MR-emuroudo": {
+      "terrain": [
+        "森林"
+      ]
+    },
+    "e3h-SSR-marijji": {
+      "dist": "遠距離"
+    },
+    "a3g-SSR-hao": {
+      "terrain": [
+        "火山"
+      ]
+    },
+    "d13i-MR-asakurayou": {
+      "dist": "中距離"
+    },
+    "e2j-SSR-rekusu": {
+      "terrain": [
+        "海岸"
+      ]
+    },
+    "f16h-MR-iburiisu": {
+      "dist": "遠距離"
+    },
+    "f6l-SSR-araibu": {
+      "dist": "近距離"
+    },
+    "f1g-SSR-tyakooru": {
+      "dist": "中距離"
+    },
+    "f21l-MR-serene": {
+      "terrain": [
+        "砂漠"
+      ]
+    },
+    "d6g-SSR-king": {
+      "dist": "遠距離"
+    },
+    "c2h-SSR-meriodasu": {
+      "terrain": [
+        "雪山"
+      ]
+    },
+    "b2l-SSR-rikanto": {
+      "terrain": [
+        "森林"
+      ]
+    },
+    "a5g-SSR-roozuheddo": {
+      "terrain": [
+        "海岸",
+        "砂漠"
+      ]
+    },
+    "a1j-SSR-kurousu": {
+      "dist": "近距離"
+    },
+    "d2l-SSR-mikasa": {
+      "terrain": [
+        "火山"
+      ]
+    },
+    "c6k-SSR-jonson": {
+      "terrain": [
+        "砂漠"
+      ]
+    },
+    "e1g-SSR-yunibaasu": {
+      "dist": "中距離"
+    },
+    "a3i-SSR-mirimu": {
+      "dist": "遠距離"
+    },
+    "b1i-SSR-rimuru": {
+      "terrain": [
+        "森林"
+      ]
+    },
+    "a6j-SSR-akazonaenusi": {
+      "dist": "近距離"
+    },
+    "c14k-MR-suzuka": {
+      "dist": "零距離"
+    },
+    "e12i-MR-raburesu": {
+      "dist": "零距離"
+    },
+    "d11g-MR-ratatosuku": {
+      "terrain": [
+        "森林"
+      ]
+    },
+    "f6g-SSR-momonandhamusuke": {
+      "dist": "遠距離"
+    },
+    "f5h-SSR-tyakkuru": {
+      "terrain": [
+        "火山"
+      ]
+    }
+  }
+}

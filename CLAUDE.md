@@ -3,7 +3,7 @@
 > **開発ルールは `AGENTS.md` が唯一の正です。作業前に必ず読んでください。**
 > このファイルはガチャ更新・モンスター更新・日記追加など、コンテンツ運用だけを扱います。
 
-**最終更新：2026-09-14（ゴースト種にメレンゲ専用技ホイップハンマーを追加）**
+**最終更新：2026-09-16（アシスト一覧の評価・距離地形を生成時埋め込みへ変更）**
 
 Git・ブランチ・PR・マージの管理者向け手順は`docs/admin-development.md`を参照してください。
 
@@ -179,23 +179,20 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 ### セットで更新するファイル
 
 1. `cards/cards-data.js` → 先頭に追加
-2. `assist.html` → `#cardGrid`の先頭にカードHTMLを追加
+2. `assist.html` → 手で編集しない。`node build.js`が3DBから一覧を再生成する
 3. `index.html` → ピックアップ画像・リンク・説明文を更新
 4. `reroll.html` → 「現在のおすすめ」と更新日を更新
 5. `assist-cards/` → カード画像を配置
 6. `assist-abilities/` → 能力画像を配置
-7. 下の「現在のピックアップ状態」を更新
+7. 距離適性・地形適性が分かる場合だけ`src/data/assist-aptitudes.json`へ追記（推測で埋めない）
+8. 下の「現在のピックアップ状態」を更新
+
+一覧`assist.html`の総合評価・一致評価と距離・地形の絞り込みは`node build.js`が3DBと
+`assist-aptitudes.json`から埋め込みます。CMSで評価を保存・公開すれば一覧にも反映されます。
 
 `assist-abilities/`への画像配置はできますが、カードとの対応はFirestoreの
 `cardAbilities/assignments`に保存されています。`ability-match.html`は現在書き込めないため、
 新規割り当てが必要になったら止まって相談してください。Firestoreルールは緩めません。
-
-```html
-<a class="card" data-rarity="MR" href="cards/card.html#カードID">
-  <img class="card-img" src="assist-cards/カードID.jpg" alt="カード名">
-  <div class="card-info"><div class="card-name">カード名</div><span class="rarity rarity-MR">MR</span></div>
-</a>
-```
 
 モンスター編成で新カードを使う場合は、先に`cards/cards-data.js`へカードIDを登録します。
 未登録IDは`build.js`の警告に出るため0件にしてください。
@@ -287,7 +284,7 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 ### リポジトリで管理
 
 - `src/data/monster-skills.json`、`src/data/skill-abilities.json`（技DB。現在は手入力）
-- `cards/cards-data.js`、`assist.html`、`reroll.html`
+- `cards/cards-data.js`、`src/data/assist-aptitudes.json`、`reroll.html`
 - `index.html`のピックアップ・日記プレビュー・更新履歴
 - `diary.html`、`diary/*.html`
 - `assist-cards/`、`assist-abilities/`

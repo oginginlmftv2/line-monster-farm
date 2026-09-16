@@ -9,7 +9,10 @@ const INPUTS = {
   cards: 'src/data/assist-cards.json',
   effects: 'src/data/assist-effects.json',
   abilities: 'src/data/assist-abilities.json',
+  aptitudes: 'src/data/assist-aptitudes.json',
 };
+const DIST_VALUES = ['零距離', '近距離', '中距離', '遠距離'];
+const TERRAIN_VALUES = ['砂漠', '海岸', '雪山', '火山', '森林'];
 const RANK_ORDER = ['無凸', '1凸', '2凸', '3凸', '4凸'];
 const INDEXABLE_VISIBLE_CHARS = 800;
 const INDEXABLE_EXPLANATION_CHARS = 50;
@@ -64,20 +67,31 @@ function renderPairRows(rows) {
   return lines.join('\n');
 }
 
-function renderRatings(card) {
-  const labels = [
-    ['ikusei', '総合力育成'],
-    ['karyo', '火力'],
-    ['battle', 'バトル性能'],
-    ['ta', '他オーラモン類'],
-  ];
-  const rawRatings = labels.filter(([key]) => card.ratings && card.ratings[key] !== null)
+const RATING_LABELS = [
+  ['ikusei', '総合力育成'],
+  ['karyo', '火力'],
+  ['battle', 'バトル性能'],
+  ['ta', '他オーラモン類'],
+];
+
+// 総合評価＝4項目の平均、一致評価＝他オーラモン類を除く3項目の平均（小数1桁切り捨て）。
+// 詳細ページと一覧の両方で同じ値を出すため、計算はここ1か所に置く。
+function summaryScores(card) {
+  const rawRatings = RATING_LABELS
+    .filter(([key]) => card.ratings && card.ratings[key] !== null && card.ratings[key] !== undefined)
     .map(([key, label]) => ({ key, label, value: Number(card.ratings[key]) }));
   const floorAverage = values => values.length
     ? Math.floor((values.reduce((sum, value) => sum + value, 0) / values.length) * 10) / 10
     : null;
-  const sogo = floorAverage(rawRatings.map(rating => rating.value));
-  const itti = floorAverage(rawRatings.filter(rating => rating.key !== 'ta').map(rating => rating.value));
+  return {
+    rawRatings,
+    sogo: floorAverage(rawRatings.map(rating => rating.value)),
+    itti: floorAverage(rawRatings.filter(rating => rating.key !== 'ta').map(rating => rating.value)),
+  };
+}
+
+function renderRatings(card) {
+  const { rawRatings, sogo, itti } = summaryScores(card);
   const ratings = [
     ...(sogo === null ? [] : [{ label: '総合評価', value: sogo, summary: true }]),
     ...(itti === null ? [] : [{ label: '一致評価', value: itti, summary: true }]),
@@ -297,11 +311,42 @@ function writeIfChanged(relativePath, content, dryRun) {
   return existed ? 'updated' : 'new';
 }
 
-function renderAssistCard(card) {
-  return `    <a class="card" data-rarity="${escapeHtml(card.rarity)}" href="cards/${escapeHtml(card.cardId)}.html">
+// 一覧カード。評価は3DBの値を生成時に埋め込み、距離・地形は assist-aptitudes.json から
+// data属性へ入れる（assist.html側のフィルタ・評価順ソートはこの属性だけを見る）。
+function renderAssistCard(card, aptitude) {
+  const { sogo, itti } = summaryScores(card);
+  const scoreText = value => (value === null ? '-' : value.toFixed(1));
+  const dataAttrs = [
+    sogo === null ? '' : ` data-score="${sogo.toFixed(1)}"`,
+    aptitude?.dist ? ` data-dist="${escapeHtml(aptitude.dist)}"` : '',
+    aptitude?.terrain?.length ? ` data-terrain="${escapeHtml(aptitude.terrain.join(' '))}"` : '',
+  ].join('');
+  return `    <a class="card" data-rarity="${escapeHtml(card.rarity)}"${dataAttrs} href="cards/${escapeHtml(card.cardId)}.html">
       <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">
-      <div class="card-info"><div class="card-name">${escapeHtml(card.name)}</div><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span></div>
+      <div class="card-info">
+        <div class="card-name-row"><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span><span class="card-name">${escapeHtml(card.name)}</span></div>
+        <div class="card-score">総合評価 <span class="score-val">${scoreText(sogo)}</span></div>
+        <div class="card-score">一致評価 <span class="itti-val">${scoreText(itti)}</span></div>
+      </div>
     </a>`;
+}
+
+function validateAptitudes(aptitudeData, cardById) {
+  if (!aptitudeData || aptitudeData.schemaVersion !== 1 || !aptitudeData.cards || typeof aptitudeData.cards !== 'object') {
+    throw new Error('assist-aptitudes.json はschemaVersion 1のcardsオブジェクトが必須です');
+  }
+  for (const [cardId, aptitude] of Object.entries(aptitudeData.cards)) {
+    if (!cardById.has(cardId)) throw new Error(`assist-aptitudes.json にDB未登録のcardIdがあります: ${cardId}`);
+    if (aptitude.dist !== undefined && !DIST_VALUES.includes(aptitude.dist)) {
+      throw new Error(`assist-aptitudes.json の距離が不正です: ${cardId} / ${aptitude.dist}`);
+    }
+    if (aptitude.terrain !== undefined) {
+      if (!Array.isArray(aptitude.terrain) || aptitude.terrain.some(value => !TERRAIN_VALUES.includes(value))) {
+        throw new Error(`assist-aptitudes.json の地形が不正です: ${cardId} / ${JSON.stringify(aptitude.terrain)}`);
+      }
+    }
+  }
+  return aptitudeData.cards;
 }
 
 // 実装日キー。CMSは YYYY-MM-DD / YYYY-MM / YYYY/MM/DD / YYYY/MM を返しうる。
@@ -326,7 +371,7 @@ function sortByReleasedAt(baseCards) {
     .map(row => row.card);
 }
 
-function renderAssistIndex(source, cards) {
+function renderAssistIndex(source, cards, aptitudes = {}) {
   const start = source.indexOf(ASSIST_LIST_START);
   const end = source.indexOf(ASSIST_LIST_END);
   if (start < 0 || end < 0 || end <= start) {
@@ -354,7 +399,7 @@ function renderAssistIndex(source, cards) {
   const baseCards = currentIds.map(id => cardById.get(id))
     .concat(cards.filter(card => !currentIdSet.has(card.cardId)));
   const orderedCards = sortByReleasedAt(baseCards);
-  const list = `\n\n${orderedCards.map(renderAssistCard).join('\n\n')}\n\n    `;
+  const list = `\n\n${orderedCards.map(card => renderAssistCard(card, aptitudes[card.cardId])).join('\n\n')}\n\n    `;
   return source.slice(0, start + ASSIST_LIST_START.length) + list + source.slice(end);
 }
 
@@ -373,11 +418,12 @@ function buildAssistPages(options = {}) {
   const effectsByCard = effectData.cards;
   validateInputs(cards, effectsByCard, abilityData.abilities);
   const cardById = new Map(cards.map(card => [card.cardId, card]));
+  const aptitudes = validateAptitudes(readJson(INPUTS.aptitudes), cardById);
   const counts = { new: 0, updated: 0, unchanged: 0 };
   const reports = [];
 
   const assistIndex = fs.readFileSync(path.join(REPO, ASSIST_INDEX), 'utf8');
-  const assistIndexState = writeIfChanged(ASSIST_INDEX, renderAssistIndex(assistIndex, cards), dryRun);
+  const assistIndexState = writeIfChanged(ASSIST_INDEX, renderAssistIndex(assistIndex, cards, aptitudes), dryRun);
 
   for (const card of cards) {
     const effects = effectsByCard[card.cardId].effects;
@@ -416,4 +462,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { buildAssistPages, buildCardArtifact, renderAssistIndex };
+module.exports = { buildAssistPages, buildCardArtifact, renderAssistIndex, validateAptitudes, summaryScores };
