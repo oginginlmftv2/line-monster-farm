@@ -105,7 +105,11 @@ function makeHarness(options = {}) {
     UrlFetchApp: {
       fetch(url) {
         harness.calls.fetch.push(url);
-        if (url.endsWith('/git/ref/heads/main')) return response({ object: { sha: options.latestSha || SHA } });
+        if (url.endsWith('/git/ref/heads/main')) {
+          if (options.refStatus) return response('', options.refStatus);
+          return response({ object: { sha: options.latestSha || SHA } });
+        }
+        if (url.endsWith('/main/data/abilities.json')) return response(options.mainDocument || document);
         if (url.includes('/data/abilities.json')) return response(document);
         throw new Error(`unexpected URL ${url}`);
       },
@@ -477,6 +481,35 @@ test('まとめて追加のpayload検査: 未知キー・空・上限・candidat
   assert.throws(() => h.context.api_asstCreateAbilitiesFromExternalCandidates(unknownItemKey), /items\[0\]に未知の項目/);
   assert.strictEqual(h.state.abilities.length, 2, 'ヘッダー + seed のまま');
   assert.strictEqual(h.calls.lock, 0, 'payload検査はロック前に落ちる');
+});
+
+test('main解決がレート制限ならrawのmain内容と固定SHA版の一致で確認して書き込む', () => {
+  const h = makeHarness({ refStatus: 403 });
+  const payload = candidatePayload(h, 1201);
+  const before = h.calls.fetch.length;
+  const result = h.context.api_asstCreateAbilityFromExternalCandidate(payload);
+  assert.strictEqual(result.abilityId, 'ab-0002');
+  const urls = h.calls.fetch.slice(before);
+  assert.deepStrictEqual(urls, [
+    `https://raw.githubusercontent.com/futsalife24-bot/lMfDB/${SHA}/data/abilities.json`,
+    'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main',
+    'https://raw.githubusercontent.com/futsalife24-bot/lMfDB/main/data/abilities.json',
+  ]);
+  const batch = makeHarness({ refStatus: 429 });
+  const batchResult = batch.context.api_asstCreateAbilitiesFromExternalCandidates(batchPayload(batch, [1200, 1201]));
+  assert.strictEqual(batchResult.created, 2);
+});
+
+test('レート制限中にmainの内容が固定SHA版と違えば書かずに止め、429以外のAPI失敗はそのまま伝える', () => {
+  const changed = makeHarness({ refStatus: 403, mainDocument: externalDocument({ abilities: [externalAbility(1200, 'カードA', 'カード候補'), externalAbility(1201, '未知カード', '未紐付け候補（改訂）')] }) });
+  const payload = candidatePayload(changed, 1201);
+  const before = clone(changed.state);
+  assert.throws(() => changed.context.api_asstCreateAbilityFromExternalCandidate(payload), /外部mainが更新されています。再監査してください。（レート制限のためraw内容で確認）/);
+  assert.deepStrictEqual(changed.state, before);
+  const down = makeHarness({ refStatus: 500 });
+  const downPayload = candidatePayload(down, 1201);
+  assert.throws(() => down.context.api_asstCreateAbilityFromExternalCandidate(downPayload), /lMfDB main解決: HTTP 500/);
+  assert(!down.calls.fetch.some(url => url.endsWith('/main/data/abilities.json')), '500ではraw fallbackへ行かない');
 });
 
 console.log(`OK 外部候補追加・処置API ${passed}ケース`);

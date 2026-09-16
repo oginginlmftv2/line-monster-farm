@@ -543,7 +543,11 @@ function asstAuditFetchBytes_(url, label, maxBytes) {
     headers: headers
   });
   var status = response.getResponseCode();
-  if (status === 403 || status === 429) throw new Error(label + ': HTTP ' + status + '（GitHub APIのレート制限の可能性。数分待つか、' + ASST_LMFDB_READ_TOKEN_PROPERTY + 'を設定してください）');
+  if (status === 403 || status === 429) {
+    var limited = new Error(label + ': HTTP ' + status + '（GitHub APIのレート制限の可能性。数分待つか、' + ASST_LMFDB_READ_TOKEN_PROPERTY + 'を設定してください）');
+    limited.rateLimited = true;
+    throw limited;
+  }
   if (status !== 200) throw new Error(label + ': HTTP ' + status);
   var bytes = response.getBlob().getBytes();
   if (!bytes.length) throw new Error(label + ': 空レスポンスです。');
@@ -577,6 +581,26 @@ function asstAuditExternal_(externalSha) {
     document: asstAuditParseJson_(fetched.text, 'lMfDB abilities.json'),
     sha256: asstSha256Bytes_(fetched.bytes)
   };
+}
+
+// 書込み前の「外部mainは固定SHAのまま動いていないか」確認。
+// 1. キャッシュ済みのmain SHAがあればそれと比較（GitHub APIを叩かない）
+// 2. なければGitHub APIでmainを解決して比較
+// 3. APIがレート制限（403/429）なら、rawのmain版abilities.jsonを取り、固定SHA版と内容SHA-256が一致するかで判定する。
+//    rawはCDN配信でレート制限にほぼ当たらない。内容が同じなら登録の安全性はコミットSHA一致と同じ。
+//    一致しなければ従来どおり「外部mainが更新されています」で止める。
+function asstLmfdbAssertExternalCurrent_(externalSha, externalSha256) {
+  var latestSha;
+  try { latestSha = asstAuditResolveExternalSha_(null); }
+  catch (error) {
+    if (!error || !error.rateLimited) throw error;
+    var mainUrl = ASST_LMFDB_RAW_BASE + 'main' + ASST_LMFDB_RAW_PATH;
+    var current = asstAuditFetchBytes_(mainUrl, 'lMfDB main内容確認', ASST_LMFDB_MAX_BYTES);
+    if (asstSha256Bytes_(current.bytes) !== externalSha256) throw new Error('外部mainが更新されています。再監査してください。（レート制限のためraw内容で確認）');
+    return { latestSha: externalSha, verifiedBy: 'raw-content' };
+  }
+  if (latestSha !== externalSha) throw new Error('外部mainが更新されています。再監査してください。');
+  return { latestSha: latestSha, verifiedBy: 'ref' };
 }
 
 function asstAuditDangerousStrings_(value, location, found) {
