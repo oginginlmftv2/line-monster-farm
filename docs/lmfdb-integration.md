@@ -841,7 +841,7 @@ node scripts/verify.js                                 PASS 83 / FAIL 0 / WARN 0
 ```
 
 能力DBは`schemaVersion: 2`、既存1,079件の`abilityId`、legacyId、内容、配列順を
-verifierが固定検査する。監査時点では新規由来の`legacyId: null`と`status: draft`は0件であり、
+verifierが固定検査する（`status`はCMSのまとめ更新で変わる作業状態なので固定対象外）。監査時点では新規由来の`legacyId: null`と`status: draft`は0件であり、
 本番最小登録後は選択した1件だけが増える想定である。
 
 ## 20. 管理者向け本番導入手順

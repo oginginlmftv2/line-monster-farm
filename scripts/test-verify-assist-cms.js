@@ -72,6 +72,20 @@ function expectFailure(label, mutate, expected) {
   }
 }
 
+// テスト用コピーは画像を持たないため、issues全体ではなく指定のFAILが出ないことだけを見る。
+function expectNoIssue(label, mutate, unexpected) {
+  const root = makeCopy();
+  try {
+    mutate(root);
+    const issues = validateRoot(root);
+    const hit = issues.find(issue => unexpected.test(issue));
+    if (hit) throw new Error(`${label}: 想定外のFAIL: ${hit}`);
+    console.log(`PASS ${label}`);
+  } finally {
+    fs.rmSync(root, { recursive: true, force: true });
+  }
+}
+
 function gasAbilitySchemaContext() {
   const context = {
     console,
@@ -270,6 +284,13 @@ expectFailure('既存移行能力1,079件の変更を拒否', root => {
   const file = path.join(root, 'src/data/assist-abilities.json');
   const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
   doc.abilities[0].name += '変更';
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, /既存移行能力1,079件/);
+
+expectNoIssue('既存移行能力のstatus変更（CMSのまとめ更新）は許可', root => {
+  const file = path.join(root, 'src/data/assist-abilities.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
+  doc.abilities[0].status = doc.abilities[0].status === 'draft' ? 'verified' : 'draft';
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /既存移行能力1,079件/);
 
