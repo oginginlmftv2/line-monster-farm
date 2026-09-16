@@ -105,9 +105,9 @@ function asstLmfdbDispositionPayload_(payload) {
 // ScriptLock取得後に呼ぶ。外部mainの再解決・外部JSON再取得・ローカル再読込・再分類・version検算までを行い、
 // 候補の特定はしない（1件APIとまとめてAPIで共有する）。
 function asstLmfdbCurrentAuditBase_(payload) {
-  var latestSha = asstAuditResolveExternalSha_(null);
-  if (latestSha !== payload.externalSha) throw new Error('外部mainが更新されています。再監査してください。');
-  var external = asstAuditExternal_(latestSha);
+  // 固定SHA版を先に取り（rawはレート制限にほぼ当たらない）、main確認はその内容SHA-256を使えるようにする
+  var external = asstAuditExternal_(payload.externalSha);
+  var latestSha = asstLmfdbAssertExternalCurrent_(payload.externalSha, external.sha256).latestSha;
   var localRows = asstAuditReadLocal_();
   var report = asstAuditAnalyze_(external.document, localRows, latestSha, external.sha256);
   if (report.auditStatus !== 'PASS') throw new Error('外部能力監査がFAILです。登録・処置できません。');

@@ -619,6 +619,11 @@ changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReu
   `LMFDB_READ_TOKEN`（公開リポジトリ読取だけのfine-grained token）を置くと、main解決GETにだけ
   Bearerを付けて認証済み枠（1時間5,000回）を使う。固定SHAのraw取得には付けない。
   公開用tokenとは別のプロパティで、読取API側で参照してよいのはこの1件だけ（`verify-assist-cms.js`で固定）
+- **書込み時のmain確認のraw fallback**（2026-09-16 追記）: キャッシュもtokenも無い状態で書込みが
+  GitHub APIの403/429に当たると1回目が必ず落ちていた。`asstLmfdbAssertExternalCurrent_`は、
+  APIがレート制限のときだけ `raw.githubusercontent.com/.../main/data/abilities.json` を取り、
+  固定SHA版と内容SHA-256が一致すれば「mainは動いていない」とみなして書き込む。
+  一致しなければ従来どおり「外部mainが更新されています」で止める。403/429以外のAPI失敗はfallbackせずそのまま失敗
 
 ### 15-6. まとめて追加API（2026-09-16）
 
