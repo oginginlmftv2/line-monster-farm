@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1103,
-    "resolved": 584,
+    "abilities": 1111,
+    "resolved": 592,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -19793,6 +19793,135 @@
         "攻撃強化"
       ],
       "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1109",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[白]剛将",
+      "description": "＜オーラ白＞ちから技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1110",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[自身白]丈夫さ＋３%",
+      "description": "[自身白]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ白"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1111",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[無機]丈夫さ＋３%",
+      "description": "[無機]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "無機"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1112",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[砂漠]闘志",
+      "description": "[砂漠]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1113",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[雪山]丈夫さ＋１００",
+      "description": "[雪山]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1114",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[晴れ]丈夫さ＋１００",
+      "description": "[晴れ]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1115",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[無機]重撃",
+      "description": "[無機]ちから技命中時、連撃Ｌｖ１×１回",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "連撃",
+        "無機"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1116",
+      "legacyId": null,
+      "cardId": "aaa-MR-aileblanche",
+      "sourceName": "エルブランシュ",
+      "name": "[雪山]闘志",
+      "description": "[雪山]与ダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 9,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
