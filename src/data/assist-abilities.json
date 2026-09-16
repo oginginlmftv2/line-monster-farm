@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1141,
-    "resolved": 622,
+    "abilities": 1153,
+    "resolved": 634,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -20444,6 +20444,213 @@
         "クリティカル"
       ],
       "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1147",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "セラフィナパッション I",
+      "description": "[自身赤]５以上のガッツダメージを受ける度に自身の回避ステータスと丈夫さステータス＜＋５％＞＜最大＋２０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤",
+        "回避",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1148",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "セラフィナパッション II",
+      "description": "[自身赤]バトル中、次の効果<br>・５以上のガッツダメージを受ける度に自身の回避ステータスと丈夫さステータス＜＋１０％＞＜最大＋４０％＞<br>・＜赤＞技命中時、【シールド】展開＜２０秒＞＜１回＞[最大値＋１００]",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤",
+        "回避",
+        "丈夫さ強化",
+        "シールド"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1149",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "セラフィナアジリティ I",
+      "description": "[自身赤]自身の残りライフに応じて次の効果<br>・[５０％以上]回避率＜＋１０％＞<br>・[５０％以下]被ダメ低下＜＋１０％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤",
+        "回避",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1150",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "セラフィナアジリティ II",
+      "description": "[自身赤]自身の残りライフに応じて次の効果<br>・[５０％以上]回避率＜＋２０％＞と回避率に応じて追撃回避<br>・[５０％以下]丈夫さステ＜＋２０％＞と被ダメブロック＜＋２５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤",
+        "回避",
+        "追撃連撃",
+        "丈夫さ強化",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1151",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[赤]急襲",
+      "description": "＜オーラ赤＞ちから技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1152",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[自身赤]丈夫さ＋３%",
+      "description": "[自身赤]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ赤"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1153",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[幻霊]丈夫さ＋３%",
+      "description": "[幻霊]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "幻霊"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1154",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[海岸]急所狙い",
+      "description": "[海岸]クリティカル率上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1155",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[火山]急所狙い",
+      "description": "[火山]クリティカル率上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1156",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[海岸]丈夫さ＋１００",
+      "description": "[海岸]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1157",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[晴れ]丈夫さ＋１００",
+      "description": "[晴れ]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1158",
+      "legacyId": null,
+      "cardId": "g1-MR-serafina",
+      "sourceName": "セラフィナ",
+      "name": "[幻霊]身軽",
+      "description": "[幻霊]回避ステータス上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "幻霊"
+      ],
+      "sortOrder": 12,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
