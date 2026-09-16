@@ -24,6 +24,11 @@
       <select id="asst_filterMonType" aria-label="モン類で絞り込み"></select>
       <select id="asst_filterAura" aria-label="オーラで絞り込み"></select>
       <select id="asst_filterRarity" aria-label="レアリティで絞り込み"></select>
+      <select id="asst_sort" aria-label="並び順">
+        <option value="newest" selected>追加が新しい順</option>
+        <option value="oldest">追加が古い順</option>
+        <option value="name">名前順</option>
+      </select>
     </div>
     <div id="asst_cardList" class="card-list"><div class="empty">読み込み中…</div></div>
   </aside>
@@ -56,8 +61,15 @@ function asstBootLocalPreview(){
   }).catch(function(error){el('asst_cardList').innerHTML='<div class="empty">ローカルDBを読み込めません: '+esc(error.message)+'</div>';});
 }
 function asstFilteredCards(){
-  var q=el('asst_query').value.trim().toLowerCase(),monType=el('asst_filterMonType').value,aura=el('asst_filterAura').value,rarity=el('asst_filterRarity').value;
-  return ASST.cards.filter(function(card){ return (!q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0)&&(!monType||card.monType===monType)&&(!aura||card.aura===aura)&&(!rarity||card.rarity===rarity); });
+  var q=el('asst_query').value.trim().toLowerCase(),monType=el('asst_filterMonType').value,aura=el('asst_filterAura').value,rarity=el('asst_filterRarity').value,sort=el('asst_sort')?el('asst_sort').value:'newest';
+  // ASST.cardsはサーバーがsourceOrder昇順（＝登録順）で返し、新規登録は末尾へ足す。配列の位置をそのまま追加順として使う。
+  var list=ASST.cards.map(function(card,index){return{card:card,index:index};}).filter(function(item){ var card=item.card;return (!q||(card.cardId+' '+card.name).toLowerCase().indexOf(q)>=0)&&(!monType||card.monType===monType)&&(!aura||card.aura===aura)&&(!rarity||card.rarity===rarity); });
+  list.sort(function(a,b){
+    if(sort==='name')return String(a.card.name).localeCompare(String(b.card.name),'ja')||a.index-b.index;
+    if(sort==='oldest')return a.index-b.index;
+    return b.index-a.index;
+  });
+  return list.map(function(item){return item.card;});
 }
 function asstPopulateCardFilter(select,label,values){select.replaceChildren();select.add(new Option(label+'すべて',''));values.forEach(function(value){select.add(new Option(value,value));});}
 function asstPopulateCardFilters(){
@@ -1110,4 +1122,4 @@ function asstExportAll(){
     alert('export成功\n'+result.files.map(function(file){return file.name+'\nSHA-256 '+file.sha256;}).join('\n\n'));
   });
 }
-el('asst_query').oninput=asstRenderList;el('asst_filterMonType').onchange=asstRenderList;el('asst_filterAura').onchange=asstRenderList;el('asst_filterRarity').onchange=asstRenderList;el('asst_btnCreateCard').onclick=asstOpenCreateCard;el('asst_btnExternalAbilityAudit').onclick=asstOpenExternalAudit;el('asst_btnAbilitySearch').onclick=asstSearchAbility;el('asst_btnExport').onclick=asstExportAll;</script>
+el('asst_query').oninput=asstRenderList;el('asst_filterMonType').onchange=asstRenderList;el('asst_filterAura').onchange=asstRenderList;el('asst_filterRarity').onchange=asstRenderList;el('asst_sort').onchange=asstRenderList;el('asst_btnCreateCard').onclick=asstOpenCreateCard;el('asst_btnExternalAbilityAudit').onclick=asstOpenExternalAudit;el('asst_btnAbilitySearch').onclick=asstSearchAbility;el('asst_btnExport').onclick=asstExportAll;</script>
