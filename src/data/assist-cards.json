@@ -194,9 +194,9 @@
         "4b": null
       },
       "ratings": {
+        "ta": 5,
         "karyo": 1.2,
         "ikusei": 3.8,
-        "ta": 5,
         "battle": 2.5
       },
       "explanation": "・創造待望の師匠\n・トレ性能には特殊なところはなく他の師匠と遜色ない性能\n・環境を変えてくれること間違いなし\n・創造を強くしたいなら絶対に必要\n・被ダメブロックはよい\n・被ガッツダメ低下もよい\n・全ステ上昇はおまけでシールド破壊が本体\n・幻霊を絶対許さないマン製造機\n・幻霊には強いが他にはどうかと言われたらまぁまぁまぁ",
@@ -245,7 +245,7 @@
       "image": "assist-cards/c27j-MR-godemperor.jpg",
       "event2": "超本気",
       "releasedAt": "2026/06/14",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -258,10 +258,10 @@
         "4b": null
       },
       "ratings": {
-        "karyo": 2.3,
-        "ikusei": 3.3,
         "ta": 1.5,
-        "battle": 2.5
+        "ikusei": 3.3,
+        "battle": 2.5,
+        "karyo": 2.3
       },
       "explanation": "",
       "formations": [],

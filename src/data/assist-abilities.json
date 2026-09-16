@@ -5,10 +5,10 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1213,
-    "resolved": 694,
+    "abilities": 1245,
+    "resolved": 723,
     "ambiguous": 7,
-    "unlinked": 512,
+    "unlinked": 515,
     "duplicateCandidates": 44
   },
   "abilities": [
@@ -13766,7 +13766,7 @@
     {
       "abilityId": "ab-0782",
       "legacyId": 782,
-      "cardId": "d23k-MR-eiru",
+      "cardId": null,
       "sourceName": "エイル",
       "name": "雪戯クイック I",
       "description": "中距離でダメージを受けた時、ガッツ回復Lv3",
@@ -13775,15 +13775,15 @@
       "tags": [
         "ガッツ回復"
       ],
-      "sortOrder": 1,
-      "linkStatus": "resolved",
+      "sortOrder": null,
+      "linkStatus": "unlinked",
       "flags": [],
       "status": "draft"
     },
     {
       "abilityId": "ab-0783",
       "legacyId": 783,
-      "cardId": "d23k-MR-eiru",
+      "cardId": null,
       "sourceName": "エイル",
       "name": "雪戯クイック II",
       "description": "中距離でダメージを受けた時、ガッツ回復Lv6",
@@ -13792,15 +13792,15 @@
       "tags": [
         "ガッツ回復"
       ],
-      "sortOrder": 2,
-      "linkStatus": "resolved",
+      "sortOrder": null,
+      "linkStatus": "unlinked",
       "flags": [],
       "status": "draft"
     },
     {
       "abilityId": "ab-0784",
       "legacyId": 784,
-      "cardId": "d23k-MR-eiru",
+      "cardId": null,
       "sourceName": "エイル",
       "name": "聖夜の贈り物 II",
       "description": "[自身緑]遠距離技発動時、ガッツ回復Lv7",
@@ -13810,8 +13810,8 @@
         "オーラ緑",
         "ガッツ回復"
       ],
-      "sortOrder": 3,
-      "linkStatus": "resolved",
+      "sortOrder": null,
+      "linkStatus": "unlinked",
       "flags": [],
       "status": "draft"
     },
@@ -21231,7 +21231,7 @@
         "全技強化",
         "ガッツ変化系"
       ],
-      "sortOrder": 4,
+      "sortOrder": 1,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21250,7 +21250,7 @@
         "デバフ",
         "被ダメ軽減"
       ],
-      "sortOrder": 5,
+      "sortOrder": 2,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21270,7 +21270,7 @@
         "後半",
         "デバフ"
       ],
-      "sortOrder": 6,
+      "sortOrder": 3,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21291,7 +21291,7 @@
         "被ダメ軽減",
         "ガッツ変化系"
       ],
-      "sortOrder": 7,
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21311,7 +21311,7 @@
         "攻撃強化",
         "シールド"
       ],
-      "sortOrder": 8,
+      "sortOrder": 5,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21331,7 +21331,7 @@
         "攻撃強化",
         "シールド"
       ],
-      "sortOrder": 9,
+      "sortOrder": 6,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
@@ -21826,6 +21826,588 @@
         "ガッツ変化系"
       ],
       "sortOrder": 24,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1219",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[青]ホークアイ",
+      "description": "＜オーラ青＞技発動時、[相手赤]に次の技必中＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青",
+        "命中"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1220",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[自身青]丈夫さ＋３％",
+      "description": "[自身青]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1221",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[魔族]丈夫さ＋３％",
+      "description": "[魔族]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "魔族",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1222",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[雪山]精神攻撃",
+      "description": "[雪山]ガッツダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "雪山",
+        "ガッツ変化系"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1223",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[森林]狙い撃ち",
+      "description": "[森林]命中率上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "森林",
+        "命中"
+      ],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1224",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[雪山]丈夫さ＋１００",
+      "description": "[雪山]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1225",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[曇り]丈夫さ＋１００",
+      "description": "[曇り]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1226",
+      "legacyId": null,
+      "cardId": "b16i-MR-diana",
+      "sourceName": "ディアナ",
+      "name": "[魔族]スコープ",
+      "description": "[魔族]命中率上昇Ｌｖ４",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "魔族"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1227",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[青]急襲",
+      "description": "＜オーラ青＞ちから技発動時、与ダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青",
+        "攻撃強化"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1228",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[自身青]回避＋３％",
+      "description": "[自身青]回避ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青",
+        "回避"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1229",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[創造]回避＋３％",
+      "description": "[創造]回避ステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "創造",
+        "回避"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1230",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[砂漠]急所狙い",
+      "description": "[砂漠]クリティカル率上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "砂漠",
+        "クリティカル"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1231",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[雪山]急所狙い",
+      "description": "[雪山]クリティカル率上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "雪山",
+        "クリティカル"
+      ],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1232",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[雪山]回避＋１００",
+      "description": "[雪山]回避ステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "雪山",
+        "回避"
+      ],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1233",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[悪天候]回避＋１００",
+      "description": "[悪天候]回避ステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1234",
+      "legacyId": null,
+      "cardId": "b5g-SSR-norun",
+      "sourceName": "ノルン",
+      "name": "[創造]身軽",
+      "description": "[創造]回避ステータス上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "創造",
+        "回避"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1235",
+      "legacyId": null,
+      "cardId": "c24j-MR-ikki",
+      "sourceName": "イッキ",
+      "name": "ロボトルファイト！IV",
+      "description": "[自身黄]次の効果付与＜１回＞<br>・[装甲Ｌｖ５（ブロック＜－７５％＞、技を受けた時＜１５％＞ずつ減少）]<br>・オーラ技発動時、[充填Ｌｖ４]付与<br>・[有利]オーラ技発動時、全技ステータス＜＋５＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "自身黄",
+        "装甲",
+        "充填",
+        "有利時",
+        "全技強化",
+        "オーラ黄",
+        "ガッツ回復"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1236",
+      "legacyId": null,
+      "cardId": "c24j-MR-ikki",
+      "sourceName": "イッキ",
+      "name": "熱い魂 III",
+      "description": "[後半][自身黄]忠誠度＜９０＞以上で技発動時、次の効果<br>・ガッツ回復速度＜＋２０％＞<br>・忠誠度９０を超えた分ガッツ回復＜最大４０＞＜１回＞<br>・[有利]消費ガッツ＜－２０％＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "後半",
+        "自身黄",
+        "ガッツ回復",
+        "忠誠度",
+        "有利時"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1237",
+      "legacyId": null,
+      "cardId": "c24j-MR-ikki",
+      "sourceName": "イッキ",
+      "name": "熱い魂 IV",
+      "description": "[後半][自身黄]忠誠度＜９０＞以上で技発動時、次の効果<br>・ガッツ回復速度＜＋２０％＞<br>・忠誠度９０を超えた分ガッツ回復＜最大５０＞＜１回＞<br>・[有利]消費ガッツ＜－２０％＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "後半",
+        "自身黄",
+        "ガッツ回復",
+        "忠誠度",
+        "有利時"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1238",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "超闘魂",
+      "description": "[状態変化]中盤以降で相手ガッツが多いとき発動し、一定時間被ダメしたとき自身のガッツが大回復",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "ガッツ回復"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1239",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "バーサーク I",
+      "description": "[無機]オーラ技命中時、次の効果付与＜３回＞<br>・自身の丈夫さステ＜－２０％＞<br>・丈夫さステの＜１０％＞をちから、かしこさ、命中、回避ステに加算",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "無機",
+        "オーラ",
+        "攻撃強化",
+        "命中強化",
+        "回避"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1240",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "バーサーク II",
+      "description": "[自身黄または無機]オーラ技命中時、次の効果付与＜３回＞<br>・自身の丈夫さステ＜－２０％＞<br>・丈夫さステの＜１３％＞をちから、かしこさ、命中、回避ステに加算<br>・[有利]クリ率とクリダメ＜＋８％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身黄",
+        "無機",
+        "オーラ",
+        "攻撃強化",
+        "命中強化",
+        "回避",
+        "クリティカル",
+        "有利時"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1241",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "威力全開 I",
+      "description": "[自身黄またはニャー種]＜かしこさ＞技命中時、次の効果<br>・バトル中の技の発動回数に応じて攻撃ステ上昇＜最大＋２０％＞<br>・[有利]貫通Ｌｖ１",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身黄",
+        "ニャー種",
+        "かしこさ技",
+        "攻撃強化",
+        "貫通",
+        "有利時"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1242",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "威力全開 II",
+      "description": "[自身黄またはニャー種]＜かしこさ＞技命中時、次の効果<br>・バトル中の技の発動回数に応じて攻撃ステ上昇＜最大＋４０％＞<br>・[有利]貫通Ｌｖ２",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身黄",
+        "ニャー種",
+        "かしこさ技",
+        "攻撃強化",
+        "貫通",
+        "有利時"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1243",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[黄]破壊",
+      "description": "＜オーラ黄＞技発動時、クリダメ上昇Ｌｖ４＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ黄"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1244",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[自身黄]丈夫さ＋３％",
+      "description": "[自身黄]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "自身黄",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1245",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[無機]丈夫さ＋３％",
+      "description": "[無機]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "無機",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1246",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[砂漠]強打",
+      "description": "[砂漠]クリダメ上昇Ｌｖ３",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1247",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[砂漠]丈夫さ＋１００",
+      "description": "[砂漠]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1248",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[曇り]丈夫さ＋１００",
+      "description": "[曇り]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1249",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[無機]守護",
+      "description": "[無機]被ダメ低下Ｌｖ４",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "無機",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1250",
+      "legacyId": null,
+      "cardId": "c25j-SSR-metabee",
+      "sourceName": "メタビー",
+      "name": "[森林]守護",
+      "description": "[森林]被ダメ低下Ｌｖ４",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "被ダメ軽減"
+      ],
+      "sortOrder": 13,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
