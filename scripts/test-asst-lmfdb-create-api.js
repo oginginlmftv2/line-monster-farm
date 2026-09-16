@@ -82,6 +82,7 @@ function makeHarness(options = {}) {
   const harness = {
     state,
     calls: { fetch: [], lock: 0, release: 0, auth: 0 },
+    cache: options.cache ? Object.assign({}, options.cache) : {},
     failure: options.failure ? Object.assign({ used: false }, options.failure) : null,
     maybeFail(sheet, op) {
       if (this.failure && !this.failure.used && this.failure.sheet === sheet && this.failure.op === op) {
@@ -110,6 +111,9 @@ function makeHarness(options = {}) {
       },
     },
     LockService: { getScriptLock() { return { tryLock() { harness.calls.lock++; return options.lockAvailable !== false; }, releaseLock() { harness.calls.release++; } }; } },
+    // main解決SHAのキャッシュと任意読取tokenだけを許す。シートへの永続化には使わない
+    CacheService: { getScriptCache() { return { get(key) { return Object.prototype.hasOwnProperty.call(harness.cache, key) ? harness.cache[key] : null; }, put(key, value) { harness.cache[key] = String(value); } }; } },
+    PropertiesService: { getScriptProperties() { return { getProperty(key) { return options.properties && options.properties[key] ? options.properties[key] : null; } }; } },
     requireScope_(scope) { harness.calls.auth++; if (options.unauthorized) throw new Error('権限がありません。'); assert.strictEqual(scope, 'assist'); return { nickname: 'tester', role: 'admin', scopes: ['assist'] }; },
     book_() { return { getSheetByName: name => sheets[name] || null }; },
     nowIso_() { return NOW; },
@@ -179,13 +183,31 @@ function assertRestored(harness) { assert.deepStrictEqual(harness.state, harness
 test('正常なunlinked追加・サーバー採番・draft固定', () => {
   const h = makeHarness();
   const result = clone(h.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h, 1201)));
-  assert.deepStrictEqual(result, { ok: true, abilityId: 'ab-0002', legacyId: null, status: 'draft', linkStatus: 'unlinked', sortOrder: null, sourceOrder: 2, externalSha: SHA, externalFingerprint: result.externalFingerprint, validation: 'PASS' });
+  assert.deepStrictEqual(result, { ok: true, abilityId: 'ab-0002', legacyId: null, status: 'draft', linkStatus: 'unlinked', sortOrder: null, sourceOrder: 2, externalSha: SHA, externalFingerprint: result.externalFingerprint, validation: 'PASS', expectedAbilitiesVersion: result.expectedAbilitiesVersion });
+  // 書込み後のversionは、次の書込みがそのまま使える値（再監査で得るversionと一致）
+  assert.match(result.expectedAbilitiesVersion, /^[0-9a-f]{64}$/);
+  assert.strictEqual(result.expectedAbilitiesVersion, h.context.api_asstAuditExternalAbilities({ externalSha: SHA }).expectedAbilitiesVersion);
   const row = h.state.abilities[2];
   assert.strictEqual(row[HEADERS.abilities.indexOf('legacyId')], '');
   assert.strictEqual(row[HEADERS.abilities.indexOf('cardId')], '');
   assert.strictEqual(row[HEADERS.abilities.indexOf('sortOrder')], '');
   assert.strictEqual(row[HEADERS.abilities.indexOf('flagsJson')], '[]');
   assert.strictEqual(row[HEADERS.abilities.indexOf('version')], 1);
+});
+
+test('応答のexpectedAbilitiesVersionをそのまま次の書込みに使え、再監査を挟まなくても連続保存できる', () => {
+  const h = makeHarness();
+  const beforeFetches = h.calls.fetch.length;
+  const first = h.context.api_asstCreateAbilityFromExternalCandidate(candidatePayload(h, 1201));
+  const staleVersion = candidatePayload(h, 1200).expectedAbilitiesVersion;
+  assert.strictEqual(staleVersion, first.expectedAbilitiesVersion, '再監査で得るversionと応答のversionは同じ');
+  const second = candidatePayload(h, 1200);
+  second.expectedAbilitiesVersion = first.expectedAbilitiesVersion;
+  const result = h.context.api_asstCreateAbilityFromExternalCandidate(second);
+  assert.strictEqual(result.abilityId, 'ab-0003');
+  assert.match(result.expectedAbilitiesVersion, /^[0-9a-f]{64}$/);
+  assert.notStrictEqual(result.expectedAbilitiesVersion, first.expectedAbilitiesVersion);
+  assert(h.calls.fetch.length > beforeFetches, 'サーバー側は毎回外部を再取得して検査する');
 });
 
 test('正常なresolved追加と対象カード末尾sortOrder採番', () => {

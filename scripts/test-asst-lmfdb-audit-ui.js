@@ -569,7 +569,7 @@ test('読取専用分類・処置済み・auditOnlyは編集プレビューを�
     candidate('card_match_candidate', 5, '監査のみ', { registrationEligible: true, auditOnly: true }),
   ]) {
     const h = harness({ response: response({ candidates: [item] }) });h.context.asstOpenExternalAudit();h.context.asstOpenAuditDetail(0);
-    assert.match(h.html(), /読取専用/);assert.doesNotMatch(h.html(), /id="asst_btnAuditFinalPreview"/);
+    assert.match(h.html(), /読取専用/);assert.doesNotMatch(h.html(), /id="asst_btnAuditCreateAbility"/);
   }
 });
 
@@ -591,18 +591,19 @@ test('登録予定値は原文を保ちlinkStatusだけ未選択で開始する'
 });
 
 test('プレビュー検査が必須値・許可値・タグ・危険文字列・確認漏れを拒否する', () => {
-  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const bad={sourceName:'   ',name:'x\t',description:'<b>x</b></ScRiPt>',source:'未知',rarity:'UR',tags:[' ','重複','重複',7],linkStatus:'',confirmations:{originalCompared:false,normalizationReviewed:false,cardReviewed:false,idReuseReviewed:false,draftReviewed:false}};
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const bad={sourceName:'   ',name:'x\t',description:'<b>x</b></ScRiPt>',source:'未知',rarity:'UR',tags:[' ','重複','重複',7],linkStatus:'',confirmations:{idReuseReviewed:false}};
   const issues=h.context.asstAuditDraftIssues(item,bad).join(' / ');
-  for (const token of ['sourceNameは必須','制御文字','許可値','空タグ','重複タグ','文字列以外','</script','<br>以外','linkStatus','外部原文','NFKC','カード対応','draft']) assert(issues.includes(token), token);
+  for (const token of ['sourceNameは必須','制御文字','許可値','空タグ','重複タグ','文字列以外','</script','<br>以外','linkStatus']) assert(issues.includes(token), token);
+  for (const token of ['外部原文との比較確認','NFKCの比較専用確認','draft・未公開の確認']) assert(!issues.includes(token), token);
 });
 
-test('resolvedはカード選択とカード確認を必須にする', () => {
+test('resolvedはカード選択を必須にし、確認チェックは要求しない', () => {
   const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.cards=[{cardId:'card-1200',name:'ジュリア',rarity:'MR'}];
   const item=h.context.ASST.audit.response.candidates[0];
-  const d={sourceName:'カード',name:'能力',description:'説明<br>続き',source:'伝授',rarity:'その他',tags:[],linkStatus:'resolved',cardId:'card-1200',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:false,idReuseReviewed:false,draftReviewed:true}};
-  assert(h.context.asstAuditDraftIssues(item,d).some(value => /カード確認/.test(value)));
-  d.confirmations.cardReviewed=true;
+  const d={sourceName:'カード',name:'能力',description:'説明<br>続き',source:'伝授',rarity:'その他',tags:[],linkStatus:'resolved',cardId:'card-1200',confirmations:{idReuseReviewed:false}};
   assert.strictEqual(h.context.asstAuditDraftIssues(item,d).length,0);
+  const preview=h.context.asstBuildAuditPreview(item,d);
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(preview.confirmations)),{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false});
   d.cardId='';
   assert(h.context.asstAuditDraftIssues(item,d).some(value => /紐付けるカードを選択/.test(value)));
   d.cardId='card-unknown';
@@ -620,15 +621,20 @@ test('自動候補がなくても手動でカードを選びresolvedで登録で
   assert.match(h.html(), /<option value="aab-MR-julia">ジュリア（MR） \/ aab-MR-julia<\/option>/);
   assert.doesNotMatch(h.html(), /value="resolved"[^>]* disabled/);
   assert.match(h.html(), /—（自動一致なし）/);
+  assert.match(h.html(), /id="asst_auditFinalPreview"/);
+  assert.match(h.html(), /id="asst_btnAuditCreateAbility" disabled/);
+  assert.match(h.html(), /追加前に直す項目: [^<]*linkStatusを明示選択してください/);
   for (const [id, value] of [['sourceName','ジュリア'],['name','能力'],['description','説明'],['source','イベント'],['rarity','MR'],['tags',''],['linkStatus','resolved'],['cardId','aab-MR-julia']]) h.context.el('asst_audit_'+id).value=value;
-  for (const id of ['originalCompared','normalizationReviewed','cardReviewed','draftReviewed']) h.context.el('asst_audit_'+id).checked=true;
-  h.context.asstConfirmAuditPreview();
-  const preview=h.context.ASST.audit.finalPreview;
+  h.context.asstRefreshAuditPreview();
+  const wrap=h.context.el('asst_auditFinalPreviewWrap').innerHTML;
+  assert.doesNotMatch(wrap, /id="asst_btnAuditCreateAbility" disabled/);
+  assert.match(wrap, /ジュリア（MR） \/ aab-MR-julia/);
+  assert.doesNotMatch(h.html(), /id="asst_audit_originalCompared"|id="asst_audit_draftReviewed"/);
+  h.context.asstQueueAuditAbility();
+  const preview=h.context.ASST.audit.pending[0];
   assert.strictEqual(preview.registration.linkStatus,'resolved');
   assert.strictEqual(preview.registration.cardId,'aab-MR-julia');
-  assert.match(h.html(), /手動で選択/);
-  assert.match(h.html(), /ジュリア（MR） \/ aab-MR-julia/);
-  h.context.asstQueueAuditAbility();
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(preview.confirmations)),{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false});
   assert.strictEqual(h.calls.length,1);
   assert.strictEqual(h.context.ASST.audit.pending.length,1);
   h.context.asstRunPendingAuditSaves();
@@ -639,15 +645,15 @@ test('自動候補がなくても手動でカードを選びresolvedで登録で
 test('unlinkedを選んだときはcardIdをnullで送る', () => {
   const h = harness();h.context.asstOpenExternalAudit();h.context.ASST.cards=[{cardId:'card-1200',name:'ジュリア',rarity:'MR'}];
   const item=h.context.ASST.audit.response.candidates[0];
-  const preview=h.context.asstBuildAuditPreview(item,{sourceName:'カード',name:'能力',description:'説明',source:'イベント',rarity:'MR',tags:[],linkStatus:'unlinked',cardId:'card-1200',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false}});
+  const preview=h.context.asstBuildAuditPreview(item,{sourceName:'カード',name:'能力',description:'説明',source:'イベント',rarity:'MR',tags:[],linkStatus:'unlinked',cardId:'card-1200',confirmations:{idReuseReviewed:false}});
   assert.strictEqual(preview.registration.cardId,null);
 });
 
 test('最終プレビュー契約は許可キーだけを組み立てる', () => {
-  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明\r\n続き',source:'イベント',rarity:'MR',tags:['タグ'],linkStatus:'unlinked',confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false,draftReviewed:true}};
+  const h = harness();h.context.asstOpenExternalAudit();const item=h.context.ASST.audit.response.candidates[0];const d={sourceName:'カード',name:'能力',description:'説明\r\n続き',source:'イベント',rarity:'MR',tags:['タグ'],linkStatus:'unlinked',confirmations:{idReuseReviewed:false}};
   const preview=h.context.asstBuildAuditPreview(item,d);assert.deepStrictEqual(Object.keys(preview.registration),['sourceName','name','description','source','rarity','tags','linkStatus','cardId']);assert.strictEqual(preview.registration.description,'説明\n続き');assert.strictEqual(preview.registration.cardId,null);assert.deepStrictEqual(Object.keys(preview.confirmations),['originalCompared','normalizationReviewed','cardReviewed','idReuseReviewed']);assert.strictEqual(h.calls.length,1);
   const rendered=h.context.asstRenderAuditFinalPreview(preview);assert.match(rendered,/まだ保存されていません/);assert.match(rendered,/保存予定に追加/);assert.doesNotMatch(rendered,/<textarea|登録成功|公開ボタン/);
-  assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*ASST\.audit\.finalPreview=null/);
+  assert.match(UI_SOURCE,/function asstBindAuditDetail\(\)[\s\S]*input\.oninput=asstRefreshAuditPreview/);
 });
 
 test('同じページ・同じタブへ戻ると編集・サマリー・処置済み表示を保持しページ移動で編集だけ破棄する', () => {
@@ -702,8 +708,8 @@ test('GASテンプレートを途中終了させるscript終了タグを文字�
 
 function queueCreate(h, index = 0) {
   const item = h.context.ASST.audit.response.candidates[index];
-  h.context.ASST.audit.detailIndex = index;
-  h.context.ASST.audit.finalPreview = h.context.asstBuildAuditPreview(item, { sourceName:'カード', name:'能力'+item.externalNumericId, description:'説明', source:'イベント', rarity:'MR', tags:[], linkStatus:'unlinked', cardId:'', confirmations:{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false} });
+  h.context.asstOpenAuditDetail(index);
+  for (const [id, value] of [['sourceName','カード'],['name','能力'+item.externalNumericId],['description','説明'],['source','イベント'],['rarity','MR'],['tags',''],['linkStatus','unlinked'],['cardId','']]) h.context.el('asst_audit_'+id).value=value;
   h.context.asstQueueAuditAbility();
 }
 
@@ -774,7 +780,29 @@ test('保存結果は成功だけなら時間経過で消え、失敗があれ�
   assert.doesNotMatch(failed.html(),/まとめて保存: 成功/);
 });
 
-test('新規登録を複数件まとめて保存し、1件ごとに再監査してから次を送る', () => {
+test('サーバーが書込み後のversionを返す場合は1件ごとの再監査を省き、次の送信にそのversionを使う', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)}),candidate('card_match_candidate',12,'能力C',{candidateKey:'c'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:3,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  for (const index of [0,1,2]) queueCreate(h,index);
+  let seq=0;
+  const runner=h.context.google.script.run;
+  runner.api_asstCreateAbilityFromExternalCandidate=function(payload){
+    h.calls.push({name:'api_asstCreateAbilityFromExternalCandidate',payload:JSON.parse(JSON.stringify(payload))});
+    seq++;
+    this.success({ok:true,abilityId:'ab-'+(1085+seq),legacyId:null,status:'draft',linkStatus:'unlinked',sortOrder:null,expectedAbilitiesVersion:String(seq).repeat(64)});
+  };
+  h.context.asstRunPendingAuditSaves();
+  const names=h.calls.map(call => call.name);
+  assert.deepStrictEqual(names,['api_asstAuditExternalAbilities','api_asstCreateAbilityFromExternalCandidate','api_asstCreateAbilityFromExternalCandidate','api_asstCreateAbilityFromExternalCandidate','api_asstAuditExternalAbilities']);
+  assert.strictEqual(h.calls[1].payload.expectedAbilitiesVersion,ABILITIES_VERSION);
+  assert.strictEqual(h.calls[2].payload.expectedAbilitiesVersion,'1'.repeat(64));
+  assert.strictEqual(h.calls[3].payload.expectedAbilitiesVersion,'2'.repeat(64));
+  assert.match(h.html(),/成功 3件 \/ 失敗 0件/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+});
+
+test('サーバー応答にversionが無い旧版では従来どおり1件ごとに再監査してから次を送る', () => {
   const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)}),candidate('card_match_candidate',12,'能力C',{candidateKey:'c'.repeat(64)})];
   const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:3,totalPages:1}})});
   h.context.asstOpenExternalAudit();
@@ -788,7 +816,7 @@ test('新規登録を複数件まとめて保存し、1件ごとに再監査し�
   assert.strictEqual(h.context.ASST.audit.pending.length,0);
 });
 
-test('途中の書込み失敗でも残りを処理し、失敗分だけ保存予定に残す', () => {
+test('書込み失敗は同じ固定SHAで再監査してから1回だけやり直し、通れば保存予定に残さない', () => {
   const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)})];
   const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
   h.context.asstOpenExternalAudit();
@@ -798,14 +826,62 @@ test('途中の書込み失敗でも残りを処理し、失敗分だけ保存�
   const original=runner.api_asstCreateAbilityFromExternalCandidate;
   runner.api_asstCreateAbilityFromExternalCandidate=function(payload){
     sent++;
-    if(sent===1){this.failure(new Error('能力DBが更新されています。'));return;}
+    if(sent===1){this.failure(new Error('能力DBが更新されています。再監査してください。'));return;}
+    return original.call(this,payload);
+  };
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(sent,3);
+  const names=h.calls.map(call => call.name);
+  // 1回目のcreate失敗はstub側で記録しないため、記録上は「再監査 → create成功 → 保存後の再監査」の順になる
+  assert.deepStrictEqual(names.slice(1,4),['api_asstAuditExternalAbilities','api_asstCreateAbilityFromExternalCandidate','api_asstAuditExternalAbilities']);
+  assert.deepStrictEqual(h.calls[1].payload,{page:1,pageSize:1000,externalSha:FIXED_SHA});
+  assert.strictEqual(h.calls[2].payload.candidateKey,'a'.repeat(64));
+  assert.match(h.html(),/成功 2件 \/ 失敗 0件 \/ やり直しで成功 1件/);
+  assert.match(h.html(),/1回目は失敗: 能力DBが更新されています。再監査してください。 → 再監査後のやり直しで成功/);
+  assert.strictEqual(h.runTimers(),0,'やり直しがあった結果は自動で消さない');
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+});
+
+test('やり直しても失敗する書込みは2回目で失敗にし、残りを処理して失敗分だけ保存予定に残す', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  queueCreate(h,0);queueCreate(h,1);
+  let sent=0;
+  const runner=h.context.google.script.run;
+  const original=runner.api_asstCreateAbilityFromExternalCandidate;
+  runner.api_asstCreateAbilityFromExternalCandidate=function(payload){
+    sent++;
+    if(payload.candidateKey==='a'.repeat(64)){this.failure(new Error('新規能力検査FAIL'));return;}
+    return original.call(this,payload);
+  };
+  h.context.asstRunPendingAuditSaves();
+  assert.strictEqual(sent,3);
+  assert.match(h.html(),/成功 1件 \/ 失敗 1件/);
+  assert.match(h.html(),/新規能力検査FAIL/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey,'a'.repeat(64));
+});
+
+test('応答が届かず保存予定に残った分は、再監査で保存済みなら成功として回収する', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64)}),candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64)})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.asstOpenExternalAudit();
+  queueCreate(h,0);queueCreate(h,1);
+  const saved=response({candidates:[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64),processed:true,disposition:'imported',registrationEligible:false}),candidates[1]],pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}});
+  let sent=0;
+  const runner=h.context.google.script.run;
+  const original=runner.api_asstCreateAbilityFromExternalCandidate;
+  runner.api_asstCreateAbilityFromExternalCandidate=function(payload){
+    sent++;
+    if(payload.candidateKey==='a'.repeat(64)){h.transport.response=saved;this.failure(new Error('タイムアウト'));return;}
     return original.call(this,payload);
   };
   h.context.asstRunPendingAuditSaves();
   assert.strictEqual(sent,2);
-  assert.match(h.html(),/成功 1件 \/ 失敗 1件/);
-  assert.strictEqual(h.context.ASST.audit.pending.length,1);
-  assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey,'a'.repeat(64));
+  assert.match(h.html(),/成功 2件 \/ 失敗 0件/);
+  assert.match(h.html(),/再監査で保存済みを確認しました/);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
 });
 
 test('保存後の再監査に失敗したら1度やり直し、それでも駄目なら未処理分を保存予定へ残す', () => {
@@ -827,6 +903,72 @@ test('保存後の再監査に失敗したら1度やり直し、それでも駄�
   assert.match(h.html(),/未処理の 1件は保存予定に残しました/);
   assert.strictEqual(h.context.ASST.audit.pending.length,1);
   assert.strictEqual(h.context.ASST.audit.pending[0].candidateKey,'b'.repeat(64));
+});
+
+test('カード対応候補だけ一覧にチェックを出し、紐付け先カードを名前で示す', () => {
+  const candidates=[
+    candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64),cardIdCandidate:'aab-MR-julia'}),
+    candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64),cardIdCandidate:'zzz-MR-missing'}),
+    candidate('unlinked_candidate',12,'能力C',{candidateKey:'c'.repeat(64),cardIdCandidate:null}),
+  ];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:3,totalPages:1}})});
+  h.context.ASST.cards=[{cardId:'aab-MR-julia',name:'ジュリア',rarity:'MR'}];
+  h.context.asstOpenExternalAudit();
+  assert.match(h.html(),/data-audit-select="0"/);
+  assert.match(h.html(),/紐付け先カード: <strong>ジュリア（MR） \/ aab-MR-julia<\/strong>/);
+  assert.doesNotMatch(h.html(),/data-audit-select="1"/);
+  assert.match(h.html(),/zzz-MR-missing（カードDBにありません）/);
+  assert.match(h.html(),/id="asst_btnSelectPage"/);
+  assert.match(h.html(),/id="asst_btnQueueSelected" disabled>選択した 0件を保存予定に追加/);
+  h.context.ASST.audit.tab='unlinked_candidate';h.context.asstRenderExternalAudit();
+  assert.doesNotMatch(h.html(),/data-audit-select=/);
+  assert.doesNotMatch(h.html(),/id="asst_btnQueueSelected"/);
+});
+
+test('一覧でチェックした候補を原文のまま自動候補カードへresolvedで保存予定に追加しAPIは呼ばない', () => {
+  const candidates=[
+    candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64),cardIdCandidate:'aab-MR-julia'}),
+    candidate('card_match_candidate',11,'能力B',{candidateKey:'b'.repeat(64),cardIdCandidate:'aaa-MR-aileblanche'}),
+  ];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:2,totalPages:1}})});
+  h.context.ASST.cards=[{cardId:'aab-MR-julia',name:'ジュリア',rarity:'MR'},{cardId:'aaa-MR-aileblanche',name:'エルブランシュ',rarity:'MR'}];
+  h.context.asstOpenExternalAudit();
+  h.context.asstToggleAuditSelection(0,true);
+  assert.strictEqual(h.context.asstAuditSelectedCount(),1);
+  h.context.asstQueueSelectedAuditCandidates();
+  assert.strictEqual(h.calls.length,1);
+  assert.strictEqual(h.context.ASST.audit.pending.length,1);
+  const entry=h.context.ASST.audit.pending[0];
+  assert.strictEqual(entry.kind,'create');
+  assert.strictEqual(entry.candidateKey,'a'.repeat(64));
+  assert.strictEqual(entry.registration.linkStatus,'resolved');
+  assert.strictEqual(entry.registration.cardId,'aab-MR-julia');
+  assert.strictEqual(entry.registration.name,'能力A');
+  assert.strictEqual(entry.registration.sourceName,'カード10');
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(entry.confirmations)),{originalCompared:true,normalizationReviewed:true,cardReviewed:true,idReuseReviewed:false});
+  assert.strictEqual(h.context.asstAuditSelectedCount(),0);
+  assert.match(h.html(),/能力A[\s\S]*保存予定に追加済み（新規登録（cardId aab-MR-julia））/);
+  assert.doesNotMatch(h.html(),/data-audit-select="0"/);
+  assert.match(h.html(),/data-audit-select="1"/);
+  assert.match(h.html(),/保存予定 1件/);
+  h.context.el('asst_btnSelectPage').onclick();
+  assert.strictEqual(h.context.asstAuditSelectedCount(),1);
+  h.context.asstQueueSelectedAuditCandidates();
+  assert.strictEqual(h.context.ASST.audit.pending.length,2);
+  h.context.asstRunPendingAuditSaves();
+  const writes=h.calls.filter(call => call.name==='api_asstCreateAbilityFromExternalCandidate');
+  assert.deepStrictEqual(writes.map(call => call.payload.registration.cardId),['aab-MR-julia','aaa-MR-aileblanche']);
+  assert.strictEqual(h.context.ASST.audit.pending.length,0);
+});
+
+test('再監査を始めると一覧の選択は消えるが保存予定は残る', () => {
+  const candidates=[candidate('card_match_candidate',10,'能力A',{candidateKey:'a'.repeat(64),cardIdCandidate:'aab-MR-julia'})];
+  const h=harness({response:response({candidates,pagination:{page:1,pageSize:1000,totalItems:1,totalPages:1}})});
+  h.context.ASST.cards=[{cardId:'aab-MR-julia',name:'ジュリア',rarity:'MR'}];
+  h.context.asstOpenExternalAudit();
+  h.context.asstToggleAuditSelection(0,true);
+  h.context.asstLoadExternalAudit(false);
+  assert.strictEqual(h.context.asstAuditSelectedCount(),0);
 });
 
 test('保存予定は取り消しと一括破棄ができる', () => {

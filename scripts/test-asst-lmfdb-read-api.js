@@ -87,7 +87,7 @@ function values(headers, rows) {
 }
 
 function makeHarness(options = {}) {
-  const calls = { fetch: [], dataRange: { cards: 0, abilities: 0, ability_external_refs: 0 }, auth: 0 };
+  const calls = { fetch: [], dataRange: { cards: 0, abilities: 0, ability_external_refs: 0 }, auth: 0, properties: [], cacheGet: [], cachePut: [] };
   const state = {
     cards: options.cards || CARDS_DOCUMENT.cards.map(cardRow),
     abilities: options.abilities || ABILITIES_DOCUMENT.abilities.map(abilityRow),
@@ -158,8 +158,10 @@ function makeHarness(options = {}) {
     },
     book_() { return { getSheetByName: name => sheets[name] || null }; },
     LockService: new Proxy({}, { get() { throw new Error('読取APIがLockServiceへアクセスしました'); } }),
-    PropertiesService: new Proxy({}, { get() { throw new Error('読取APIがPropertiesServiceへアクセスしました'); } }),
-    CacheService: new Proxy({}, { get() { throw new Error('読取APIがCacheServiceへアクセスしました'); } }),
+    // 読取APIが触れてよいのは main解決SHAのスクリプトキャッシュ（get/put）と、
+    // 任意読取tokenのgetPropertyだけ。setPropertyやremoveは用意せず、呼べば例外になる
+    PropertiesService: { getScriptProperties() { return { getProperty(key) { calls.properties.push(key); return options.properties && options.properties[key] ? options.properties[key] : null; } }; } },
+    CacheService: { getScriptCache() { return { get(key) { calls.cacheGet.push(key); return Object.prototype.hasOwnProperty.call(state.cache, key) ? state.cache[key] : null; }, put(key, value, seconds) { calls.cachePut.push({ key, value, seconds }); state.cache[key] = String(value); } }; } },
     ScriptApp: new Proxy({}, { get() { throw new Error('読取APIがScriptAppへアクセスしました'); } }),
   };
   vm.createContext(context);
@@ -184,30 +186,36 @@ test('固定SHA監査の既知分類件数とBLOCK理由', () => {
   assert.strictEqual(result.auditVersion, 3);
   assert.strictEqual(result.provider, 'lmfdb');
   assert.strictEqual(result.auditStatus, 'PASS', JSON.stringify(result.validationErrors));
-  assert.strictEqual(result.safetyVerdict, 'BLOCKED');
-  assert.deepStrictEqual(result.blockReasons, ['ID_REUSE_SUSPECTED']);
-  assert.strictEqual(result.counts.idReuseSuspected, 1);
-  assert.strictEqual(
-    result.counts.newCandidates,
-    result.counts.cardMatchCandidates + result.counts.unlinkedCandidates,
-  );
-  assert(result.counts.newCandidates > 0);
-  assert.strictEqual(result.counts.missingUpstreamObservations, 20);
-  assert.strictEqual(result.counts.duplicateLocalContentMatches, 22);
+  // ローカル側（src/data/assist-*.json）はCMS公開のたびに増えるので、件数や候補の位置を固定値で持たない。
+  // 外部fixtureは固定SHAで凍結し、分類はP12-17a（sync-lmfdb-abilities.js）の結果と一致することだけを検査する。
   const p12Report = lmfdbAudit.analyze(EXTERNAL_DOCUMENT, {
     cards: CARDS_DOCUMENT,
     abilities: ABILITIES_DOCUMENT,
     cardMap: CARD_MAP_DOCUMENT,
   }, { type: 'file', value: 'fixed fixture' }, digest(EXTERNAL_BYTES), { showAllRepresentation: true, showDuplicateDetails: true });
+  assert.strictEqual(result.safetyVerdict, p12Report.safetyVerdict);
+  assert.deepStrictEqual(result.blockReasons, p12Report.blockReasons);
+  assert.deepStrictEqual(result.reviewReasons, p12Report.reviewReasons);
+  assert.strictEqual(
+    result.counts.newCandidates,
+    result.counts.cardMatchCandidates + result.counts.unlinkedCandidates,
+  );
   for (const key of ['newCandidates','knownExact','representationOnly','existingContentDifferences','idReuseSuspected',
     'missingUpstreamObservations','cardMatchCandidates','unlinkedCandidates','duplicateLocalContentMatches']) {
     assert.strictEqual(result.counts[key], p12Report.counts[key], `${key}がP12-17aと不一致`);
   }
-  assert(result.candidates.some(candidate => candidate.classification === 'card_match_candidate'));
-  const later = plain(makeHarness().context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA, page: 3 }));
-  assert(later.candidates.some(candidate => candidate.classification === 'unlinked_candidate'));
-  assert(later.candidates.some(candidate => candidate.classification === 'ID_REUSE_SUSPECTED' && candidate.externalNumericId === 1084 &&
-    candidate.registrationEligible && candidate.requiresIdReuseConfirmation && !candidate.auditOnly));
+  const all = [];
+  for (let page = 1; page <= result.pagination.totalPages; page++) {
+    all.push(...plain(makeHarness().context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA, page })).candidates);
+  }
+  assert.strictEqual(all.length, result.pagination.totalItems);
+  const countOf = classification => all.filter(candidate => candidate.classification === classification).length;
+  assert.strictEqual(countOf('card_match_candidate'), p12Report.counts.cardMatchCandidates);
+  assert.strictEqual(countOf('unlinked_candidate'), p12Report.counts.unlinkedCandidates);
+  assert.strictEqual(countOf('ID_REUSE_SUSPECTED'), p12Report.counts.idReuseSuspected);
+  for (const candidate of all.filter(item => item.classification === 'ID_REUSE_SUSPECTED')) {
+    assert(candidate.registrationEligible && candidate.requiresIdReuseConfirmation && !candidate.auditOnly, `ID再利用疑い ${candidate.externalNumericId}`);
+  }
   assert(!result.blockReasons.includes('duplicate_local_content_match'));
 });
 
@@ -430,6 +438,48 @@ test('cardsのname + rarity重複は対応表を作らずFAILにする', () => {
   const result = plain(harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA }));
   assert.strictEqual(result.auditStatus, 'FAIL');
   assert(/name \+ rarityが重複/.test(result.validationErrors[0]), result.validationErrors[0]);
+});
+
+test('最新解決したmain SHAはスクリプトキャッシュに10分置き、2回目はGitHub APIを叩かない', () => {
+  const harness = makeHarness();
+  const first = plain(harness.context.api_asstAuditExternalAbilities({}));
+  assert.strictEqual(first.externalSha, FIXED_SHA);
+  assert.deepStrictEqual(harness.calls.cachePut, [{ key: 'asst_lmfdb_main_sha_v1', value: FIXED_SHA, seconds: 600 }]);
+  const mainRefCalls = () => harness.calls.fetch.filter(call => call.url.endsWith('/git/ref/heads/main')).length;
+  assert.strictEqual(mainRefCalls(), 1);
+  const second = plain(harness.context.api_asstAuditExternalAbilities({}));
+  assert.strictEqual(second.externalSha, FIXED_SHA);
+  assert.strictEqual(mainRefCalls(), 1, 'キャッシュ有効中はmain解決GETを再実行しない');
+  assert.strictEqual(harness.calls.cachePut.length, 1);
+  assert.strictEqual(JSON.stringify(harness.state.abilities), JSON.stringify(makeHarness().state.abilities));
+});
+
+test('固定SHA指定ではキャッシュにもプロパティにも触れない', () => {
+  const harness = makeHarness();
+  harness.context.api_asstAuditExternalAbilities({ externalSha: FIXED_SHA });
+  assert.deepStrictEqual(harness.calls.cacheGet, []);
+  assert.deepStrictEqual(harness.calls.cachePut, []);
+  assert.deepStrictEqual(harness.calls.properties, []);
+});
+
+test('LMFDB_READ_TOKENがあればmain解決GETにだけBearerを付け、raw取得には付けない', () => {
+  const withToken = makeHarness({ properties: { LMFDB_READ_TOKEN: 'read-only-token' } });
+  withToken.context.api_asstAuditExternalAbilities({});
+  const mainRef = withToken.calls.fetch.find(call => call.url.endsWith('/git/ref/heads/main'));
+  const raw = withToken.calls.fetch.find(call => call.url === withToken.rawUrl);
+  assert.strictEqual(mainRef.request.headers.Authorization, 'Bearer read-only-token');
+  assert.strictEqual(raw.request.headers.Authorization, undefined);
+  assert.deepStrictEqual(withToken.calls.properties, ['LMFDB_READ_TOKEN']);
+  const withoutToken = makeHarness();
+  withoutToken.context.api_asstAuditExternalAbilities({});
+  const plainRef = withoutToken.calls.fetch.find(call => call.url.endsWith('/git/ref/heads/main'));
+  assert.strictEqual(plainRef.request.headers.Authorization, undefined);
+});
+
+test('main解決がHTTP 403ならレート制限の可能性と対処を含めて失敗し、キャッシュに書かない', () => {
+  const harness = makeHarness({ fetchOverride: () => ({ getResponseCode() { return 403; }, getBlob() { return { getBytes() { return []; } }; }, getContentText() { return ''; } }) });
+  assert.throws(() => harness.context.api_asstAuditExternalAbilities({}), /lMfDB main解決: HTTP 403（GitHub APIのレート制限の可能性。数分待つか、LMFDB_READ_TOKENを設定してください）/);
+  assert.deepStrictEqual(harness.calls.cachePut, []);
 });
 
 console.log(`\n${passed} GAS read API tests passed`);
