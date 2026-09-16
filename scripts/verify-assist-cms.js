@@ -314,7 +314,25 @@ function validateRoot(root) {
     issues.push('外部能力監査APIのpayloadがexternalSha/page/pageSizeだけに限定されていない');
   }
   const auditForbidden = /appendRow\s*\(|setValue(?:s)?\s*\(|clearContent\s*\(|deleteRows\s*\(|PropertiesService|CacheService|LockService|ScriptApp|DriveApp|githubRequest_|api_asstCreateAbilityFromExternalCandidate|api_asstSetExternalCandidateDisposition/;
-  if (auditForbidden.test(auditSource)) issues.push('外部能力監査APIの読取専用境界に書込み・ロック・永続化処理が混入');
+  // 例外は2関数だけ。main解決SHAのスクリプトキャッシュ（asstAuditResolveExternalSha_）と、
+  // main解決GETに付ける任意の読取token（asstAuditFetchBytes_）。どちらもシート・Drive・公開処理には触れない。
+  const auditCacheExempt = ['asstAuditResolveExternalSha_', 'asstAuditFetchBytes_'];
+  const auditSourceStrict = auditFunctionNames.filter(name => !auditCacheExempt.includes(name)).map(name => functionBlock(gas, name)).join('\n');
+  if (auditForbidden.test(auditSourceStrict)) issues.push('外部能力監査APIの読取専用境界に書込み・ロック・永続化処理が混入');
+  const resolveShaBlock = functionBlock(gas, 'asstAuditResolveExternalSha_');
+  const fetchBytesBlock = functionBlock(gas, 'asstAuditFetchBytes_');
+  if (!resolveShaBlock || !fetchBytesBlock ||
+      (resolveShaBlock.match(/CacheService/g) || []).length !== 1 ||
+      !/cache\.get\(ASST_LMFDB_MAIN_SHA_CACHE_KEY\)/.test(resolveShaBlock) ||
+      !/cache\.put\(ASST_LMFDB_MAIN_SHA_CACHE_KEY, sha, ASST_LMFDB_MAIN_SHA_CACHE_SECONDS\)/.test(resolveShaBlock) ||
+      /PropertiesService|LockService|ScriptApp|DriveApp|appendRow|setValue/.test(resolveShaBlock) ||
+      /CacheService|LockService|ScriptApp|DriveApp|appendRow|setValue/.test(fetchBytesBlock) ||
+      (fetchBytesBlock.match(/PropertiesService/g) || []).length !== 1 ||
+      !/if \(url === ASST_LMFDB_MAIN_REF_URL\) \{[\s\S]*getProperty\(ASST_LMFDB_READ_TOKEN_PROPERTY\)/.test(fetchBytesBlock) ||
+      !/ASST_LMFDB_READ_TOKEN_PROPERTY = 'LMFDB_READ_TOKEN'/.test(gas) ||
+      !/ASST_LMFDB_MAIN_SHA_CACHE_SECONDS = 600/.test(gas)) {
+    issues.push('lMfDB main解決のキャッシュ・任意読取tokenが想定の形（キー固定・main解決GETだけ・10分）になっていない');
+  }
   if (!/id="asst_btnExternalAbilityAudit"[^>]*>外部能力DBを確認</.test(html) ||
       !/api_asstAuditExternalAbilities\(payload\)/.test(auditUiSource) ||
       !/var payload=\{page:page,pageSize:ASST_AUDIT_PAGE_SIZE\}/.test(auditUiSource) ||
@@ -392,7 +410,7 @@ function validateRoot(root) {
     'normalizedChangedFields', '比較用NFKC', '登録予定値', '保存時にサーバー採番',
     'なし（null）', 'この段階では公開されない', '明示選択してください',
     'クライアント検査は将来のサーバー検査の代わりではありません',
-    '最終プレビューを確認', 'まだ保存されていません',
+    'まだ保存されていません', '追加前に直す項目', '一覧から紐付ける', '紐付け先カード',
   ];
   if (auditDetailFunctions.some(name => !new RegExp(`function\\s+${name}\\s*\\(`).test(html)) ||
       auditDetailText.some(value => !html.includes(value)) ||
@@ -412,8 +430,18 @@ function validateRoot(root) {
       !/\['MR','SSR','SR','その他'\]/.test(auditValidationBlock) ||
       !/\['resolved','unlinked'\]/.test(auditValidationBlock) ||
       !/制御文字/.test(auditValidationBlock) || !/<br>以外/.test(auditValidationBlock) ||
-      !/ID再利用疑い/.test(auditValidationBlock) || !/draft・未公開/.test(auditValidationBlock)) {
-    issues.push('外部能力候補のクライアントプレビュー検査が不足');
+      !/ID再利用疑い/.test(auditValidationBlock) || /originalCompared|draftReviewed/.test(auditValidationBlock)) {
+    issues.push('外部能力候補のクライアントプレビュー検査が不足、または廃止した確認チェックが残っている');
+  }
+  if (!/function asstAuditQuickLinkable\(candidate\)/.test(auditUiSource) ||
+      !/classification==='card_match_candidate'&&candidate\.candidateKey&&candidate\.cardIdCandidate&&asstAuditFindCard\(candidate\.cardIdCandidate\)/.test(auditUiSource) ||
+      !/function asstQueueSelectedAuditCandidates\(\)/.test(auditUiSource) ||
+      !/id="asst_btnQueueSelected"/.test(auditUiSource) || !/data-audit-select=/.test(auditUiSource) ||
+      !/function asstRefreshAuditPreview\(\)/.test(auditUiSource) ||
+      !/function asstRetryAuditPendingAfterReload\(entry,message\)/.test(auditUiSource) ||
+      !/function asstAuditAlreadySaved\(entry,candidate\)/.test(auditUiSource) ||
+      /asst_btnAuditFinalPreview|asstConfirmAuditPreview|asst_audit_originalCompared|asst_audit_draftReviewed/.test(auditUiSource)) {
+    issues.push('外部能力監査UIの一覧からの紐付け・常時プレビュー・保存やり直しが不足、または旧確認チェックが残っている');
   }
   if (!/esc\(label\)/.test(auditReadOnlyBlock) || !/esc\(asstAuditDisplayValue\(value\)\)/.test(auditReadOnlyBlock) ||
       /id=["']\s*['"]?\+.*candidateKey|id=["']\s*['"]?\+.*external/.test(auditUiSource) ||

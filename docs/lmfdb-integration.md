@@ -465,7 +465,7 @@ expectedAbilitiesVersion / auditStatus / safetyVerdict / counts / candidates`を
   → 候補詳細
   → 外部原文と登録予定値の左右比較
   → 管理者が登録値を修正し、カード候補を確認
-  → 最終プレビューと確認チェック
+  → 最終プレビュー（最初から表示・入力のたびに更新）から「保存予定に追加」
   → 新規能力として保存（status: draft）
   → 既存の能力編集で確認後にverified
   → 管理者が既存のアシスト公開を明示実行
@@ -579,6 +579,46 @@ changedFields / comparison`の未定義を`null`へ、`auditOnly / requiresIdReu
 
 サーバーAPIと契約は変更しない。1回の呼び出しで書けるのは従来どおり1件で、
 サーバーは毎回再取得・再計算して検査する。
+
+### 15-5. 一覧からの紐付け・確認チェック廃止・保存やり直し（2026-09-16）
+
+紐付け作業の手数を減らすための画面側の変更。サーバーAPIと契約は変更しない。
+
+- **一覧からの紐付け（カード対応候補だけ）**: 「カード対応候補」タブの各行に、自動候補
+  `cardIdCandidate`が指すカードを名前で「紐付け先カード」として出し、チェックボックス
+  「一覧から紐付ける」を付ける。「選択した N件を保存予定に追加」で、外部原文のまま
+  `linkStatus: resolved / cardId: cardIdCandidate`の新規登録を保存予定へ積む。
+  判定は`asstAuditQuickLinkable`で、登録可能・未処置・`card_match_candidate`・
+  `cardIdCandidate`がカードDBに実在する候補だけ。未紐付け候補とID再利用疑いは
+  カード選択や専用確認が要るため一覧から追加できず、従来どおり詳細から行う。
+  名前や説明を直す場合も詳細から行う。選択状態は`ASST.audit.selected`（candidateKey）に
+  持ち、再監査を始めると消える（保存予定は残る）
+- **確認チェックの廃止**: 詳細の「外部原文と比較した／NFKC／カード対応／draft」の
+  4つのチェックとボタン「最終プレビューを確認」を削除し、最終プレビューを最初から表示する。
+  入力のたびに`asstRefreshAuditPreview`でプレビューを描き直し、検査に引っかかる項目は
+  プレビュー内に「追加前に直す項目」として出して「保存予定に追加」を無効にする。
+  サーバー契約の`confirmations`は「保存予定に追加」を押した時点で
+  `originalCompared / normalizationReviewed / cardReviewed`をtrueとして送る。
+  `ID_REUSE_SUSPECTED`の専用チェック（`idReuseReviewed`）だけは残す
+- **保存漏れの回収**: まとめて保存で書込みが失敗した項目は、その場で同じ固定SHAで
+  再監査してから1回だけやり直す（`asstRetryAuditPendingAfterReload`）。
+  従来は1件の`expectedAbilitiesVersion`不一致で残り全件が同じ理由で失敗し、保存予定に
+  残ったまま「まとめて保存」を何度も押す必要があった。また、前回の書込みは成功したのに
+  応答が届かず保存予定に残った項目は、再監査結果で処置済み（`imported`または同じ
+  `disposition`）なら成功扱いにして保存予定から取り除く（`asstAuditAlreadySaved`）
+- **1件ごとの再監査の省略**: `api_asstCreateAbilityFromExternalCandidate`が書込み後の
+  `expectedAbilitiesVersion`を応答に含めるようにし、画面はそれを引き継いで次の書込みを送る。
+  従来は1件ごとに「サーバー側の再取得・再分類＋画面側の再監査（外部JSON再取得＋全件再分類）」
+  の2往復だったものが、サーバー側の1往復になる。最後の再監査1回は残す。
+  応答にversionが無い旧版サーバーに対しては従来どおり1件ごとに再監査する
+- **main解決のレート制限対策**: 書込みのたびに`api.github.com`でmainを解決していたため、
+  未認証GETの上限（1時間60回/IP。GASは他利用者と送信元IPを共有）に当たり
+  `lMfDB main解決: HTTP 403`で1回目の書込みが落ちていた。解決したSHAをスクリプトキャッシュに
+  10分置き（`ASST_LMFDB_MAIN_SHA_CACHE_SECONDS`）、バッチ中はGitHubを1回しか叩かない。
+  「最新状態で再監査」も最大10分は同じSHAを返す。任意でスクリプトプロパティ
+  `LMFDB_READ_TOKEN`（公開リポジトリ読取だけのfine-grained token）を置くと、main解決GETにだけ
+  Bearerを付けて認証済み枠（1時間5,000回）を使う。固定SHAのraw取得には付けない。
+  公開用tokenとは別のプロパティで、読取API側で参照してよいのはこの1件だけ（`verify-assist-cms.js`で固定）
 
 ## 16. 登録値、状態、カード紐付け
 

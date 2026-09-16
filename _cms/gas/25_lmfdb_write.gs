@@ -397,10 +397,13 @@ function api_asstCreateAbilityFromExternalCandidate(payload) {
       catch (compensationError) { throw compensationError; }
       throw error;
     }
+    // 書込み後のversionを返し、画面側が1件ごとの再監査（外部JSON再取得＋全件再分類）を省けるようにする。
+    // 次の書込みはこのversionをexpectedAbilitiesVersionとして送り、サーバーは従来どおり毎回再取得・再検査する。
     return {
       ok: true, abilityId: abilityId, legacyId: null, status: 'draft', linkStatus: ability.linkStatus,
       sortOrder: sortOrder, sourceOrder: sourceOrder, externalSha: audit.latestSha,
-      externalFingerprint: candidate.externalFingerprint, validation: 'PASS'
+      externalFingerprint: candidate.externalFingerprint, validation: 'PASS',
+      expectedAbilitiesVersion: asstAuditExpectedAbilitiesVersion_(asstRows_(ASST_SHEET_ABILITIES))
     };
   } finally { asstReleaseScriptLock_(lock); }
 }

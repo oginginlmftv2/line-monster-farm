@@ -31,6 +31,13 @@ var ASST_EXTERNAL_SNAPSHOT_KEYS = ['id','card','name','desc','source','rarity','
 var ASST_LMFDB_PROVIDER = 'lmfdb';
 var ASST_LMFDB_MAIN_REF_URL = 'https://api.github.com/repos/futsalife24-bot/lMfDB/git/ref/heads/main';
 var ASST_LMFDB_RAW_BASE = 'https://raw.githubusercontent.com/futsalife24-bot/lMfDB/';
+// main解決の結果はスクリプトキャッシュに10分持つ。GitHub REST APIの未認証GETは1時間60回/IPで、
+// GASは他利用者と送信元IPを共有するため、書込み1件ごとに解決しているとHTTP 403で止まる。
+var ASST_LMFDB_MAIN_SHA_CACHE_KEY = 'asst_lmfdb_main_sha_v1';
+var ASST_LMFDB_MAIN_SHA_CACHE_SECONDS = 600;
+// 任意。スクリプトプロパティ LMFDB_READ_TOKEN（公開リポジトリの読取だけの fine-grained token）があれば
+// main解決GETにだけ付けて認証済みレート枠を使う。公開用のtokenとは別物で、無ければ未認証のまま動く。
+var ASST_LMFDB_READ_TOKEN_PROPERTY = 'LMFDB_READ_TOKEN';
 var ASST_LMFDB_RAW_PATH = '/data/abilities.json';
 var ASST_LMFDB_MAX_BYTES = 2 * 1024 * 1024;
 var ASST_LMFDB_REQUIRED_FIELDS = ['id','name','desc','card','tags','source','rarity'];
@@ -522,15 +529,21 @@ function asstAuditPayload_(payload) {
 }
 
 function asstAuditFetchBytes_(url, label, maxBytes) {
+  var headers = {
+    Accept: 'application/vnd.github+json',
+    'User-Agent': 'line-monster-farm-lmfdb-audit/1.0'
+  };
+  if (url === ASST_LMFDB_MAIN_REF_URL) {
+    var readToken = PropertiesService.getScriptProperties().getProperty(ASST_LMFDB_READ_TOKEN_PROPERTY);
+    if (readToken) headers.Authorization = 'Bearer ' + readToken;
+  }
   var response = UrlFetchApp.fetch(url, {
     muteHttpExceptions: true,
     followRedirects: false,
-    headers: {
-      Accept: 'application/vnd.github+json',
-      'User-Agent': 'line-monster-farm-lmfdb-audit/1.0'
-    }
+    headers: headers
   });
   var status = response.getResponseCode();
+  if (status === 403 || status === 429) throw new Error(label + ': HTTP ' + status + '（GitHub APIのレート制限の可能性。数分待つか、' + ASST_LMFDB_READ_TOKEN_PROPERTY + 'を設定してください）');
   if (status !== 200) throw new Error(label + ': HTTP ' + status);
   var bytes = response.getBlob().getBytes();
   if (!bytes.length) throw new Error(label + ': 空レスポンスです。');
@@ -545,10 +558,14 @@ function asstAuditParseJson_(text, label) {
 
 function asstAuditResolveExternalSha_(specifiedSha) {
   if (specifiedSha) return specifiedSha;
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get(ASST_LMFDB_MAIN_SHA_CACHE_KEY);
+  if (asstIsSha_(cached, 40)) return cached;
   var resolved = asstAuditFetchBytes_(ASST_LMFDB_MAIN_REF_URL, 'lMfDB main解決', 256 * 1024);
   var document = asstAuditParseJson_(resolved.text, 'lMfDB main解決');
   var sha = document && document.object && document.object.sha;
   if (!asstIsSha_(sha, 40)) throw new Error('lMfDB mainを完全なコミットSHAへ解決できません。');
+  cache.put(ASST_LMFDB_MAIN_SHA_CACHE_KEY, sha, ASST_LMFDB_MAIN_SHA_CACHE_SECONDS);
   return sha;
 }
 
