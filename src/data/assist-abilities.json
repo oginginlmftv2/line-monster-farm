@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1169,
-    "resolved": 650,
+    "abilities": 1178,
+    "resolved": 659,
     "ambiguous": 7,
     "unlinked": 512,
     "duplicateCandidates": 44
@@ -20938,6 +20938,200 @@
         "シールド"
       ],
       "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1175",
+      "legacyId": null,
+      "cardId": "c28j-SSR-rokusho",
+      "sourceName": "ロクショウ",
+      "name": "データ操作 I",
+      "description": "[自身白]バトル中、次の効果<br>・移動速度＜＋２＞<br>・[前半]命中率と回避率＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身白",
+        "移動速度",
+        "命中強化",
+        "回避",
+        "前半"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1176",
+      "legacyId": null,
+      "cardId": "c28j-SSR-rokusho",
+      "sourceName": "ロクショウ",
+      "name": "データ操作 II",
+      "description": "[自身白またはニャー種]バトル中、次の効果<br>・移動速度＜＋４＞<br>・[前半]命中率と回避率＜＋３０％＞<br>・[ニャー種]地形適応効果＜＋３０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "自身白",
+        "ニャー種",
+        "移動速度",
+        "命中強化",
+        "回避",
+        "前半",
+        "地形適応"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1177",
+      "legacyId": null,
+      "cardId": "c28j-SSR-rokusho",
+      "sourceName": "ロクショウ",
+      "name": "横一閃 I",
+      "description": "[前半][無機]＜白＞技発動時、バトル中の地形適応に応じて次の効果<br>・Ａ以上：ちからステ＜＋２０％＞<br>・Ｓ以上：クリ率上昇＜＋２０％＞<br>・ＳＳ以上：クリダメ上昇＜＋２０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "無機",
+        "オーラ白",
+        "地形適応",
+        "攻撃強化",
+        "クリティカル"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1178",
+      "legacyId": null,
+      "cardId": "c28j-SSR-rokusho",
+      "sourceName": "ロクショウ",
+      "name": "横一閃 II",
+      "description": "[前半][自身白または無機]＜白＞技発動時、バトル中の地形適応に応じて次の効果<br>・Ａ以上：ちからステ＜＋３０％＞<br>・Ｓ以上：クリ率上昇＜＋４０％＞<br>・ＳＳ以上：クリダメ上昇＜＋４０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "自身白",
+        "無機",
+        "オーラ白",
+        "地形適応",
+        "攻撃強化",
+        "クリティカル"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1179",
+      "legacyId": null,
+      "cardId": "c27j-MR-godemperor",
+      "sourceName": "ゴッドエンペラー",
+      "name": "超本気",
+      "description": "[状態変化]相手ライフが少ない時、一定時間さまざま強化され、効果終了後、虚脱状態になる",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "ライフ低下時"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1180",
+      "legacyId": null,
+      "cardId": "c27j-MR-godemperor",
+      "sourceName": "ゴッドエンペラー",
+      "name": "リミッター解除 I",
+      "description": "[獣族]残りライフ＜４０％＞以下で次の効果<br>・ライフ以外の全ステータス＜＋２０％＞<br>・＜黒＞技の全技ステータス＜＋４＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "獣族",
+        "ライフ低下時",
+        "全技強化",
+        "オーラ黒"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1181",
+      "legacyId": null,
+      "cardId": "c27j-MR-godemperor",
+      "sourceName": "ゴッドエンペラー",
+      "name": "リミッター解除 II",
+      "description": "[獣族]残りライフ＜５０％＞以下で次の効果<br>・ライフ以外の全ステータス＜＋３０％＞<br>・＜黒＞技の全技ステータス＜＋６＞<br>・[有利]ガッツ＜５０＞回復＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "獣族",
+        "ライフ低下時",
+        "全技強化",
+        "オーラ黒",
+        "ガッツ回復",
+        "有利時"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1182",
+      "legacyId": null,
+      "cardId": "c27j-MR-godemperor",
+      "sourceName": "ゴッドエンペラー",
+      "name": "解き放たれた力 I",
+      "description": "[獣族]残りライフ＜６０％＞以下でオーラ技命中時次の効果<br>・ダメージ＜１０％＞の追撃＜１回＞<br>・[有利]命中ステ＜５％＞の追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "獣族",
+        "ライフ低下時",
+        "オーラ",
+        "追撃",
+        "命中強化",
+        "有利時"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1183",
+      "legacyId": null,
+      "cardId": "c27j-MR-godemperor",
+      "sourceName": "ゴッドエンペラー",
+      "name": "解き放たれた力 II",
+      "description": "[獣族]残りライフ＜７０％＞以下でオーラ技命中時次の効果<br>・ダメージ＜１０％＞の追撃＜１回＞<br>・＜黒＞技時、回避ステ＜１０％＞の追撃＜１回＞<br>・[有利]命中ステ＜１０％＞の追撃＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "獣族",
+        "ライフ低下時",
+        "オーラ",
+        "オーラ黒",
+        "追撃",
+        "命中強化",
+        "回避",
+        "有利時"
+      ],
+      "sortOrder": 5,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
