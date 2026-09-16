@@ -6,14 +6,150 @@
   "generatedAt": null,
   "counts": {
     "cards": 95,
-    "cardsWithEffects": 88,
-    "cardsDraft": 7,
-    "effects": 949
+    "cardsWithEffects": 89,
+    "cardsDraft": 6,
+    "effects": 961
   },
   "cards": {
     "g1-MR-serafina": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "g1-MR-serafina-e01",
+          "name": "血統オーラ上限解放 +60",
+          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ\nまた主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "or",
+            "types": [
+              "mainBloodlineMatch",
+              "subBloodlineMatch",
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "g1-MR-serafina-e02",
+          "name": "オーラブリーダー +60%",
+          "description": "育成対象とオーラ一致したとき、ブリーダーがトレーニングに出現する（3人まで）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "g1-MR-serafina-e03",
+          "name": "トレ効果アップ +10%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e04",
+          "name": "忠誠度効果アップ +25%",
+          "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e05",
+          "name": "ガード上限アップ +120",
+          "description": "回避と丈夫さの基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e06",
+          "name": "オーラ追加トレボーナス +20",
+          "description": "一緒にトレーニング時、追加トレーニングイベントの発生率アップ\n追加トレーニングイベント時、ステータスが1種ランダムで上昇（5〜99）（重複不可）",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "g1-MR-serafina-e07",
+          "name": "ガードボーナスⅡ +1",
+          "description": "回避、丈夫さの素質アップ+1%\n一緒にトレーニングしたとき、回避、丈夫さの上昇量アップ+1",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e08",
+          "name": "大成功率アップ +8",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e09",
+          "name": "忠誠度効果アップ +20%",
+          "description": "忠誠度に応じて基礎ステータスの上昇量アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e10",
+          "name": "オーラブリーダー・幸運Ⅱ",
+          "description": "ブリーダートレ出現率+15%\nブリーダーがトレーニングに出現時、発動中の大成功率アップの効果量を50%UP、応援効果+15%、ステータス上昇量の上限+20%",
+          "unlockRank": "3凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "g1-MR-serafina-e11",
+          "name": "トレ効果アップ +8%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "g1-MR-serafina-e12",
+          "name": "オーラブリーダー・継承",
+          "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        }
+      ]
     },
     "g2-SSR-monodasu": {
       "status": "draft",
@@ -722,8 +858,13 @@
           "description": "育成対象とモン類が一致したとき、すべての基礎ステータスを上限アップ",
           "unlockRank": "無凸",
           "sortOrder": 1,
-          "conditional": 0,
-          "conditions": null
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
         },
         {
           "effectId": "b5g-SSR-norun-e02",
@@ -731,8 +872,13 @@
           "description": "育成対象とオーラ一致したとき、修行の基礎ステータス上昇量アップ（重複不可）",
           "unlockRank": "無凸",
           "sortOrder": 2,
-          "conditional": 0,
-          "conditions": null
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
         },
         {
           "effectId": "b5g-SSR-norun-e03",
@@ -776,8 +922,13 @@
           "description": "育成対象とモン類が一致したとき、モン類レベル上限アップ（同効果内で最大Lv5まで）",
           "unlockRank": "1凸",
           "sortOrder": 7,
-          "conditional": 0,
-          "conditions": null
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "monTypeMatch"
+            ]
+          }
         },
         {
           "effectId": "b5g-SSR-norun-e08",
@@ -794,8 +945,13 @@
           "description": "育成対象とオーラが一致したとき、トレーニング時のEXトレパワー上昇量アップ（重複不可）",
           "unlockRank": "2凸",
           "sortOrder": 9,
-          "conditional": 0,
-          "conditions": null
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
         },
         {
           "effectId": "b5g-SSR-norun-e10",
@@ -803,8 +959,13 @@
           "description": "育成対象とオーラ一致したとき、修行の基礎ステータス上昇量アップ（重複不可）",
           "unlockRank": "3凸",
           "sortOrder": 10,
-          "conditional": 0,
-          "conditions": null
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
         },
         {
           "effectId": "b5g-SSR-norun-e11",
