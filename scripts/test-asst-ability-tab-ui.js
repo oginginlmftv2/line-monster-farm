@@ -13,11 +13,11 @@ const UI_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/ui_assist.html'), 'u
 const COMMON_SCRIPT = COMMON_SOURCE.match(/<script>([\s\S]*)<\/script>/)[1];
 const SCRIPT = UI_SOURCE.match(/<script>([\s\S]*)<\/script>/)[1];
 
-function ability(abilityId, name, sortOrder, status = 'verified') {
+function ability(abilityId, name, sortOrder, status = 'verified', version = 3) {
   return {
     abilityId, legacyId: null, cardId: 'aab-MR-julia', sourceName: 'ジュリア', name,
     description: '説明', source: 'イベント', rarity: 'MR', tags: [], sortOrder,
-    linkStatus: 'resolved', flags: [], status,
+    linkStatus: 'resolved', flags: [], status, version,
   };
 }
 
@@ -66,6 +66,14 @@ function harness(options = {}) {
       this.success({ card: { cardId, name: 'ジュリア', rarity: 'MR' }, version: 1, effects: [], abilities });
     },
   };
+  // 状態まとめ更新APIは新サーバーだけが持つ。既定は旧サーバー（1件ずつ）として振る舞い、batchApi:true で新サーバーにする
+  if (options.batchApi) {
+    runner.api_asstSetAbilityStatuses = function (payload) {
+      calls.push({ name: 'api_asstSetAbilityStatuses', payload: JSON.parse(JSON.stringify(payload)) });
+      if (options.saveError) { this.failure(new Error(options.saveError)); return; }
+      this.success({ ok: true, updated: payload.items.map(item => ({ abilityId: item.abilityId, version: item.version + 1, status: item.status })), skipped: 0 });
+    };
+  }
   const context = {
     console, Number, String, Array, Object, Map, Set, Promise, Date, RegExp, Math, JSON, isFinite,
     setTimeout(fn) { microtasks.push(fn); return microtasks.length; },
@@ -197,6 +205,46 @@ test('保存中は選択とボタンを操作させない', async () => {
   assert.match(h.html(), /id="asst_btnSaveAbilityChanges" disabled/);
   assert.match(h.html(), /data-ability-status="ab-1090"[^>]* disabled/);
   assert.match(h.html(), /保存中です。/);
+});
+
+test('「すべて確認済みにする」は画面上で下書き全件をverifiedへ切り替え、保存はしない', async () => {
+  const h = harness({ abilities: [ability('ab-1090', 'A', 1, 'draft'), ability('ab-1091', 'B', 2, 'verified'), ability('ab-1093', 'C', 3, 'draft')] });
+  assert.match(h.html(), /id="asst_btnVerifyAllAbilities"[^>]*>すべて確認済みにする（下書き 2件）/);
+  assert.doesNotMatch(h.html(), /id="asst_btnVerifyAllAbilities" disabled/);
+  h.context.asstSetAllAbilityStatus('verified');
+  assert.deepStrictEqual(h.context.asstAbilityStatusChangedIds(h.context.ASST.detail), ['ab-1090', 'ab-1093']);
+  assert.strictEqual(h.calls.filter(call => call.name !== 'show').length, 0, '切り替えだけではAPIを呼ばない');
+  assert.match(h.html(), /未保存: 状態 2件/);
+  assert.match(h.html(), /id="asst_btnVerifyAllAbilities" disabled/);
+  assert.doesNotMatch(h.html(), /id="asst_btnDraftAllAbilities" disabled/);
+  h.context.asstSetAllAbilityStatus('draft');
+  assert.deepStrictEqual(h.context.asstAbilityStatusChangedIds(h.context.ASST.detail), ['ab-1091']);
+  h.context.asstResetAbilityChanges();
+  assert.deepStrictEqual(h.context.asstAbilityStatusChangedIds(h.context.ASST.detail), []);
+});
+
+test('新サーバーでは状態変更をカード取得時のversion付きで1回のまとめ更新として送る', async () => {
+  const h = harness({ batchApi: true, abilities: [ability('ab-1090', 'A', 1, 'draft', 5), ability('ab-1091', 'B', 2, 'verified', 2), ability('ab-1093', 'C', 3, 'draft', 7)] });
+  h.context.asstSetAllAbilityStatus('verified');
+  h.context.asstSaveAbilityChanges();
+  await h.settle();
+  const names = h.calls.map(call => call.name).filter(name => name !== 'show');
+  assert.deepStrictEqual(names, ['api_asstSetAbilityStatuses', 'api_asstGetCard']);
+  assert.deepStrictEqual(h.calls[0].payload, { items: [{ abilityId: 'ab-1090', version: 5, status: 'verified' }, { abilityId: 'ab-1093', version: 7, status: 'verified' }] });
+  assert.strictEqual(h.context.ASST.abilityStatusEdits, null);
+});
+
+test('まとめ更新が失敗したら並び順を送らず、失敗を表示して編集を保持しない', async () => {
+  const h = harness({ batchApi: true, saveError: 'ab-1093: 他の編集が保存済みです。カードを開き直してください。' });
+  h.context.asstSetAbilityStatus('ab-1093', 'verified');
+  h.context.asstMoveAbility('ab-1093', -1);
+  h.context.asstSaveAbilityChanges();
+  await h.settle();
+  const names = h.calls.map(call => call.name).filter(name => name !== 'show');
+  assert.deepStrictEqual(names, ['api_asstSetAbilityStatuses', 'api_asstGetCard']);
+  const shown = h.calls.filter(call => call.name === 'show').pop();
+  assert.match(shown.payload.message, /状態 1件: ab-1093: 他の編集が保存済みです/);
+  assert.strictEqual(shown.payload.isError, true);
 });
 
 (async () => {

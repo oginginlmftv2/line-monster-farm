@@ -9,6 +9,7 @@ const vm = require('vm');
 
 const REPO = path.resolve(__dirname, '..');
 const ASSIST_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8');
+const STATUS_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/22_assist_status.gs'), 'utf8');
 const NOW = '2026-09-02T12:34:56+09:00';
 const HEADERS = {
   cards: ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'],
@@ -86,6 +87,7 @@ function makeHarness(options = {}) {
   };
   vm.createContext(context);
   vm.runInContext(ASSIST_SOURCE, context);
+  vm.runInContext(STATUS_SOURCE, context);
   harness.context = context;
   harness.before = clone(state);
   return harness;
@@ -186,6 +188,71 @@ test('途中の書込み失敗は書いた行を元に戻す', () => {
   assert.deepStrictEqual(clone(h.state.abilities), h.before.abilities);
   assert.strictEqual(h.state.assist_log[1][3], 'FAIL');
   assert.strictEqual(h.calls.release, 1);
+});
+
+// ---------------------------------------------------------------- 状態まとめ更新API・能力保存の軽量検査
+function statusOf(harness, abilityId) {
+  const row = harness.state.abilities.slice(1).find(row => row[HEADERS.abilities.indexOf('abilityId')] === abilityId);
+  return { status: row[HEADERS.abilities.indexOf('status')], version: row[HEADERS.abilities.indexOf('version')], updatedBy: row[HEADERS.abilities.indexOf('updatedBy')] };
+}
+
+test('状態まとめ更新はロック1回で全件検査してから書き、変わらない件は飛ばす', () => {
+  const h = makeHarness({ abilities: [
+    abilityRow({ sourceOrder: 1, abilityId: 'ab-0001', sortOrder: 1, status: 'draft', version: 2 }),
+    abilityRow({ sourceOrder: 2, abilityId: 'ab-0002', sortOrder: 2, status: 'verified', version: 1 }),
+    abilityRow({ sourceOrder: 3, abilityId: 'ab-0003', sortOrder: 3, status: 'draft', version: 4 }),
+  ] });
+  const result = clone(h.context.api_asstSetAbilityStatuses({ items: [
+    { abilityId: 'ab-0001', version: 2, status: 'verified' },
+    { abilityId: 'ab-0002', version: 1, status: 'verified' },
+    { abilityId: 'ab-0003', version: 4, status: 'verified' },
+  ] }));
+  assert.strictEqual(h.calls.lock, 1); assert.strictEqual(h.calls.release, 1);
+  assert.deepStrictEqual(result.updated, [{ abilityId: 'ab-0001', version: 3, status: 'verified' }, { abilityId: 'ab-0003', version: 5, status: 'verified' }]);
+  assert.strictEqual(result.skipped, 1);
+  assert.deepStrictEqual(statusOf(h, 'ab-0001'), { status: 'verified', version: 3, updatedBy: 'tester' });
+  assert.deepStrictEqual(statusOf(h, 'ab-0002'), { status: 'verified', version: 1, updatedBy: 'seed' });
+  assert.deepStrictEqual(statusOf(h, 'ab-0003'), { status: 'verified', version: 5, updatedBy: 'tester' });
+  assert.strictEqual(h.state.assist_log.length, 2);
+  assert.match(h.state.assist_log[1][4], /ab-0001=verified v3 ab-0003=verified v5/);
+});
+
+test('状態まとめ更新は1件でもversion不一致・未知ID・許可外statusなら何も書かない', () => {
+  for (const [items, pattern] of [
+    [[{ abilityId: 'ab-0001', version: 1, status: 'draft' }, { abilityId: 'ab-0002', version: 9, status: 'draft' }], /ab-0002: 他の編集が保存済みです/],
+    [[{ abilityId: 'ab-0001', version: 1, status: 'draft' }, { abilityId: 'ab-9999', version: 1, status: 'draft' }], /ab-9999: 能力が見つかりません/],
+    [[{ abilityId: 'ab-0001', version: 1, status: 'published' }], /status/],
+    [[{ abilityId: 'ab-0001', version: 1, status: 'draft' }, { abilityId: 'ab-0001', version: 1, status: 'draft' }], /abilityIdが重複/],
+    [[{ abilityId: 'ab-0001', version: 1, status: 'draft', note: 'x' }], /未対応の項目/],
+    [[], /1件以上/],
+  ]) {
+    const h = makeHarness();
+    assert.throws(() => h.context.api_asstSetAbilityStatuses({ items }), pattern);
+    assert.deepStrictEqual(h.state, h.before);
+  }
+  const many = makeHarness();
+  assert.throws(() => many.context.api_asstSetAbilityStatuses({ items: Array.from({ length: 101 }, (_, i) => ({ abilityId: 'ab-' + String(i).padStart(4, '0'), version: 1, status: 'draft' })) }), /100件まで/);
+  assert.strictEqual(many.calls.lock, 0, 'payload検査はロック前に落ちる');
+});
+
+test('能力保存は全件検証せず、この能力と同じカードのsortOrder連番だけを検査する', () => {
+  const h = makeHarness();
+  const current = h.context.api_asstGetAbility('ab-0002');
+  const ability = Object.assign({}, current.ability, { name: '名称変更', status: 'verified' });
+  const reads = { count: 0 };
+  const originalRows = h.context.asstRows_;
+  h.context.asstRows_ = function (name) { reads.count++; return originalRows.call(this, name); };
+  h.context.asstBuildDocuments_ = function () { throw new Error('全件組み立てを呼んではいけない'); };
+  const result = h.context.api_asstSaveAbility({ ability, version: current.version });
+  assert.strictEqual(result.version, 2);
+  assert.strictEqual(statusOf(h, 'ab-0002').status, 'verified');
+  assert(reads.count <= 2, 'abilitiesとcardsの読取だけ: ' + reads.count);
+  // sortOrderが同じカード内で重複する変更は拒否する
+  const dup = Object.assign({}, h.context.api_asstGetAbility('ab-0003').ability, { sortOrder: 2 });
+  assert.throws(() => h.context.api_asstSaveAbility({ ability: dup, version: 1 }), /能力検査FAIL: c0001-MR: 能力sortOrder不連続/);
+  // resolved以外でcardId/sortOrderが残っていれば拒否する
+  const bad = Object.assign({}, h.context.api_asstGetAbility('ab-0003').ability, { linkStatus: 'unlinked' });
+  assert.throws(() => h.context.api_asstSaveAbility({ ability: bad, version: 1 }), /resolved以外はcardIdとsortOrderをnullにしてください/);
 });
 
 console.log(`\nOK 能力並び替えAPI ${passed}ケース`);
