@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const assert = require('assert');
-const { renderAssistIndex, validateAptitudes, summaryScores } = require('./build-assist-pages');
+const { renderAssistIndex, validateAptitudes, summaryScores, aptitudeFromEvent2, resolveAptitude } = require('./build-assist-pages');
 
 const cards = [
   { cardId: 'a-MR-one', name: '新しい&名前', rarity: 'MR', image: 'assist-cards/a-MR-one.jpg' },
@@ -108,6 +108,25 @@ assert(ratedRendered.includes('<a class="card" data-rarity="MR" href="cards/r3-M
 assert((ratedRendered.match(/<span class="score-val">-<\/span>/g) || []).length === 1, '未評価カードは「-」表示');
 assert(ratedRendered.includes('<span class="rarity rarity-MR">MR</span><span class="card-name">全項目</span>'), 'レアリティ＋カード名を1行で生成する');
 console.log('PASS assist一覧: 評価と距離・地形をdata属性へ埋め込む');
+
+// assist-aptitudes.json に無いカードはCMSのイベント2から距離・地形を読む（エルブランシュの中距離が絞り込みに出なかった件）
+assert.deepStrictEqual(aptitudeFromEvent2('中距離'), { dist: '中距離' }, 'イベント2の距離1語を読む');
+assert.deepStrictEqual(aptitudeFromEvent2('森林'), { terrain: ['森林'] }, 'イベント2の地形1語を読む');
+assert.deepStrictEqual(aptitudeFromEvent2('海岸 / 砂漠'), { terrain: ['海岸', '砂漠'] }, 'イベント2の「 / 」区切り地形を読む');
+assert.deepStrictEqual(aptitudeFromEvent2('超根性'), {}, '適性以外のイベント2は空');
+assert.deepStrictEqual(aptitudeFromEvent2('調査中'), {}, '調査中は空');
+assert.deepStrictEqual(aptitudeFromEvent2(null), {}, '未設定は空');
+const e2Cards = [
+  { cardId: 'e1-MR-event2', name: 'イベント2のみ', rarity: 'MR', image: 'assist-cards/e1-MR-event2.jpg', ratings: null, event2: '中距離' },
+  { cardId: 'e2-MR-override', name: 'JSON優先', rarity: 'MR', image: 'assist-cards/e2-MR-override.jpg', ratings: null, event2: '森林' },
+];
+const e2Aptitudes = { 'e2-MR-override': { dist: '遠距離' } };
+assert.deepStrictEqual(resolveAptitude(e2Cards[0], e2Aptitudes), { dist: '中距離' }, 'JSON未登録ならイベント2を使う');
+assert.deepStrictEqual(resolveAptitude(e2Cards[1], e2Aptitudes), { dist: '遠距離' }, 'JSON登録があればイベント2より優先する');
+const e2Rendered = renderAssistIndex(ratedSource, e2Cards, e2Aptitudes);
+assert(e2Rendered.includes('data-rarity="MR" data-dist="中距離" href="cards/e1-MR-event2.html"'), 'イベント2の距離をdata-distへ埋め込む');
+assert(e2Rendered.includes('data-rarity="MR" data-dist="遠距離" href="cards/e2-MR-override.html"'), 'JSON優先の距離を埋め込み、イベント2の地形は付けない');
+console.log('PASS assist一覧: イベント2から距離・地形を補う');
 
 const cardById = new Map(ratedCards.map(card => [card.cardId, card]));
 assert.throws(() => validateAptitudes({ schemaVersion: 1, cards: { 'zz-MR-unknown': { dist: '零距離' } } }, cardById), /DB未登録のcardId/, 'DB未登録の適性を拒否する');
