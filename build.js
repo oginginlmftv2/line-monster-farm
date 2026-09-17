@@ -1318,15 +1318,11 @@ ${abilityUnlocks.map(({ skill, link }) => {
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
 }
 
-function renderBasicsScore(scoreValue) {
-  return `<span class="basics-score">${basics.formatScore(scoreValue)}<small>/5.0</small></span>`;
-}
-
 function renderBasicsRankList(entries) {
   return entries.map(entry => `${escapeHtml(entry.label)}<b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b>`).join('・');
 }
 
-function renderBasicsAptitude(title, entries, scoreValue) {
+function renderBasicsAptitude(title, entries) {
   const { strong, weak } = basics.classifyRanks(entries);
   const gridClass = entries.length === 4 ? ' basics-grid-4' : '';
   const rows = entries.map(entry => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(entry.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b></div>`).join('\n');
@@ -1337,27 +1333,37 @@ function renderBasicsAptitude(title, entries, scoreValue) {
 ${rows}
       </div>
       <dl class="basics-summary">
-        <div><dt>${escapeHtml(title)}評価</dt><dd>${renderBasicsScore(scoreValue)}</dd></div>
         <div><dt>得意（${basics.STRONG_MIN_RANK}以上）</dt><dd>${strong.length ? renderBasicsRankList(strong) : 'なし'}</dd></div>
         <div><dt>苦手（${basics.WEAK_MAX_RANK}以下）</dt><dd>${weak.length ? renderBasicsRankList(weak) : 'なし'}</dd></div>
       </dl>
     </div>`;
 }
 
+// 適性データの見出し直下に置く評価カード。アシストカード詳細の「管理者による評価」と同じ見た目
+function renderBasicsRatingCards(ratings) {
+  return `
+    <div class="basics-rating-grid">
+${ratings.map(rating => `      <div class="basics-rating-card">
+        <div class="basics-rating-label">${escapeHtml(rating.label)}</div>
+        <span class="basics-rating-value">${escapeHtml(basics.formatScore(rating.value))}</span><span class="basics-rating-max">/ 5.0</span>
+      </div>`).join('\n')}
+    </div>`;
+}
+
 /**
- * 基礎データ（素質・特徴・地形適性・間合い適性）。5-11 を参照。
+ * 基礎データ（素質・特徴）と適性データ（地形適性・間合い適性）。5-11 を参照。
  * 生の値は monster-basics.json、評価は src/lib/monster-basics.js の式で毎回計算する。
  * データが無いモンスターはセクションごと出さない。グループごとに揃っている分だけ出す。
  */
 function renderMonsterBasics(monster, context) {
   const entry = context.basicsById.get(monster.id);
   if (!entry) return '';
-  const blocks = [];
+  const basicBlocks = [];
 
   if (entry.talent) {
     const summary = basics.summarizeTalent(entry.talent);
     const rows = basics.TALENTS.map(field => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-percent">${escapeHtml(basics.formatPercent(entry.talent[field.key]))}</b></div>`).join('\n');
-    blocks.push(`
+    basicBlocks.push(`
     <div class="basics-block">
       <h3 class="basics-title">素質</h3>
       <div class="basics-grid basics-grid-6">
@@ -1365,7 +1371,9 @@ ${rows}
       </div>
       <dl class="basics-summary">
         <div><dt>素質合計</dt><dd><span class="basics-score">${escapeHtml(basics.formatPercent(summary.total))}</span></dd></div>
-        <div><dt>最高素質</dt><dd>${summary.best.map(item => `${escapeHtml(item.label)} ${escapeHtml(basics.formatPercent(item.value))}`).join('・')}</dd></div>
+        <div><dt>最高素質</dt><dd>${summary.best.length === basics.TALENTS.length
+          ? `なし（全項目 ${escapeHtml(basics.formatPercent(summary.best[0].value))}）`
+          : summary.best.map(item => `${escapeHtml(item.label)} ${escapeHtml(basics.formatPercent(item.value))}`).join('・')}</dd></div>
       </dl>
     </div>`);
   }
@@ -1382,7 +1390,7 @@ ${rows}
     }
   }
   if (traitRows.length) {
-    blocks.push(`
+    basicBlocks.push(`
     <div class="basics-block">
       <h3 class="basics-title">特徴</h3>
       <div class="basics-grid basics-grid-trait">
@@ -1391,27 +1399,35 @@ ${traitRows.join('\n')}
     </div>`);
   }
 
+  const ratings = [];
+  const aptitudeBlocks = [];
   if (entry.terrain) {
-    blocks.push(renderBasicsAptitude(
-      '地形適性', basics.terrainEntries(entry.terrain),
-      basics.scoreTerrain(entry.terrain)
-    ));
+    ratings.push({ label: '地形適性評価', value: basics.scoreTerrain(entry.terrain) });
+    aptitudeBlocks.push(renderBasicsAptitude('地形適性', basics.terrainEntries(entry.terrain)));
   }
   if (entry.range) {
-    blocks.push(renderBasicsAptitude(
-      '間合い適性', basics.rangeEntries(entry.range),
-      basics.scoreRange(entry.range)
-    ));
+    ratings.push({ label: '間合い適性評価', value: basics.scoreRange(entry.range) });
+    aptitudeBlocks.push(renderBasicsAptitude('間合い適性', basics.rangeEntries(entry.range)));
   }
-  if (!blocks.length) return '';
-  const hasAptitude = entry.terrain || entry.range;
-  return `
+
+  const basicSection = basicBlocks.length
+    ? `
   <div class="section-box">
     <div class="section-header">
       <h2 class="section-title">基礎データ</h2>
-    </div>${blocks.join('')}${hasAptitude ? `
-    <p class="basics-note">適性評価は当サイト独自の指標です。${basics.STRONG_MIN_RANK}以上は育成でSに届く適性、${basics.WEAK_MAX_RANK}以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>` : ''}
-  </div>`;
+    </div>${basicBlocks.join('')}
+  </div>`
+    : '';
+  const aptitudeSection = aptitudeBlocks.length
+    ? `
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">適性データ</h2>
+    </div>${renderBasicsRatingCards(ratings)}${aptitudeBlocks.join('')}
+    <p class="basics-note">適性評価は当サイト独自の指標です。${basics.STRONG_MIN_RANK}以上は育成でSに届く適性、${basics.WEAK_MAX_RANK}以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>
+  </div>`
+    : '';
+  return `${basicSection}${aptitudeSection}`;
 }
 
 function renderDetail(entry, context) {
