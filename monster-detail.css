@@ -301,6 +301,15 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+/* 素質6項目・特徴5項目はPCで1行 */
+.monster-detail-page .basics-grid-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.monster-detail-page .basics-grid-trait {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
 .monster-detail-page .basics-cell {
   display: flex;
   flex-direction: column;
@@ -381,8 +390,9 @@
 }
 
 @media (max-width: 480px) {
-  /* 地形5マスだけ3列へ折り返す。間合い4マス・素質/特徴3マスはそのまま */
-  .monster-detail-page .basics-grid {
+  /* 地形5マス・素質6マスは3列へ折り返す。間合い4マスはそのまま */
+  .monster-detail-page .basics-grid,
+  .monster-detail-page .basics-grid-6 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
@@ -392,5 +402,18 @@
 
   .monster-detail-page .basics-grid-4 {
     grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  /* 特徴は「ガッツ回復力・移動速度」で1行、「成長タイプ・ヨイワル・サイズ」で1行 */
+  .monster-detail-page .basics-grid-trait {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .monster-detail-page .basics-grid-trait .basics-cell-trait-rank {
+    grid-column: span 3;
+  }
+
+  .monster-detail-page .basics-grid-trait .basics-cell-trait-enum {
+    grid-column: span 2;
   }
 }

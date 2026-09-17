@@ -826,14 +826,8 @@ function createBuildContext(inputs, eligibleMonTypes, eligibleBloods) {
         title: formation.title || 'おすすめ編成',
       }));
   });
-  // 基礎データの順位は「登録済みの中で」数える。母数はビルドごとに変わってよい（決定的）。
   const basicsList = (inputs.basicsJson && inputs.basicsJson.monsters) || [];
   const basicsById = new Map(basicsList.map(entry => [entry.id, entry]));
-  const basicsRanks = {
-    terrain: basics.rankAmong(basicsList, entry => basics.scoreTerrain(entry.terrain)),
-    range: basics.rankAmong(basicsList, entry => basics.scoreRange(entry.range)),
-    talent: basics.rankAmong(basicsList, entry => (entry.talent ? basics.summarizeTalent(entry.talent).total : null)),
-  };
   return {
     ...inputs,
     eligibleMonSlugs,
@@ -841,7 +835,6 @@ function createBuildContext(inputs, eligibleMonTypes, eligibleBloods) {
     eligibleBloods,
     bloodPageByBlood,
     basicsById,
-    basicsRanks,
     skillsByBlood,
     abilityById,
     buffById,
@@ -1325,16 +1318,15 @@ ${abilityUnlocks.map(({ skill, link }) => {
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
 }
 
-function renderBasicsRankLine(scoreValue, rankInfo) {
-  const rank = rankInfo ? `（登録${rankInfo.total}体中${rankInfo.rank}位）` : '';
-  return `<span class="basics-score">${basics.formatScore(scoreValue)}<small>/5.0</small></span>${rank}`;
+function renderBasicsScore(scoreValue) {
+  return `<span class="basics-score">${basics.formatScore(scoreValue)}<small>/5.0</small></span>`;
 }
 
 function renderBasicsRankList(entries) {
   return entries.map(entry => `${escapeHtml(entry.label)}<b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b>`).join('・');
 }
 
-function renderBasicsAptitude(title, entries, scoreValue, rankInfo) {
+function renderBasicsAptitude(title, entries, scoreValue) {
   const { strong, weak } = basics.classifyRanks(entries);
   const gridClass = entries.length === 4 ? ' basics-grid-4' : '';
   const rows = entries.map(entry => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(entry.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b></div>`).join('\n');
@@ -1345,7 +1337,7 @@ function renderBasicsAptitude(title, entries, scoreValue, rankInfo) {
 ${rows}
       </div>
       <dl class="basics-summary">
-        <div><dt>${escapeHtml(title)}評価</dt><dd>${renderBasicsRankLine(scoreValue, rankInfo)}</dd></div>
+        <div><dt>${escapeHtml(title)}評価</dt><dd>${renderBasicsScore(scoreValue)}</dd></div>
         <div><dt>得意（${basics.STRONG_MIN_RANK}以上）</dt><dd>${strong.length ? renderBasicsRankList(strong) : 'なし'}</dd></div>
         <div><dt>苦手（${basics.WEAK_MAX_RANK}以下）</dt><dd>${weak.length ? renderBasicsRankList(weak) : 'なし'}</dd></div>
       </dl>
@@ -1364,16 +1356,15 @@ function renderMonsterBasics(monster, context) {
 
   if (entry.talent) {
     const summary = basics.summarizeTalent(entry.talent);
-    const rankInfo = context.basicsRanks.talent.get(monster.id);
     const rows = basics.TALENTS.map(field => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-percent">${escapeHtml(basics.formatPercent(entry.talent[field.key]))}</b></div>`).join('\n');
     blocks.push(`
     <div class="basics-block">
       <h3 class="basics-title">素質</h3>
-      <div class="basics-grid basics-grid-3">
+      <div class="basics-grid basics-grid-6">
 ${rows}
       </div>
       <dl class="basics-summary">
-        <div><dt>素質合計</dt><dd><span class="basics-score">${escapeHtml(basics.formatPercent(summary.total))}</span>${rankInfo ? `（登録${rankInfo.total}体中${rankInfo.rank}位）` : ''}</dd></div>
+        <div><dt>素質合計</dt><dd><span class="basics-score">${escapeHtml(basics.formatPercent(summary.total))}</span></dd></div>
         <div><dt>最高素質</dt><dd>${summary.best.map(item => `${escapeHtml(item.label)} ${escapeHtml(basics.formatPercent(item.value))}`).join('・')}</dd></div>
       </dl>
     </div>`);
@@ -1382,19 +1373,19 @@ ${rows}
   const traitRows = [];
   for (const field of basics.TRAIT_RANK_FIELDS) {
     if (entry[field.key] != null) {
-      traitRows.push(`        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry[field.key])}">${escapeHtml(entry[field.key])}</b></div>`);
+      traitRows.push(`        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry[field.key])}">${escapeHtml(entry[field.key])}</b></div>`);
     }
   }
   for (const field of basics.TRAIT_ENUM_FIELDS) {
     if (entry[field.key] != null) {
-      traitRows.push(`        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-text">${escapeHtml(entry[field.key])}</b></div>`);
+      traitRows.push(`        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-text">${escapeHtml(entry[field.key])}</b></div>`);
     }
   }
   if (traitRows.length) {
     blocks.push(`
     <div class="basics-block">
       <h3 class="basics-title">特徴</h3>
-      <div class="basics-grid basics-grid-3">
+      <div class="basics-grid basics-grid-trait">
 ${traitRows.join('\n')}
       </div>
     </div>`);
@@ -1403,13 +1394,13 @@ ${traitRows.join('\n')}
   if (entry.terrain) {
     blocks.push(renderBasicsAptitude(
       '地形適性', basics.terrainEntries(entry.terrain),
-      basics.scoreTerrain(entry.terrain), context.basicsRanks.terrain.get(monster.id)
+      basics.scoreTerrain(entry.terrain)
     ));
   }
   if (entry.range) {
     blocks.push(renderBasicsAptitude(
       '間合い適性', basics.rangeEntries(entry.range),
-      basics.scoreRange(entry.range), context.basicsRanks.range.get(monster.id)
+      basics.scoreRange(entry.range)
     ));
   }
   if (!blocks.length) return '';

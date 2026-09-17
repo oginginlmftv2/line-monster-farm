@@ -193,25 +193,6 @@ function validateMonsterBasics(basicsJson, idsJson) {
   return errors;
 }
 
-/**
- * 登録済み全体の中での順位。scoreOf が null を返すモンスターは母数に入れない。
- * 同点は同順位（1位・1位・3位）。戻り値は Map<id, {rank, total}>。
- */
-function rankAmong(monsters, scoreOf) {
-  const scored = monsters
-    .map(entry => ({ id: entry.id, score: scoreOf(entry) }))
-    .filter(entry => entry.score != null)
-    .sort((a, b) => b.score - a.score || a.id.localeCompare(b.id));
-  const result = new Map();
-  scored.forEach((entry, index) => {
-    const rank = index > 0 && scored[index - 1].score === entry.score
-      ? result.get(scored[index - 1].id).rank
-      : index + 1;
-    result.set(entry.id, { rank, total: scored.length });
-  });
-  return result;
-}
-
 module.exports = {
   RANKS,
   RANK_POINTS,
@@ -238,5 +219,4 @@ module.exports = {
   formatPercent,
   formatScore,
   validateMonsterBasics,
-  rankAmong,
 };
