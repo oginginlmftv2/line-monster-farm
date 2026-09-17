@@ -572,8 +572,8 @@
       "createdAt": "",
       "updatedAt": "2026-08-20",
       "releasedAt": "2026-04-30",
-      "baseline": 198,
-      "current": 198,
+      "baseline": 410,
+      "current": 410,
       "indexable": false
     },
     {
@@ -3196,8 +3196,8 @@
       "createdAt": "2026-03-14",
       "updatedAt": "2026-09-01",
       "releasedAt": "2026-03-14",
-      "baseline": 205,
-      "current": 1657,
+      "baseline": 417,
+      "current": 1869,
       "indexable": true
     },
     {
@@ -8405,8 +8405,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2026-02-28",
-      "baseline": 385,
-      "current": 1598,
+      "baseline": 597,
+      "current": 1810,
       "indexable": true
     },
     {
@@ -9347,8 +9347,8 @@
       "createdAt": "2026-09-14",
       "updatedAt": "2026-09-14",
       "releasedAt": "2026-09-14",
-      "baseline": 674,
-      "current": 1086,
+      "baseline": 983,
+      "current": 1395,
       "indexable": true
     },
     {
@@ -9568,8 +9568,8 @@
       "createdAt": "2026-09-01",
       "updatedAt": "2026-09-01",
       "releasedAt": "2026-08-31",
-      "baseline": 571,
-      "current": 1825,
+      "baseline": 786,
+      "current": 2040,
       "indexable": true
     },
     {
@@ -9949,8 +9949,8 @@
       "createdAt": "2026-06-30",
       "updatedAt": "2026-09-01",
       "releasedAt": "2026-06-30",
-      "baseline": 177,
-      "current": 2163,
+      "baseline": 385,
+      "current": 2371,
       "indexable": true
     }
   ]

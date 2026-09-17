@@ -32,6 +32,7 @@
 | 管理者がClaudeへ依頼して開発・公開するとき | `docs/admin-development.md` |
 | 次回のClaude作業を開始するとき | `docs/claude-next-session.md` |
 | AdSense申請・インデックス改善を進めるとき | `docs/adsense-indexing-handoff.md` |
+| モンスター基礎データ（素質・適性）の入力・評価式 | `docs/monster-basics-design.md` |
 | アシストカードDB・静的ページ・CMSの設計と進捗 | `docs/assist-card-cms-progress.md` |
 | CMS統合の方針と実施順 | `docs/cms-integration-plan.md` |
 | 外部能力DB（lMfDB）の読取専用候補監査 | `docs/lmfdb-integration.md` |

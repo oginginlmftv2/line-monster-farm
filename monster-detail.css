@@ -271,3 +271,126 @@
   font-size: 12px;
   line-height: 1.6;
 }
+
+/* 基礎データ（素質・特徴・地形適性・間合い適性）。build.js の renderMonsterBasics が出す */
+.monster-detail-page .basics-block {
+  margin-top: 14px;
+}
+
+.monster-detail-page .basics-block:first-of-type {
+  margin-top: 0;
+}
+
+.monster-detail-page .basics-title {
+  margin: 0 0 8px;
+  font-size: 15px;
+  color: #5a4a2f;
+}
+
+.monster-detail-page .basics-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.monster-detail-page .basics-grid-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.monster-detail-page .basics-grid-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.monster-detail-page .basics-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 4px;
+  background: #fbf7ee;
+  border: 1px solid #e6dcc6;
+  border-radius: 8px;
+}
+
+.monster-detail-page .basics-cell-label {
+  font-size: 12px;
+  color: #7a6a4f;
+}
+
+.monster-detail-page .basics-rank,
+.monster-detail-page .basics-percent,
+.monster-detail-page .basics-text {
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.monster-detail-page .basics-rank-S,
+.monster-detail-page .basics-rank-A { color: #c53030; }
+.monster-detail-page .basics-rank-B { color: #b83280; }
+.monster-detail-page .basics-rank-C { color: #2f855a; }
+.monster-detail-page .basics-rank-D { color: #2b6cb0; }
+.monster-detail-page .basics-rank-E,
+.monster-detail-page .basics-rank-F,
+.monster-detail-page .basics-rank-G { color: #6b46c1; }
+
+.monster-detail-page .basics-summary {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.monster-detail-page .basics-summary > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 8px;
+}
+
+.monster-detail-page .basics-summary dt {
+  flex: none;
+  color: #7a6a4f;
+}
+
+.monster-detail-page .basics-summary dd {
+  margin: 0;
+}
+
+.monster-detail-page .basics-summary .basics-rank {
+  margin-left: 2px;
+  font-size: 13px;
+}
+
+.monster-detail-page .basics-score {
+  font-weight: bold;
+  font-size: 16px;
+  color: #5a4a2f;
+}
+
+.monster-detail-page .basics-score small {
+  font-size: 11px;
+  font-weight: normal;
+  color: #9a8a6f;
+}
+
+.monster-detail-page .basics-note {
+  margin: 12px 0 0;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #7a6a4f;
+}
+
+@media (max-width: 480px) {
+  /* 地形5マスだけ3列へ折り返す。間合い4マス・素質/特徴3マスはそのまま */
+  .monster-detail-page .basics-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .monster-detail-page .basics-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .monster-detail-page .basics-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
