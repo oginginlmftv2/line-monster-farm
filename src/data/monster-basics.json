@@ -5,6 +5,19 @@
     {
       "id": "0190",
       "name": "ティターニア",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "小さい",
       "terrain": {
         "砂漠": "D",
         "森林": "B",
@@ -23,6 +36,19 @@
     {
       "id": "0990",
       "name": "ヴァナルガンド",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "小さい",
       "terrain": {
         "砂漠": "D",
         "森林": "A",
@@ -41,6 +67,19 @@
     {
       "id": "2690",
       "name": "タマモノマエ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "小さい",
       "terrain": {
         "砂漠": "E",
         "森林": "B",
@@ -90,6 +129,19 @@
     {
       "id": "3290",
       "name": "ワルキューレ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
       "terrain": {
         "砂漠": "B",
         "森林": "D",
@@ -108,6 +160,19 @@
     {
       "id": "3490",
       "name": "フウマ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
       "terrain": {
         "砂漠": "C",
         "森林": "A",
