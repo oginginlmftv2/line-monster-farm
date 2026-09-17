@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const { buildAssistPages } = require('./scripts/build-assist-pages');
 const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
+const basics = require('./src/lib/monster-basics');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -119,6 +120,9 @@ function loadInputs() {
   const skillAbilitiesJson = fs.existsSync(skillAbilitiesPath) ? readJson('src/data/skill-abilities.json') : null;
   const skillBuffsPath = path.join(REPO, 'src/data/skill-buffs.json');
   const skillBuffsJson = fs.existsSync(skillBuffsPath) ? readJson('src/data/skill-buffs.json') : null;
+  // 基礎データ（素質・特徴・適性）は任意入力。無ければセクションを出さずにビルドを通す。
+  const basicsPath = path.join(REPO, 'src/data/monster-basics.json');
+  const basicsJson = fs.existsSync(basicsPath) ? readJson('src/data/monster-basics.json') : null;
 
   const monsters = idsJson.monsters;
   const editorial = Object.values(editorialJson.monsters);
@@ -146,6 +150,7 @@ function loadInputs() {
   if (monstersData.length !== monsters.length) {
     errors.push(`monsters-data.js と monster-ids.json の件数不一致: ${monstersData.length} / ${monsters.length}`);
   }
+  if (basicsJson) errors.push(...basics.validateMonsterBasics(basicsJson, idsJson));
   if (errors.length) throw new Error(errors.join('\n'));
 
   const runtimeById = new Map(
@@ -166,6 +171,7 @@ function loadInputs() {
     skillsJson,
     skillAbilitiesJson,
     skillBuffsJson,
+    basicsJson,
     sitemap: fs.readFileSync(path.join(REPO, 'sitemap.xml'), 'utf8'),
     runtimeById,
     monsterById,
@@ -820,12 +826,22 @@ function createBuildContext(inputs, eligibleMonTypes, eligibleBloods) {
         title: formation.title || 'おすすめ編成',
       }));
   });
+  // 基礎データの順位は「登録済みの中で」数える。母数はビルドごとに変わってよい（決定的）。
+  const basicsList = (inputs.basicsJson && inputs.basicsJson.monsters) || [];
+  const basicsById = new Map(basicsList.map(entry => [entry.id, entry]));
+  const basicsRanks = {
+    terrain: basics.rankAmong(basicsList, entry => basics.scoreTerrain(entry.terrain)),
+    range: basics.rankAmong(basicsList, entry => basics.scoreRange(entry.range)),
+    talent: basics.rankAmong(basicsList, entry => (entry.talent ? basics.summarizeTalent(entry.talent).total : null)),
+  };
   return {
     ...inputs,
     eligibleMonSlugs,
     eligibleMonTypes,
     eligibleBloods,
     bloodPageByBlood,
+    basicsById,
+    basicsRanks,
     skillsByBlood,
     abilityById,
     buffById,
@@ -1309,6 +1325,104 @@ ${abilityUnlocks.map(({ skill, link }) => {
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
 }
 
+function renderBasicsRankLine(scoreValue, rankInfo) {
+  const rank = rankInfo ? `（登録${rankInfo.total}体中${rankInfo.rank}位）` : '';
+  return `<span class="basics-score">${basics.formatScore(scoreValue)}<small>/5.0</small></span>${rank}`;
+}
+
+function renderBasicsRankList(entries) {
+  return entries.map(entry => `${escapeHtml(entry.label)}<b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b>`).join('・');
+}
+
+function renderBasicsAptitude(title, entries, scoreValue, rankInfo) {
+  const { strong, weak } = basics.classifyRanks(entries);
+  const gridClass = entries.length === 4 ? ' basics-grid-4' : '';
+  const rows = entries.map(entry => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(entry.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry.rank)}">${escapeHtml(entry.rank)}</b></div>`).join('\n');
+  return `
+    <div class="basics-block">
+      <h3 class="basics-title">${escapeHtml(title)}</h3>
+      <div class="basics-grid${gridClass}">
+${rows}
+      </div>
+      <dl class="basics-summary">
+        <div><dt>${escapeHtml(title)}評価</dt><dd>${renderBasicsRankLine(scoreValue, rankInfo)}</dd></div>
+        <div><dt>得意（${basics.STRONG_MIN_RANK}以上）</dt><dd>${strong.length ? renderBasicsRankList(strong) : 'なし'}</dd></div>
+        <div><dt>苦手（${basics.WEAK_MAX_RANK}以下）</dt><dd>${weak.length ? renderBasicsRankList(weak) : 'なし'}</dd></div>
+      </dl>
+    </div>`;
+}
+
+/**
+ * 基礎データ（素質・特徴・地形適性・間合い適性）。5-11 を参照。
+ * 生の値は monster-basics.json、評価は src/lib/monster-basics.js の式で毎回計算する。
+ * データが無いモンスターはセクションごと出さない。グループごとに揃っている分だけ出す。
+ */
+function renderMonsterBasics(monster, context) {
+  const entry = context.basicsById.get(monster.id);
+  if (!entry) return '';
+  const blocks = [];
+
+  if (entry.talent) {
+    const summary = basics.summarizeTalent(entry.talent);
+    const rankInfo = context.basicsRanks.talent.get(monster.id);
+    const rows = basics.TALENTS.map(field => `        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-percent">${escapeHtml(basics.formatPercent(entry.talent[field.key]))}</b></div>`).join('\n');
+    blocks.push(`
+    <div class="basics-block">
+      <h3 class="basics-title">素質</h3>
+      <div class="basics-grid basics-grid-3">
+${rows}
+      </div>
+      <dl class="basics-summary">
+        <div><dt>素質合計</dt><dd><span class="basics-score">${escapeHtml(basics.formatPercent(summary.total))}</span>${rankInfo ? `（登録${rankInfo.total}体中${rankInfo.rank}位）` : ''}</dd></div>
+        <div><dt>最高素質</dt><dd>${summary.best.map(item => `${escapeHtml(item.label)} ${escapeHtml(basics.formatPercent(item.value))}`).join('・')}</dd></div>
+      </dl>
+    </div>`);
+  }
+
+  const traitRows = [];
+  for (const field of basics.TRAIT_RANK_FIELDS) {
+    if (entry[field.key] != null) {
+      traitRows.push(`        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-rank basics-rank-${escapeHtml(entry[field.key])}">${escapeHtml(entry[field.key])}</b></div>`);
+    }
+  }
+  for (const field of basics.TRAIT_ENUM_FIELDS) {
+    if (entry[field.key] != null) {
+      traitRows.push(`        <div class="basics-cell"><span class="basics-cell-label">${escapeHtml(field.label)}</span><b class="basics-text">${escapeHtml(entry[field.key])}</b></div>`);
+    }
+  }
+  if (traitRows.length) {
+    blocks.push(`
+    <div class="basics-block">
+      <h3 class="basics-title">特徴</h3>
+      <div class="basics-grid basics-grid-3">
+${traitRows.join('\n')}
+      </div>
+    </div>`);
+  }
+
+  if (entry.terrain) {
+    blocks.push(renderBasicsAptitude(
+      '地形適性', basics.terrainEntries(entry.terrain),
+      basics.scoreTerrain(entry.terrain), context.basicsRanks.terrain.get(monster.id)
+    ));
+  }
+  if (entry.range) {
+    blocks.push(renderBasicsAptitude(
+      '間合い適性', basics.rangeEntries(entry.range),
+      basics.scoreRange(entry.range), context.basicsRanks.range.get(monster.id)
+    ));
+  }
+  if (!blocks.length) return '';
+  const hasAptitude = entry.terrain || entry.range;
+  return `
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">基礎データ</h2>
+    </div>${blocks.join('')}${hasAptitude ? `
+    <p class="basics-note">適性評価は当サイト独自の指標です。${basics.STRONG_MIN_RANK}以上は育成でSに届く適性、${basics.WEAK_MAX_RANK}以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>` : ''}
+  </div>`;
+}
+
 function renderDetail(entry, context) {
   const monster = context.monsterById.get(entry.id);
   const runtime = context.runtimeById.get(entry.id);
@@ -1360,6 +1474,7 @@ function renderDetail(entry, context) {
   </div>`
     : '';
   const related = relatedMonsters(monster, context);
+  const basicsSection = renderMonsterBasics(monster, context);
   const skillSections = renderMonsterSkillSections(monster, context);
   const gachaAppearances = renderGachaAppearances(
     publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX, 'box'
@@ -1404,7 +1519,7 @@ function renderDetail(entry, context) {
     </div>
   </div>
 
-${explanation}${formations}${skillSections}
+${explanation}${formations}${basicsSection}${skillSections}
 
   <div class="section-box">
     <div class="section-header">
@@ -2616,6 +2731,8 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
   console.log(`  monsters-editorial  ${inputs.editorial.length}件`);
   console.log(`  monster-images     ${Object.keys(inputs.images).length}件`);
   console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン類${taxonomyCounts.monTypes}件`);
+  const basicsList = (inputs.basicsJson && inputs.basicsJson.monsters) || [];
+  console.log(`  monster-basics     ${basicsList.length}体（素質 ${basicsList.filter(entry => entry.talent).length} / 地形 ${basicsList.filter(entry => entry.terrain).length} / 間合い ${basicsList.filter(entry => entry.range).length}）`);
   console.log('');
   console.log('=== ゲート判定 ===');
   console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);

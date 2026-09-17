@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "note": "スクショから転記した生の値だけを持つ。評価値は保存せず build.js が src/lib/monster-basics.js で計算する。手で編集せず src/data/_source/monster-basics-*.tsv を直して scripts/import-monster-basics-tsv.js を実行する。",
+  "monsters": [
+    {
+      "id": "0190",
+      "name": "ティターニア",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "B",
+        "火山": "D"
+      },
+      "range": {
+        "far": "A",
+        "mid": "B",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "0990",
+      "name": "ヴァナルガンド",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "A",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "A"
+      },
+      "range": {
+        "far": "A",
+        "mid": "C",
+        "near": "B",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "2690",
+      "name": "タマモノマエ",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "E",
+        "雪山": "B",
+        "火山": "A"
+      },
+      "range": {
+        "far": "D",
+        "mid": "A",
+        "near": "A",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "3151",
+      "name": "メレンゲ",
+      "talent": {
+        "life": 0,
+        "power": -5,
+        "wisdom": 10,
+        "accuracy": 20,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "D",
+        "雪山": "B",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "3290",
+      "name": "ワルキューレ",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "B",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "B",
+        "near": "B",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "3490",
+      "name": "フウマ",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "A",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "B",
+        "near": "C",
+        "zero": "A"
+      },
+      "capturedAt": "2026-09-17"
+    }
+  ]
+}

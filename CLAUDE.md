@@ -3,7 +3,7 @@
 > **開発ルールは `AGENTS.md` が唯一の正です。作業前に必ず読んでください。**
 > このファイルはガチャ更新・モンスター更新・日記追加など、コンテンツ運用だけを扱います。
 
-**最終更新：2026-09-16（アシスト効果のスクショ読取をClaudeスキル化・CMSへJSON貼り付け導線を追加）**
+**最終更新：2026-09-17（モンスター基礎データ（素質・適性）のスクショ取り込みをスキル化・詳細ページに「基礎データ」を追加）**
 
 Git・ブランチ・PR・マージの管理者向け手順は`docs/admin-development.md`を参照してください。
 
@@ -43,18 +43,19 @@ GAS管理画面で保存・画像アップロード
 | 項目 | 値 |
 |---|---:|
 | モンスター総数 | 358 |
-| インデックス対象 | 64 |
-| noindex | 294 |
+| インデックス対象 | 66 |
+| noindex | 292 |
 | 血統ページ | 4（キュービ・イルミネ・ゴースト・キジン。技109件） |
-| sitemap | 157URL（既存25 + カード58 + モンスター64 + 血統4 + モン類6） |
+| 基礎データ登録 | 6体（素質1 / 地形6 / 間合い6） |
+| sitemap | 164URL（既存25 + カード63 + モンスター66 + 血統4 + モン類6） |
 
 インデックス判定は生成HTMLの可視文字数800字以上です。UI表示は予測で、最終判定は
 `build.js`が行います。sitemap合計は`existingBlocks + pages`で動的計算されるため、
 モンスターの昇格時に定数を手で直す必要はありません。
 
 **この表は、値を変える作業と同じPRで更新します。**あとでまとめて直すと必ず古くなります。
-値は`node build.js`のログ（`詳細ページ 生成/インデックス/noindex`、`血統ページ 生成/技`）と
-`grep -c '<url>' sitemap.xml`から取り、目視で数えません。
+値は`node build.js`のログ（`詳細ページ 生成/インデックス/noindex`、`血統ページ 生成/技`、
+`monster-basics`）と`grep -c '<url>' sitemap.xml`から取り、目視で数えません。
 
 ---
 
@@ -242,6 +243,29 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 
 ---
 
+## ⚠️ モンスター基礎データ（素質・特徴・適性）の追加
+
+モンスター詳細画面の右上3タブ（基礎・特徴・適性）のスクショから、素質％・ガッツ回復力・
+移動速度・成長タイプ・ヨイワル・サイズ・地形適性・間合い適性を読み、詳細ページの「基礎データ」に
+出します。CMS対象外で、リポジトリのTSVとJSONで管理します（技DBと同じ区分）。
+
+1. スクショ（1メッセージ10体まで、1体3枚）を添付し、スキル `monster-basics-capture` で読む
+   - 名前→IDの照合とオーラ・モン類の突き合わせに通った体だけ転記する
+2. `src/data/_source/monster-basics-<血統slug>.tsv` へ1体1行で追記
+3. `node scripts/import-monster-basics-tsv.js` → FAIL 0 で `src/data/monster-basics.json` が書き直される
+   - `monster-basics.json` は直接編集しない（TSVと一致しないと `verify.js` 検査21がFAIL）
+4. `node build.js` → `node scripts/test-monster-basics.js` → `node scripts/verify.js` がFAIL 0
+5. 上の「現在の実数」の基礎データ登録数と「最終更新」を同じPRで更新
+
+評価値（地形適性評価・間合い適性評価・得意/苦手・順位）は保存せず、`build.js` が
+`src/lib/monster-basics.js` の式で毎回計算します。式・点数表・閾値を変えるときは
+そのファイルと `scripts/test-monster-basics.js`・`docs/monster-basics-design.md` を同じPRで直します。
+
+基礎データだけでは可視文字数が約+310字で、300字未満のページは800字に届きません。
+インデックス昇格は能力スコアリング（`docs/adsense-indexing-handoff.md`）と合わせて進めます。
+
+---
+
 ## ⚠️ プレイ日記追加時の注意
 
 日記は1記事＝1ページです。`diary.html`へ本文全文を追記しません。
@@ -291,6 +315,7 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 ### リポジトリで管理
 
 - `src/data/monster-skills.json`、`src/data/skill-abilities.json`（技DB。現在は手入力）
+- `src/data/monster-basics.json`、`src/data/_source/monster-basics-*.tsv`（基礎データ。TSVから生成）
 - `cards/cards-data.js`、`src/data/assist-aptitudes.json`、`reroll.html`
 - `index.html`のピックアップ・日記プレビュー・更新履歴
 - `diary.html`、`diary/*.html`

@@ -1987,6 +1987,71 @@ head('20. 広告タグの配置');
   else ok(`広告clientがads.txtのID（${adsPub}）と一致（client ${clients.size}種）`);
 }
 
+// ---------------------------------------------------------------- 21
+head('21. モンスター基礎データDB');
+{
+  // 素質・特徴・地形適性・間合い適性。DBはリポジトリ管理（技DBと同じ区分）で、CMS公開の対象外。
+  // 生の値だけを持ち、評価値は build.js が src/lib/monster-basics.js の式で毎回計算する。
+  const BASICS_DB = 'src/data/monster-basics.json';
+  if (!exists(BASICS_DB)) {
+    sk(`${BASICS_DB} が無い（任意入力。無ければセクションを出さない）`);
+  } else {
+    const basicsLib = require('../src/lib/monster-basics');
+    const ids = JSON.parse(read('src/data/monster-ids.json'));
+    let db = null;
+    try { db = JSON.parse(read(BASICS_DB)); } catch (error) { ng(`${BASICS_DB} が読めない: ${error.message}`); }
+    if (db) {
+      const issues = basicsLib.validateMonsterBasics(db, ids);
+      if (issues.length) ng(`基礎データDBの検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(' / ')}`);
+      else ok(`基礎データDB ${db.monsters.length}体（スキーマ・ID・列挙が整合）`);
+
+      // DBはTSVから生成する。手で編集していないことを、TSVから再生成した結果と一致するかで確認する
+      try {
+        const importer = require('./import-monster-basics-tsv');
+        const sources = importer.collectSourceFiles();
+        const rebuilt = importer.buildDb(sources, ids);
+        if (rebuilt.errors.length) ng(`基礎データTSVの検査FAIL ${rebuilt.errors.length}件: ${rebuilt.errors.slice(0, 5).join(' / ')}`);
+        else if (JSON.stringify(rebuilt.db) !== JSON.stringify(db)) ng(`${BASICS_DB} がTSVと一致しない（scripts/import-monster-basics-tsv.js を実行すること）`);
+        else ok(`基礎データDBは _source のTSV ${sources.length}枚と一致`);
+      } catch (error) {
+        ng(`基礎データTSVの再生成に失敗: ${error.message}`);
+      }
+
+      // 評価式の期待値（較正した6体）。式を変えたときは docs/monster-basics-design.md と一緒に更新する
+      const expected = { '3290': { range: 4.5 }, '3151': { range: 3.5, terrain: 3.2 }, '2690': { range: 4.2, terrain: 3.5 } };
+      const scoreIssues = [];
+      for (const [id, want] of Object.entries(expected)) {
+        const entry = db.monsters.find(item => item.id === id);
+        if (!entry) continue;
+        if (want.range != null && basicsLib.scoreRange(entry.range) !== want.range) scoreIssues.push(`${id} 間合い ${basicsLib.scoreRange(entry.range)}≠${want.range}`);
+        if (want.terrain != null && basicsLib.scoreTerrain(entry.terrain) !== want.terrain) scoreIssues.push(`${id} 地形 ${basicsLib.scoreTerrain(entry.terrain)}≠${want.terrain}`);
+      }
+      if (scoreIssues.length) ng(`評価式が較正値と一致しない: ${scoreIssues.join(', ')}`);
+      else ok('評価式が較正値（ワルキューレ4.5・メレンゲ3.5/3.2・タマモノマエ4.2/3.5）と一致');
+
+      // 生成ページとの整合：登録済みは「基礎データ」セクションがあり、未登録には無い
+      const registered = new Set(db.monsters.map(entry => entry.id));
+      const missing = [];
+      const unexpected = [];
+      for (const monster of ids.monsters) {
+        const rel = monster.url.replace(/^\//, '');
+        if (!exists(rel)) continue;
+        const has = /<h2 class="section-title">基礎データ<\/h2>/.test(read(rel));
+        if (registered.has(monster.id) && !has) missing.push(monster.id);
+        if (!registered.has(monster.id) && has) unexpected.push(monster.id);
+      }
+      if (missing.length) ng(`登録済みなのに基礎データが出ていない詳細ページ ${missing.length}件: ${missing.slice(0, 5).join(', ')}（node build.js を実行）`);
+      else if (unexpected.length) ng(`未登録なのに基礎データが出ている詳細ページ ${unexpected.length}件: ${unexpected.slice(0, 5).join(', ')}`);
+      else ok(`基礎データセクションは登録済み${registered.size}体の詳細ページだけに出ている`);
+
+      // CMS公開の境界：CMSのソース・生成物の集合にこのDBを入れない（CMS公開で上書き・削除されないこと）
+      const guard = read('scripts/verify-cms-source.js');
+      if (guard.includes(BASICS_DB)) ng(`${BASICS_DB} が verify-cms-source.js のCMS対象に含まれている`);
+      else ok(`${BASICS_DB} はCMS公開の対象外（リポジトリ管理）`);
+    }
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);

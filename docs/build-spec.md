@@ -55,6 +55,7 @@
 | `monsters-data.js` | オーラ・限定ラベル・gwImg・localImg | `monster-ids.json`と同数 |
 | `cards/cards-data.js` | 旧fragment URL用の互換データ。既存91件は保持し、CMS追加カードの正にはしない（`dist`/`terrain`は参照しない） | 91 |
 | `src/data/assist-aptitudes.json` | `assist.html`の距離・地形filter用（手入力。CMS未対応） | 41 |
+| `src/data/monster-basics.json` | 素質・特徴・地形適性・間合い適性（任意。TSVから生成。5-11） | 動的（2026-09-17: 6） |
 | `style.css` | 既存スタイル。共通の `page-breadcrumb` を定義 | – |
 
 ### 入力の整合性チェック（起動時に実行し、違反があれば即失敗）
@@ -577,6 +578,29 @@ BreadcrumbList の JSON-LD も同じ条件で1段増やす。
 - 上の余白は h3 の `margin-bottom`、下の余白は `.mon-type-blood-skill-nav`（PC24px・SP20px）
 - モン類ページは `style.css` と `monster-type.css` しか読み込まない。
   この導線の定義を `blood.css` へ置くと当たらない
+
+### 5-11. モンスター詳細の基礎データセクション（2026-09-17・P15-4）
+
+`src/data/monster-basics.json`（任意入力。無ければ何も出さない）にそのモンスターがあるときだけ、
+「おすすめ編成」の後・技セクションの前に `基礎データ` セクションを出す。
+
+| ブロック | 出す条件 | 内容 |
+|---|---|---|
+| 素質 | `talent` がある | 6項目の％、素質合計（登録N体中M位）、最高素質（同率併記） |
+| 特徴 | 特徴タブの項目が1つでもある | ガッツ回復力・移動速度（ランク）、成長タイプ・ヨイワル・サイズ（文字列） |
+| 地形適性 | `terrain` がある | 5地形のランク、地形適性評価 n.n/5.0（順位）、得意（B以上）、苦手（D以下） |
+| 間合い適性 | `range` がある | 4間合いのランク、間合い適性評価、得意、苦手 |
+
+- 評価・得意・苦手・順位は**JSONに持たず**、`src/lib/monster-basics.js` の式で毎回計算する。
+  式・点数表・閾値の正はそのファイルと `docs/monster-basics-design.md`
+- 順位の母数は登録済みの体だけ。データが増えると全ページの順位が動くが出力は決定的
+- 適性ブロックが1つでもあれば、末尾に「当サイト独自の指標」の注記を1行だけ出す
+- 入力の整合性チェックに `validateMonsterBasics` を加える。失敗したら即失敗（何も出力しない）
+- ビルドログの「入力」に `monster-basics <n>体（素質 / 地形 / 間合い）` を出す
+- スタイルは `monster-detail.css` の `.basics-*`（`.monster-detail-page` 配下にスコープ）
+
+`scripts/verify.js` 検査21が、DBのスキーマ、`_source` のTSVとの一致、較正値、
+「登録済みの詳細ページだけにセクションがある」こと、CMS公開の対象外であることを検査する。
 
 ### 5-4. sitemap.xml の再生成
 
