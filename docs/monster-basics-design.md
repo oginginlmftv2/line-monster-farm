@@ -27,7 +27,7 @@ CMS化するときはこのJSONをシートへ流し込む。
 
 | タブ | 読む項目 | 列 | 値 |
 |---|---|---|---|
-| 基礎 | 「素質」列（右端）6行 | `talent.life/power/wisdom/accuracy/evasion/defense` | 符号付き整数％ |
+| 基礎 | 「素質」列（右端）6行 | `talent.life/power/wisdom/accuracy/evasion/defense` | 符号付き整数％。**素の値**（レア度上げの割り振り分を引く。入力者の申告で判断） |
 | 特徴 | ガッツ回復力／移動速度 | `gutsRecovery` `moveSpeed` | `G`〜`S` |
 | 特徴 | 成長タイプ／ヨイワル／サイズ | `growthType` `goodEvil` `size` | 列挙（画面で見た値だけ足す） |
 | 適性 | 地形適性5項目 | `terrain.砂漠/森林/海岸/雪山/火山` | `G`〜`S` |

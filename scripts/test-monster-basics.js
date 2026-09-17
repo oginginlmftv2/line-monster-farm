@@ -88,7 +88,7 @@ broken(db => { db.monsters[0].name = 'タマモノマエ'; }, '一致しない')
 broken(db => { db.monsters[0].terrain.森林 = 'S+'; }, 'ランク');
 broken(db => { db.monsters[0].range.zero = 'B+'; }, 'ランク');
 broken(db => { db.monsters[0].size = '大きめ'; }, '列挙外');
-broken(db => { db.monsters[0].growthType = '早熟'; }, '列挙外');
+broken(db => { db.monsters[0].growthType = '超早熟'; }, '列挙外');
 broken(db => { delete db.monsters[0].talent.defense; }, 'talent.defense');
 broken(db => { db.monsters[0].talent.life = '+5%'; }, '整数％');
 broken(db => { db.monsters[0].terrain.草原 = 'A'; }, '未知の地形');
