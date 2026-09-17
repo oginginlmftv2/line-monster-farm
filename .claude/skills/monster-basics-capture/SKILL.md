@@ -125,6 +125,6 @@ sips -z 360 1560 crop.png --out crop-big.png
 
 ## 評価値は書かない
 
-地形評価・間合い評価・得意/苦手・順位は `build.js` が `src/lib/monster-basics.js` の式で
+地形評価・間合い評価・得意/苦手は `build.js` が `src/lib/monster-basics.js` の式で
 毎回計算する。TSVにもJSONにも書かない。式を変えるときはそのファイルと
 `scripts/test-monster-basics.js`・`docs/monster-basics-design.md` を一緒に直す。

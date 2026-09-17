@@ -257,7 +257,7 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 4. `node build.js` → `node scripts/test-monster-basics.js` → `node scripts/verify.js` がFAIL 0
 5. 上の「現在の実数」の基礎データ登録数と「最終更新」を同じPRで更新
 
-評価値（地形適性評価・間合い適性評価・得意/苦手・順位）は保存せず、`build.js` が
+評価値（地形適性評価・間合い適性評価・得意/苦手）は保存せず、`build.js` が
 `src/lib/monster-basics.js` の式で毎回計算します。式・点数表・閾値を変えるときは
 そのファイルと `scripts/test-monster-basics.js`・`docs/monster-basics-design.md` を同じPRで直します。
 

@@ -65,21 +65,6 @@ assert.strictEqual(lib.scoreTerrain(null), null);
   assert.strictEqual(lib.formatPercent(-5), '-5%');
 }
 
-// --- 順位（同点は同順位・欠損は母数に入れない）
-{
-  const list = [
-    { id: '0001', range: range('BBBB') },
-    { id: '0002', range: range('BBBB') },
-    { id: '0003', range: range('BDBD') },
-    { id: '0004' },
-  ];
-  const ranks = lib.rankAmong(list, entry => lib.scoreRange(entry.range));
-  assert.deepStrictEqual(ranks.get('0001'), { rank: 1, total: 3 });
-  assert.deepStrictEqual(ranks.get('0002'), { rank: 1, total: 3 });
-  assert.deepStrictEqual(ranks.get('0003'), { rank: 3, total: 3 });
-  assert.strictEqual(ranks.has('0004'), false);
-}
-
 // --- 検証
 const merengue = byName('メレンゲ');
 const valid = () => ({
