@@ -1,0 +1,5 @@
+{
+  "schemaVersion": 1,
+  "note": "機械抽出で扱えない能力の手上書き（追加専用）。キーは abilityId。power は青天井の整数、pool は現役プールへの手動追加/除外、reason は理由。パーサで取れる語彙は上書きせずパーサ側へ足す。",
+  "overrides": {}
+}

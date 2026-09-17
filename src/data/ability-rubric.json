@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "note": "能力評価の基準値と補正。値は未定（null）。決めるときは docs/ability-scoring-design.md の3章と一緒に更新する。原子語・条件の語彙は src/lib/ability-parser.js が正で、ここに無い語彙が出たらパーサ側へ足す。",
+  "base": {
+    "必中": null, "完全回避": null, "クリ確定": null, "クリ無効": null,
+    "与ダメ上昇": null, "クリ率上昇": null, "クリダメ上昇": null, "追撃": null, "連撃": null,
+    "攻撃ステ加算": null, "ステ上昇": null, "ステ変換": null, "技性能上昇": null, "技ステ上昇": null, "貫通": null,
+    "命中率上昇": null, "回避率上昇": null, "被ダメ低下": null, "被ダメブロック": null, "シールド展開": null, "食いしばり": null,
+    "ガッツ回復": null, "ガッツダメ上昇": null, "ガッツダメ低下": null, "消費ガッツ": null,
+    "相手ステ低下": null, "相手被ダメ上昇": null, "相手ガッツ停止": null, "相手ガッツ減少": null, "相手忠誠度減少": null, "シールド破壊": null, "封じ": null, "デバフ付与": null,
+    "バフ付与": null, "無効化・解除": null, "オーラ変貌": null, "適性効果上昇": null, "ライフ回復": null
+  },
+  "valueScale": {
+    "note": "数値→係数。Lv は段階、% は割合、pt は絶対値。未定",
+    "Lv": null, "%": null, "pt": null, "large": null
+  },
+  "statCount": {
+    "note": "ステ上昇の項目数による係数（1項目→全ステ）。未定",
+    "1": null, "2": null, "3": null, "5": null, "6": null
+  },
+  "modifiers": {
+    "note": "状況条件・トリガー・回数・秒数の補正係数。未定",
+    "time": { "序盤": null, "前半": null, "中盤": null, "後半": null, "終盤": null },
+    "stance": { "有利": null, "有利以外": null, "不利以外": null, "自身有利": null, "オーラ有利": null, "モン類有利": null },
+    "terrain": null,
+    "weather": null,
+    "position": null,
+    "opponent": null,
+    "state": null,
+    "compare": null,
+    "life": null,
+    "probability": null,
+    "stack": null,
+    "while": null,
+    "trigger": { "技発動時": null, "技命中時": null, "技非命中時": null, "被ダメ時": null, "回避時": null, "クリティカル時": null, "バトル開始時": null, "シールド破壊時": null },
+    "skillCond": { "aura": null, "stance": null, "type": null, "rank": null, "aptitude": null, "range": null, "position": null, "repeat": null },
+    "limit": { "1": null, "2": null, "3": null, "unlimited": null },
+    "duration": { "10": null, "20": null, "permanent": null },
+    "hits": "ヒット数は数値係数に掛ける（補正ではない）"
+  },
+  "tier": {
+    "note": "現役プール内の相対位置。未定",
+    "pool": { "recentMonths": null, "manualFlag": "ability-overrides.json の pool" },
+    "cut": { "1": null, "2": null, "3": null }
+  }
+}

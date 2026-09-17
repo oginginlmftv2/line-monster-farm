@@ -2052,6 +2052,32 @@ head('21. モンスター基礎データDB');
   }
 }
 
+// ---------------------------------------------------------------- 22
+head('22. 能力スコアリング（説明文パーサ）');
+{
+  // 語彙の正は src/lib/ability-parser.js。テストが合意ルール（上位段階のみ評価・ヒット数と回数制限の区別）を固定する
+  if (!exists('scripts/test-ability-parser.js')) ng('能力パーサのテストがない');
+  else {
+    const result = childProcess.spawnSync(process.execPath, ['scripts/test-ability-parser.js'], { cwd: REPO, encoding: 'utf8' });
+    if (result.status !== 0) ng(`能力パーサテストFAIL: ${(result.stderr || result.stdout).trim().split('\n').slice(0, 5).join(' / ')}`);
+    else ok('能力パーサは系列の評価対象・適用条件/技条件/状況条件・ヒット数と回数制限・ステ上昇の分類を固定');
+  }
+  // ルーブリックと上書きは JSON として読め、上書きの abilityId は実在する
+  for (const file of ['src/data/ability-rubric.json', 'src/data/ability-overrides.json']) {
+    if (!exists(file)) { ng(`${file} がない`); continue; }
+    try { JSON.parse(read(file)); ok(`${file} はJSONとして読める`); } catch (error) { ng(`${file} が読めない: ${error.message}`); }
+  }
+  if (exists('src/data/ability-overrides.json') && exists('src/data/assist-abilities.json')) {
+    try {
+      const ids = new Set(JSON.parse(read('src/data/assist-abilities.json')).abilities.map(a => String(a.abilityId)));
+      const overrides = JSON.parse(read('src/data/ability-overrides.json')).overrides || {};
+      const unknown = Object.keys(overrides).filter(id => !ids.has(id));
+      if (unknown.length) ng(`ability-overrides.json に無い abilityId: ${unknown.slice(0, 5).join(', ')}`);
+      else ok(`ability-overrides.json の上書き ${Object.keys(overrides).length}件はすべて実在の能力`);
+    } catch (error) { ng(`ability-overrides.json の照合に失敗: ${error.message}`); }
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
