@@ -311,7 +311,24 @@ function writeIfChanged(relativePath, content, dryRun) {
   return existed ? 'updated' : 'new';
 }
 
-// 一覧カード。評価は3DBの値を生成時に埋め込み、距離・地形は assist-aptitudes.json から
+// CMSのイベント2（event2）から距離・地形を読む。「中距離」「森林」「海岸 / 砂漠」のように
+// 距離1語または地形の「 / 」区切りで入る。超根性などの適性以外の値は無視して空を返す。
+function aptitudeFromEvent2(event2) {
+  const text = String(event2 || '').trim();
+  if (!text) return {};
+  if (DIST_VALUES.includes(text)) return { dist: text };
+  const parts = text.split(/\s*\/\s*/);
+  if (parts.length && parts.every(part => TERRAIN_VALUES.includes(part))) return { terrain: parts };
+  return {};
+}
+
+// 一覧に埋め込む距離・地形。assist-aptitudes.json に登録があればそれを優先し、
+// 無ければCMSのイベント2から読む（CMSで「中距離」と入れただけで絞り込みに出るようにする）。
+function resolveAptitude(card, aptitudes = {}) {
+  return aptitudes[card.cardId] || aptitudeFromEvent2(card.event2);
+}
+
+// 一覧カード。評価は3DBの値を生成時に埋め込み、距離・地形は resolveAptitude() の値を
 // data属性へ入れる（assist.html側のフィルタ・評価順ソートはこの属性だけを見る）。
 function renderAssistCard(card, aptitude) {
   const { sogo, itti } = summaryScores(card);
@@ -399,7 +416,7 @@ function renderAssistIndex(source, cards, aptitudes = {}) {
   const baseCards = currentIds.map(id => cardById.get(id))
     .concat(cards.filter(card => !currentIdSet.has(card.cardId)));
   const orderedCards = sortByReleasedAt(baseCards);
-  const list = `\n\n${orderedCards.map(card => renderAssistCard(card, aptitudes[card.cardId])).join('\n\n')}\n\n    `;
+  const list = `\n\n${orderedCards.map(card => renderAssistCard(card, resolveAptitude(card, aptitudes))).join('\n\n')}\n\n    `;
   return source.slice(0, start + ASSIST_LIST_START.length) + list + source.slice(end);
 }
 
@@ -462,4 +479,4 @@ if (require.main === module) {
   }
 }
 
-module.exports = { buildAssistPages, buildCardArtifact, renderAssistIndex, validateAptitudes, summaryScores };
+module.exports = { buildAssistPages, buildCardArtifact, renderAssistIndex, validateAptitudes, summaryScores, aptitudeFromEvent2, resolveAptitude };

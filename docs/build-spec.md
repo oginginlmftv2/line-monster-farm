@@ -54,7 +54,7 @@
 | `src/data/taxonomy.json` | 集約ページの導入文（**P6-2で作成。無ければ集約ページを生成しない**） | – |
 | `monsters-data.js` | オーラ・限定ラベル・gwImg・localImg | `monster-ids.json`と同数 |
 | `cards/cards-data.js` | 旧fragment URL用の互換データ。既存91件は保持し、CMS追加カードの正にはしない（`dist`/`terrain`は参照しない） | 91 |
-| `src/data/assist-aptitudes.json` | `assist.html`の距離・地形filter用（手入力。CMS未対応） | 41 |
+| `src/data/assist-aptitudes.json` | `assist.html`の距離・地形filter用（手入力の上書き。無ければCMSのイベント2から読む） | 41 |
 | `src/data/monster-basics.json` | 素質・特徴・地形適性・間合い適性（任意。TSVから生成。5-11） | 動的（2026-09-17: 6） |
 | `style.css` | 既存スタイル。共通の `page-breadcrumb` を定義 | – |
 
@@ -909,10 +909,11 @@ HTMLのrobots、広告、sitemapへ同じ判定を適用し、標準出力にも
 `assist.html`の各カードには生成時に総合評価（`data-score`）・一致評価の表示値、
 距離（`data-dist`）・地形（`data-terrain`、空白区切り）を埋め込む。評価は3DBの`ratings`から
 詳細ページと同じ計算（総合＝4項目平均、一致＝他オーラモン類を除く3項目平均、小数1桁切り捨て）
-で求め、`assist.html`は実行時にFirestoreや`cards-data.js`を読まない。距離・地形はCMSに項目が
-無いため`src/data/assist-aptitudes.json`（手入力）を正とし、旧`cards-data.js`の`dist`/`terrain`は
-参照しない。未登録のカードは属性を持たず、絞り込み時は除外される。新規カードの距離・地形を
-推測して埋めてはならない。`assist-aptitudes.json`のcardIdは3DBに実在し、距離は
+で求め、`assist.html`は実行時にFirestoreや`cards-data.js`を読まない。距離・地形は
+`src/data/assist-aptitudes.json`（手入力）を優先し、無いカードはCMSのイベント2（`event2`）が
+距離1語または地形の「 / 」区切りならそこから読む（`resolveAptitude()`）。超根性などの値は無視する。
+旧`cards-data.js`の`dist`/`terrain`は参照しない。どちらにも無いカードは属性を持たず、絞り込み時は
+除外される。新規カードの距離・地形を推測して埋めてはならない。`assist-aptitudes.json`のcardIdは3DBに実在し、距離は
 零距離・近距離・中距離・遠距離、地形は砂漠・海岸・雪山・火山・森林の配列に限る。
 
 - DBのcardIdと生成ページが1対1である

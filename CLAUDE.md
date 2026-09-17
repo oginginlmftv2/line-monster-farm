@@ -185,11 +185,12 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 4. `reroll.html` → 「現在のおすすめ」と更新日を更新
 5. `assist-cards/` → カード画像を配置
 6. `assist-abilities/` → 能力画像を配置
-7. 距離適性・地形適性が分かる場合だけ`src/data/assist-aptitudes.json`へ追記（推測で埋めない）
+7. 距離適性・地形適性はCMSのイベント2（`中距離`・`森林`・`海岸 / 砂漠`など）を入れれば一覧の絞り込みに出る。
+   `src/data/assist-aptitudes.json`はイベント2と違う値にしたい時だけ追記（推測で埋めない）
 8. 下の「現在のピックアップ状態」を更新
 
 一覧`assist.html`の総合評価・一致評価と距離・地形の絞り込みは`node build.js`が3DBと
-`assist-aptitudes.json`から埋め込みます。CMSで評価を保存・公開すれば一覧にも反映されます。
+`assist-aptitudes.json`（無ければイベント2）から埋め込みます。CMSで評価を保存・公開すれば一覧にも反映されます。
 
 `assist-abilities/`への画像配置はできますが、カードとの対応はFirestoreの
 `cardAbilities/assignments`に保存されています。`ability-match.html`は現在書き込めないため、
