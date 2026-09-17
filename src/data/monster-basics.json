@@ -34,6 +34,37 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "0430",
+      "name": "ラクシャーガ",
+      "talent": {
+        "life": 10,
+        "power": 5,
+        "wisdom": 5,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 15
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "A",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
       "id": "0990",
       "name": "ヴァナルガンド",
       "talent": {
@@ -65,6 +96,68 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "1553",
+      "name": "ベタピン",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "E",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "2613",
+      "name": "センリ",
+      "talent": {
+        "life": 5,
+        "power": -5,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 15,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
       "id": "2690",
       "name": "タマモノマエ",
       "talent": {
@@ -92,6 +185,37 @@
         "mid": "A",
         "near": "A",
         "zero": "B"
+      },
+      "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "3027",
+      "name": "アストロガール",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 10,
+        "defense": -10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "E",
+        "zero": "C"
       },
       "capturedAt": "2026-09-17"
     },

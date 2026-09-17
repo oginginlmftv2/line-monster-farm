@@ -1,2 +1,3 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 タマモノマエ	0	0	0	0	0	0	A	A	晩成	ワル	小さい	E	B	E	B	A	D	A	A	B	2026-09-17
+センリ	+5	-5	0	+10	+15	-5	B	B	早熟	ややワル	小さい	C	C	F	C	E	D	C	D	C	2026-09-17
