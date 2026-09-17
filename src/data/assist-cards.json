@@ -19,9 +19,9 @@
       "cardType": "ガード",
       "monType": "幻霊",
       "image": "assist-cards/g1-MR-serafina.jpg",
-      "event2": "調査中",
+      "event2": "中距離",
       "releasedAt": "2026/07/31",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -34,10 +34,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 2,
-        "battle": 2,
         "karyo": 1.1,
-        "ta": 1.3
+        "ikusei": 2,
+        "ta": 1.3,
+        "battle": 2
       },
       "explanation": "",
       "formations": [],
@@ -51,9 +51,9 @@
       "cardType": "かしこさ",
       "monType": "無機",
       "image": "assist-cards/g2-SSR-monodasu.jpg",
-      "event2": "調査中",
+      "event2": "中距離",
       "releasedAt": "2026/07/31",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -66,10 +66,10 @@
         "4b": null
       },
       "ratings": {
-        "ta": 1.5,
+        "karyo": 1.5,
         "ikusei": 2.1,
-        "battle": 2.3,
-        "karyo": 1.5
+        "ta": 1.5,
+        "battle": 2.3
       },
       "explanation": "",
       "formations": [],
@@ -307,9 +307,9 @@
       "cardType": "丈夫さ",
       "monType": "無機",
       "image": "assist-cards/c25j-SSR-metabee.jpg",
-      "event2": null,
+      "event2": "超闘魂",
       "releasedAt": "2026/05/31",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -322,10 +322,10 @@
         "4b": null
       },
       "ratings": {
+        "karyo": 2,
         "battle": 1.5,
-        "ta": 1,
         "ikusei": 1.1,
-        "karyo": 2
+        "ta": 1
       },
       "explanation": "まず初めに評価点数は気にしないでほしい。\nこのカードを真に評価すべき項目が用意されていないからである。\nオーラ超ワイルドという秘伝周回必須効果を総合力やバトルでの評価でしか見ないのはサイトとしての欠陥である。反省。でも面倒だから変えない。\nちなみにオーラスキルアップもソロモンクエストで必須級であるが評価項目にはない。\n見た目以上にゲームプレイに重要なカード。以下動画からそのまま抜粋\n\n・メダロットコラボフェスSSRカード\n・黄色SSR初のEXトレパワー持ち\n・トレ性能も悪くはないで\n・オーラスキルアップはソロクエ向け\n・オーラ超ワイルドとかいう神効果\n・秘伝周回において革命という言葉で\n　は足りないほどの効果のノラ勝利時\n　「ボスモン遭遇確定」1回持ち\n・バーサークはデメリットこそあるが\n　効果がめちゃくちゃ強力\n・特に命中回避を累計40％近く上げ\n　られるのがやばくてやばい\n・威力全開も結構強い\n・メタビーを強くするぞという\n　確かな意志を感じる",
       "formations": [],
@@ -405,7 +405,7 @@
       "image": "assist-cards/b16i-MR-diana.jpg",
       "event2": "遠距離",
       "releasedAt": "2026/04/30",
-      "accessoryStatus": "unknown",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -418,10 +418,10 @@
         "4b": null
       },
       "ratings": {
-        "battle": 1.3,
-        "ta": 1.3,
+        "ikusei": 3.3,
         "karyo": 1.1,
-        "ikusei": 3.3
+        "battle": 1.3,
+        "ta": 1.3
       },
       "explanation": "・3枚目の青オーラブリーダー継承\n・オーラブリーダーの中では\n　最強クラスのトレ性能\n・恩恵なのもよき\n・大成功持ちの中では最強かも\n・オーラ修行がノアと被っている\n・ノアがない人はぜひともほしい\n・チェイサーはあったらいいな\n・魔境は汎用性が高めな分効果が\n　ひかえめに見えるが使ってみないと\n　本当の強さは未知数\n・ピクシーにとっては積みたい能力\n・世界を変える能力ではない",
       "formations": [],
