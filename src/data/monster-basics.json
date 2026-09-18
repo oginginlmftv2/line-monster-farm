@@ -282,6 +282,99 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "3406",
+      "name": "シン",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-18"
+    },
+    {
+      "id": "3408",
+      "name": "レツ",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": -10,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-18"
+    },
+    {
+      "id": "3434",
+      "name": "ザン",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-18"
+    },
+    {
       "id": "3490",
       "name": "フウマ",
       "talent": {
