@@ -1,2 +1,5 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 フウマ	0	0	0	0	0	0	C	A	早熟	ややワル	ふつう	C	A	D	D	B	B	B	C	A	2026-09-17
+シン	0	5	5	5	10	-5	B	B	早熟	ふつう	ふつう	D	C	F	D	C	D	D	D	B	2026-09-18
+ザン	0	10	-5	5	15	0	B	B	ふつう	ふつう	ふつう	C	B	F	D	B	D	C	B	D	2026-09-18
+レツ	0	15	-10	5	10	0	B	C	晩成	ふつう	ふつう	D	C	C	E	C	B	C	D	D	2026-09-18
