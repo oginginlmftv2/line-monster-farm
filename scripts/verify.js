@@ -831,7 +831,7 @@ head('8. 秘密情報');
       ng(`${protectedTestWorkflow} がmainを更新対象にしている`);
     } else if (requiredMarkers.some(pattern => !pattern.test(workflow))) {
       ng(`${protectedTestWorkflow} のtest専用ゲートが不足している`);
-    } else if (/CMS_PUBLISH_TOKEN/.test(workflow)) {
+    } else if (/CMS_PUBLISH_TOKEN|CMS_APP_ID|CMS_APP_PRIVATE_KEY/.test(workflow)) {
       ng(`${protectedTestWorkflow} が本番CMS tokenを参照している`);
     } else {
       ok('CMS保護test Workflowは専用branch・専用tokenだけを使用');

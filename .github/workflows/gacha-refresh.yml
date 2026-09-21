@@ -20,21 +20,29 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Check publish token
+      - name: Check publish app secrets
         env:
-          CMS_PUBLISH_TOKEN: ${{ secrets.CMS_PUBLISH_TOKEN }}
+          CMS_APP_ID: ${{ secrets.CMS_APP_ID }}
+          CMS_APP_PRIVATE_KEY: ${{ secrets.CMS_APP_PRIVATE_KEY }}
         run: |
-          if [ -z "$CMS_PUBLISH_TOKEN" ]; then
-            echo "Repository secret CMS_PUBLISH_TOKEN is not configured."
+          if [ -z "$CMS_APP_ID" ] || [ -z "$CMS_APP_PRIVATE_KEY" ]; then
+            echo "Repository secrets CMS_APP_ID and CMS_APP_PRIVATE_KEY must both be configured."
             exit 1
           fi
+
+      - name: Create publish token from GitHub App
+        id: publish-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.CMS_APP_ID }}
+          private-key: ${{ secrets.CMS_APP_PRIVATE_KEY }}
 
       - name: Check out main
         uses: actions/checkout@v4
         with:
           ref: main
           fetch-depth: 0
-          token: ${{ secrets.CMS_PUBLISH_TOKEN }}
+          token: ${{ steps.publish-token.outputs.token }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
