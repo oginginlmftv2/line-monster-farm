@@ -8,7 +8,7 @@ manifest.jsonはリポジトリ側の正しい構成を列挙します。GASへ�
 
 ## Script Properties
 
-ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指定します。モンスター画像アップロードにはDRIVE_FOLDER_IDを使い、未設定の場合はsetup4_checkAllが`DRIVE_FOLDER_ID: ★未設定`を出します。productionだけGITHUB_TOKENを設定します。アシスト画像・OCRにはASSIST_IMAGE_FOLDER_ID、GOOGLE_CLOUD_VISION_API_KEY、OCR_DAILY_LIMITを使います。破壊的setupはALLOW_DESTRUCTIVE_SETUPへ関数名と当日の日付を一度だけ設定します。
+ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指定します。モンスター画像アップロードにはDRIVE_FOLDER_IDを使い、未設定の場合はsetup4_checkAllが`DRIVE_FOLDER_ID: ★未設定`を出します。productionだけGitHubの認証を設定します。GITHUB_APP_IDとGITHUB_APP_PRIVATE_KEYがあればGitHub Appの短命tokenを発行して使い、無ければGITHUB_TOKEN（PAT）を使います。アシスト画像・OCRにはASSIST_IMAGE_FOLDER_ID、GOOGLE_CLOUD_VISION_API_KEY、OCR_DAILY_LIMITを使います。破壊的setupはALLOW_DESTRUCTIVE_SETUPへ関数名と当日の日付を一度だけ設定します。
 
 常設のtest環境は作りません。大改修のたびに本番bookのコピーを作り、ENVIRONMENT=rehearsalのプロジェクトでリハーサルしてから本番へ反映します。
 
@@ -110,6 +110,20 @@ Vision OCRの精度が低いため、スクショの読み取りはClaude Code�
 貼り付けたJSONはOCR候補と同じくブラウザ内だけに持ち、Driveやシートへは保存しません。
 Vision OCRの導線はそのまま残しています。
 
+## GitHub App認証の反映
+
+GitHub送信の認証は`30_publish.gs`だけにあります。ActionsとGASが同じGitHub Appを使い、PATの期限切れで公開が止まらないようにします。
+
+1. `30_publish.gs`と`ui_publish.html`を最新版に置き換える
+2. プロジェクトの設定 → スクリプト プロパティへ次を追加する（productionだけ）
+   - `GITHUB_APP_ID`：GitHub AppのApp ID（数字。Client IDではない）
+   - `GITHUB_APP_PRIVATE_KEY`：GitHubが発行した`.pem`の全文（`-----BEGIN RSA PRIVATE KEY-----`から`-----END RSA PRIVATE KEY-----`まで）。1行に潰れて貼られてもコードが復元する
+3. 新しいdeploymentを作る
+4. 管理画面の公開タブで「GitHub接続を確認」を押し、`GitHub App で oginginlmftv2/line-monster-farm に接続できました。`が出ることを確認する
+5. 確認できたら`GITHUB_TOKEN`をスクリプト プロパティから削除する（残っていても、App設定がある間は使われない）
+
+Appは対象repositoryにInstallし、Repository permissionsはContents: Read and writeだけにします。発行したtokenは1時間有効で、GASのScript Cacheに50分だけ保持します。秘密鍵を作り直したら`GITHUB_APP_PRIVATE_KEY`を差し替えるだけで、次回から新しい鍵で発行します。
+
 ## token更新
 
-新tokenは最小権限で発行し、GitHub secretと本番GASのGITHUB_TOKENを管理者が同一作業で更新します。値を文書・ログ・チャットへ貼りません。rehearsalにはGITHUB_TOKENを設定しません。
+GitHub Appを使う場合、定期的なtoken更新はありません。PAT（GITHUB_TOKEN）を使い続ける場合は、新tokenを最小権限で発行し、値を文書・ログ・チャットへ貼らずにスクリプト プロパティを更新します。rehearsalにはGitHub認証を設定しません。

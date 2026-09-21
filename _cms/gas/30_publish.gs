@@ -15,8 +15,135 @@ function requirePublishable_(scope) {
   return user;
 }
 
+// ---------------------------------------------------------------- GitHub認証
+// GITHUB_APP_ID と GITHUB_APP_PRIVATE_KEY があれば GitHub App の短命token（1時間）を
+// 毎回発行して使う。無ければ従来の GITHUB_TOKEN（PAT）を使う。両方無ければエラー。
+var GITHUB_APP_TOKEN_CACHE_SECONDS = 50 * 60;
+
+function githubAuthMode_() {
+  if (optionalProp_('GITHUB_APP_ID') && optionalProp_('GITHUB_APP_PRIVATE_KEY')) return 'app';
+  if (optionalProp_('GITHUB_TOKEN')) return 'pat';
+  return '';
+}
+
+/** 公開処理の冒頭で、blob作成前に認証設定の有無だけを確認する。 */
+function requireGithubAuthConfig_() {
+  var mode = githubAuthMode_();
+  if (!mode) {
+    throw new Error('スクリプトプロパティ GITHUB_APP_ID と GITHUB_APP_PRIVATE_KEY（または GITHUB_TOKEN）が未設定です。');
+  }
+  return mode;
+}
+
+function githubAuthToken_() {
+  var mode = requireGithubAuthConfig_();
+  if (mode === 'pat') return prop_('GITHUB_TOKEN');
+  return githubAppInstallationToken_();
+}
+
+/** Script Propertiesの1行入力で改行が失われたPEMを復元する。 */
+function githubAppNormalizePem_(raw) {
+  var text = String(raw || '').replace(/\\n/g, '\n').replace(/\r/g, '').trim();
+  var match = text.match(/-----BEGIN ([A-Z ]+)-----([\s\S]*?)-----END \1-----/);
+  if (!match) throw new Error('GITHUB_APP_PRIVATE_KEY がPEM形式（BEGIN/END行を含む）ではありません。');
+  var label = match[1];
+  var body = match[2].replace(/\s+/g, '');
+  if (!body) throw new Error('GITHUB_APP_PRIVATE_KEY の本文が空です。');
+  var lines = [];
+  for (var i = 0; i < body.length; i += 64) lines.push(body.substr(i, 64));
+  return '-----BEGIN ' + label + '-----\n' + lines.join('\n') + '\n-----END ' + label + '-----\n';
+}
+
+function githubAppBase64Url_(input) {
+  return Utilities.base64EncodeWebSafe(input).replace(/=+$/, '');
+}
+
+/** GitHub App として認証するJWT（有効10分）。 */
+function githubAppJwt_(appId, pem) {
+  var now = Math.floor(Date.now() / 1000);
+  var header = githubAppBase64Url_(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  var payload = githubAppBase64Url_(JSON.stringify({ iat: now - 60, exp: now + 9 * 60, iss: String(appId) }));
+  var signingInput = header + '.' + payload;
+  var signature;
+  try {
+    signature = Utilities.computeRsaSha256Signature(signingInput, pem);
+  } catch (e) {
+    throw new Error('GITHUB_APP_PRIVATE_KEY で署名できません。GitHubが発行した.pemの全文（BEGIN〜END）を設定してください。' +
+      '（' + (e && e.message ? e.message : e) + '）');
+  }
+  return signingInput + '.' + githubAppBase64Url_(signature);
+}
+
+function githubAppApi_(method, url, bearer, body) {
+  var options = {
+    method: method,
+    muteHttpExceptions: true,
+    headers: {
+      Authorization: 'Bearer ' + bearer,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  };
+  if (body != null) {
+    options.contentType = 'application/json';
+    options.payload = JSON.stringify(body);
+  }
+  var response = UrlFetchApp.fetch(url, options);
+  var code = response.getResponseCode();
+  var text = response.getContentText();
+  var json = {};
+  try { json = JSON.parse(text); } catch (ignore) { json = {}; }
+  if (code < 200 || code >= 300) {
+    throw new Error('GitHub App認証でエラーが発生しました（HTTP ' + code +
+      (json.message ? ' / ' + json.message : '') + '）。' +
+      (code === 404 ? ' AppがこのリポジトリにInstallされているか確認してください。' : '') +
+      (code === 401 ? ' GITHUB_APP_ID と秘密鍵の組み合わせを確認してください。' : ''));
+  }
+  return json;
+}
+
+/** installation token を発行する。同じ鍵のあいだは50分キャッシュする。 */
+function githubAppInstallationToken_() {
+  var appId = String(prop_('GITHUB_APP_ID')).trim();
+  if (!/^\d+$/.test(appId)) throw new Error('GITHUB_APP_ID は数字のApp ID（Client IDではない）を設定してください。');
+  var pem = githubAppNormalizePem_(prop_('GITHUB_APP_PRIVATE_KEY'));
+  var keyDigest = Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, pem)).slice(0, 16);
+  var cacheKey = 'ghapp:' + appId + ':' + keyDigest;
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get(cacheKey);
+  if (cached) return cached;
+
+  var jwt = githubAppJwt_(appId, pem);
+  var installation = githubAppApi_('get', GITHUB_API_BASE + '/installation', jwt, null);
+  if (!installation.id) throw new Error('GitHub Appのinstallationが見つかりません。');
+  var issued = githubAppApi_('post',
+    'https://api.github.com/app/installations/' + installation.id + '/access_tokens', jwt,
+    { repositories: [GITHUB_REPO], permissions: { contents: 'write' } });
+  if (!issued.token) throw new Error('GitHub Appのtokenを取得できませんでした。');
+  cache.put(cacheKey, issued.token, GITHUB_APP_TOKEN_CACHE_SECONDS);
+  return issued.token;
+}
+
+/** 管理画面の「GitHub接続を確認」。tokenの値は返さない。 */
+function api_githubAuthCheck() {
+  var user = me_();
+  if (!user) throw new Error('権限がありません。画面を開き直してください。');
+  if (user.role !== 'admin') throw new Error('GitHub接続の確認はadminだけが実行できます。');
+  var mode = githubAuthMode_();
+  if (!mode) return { mode: '', ok: false, message: 'GitHub認証が未設定です（GITHUB_APP_ID + GITHUB_APP_PRIVATE_KEY、または GITHUB_TOKEN）。' };
+  var repo = githubRequest_('get', '', null, false);
+  var label = mode === 'app' ? 'GitHub App' : 'PAT（GITHUB_TOKEN）';
+  var permissions = repo.permissions || {};
+  return {
+    mode: mode,
+    ok: true,
+    message: label + ' で ' + (repo.full_name || GITHUB_OWNER + '/' + GITHUB_REPO) + ' に接続できました' +
+      (permissions.push === false ? '（注意: push権限がありません）' : '') + '。'
+  };
+}
+
 function githubRequest_(method, path, body, allow404) {
-  var token = prop_('GITHUB_TOKEN');
+  var token = githubAuthToken_();
   var options = {
     method: method,
     muteHttpExceptions: true,
@@ -254,7 +381,7 @@ function api_monPublish() {
   var pushedSha = '';
   try {
     // トークン未設定を、blob作成後ではなく最初に検出する。
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var all = monReadAll_();
     var files = monBuildPublishTextFiles_(all);
 
@@ -405,7 +532,7 @@ function api_asstPublish() {
       issues.push('draft resolved能力が公開ページ対象へ混入しています。');
     }
     if (issues.length) throw new Error('アシスト公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
     var mainSha = mainRef.object.sha;
     var mainCommit = githubRequest_('get', '/git/commits/' + mainSha, null, false);
@@ -480,7 +607,7 @@ function api_gachaPublish() {
 
   var pushedSha = '';
   try {
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var rows = gachaReadAll_();
     var documents = gachaBuildPublishDocuments_(rows);
     var issues = gachaValidatePublishDocuments_(documents, true);
