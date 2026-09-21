@@ -19,3 +19,4 @@ jobs:
       - run: node scripts/verify.js
       - run: node scripts/test-verify-cms-source.js
       - run: node scripts/test-verify-assist-cms.js
+      - run: node scripts/test-github-app-auth.js
