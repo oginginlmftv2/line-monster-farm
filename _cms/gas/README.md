@@ -119,7 +119,9 @@ GitHub送信の認証は`30_publish.gs`だけにあります。ActionsとGASが�
    - `GITHUB_APP_ID`：GitHub AppのApp ID（数字。Client IDではない）
    - `GITHUB_APP_PRIVATE_KEY`：GitHubが発行した`.pem`の全文（`-----BEGIN RSA PRIVATE KEY-----`から`-----END RSA PRIVATE KEY-----`まで）。1行に潰れて貼られても復元し、PKCS#1はPKCS#8へ変換してから署名する（`Utilities.computeRsaSha256Signature`はPKCS#8しか受け付けず、PKCS#1のままだと`無効な引数: key`になる）
 3. 新しいdeploymentを作る
-4. 管理画面の公開タブで「GitHub接続を確認」を押し、`GitHub App で oginginlmftv2/line-monster-farm に接続できました。`が出ることを確認する
+4. 管理画面の公開タブで「GitHub接続を確認」を押し、`GitHub App で oginginlmftv2/line-monster-farm に接続できました（contents: write）。公開できます。`が出ることを確認する
+   - `書き込み権限がありません`と出た場合は、AppのRepository permissionsでContentsをRead and writeにし、
+     Installしたアカウント側で権限変更の承認（Review request）を済ませる。承認前は古い権限のまま
 5. 確認できたら`GITHUB_TOKEN`をスクリプト プロパティから削除する（残っていても、App設定がある間は使われない）
 
 Appは対象repositoryにInstallし、Repository permissionsはContents: Read and writeだけにします。発行したtokenは1時間有効で、GASのScript Cacheに50分だけ保持します。秘密鍵を作り直したら`GITHUB_APP_PRIVATE_KEY`を差し替えるだけで、次回から新しい鍵で発行します。

@@ -154,7 +154,7 @@ function githubAppApi_(method, url, bearer, body) {
 }
 
 /** installation token を発行する。同じ鍵のあいだは50分キャッシュする。 */
-function githubAppInstallationToken_() {
+function githubAppInstallationAuth_() {
   var appId = String(prop_('GITHUB_APP_ID')).trim();
   if (!/^\d+$/.test(appId)) throw new Error('GITHUB_APP_ID は数字のApp ID（Client IDではない）を設定してください。');
   var pem = githubAppNormalizePem_(prop_('GITHUB_APP_PRIVATE_KEY'));
@@ -162,17 +162,28 @@ function githubAppInstallationToken_() {
   var cacheKey = 'ghapp:' + appId + ':' + keyDigest;
   var cache = CacheService.getScriptCache();
   var cached = cache.get(cacheKey);
-  if (cached) return cached;
+  if (cached) {
+    try {
+      var parsed = JSON.parse(cached);
+      if (parsed && parsed.token) return parsed;
+    } catch (ignore) { /* 旧形式のキャッシュは捨てて取り直す。 */ }
+  }
 
   var jwt = githubAppJwt_(appId, pem);
   var installation = githubAppApi_('get', GITHUB_API_BASE + '/installation', jwt, null);
   if (!installation.id) throw new Error('GitHub Appのinstallationが見つかりません。');
+  // contents:write を明示して要求する。Appに与えられていなければGitHubが422で拒否する。
   var issued = githubAppApi_('post',
     'https://api.github.com/app/installations/' + installation.id + '/access_tokens', jwt,
     { repositories: [GITHUB_REPO], permissions: { contents: 'write' } });
   if (!issued.token) throw new Error('GitHub Appのtokenを取得できませんでした。');
-  cache.put(cacheKey, issued.token, GITHUB_APP_TOKEN_CACHE_SECONDS);
-  return issued.token;
+  var auth = { token: issued.token, permissions: issued.permissions || {} };
+  cache.put(cacheKey, JSON.stringify(auth), GITHUB_APP_TOKEN_CACHE_SECONDS);
+  return auth;
+}
+
+function githubAppInstallationToken_() {
+  return githubAppInstallationAuth_().token;
 }
 
 /** 管理画面の「GitHub接続を確認」。tokenの値は返さない。 */
@@ -183,13 +194,24 @@ function api_githubAuthCheck() {
   var mode = githubAuthMode_();
   if (!mode) return { mode: '', ok: false, message: 'GitHub認証が未設定です（GITHUB_APP_ID + GITHUB_APP_PRIVATE_KEY、または GITHUB_TOKEN）。' };
   var repo = githubRequest_('get', '', null, false);
-  var label = mode === 'app' ? 'GitHub App' : 'PAT（GITHUB_TOKEN）';
-  var permissions = repo.permissions || {};
+  var name = repo.full_name || GITHUB_OWNER + '/' + GITHUB_REPO;
+  if (mode === 'pat') {
+    // PATの実権限はこのAPIからは分からないので、接続できたことだけを伝える。
+    return { mode: mode, ok: true, write: null, message: 'PAT（GITHUB_TOKEN）で ' + name + ' に接続できました。' };
+  }
+  // 書き込み可否は、発行されたinstallation token自身の権限で判定する。
+  // リポジトリAPIのpermissions.pushはinstallation tokenでは当てにならない。
+  var granted = githubAppInstallationAuth_().permissions || {};
+  var canWrite = granted.contents === 'write';
   return {
     mode: mode,
-    ok: true,
-    message: label + ' で ' + (repo.full_name || GITHUB_OWNER + '/' + GITHUB_REPO) + ' に接続できました' +
-      (permissions.push === false ? '（注意: push権限がありません）' : '') + '。'
+    ok: canWrite,
+    write: canWrite,
+    message: canWrite
+      ? 'GitHub App で ' + name + ' に接続できました（contents: write）。公開できます。'
+      : 'GitHub App で ' + name + ' に接続できましたが、書き込み権限がありません（contents: ' +
+        (granted.contents || 'なし') + '）。AppのRepository permissionsでContentsをRead and writeにし、' +
+        'Installされたアカウント側で権限変更の承認（Review request）を済ませてください。'
   };
 }
 

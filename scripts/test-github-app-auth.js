@@ -52,8 +52,10 @@ function makeHarness(props, options = {}) {
           if (custom) return respond(custom.code, custom.body);
         }
         if (/\/repos\/[^/]+\/[^/]+\/installation$/.test(url)) return respond(200, { id: 4242 });
-        if (/\/app\/installations\/4242\/access_tokens$/.test(url)) return respond(201, { token: 'ghs_' + 'x'.repeat(30) });
-        if (/\/repos\/[^/]+\/[^/]+$/.test(url)) return respond(200, { full_name: 'oginginlmftv2/line-monster-farm', permissions: { push: true } });
+        if (/\/app\/installations\/4242\/access_tokens$/.test(url)) {
+          return respond(201, { token: 'ghs_' + 'x'.repeat(30), permissions: options.grantedPermissions || { contents: 'write' } });
+        }
+        if (/\/repos\/[^/]+\/[^/]+$/.test(url)) return respond(200, { full_name: 'oginginlmftv2/line-monster-farm', permissions: { push: false } });
         return respond(404, { message: 'Not Found' });
       },
     },
@@ -166,12 +168,42 @@ test('エラー: App未installは404の案内、GITHUB_APP_IDが数字以外は�
 test('api_githubAuthCheck: adminだけ実行でき、tokenの値を返さない', () => {
   const h = makeHarness({ GITHUB_APP_ID: '1', GITHUB_APP_PRIVATE_KEY: PEM });
   const result = h.ctx.api_githubAuthCheck();
-  assert.deepStrictEqual(Object.keys(result).sort(), ['message', 'mode', 'ok']);
+  assert.deepStrictEqual(Object.keys(result).sort(), ['message', 'mode', 'ok', 'write']);
   assert.strictEqual(result.mode, 'app');
-  assert.strictEqual(result.ok, true);
   assert.doesNotMatch(result.message, /ghs_/);
   assert.throws(() => makeHarness({ GITHUB_TOKEN: 'x' }, { role: 'editor' }).ctx.api_githubAuthCheck(), /adminだけ/);
   assert.strictEqual(makeHarness({}).ctx.api_githubAuthCheck().ok, false);
+});
+
+test('書き込み可否はtoken自身のpermissionsで判定する（repoのpush=falseに引きずられない）', () => {
+  // 実際のinstallation tokenでは GET /repos の permissions.push が false で返る。
+  const ok = makeHarness({ GITHUB_APP_ID: '1', GITHUB_APP_PRIVATE_KEY: PEM }).ctx.api_githubAuthCheck();
+  assert.strictEqual(ok.write, true);
+  assert.strictEqual(ok.ok, true);
+  assert.match(ok.message, /contents: write/);
+  assert.doesNotMatch(ok.message, /権限がありません/);
+
+  const readOnly = makeHarness({ GITHUB_APP_ID: '1', GITHUB_APP_PRIVATE_KEY: PEM },
+    { grantedPermissions: { contents: 'read' } }).ctx.api_githubAuthCheck();
+  assert.strictEqual(readOnly.write, false);
+  assert.strictEqual(readOnly.ok, false);
+  assert.match(readOnly.message, /Read and write/);
+
+  const pat = makeHarness({ GITHUB_TOKEN: 'ghp_x' }).ctx.api_githubAuthCheck();
+  assert.strictEqual(pat.write, null);
+  assert.strictEqual(pat.ok, true);
+});
+
+test('キャッシュはtokenと権限をまとめて持ち、旧形式の生token文字列は捨てて取り直す', () => {
+  const h = makeHarness({ GITHUB_APP_ID: '1', GITHUB_APP_PRIVATE_KEY: PEM });
+  assert.strictEqual(h.ctx.githubAppInstallationAuth_().permissions.contents, 'write');
+  assert.strictEqual(h.fetches.length, 2);
+  h.ctx.githubAppInstallationAuth_();
+  assert.strictEqual(h.fetches.length, 2);
+  const key = [...h.cache.keys()][0];
+  h.cache.set(key, 'ghs_oldformat');
+  assert.strictEqual(h.ctx.githubAppInstallationAuth_().permissions.contents, 'write');
+  assert.strictEqual(h.fetches.length, 4);
 });
 
 console.log(`PASS ${passed} / FAIL 0`);
