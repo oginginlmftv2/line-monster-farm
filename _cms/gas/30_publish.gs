@@ -42,16 +42,67 @@ function githubAuthToken_() {
 }
 
 /** Script Propertiesの1行入力で改行が失われたPEMを復元する。 */
+/** DERの長さフィールド（短形式・長形式）を作る。 */
+function githubAppDerLength_(length) {
+  if (length < 0x80) return [length];
+  var bytes = [];
+  var rest = length;
+  while (rest > 0) {
+    bytes.unshift(rest % 256);
+    rest = Math.floor(rest / 256);
+  }
+  return [0x80 + bytes.length].concat(bytes);
+}
+
+/** rsaEncryption の AlgorithmIdentifier（SEQUENCE { OID 1.2.840.113549.1.1.1, NULL }）。 */
+var GITHUB_APP_RSA_ALGORITHM_DER = [
+  0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
+];
+
+/**
+ * GitHubが配るPKCS#1（BEGIN RSA PRIVATE KEY）をPKCS#8（BEGIN PRIVATE KEY）へ包み直す。
+ * Utilities.computeRsaSha256SignatureはPKCS#8しか受け付けないため、変換しないと署名できない。
+ */
+function githubAppPkcs1ToPkcs8Base64_(pkcs1Base64) {
+  var decoded = Utilities.base64Decode(pkcs1Base64);
+  var inner = [];
+  for (var i = 0; i < decoded.length; i++) inner.push(decoded[i] & 0xff);
+  var octetString = [0x04].concat(githubAppDerLength_(inner.length), inner);
+  var body = [0x02, 0x01, 0x00].concat(GITHUB_APP_RSA_ALGORITHM_DER, octetString);
+  var der = [0x30].concat(githubAppDerLength_(body.length), body);
+  var signed = [];
+  for (var j = 0; j < der.length; j++) signed.push(der[j] > 127 ? der[j] - 256 : der[j]);
+  return Utilities.base64Encode(signed);
+}
+
+/**
+ * Script Propertiesの1行入力で改行が失われたPEMを復元し、PKCS#8へそろえる。
+ * GitHubの.pemはPKCS#1なので、そのまま貼っても動くようここで変換する。
+ */
 function githubAppNormalizePem_(raw) {
   var text = String(raw || '').replace(/\\n/g, '\n').replace(/\r/g, '').trim();
-  var match = text.match(/-----BEGIN ([A-Z ]+)-----([\s\S]*?)-----END \1-----/);
+  var match = text.match(/-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/);
   if (!match) throw new Error('GITHUB_APP_PRIVATE_KEY がPEM形式（BEGIN/END行を含む）ではありません。');
   var label = match[1];
   var body = match[2].replace(/\s+/g, '');
   if (!body) throw new Error('GITHUB_APP_PRIVATE_KEY の本文が空です。');
+  if (label === 'ENCRYPTED PRIVATE KEY') {
+    throw new Error('GITHUB_APP_PRIVATE_KEY がパスフレーズ付きです。GitHubが発行した.pemをそのまま設定してください。');
+  }
+  if (label !== 'RSA PRIVATE KEY' && label !== 'PRIVATE KEY') {
+    throw new Error('GITHUB_APP_PRIVATE_KEY の種別が想定外です（' + label + '）。GitHub Appの秘密鍵(.pem)を設定してください。');
+  }
+  if (label === 'RSA PRIVATE KEY') {
+    try {
+      body = githubAppPkcs1ToPkcs8Base64_(body);
+    } catch (e) {
+      throw new Error('GITHUB_APP_PRIVATE_KEY を変換できません。.pemの本文が欠けていないか確認してください。' +
+        '（' + (e && e.message ? e.message : e) + '）');
+    }
+  }
   var lines = [];
   for (var i = 0; i < body.length; i += 64) lines.push(body.substr(i, 64));
-  return '-----BEGIN ' + label + '-----\n' + lines.join('\n') + '\n-----END ' + label + '-----\n';
+  return '-----BEGIN PRIVATE KEY-----\n' + lines.join('\n') + '\n-----END PRIVATE KEY-----\n';
 }
 
 function githubAppBase64Url_(input) {
