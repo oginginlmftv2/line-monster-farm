@@ -117,7 +117,7 @@ GitHub送信の認証は`30_publish.gs`だけにあります。ActionsとGASが�
 1. `30_publish.gs`と`ui_publish.html`を最新版に置き換える
 2. プロジェクトの設定 → スクリプト プロパティへ次を追加する（productionだけ）
    - `GITHUB_APP_ID`：GitHub AppのApp ID（数字。Client IDではない）
-   - `GITHUB_APP_PRIVATE_KEY`：GitHubが発行した`.pem`の全文（`-----BEGIN RSA PRIVATE KEY-----`から`-----END RSA PRIVATE KEY-----`まで）。1行に潰れて貼られてもコードが復元する
+   - `GITHUB_APP_PRIVATE_KEY`：GitHubが発行した`.pem`の全文（`-----BEGIN RSA PRIVATE KEY-----`から`-----END RSA PRIVATE KEY-----`まで）。1行に潰れて貼られても復元し、PKCS#1はPKCS#8へ変換してから署名する（`Utilities.computeRsaSha256Signature`はPKCS#8しか受け付けず、PKCS#1のままだと`無効な引数: key`になる）
 3. 新しいdeploymentを作る
 4. 管理画面の公開タブで「GitHub接続を確認」を押し、`GitHub App で oginginlmftv2/line-monster-farm に接続できました。`が出ることを確認する
 5. 確認できたら`GITHUB_TOKEN`をスクリプト プロパティから削除する（残っていても、App設定がある間は使われない）

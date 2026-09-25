@@ -11,7 +11,9 @@ const vm = require('vm');
 const REPO = path.resolve(__dirname, '..');
 const SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/30_publish.gs'), 'utf8');
 const { privateKey, publicKey } = crypto.generateKeyPairSync('rsa', { modulusLength: 2048 });
+// GitHubが配るのはPKCS#1。Apps Scriptが受け付けるのはPKCS#8だけ。
 const PEM = privateKey.export({ type: 'pkcs1', format: 'pem' });
+const PEM_PKCS8 = privateKey.export({ type: 'pkcs8', format: 'pem' });
 
 function makeHarness(props, options = {}) {
   const cache = new Map();
@@ -31,7 +33,13 @@ function makeHarness(props, options = {}) {
     CacheService: { getScriptCache: () => ({ get: key => (cache.has(key) ? cache.get(key) : null), put: (key, value) => cache.set(key, value) }) },
     Utilities: {
       base64EncodeWebSafe: input => Buffer.from(typeof input === 'string' ? input : Uint8Array.from(input)).toString('base64url'),
-      computeRsaSha256Signature: (value, key) => Array.from(crypto.sign('sha256', Buffer.from(value), key)),
+      base64Encode: input => Buffer.from(typeof input === 'string' ? input : Uint8Array.from(input.map(b => b & 0xff))).toString('base64'),
+      base64Decode: input => Array.from(Buffer.from(input, 'base64')).map(b => (b > 127 ? b - 256 : b)),
+      computeRsaSha256Signature: (value, key) => {
+        // Apps Scriptと同じく、PKCS#1のPEMは「無効な引数: key」で拒否する。
+        if (/BEGIN RSA PRIVATE KEY/.test(key)) throw new Error('無効な引数: key');
+        return Array.from(crypto.sign('sha256', Buffer.from(value), key));
+      },
       computeDigest: (algorithm, value) => Array.from(crypto.createHash('sha256').update(value).digest()),
       DigestAlgorithm: { SHA_256: 'SHA_256' },
     },
@@ -82,14 +90,33 @@ test('認証モード: App設定があればapp、無ければpat、どちらも
   assert.throws(() => makeHarness({}).ctx.requireGithubAuthConfig_(), /GITHUB_APP_ID と GITHUB_APP_PRIVATE_KEY/);
 });
 
-test('PEM復元: 1行化・\\n表記のどちらも64桁改行のPEMへ戻す', () => {
+test('PEM正規化: PKCS#1をPKCS#8へ変換し、1行化・\\n表記も復元する', () => {
   const ctx = makeHarness({}).ctx;
-  const oneLine = PEM.replace(/\n/g, ' ');
-  const escaped = PEM.replace(/\n/g, '\\n');
-  assert.strictEqual(ctx.githubAppNormalizePem_(oneLine), PEM);
-  assert.strictEqual(ctx.githubAppNormalizePem_(escaped), PEM);
-  assert.strictEqual(ctx.githubAppNormalizePem_(PEM), PEM);
+  assert.strictEqual(ctx.githubAppNormalizePem_(PEM), PEM_PKCS8);
+  assert.strictEqual(ctx.githubAppNormalizePem_(PEM.replace(/\n/g, ' ')), PEM_PKCS8);
+  assert.strictEqual(ctx.githubAppNormalizePem_(PEM.replace(/\n/g, '\\n')), PEM_PKCS8);
+  assert.strictEqual(ctx.githubAppNormalizePem_(PEM_PKCS8), PEM_PKCS8);
   assert.throws(() => ctx.githubAppNormalizePem_('not a key'), /PEM形式/);
+  assert.throws(() => ctx.githubAppNormalizePem_('-----BEGIN ENCRYPTED PRIVATE KEY-----\nAAAA\n-----END ENCRYPTED PRIVATE KEY-----'), /パスフレーズ付き/);
+  assert.throws(() => ctx.githubAppNormalizePem_('-----BEGIN CERTIFICATE-----\nAAAA\n-----END CERTIFICATE-----'), /種別が想定外/);
+});
+
+test('変換したPKCS#8はopensslのpkcs8 -topk8と同じDERになる', () => {
+  const ctx = makeHarness({}).ctx;
+  const converted = ctx.githubAppNormalizePem_(PEM);
+  const der = Buffer.from(converted.replace(/-----[A-Z ]+-----|\s/g, ''), 'base64');
+  assert.deepStrictEqual(der, privateKey.export({ type: 'pkcs8', format: 'der' }));
+  // 変換後の鍵で署名でき、元の公開鍵で検証できる。
+  assert.strictEqual(decodeJwt(ctx.githubAppJwt_('1', converted)).verified, true);
+});
+
+test('PKCS#1をそのまま設定してもJWTを署名できる（回帰: 無効な引数: key）', () => {
+  const h = makeHarness({ GITHUB_APP_ID: '5020214', GITHUB_APP_PRIVATE_KEY: PEM });
+  const token = h.ctx.githubAuthToken_();
+  assert.match(token, /^ghs_/);
+  const jwt = decodeJwt(h.fetches[0].auth.replace(/^Bearer /, ''));
+  assert.strictEqual(jwt.verified, true);
+  assert.strictEqual(jwt.payload.iss, '5020214');
 });
 
 test('installation token: JWTが秘密鍵で検証でき、installation→access_tokensの順で発行する', () => {
