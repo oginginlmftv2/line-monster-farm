@@ -74,6 +74,19 @@ assert.ok(power(apt, 'x', { bestRange: 'C', rangeCount: 2 }) < power(apt, 'x', {
 assert.ok(power(apt, 'x', { bestRange: 'B', rangeCount: 1 }) < power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), '1方向だけは割り引く');
 close(power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), power(apt, 'x', { bestRange: 'B', rangeCount: 4 }), 0.01);
 
+// --- 技の発動回数に応じた累積（1回+10%、最大+40%）は、一律の累積割引（×0.6）より強い（威力全開 II）
+{
+  const perUse = power('バトル中の技の発動回数に応じて攻撃ステ上昇<最大+40%>');
+  const flat = power('スタック数に応じて攻撃ステータス上昇<最大+40%>');
+  close(perUse, 40 / rubric.battle.dmgPerLv * rubric.coefficients.special * 0.75, 0.2); // 10・20・30・40・40・40 の平均＝上限の75%
+  assert.ok(perUse > flat);
+}
+// --- 「忠誠度90を超えた分ガッツ回復<最大30>」は見込み15ガッツ。忠誠度の条件は二重に割り引かない（熱い魂 II）
+{
+  const withHeader = power('忠誠度<90>以上で技発動時、次の効果<br>・忠誠度90を超えた分ガッツ回復<最大30><1回>');
+  close(withHeader, rubric.coefficients.loyaltyExcessGuts * rubric.coefficients.gutsToLv * rubric.modifiers.loyalty * rubric.modifiers.trigger['技発動時'], 0.1);
+}
+
 // --- 集計：同名・同説明は1種、Tier境界は全体の上位10/25/50%
 {
   const abilities = [

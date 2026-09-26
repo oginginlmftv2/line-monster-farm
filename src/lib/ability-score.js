@@ -175,6 +175,8 @@ function createScorer(rubric) {
       case 'ガッツ回復': {
         if (/速度/.test(t)) return { kind: 'state', lv: gutsToLv(B.gutsPerBattle * lvOrPct(1, C.largeUp) / 100) };
         if (/リセット/.test(raw)) return { kind: 'event', lv: 0 };
+        // 「忠誠度90を超えた分ガッツ回復<最大30>」は超えた分の見込み（loyaltyExcessGuts）で、上限で止める
+        if (/忠誠度\d+を超えた分/.test(raw)) { const cap = String(raw).match(/<最大(\d+)>/); return { kind: 'event', lv: gutsToLv(Math.min(cap ? Number(cap[1]) : Infinity, C.loyaltyExcessGuts)) }; }
         // 「技の命中回数×<6>ガッツ回復<最大30>」は1技の命中回数（hitsPerSkill）を掛けて上限で止める
         const perHit = String(raw).match(/命中回数×<?(\d+)>?/);
         if (perHit) { const cap = String(raw).match(/<最大(\d+)>/); return { kind: 'event', lv: gutsToLv(Math.min(cap ? Number(cap[1]) : Infinity, Number(perHit[1]) * B.hitsPerSkill)) }; }
@@ -275,7 +277,7 @@ function createScorer(rubric) {
     // 「〜する度に」は頻繁に積み上がるので累積の割引を軽くする
     each(cond.stack, x => (/度に/.test(x) ? MOD.stackEvery : MOD.stack));
     each(cond.while, () => MOD.while);
-    each(cond.loyalty, () => MOD.loyalty);
+    if ((cond.loyalty || []).length) f *= MOD.loyalty;
     each(cond.opponentShield, () => MOD.opponentShield);
     each(cond.opponentDisabled, () => MOD.opponentDisabled);
     each(cond.guts, () => MOD.guts);
@@ -399,6 +401,7 @@ function createScorer(rubric) {
       const factor = (randomShare.get(lineIndex) || 1) * Math.max(MOD.floor, conditionFactor(condsFor(line.effects.map(e => e.atom))) * skillCondFactor(sc, monsterCtx) * (line.trigger ? MOD.trigger[line.trigger] || 1 : 1));
       const isNext = /次の技/.test(line.raw) && !/発動技と次の技/.test(line.raw);
       const grantStacks = underGrant && typeof ctx.limit === 'number' ? ctx.limit : 1;
+      const perUse = /技の発動回数に応じて/.test(line.raw);
       const stackBoost = (line.maxStack ? 1 + (line.maxStack - 1) * 0.5 : 1) * (1 + (grantStacks - 1) * (C.grantStackCredit ?? 0.5));
       for (const e of line.effects) {
         const ev = effectValue(e, line);
@@ -409,7 +412,13 @@ function createScorer(rubric) {
         if (ev.decisive && limitOf(line) == null) qty = Math.min(C.decisiveCountCap, qty);
         // Lvの上昇は「発動技と次の技」のうち発動技の分だけ（頭打ち3発のうち半分）
         if (ev.upgradeHalf) qty = Math.min(qty, C.decisiveCountCap / 2);
-        const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost);
+        let ramp = 1;
+        if (perUse && e.value) {
+          let sum = 0;
+          for (let k = 1; k <= B.skillsPerBattle; k++) sum += Math.min(C.perUseStackPct * k, e.value);
+          ramp = sum / B.skillsPerBattle / e.value / MOD.stack; // conditionFactor で掛けた累積の一律割引を戻して置き換える
+        }
+        const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost) * ramp;
         parts.push({ atom: e.atom, lv, penalty: !!ev.penalty, line: line.raw });
       }
       if (line0.effects.length && /次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw) };

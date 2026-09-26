@@ -399,6 +399,10 @@ power      = 能力の評価。手入力は ability-overrides.json の上書き�
 - 見出しにトリガーが2つある `バトル開始時、回避ステ<+400>、技回避時、次の効果` は、見出しの効果が前、後続行が後ろのトリガー
 - `相手<オーラ緑>技発動後` は自分の技の色ではなく相手の技の色（相手の条件0.17）
 - `＜１回＞さらに…` のように読点なしで続く「さらに」も別の効果
+- **「技の発動回数に応じて…<最大+X%>」は1回につき+10%**（説明文に明記は無い。管理者確認 2026-09-27・威力全開 II）。
+  1試合6回で 10・20・30・40・40・40% と上がる平均（上限40%なら75%）を掛け、累積の一律割引（0.6）は使わない。`攻撃ステ上昇` の短い書き方も読む
+- **「忠誠度90を超えた分ガッツ回復<最大30>」は見込み15ガッツ**（忠誠度は育成で100を超え120にもできるが、120は難しめ。熱い魂 II）。
+  見出しと行の両方に忠誠度の条件があっても、割り引くのは1回
 - **重ねがけ（付与<N回>）は全部数える**（バーサーク II の3回）。重ねがけは序の「全ステ+5%」より相対的に強い（管理者確認）
 - **「次の効果付与<N回>」の後ろの効果は付いた後ずっと効き、N回は重ねがけ**（ロボトルファイト！IV・バーサーク II）。
   装甲の「技を受けた時<15%>ずつ減少」は、試合中に受ける回数（約3.6回）の平均で見る（ブロック75%→平均55.5%）
@@ -474,7 +478,8 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
 新しい強い能力が入れば境界が上がり、旧能力の値は変わらない（インフレ対策）。
 ただし**新しい能力の読み方は誰も確かめていない**ので、次の順で点検する。
 
-1. `node build.js` のログに「未点検の能力 N件」が出る（`ability-rubric.json` の `review.reviewedThroughAbilityId` より後のID）
+1. CMSのアシスト公開の結果画面（Actions の job summary）と `node build.js` のログに、未点検の能力が出る
+   （`ability-rubric.json` の `review.reviewedThroughAbilityId` より後のID）
 2. `node scripts/audit-ability-reading.js --new` で、新しい能力だけを読み違いの型ごとに点検する
 3. 引っかかった型は3-1のルールで直す。語彙はパーサ、値は rubric、式は ability-score.js。
    直したら `node scripts/build-ability-parse.js`（カバレッジ表）→ `node build.js` → `node scripts/audit-ability-reading.js`（全体）
@@ -515,8 +520,11 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
 
 ### 5-4. 新しい能力の点検結果を見る場所（2026-09-27・管理者判断）
 
-- **A（自動）**：CMSのアシスト公開のWorkflowが、GitHub Actions の結果画面（job summary）に
-  未点検の能力の表（点・順位・分類・説明文・読み方点検の引っかかり）を出す。Workflowの変更は別PR
+- **A（自動）**：CMSのアシスト公開のWorkflow（`.github/workflows/cms-assist-publish.yml` の最後のステップ）が、
+  公開のあとに GitHub Actions の結果画面（job summary）へ未点検の能力の表を出す（2026-09-27 実装）。
+  中身は `node scripts/audit-ability-reading.js --new --summary`：能力・出どころ・点・順位・Tier・分類・
+  詳細ページに載る体の数・読み方点検の引っかかり・説明文。未点検が無ければ「ありません」の1行。
+  `continue-on-error` なので、このステップが失敗しても公開は止まらない
 - **C（Claudeのセッション）**：表を見た管理者の依頼で、Claudeのセッションが5-1の手順で読み方とTierを検証し、
   直すPRを作る。確認が取れたら `review.reviewedThroughAbilityId` を進める
 - 公開サイトに確認用のページ（noindex含む）は作らない。Tierを公開しない方針のため
