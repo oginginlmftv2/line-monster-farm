@@ -1,5 +1,8 @@
 /** モンスタードメイン。 */
-var MON_THRESHOLD = 800;
+// インデックス条件（2026-09-27〜。build.js が正・docs/build-spec.md 3-1）：
+// 解説があって可視 MON_THRESHOLD 字以上、または基礎データあり（どちらも可視 MON_MIN_CHARS 字以上が下限）
+var MON_THRESHOLD = 1000;
+var MON_MIN_CHARS = 800;
 var MON_IMAGE_FOLDER_NAME = 'monster';
 var MON_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
 var MON_IMAGE_MIME_EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
@@ -15,6 +18,7 @@ var MON_TYPE_LIST = ['創造','幻霊','魔族','獣族','怪物','無機'];
 function monSeedUrl_() { return RAW_BASE + 'cms-seed.json'; }
 function monBaselineUrl_() { return RAW_BASE + 'page-baseline.json'; }
 function monAvailabilityUrl_() { return RAW_BASE + 'id-availability.json'; }
+function monBasicsUrl_() { return RAW_BASE + 'monster-basics.json'; }
 
 function monImageFolder_() {
   var root = DriveApp.getFolderById(prop_('DRIVE_FOLDER_ID'));
@@ -121,6 +125,32 @@ function monBaselineMap_() {
   }
 }
 
+// 基礎データ（素質・適性）が登録されている体の ID。登録があれば解説の字数に関わらずインデックス対象
+function monBasicsIds_() {
+  var cache = CacheService.getScriptCache();
+  var hit = cache.get('basicsIds');
+  if (hit) {
+    try { return JSON.parse(hit); } catch (e) { /* 壊れていたら取り直す */ }
+  }
+  try {
+    var res = UrlFetchApp.fetch(monBasicsUrl_(), { muteHttpExceptions: true });
+    if (res.getResponseCode() !== 200) return {};
+    var data = JSON.parse(res.getContentText());
+    var ids = {};
+    (data.monsters || []).forEach(function (b) { ids[pad4_(b.id)] = true; });
+    cache.put('basicsIds', JSON.stringify(ids), 3600);
+    return ids;
+  } catch (e) {
+    return {};
+  }
+}
+
+// 保存時の見込み（判定そのものは build.js が行う）
+function monIndexable_(predicted, hasExplanation, hasBasics) {
+  if (predicted < MON_MIN_CHARS) return false;
+  return (hasExplanation && predicted >= MON_THRESHOLD) || hasBasics;
+}
+
 function monAvailabilityData_() {
   var cache = CacheService.getScriptCache();
   var hit = cache.get('idAvailability');
@@ -204,6 +234,7 @@ function api_monBootstrap() {
   var user = requireScope_('monster');
   
   var baseMap = monBaselineMap_();
+  var basicsIds = monBasicsIds_();
   var bloods = monBloodLists_();
   var list = monReadAll_().map(function (m) {
     return {
@@ -214,6 +245,7 @@ function api_monBootstrap() {
       mainBlood: m.mainBlood,
       subBlood: m.subBlood,
       hasExplanation: !!m.explanation,
+      hasBasics: basicsIds[m.id] === true,
       visibleChars: m.visibleChars,
       indexable: m.indexable,
       author: m.author,
@@ -228,6 +260,7 @@ function api_monBootstrap() {
     me: { nickname: user.nickname, role: user.role },
     memberNames: monMemberNames_(),
     threshold: MON_THRESHOLD,
+    minChars: MON_MIN_CHARS,
     imageMaxBytes: MON_IMAGE_MAX_BYTES,
     auraList: MON_AURA_LIST,
     monList: MON_TYPE_LIST,
@@ -251,6 +284,7 @@ function api_monGet(id) {
   var baseMap = monBaselineMap_();
   m.overhead = monOverhead_(m, baseMap);
   m.baselineLoaded = !!(baseMap && baseMap[m.id] != null);
+  m.hasBasics = monBasicsIds_()[m.id] === true;
   return m;
 }
 
@@ -716,7 +750,7 @@ function api_monSave(payload) {
     var baseMap = monBaselineMap_();
     var overhead = monOverhead_(m, baseMap);
     var predicted = overhead + countChars_(explanation);
-    var indexable = predicted >= MON_THRESHOLD;
+    var indexable = monIndexable_(predicted, !!explanation, monBasicsIds_()[target] === true);
 
     // --- 書き込み（C列〜T列を1回で。image と status は今の値をそのまま戻す）
     var sh = monSheet_();

@@ -9,7 +9,7 @@
       <select id="mon_fState">
         <option value="">状態すべて</option>
         <option value="index">インデックス対象</option>
-        <option value="near">あと少し（700字〜）</option>
+        <option value="near">あと少し（解説あり・900字〜）</option>
         <option value="has">解説あり</option>
         <option value="none">解説なし</option>
       </select>
@@ -100,7 +100,8 @@ function monFiltered(){
   var list = MON.boot.monsters.filter(function(x){
     if (mon && x.mon !== mon) return false;
     if (state === 'index' && !x.indexable) return false;
-    if (state === 'near' && !(x.visibleChars >= 700 && x.visibleChars < th)) return false;
+    // インデックス条件（2026-09-27〜）：解説があって threshold 字以上、または基礎データあり
+    if (state === 'near' && !(x.hasExplanation && !x.hasBasics && x.visibleChars >= th - 100 && x.visibleChars < th)) return false;
     if (state === 'has' && !x.hasExplanation) return false;
     if (state === 'none' && x.hasExplanation) return false;
     if (q) {
@@ -126,7 +127,7 @@ function monFiltered(){
 
 function monBarClass(chars){
   if (chars >= MON.boot.threshold) return 'bar done';
-  if (chars >= 700) return 'bar near';
+  if (chars >= MON.boot.threshold - 100) return 'bar near';
   return 'bar';
 }
 
@@ -136,7 +137,7 @@ function monRenderList(){
   var th = MON.boot.threshold;
   var html = list.map(function(x){
     var pct = Math.min(100, Math.round(x.visibleChars / th * 100));
-    var tag = x.indexable ? '公開対象' : (th - x.visibleChars) + '字';
+    var tag = x.indexable ? '公開対象' : (x.hasBasics ? '基礎データで対象' : (th - x.visibleChars) + '字');
     return '<button class="row' + (MON.current && MON.current.id === x.id ? ' sel' : '') +
       '" data-id="' + esc(x.id) + '">' +
       '<div class="r1"><span class="id">' + esc(x.id) + '</span>' +
@@ -454,9 +455,19 @@ function monUpdateProgress(){
   var bar = el('mon_progbar');
   bar.className = monBarClass(chars);
   bar.querySelector('i').style.width = pct + '%';
-  el('mon_prog').innerHTML = chars >= th
-    ? '<b>' + chars + '</b> / ' + th + '字　<span style="color:#1a7f37">インデックス対象です</span>'
-    : '<b>' + chars + '</b> / ' + th + '字　あと <b>' + (th - chars) + '</b> 字';
+  // インデックス条件（2026-09-27〜。判定は build.js）：解説があって threshold 字以上、または基礎データあり
+  var hasText = monCountChars(el('mon_f_explanation').value) > 0;
+  var hasBasics = !!(MON.current && MON.current.hasBasics);
+  var ok = '<span style="color:#1a7f37">';
+  if (hasBasics) {
+    el('mon_prog').innerHTML = '<b>' + chars + '</b> 字　' + ok + '基礎データ登録済みのため、解説の字数に関わらずインデックス対象です</span>';
+  } else if (hasText && chars >= th) {
+    el('mon_prog').innerHTML = '<b>' + chars + '</b> / ' + th + '字　' + ok + 'インデックス対象です</span>';
+  } else if (!hasText) {
+    el('mon_prog').innerHTML = '<b>' + chars + '</b> / ' + th + '字　解説を書いて ' + th + '字に届くか、基礎データを登録するとインデックス対象になります';
+  } else {
+    el('mon_prog').innerHTML = '<b>' + chars + '</b> / ' + th + '字　あと <b>' + (th - chars) + '</b> 字（基礎データを登録しても対象になります）';
+  }
 }
 
 function monFormatFileSize(bytes){
