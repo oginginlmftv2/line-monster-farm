@@ -179,6 +179,8 @@ function parseLine(rawLine) {
   });
   // 「相手<オーラ緑>技発動後」は自分の技ではなく相手の技の色（ローズシールド）
   text = text.replace(/相手<オーラ(赤|青|黄|黒|白|緑)>技(?:発動後|発動時)?、?/g, (m, c) => { (line.conditions.opponentAura = line.conditions.opponentAura || []).push('相手' + c + '技'); return ' '; });
+  // 「<有利>技発動時」は技の条件ではなく「有利なときに技を発動」。[有利] と同じ状況条件（料理人 II・管理者確認）
+  text = text.replace(/<(有利|有利以外|不利以外)>(?=技)/g, (m, s) => { (line.conditions.stance = line.conditions.stance || []).push(s); return ''; });
   // 2. 技条件 <...>技
   const skillAura = text.match(/<(?:オーラ)?(赤|青|黄|黒|白|緑)(?:オーラ)?(?:または(?:オーラ)?(赤|青|黄|黒|白|緑|無))?>(?:オーラ)?(?:ちから|かしこさ)?技|<(?:オーラ技)(赤|青|黄|黒|白|緑)>|<(赤|青|黄|黒|白|緑)オーラ技>|(赤|青|黄|黒|白|緑)技(?:発動|命中)|<(?:オーラ)?(黒または無|緑または無|オーラなしまたは青|黒または白)(?:オーラ)?>技/);
   if (skillAura) { line.skillCond.aura = (skillAura.slice(1).filter(Boolean)).join('または'); const keep = skillAura[0].match(/(ちから|かしこさ)技$/); text = text.replace(skillAura[0], skillAura[0].endsWith('技') ? (keep ? keep[0] : '技') : ' '); }
@@ -262,6 +264,12 @@ function parseLine(rawLine) {
   }
   // 付与される効果 [G] の中身も原子として解析（[強撃Lv1]・[被ダメ-20%<20秒>] など）
   for (const g of line.grants) {
+    // 相手に付与する [丈夫さ<-30%><20秒>] は相手のステ低下（料理人 II）
+    const debuff = /相手に/.test(rawLine) && String(g).match(/^(ちから|かしこさ|命中|回避|丈夫さ|ライフ|攻撃ステータス)<-(\d+)%>(?:<(\d+)秒>)?$/);
+    if (debuff) {
+      line.effects.push({ atom: '相手ステ低下', value: Number(debuff[2]), unit: '%', stats: STATS.filter(s => debuff[1] === s), text: '相手の' + debuff[1] + '<-' + debuff[2] + '%>', granted: true, duration: debuff[3] ? Number(debuff[3]) : undefined });
+      continue;
+    }
     const inner = parseLine(g.replace(/<\d+秒>/, m => m));
     for (const e of inner.effects) line.effects.push({ ...e, granted: true, duration: inner.duration });
   }

@@ -69,4 +69,20 @@ assert.strictEqual(applyMatches(parser.parseAbility({ abilityId: 'x', name: 'x',
 const withGreen = recommendAbilities({ monster: tamamo, ownSkills: [{ aura: '緑', skillType: 'ちから', range: '近' }], basicsEntry: null, ...base, limit: 20 });
 assert.ok(withGreen.some(item => item.abilityId === greenSkill), '緑の技を持つ体には緑技の能力が載る');
 
+// --- 適用条件は行ごと（料理人 II：怪物なら使えるが、必中の行は自身黒だけ）
+{
+  const ryouri = parser.parseAbility({ abilityId: 'x', name: '料理人 II', description: '[怪物]<有利>技発動時、次の効果が発動<br>・クリティカル確定<br>・相手に[丈夫さ<-30%><20秒>]を付与<1回><br>・[自身黒]必中Lv1<1回>' });
+  const { applyMatches: match } = require('../src/lib/ability-recommend');
+  const scoreFor = monster => scorer.scoreAbility(ryouri, { applyMatches: apply => match(apply, monster) }).power;
+  const blackMonster = { aura: '黒', mon: '怪物', blood: 'ゴースト' };
+  const redMonster = { aura: '赤', mon: '怪物', blood: 'ゴースト' };
+  const beast = { aura: '黒', mon: '獣族', blood: 'キュービ' };
+  assert.ok(scoreFor(blackMonster) > scoreFor(redMonster) * 4, '必中は黒の怪物だけ');
+  assert.ok(scoreFor(redMonster) > 0, '黒以外の怪物もクリ確定などは使える');
+  assert.strictEqual(scoreFor(beast), 0, '怪物でなければ見出しごと使えない');
+  // 評価式は行ごとに判定する（執事の心得・序：黒でなくても前半の点は入る）。ページに載せるかは能力全体の条件でも絞る
+  const shitsuji = parser.parseAbility({ abilityId: 'x', name: '執事の心得・序', description: 'バトル開始時、ライフ以外のステータス<+5%><br>[自身黒]この効果中、ライフ50%以上で技発動時、[有利以外]完全回避Lv2<1回>' });
+  assert.ok(scorer.scoreAbility(shitsuji, { applyMatches: apply => match(apply, redMonster) }).power > 0);
+}
+
 console.log('test-ability-recommend: OK');
