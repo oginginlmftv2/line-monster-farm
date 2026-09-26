@@ -176,6 +176,8 @@ const atoms = line => line.effects.map(e => e.atom);
   // 1つのステを複数のステへ加算、自身のステ低下はデメリット
   assert.deepStrictEqual(eff('・自身の丈夫さステ<-20%>'), [['自身ステ低下', 20, '%']]);
   assert.deepStrictEqual(atoms(line('・丈夫さステの<13%>をちから、かしこさ、命中、回避ステに加算')), ['ステ変換']);
+  // 「攻撃ステ上昇<最大+40%>」の短い書き方（威力全開）
+  assert.deepStrictEqual(eff('・バトル中の技の発動回数に応じて攻撃ステ上昇<最大+40%>'), [['ステ上昇', 40, '%']]);
   // 「、さらに」「>さらに」は別の行
   assert.strictEqual(parse('x', '回避25%分の【シールド】を展開する<20秒><1回>さらに自身[有利]の時、その技に対し完全回避Lv2<1回>').lines.length, 2);
 }
