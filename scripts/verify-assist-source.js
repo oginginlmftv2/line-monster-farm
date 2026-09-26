@@ -8,10 +8,14 @@ const TEXT_SOURCE_FILES = new Set([
   'src/data/assist-abilities.json',
 ]);
 const IMAGE_PATH = /^assist-cards\/[A-Za-z0-9._-]+\.(jpg|png|webp)$/i;
-const GENERATED_PREFIXES = ['cards/', 'gacha/'];
+// monsters/ と能力の生成物は P15-4b（2026-09-27）から。モンスター詳細の「相性のいいアシスト能力」と
+// 能力の評価値はアシストのデータ（カードの発売日・能力の説明文）から作るため、アシスト公開でも変わる。
+// monsters-data.js・monsters-editorial.json などモンスターのCMS入力は monsters/ の下に無いので、ここから触れない
+const GENERATED_PREFIXES = ['cards/', 'gacha/', 'monsters/'];
 const GENERATED_FILES = new Set([
   'assist.html', 'index.html', 'reroll.html', 'sitemap.xml',
   'src/data/lmfdb-card-map.json',
+  'src/data/ability-scores.json', 'src/data/page-baseline.json', 'src/data/cms-seed.json',
 ]);
 const SUBJECT = /^CMS assist publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
