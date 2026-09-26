@@ -930,6 +930,26 @@ else {
     ok(`インデックス対象${measuredDetails.length}件すべて可視800字以上（最小 ${minimum}字）`);
   }
 
+  // 9-4b. 詳細ページのインデックス条件（2026-09-27・build-spec 3-1）：
+  // 解説があって可視1000字以上、または基礎データあり。「相性のいいアシスト能力」の字数だけでは昇格させない
+  try {
+    const editorialRaw = JSON.parse(read('src/data/monsters-editorial.json')).monsters;
+    const editorialList = Array.isArray(editorialRaw) ? editorialRaw : Object.values(editorialRaw);
+    const withExplanation = new Set(editorialList.filter(entry => String(entry.explanation || '').trim()).map(entry => entry.id));
+    const withBasics = new Set(exists('src/data/monster-basics.json') ? JSON.parse(read('src/data/monster-basics.json')).monsters.map(entry => entry.id) : []);
+    const idsJson = JSON.parse(read('src/data/monster-ids.json'));
+    const wrongGate = [];
+    for (const monster of idsJson.monsters) {
+      const relative = monster.url.replace(/^\//, '');
+      if (!exists(relative)) continue;
+      const count = visibleChars(read(relative));
+      const expected = count >= 800 && ((withExplanation.has(monster.id) && count >= 1000) || withBasics.has(monster.id));
+      if (expected !== sitemapPaths.has(relative)) wrongGate.push(`${monster.id}（${count}字・解説${withExplanation.has(monster.id) ? 'あり' : 'なし'}・基礎${withBasics.has(monster.id) ? 'あり' : 'なし'}）`);
+    }
+    if (wrongGate.length) ng(`詳細ページのインデックス条件と sitemap が不一致 ${wrongGate.length}件: ${wrongGate.slice(0, 5).join(', ')}`);
+    else ok('詳細ページのインデックスは「解説あり＋可視1000字以上、または基礎データあり」と一致');
+  } catch (error) { ng(`詳細ページのインデックス条件の照合に失敗: ${error.message}`); }
+
   // 9-5. 公開HTMLに旧URLへのリンクが残っていないこと
   const htmlFiles = [];
   const walkHtml = p => {
@@ -2091,6 +2111,39 @@ head('22. 能力スコアリング（説明文パーサ）');
       }
     } catch (error) { ng(`ability-scores.json の照合に失敗: ${error.message}`); }
   }
+  // モンスター詳細の「相性のいいアシスト能力」（build-spec 5-12）：5件以下・番号なし・発売が新しい順、セクションの並び
+  if (!exists('scripts/test-ability-recommend.js')) ng('相性のいいアシスト能力の選び方のテストがない');
+  else {
+    const result = childProcess.spawnSync(process.execPath, ['scripts/test-ability-recommend.js'], { cwd: REPO, encoding: 'utf8' });
+    if (result.status !== 0) ng(`相性のいいアシスト能力テストFAIL: ${(result.stderr || result.stdout).trim().split('\n').slice(0, 5).join(' / ')}`);
+    else ok('相性のいいアシスト能力の選び方（イベントのみ・状態変化除外・主血統・技条件・上位5件・発売が新しい順）を固定');
+  }
+  try {
+    const ORDER = ['基礎データ', '適性データ', '固有技', '種の技', '相性のいいアシスト能力', '評価解説', 'おすすめ編成', '同じ血統のモンスター', '登場ガチャ', '関連リンク'];
+    // 技セクションには固有技のほかに「◯◯のレア度上昇で解放できる技／技能力」があり、固有技と同じ位置に入る（5-10）
+    const orderIndex = title => (/のレア度上昇で解放できる技(?:能力)?$/.test(title) ? ORDER.indexOf('固有技') : ORDER.findIndex(name => (name === '種の技' ? /種の技$/.test(title) : title === name)));
+    const cardDates = new Map(JSON.parse(read('src/data/assist-cards.json')).cards.map(card => [card.cardId, card.releasedAt || '']));
+    const bad = [];
+    let withSection = 0;
+    for (const monster of JSON.parse(read('src/data/monster-ids.json')).monsters) {
+      const relative = monster.url.replace(/^\//, '');
+      if (!exists(relative)) continue;
+      const html = read(relative);
+      const titles = [...html.matchAll(/<h2 class="section-title">([^<]+)<\/h2>/g)].map(match => match[1]);
+      const indexes = titles.map(orderIndex);
+      if (indexes.some(index => index < 0) || indexes.some((index, i) => i > 0 && index < indexes[i - 1])) bad.push(`${monster.id} 並び: ${titles.join('→')}`);
+      const section = html.match(/<h2 class="section-title">相性のいいアシスト能力<\/h2>[\s\S]*?<\/ul>/);
+      if (!section) continue;
+      withSection++;
+      const items = [...section[0].matchAll(/<li class="skill-line">/g)].length;
+      if (items < 1 || items > 5) bad.push(`${monster.id} 能力${items}件`);
+      if (/<ol\b|\d+位|No\.\d/.test(section[0])) bad.push(`${monster.id} 番号付き`);
+      const dates = [...section[0].matchAll(/cards\/([^"]+)\.html/g)].map(match => cardDates.get(match[1]) || '');
+      if (dates.some((date, i) => i > 0 && date > dates[i - 1])) bad.push(`${monster.id} 発売が新しい順でない`);
+    }
+    if (bad.length) ng(`モンスター詳細の並び・相性のいいアシスト能力が仕様と不一致 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
+    else ok(`モンスター詳細のセクションの並びが仕様どおり。相性のいいアシスト能力 ${withSection}体（各5件以下・番号なし・発売が新しい順）`);
+  } catch (error) { ng(`相性のいいアシスト能力の検査に失敗: ${error.message}`); }
   // ルーブリックと上書きは JSON として読め、上書きの abilityId は実在する
   for (const file of ['src/data/ability-rubric.json', 'src/data/ability-overrides.json']) {
     if (!exists(file)) { ng(`${file} がない`); continue; }

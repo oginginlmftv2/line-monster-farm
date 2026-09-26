@@ -125,11 +125,27 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/1104.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/1150.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/nyaa/1352.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/hinotori/1450.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/suezo/1553.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/mocchi/1625.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -153,6 +169,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/nendoro/1850.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/nendoro/1851.html</loc>
     <priority>0.7</priority>
   </url>
@@ -169,6 +189,10 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/monolith/2224.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/monolith/2250.html</loc>
     <priority>0.7</priority>
   </url>
@@ -177,7 +201,43 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2309.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2310.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2321.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2323.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2324.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2350.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/2351.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/naga/2450.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/naga/2453.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kawazumo/2502.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -309,11 +369,19 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/pixie/0190.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/0227.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/0250.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/centaur/0350.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -326,6 +394,10 @@
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/0550.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/dino/0602.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -365,7 +437,27 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0701.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0702.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0707.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0709.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0750.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0751.html</loc>
     <priority>0.7</priority>
   </url>
   <url>
@@ -374,6 +466,46 @@
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0753.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/0754.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0804.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0808.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0815.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0817.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0820.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0850.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0851.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/0852.html</loc>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/liger/0928.html</loc>
     <priority>0.7</priority>
   </url>
   <url>

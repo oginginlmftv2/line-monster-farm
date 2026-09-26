@@ -6,7 +6,8 @@ const { buildAssistPages } = require('./scripts/build-assist-pages');
 const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
 const basics = require('./src/lib/monster-basics');
 const abilityParser = require('./src/lib/ability-parser');
-const { computeAbilityScores } = require('./src/lib/ability-score');
+const { computeAbilityScores, createScorer: createAbilityScorer } = require('./src/lib/ability-score');
+const { recommendAbilities } = require('./src/lib/ability-recommend');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -15,6 +16,10 @@ const MON_TYPE_ROOT_PREFIX = '../../';
 const DRY_RUN = process.argv.includes('--dry');
 const GTM_TAG = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');<\/script>`;
 const INDEXABLE_THRESHOLD = 800;
+// モンスター詳細のインデックス判定（2026-09-27・管理者判断。build-spec 3-1）：
+// 解説があって可視1000字以上、または基礎データが登録されている（可視800字以上は共通の下限）。
+// 同じ血統・オーラの体は基礎データ以外で差をつけられないため、「相性のいいアシスト能力」の字数だけでは昇格させない
+const DETAIL_EXPLANATION_THRESHOLD = 1000;
 const PICKUP_SLOTS = 5;
 const GACHA_EXCERPT_CHARS = 140;
 const GACHA_GATE_VISIBLE_CHARS = 800;
@@ -1432,11 +1437,54 @@ ${traitRows.join('\n')}
   return `${basicSection}${aptitudeSection}`;
 }
 
+/**
+ * 相性のいいアシスト能力（build-spec 5-12・P15-4b）。選び方は src/lib/ability-recommend.js、
+ * 方針は docs/ability-scoring-design.md 5-3。点と順位は出さず、選んだ能力を発売が新しい順に並べる。
+ */
+function renderMonsterAbilities(monster, context) {
+  const source = context.abilityRecommend;
+  if (!source) return { html: '', names: [] };
+  const ownSkills = (context.skillsByBlood.get(monster.blood) || [])
+    .filter(skill => !skill.unique || (skill.owners || []).includes(monster.id));
+  const picked = recommendAbilities({
+    monster,
+    ownSkills,
+    basicsEntry: context.basicsById.get(monster.id) || null,
+    ...source,
+  });
+  if (!picked.length) return { html: '', names: [] };
+  const items = picked.map(item => {
+    let where = 'イベント報酬';
+    if (item.card) {
+      addLink(context, `cards/${item.card.cardId}.html`);
+      const month = item.card.releasedAt ? `・${escapeHtml(String(item.card.releasedAt).slice(0, 7))}` : '';
+      where = `<a href="${ROOT_PREFIX}cards/${escapeHtml(item.card.cardId)}.html">${escapeHtml(item.card.name)}</a>（${escapeHtml(item.card.rarity)}${month}）`;
+    }
+    const text = item.description.split('\n').map(line => escapeHtml(line.replace(/^・/, ''))).join('<br>');
+    return `      <li class="skill-line">
+        <span class="skill-line-name">${escapeHtml(item.name)}</span>
+        <span class="skill-line-meta">入手：${where}／${escapeHtml(item.categories.join('・'))}</span>
+        <span class="skill-line-abilities">${text}</span>
+      </li>`;
+  }).join('\n');
+  const html = `
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">相性のいいアシスト能力</h2>
+    </div>
+    <p class="skill-section-lead">${escapeHtml(monster.name)}（${escapeHtml(monster.aura)}・${escapeHtml(monster.mon)}・${escapeHtml(monster.blood)}種）が発動できる、アシストカードのイベントで獲得できる能力です。新しいカードの能力から並べています。</p>
+    <ul class="skill-line-list">
+${items}
+    </ul>
+  </div>`;
+  return { html, names: picked.map(item => item.name) };
+}
+
 function renderDetail(entry, context) {
   const monster = context.monsterById.get(entry.id);
   const runtime = context.runtimeById.get(entry.id);
   const title = `${monster.name}（${monster.blood}・${monster.mon}）| LINEモンスターファーム徹底攻略`;
-  const description = descriptionFrom(entry.explanation);
   const canonical = `${SITE_URL}${monster.url}`;
   const image = resolveImage(monster.id, context).url;
   const breadcrumbTop = rootLink(context, 'index.html', 'トップ');
@@ -1485,6 +1533,12 @@ function renderDetail(entry, context) {
   const related = relatedMonsters(monster, context);
   const basicsSection = renderMonsterBasics(monster, context);
   const skillSections = renderMonsterSkillSections(monster, context);
+  const abilities = renderMonsterAbilities(monster, context);
+  const abilitySection = abilities.html;
+  // 解説の無い体は、属性と相性のいいアシスト能力から description を作る（体ごとに一意・40〜140字）
+  const description = String(entry.explanation || '').trim()
+    ? descriptionFrom(entry.explanation)
+    : descriptionFrom(`${monster.name}（${monster.aura}オーラ・${monster.mon}・${monster.blood}種）のデータ。${context.basicsById.has(monster.id) ? '素質・地形と間合いの適性、' : ''}${monster.name}が発動できるアシスト能力${abilities.names.length ? `（${abilities.names.slice(0, 2).join('・')}など）` : ''}をまとめています。`);
   const gachaAppearances = renderGachaAppearances(
     publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX, 'box'
   );
@@ -1528,7 +1582,7 @@ function renderDetail(entry, context) {
     </div>
   </div>
 
-${explanation}${formations}${basicsSection}${skillSections}
+${basicsSection}${skillSections}${abilitySection}${explanation}${formations}
 
   <div class="section-box">
     <div class="section-header">
@@ -1557,7 +1611,10 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 </body>
 `;
   const contentCharacters = visibleChars(body);
-  const indexable = contentCharacters >= INDEXABLE_THRESHOLD;
+  const hasExplanation = Boolean(String(entry.explanation || '').trim());
+  const hasBasics = context.basicsById.has(monster.id);
+  const indexable = contentCharacters >= INDEXABLE_THRESHOLD
+    && ((hasExplanation && contentCharacters >= DETAIL_EXPLANATION_THRESHOLD) || hasBasics);
   const robotsMeta = indexable
     ? ''
     : '\n  <meta name="robots" content="noindex,follow">';
@@ -1585,7 +1642,7 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 </head>
 ${body}</html>
 `;
-  return { html, indexable, contentCharacters };
+  return { html, indexable, contentCharacters, description };
 }
 
 function renderMonTypeCard(monster, context) {
@@ -1598,7 +1655,8 @@ function renderMonTypeCard(monster, context) {
   const limitedLabel = limitedLabelOf(runtime || monster);
   addLink(context, monster.url.replace(/^\//, ''));
   // 解説なしは共通の縦型カード、解説ありは横型カード。
-  if (!isIndexable) {
+  // 解説が無くても能力セクションなどでインデックス対象になる体があるので、解説の有無も見る
+  if (!isIndexable || !editorial || !String(editorial.explanation || '').trim()) {
     return renderMonCard({
       href,
       image,
@@ -2618,8 +2676,8 @@ function createPageBaseline(detailPages) {
       indexable: page.indexable,
     }));
   return {
-    note: 'build.js が生成。baseline = 解説と編成を除いたページの可視文字数',
-    threshold: INDEXABLE_THRESHOLD,
+    note: 'build.js が生成。baseline = 解説と編成を除いたページの可視文字数。threshold は解説がある体のインデックス基準（基礎データがある体は字数に関わらず対象）',
+    threshold: DETAIL_EXPLANATION_THRESHOLD,
     pages,
   };
 }
@@ -2662,7 +2720,7 @@ function createCmsSeed(context, detailPages) {
     });
   return {
     note: 'build.js が生成。管理画面（GAS）の初期データ用。手で編集しない',
-    threshold: INDEXABLE_THRESHOLD,
+    threshold: DETAIL_EXPLANATION_THRESHOLD,
     count: monsters.length,
     monsters,
   };
@@ -2769,13 +2827,17 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
   console.log('');
   console.log('=== ゲート判定 ===');
   console.log(`  詳細ページ  生成 ${gates.length}件 / インデックス ${indexable.length}件 / noindex ${noindex.length}件`);
+  const withExplanation = new Set(inputs.editorial.filter(entry => String(entry.explanation || '').trim()).map(entry => entry.id));
   const nearThreshold = noindex
-    .filter(entry => entry.contentCharacters >= 700 && entry.contentCharacters < INDEXABLE_THRESHOLD)
+    .filter(entry => withExplanation.has(entry.id) && entry.contentCharacters >= 900 && entry.contentCharacters < DETAIL_EXPLANATION_THRESHOLD)
     .sort((a, b) => a.contentCharacters - b.contentCharacters || Number(a.id) - Number(b.id));
-  console.log(`  昇格まであと少し（可視700〜799字）: ${nearThreshold.length}件`);
+  console.log(`  インデックス条件：解説があって可視${DETAIL_EXPLANATION_THRESHOLD}字以上、または基礎データあり`);
+  console.log(`  昇格まであと少し（解説あり・可視900〜999字）: ${nearThreshold.length}件`);
   for (const entry of nearThreshold) {
-    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${INDEXABLE_THRESHOLD - entry.contentCharacters}字）`);
+    console.log(`    ${entry.id} ${entry.name}  ${entry.contentCharacters}字（あと${DETAIL_EXPLANATION_THRESHOLD - entry.contentCharacters}字）`);
   }
+  const noindexNoExplanation = noindex.filter(entry => !withExplanation.has(entry.id)).length;
+  console.log(`  解説も基礎データも無くnoindex: ${noindexNoExplanation}件（基礎データを登録すると昇格）`);
   console.log(`  モン類ページ 生成 ${eligibleMonTypes.length}件（${eligibleMonTypes.map(monType => monType.name).join(' → ')}） / 除外 ${excludedMonTypes.length}件`);
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
@@ -2821,6 +2883,15 @@ function main() {
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
   const eligibleBloods = bloodGates.filter(bloodGate => bloodGate.eligible);
   const context = createBuildContext(inputs, eligibleMonTypes, eligibleBloods);
+  // 能力の評価値は詳細ページの描画より先に計算する（相性のいいアシスト能力が使う）
+  const abilityScores = createAbilityScores(inputs.assistCards);
+  context.abilityRecommend = {
+    scoreRows: abilityScores.abilities,
+    abilityById: new Map(readJson('src/data/assist-abilities.json').abilities.map(ability => [ability.abilityId, ability])),
+    cardById: new Map(inputs.assistCards.map(card => [card.cardId, card])),
+    scorer: createAbilityScorer(readJson('src/data/ability-rubric.json')),
+    parser: abilityParser,
+  };
   const monsterIndex = renderMonsterIndex(
     fs.readFileSync(path.join(REPO, 'monsters.html'), 'utf8'),
     context
@@ -2837,7 +2908,7 @@ function main() {
       path: monster.url.replace(/^\//, ''),
       html: rendered.html,
       title,
-      description: descriptionFrom(entry.explanation),
+      description: rendered.description,
       canonical: `${SITE_URL}${monster.url}`,
       priority: '0.7',
       indexable: rendered.indexable,
@@ -2878,8 +2949,12 @@ function main() {
   const detailPageById = new Map(detailPages.map(page => {
     return [path.basename(page.path, '.html'), page];
   }));
+  // 解説の無い体も「相性のいいアシスト能力」などで800字を超えればインデックス対象になる（P15-4b）。
+  // 既存のURL順（解説DBの順）を保ったまま、解説の無い体はID順で後ろに足す
+  const editorialIds = new Set(inputs.editorial.map(entry => entry.id));
   const sitemapPages = inputs.editorial
     .map(entry => detailPageById.get(entry.id))
+    .concat(detailPages.filter(page => !editorialIds.has(page.id)).sort((a, b) => a.id.localeCompare(b.id)))
     .filter(page => page && page.indexable)
     .concat([...monTypePages].sort((a, b) => {
       // sitemap.xml は表示順ではないため、既存の決定的なURL順を維持する。
@@ -2947,7 +3022,6 @@ function main() {
     LMFDB_CARD_MAP_FILE,
     renderLmfdbCardMap(inputs.assistCards)
   )]++;
-  const abilityScores = createAbilityScores(inputs.assistCards);
   // 1能力1行で書く（差分が能力単位で読め、ファイルも軽い）
   const { abilities: scoreRows, ...scoreHead } = abilityScores;
   const scoreJson = JSON.stringify(scoreHead, null, 2).replace(/\n}$/, ',\n  "abilities": [\n' + scoreRows.map(row => '    ' + JSON.stringify(row)).join(',\n') + '\n  ]\n}');

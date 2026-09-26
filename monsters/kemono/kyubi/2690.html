@@ -55,6 +55,142 @@
 
   <div class="section-box">
     <div class="section-header">
+      <h2 class="section-title">基礎データ</h2>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">素質</h3>
+      <div class="basics-grid basics-grid-6">
+        <div class="basics-cell"><span class="basics-cell-label">ライフ</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">ちから</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">かしこさ</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">命中</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">回避</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">丈夫さ</span><b class="basics-percent">0%</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>素質合計</dt><dd><span class="basics-score">0%</span></dd></div>
+        <div><dt>最高素質</dt><dd>なし（全項目 0%）</dd></div>
+      </dl>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">特徴</h3>
+      <div class="basics-grid basics-grid-trait">
+        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">ガッツ回復力</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">移動速度</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">成長タイプ</span><b class="basics-text">晩成</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">ヨイワル</span><b class="basics-text">ワル</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">サイズ</span><b class="basics-text">小さい</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">適性データ</h2>
+    </div>
+    <div class="basics-rating-grid">
+      <div class="basics-rating-card">
+        <div class="basics-rating-label">地形適性評価</div>
+        <span class="basics-rating-value">3.5</span><span class="basics-rating-max">/ 5.0</span>
+      </div>
+      <div class="basics-rating-card">
+        <div class="basics-rating-label">間合い適性評価</div>
+        <span class="basics-rating-value">4.2</span><span class="basics-rating-max">/ 5.0</span>
+      </div>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">地形適性</h3>
+      <div class="basics-grid">
+        <div class="basics-cell"><span class="basics-cell-label">砂漠</span><b class="basics-rank basics-rank-E">E</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">森林</span><b class="basics-rank basics-rank-B">B</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">海岸</span><b class="basics-rank basics-rank-E">E</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">雪山</span><b class="basics-rank basics-rank-B">B</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">火山</span><b class="basics-rank basics-rank-A">A</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>得意（B以上）</dt><dd>森林<b class="basics-rank basics-rank-B">B</b>・雪山<b class="basics-rank basics-rank-B">B</b>・火山<b class="basics-rank basics-rank-A">A</b></dd></div>
+        <div><dt>苦手（D以下）</dt><dd>砂漠<b class="basics-rank basics-rank-E">E</b>・海岸<b class="basics-rank basics-rank-E">E</b></dd></div>
+      </dl>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">間合い適性</h3>
+      <div class="basics-grid basics-grid-4">
+        <div class="basics-cell"><span class="basics-cell-label">遠</span><b class="basics-rank basics-rank-D">D</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">中</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">近</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">零</span><b class="basics-rank basics-rank-B">B</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>得意（B以上）</dt><dd>中<b class="basics-rank basics-rank-A">A</b>・近<b class="basics-rank basics-rank-A">A</b>・零<b class="basics-rank basics-rank-B">B</b></dd></div>
+        <div><dt>苦手（D以下）</dt><dd>遠<b class="basics-rank basics-rank-D">D</b></dd></div>
+      </dl>
+    </div>
+    <p class="basics-note">適性評価は当サイト独自の指標です。B以上は育成でSに届く適性、D以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>
+  </div>
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">固有技</h2>
+    </div>
+    <p class="skill-section-lead">タマモノマエが使える、キュービ種の中でも限られたモンスターだけの技です。</p>
+    <ul class="skill-line-list">
+      <li class="skill-line skill-line--wits">
+        <a class="skill-line-name" href="index.html#sk-0007"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>王狐焔</a>
+        <span class="skill-line-meta">中距離ランク1／かしこさ／ガッツ18</span>
+        <span class="skill-line-abilities">技能力：禍炎</span>
+      </li>
+      <li class="skill-line skill-line--wits">
+        <a class="skill-line-name" href="index.html#sk-0038"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>王狐炎衝</a>
+        <span class="skill-line-meta">中距離ランク6／かしこさ／ガッツ49</span>
+        <span class="skill-line-abilities">技能力：連撃：王狐炎衝・殺生石・テクニックレイズ・テクニックオーバー</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">キュービ種の技</h2>
+    </div>
+    <p class="skill-section-lead">技は血統ごとに共通です。キュービ種が覚える技の一覧は血統ページにまとめています。</p>
+    <div class="menu-grid">
+      <a class="menu-link" href="index.html"><span class="icon">🐺</span>キュービ種の技一覧（38技）</a>
+    </div>
+  </div>
+
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">相性のいいアシスト能力</h2>
+    </div>
+    <p class="skill-section-lead">タマモノマエ（赤・獣族・キュービ種）が発動できる、アシストカードのイベントで獲得できる能力です。新しいカードの能力から並べています。</p>
+    <ul class="skill-line-list">
+      <li class="skill-line">
+        <span class="skill-line-name">モノダスアボイド II</span>
+        <span class="skill-line-meta">入手：<a href="../../../cards/g2-SSR-monodasu.html">モノダス</a>（SSR・2026/07）／回避・防御・弱体</span>
+        <span class="skill-line-abilities">[後半][自身赤またはモノリス種]次の効果<br>完全回避Lv4&lt;1回&gt;<br>相手のかしこさステ&lt;-30%&gt;<br>[モノリス種]いずれかの間合いの技がすべて使用不可&lt;10秒&gt;</span>
+      </li>
+      <li class="skill-line">
+        <span class="skill-line-name">セラフィナアジリティ II</span>
+        <span class="skill-line-meta">入手：<a href="../../../cards/g1-MR-serafina.html">セラフィナ</a>（MR・2026/07）／回避・防御</span>
+        <span class="skill-line-abilities">[自身赤]自身の残りライフに応じて次の効果<br>[50%以上]回避率&lt;+20%&gt;と回避率に応じて追撃回避<br>[50%以下]丈夫さステ&lt;+20%&gt;と被ダメブロック&lt;+25%&gt;</span>
+      </li>
+      <li class="skill-line">
+        <span class="skill-line-name">セラフィナパッション II</span>
+        <span class="skill-line-meta">入手：<a href="../../../cards/g1-MR-serafina.html">セラフィナ</a>（MR・2026/07）／回避・防御</span>
+        <span class="skill-line-abilities">[自身赤]バトル中、次の効果<br>5以上のガッツダメージを受ける度に自身の回避ステータス&lt;+40%&gt;、丈夫さステータス&lt;+40%&gt;<br>&lt;赤&gt;技命中時、【シールド】展開&lt;20秒&gt;&lt;1回&gt;[最大値+100]</span>
+      </li>
+      <li class="skill-line">
+        <span class="skill-line-name">ルピナスリカバー II</span>
+        <span class="skill-line-meta">入手：<a href="../../../cards/d24k-SSR-rupinasu.html">ルピナス</a>（SSR・2026/06）／回避・防御・ガッツ</span>
+        <span class="skill-line-abilities">[自身緑または獣族]バトル開始時、回避ステ&lt;+400&gt;、技回避時、次の効果<br>[前半]ガッツ回復&lt;+30&gt;&lt;1回&gt;<br>[後半]ガッツ回復&lt;+40&gt;&lt;1回&gt;</span>
+      </li>
+      <li class="skill-line">
+        <span class="skill-line-name">シザースインサイト II</span>
+        <span class="skill-line-meta">入手：<a href="../../../cards/a4g-SSR-karukinosu.html">カルキノス</a>（SSR・2026/03）／命中</span>
+        <span class="skill-line-abilities">[自身赤または創造]次の効果を発動<br>[前半]残りライフが多いほど命中率上昇&lt;最大+40%&gt;<br>[後半]オーラ技発動時、必中Lv1&lt;1回&gt;</span>
+      </li>
+    </ul>
+  </div>
+  <div class="section-box">
+    <div class="section-header">
       <h2 class="section-title">評価解説</h2>
     </div>
     <div class="expl-body"><ul><li>3周年アニバにて初お披露目されたキュービ血統のロード種モンスター</li><li>ガチャでは恒常排出だが初のロード種とあって非常に強力。通常のモンスターより遥かに高い水準の初期ステ（素質はオール0%だが...）と地形及び距離適性を持つ。</li><li>固有状態変化の「王者覚醒」はその名に恥じない最強の性能をしており、バトル中発動すれば有利不利関係なく形勢逆転し得るステ上昇補正を付与する。</li><li>同時実装のMR師匠フレリアの能力とも相まってモングラの総合力育成やローマス育成、キュービ種特有の実装技の豊富さゆえにソロクエでも全距離☆を獲得できる等、あらゆる面で有用な最強クラスのモンスターといえる。</li><li>中距離の初ランク6固有技の「王狐炎衝」が技性能も全モンスター中最高峰で、最大ライフ5%の継続ダメージ付与まで可能。完全回避付与できる陽炎との2セットの軸で中距離は戦いたい。</li><li>もし「天河天翔」や「炸裂気泡陣」も技登録出来ているのなら迷わず技構成に組み込もう。「古代トチカの教え」を最大限活かしつつオールレンジでランク5技主体で戦えるのはキュービ種の特権。</li><li>想定編成のMRフレリアの「古代トチカのちから」や「フレリアの試練」「古代トチカの教え」、そして自身の持つ獣の律による回避+50%などの補助により、特にバトル前半では多少の技の応酬はものともせず、放つ技は常に有利オーラとなりうる為、幅広いモンスターに対してチャンスを見出せる。その場合相手によっては赤オーラ技として打つことが無くなるので、「ヴィトニルシールド」や「トレンドチェイサー」「喰っていいぞ」といった赤オーラ技が起点となる能力は発動しない点に注意。</li><li>「古代トチカのちから・急」の能力による有利オーラ変換をより活かす為に、「レッドアディション」「本当の罪ってのは…」等のどのオーラにも適用される火力スキルをロード秘伝によって積むのが一番ベスト。</li><li>ロード秘伝を獲得できる又はその起点となれる、秘伝周回においても非常に重要なモンスター。ベースとなるキュービ種そのものが元々多くの血統と伝授相性が良いのも相まってこのモンスターの持つ意義は大きい。</li></ul><p class="gap">・これまでどれだけキュービ種の技登録を解放してきたかによって、このモンスターの実力は大きく変わってくる。技が揃えば揃うほど真価を発揮し、秘伝周回やモングラにローマスやソロクエまで、幅広い舞台で主力級の存在感を放ってくれる。</p><p>キュービ種を愛して育て続けてきた人、赤育成の土台が整っている人であればその期待にしっかり応えてくれるであろう、あらゆる場面で頼もしい非常に強力なモンスターだ。</p></div>
@@ -169,108 +305,6 @@
           </div>
         </div>
       </div>
-  </div>
-  <div class="section-box">
-    <div class="section-header">
-      <h2 class="section-title">基礎データ</h2>
-    </div>
-    <div class="basics-block">
-      <h3 class="basics-title">素質</h3>
-      <div class="basics-grid basics-grid-6">
-        <div class="basics-cell"><span class="basics-cell-label">ライフ</span><b class="basics-percent">0%</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">ちから</span><b class="basics-percent">0%</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">かしこさ</span><b class="basics-percent">0%</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">命中</span><b class="basics-percent">0%</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">回避</span><b class="basics-percent">0%</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">丈夫さ</span><b class="basics-percent">0%</b></div>
-      </div>
-      <dl class="basics-summary">
-        <div><dt>素質合計</dt><dd><span class="basics-score">0%</span></dd></div>
-        <div><dt>最高素質</dt><dd>なし（全項目 0%）</dd></div>
-      </dl>
-    </div>
-    <div class="basics-block">
-      <h3 class="basics-title">特徴</h3>
-      <div class="basics-grid basics-grid-trait">
-        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">ガッツ回復力</span><b class="basics-rank basics-rank-A">A</b></div>
-        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">移動速度</span><b class="basics-rank basics-rank-A">A</b></div>
-        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">成長タイプ</span><b class="basics-text">晩成</b></div>
-        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">ヨイワル</span><b class="basics-text">ワル</b></div>
-        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">サイズ</span><b class="basics-text">小さい</b></div>
-      </div>
-    </div>
-  </div>
-  <div class="section-box">
-    <div class="section-header">
-      <h2 class="section-title">適性データ</h2>
-    </div>
-    <div class="basics-rating-grid">
-      <div class="basics-rating-card">
-        <div class="basics-rating-label">地形適性評価</div>
-        <span class="basics-rating-value">3.5</span><span class="basics-rating-max">/ 5.0</span>
-      </div>
-      <div class="basics-rating-card">
-        <div class="basics-rating-label">間合い適性評価</div>
-        <span class="basics-rating-value">4.2</span><span class="basics-rating-max">/ 5.0</span>
-      </div>
-    </div>
-    <div class="basics-block">
-      <h3 class="basics-title">地形適性</h3>
-      <div class="basics-grid">
-        <div class="basics-cell"><span class="basics-cell-label">砂漠</span><b class="basics-rank basics-rank-E">E</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">森林</span><b class="basics-rank basics-rank-B">B</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">海岸</span><b class="basics-rank basics-rank-E">E</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">雪山</span><b class="basics-rank basics-rank-B">B</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">火山</span><b class="basics-rank basics-rank-A">A</b></div>
-      </div>
-      <dl class="basics-summary">
-        <div><dt>得意（B以上）</dt><dd>森林<b class="basics-rank basics-rank-B">B</b>・雪山<b class="basics-rank basics-rank-B">B</b>・火山<b class="basics-rank basics-rank-A">A</b></dd></div>
-        <div><dt>苦手（D以下）</dt><dd>砂漠<b class="basics-rank basics-rank-E">E</b>・海岸<b class="basics-rank basics-rank-E">E</b></dd></div>
-      </dl>
-    </div>
-    <div class="basics-block">
-      <h3 class="basics-title">間合い適性</h3>
-      <div class="basics-grid basics-grid-4">
-        <div class="basics-cell"><span class="basics-cell-label">遠</span><b class="basics-rank basics-rank-D">D</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">中</span><b class="basics-rank basics-rank-A">A</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">近</span><b class="basics-rank basics-rank-A">A</b></div>
-        <div class="basics-cell"><span class="basics-cell-label">零</span><b class="basics-rank basics-rank-B">B</b></div>
-      </div>
-      <dl class="basics-summary">
-        <div><dt>得意（B以上）</dt><dd>中<b class="basics-rank basics-rank-A">A</b>・近<b class="basics-rank basics-rank-A">A</b>・零<b class="basics-rank basics-rank-B">B</b></dd></div>
-        <div><dt>苦手（D以下）</dt><dd>遠<b class="basics-rank basics-rank-D">D</b></dd></div>
-      </dl>
-    </div>
-    <p class="basics-note">適性評価は当サイト独自の指標です。B以上は育成でSに届く適性、D以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>
-  </div>
-
-  <div class="section-box">
-    <div class="section-header">
-      <h2 class="section-title">固有技</h2>
-    </div>
-    <p class="skill-section-lead">タマモノマエが使える、キュービ種の中でも限られたモンスターだけの技です。</p>
-    <ul class="skill-line-list">
-      <li class="skill-line skill-line--wits">
-        <a class="skill-line-name" href="index.html#sk-0007"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>王狐焔</a>
-        <span class="skill-line-meta">中距離ランク1／かしこさ／ガッツ18</span>
-        <span class="skill-line-abilities">技能力：禍炎</span>
-      </li>
-      <li class="skill-line skill-line--wits">
-        <a class="skill-line-name" href="index.html#sk-0038"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>王狐炎衝</a>
-        <span class="skill-line-meta">中距離ランク6／かしこさ／ガッツ49</span>
-        <span class="skill-line-abilities">技能力：連撃：王狐炎衝・殺生石・テクニックレイズ・テクニックオーバー</span>
-      </li>
-    </ul>
-  </div>
-
-  <div class="section-box">
-    <div class="section-header">
-      <h2 class="section-title">キュービ種の技</h2>
-    </div>
-    <p class="skill-section-lead">技は血統ごとに共通です。キュービ種が覚える技の一覧は血統ページにまとめています。</p>
-    <div class="menu-grid">
-      <a class="menu-link" href="index.html"><span class="icon">🐺</span>キュービ種の技一覧（38技）</a>
-    </div>
   </div>
 
   <div class="section-box">

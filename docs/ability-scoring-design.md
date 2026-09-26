@@ -1,6 +1,6 @@
 # 能力スコアリングの設計（P15-4b）
 
-最終更新: 2026-09-27（第2段：評価値・Tierの計算。ページ描画は別PR）
+最終更新: 2026-09-27（第2段：評価値・Tierの計算とページ描画）
 
 モンスター詳細ページを「そのモンスターが使える能力」で厚くするための設計。
 背景は `docs/adsense-indexing-handoff.md`（薄い詳細ページ236枚）と
@@ -18,7 +18,7 @@
 | 評価値・Tier（生成物） | `src/data/ability-scores.json` | `build.js` が毎回生成。`verify.js` 検査22が鮮度を照合 |
 | 読み方の点検 | `scripts/audit-ability-reading.js` → `docs/ability-reading-audit.md` | 手動。能力追加時は `--new`（5章） |
 | 手上書き | `src/data/ability-overrides.json` | 空。固有ギミック用 |
-| ページ描画 | `build.js`（build-spec 5-12） | 未着手（描画PR） |
+| ページ描画 | `build.js`・`src/lib/ability-recommend.js`（build-spec 5-12） | **済**（2026-09-27）。上位5件・番号なし・発売が新しい順。テストは `scripts/test-ability-recommend.js` |
 
 `assist-abilities.json` はCMS生成物なので触らない。パーサは説明文を読むだけ。
 
