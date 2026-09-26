@@ -4,7 +4,8 @@
  *
  * 選び方の正は docs/ability-scoring-design.md 5-3。
  *   - 載せるのはアシストのイベントで獲得できる能力（source＝イベント）。閃き・EXトレ・状態変化は載せない
- *   - その体が使える能力だけ：適用条件はオーラ・モン類・主血統（サブ血統を見る能力は無い）、
+ *   - その体が使える能力だけ：適用条件はオーラ・モン類・主血統（サブ血統を見る能力は無い）。能力全体の条件で判定したうえで、
+ *     行ごとの条件（料理人 II の [自身黒]必中 など）が合わない行は点に入れない。
  *     技条件は技DBがあれば実際の技の色・種類・間合い、無ければオーラ一致で代用
  *   - 点はその体に合わせて出し直す（技の色の割合、基礎データの間合い適性からS以上に届く見込み）
  *   - 点の上位 LIMIT 件を選び、番号は振らずに発売が新しい順に並べる（点と順位はページに出さない）
@@ -81,8 +82,10 @@ function recommendAbilities({ monster, ownSkills, basicsEntry, scoreRows, abilit
     if (!ability) continue;
     const parsed = parser.parseAbility(ability);
     if (isStateChange(parsed)) continue;
+    // 能力全体の適用条件（先頭に出る条件）で使えるかを決め、そのうえで行ごとの条件が合わない行は点に入れない
+    // （料理人 II：怪物なら使えるが、必中の行は自身黒だけ）
     if (!applyMatches(parsed.apply, monster) || !skillMatches(parsed, monster, ownSkills)) continue;
-    const power = scorer.scoreAbility(parsed, ctx).power;
+    const power = scorer.scoreAbility(parsed, { ...ctx, applyMatches: apply => applyMatches(apply, monster) }).power;
     if (!(power > 0)) continue;
     const card = row.cardId ? cardById.get(row.cardId) || null : null;
     candidates.push({

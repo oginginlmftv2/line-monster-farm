@@ -178,6 +178,9 @@ const atoms = line => line.effects.map(e => e.atom);
   assert.deepStrictEqual(atoms(line('・丈夫さステの<13%>をちから、かしこさ、命中、回避ステに加算')), ['ステ変換']);
   // 「攻撃ステ上昇<最大+40%>」の短い書き方（威力全開）
   assert.deepStrictEqual(eff('・バトル中の技の発動回数に応じて攻撃ステ上昇<最大+40%>'), [['ステ上昇', 40, '%']]);
+  // 「<有利>技発動時」の有利は状況条件、相手に付与する [丈夫さ<-30%>] は相手のステ低下（料理人 II）
+  assert.deepStrictEqual(line('[怪物]<有利>技発動時、次の効果が発動').conditions.stance, ['有利']);
+  assert.deepStrictEqual(eff('・相手に[丈夫さ<-30%><20秒>]を付与<1回>'), [['相手ステ低下', 30, '%']]);
   // 「、さらに」「>さらに」は別の行
   assert.strictEqual(parse('x', '回避25%分の【シールド】を展開する<20秒><1回>さらに自身[有利]の時、その技に対し完全回避Lv2<1回>').lines.length, 2);
 }

@@ -26,7 +26,6 @@
   "abilities": [
     {"abilityId":"ab-0592","name":"エスエルシールド II","group":"ab-0592","source":"イベント","cardId":"f18l-MR-esueru","releasedAt":"2026/04/14","categories":["回避・防御","命中"],"power":180.3,"held":false,"mainAtoms":["必中","シールド展開","ステ上昇"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0026","name":"オフリアボイド II","group":"ab-0026","source":"イベント","cardId":"c19k-MR-ofurii","releasedAt":"2025/02/28","categories":["回避・防御"],"power":142.5,"held":false,"mainAtoms":["完全回避","被ダメブロック"],"reviewed":true,"tier":1},
-    {"abilityId":"ab-0718","name":"料理人 II","group":"ab-0718","source":"イベント","cardId":null,"releasedAt":null,"categories":["火力","命中"],"power":130,"held":false,"mainAtoms":["必中","クリ確定"],"reviewed":true,"tier":1},
     {"abilityId":"ab-1162","name":"モノダスアボイド II","group":"ab-1162","source":"イベント","cardId":"g2-SSR-monodasu","releasedAt":"2026/07/31","categories":["回避・防御","弱体"],"power":120.3,"held":false,"mainAtoms":["完全回避","相手ステ低下","封じ"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0027","name":"俺が仕留める II","group":"ab-0027","source":"イベント","cardId":"d7-SSR-rivai","releasedAt":"2024/10/31","categories":["命中","火力"],"power":112.7,"held":false,"mainAtoms":["必中","ステ上昇"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0254","name":"ギフトンアボイド II","group":"ab-0254","source":"イベント","cardId":"c12l-MR-gifton","releasedAt":"2025/12/14","categories":["回避・防御","火力"],"power":101.4,"held":false,"mainAtoms":["完全回避","追撃"],"reviewed":true,"tier":1},
@@ -66,6 +65,7 @@
     {"abilityId":"ab-1240","name":"バーサーク II","group":"ab-1240","source":"イベント","cardId":"c25j-SSR-metabee","releasedAt":"2026/05/31","categories":["火力","命中","回避・防御"],"power":44.2,"held":false,"mainAtoms":["ステ変換","クリ率上昇","クリダメ上昇"],"reviewed":true,"tier":1},
     {"abilityId":"ab-1148","name":"セラフィナパッション II","group":"ab-1148","source":"イベント","cardId":"g1-MR-serafina","releasedAt":"2026/07/31","categories":["回避・防御"],"power":41.5,"held":false,"mainAtoms":["ステ上昇","シールド展開"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0082","name":"執事の心得・序","group":"ab-0082","source":"イベント","cardId":"f10h-MR-rucas","releasedAt":"2026/03/31","categories":["火力","命中","回避・防御"],"power":41.3,"held":false,"mainAtoms":["完全回避","ステ上昇"],"reviewed":true,"tier":1},
+    {"abilityId":"ab-0718","name":"料理人 II","group":"ab-0718","source":"イベント","cardId":null,"releasedAt":null,"categories":["火力","弱体","命中"],"power":40.7,"held":false,"mainAtoms":["必中","クリ確定","相手ステ低下"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0162","name":"花嫁の祝福 II","group":"ab-0162","source":"イベント","cardId":"e3h-SSR-marijji","releasedAt":"2025/05/31","categories":["回避・防御","支援"],"power":40.3,"held":false,"mainAtoms":["被ダメ低下","無効化・解除"],"reviewed":true,"tier":1},
     {"abilityId":"ab-1200","name":"花嫁の祝福 II","group":"ab-0162","source":"イベント","cardId":"aab-MR-julia","releasedAt":"2026/08/31","categories":["回避・防御","支援"],"power":40.3,"held":false,"mainAtoms":["被ダメ低下","無効化・解除"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0033","name":"俺は喰らう者だ IV","group":"ab-0033","source":"イベント","cardId":"b21i-MR-rimuru","releasedAt":"2026/01/31","categories":["火力","支援"],"power":39.2,"held":false,"mainAtoms":["技性能上昇","バフ付与"],"reviewed":true,"tier":1},

@@ -379,9 +379,16 @@ function createScorer(rubric) {
     }
     for (const [lineIndex, line0Raw] of parsed.lines.entries()) {
       let line0 = chainLimit.has(lineIndex) ? { ...line0Raw, limit: chainLimit.get(lineIndex) } : line0Raw;
+      // 体ごとの評価（monsterCtx.applyMatches）では、行ごとの適用条件（料理人 II の [自身黒]必中 など）が合わない行を数えない
+      const lineApplies = !monsterCtx || !monsterCtx.applyMatches || !line0.apply || monsterCtx.applyMatches(line0.apply);
       const hasCond = Object.keys(line0.conditions).length || line0.trigger || Object.keys(line0.skillCond).length;
       const isHeader = !line0.effects.length && (/次の効果|以下の効果|次の能力/.test(line0.raw) || hasCond);
-      if (isHeader) { ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw) }; continue; }
+      if (isHeader) { ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw), blocked: !lineApplies }; continue; }
+      if (ctx && ctx.blocked) continue;
+      if (!lineApplies) {
+        if (/次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: {}, skillCond: {}, blocked: true };
+        continue;
+      }
       const prev = lineIndex > 0 ? parsed.lines[lineIndex - 1] : null;
       if (prev && /^さらに/.test(line0.raw.replace(/^[・\s]+/, '')) && prev.effects.length) {
         line0 = { ...line0, trigger: line0.trigger || prev.trigger, conditions: mergeLists(prev.conditions, line0.conditions), skillCond: { ...prev.skillCond, ...line0.skillCond } };
