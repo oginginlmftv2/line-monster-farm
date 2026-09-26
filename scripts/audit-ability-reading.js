@@ -4,6 +4,8 @@
  *
  *   node scripts/audit-ability-reading.js         … 評価対象すべて → docs/ability-reading-audit.md
  *   node scripts/audit-ability-reading.js --new   … 未点検の能力だけ（ability-rubric.json の review より後）を画面に出す
+ *   node scripts/audit-ability-reading.js --new --summary … 同じ内容を GitHub Actions の結果画面（job summary）向けの Markdown で出す
+ *                                                   （CMSのアシスト公開 Workflow が公開後に実行する。docs/ability-scoring-design.md 5-4）
  *
  * 2026-09-27 の仮ビルドで見つかった読み違いの型を機械的に拾う。拾えるのは「読み残し」と「型にはまった書き方」だけで、
  * 読めているのに意味の取り方が違うもの（相手<オーラ緑>技を自分の技と読む等）は、上位の並びを人が見て確かめる。
@@ -13,7 +15,8 @@
 const fs = require('fs');
 const path = require('path');
 const parser = require('../src/lib/ability-parser');
-const { computeAbilityScores } = require('../src/lib/ability-score');
+const { computeAbilityScores, createScorer } = require('../src/lib/ability-score');
+const { recommendAbilities } = require('../src/lib/ability-recommend');
 
 const REPO = path.resolve(__dirname, '..');
 const OUT_DOC = 'docs/ability-reading-audit.md';
@@ -46,6 +49,45 @@ const CHECKS = [
     p => p.lines.filter(l => (l.raw.match(/発動時|命中時|受けた時|回避時|クリティカル(?:発生)?時|開始時|破壊時|したとき|した時/g) || []).length >= 2).map(l => l.raw)],
 ];
 
+/**
+ * 未点検の能力を job summary 向けの Markdown にする。点・順位・Tier・載るモンスター数・読み方点検の引っかかり・説明文。
+ * 公開は止めない（読むのは管理者。検証は Claude のセッションで行う）。
+ */
+function renderSummary({ list, results, rubric, rows, abilities }) {
+  const md = s => String(s).replace(/\|/g, '／').replace(/\r?\n/g, '<br>');
+  const through = rubric.review.reviewedThroughAbilityId;
+  let out = '## 未点検の能力（相性のいいアシスト能力・能力スコアリング）\n\n';
+  if (!list.length) return out + `未点検の能力はありません（${through} まで点検済み）。\n`;
+  // 載るモンスター数：詳細ページの「相性のいいアシスト能力」（上位5件）に入る体の数
+  const monsters = readJson('src/data/monster-ids.json').monsters;
+  const skills = readJson('src/data/monster-skills.json').skills;
+  const basics = new Map((fs.existsSync(path.join(REPO, 'src/data/monster-basics.json')) ? readJson('src/data/monster-basics.json').monsters : []).map(entry => [entry.id, entry]));
+  const source = {
+    scoreRows: rows,
+    abilityById: new Map(abilities.map(ability => [ability.abilityId, ability])),
+    cardById: new Map(readJson('src/data/assist-cards.json').cards.map(card => [card.cardId, card])),
+    scorer: createScorer(rubric),
+    parser,
+  };
+  const listed = new Map();
+  for (const monster of monsters) {
+    const ownSkills = skills.filter(skill => skill.blood === monster.blood && (!skill.unique || (skill.owners || []).includes(monster.id)));
+    for (const item of recommendAbilities({ monster, ownSkills, basicsEntry: basics.get(monster.id) || null, ...source })) {
+      listed.set(item.abilityId, (listed.get(item.abilityId) || 0) + 1);
+    }
+  }
+  const flagsOf = item => results.filter(r => r.hits.some(h => h.item === item)).map(r => r.title);
+  out += `${through} より後に追加された能力が **${list.length}種** あります。点と順位は仮の評価で、ページには出していません。\n`;
+  out += 'Claude のセッションで「未点検の能力を点検して」と依頼すると、読み方とTierを検証します（docs/ability-scoring-design.md 5-1）。\n\n';
+  out += '| 能力 | 出どころ | 点 | 順位 | Tier | 分類 | 詳細ページに載る体 | 読み方点検の引っかかり | 説明文 |\n|---|---|---:|---:|---|---|---:|---|---|\n';
+  for (const item of list) {
+    const { row, rank } = item;
+    const flags = flagsOf(item);
+    out += `| ${md(row.name)}（${row.abilityId}） | ${md(row.source || '')} | ${row.power ?? '保留'} | ${rank} | ${row.tier ? `Tier${row.tier}` : '—'} | ${md(row.categories.join('・'))} | ${listed.get(row.abilityId) || 0} | ${flags.length ? md(flags.join('・')) : 'なし'} | ${md(parser.normalize(abilities.find(a => a.abilityId === row.abilityId).description))} |\n`;
+  }
+  return out;
+}
+
 function main() {
   const onlyNew = process.argv.includes('--new');
   const abilities = readJson('src/data/assist-abilities.json').abilities;
@@ -66,6 +108,10 @@ function main() {
     hits: list.map(item => ({ item, lines: fn(item.p) })).filter(h => h.lines.length),
   }));
 
+  if (onlyNew && process.argv.includes('--summary')) {
+    console.log(renderSummary({ list, results, rubric, rows, abilities }));
+    return;
+  }
   if (onlyNew) {
     console.log(`未点検の能力 ${list.length}種（${rubric.review.reviewedThroughAbilityId} より後）`);
     for (const { row, rank } of list) console.log(`  ${row.abilityId} ${row.name}  ${row.power}点（${rank}位・Tier${row.tier}）`);

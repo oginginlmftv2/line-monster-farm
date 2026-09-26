@@ -474,7 +474,8 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
 新しい強い能力が入れば境界が上がり、旧能力の値は変わらない（インフレ対策）。
 ただし**新しい能力の読み方は誰も確かめていない**ので、次の順で点検する。
 
-1. `node build.js` のログに「未点検の能力 N件」が出る（`ability-rubric.json` の `review.reviewedThroughAbilityId` より後のID）
+1. CMSのアシスト公開の結果画面（Actions の job summary）と `node build.js` のログに、未点検の能力が出る
+   （`ability-rubric.json` の `review.reviewedThroughAbilityId` より後のID）
 2. `node scripts/audit-ability-reading.js --new` で、新しい能力だけを読み違いの型ごとに点検する
 3. 引っかかった型は3-1のルールで直す。語彙はパーサ、値は rubric、式は ability-score.js。
    直したら `node scripts/build-ability-parse.js`（カバレッジ表）→ `node build.js` → `node scripts/audit-ability-reading.js`（全体）
@@ -515,8 +516,11 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
 
 ### 5-4. 新しい能力の点検結果を見る場所（2026-09-27・管理者判断）
 
-- **A（自動）**：CMSのアシスト公開のWorkflowが、GitHub Actions の結果画面（job summary）に
-  未点検の能力の表（点・順位・分類・説明文・読み方点検の引っかかり）を出す。Workflowの変更は別PR
+- **A（自動）**：CMSのアシスト公開のWorkflow（`.github/workflows/cms-assist-publish.yml` の最後のステップ）が、
+  公開のあとに GitHub Actions の結果画面（job summary）へ未点検の能力の表を出す（2026-09-27 実装）。
+  中身は `node scripts/audit-ability-reading.js --new --summary`：能力・出どころ・点・順位・Tier・分類・
+  詳細ページに載る体の数・読み方点検の引っかかり・説明文。未点検が無ければ「ありません」の1行。
+  `continue-on-error` なので、このステップが失敗しても公開は止まらない
 - **C（Claudeのセッション）**：表を見た管理者の依頼で、Claudeのセッションが5-1の手順で読み方とTierを検証し、
   直すPRを作る。確認が取れたら `review.reviewedThroughAbilityId` を進める
 - 公開サイトに確認用のページ（noindex含む）は作らない。Tierを公開しない方針のため

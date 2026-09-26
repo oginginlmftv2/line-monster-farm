@@ -87,3 +87,10 @@ jobs:
             echo "- Source: \`${source_sha}\`"
             echo "- Main: \`${published_sha}\`"
           } >> "$GITHUB_STEP_SUMMARY"
+
+      # 能力が増えたら、未点検の能力（点・順位・Tier・載る体・読み方点検の引っかかり）を結果画面に出す。
+      # 公開は止めない。検証は管理者の依頼で Claude のセッションが行う（docs/ability-scoring-design.md 5-1・5-4）
+      - name: Summarize unreviewed abilities
+        if: success()
+        continue-on-error: true
+        run: node scripts/audit-ability-reading.js --new --summary >> "$GITHUB_STEP_SUMMARY"
