@@ -684,6 +684,7 @@ JavaScriptが整数キー（1625）を先に列挙するため順序が保証さ
 - `monsters/redirect-map.js`
 - `src/data/id-availability.json`
 - `src/data/page-baseline.json`
+- `src/data/ability-scores.json`（能力の評価値とTier。P15-4b。仕様は `docs/ability-scoring-design.md`。ページ描画は 5-12 で別に足す）
 
 ```js
 // build.js のエントリポイント
@@ -805,7 +806,7 @@ Node 18+ の標準機能のみで実装する。テンプレートエンジン�
 - `src/data/monsters-editorial.json`、`src/data/cms-id-predictions.json`、
   `src/data/taxonomy.json`などの管理入力 — `build.js`が書き換えてはならない
 - `src/data/id-availability.json`、`src/data/page-baseline.json`、
-  `src/data/cms-seed.json` — `build.js`の生成物。手で編集しない
+  `src/data/cms-seed.json`、`src/data/ability-scores.json` — `build.js`の生成物。手で編集しない
 - `src/data/monster-ids.json` — `generate-ids.js`の生成物。手で編集しない
 - `style.css` — 既存定義は変更しない。`page-breadcrumb` の追記のみ可
 - `robots.txt` — sitemap.xml は再生成するが robots.txt は触らない

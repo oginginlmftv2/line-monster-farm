@@ -2065,6 +2065,32 @@ head('22. 能力スコアリング（説明文パーサ）');
     if (result.status !== 0) ng(`能力パーサテストFAIL: ${(result.stderr || result.stdout).trim().split('\n').slice(0, 5).join(' / ')}`);
     else ok('能力パーサは系列の評価対象・適用条件/技条件/状況条件・ヒット数と回数制限・ステ上昇の分類を固定');
   }
+  // 評価式のテストが、管理者と合意した値と強弱の関係（docs/ability-scoring-design.md 3-1）を固定する
+  if (!exists('scripts/test-ability-score.js')) ng('能力評価式のテストがない');
+  else {
+    const result = childProcess.spawnSync(process.execPath, ['scripts/test-ability-score.js'], { cwd: REPO, encoding: 'utf8' });
+    if (result.status !== 0) ng(`能力評価式テストFAIL: ${(result.stderr || result.stdout).trim().split('\n').slice(0, 5).join(' / ')}`);
+    else ok('能力評価式は合意した値と強弱の関係（完全回避＞必中、重ねがけ＞序、リッピーカット＞リッピーゾーン等）を固定');
+  }
+  // ability-scores.json は build.js の生成物。rubric・パーサ・能力DBを変えたら node build.js で作り直す
+  if (!exists('src/data/ability-scores.json')) ng('src/data/ability-scores.json がない（node build.js で生成）');
+  else {
+    try {
+      const { computeAbilityScores } = require(path.join(REPO, 'src/lib/ability-score'));
+      const expected = computeAbilityScores({
+        abilities: JSON.parse(read('src/data/assist-abilities.json')).abilities,
+        cards: JSON.parse(read('src/data/assist-cards.json')).cards,
+        rubric: JSON.parse(read('src/data/ability-rubric.json')),
+        parser: require(path.join(REPO, 'src/lib/ability-parser')),
+      });
+      const actual = JSON.parse(read('src/data/ability-scores.json'));
+      if (JSON.stringify(actual.abilities) !== JSON.stringify(expected.rows) || JSON.stringify(actual.tierCut) !== JSON.stringify(expected.cut)) {
+        ng('src/data/ability-scores.json が評価式・rubric・能力DBと一致しない（node build.js を実行）');
+      } else {
+        ok(`ability-scores.json は最新（評価対象 ${expected.rows.length}件・${expected.groups}種）`);
+      }
+    } catch (error) { ng(`ability-scores.json の照合に失敗: ${error.message}`); }
+  }
   // ルーブリックと上書きは JSON として読め、上書きの abilityId は実在する
   for (const file of ['src/data/ability-rubric.json', 'src/data/ability-overrides.json']) {
     if (!exists(file)) { ng(`${file} がない`); continue; }

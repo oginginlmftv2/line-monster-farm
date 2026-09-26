@@ -1,46 +1,208 @@
 {
-  "schemaVersion": 1,
-  "note": "能力評価の基準値と補正。値は未定（null）。決めるときは docs/ability-scoring-design.md の3章と一緒に更新する。原子語・条件の語彙は src/lib/ability-parser.js が正で、ここに無い語彙が出たらパーサ側へ足す。",
-  "base": {
-    "必中": null, "完全回避": null, "クリ確定": null, "クリ無効": null,
-    "与ダメ上昇": null, "クリ率上昇": null, "クリダメ上昇": null, "追撃": null, "連撃": null,
-    "攻撃ステ加算": null, "ステ上昇": null, "ステ変換": null, "技性能上昇": null, "技ステ上昇": null, "貫通": null,
-    "命中率上昇": null, "回避率上昇": null, "被ダメ低下": null, "被ダメブロック": null, "シールド展開": null, "食いしばり": null,
-    "ガッツ回復": null, "ガッツダメ上昇": null, "ガッツダメ低下": null, "消費ガッツ": null,
-    "相手ステ低下": null, "相手被ダメ上昇": null, "相手ガッツ停止": null, "相手ガッツ減少": null, "相手忠誠度減少": null, "シールド破壊": null, "封じ": null, "デバフ付与": null,
-    "バフ付与": null, "無効化・解除": null, "オーラ変貌": null, "適性効果上昇": null, "ライフ回復": null
+  "schemaVersion": 2,
+  "note": "能力評価の基準値と補正。物差しは「与ダメ上昇Lv1＝1点」。値の根拠は docs/ability-scoring-design.md の3-1（ゲーム内ヘルプと管理者確認）。式は src/lib/ability-score.js。値を変えるときは3-1と同じPRで直す。",
+  "battle": {
+    "note": "試合の前提。命中率60%・技6回/試合・メインダメ2500・ステ基準1500・クリ率30%・ガッツ自然回復150/試合・平均消費30。命中・回避ステ+100で命中率±3%（2026-09-27に5から下げた。全ステ+5%が強く出すぎたため）。命中・回避ステの上げ幅は (上げ幅/100)^statCurve で効く（上げ幅が大きいほど差が大きく開く。2026-09-27）",
+    "dmgPerLv": 1.8,
+    "hitRate": 60,
+    "skillsPerBattle": 6,
+    "mainDamage": 2500,
+    "statBase": 1500,
+    "critRate": 30,
+    "critMultiplier": 1.5,
+    "gutsPerBattle": 150,
+    "avgGutsCost": 30,
+    "followupShareOfMain": 50,
+    "hitPpPer100Stat": 3,
+    "statCurve": 1.3,
+    "hitsPerSkill": 2.5
   },
-  "valueScale": {
-    "note": "数値→係数。Lv は段階、% は割合、pt は絶対値。未定",
-    "Lv": null, "%": null, "pt": null, "large": null
+  "coefficients": {
+    "note": "M は命中率・回避率の価値倍率（2026-09-27に3→1.5）。decisive は必中1回の値、完全回避は evadeOverHit 倍。defense は被ダメ低下・ブロック・被ダメカットの攻守比",
+    "M": 1.5,
+    "decisive": 125,
+    "decisiveLvStep": 0.2,
+    "decisiveCountCap": 3,
+    "damageCut": 0.6,
+    "special": 1.2,
+    "followupOnly": 0.25,
+    "statFollowup": 0.7,
+    "comboPerLv": 10,
+    "nextSkillRepeat": 0.5,
+    "gutsToLv": 0.56,
+    "gutsDenialM": 3,
+    "shieldCap": 350,
+    "confusion": 30,
+    "grantStatPerLv": 10,
+    "grantOtherPerLv": 5,
+    "largeUp": 30,
+    "sameAtomDecay": [
+      1,
+      0.7,
+      0.5
+    ],
+    "evadeOverHit": 1.5,
+    "defense": 1.5,
+    "grantStackCredit": 1
   },
-  "statCount": {
-    "note": "ステ上昇の項目数による係数（1項目→全ステ）。未定",
-    "1": null, "2": null, "3": null, "5": null, "6": null
+  "flat": {
+    "note": "1回あたりの固定値（Lv換算）。回数・トリガー・条件の補正は別に掛かる",
+    "食いしばり": 125,
+    "シールド破壊": 2,
+    "能力解除": 30,
+    "追撃連撃無効": 4.6,
+    "追撃連撃無効_常時": 28,
+    "相手ガッツ0": 56,
+    "相手ガッツ停止": 62,
+    "封じ": 5,
+    "技ステ上昇_per1": 0.5,
+    "エーテル": 3
+  },
+  "timeWeight": {
+    "note": "試合が続いている確率。0〜20秒・20〜40秒・40〜60秒",
+    "early": 1,
+    "mid": 0.7,
+    "late": 0.45
   },
   "modifiers": {
-    "note": "状況条件・トリガー・回数・秒数の補正係数。未定",
-    "time": { "序盤": null, "前半": null, "中盤": null, "後半": null, "終盤": null },
-    "stance": { "有利": null, "有利以外": null, "不利以外": null, "自身有利": null, "オーラ有利": null, "モン類有利": null },
-    "terrain": null,
-    "weather": null,
-    "position": null,
-    "opponent": null,
-    "state": null,
-    "compare": null,
-    "life": null,
-    "probability": null,
-    "stack": null,
-    "while": null,
-    "trigger": { "技発動時": null, "技命中時": null, "技非命中時": null, "被ダメ時": null, "回避時": null, "クリティカル時": null, "バトル開始時": null, "シールド破壊時": null },
-    "skillCond": { "aura": null, "stance": null, "type": null, "rank": null, "aptitude": null, "range": null, "position": null, "repeat": null },
-    "limit": { "1": null, "2": null, "3": null, "unlimited": null },
-    "duration": { "10": null, "20": null, "permanent": null },
-    "hits": "ヒット数は数値係数に掛ける（補正ではない）"
+    "note": "状況条件・トリガー・技条件の補正。掛け合わせて下限 floor",
+    "floor": 0.05,
+    "time": {
+      "序盤": 0.47,
+      "前半": 0.63,
+      "中盤": 0.33,
+      "後半": 0.37,
+      "終盤": 0.21
+    },
+    "stance": {
+      "有利": 0.31,
+      "自身有利": 0.31,
+      "オーラ有利": 0.17,
+      "自身オーラ有利": 0.17,
+      "モン類有利": 0.17,
+      "有利以外": 0.69,
+      "不利以外": 0.69,
+      "不利": 0.31,
+      "優勢": 0.5,
+      "劣勢": 0.5
+    },
+    "terrain": 0.2,
+    "weather": {
+      "晴れ": 0.4,
+      "曇り": 0.3,
+      "雨": 0.3,
+      "悪天候": 0.3
+    },
+    "position": 0.5,
+    "opponent": 0.17,
+    "state": {
+      "状態変化": 1,
+      "怒": 0.5
+    },
+    "compare": 0.5,
+    "life": {
+      "note": "残りライフの条件。しきい値で分ける（2026-09-27）。2発で決着する環境では「少ない」側は発動前に倒れることもある",
+      "low10": 0.05,
+      "low30": 0.15,
+      "low50": 0.25,
+      "lowScaling": 0.3,
+      "high30": 0.85,
+      "high50": 0.7,
+      "high70": 0.5,
+      "full": 0.35,
+      "opponentLow": 0.3,
+      "highScaling": 0.5
+    },
+    "probabilityRare": 0.6,
+    "stack": 0.6,
+    "while": 0.5,
+    "loyalty": 0.7,
+    "opponentShield": 0.3,
+    "trigger": {
+      "バトル開始時": 1,
+      "技発動時": 0.9,
+      "技命中時": 0.8,
+      "被ダメ時": 0.8,
+      "回避時": 0.5,
+      "技非命中時": 0.5,
+      "クリティカル時": 0.4,
+      "シールド破壊時": 0.3,
+      "被ダメ無効時": 0.3
+    },
+    "skillCond": {
+      "aura": 0.5,
+      "stanceAura": 0.7,
+      "stanceNone": 0.3,
+      "stanceAdvantage": 0.3,
+      "type": 0.5,
+      "rank": 0.5,
+      "aptitude": {
+        "note": "間合い適性◯以上。届かない距離では発動しないので厳しめ（2026-09-27）",
+        "A以上": 0.5,
+        "S以上": 0.35,
+        "SS以上": 0.25,
+        "M以上": 0.15,
+        "S未満": 0.5
+      },
+      "range": 0.35,
+      "position": 0.5,
+      "repeat": 0.3
+    },
+    "opponentDisabled": 0.15,
+    "guts": 0.4,
+    "opponentSize": 0.33,
+    "monLevel": 0.7,
+    "stage": {
+      "1": 0.75,
+      "2": 0.35,
+      "3": 0.1,
+      "note": "「回避した回数に応じて」の段階。1回・2回・3回の回避が要る"
+    },
+    "stackEvery": 0.8
+  },
+  "held": {
+    "note": "保留。ゲーム側の効果詳細が分かるまで点を付けない。第1段の抽出なし18件は2026-09-27に管理者確認で解除した（docs/ability-scoring-design.md 4章）",
+    "reason": "中身不明の状態「弱気」",
+    "abilityIds": [],
+    "grants": [
+      "弱気"
+    ]
   },
   "tier": {
-    "note": "現役プール内の相対位置。未定",
-    "pool": { "recentMonths": null, "manualFlag": "ability-overrides.json の pool" },
-    "cut": { "1": null, "2": null, "3": null }
+    "note": "Tierは公開しない（2026-09-27・管理者判断）。境界は評価対象を同名・同説明でまとめた全体の上位10%／25%／50%。12か月の現役プールは使わない（必須級の古い能力が落ちるため）",
+    "population": "all",
+    "cutPercentile": {
+      "1": 10,
+      "2": 25,
+      "3": 50
+    }
+  },
+  "aptitudeReach": {
+    "note": "基礎データの間合い・地形適性（育成開始時の値）から、育成でS以上に届く見込み。開始時に最大2段階上がる（Sは超えない）のでB以上は実質S。C・Dは届きにくく、E以下はほぼ届かない（docs/monster-basics-design.md 2章）。SS・Mは育成中のイベントでさらに上げる必要があるので、S以上の見込みにさらに掛ける",
+    "S": {
+      "S": 1,
+      "A": 1,
+      "B": 1,
+      "C": 0.5,
+      "D": 0.25,
+      "E": 0.05,
+      "F": 0.05,
+      "G": 0.05
+    },
+    "beyondS": {
+      "A": 1,
+      "S": 1,
+      "SS": 0.6,
+      "M": 0.2
+    },
+    "rangeCount": {
+      "1": 0.6,
+      "2": 1,
+      "note": "S以上に届く（B以上の）間合いの数。1方向だけだとその距離で戦う時しか発動しない。2方向以上は1"
+    }
+  },
+  "review": {
+    "note": "読み方の点検（scripts/audit-ability-reading.js と管理者確認）が済んだ最後の abilityId。CMSで能力が増えたら、これより後の能力を点検してから進める（docs/ability-scoring-design.md 5章）",
+    "reviewedThroughAbilityId": "ab-1253"
   }
 }
