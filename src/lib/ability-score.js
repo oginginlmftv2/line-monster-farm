@@ -474,8 +474,12 @@ function computeAbilityScores({ abilities, cards, rubric, parser }) {
       reviewed: !reviewedThrough || p.abilityId <= reviewedThrough,
     };
   });
+  // 同名・同説明のまとまりは、abilityId の一番小さいものを代表IDにして持つ（説明文をそのまま持つと生成物が重い）
+  const groupId = new Map();
+  for (const row of [...rows].sort((x, y) => x.abilityId.localeCompare(y.abilityId))) if (!groupId.has(row.group)) groupId.set(row.group, row.abilityId);
   const groupPower = new Map();
   for (const row of rows) if (row.power != null && !groupPower.has(row.group)) groupPower.set(row.group, row.power);
+  for (const row of rows) row.group = groupId.get(row.group);
   const sorted = [...groupPower.values()].sort((x, y) => y - x);
   const pct = rubric.tier.cutPercentile;
   const cut = { 1: cutAt(sorted, pct['1']), 2: cutAt(sorted, pct['2']), 3: cutAt(sorted, pct['3']) };

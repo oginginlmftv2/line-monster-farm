@@ -2948,10 +2948,10 @@ function main() {
     renderLmfdbCardMap(inputs.assistCards)
   )]++;
   const abilityScores = createAbilityScores(inputs.assistCards);
-  outputCounts[writeIfChanged(
-    'src/data/ability-scores.json',
-    JSON.stringify(abilityScores, null, 2) + '\n'
-  )]++;
+  // 1能力1行で書く（差分が能力単位で読め、ファイルも軽い）
+  const { abilities: scoreRows, ...scoreHead } = abilityScores;
+  const scoreJson = JSON.stringify(scoreHead, null, 2).replace(/\n}$/, ',\n  "abilities": [\n' + scoreRows.map(row => '    ' + JSON.stringify(row)).join(',\n') + '\n  ]\n}');
+  outputCounts[writeIfChanged('src/data/ability-scores.json', scoreJson + '\n')]++;
   outputCounts.total++;
   logBuild(inputs, detailPages, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks);
   const { counts, tierCut } = abilityScores;
