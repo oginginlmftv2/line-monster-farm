@@ -1280,7 +1280,7 @@
       "monType": "無機",
       "image": "assist-cards/f5l-SSR-sharutia.jpg",
       "event2": "遠距離",
-      "releasedAt": "2026/11/14",
+      "releasedAt": "2025/11/14",
       "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
@@ -1294,10 +1294,10 @@
         "4b": null
       },
       "ratings": {
-        "battle": 2.3,
         "ta": 1,
         "karyo": 1,
-        "ikusei": 1.8
+        "ikusei": 1.8,
+        "battle": 2.3
       },
       "explanation": "・オーバーロードコラボガチャカード\n・まあまあのトレ性能\n・トレ性能だけ見ればいくらでも替えがきく\n・能力の蹂躙を開始しんすが赤にとっては生命線になるほど重要\n・前衛にしか効果はないが、環境トップモンスターは前衛に強力な技を持ってる場合が多いから活躍するシーンは多いと思われる\n・シールドはなくてもまあ",
       "formations": [],
@@ -1360,7 +1360,7 @@
       "monType": "怪物",
       "image": "assist-cards/f18k-MR-ainzu.jpg",
       "event2": "超本気",
-      "releasedAt": "2026/10/31",
+      "releasedAt": "2025/10/31",
       "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
@@ -1375,9 +1375,9 @@
       },
       "ratings": {
         "ta": 1.8,
-        "karyo": 1,
         "battle": 2.8,
-        "ikusei": 3.5
+        "ikusei": 3.5,
+        "karyo": 1
       },
       "explanation": "・オーバーロードコラボガチャカード\n・黒のオーラブリーダー2枚目\n・書いてある情報だけだと全然強そうに見えないがトレ性能がかなり高い\n・能力は必中も命中アップもそこそこ強い\n・カードタイプも優秀で、わかりやすく強いデミウルゴスの影に隠れて取らなかったことを後悔する人も多いとか",
       "formations": [],
@@ -1440,7 +1440,7 @@
       "monType": null,
       "image": "assist-cards/d9-SSR-airisu.jpg",
       "event2": null,
-      "releasedAt": "2026/09/30",
+      "releasedAt": "2025/09/30",
       "accessoryStatus": "unknown",
       "stats": [],
       "limitBreak": {
@@ -1455,9 +1455,9 @@
       },
       "ratings": {
         "ikusei": 2.5,
-        "karyo": 1.5,
         "ta": 2.5,
-        "battle": 2.8
+        "battle": 2.8,
+        "karyo": 1.5
       },
       "explanation": "・緑のSSRライバル\n・トレ集合率と初期修行チケット+1をもっている\n・能力が3発目以降奇数回目必中&クリ確という強すぎるオンリーワン能力\n・おまけにクリダメアップ能力もあり火力要員としても優秀\n・現在（20260314時点）緑勢力は辛い戦いを強いられているがいつかまた緑の時代がくるでしょう",
       "formations": [],
