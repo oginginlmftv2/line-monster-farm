@@ -816,8 +816,8 @@
       "monType": "怪物",
       "image": "assist-cards/f2k-SSR-shionresort.jpg",
       "event2": "海岸",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/02/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -830,10 +830,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 2.5,
         "karyo": 1,
         "battle": 1.5,
-        "ta": 1.5
+        "ta": 1.5,
+        "ikusei": 2.5
       },
       "explanation": "・転スラリゾートコラボガチャカード\n・オーラ忠誠度効果Ⅱがかなり強い\n・それ以外が強くない\n・見た目は強い",
       "formations": [],
@@ -848,8 +848,8 @@
       "monType": "魔族",
       "image": "assist-cards/a6i-SSR-mirimuresort.jpg",
       "event2": "超本気",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/02/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -863,9 +863,9 @@
       },
       "ratings": {
         "ikusei": 2,
+        "ta": 1,
         "karyo": 2,
-        "battle": 3,
-        "ta": 1
+        "battle": 3
       },
       "explanation": "・転スラリゾートコラボガチャカード\n・オーラ効果が人気度と賞金励とどちらもなんで強いかわからないけどなんか強い筆頭\n・おかわりなのだは必中Lv3が2回のぶっ壊れ能力だけど魔族かつランク4以上かつ赤技じゃないと意味ないので汎用性は激低\n・もう一つの能力はわかりやすく強いけどぶっ壊れではない\n・汎用性は終わってるけど魔族で戦うとき、特にピクシーやドラゴンでバトルするときには絶対入れたい能力を持っている",
       "formations": [],
@@ -880,8 +880,8 @@
       "monType": "魔族",
       "image": "assist-cards/b5i-SSR-rimurugurasan.jpg",
       "event2": "零距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/01/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -894,10 +894,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1,
         "karyo": 2,
         "battle": 1.5,
-        "ta": 1
+        "ta": 1,
+        "ikusei": 1
       },
       "explanation": "・転スラリゾートコラボの配布SSR\n・配布時はMRリムルの圧倒的下位互換で無課金初心者にのみ有用だとされていて、このアシストカード一覧にも載ることはなかったであろうカード\n・ロード秘伝の登場により俺は喰らうものだⅡがMRのⅣと併用出来るようになり、叡智之王と合わせれば青オーラモンスターの火力がとんでもないことに\n・今後もコラボカードで実装されるSSRの下位互換能力に注目したい",
       "formations": [],
@@ -960,8 +960,8 @@
       "monType": "魔族",
       "image": "assist-cards/b21i-MR-rimuru.jpg",
       "event2": "零距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/01/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -974,10 +974,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 3.3,
+        "ta": 1,
         "karyo": 4,
-        "battle": 4.5,
-        "ta": 1
+        "ikusei": 3.3,
+        "battle": 4.5
       },
       "explanation": "・転スラリゾートコラボガチャカード\n・トレ出現数アップは全オーラ効果で最強ということを必ず覚えておこう\n・能力の『俺は喰らうものだ』が対戦環境で大暴れしている\n・火力だけではなく命中も大幅に上げてくれるのが命中カードが乏しい青にとって神\n・早く黄色オーラを強くしないといつまで経っても青が世界を支配してしまう（20260314時点）\n・総合力育成にも強くバトル性能もぶっ壊れだが汎用性だけはない",
       "formations": [],
@@ -1280,8 +1280,8 @@
       "monType": "無機",
       "image": "assist-cards/f5l-SSR-sharutia.jpg",
       "event2": "遠距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/11/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -1294,10 +1294,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.8,
-        "karyo": 1,
         "battle": 2.3,
-        "ta": 1
+        "ta": 1,
+        "karyo": 1,
+        "ikusei": 1.8
       },
       "explanation": "・オーバーロードコラボガチャカード\n・まあまあのトレ性能\n・トレ性能だけ見ればいくらでも替えがきく\n・能力の蹂躙を開始しんすが赤にとっては生命線になるほど重要\n・前衛にしか効果はないが、環境トップモンスターは前衛に強力な技を持ってる場合が多いから活躍するシーンは多いと思われる\n・シールドはなくてもまあ",
       "formations": [],
@@ -1360,8 +1360,8 @@
       "monType": "怪物",
       "image": "assist-cards/f18k-MR-ainzu.jpg",
       "event2": "超本気",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2026/10/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -1374,10 +1374,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 3.5,
+        "ta": 1.8,
         "karyo": 1,
         "battle": 2.8,
-        "ta": 1.8
+        "ikusei": 3.5
       },
       "explanation": "・オーバーロードコラボガチャカード\n・黒のオーラブリーダー2枚目\n・書いてある情報だけだと全然強そうに見えないがトレ性能がかなり高い\n・能力は必中も命中アップもそこそこ強い\n・カードタイプも優秀で、わかりやすく強いデミウルゴスの影に隠れて取らなかったことを後悔する人も多いとか",
       "formations": [],
@@ -1440,7 +1440,7 @@
       "monType": null,
       "image": "assist-cards/d9-SSR-airisu.jpg",
       "event2": null,
-      "releasedAt": null,
+      "releasedAt": "2026/09/30",
       "accessoryStatus": "unknown",
       "stats": [],
       "limitBreak": {
@@ -1456,8 +1456,8 @@
       "ratings": {
         "ikusei": 2.5,
         "karyo": 1.5,
-        "battle": 2.8,
-        "ta": 2.5
+        "ta": 2.5,
+        "battle": 2.8
       },
       "explanation": "・緑のSSRライバル\n・トレ集合率と初期修行チケット+1をもっている\n・能力が3発目以降奇数回目必中&クリ確という強すぎるオンリーワン能力\n・おまけにクリダメアップ能力もあり火力要員としても優秀\n・現在（20260314時点）緑勢力は辛い戦いを強いられているがいつかまた緑の時代がくるでしょう",
       "formations": [],
@@ -1664,8 +1664,8 @@
       "monType": "怪物",
       "image": "assist-cards/f3k-SSR-baromu.jpg",
       "event2": "超逆上",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/08/13",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -1678,10 +1678,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 2,
-        "karyo": 2.2,
         "battle": 2.2,
-        "ta": 1
+        "ta": 1,
+        "karyo": 2.2,
+        "ikusei": 2
       },
       "explanation": "・デュエマコラボガチャカード\n・トレ性能、能力共にMRと張り合える数少ないSSR\n・能力は二つとも優秀で、アディションのほうは言うまでもないが、悪魔の力は有利の上下関係をより強烈にできるから黒モンスターのバトルではぜひ入れておきたい\n・バロムがMRでよかったのでは？",
       "formations": [],
@@ -1696,7 +1696,7 @@
       "monType": null,
       "image": "assist-cards/e9-SSR-hakuou.jpg",
       "event2": null,
-      "releasedAt": null,
+      "releasedAt": "2025/08/13",
       "accessoryStatus": "unknown",
       "stats": [],
       "limitBreak": {
@@ -1710,9 +1710,9 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.8,
-        "karyo": 1,
         "battle": 1.5,
+        "karyo": 1,
+        "ikusei": 1.8,
         "ta": 2.5
       },
       "explanation": "・デュエマコラボガチャカード\n・白初のライバル\n・オーラ効果が微妙\n・能力は有利完全回避が優秀\n・欲を言えばもっと強くしてほしかった\n・白はまだ、眠りについている",
@@ -1728,8 +1728,8 @@
       "monType": "無機",
       "image": "assist-cards/e6l-SSR-arukadiasu.jpg",
       "event2": "火山",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/07/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -1742,10 +1742,10 @@
         "4b": null
       },
       "ratings": {
+        "ta": 1,
         "ikusei": 1.8,
         "karyo": 2.2,
-        "battle": 1.8,
-        "ta": 1
+        "battle": 1.8
       },
       "explanation": "・デュエマコラボガチャカード\n・トレ性能はちょっぴりまあまあ\n・火力も黒ボスのグラスラ専用機としては絶対に入るレベル\n・それ以外の出番はなかなか\n・出番があるだけ恵まれている",
       "formations": [],
@@ -1760,8 +1760,8 @@
       "monType": "魔族",
       "image": "assist-cards/a25i-MR-borusyakku.jpg",
       "event2": "火山",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/07/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -1776,8 +1776,8 @@
       "ratings": {
         "ikusei": 3,
         "karyo": 1.8,
-        "battle": 1.3,
-        "ta": 1.5
+        "ta": 1.5,
+        "battle": 1.3
       },
       "explanation": "・デュエマコラボガチャカード\n・赤のオーラブリーダー1枚目\n・トレ性能はかなり高いが、条件の緩すぎる被ダメ40%アップと条件のキツすぎる火力40%アップ能力のせいで半年間罵声を浴び続けた\n・その悲しみを怒りに変えて今後は活躍してほしい\n・逆に言えば被ダメを大幅に上げられる唯一無二のカードなので、どこかで必ずボルシャックにしか出来ないことが現れるはず\n・たぶん",
       "formations": [],
@@ -1840,7 +1840,7 @@
       "monType": null,
       "image": "assist-cards/c7-SSR-piisii.jpg",
       "event2": null,
-      "releasedAt": null,
+      "releasedAt": "2025/06/30",
       "accessoryStatus": "unknown",
       "stats": [],
       "limitBreak": {
@@ -2064,8 +2064,8 @@
       "monType": "創造",
       "image": "assist-cards/a3g-SSR-hao.jpg",
       "event2": "火山",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/05/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -2078,10 +2078,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.8,
-        "karyo": 1.3,
         "battle": 1.7,
-        "ta": 1
+        "ikusei": 1.8,
+        "ta": 1,
+        "karyo": 1.3
       },
       "explanation": "・シャーマンキングコラボガチャカード\n・赤のかしこさSSR\n・トレ性能もなかなかで赤ではまだまだ現役\n・能力も火山に寄っているダメージ追撃とステータス追撃で、赤創造であればフルパワーを発揮できる\n・火山じゃないと活躍出来ない能力は、逆に火山であればかなり息は長い",
       "formations": [],
@@ -2144,8 +2144,8 @@
       "monType": "魔族",
       "image": "assist-cards/d13i-MR-asakurayou.jpg",
       "event2": "中距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/04/30",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -2158,9 +2158,9 @@
         "4b": null
       },
       "ratings": {
+        "battle": 1.2,
         "ikusei": 3,
         "karyo": 1.1,
-        "battle": 1.2,
         "ta": 1.5
       },
       "explanation": "・シャーマンキングコラボガチャカード\n・魔族のモン類ブリーダー1枚目\n・モン類ブリーダーでテクニックなのは麻倉葉だけ\n・能力はモンスターの麻倉葉専用機みたいな汎用性の狭さだが、ロード秘伝の登場により能力の強さよりトレ性能の高さが評価に繋がる時代になり評価アップ\n・バトルでも総合力でも魔族の育成には入れたい1枚",
@@ -2560,8 +2560,8 @@
       "monType": "創造",
       "image": "assist-cards/d6g-SSR-king.jpg",
       "event2": "遠距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/02/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -2574,10 +2574,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.1,
-        "karyo": 1.8,
         "battle": 1.5,
-        "ta": 1.1
+        "karyo": 1.8,
+        "ta": 1.1,
+        "ikusei": 1.1
       },
       "explanation": "・七つの大罪コラボガチャカード\n・丈夫さSSR\n・2周年より前のカードなのでステ上限アップはないがオーラ一致のトレ性能はまあまあ\n・バトル性能もまあまあ\n・実装当初はかなり強かったのでインフレが少しずつ進んでいるのを感じる",
       "formations": [],
@@ -2640,8 +2640,8 @@
       "monType": "幻霊",
       "image": "assist-cards/c2h-SSR-meriodasu.jpg",
       "event2": "雪山",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/01/31",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -2654,9 +2654,9 @@
         "4b": null
       },
       "ratings": {
+        "battle": 1.5,
         "ikusei": 2.5,
         "karyo": 1,
-        "battle": 1.5,
         "ta": 1
       },
       "explanation": "・七つの大罪コラボガチャカード\n・黄ちからのSSR\n・オーラ効果で最強なのはトレ出現数アップ+1\n・メリオダスはそれが2行\n・つまり最強ってこと\n・SSRであるがゆえに初期親密度がMRに比べて低いことと、2周年より前のカードであるがゆえにステ上限アップがないことが弱点\n・能力も対青性能は優秀",
@@ -2960,8 +2960,8 @@
       "monType": "無機",
       "image": "assist-cards/d2l-SSR-mikasa.jpg",
       "event2": "火山",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2024/11/13",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -2974,10 +2974,10 @@
         "4b": null
       },
       "ratings": {
+        "ta": 1.2,
         "ikusei": 2,
-        "karyo": 1,
         "battle": 1,
-        "ta": 1.2
+        "karyo": 1
       },
       "explanation": "・進撃の巨人コラボガチャカード\n・実装から1年半経っても緑の総合力育成ではまだまだ活躍できるほどトレ性能が高い\n・能力はそこまで強くないので出番は減っていきそう",
       "formations": [],
@@ -3136,7 +3136,7 @@
       "monType": null,
       "image": "assist-cards/c9-SSR-porutsu.png",
       "event2": null,
-      "releasedAt": null,
+      "releasedAt": "2024/09/14",
       "accessoryStatus": "unknown",
       "stats": [],
       "limitBreak": {
@@ -3150,10 +3150,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1,
-        "karyo": 1,
+        "ta": 1.1,
         "battle": 1,
-        "ta": 1.1
+        "ikusei": 1,
+        "karyo": 1
       },
       "explanation": "・初のメガネSSR\n・実装当初は革命的だったが長い時を経て産業廃棄物へクラスチェンジ\n・能力も強くない",
       "formations": [],
@@ -3264,8 +3264,8 @@
       "monType": "魔族",
       "image": "assist-cards/a3i-SSR-mirimu.png",
       "event2": "遠距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2024/08/28",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -3278,10 +3278,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.1,
-        "karyo": 1.3,
         "battle": 1.1,
-        "ta": 1
+        "ta": 1,
+        "karyo": 1.3,
+        "ikusei": 1.1
       },
       "explanation": "・転スラ1回目コラボガチャカード\n・",
       "formations": [],
@@ -3344,8 +3344,8 @@
       "monType": "魔族",
       "image": "assist-cards/b1i-SSR-rimuru.png",
       "event2": "森林",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2024/08/17",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -3358,10 +3358,10 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 1.1,
         "karyo": 1.5,
-        "battle": 1.3,
-        "ta": 1
+        "ta": 1,
+        "ikusei": 1.1,
+        "battle": 1.3
       },
       "explanation": "・転スラ1回目コラボガチャカード\n・叡智の王は火力要員としてロード秘伝の登場で今後も出番がかなりありそう\n・リムルのカードは能力が強いということを覚えておこう",
       "formations": [],
@@ -3760,8 +3760,8 @@
       "monType": "創造",
       "image": "assist-cards/f6g-SSR-momonandhamusuke.jpg",
       "event2": "遠距離",
-      "releasedAt": null,
-      "accessoryStatus": "unknown",
+      "releasedAt": "2025/11/14",
+      "accessoryStatus": "yes",
       "stats": [],
       "limitBreak": {
         "1a": null,
@@ -3774,9 +3774,9 @@
         "4b": null
       },
       "ratings": {
-        "ikusei": 2,
-        "karyo": 1,
         "battle": 3,
+        "karyo": 1,
+        "ikusei": 2,
         "ta": 1
       },
       "explanation": "・オーバーロードコラボガチャカード\n・黒の丈夫さSSR\n・トレ性能も高くバトル性能も高い優秀なカード\n・実装当初より新シナリオで距離適性を上げやすくなったおかげで全種族魅了を生かしやすくなり、黒にバトルの人権を与えることになった",
