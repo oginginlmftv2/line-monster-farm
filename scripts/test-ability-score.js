@@ -71,7 +71,8 @@ assert.ok(power('ライフ10%以下で、完全回避Lv2<1回>') < power('ライ
 const auraSkill = '<緑>技発動時、完全回避Lv2<1回>';
 assert.ok(power(auraSkill, 'x', { auraShare: () => 0.2 }) < power(auraSkill, 'x', { auraShare: () => 0.8 }));
 const apt = '適性S以上の間合いで技を受けた時、最大ライフ30%以上の被ダメカット';
-assert.ok(power(apt, 'x', { bestRange: 'C', rangeCount: 2 }) < power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), 'Cは届きにくい');
+close(power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), 0.01); // C も B と同じく届く（2026-09-27）
+assert.ok(power(apt, 'x', { bestRange: 'D', rangeCount: 2 }) < power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), 'Dは届きにくい');
 assert.ok(power(apt, 'x', { bestRange: 'B', rangeCount: 1 }) < power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), '1方向だけは割り引く');
 close(power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), power(apt, 'x', { bestRange: 'B', rangeCount: 4 }), 0.01);
 

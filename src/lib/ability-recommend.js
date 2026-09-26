@@ -13,7 +13,8 @@
 
 const LIMIT = 5;
 const RANK_ORDER = ['M', 'SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
-const REACH_S = new Set(['M', 'SS', 'S', 'A', 'B']);
+// 育成でSに届く間合い適性（開始時の値）。C も秘伝・育成の書・イベントで届く（2026-09-27 管理者確認）
+const REACH_S = new Set(['M', 'SS', 'S', 'A', 'B', 'C']);
 
 /** 適用条件（[自身赤]・[怪物]・[主血統ガリ]・[モノリス種]）。血統は主血統だけを見る */
 function applyMatches(apply, monster) {
