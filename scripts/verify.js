@@ -831,7 +831,7 @@ head('8. 秘密情報');
       ng(`${protectedTestWorkflow} がmainを更新対象にしている`);
     } else if (requiredMarkers.some(pattern => !pattern.test(workflow))) {
       ng(`${protectedTestWorkflow} のtest専用ゲートが不足している`);
-    } else if (/CMS_PUBLISH_TOKEN/.test(workflow)) {
+    } else if (/CMS_PUBLISH_TOKEN|CMS_APP_ID|CMS_APP_PRIVATE_KEY/.test(workflow)) {
       ng(`${protectedTestWorkflow} が本番CMS tokenを参照している`);
     } else {
       ok('CMS保護test Workflowは専用branch・専用tokenだけを使用');
@@ -1594,13 +1594,16 @@ if (!exists('src/data/assist-cards.json')) {
     if (scoredInHtml !== ratedInDb.length) {
       assistListIssues.push(`評価付きカード数が不一致（3DB ${ratedInDb.length}件 / 一覧data-score ${scoredInHtml}件）`);
     }
+    // 距離・地形は assist-aptitudes.json を優先し、無ければCMSのイベント2から読む（build-assist-pages.jsと同じ解決）
+    const { resolveAptitude } = require('./build-assist-pages');
     const aptitudeCards = JSON.parse(read('src/data/assist-aptitudes.json')).cards || {};
+    const resolved = assistDb.map(card => resolveAptitude(card, aptitudeCards));
     const distInHtml = (listRegion.match(/ data-dist="/g) || []).length;
     const terrainInHtml = (listRegion.match(/ data-terrain="/g) || []).length;
-    const distInJson = Object.values(aptitudeCards).filter(a => a.dist).length;
-    const terrainInJson = Object.values(aptitudeCards).filter(a => Array.isArray(a.terrain) && a.terrain.length).length;
+    const distInJson = resolved.filter(a => a.dist).length;
+    const terrainInJson = resolved.filter(a => Array.isArray(a.terrain) && a.terrain.length).length;
     if (distInHtml !== distInJson || terrainInHtml !== terrainInJson) {
-      assistListIssues.push(`距離・地形の埋め込み数が不一致（JSON 距離${distInJson}/地形${terrainInJson} / 一覧 距離${distInHtml}/地形${terrainInHtml}）`);
+      assistListIssues.push(`距離・地形の埋め込み数が不一致（JSON+イベント2 距離${distInJson}/地形${terrainInJson} / 一覧 距離${distInHtml}/地形${terrainInHtml}）`);
     }
     if (assistListIssues.length) {
       ng(`assist.htmlの評価・適性の静的埋め込みに問題: ${assistListIssues.join(' / ')}`);

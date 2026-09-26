@@ -15,8 +15,208 @@ function requirePublishable_(scope) {
   return user;
 }
 
+// ---------------------------------------------------------------- GitHub認証
+// GITHUB_APP_ID と GITHUB_APP_PRIVATE_KEY があれば GitHub App の短命token（1時間）を
+// 毎回発行して使う。無ければ従来の GITHUB_TOKEN（PAT）を使う。両方無ければエラー。
+var GITHUB_APP_TOKEN_CACHE_SECONDS = 50 * 60;
+
+function githubAuthMode_() {
+  if (optionalProp_('GITHUB_APP_ID') && optionalProp_('GITHUB_APP_PRIVATE_KEY')) return 'app';
+  if (optionalProp_('GITHUB_TOKEN')) return 'pat';
+  return '';
+}
+
+/** 公開処理の冒頭で、blob作成前に認証設定の有無だけを確認する。 */
+function requireGithubAuthConfig_() {
+  var mode = githubAuthMode_();
+  if (!mode) {
+    throw new Error('スクリプトプロパティ GITHUB_APP_ID と GITHUB_APP_PRIVATE_KEY（または GITHUB_TOKEN）が未設定です。');
+  }
+  return mode;
+}
+
+function githubAuthToken_() {
+  var mode = requireGithubAuthConfig_();
+  if (mode === 'pat') return prop_('GITHUB_TOKEN');
+  return githubAppInstallationToken_();
+}
+
+/** Script Propertiesの1行入力で改行が失われたPEMを復元する。 */
+/** DERの長さフィールド（短形式・長形式）を作る。 */
+function githubAppDerLength_(length) {
+  if (length < 0x80) return [length];
+  var bytes = [];
+  var rest = length;
+  while (rest > 0) {
+    bytes.unshift(rest % 256);
+    rest = Math.floor(rest / 256);
+  }
+  return [0x80 + bytes.length].concat(bytes);
+}
+
+/** rsaEncryption の AlgorithmIdentifier（SEQUENCE { OID 1.2.840.113549.1.1.1, NULL }）。 */
+var GITHUB_APP_RSA_ALGORITHM_DER = [
+  0x30, 0x0d, 0x06, 0x09, 0x2a, 0x86, 0x48, 0x86, 0xf7, 0x0d, 0x01, 0x01, 0x01, 0x05, 0x00
+];
+
+/**
+ * GitHubが配るPKCS#1（BEGIN RSA PRIVATE KEY）をPKCS#8（BEGIN PRIVATE KEY）へ包み直す。
+ * Utilities.computeRsaSha256SignatureはPKCS#8しか受け付けないため、変換しないと署名できない。
+ */
+function githubAppPkcs1ToPkcs8Base64_(pkcs1Base64) {
+  var decoded = Utilities.base64Decode(pkcs1Base64);
+  var inner = [];
+  for (var i = 0; i < decoded.length; i++) inner.push(decoded[i] & 0xff);
+  var octetString = [0x04].concat(githubAppDerLength_(inner.length), inner);
+  var body = [0x02, 0x01, 0x00].concat(GITHUB_APP_RSA_ALGORITHM_DER, octetString);
+  var der = [0x30].concat(githubAppDerLength_(body.length), body);
+  var signed = [];
+  for (var j = 0; j < der.length; j++) signed.push(der[j] > 127 ? der[j] - 256 : der[j]);
+  return Utilities.base64Encode(signed);
+}
+
+/**
+ * Script Propertiesの1行入力で改行が失われたPEMを復元し、PKCS#8へそろえる。
+ * GitHubの.pemはPKCS#1なので、そのまま貼っても動くようここで変換する。
+ */
+function githubAppNormalizePem_(raw) {
+  var text = String(raw || '').replace(/\\n/g, '\n').replace(/\r/g, '').trim();
+  var match = text.match(/-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/);
+  if (!match) throw new Error('GITHUB_APP_PRIVATE_KEY がPEM形式（BEGIN/END行を含む）ではありません。');
+  var label = match[1];
+  var body = match[2].replace(/\s+/g, '');
+  if (!body) throw new Error('GITHUB_APP_PRIVATE_KEY の本文が空です。');
+  if (label === 'ENCRYPTED PRIVATE KEY') {
+    throw new Error('GITHUB_APP_PRIVATE_KEY がパスフレーズ付きです。GitHubが発行した.pemをそのまま設定してください。');
+  }
+  if (label !== 'RSA PRIVATE KEY' && label !== 'PRIVATE KEY') {
+    throw new Error('GITHUB_APP_PRIVATE_KEY の種別が想定外です（' + label + '）。GitHub Appの秘密鍵(.pem)を設定してください。');
+  }
+  if (label === 'RSA PRIVATE KEY') {
+    try {
+      body = githubAppPkcs1ToPkcs8Base64_(body);
+    } catch (e) {
+      throw new Error('GITHUB_APP_PRIVATE_KEY を変換できません。.pemの本文が欠けていないか確認してください。' +
+        '（' + (e && e.message ? e.message : e) + '）');
+    }
+  }
+  var lines = [];
+  for (var i = 0; i < body.length; i += 64) lines.push(body.substr(i, 64));
+  return '-----BEGIN PRIVATE KEY-----\n' + lines.join('\n') + '\n-----END PRIVATE KEY-----\n';
+}
+
+function githubAppBase64Url_(input) {
+  return Utilities.base64EncodeWebSafe(input).replace(/=+$/, '');
+}
+
+/** GitHub App として認証するJWT（有効10分）。 */
+function githubAppJwt_(appId, pem) {
+  var now = Math.floor(Date.now() / 1000);
+  var header = githubAppBase64Url_(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
+  var payload = githubAppBase64Url_(JSON.stringify({ iat: now - 60, exp: now + 9 * 60, iss: String(appId) }));
+  var signingInput = header + '.' + payload;
+  var signature;
+  try {
+    signature = Utilities.computeRsaSha256Signature(signingInput, pem);
+  } catch (e) {
+    throw new Error('GITHUB_APP_PRIVATE_KEY で署名できません。GitHubが発行した.pemの全文（BEGIN〜END）を設定してください。' +
+      '（' + (e && e.message ? e.message : e) + '）');
+  }
+  return signingInput + '.' + githubAppBase64Url_(signature);
+}
+
+function githubAppApi_(method, url, bearer, body) {
+  var options = {
+    method: method,
+    muteHttpExceptions: true,
+    headers: {
+      Authorization: 'Bearer ' + bearer,
+      Accept: 'application/vnd.github+json',
+      'X-GitHub-Api-Version': '2022-11-28'
+    }
+  };
+  if (body != null) {
+    options.contentType = 'application/json';
+    options.payload = JSON.stringify(body);
+  }
+  var response = UrlFetchApp.fetch(url, options);
+  var code = response.getResponseCode();
+  var text = response.getContentText();
+  var json = {};
+  try { json = JSON.parse(text); } catch (ignore) { json = {}; }
+  if (code < 200 || code >= 300) {
+    throw new Error('GitHub App認証でエラーが発生しました（HTTP ' + code +
+      (json.message ? ' / ' + json.message : '') + '）。' +
+      (code === 404 ? ' AppがこのリポジトリにInstallされているか確認してください。' : '') +
+      (code === 401 ? ' GITHUB_APP_ID と秘密鍵の組み合わせを確認してください。' : ''));
+  }
+  return json;
+}
+
+/** installation token を発行する。同じ鍵のあいだは50分キャッシュする。 */
+function githubAppInstallationAuth_() {
+  var appId = String(prop_('GITHUB_APP_ID')).trim();
+  if (!/^\d+$/.test(appId)) throw new Error('GITHUB_APP_ID は数字のApp ID（Client IDではない）を設定してください。');
+  var pem = githubAppNormalizePem_(prop_('GITHUB_APP_PRIVATE_KEY'));
+  var keyDigest = Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, pem)).slice(0, 16);
+  var cacheKey = 'ghapp:' + appId + ':' + keyDigest;
+  var cache = CacheService.getScriptCache();
+  var cached = cache.get(cacheKey);
+  if (cached) {
+    try {
+      var parsed = JSON.parse(cached);
+      if (parsed && parsed.token) return parsed;
+    } catch (ignore) { /* 旧形式のキャッシュは捨てて取り直す。 */ }
+  }
+
+  var jwt = githubAppJwt_(appId, pem);
+  var installation = githubAppApi_('get', GITHUB_API_BASE + '/installation', jwt, null);
+  if (!installation.id) throw new Error('GitHub Appのinstallationが見つかりません。');
+  // contents:write を明示して要求する。Appに与えられていなければGitHubが422で拒否する。
+  var issued = githubAppApi_('post',
+    'https://api.github.com/app/installations/' + installation.id + '/access_tokens', jwt,
+    { repositories: [GITHUB_REPO], permissions: { contents: 'write' } });
+  if (!issued.token) throw new Error('GitHub Appのtokenを取得できませんでした。');
+  var auth = { token: issued.token, permissions: issued.permissions || {} };
+  cache.put(cacheKey, JSON.stringify(auth), GITHUB_APP_TOKEN_CACHE_SECONDS);
+  return auth;
+}
+
+function githubAppInstallationToken_() {
+  return githubAppInstallationAuth_().token;
+}
+
+/** 管理画面の「GitHub接続を確認」。tokenの値は返さない。 */
+function api_githubAuthCheck() {
+  var user = me_();
+  if (!user) throw new Error('権限がありません。画面を開き直してください。');
+  if (user.role !== 'admin') throw new Error('GitHub接続の確認はadminだけが実行できます。');
+  var mode = githubAuthMode_();
+  if (!mode) return { mode: '', ok: false, message: 'GitHub認証が未設定です（GITHUB_APP_ID + GITHUB_APP_PRIVATE_KEY、または GITHUB_TOKEN）。' };
+  var repo = githubRequest_('get', '', null, false);
+  var name = repo.full_name || GITHUB_OWNER + '/' + GITHUB_REPO;
+  if (mode === 'pat') {
+    // PATの実権限はこのAPIからは分からないので、接続できたことだけを伝える。
+    return { mode: mode, ok: true, write: null, message: 'PAT（GITHUB_TOKEN）で ' + name + ' に接続できました。' };
+  }
+  // 書き込み可否は、発行されたinstallation token自身の権限で判定する。
+  // リポジトリAPIのpermissions.pushはinstallation tokenでは当てにならない。
+  var granted = githubAppInstallationAuth_().permissions || {};
+  var canWrite = granted.contents === 'write';
+  return {
+    mode: mode,
+    ok: canWrite,
+    write: canWrite,
+    message: canWrite
+      ? 'GitHub App で ' + name + ' に接続できました（contents: write）。公開できます。'
+      : 'GitHub App で ' + name + ' に接続できましたが、書き込み権限がありません（contents: ' +
+        (granted.contents || 'なし') + '）。AppのRepository permissionsでContentsをRead and writeにし、' +
+        'Installされたアカウント側で権限変更の承認（Review request）を済ませてください。'
+  };
+}
+
 function githubRequest_(method, path, body, allow404) {
-  var token = prop_('GITHUB_TOKEN');
+  var token = githubAuthToken_();
   var options = {
     method: method,
     muteHttpExceptions: true,
@@ -254,7 +454,7 @@ function api_monPublish() {
   var pushedSha = '';
   try {
     // トークン未設定を、blob作成後ではなく最初に検出する。
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var all = monReadAll_();
     var files = monBuildPublishTextFiles_(all);
 
@@ -405,7 +605,7 @@ function api_asstPublish() {
       issues.push('draft resolved能力が公開ページ対象へ混入しています。');
     }
     if (issues.length) throw new Error('アシスト公開検査FAIL: ' + issues.slice(0, 10).join(' / '));
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var mainRef = githubRef_(GITHUB_MAIN_BRANCH, false);
     var mainSha = mainRef.object.sha;
     var mainCommit = githubRequest_('get', '/git/commits/' + mainSha, null, false);
@@ -480,7 +680,7 @@ function api_gachaPublish() {
 
   var pushedSha = '';
   try {
-    prop_('GITHUB_TOKEN');
+    requireGithubAuthConfig_();
     var rows = gachaReadAll_();
     var documents = gachaBuildPublishDocuments_(rows);
     var issues = gachaValidatePublishDocuments_(documents, true);

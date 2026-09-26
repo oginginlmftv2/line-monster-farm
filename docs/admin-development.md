@@ -187,6 +187,21 @@ mainは更新されない。`GAS元コミットの親が現在のmainではあ�
 終わってからGAS管理画面で最新mainを基にもう一度公開する。許可外変更、複数親、画像不一致なら
 再公開を繰り返さず、失敗stepと`publish_log`の全文を共有する。ゲートを無効化して通さない。
 
+### Actionsがmainへpushするtoken
+
+`cms-publish`、`cms-assist-publish`、`cms-gacha-publish`、`gacha-refresh`の4 Workflowは、
+Repository secretsの`CMS_APP_ID`と`CMS_APP_PRIVATE_KEY`からGitHub Appの短命tokenを
+毎回発行してcheckoutとpushに使う（`actions/create-github-app-token`）。有効期限は無い。
+
+- checkoutで`could not read Username for 'https://github.com'`が出たら、この2つの
+  secretが欠けているかAppがrepositoryにinstallされていない。Developer settings →
+  GitHub Appsで`Install App`の状態と、secretの名前を確認する
+- 秘密鍵を作り直した場合は`CMS_APP_PRIVATE_KEY`を更新し、`gacha-refresh`を手動実行して確認する
+- 旧PATの`CMS_PUBLISH_TOKEN`はActionsからは参照していない
+- GAS側も同じGitHub Appを使う。Apps Scriptのスクリプト プロパティに`GITHUB_APP_ID`と
+  `GITHUB_APP_PRIVATE_KEY`を設定し、管理画面の「GitHub接続を確認」で接続を確認する
+  （手順は`_cms/gas/README.md`の「GitHub App認証の反映」）
+
 ## 9. ブランチ保護を今は有効化しない
 
 CMS公開Workflowはmainへ直接pushする。CMS用の迂回設定を確認せずにmainのブランチ保護を
