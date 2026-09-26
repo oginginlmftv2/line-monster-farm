@@ -5,6 +5,8 @@ const path = require('path');
 const { buildAssistPages } = require('./scripts/build-assist-pages');
 const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
 const basics = require('./src/lib/monster-basics');
+const abilityParser = require('./src/lib/ability-parser');
+const { computeAbilityScores } = require('./src/lib/ability-score');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -2726,6 +2728,30 @@ function linkExists(target, generatedPaths) {
   return generatedPaths.has(target) || fs.existsSync(path.join(REPO, target));
 }
 
+/**
+ * 能力の評価値とTier（P15-4b 第2段）。docs/ability-scoring-design.md が正で、式は src/lib/ability-score.js。
+ * ページにはまだ出さない（描画は build-spec 5-12 の別PR）。CMS公開のたびに再計算され、新しい能力が入れば境界も動く。
+ */
+function createAbilityScores(assistCards) {
+  const abilities = readJson('src/data/assist-abilities.json').abilities;
+  const rubric = readJson('src/data/ability-rubric.json');
+  const { rows, groups, cut } = computeAbilityScores({ abilities, cards: assistCards, rubric, parser: abilityParser });
+  return {
+    schemaVersion: 1,
+    note: 'build.js が生成。能力の評価値（与ダメ上昇Lv1＝1点）とTier。Tierは公開しない。手で編集しない。式と値は src/lib/ability-score.js と src/data/ability-rubric.json',
+    generatedFrom: ['src/data/assist-abilities.json', 'src/data/assist-cards.json', 'src/data/ability-rubric.json'],
+    counts: {
+      target: rows.length,
+      groups,
+      tier: [1, 2, 3, 4].map(tier => rows.filter(row => row.tier === tier).length),
+      held: rows.filter(row => row.held).length,
+      unreviewed: rows.filter(row => !row.reviewed).length,
+    },
+    tierCut: cut,
+    abilities: rows,
+  };
+}
+
 function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks) {
   const taxonomyCounts = countTaxonomyEntries(inputs.taxonomy);
   const noindex = gates.filter(entry => !entry.indexable);
@@ -2921,7 +2947,19 @@ function main() {
     LMFDB_CARD_MAP_FILE,
     renderLmfdbCardMap(inputs.assistCards)
   )]++;
+  const abilityScores = createAbilityScores(inputs.assistCards);
+  outputCounts[writeIfChanged(
+    'src/data/ability-scores.json',
+    JSON.stringify(abilityScores, null, 2) + '\n'
+  )]++;
+  outputCounts.total++;
   logBuild(inputs, detailPages, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks);
+  const { counts, tierCut } = abilityScores;
+  console.log(`  ability-scores     評価対象 ${counts.target}件（${counts.groups}種） / Tier1〜4 ${counts.tier.join('/')} / 境界 ${tierCut[1]}・${tierCut[2]}・${tierCut[3]}点`);
+  if (counts.unreviewed) {
+    const names = abilityScores.abilities.filter(row => !row.reviewed).map(row => `${row.abilityId} ${row.name}`);
+    console.log(`  未点検の能力 ${counts.unreviewed}件（node scripts/audit-ability-reading.js --new で読み方を点検）: ${names.join(', ')}`);
+  }
 }
 
 if (require.main === module) {

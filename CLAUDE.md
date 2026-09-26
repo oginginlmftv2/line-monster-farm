@@ -316,6 +316,7 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 - `src/data/id-availability.json`
 - `src/data/page-baseline.json`
 - `src/data/cms-seed.json`
+- `src/data/ability-scores.json`（能力の評価値とTier。Tierは公開しない）
 - `monsters/**/*.html`（血統ページ `monsters/<モン類>/<血統>/index.html` を含む）
 - `monsters/redirect-map.js`
 - `monsters.html`の`BUILD:MONSTER-CARDS`マーカー内

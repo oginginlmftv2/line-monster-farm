@@ -8,7 +8,7 @@
  *   node scripts/build-ability-parse.js
  *   node scripts/build-ability-parse.js --dry
  *
- * 評価値はまだ出さない。基準値・補正は src/data/ability-rubric.json（値は未定）。
+ * 評価値は出さない（build.js が src/lib/ability-score.js で src/data/ability-scores.json を作る）。
  */
 
 const fs = require('fs');
