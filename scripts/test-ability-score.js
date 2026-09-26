@@ -61,7 +61,8 @@ assert.ok(power('[序盤]相手<オーラ緑>技発動後、完全回避Lv2<1回
 // 巫女の占い：3つのうち1つを3回引く＝必中は平均1回。3つ全部が付く扱いにはしない
 const miko = power('<白>技発動時、自身に次の効果をランダムで付与<3回><br>強撃Lv2<20秒><br>必中Lv1<1回><br>ブロックLv4<20秒>');
 const single = power('<白>技発動時、必中Lv1<1回>');
-assert.ok(miko >= single && miko < single * 1.5, `ランダム付与 ${miko} / 必中1回 ${single}`);
+// ランダムで付く必中は、いつ付くか選べないので確定の半分（randomDecisive）。巫女の占いは単発の必中1回より低い
+assert.ok(miko < single && miko > single * rubric.coefficients.randomDecisive, `ランダム付与 ${miko} / 必中1回 ${single}`);
 assert.ok(power('技を回避した回数に応じて次の効果を付与<各1回><br>・3回：自身に[完全回避Lv4]') < power('技を回避した回数に応じて次の効果を付与<各1回><br>・1回：自身に[完全回避Lv4]'));
 // ライフ条件はしきい値で分ける
 assert.ok(power('ライフ10%以下で、完全回避Lv2<1回>') < power('ライフ30%以下で、完全回避Lv2<1回>'));

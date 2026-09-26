@@ -28,8 +28,8 @@
     },
     {
       "id": "0111",
-      "baseline": 876,
-      "current": 876,
+      "baseline": 900,
+      "current": 900,
       "indexable": false
     },
     {
@@ -76,8 +76,8 @@
     },
     {
       "id": "0126",
-      "baseline": 910,
-      "current": 910,
+      "baseline": 934,
+      "current": 934,
       "indexable": false
     },
     {
@@ -88,8 +88,8 @@
     },
     {
       "id": "0151",
-      "baseline": 912,
-      "current": 1845,
+      "baseline": 936,
+      "current": 1869,
       "indexable": true
     },
     {
@@ -118,8 +118,8 @@
     },
     {
       "id": "0180",
-      "baseline": 894,
-      "current": 1813,
+      "baseline": 918,
+      "current": 1837,
       "indexable": true
     },
     {
@@ -178,8 +178,8 @@
     },
     {
       "id": "0227",
-      "baseline": 893,
-      "current": 1551,
+      "baseline": 917,
+      "current": 1575,
       "indexable": true
     },
     {
@@ -256,8 +256,8 @@
     },
     {
       "id": "0350",
-      "baseline": 895,
-      "current": 1379,
+      "baseline": 908,
+      "current": 1392,
       "indexable": true
     },
     {
@@ -328,20 +328,20 @@
     },
     {
       "id": "0450",
-      "baseline": 942,
-      "current": 2510,
+      "baseline": 976,
+      "current": 2544,
       "indexable": true
     },
     {
       "id": "0451",
-      "baseline": 927,
-      "current": 927,
+      "baseline": 961,
+      "current": 961,
       "indexable": false
     },
     {
       "id": "0452",
-      "baseline": 901,
-      "current": 901,
+      "baseline": 935,
+      "current": 935,
       "indexable": false
     },
     {
@@ -364,8 +364,8 @@
     },
     {
       "id": "0511",
-      "baseline": 910,
-      "current": 910,
+      "baseline": 944,
+      "current": 944,
       "indexable": false
     },
     {
@@ -406,8 +406,8 @@
     },
     {
       "id": "0552",
-      "baseline": 928,
-      "current": 928,
+      "baseline": 962,
+      "current": 962,
       "indexable": false
     },
     {
@@ -496,8 +496,8 @@
     },
     {
       "id": "0707",
-      "baseline": 902,
-      "current": 1387,
+      "baseline": 926,
+      "current": 1411,
       "indexable": true
     },
     {
@@ -610,8 +610,8 @@
     },
     {
       "id": "0911",
-      "baseline": 874,
-      "current": 874,
+      "baseline": 887,
+      "current": 887,
       "indexable": false
     },
     {
@@ -652,14 +652,14 @@
     },
     {
       "id": "0950",
-      "baseline": 905,
-      "current": 2600,
+      "baseline": 918,
+      "current": 2613,
       "indexable": true
     },
     {
       "id": "0951",
-      "baseline": 888,
-      "current": 888,
+      "baseline": 901,
+      "current": 901,
       "indexable": false
     },
     {
@@ -688,8 +688,8 @@
     },
     {
       "id": "1011",
-      "baseline": 874,
-      "current": 874,
+      "baseline": 887,
+      "current": 887,
       "indexable": false
     },
     {
@@ -766,8 +766,8 @@
     },
     {
       "id": "1111",
-      "baseline": 874,
-      "current": 874,
+      "baseline": 849,
+      "current": 849,
       "indexable": false
     },
     {
@@ -808,8 +808,8 @@
     },
     {
       "id": "1152",
-      "baseline": 857,
-      "current": 857,
+      "baseline": 832,
+      "current": 832,
       "indexable": false
     },
     {
@@ -844,8 +844,8 @@
     },
     {
       "id": "1250",
-      "baseline": 869,
-      "current": 869,
+      "baseline": 882,
+      "current": 882,
       "indexable": false
     },
     {
@@ -874,20 +874,20 @@
     },
     {
       "id": "1313",
-      "baseline": 890,
-      "current": 890,
+      "baseline": 924,
+      "current": 924,
       "indexable": false
     },
     {
       "id": "1326",
-      "baseline": 899,
-      "current": 899,
+      "baseline": 933,
+      "current": 933,
       "indexable": false
     },
     {
       "id": "1350",
-      "baseline": 917,
-      "current": 917,
+      "baseline": 951,
+      "current": 951,
       "indexable": false
     },
     {
@@ -904,8 +904,8 @@
     },
     {
       "id": "1353",
-      "baseline": 929,
-      "current": 929,
+      "baseline": 963,
+      "current": 963,
       "indexable": false
     },
     {
@@ -964,8 +964,8 @@
     },
     {
       "id": "1452",
-      "baseline": 894,
-      "current": 894,
+      "baseline": 869,
+      "current": 869,
       "indexable": false
     },
     {
@@ -1030,14 +1030,14 @@
     },
     {
       "id": "1552",
-      "baseline": 888,
-      "current": 888,
+      "baseline": 912,
+      "current": 912,
       "indexable": false
     },
     {
       "id": "1553",
-      "baseline": 1150,
-      "current": 1150,
+      "baseline": 1119,
+      "current": 1119,
       "indexable": true
     },
     {
@@ -1054,8 +1054,8 @@
     },
     {
       "id": "1607",
-      "baseline": 941,
-      "current": 941,
+      "baseline": 945,
+      "current": 945,
       "indexable": false
     },
     {
@@ -1120,8 +1120,8 @@
     },
     {
       "id": "1711",
-      "baseline": 867,
-      "current": 867,
+      "baseline": 842,
+      "current": 842,
       "indexable": false
     },
     {
@@ -1258,8 +1258,8 @@
     },
     {
       "id": "1911",
-      "baseline": 901,
-      "current": 901,
+      "baseline": 905,
+      "current": 905,
       "indexable": false
     },
     {
@@ -1312,8 +1312,8 @@
     },
     {
       "id": "1952",
-      "baseline": 926,
-      "current": 926,
+      "baseline": 930,
+      "current": 930,
       "indexable": false
     },
     {
@@ -1360,14 +1360,14 @@
     },
     {
       "id": "2051",
-      "baseline": 935,
-      "current": 2198,
+      "baseline": 939,
+      "current": 2202,
       "indexable": true
     },
     {
       "id": "2052",
-      "baseline": 941,
-      "current": 2964,
+      "baseline": 945,
+      "current": 2968,
       "indexable": true
     },
     {
@@ -1408,8 +1408,8 @@
     },
     {
       "id": "2111",
-      "baseline": 925,
-      "current": 925,
+      "baseline": 929,
+      "current": 929,
       "indexable": false
     },
     {
@@ -1474,8 +1474,8 @@
     },
     {
       "id": "2211",
-      "baseline": 909,
-      "current": 909,
+      "baseline": 913,
+      "current": 913,
       "indexable": false
     },
     {
@@ -1516,14 +1516,14 @@
     },
     {
       "id": "2251",
-      "baseline": 935,
-      "current": 1731,
+      "baseline": 939,
+      "current": 1735,
       "indexable": true
     },
     {
       "id": "2252",
-      "baseline": 942,
-      "current": 942,
+      "baseline": 946,
+      "current": 946,
       "indexable": false
     },
     {
@@ -1576,8 +1576,8 @@
     },
     {
       "id": "2311",
-      "baseline": 901,
-      "current": 901,
+      "baseline": 876,
+      "current": 876,
       "indexable": false
     },
     {
@@ -1642,8 +1642,8 @@
     },
     {
       "id": "2411",
-      "baseline": 875,
-      "current": 875,
+      "baseline": 899,
+      "current": 899,
       "indexable": false
     },
     {
@@ -1780,8 +1780,8 @@
     },
     {
       "id": "2613",
-      "baseline": 1554,
-      "current": 2268,
+      "baseline": 1583,
+      "current": 2297,
       "indexable": true
     },
     {
@@ -1798,8 +1798,8 @@
     },
     {
       "id": "2626",
-      "baseline": 1126,
-      "current": 1126,
+      "baseline": 1139,
+      "current": 1139,
       "indexable": false
     },
     {
@@ -1834,8 +1834,8 @@
     },
     {
       "id": "2653",
-      "baseline": 1329,
-      "current": 1329,
+      "baseline": 1342,
+      "current": 1342,
       "indexable": false
     },
     {
@@ -1870,8 +1870,8 @@
     },
     {
       "id": "2727",
-      "baseline": 889,
-      "current": 889,
+      "baseline": 864,
+      "current": 864,
       "indexable": false
     },
     {
@@ -1888,8 +1888,8 @@
     },
     {
       "id": "2813",
-      "baseline": 890,
-      "current": 890,
+      "baseline": 865,
+      "current": 865,
       "indexable": false
     },
     {
@@ -1900,8 +1900,8 @@
     },
     {
       "id": "2827",
-      "baseline": 904,
-      "current": 904,
+      "baseline": 879,
+      "current": 879,
       "indexable": false
     },
     {

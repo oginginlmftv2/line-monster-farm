@@ -425,7 +425,9 @@ function createScorer(rubric) {
           for (let k = 1; k <= B.skillsPerBattle; k++) sum += Math.min(C.perUseStackPct * k, e.value);
           ramp = sum / B.skillsPerBattle / e.value / MOD.stack; // conditionFactor で掛けた累積の一律割引を戻して置き換える
         }
-        const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost) * ramp;
+        // ランダムで付与される必中・完全回避などは、いつ付くか選べないので確定のものより低く見る（巫女の占い II）
+        const randomDecisive = randomShare.has(lineIndex) && ev.decisive ? C.randomDecisive : 1;
+        const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost) * ramp * randomDecisive;
         parts.push({ atom: e.atom, lv, penalty: !!ev.penalty, line: line.raw });
       }
       if (line0.effects.length && /次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw) };
