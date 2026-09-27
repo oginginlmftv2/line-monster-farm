@@ -44,7 +44,7 @@ console.log('PASS assist一覧: マーカー重複を拒否する');
 
 assert.throws(
   () => renderAssistIndex(source.replace('cards/a-MR-one.html', 'cards/unknown.html'), cards),
-  /DB未登録のcardId/,
+  /DB未登録または準備中のcardId/,
   'DB未登録カードを拒否する',
 );
 console.log('PASS assist一覧: DB未登録カードを拒否する');
