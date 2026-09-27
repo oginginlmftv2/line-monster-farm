@@ -82,7 +82,7 @@ function asstRenderList(){
   el('asst_summary').textContent='カード '+ASST.cards.length+'件 / 表示 '+cards.length+'件';
   el('asst_cardList').innerHTML=cards.length?cards.map(function(card){
     return '<button class="card-row'+(card.cardId===ASST.selectedId?' active':'')+'" data-id="'+esc(card.cardId)+'">'+
-      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+'</span></button>';
+      '<strong>'+esc(card.name)+'</strong><span>'+esc(card.rarity)+(card.hidden?' / 準備中':'')+'</span><span class="counts">'+esc(card.cardId)+' ・ 効果'+card.effects+' ・ 能力'+card.abilities+'</span></button>';
   }).join(''):'<div class="empty">該当カードなし</div>';
   el('asst_cardList').querySelectorAll('[data-id]').forEach(function(button){ button.onclick=function(){ asstOpenCard(button.dataset.id); }; });
 }
@@ -591,6 +591,7 @@ function asstRenderCreateCardForm(){
     asstField('create_name','カード名','text','')+
     asstSelectField('create_rarity','レアリティ',['MR','SSR'],'MR')+asstSelectField('create_aura','オーラ',['赤','緑','黄','白','黒','青'],'赤')+
     asstSelectField('create_cardType','カードタイプ',ASST_CARD_TYPES,ASST_CARD_TYPES[0])+asstSelectField('create_monType','モン類',ASST_MON_TYPES,'',true)+
+    asstHiddenField('create_hidden','準備中として登録する（ガチャ事前登録用）',false,'準備中の間は詳細ページ・一覧に出ず、ガチャのピックアップにだけ名前・レアリティ・タイプがリンク無しで出ます。画像が無くても公開できます。性能が分かったらカード編集で外して公開してください。')+
     '</div><div class="actions"><button class="primary" id="asst_btnSubmitCreateCard">新規カードを登録</button><span class="muted">cardIdは登録時にサーバーが自動採番し、作成後は変更できません</span></div>';
   el('asst_btnBackCreateCard').onclick=function(){document.body.classList.remove('editing');};
   el('asst_btnSubmitCreateCard').onclick=asstCreateCard;
@@ -601,12 +602,12 @@ function asstCollectCreateCard(){
   var name=rawName.trim();
   if(!name)throw new Error('カード名は必須です。');
   if(ASST.cards.some(function(card){return card.name.trim()===name&&card.rarity===rarity;}))throw new Error('同じカード名とレアリティのカードが既にあります。');
-  return {name:name,rarity:rarity,aura:el('asst_f_create_aura').value,cardType:el('asst_f_create_cardType').value,monType:el('asst_f_create_monType').value||null};
+  return {name:name,rarity:rarity,aura:el('asst_f_create_aura').value,cardType:el('asst_f_create_cardType').value,monType:el('asst_f_create_monType').value||null,hidden:el('asst_f_create_hidden').checked};
 }
 function asstCreateCard(){
   try{
     var card=asstCollectCreateCard();
-    if(!confirm('新規カードを登録します。\n\ncardId: 登録時に自動採番（例 c0092-'+card.rarity+'）\nカード名: '+card.name+'\nレアリティ: '+card.rarity+'\n\n新規行として保存されますが、サイトにはまだ公開されません。\nよろしいですか？'))return;
+    if(!confirm('新規カードを登録します。\n\ncardId: 登録時に自動採番（例 c0092-'+card.rarity+'）\nカード名: '+card.name+'\nレアリティ: '+card.rarity+(card.hidden?'\n準備中として登録します':'')+'\n\n新規行として保存されますが、サイトにはまだ公開されません。\nよろしいですか？'))return;
     call('api_asstCreateCard',[card],function(result){
       ASST.cards=ASST.cards.filter(function(item){return item.cardId!==result.cardId;});ASST.cards.push(result.card);
       el('asst_summary').textContent='カード '+ASST.cards.length+'件';asstRenderList();
@@ -649,6 +650,7 @@ function asstRenderCardForm(d){
     asstField('cardId','cardId','text',c.cardId,true)+asstField('name','カード名','text',c.name)+
     asstSelectField('rarity','レアリティ',['MR','SSR'],c.rarity)+asstSelectField('aura','オーラ',['赤','緑','黄','白','黒','青'],c.aura)+
     asstField('cardType','カードタイプ','text',c.cardType)+asstSelectField('monType','モン類',['幻霊','無機','創造','獣族','魔族','怪物'],c.monType,true)+
+    asstHiddenField('hidden','準備中（ガチャ事前登録用）',c.hidden===true,'準備中の間は詳細ページ・一覧に出ず、ガチャのピックアップにだけ名前・レアリティ・タイプがリンク無しで出ます。画像が無くても公開できます。チェックを外して公開すると詳細ページが作られます。公開済みのカードは準備中に戻せません。')+
     asstRenderCardImageField(c)+
     asstField('event2','イベント2','text',c.event2||'')+asstReleasedAtField(c.releasedAt)+
     asstRenderAccessoryField(c.accessoryStatus)+asstRenderRatingsFields(c.ratings)+asstRenderStatsFields(c.stats)+
@@ -665,6 +667,7 @@ function asstReleasedAtField(value){var raw=String(value==null?'':value).trim(),
 function asstReleasedAtValue(){var value=el('asst_f_releasedAt').value.trim();return value?value.replace(/-/g,'/'):null;}
 function asstField(id,label,type,value,readonly){ return '<div class="asstField"><label>'+label+'</label><input id="asst_f_'+id+'" type="'+type+'" value="'+esc(value)+'"'+(readonly?' readonly class="readonly"':'')+'></div>'; }
 function asstSelectField(id,label,values,selected,blank){ return '<div class="asstField"><label>'+label+'</label><select id="asst_f_'+id+'">'+asstOptionList(values,selected,blank)+'</select></div>'; }
+function asstHiddenField(id,label,checked,hint){ return '<div class="asstField wide"><label><input id="asst_f_'+id+'" type="checkbox"'+(checked?' checked':'')+'> '+esc(label)+'</label><p class="muted">'+esc(hint)+'</p></div>'; }
 function asstSourceManagedField(label,message){ return '<div class="asstField"><label>'+label+'</label><input class="readonly" readonly value="'+esc(message)+'"></div>'; }
 function asstRenderCardImageField(card){
   var publicUrl='https://raw.githubusercontent.com/oginginlmftv2/line-monster-farm/main/'+card.image;
@@ -745,8 +748,10 @@ function asstSaveCard(){
       releasedAt:asstReleasedAtValue(),stats:asstCollectStats(),limitBreak:c.limitBreak,
       accessoryStatus:el('asst_f_accessoryStatus').value,
       ratings:asstCollectRatings(),explanation:el('asst_f_explanation').value,formations:asstCollectFormations(),
-      sapoRef:c.sapoRef};
+      sapoRef:c.sapoRef,hidden:el('asst_f_hidden').checked};
+    if(c.hidden===true&&!card.hidden&&!confirm('準備中を外します。次の公開で詳細ページが作られ、一覧・ガチャのピックアップにリンクが付きます。\n公開後は準備中に戻せません。よろしいですか？'))return;
     call('api_asstSaveCard',[{cardId:c.cardId,version:ASST.detail.version,card:card}],function(result){
+      ASST.cards.forEach(function(item){if(item.cardId===c.cardId)item.hidden=result.hidden===true;});
       show('保存しました。version '+result.version,false); asstOpenCard(c.cardId);
     });
   }catch(error){show(error.message,true);}

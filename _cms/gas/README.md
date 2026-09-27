@@ -14,7 +14,7 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 
 ## P12-19 新規カード登録の反映と確認
 
-リポジトリ内の実装対象は `20_assist.gs`、`22_assist_status.gs`（能力の状態まとめ更新API・カード紐付け解除API）、`25_lmfdb_write.gs`（lMfDB追加・処置API）と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
+リポジトリ内の実装対象は `20_assist.gs`、`22_assist_status.gs`（能力の状態まとめ更新API・カード紐付け解除API）、`23_assist_hidden.gs`（カードの準備中）、`25_lmfdb_write.gs`（lMfDB追加・処置API）と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
 
 反映後は次を手動確認します。
 
@@ -83,6 +83,16 @@ G4のリポジトリ変更がmainへマージされた後、管理者が次の�
 3. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
 
 列を追加する前でも一覧の読み込みは動き、全件を公開扱いにします。新規登録と準備中の切り替えだけは、列が無いとsetupの実行を促して止まります。既存行は空欄のままで公開扱いです。準備中の体は公開時に`monsters-editorial.json`へ`"hidden": true`で出て、`build.js`が詳細ページ・一覧・sitemapから外します（`docs/gacha-design.md` 12章）。公開済み（`page-baseline.json`にある）体は準備中にできません。
+
+## G6 アシストカードの準備中（hidden列）の反映
+
+`cards`シートの末尾に`hidden`列を追加します。`23_assist_hidden.gs`は新しいファイルなので、GASエディタの「＋」→「スクリプト」で`23_assist_hidden`という名前のファイルを先に作ってから貼ります。
+
+1. `23_assist_hidden`を新規作成して貼る。`20_assist.gs`、`40_setup.gs`、`10_monster.gs`、`ui_assist.html`も同名のGASファイルへ同期して保存する
+2. `setup5_upgradeAssistCardHiddenColumn`を実行し、`hidden 列を追加しました`と表示されることを確認する。既存列・既存行は変更しないため`ALLOW_DESTRUCTIVE_SETUP`は不要
+3. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+
+既存行は空欄のままで公開扱いです。準備中のカードは公開時に`assist-cards.json`へ`"hidden": true`で出て、`build.js`が詳細ページ・一覧・sitemap・相性能力から外します（`docs/gacha-design.md` 12章）。準備中なら画像が未登録でも保存・公開できます。mainに`cards/<cardId>.html`があるカード（公開済み）は準備中にできません。列を追加するまで、準備中への切り替えはsetupの実行を促して止まり、外部能力DBの監査はcardsシートのヘッダー不一致で止まります。
 
 ## P12-16 効果OCRサニタイザの反映
 

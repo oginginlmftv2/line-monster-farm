@@ -20,7 +20,7 @@ const { renderLmfdbCardMap } = require('./lmfdb-card-map');
 const CARDS_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-cards.json'), 'utf8'));
 const ABILITIES_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-abilities.json'), 'utf8'));
 const CARD_MAP_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8'));
-const GAS_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8');
+const GAS_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
 
 function digest(value) {
   return crypto.createHash('sha256').update(value).digest('hex');
@@ -100,7 +100,7 @@ function makeHarness(options = {}) {
     generatedHtml: { sentinel: 'unchanged' },
   };
   const headers = {
-    cards: ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'],
+    cards: ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy','hidden'],
     abilities: ['sourceOrder','abilityId','legacyId','cardId','sourceName','name','description','source','rarity','tagsJson','sortOrder','linkStatus','flagsJson','status','version','updatedAt','updatedBy'],
     ability_external_refs: ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'],
   };

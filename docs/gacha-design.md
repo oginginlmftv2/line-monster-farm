@@ -223,3 +223,13 @@ Workflowは`generate-ids.js`、`build.js`、`verify.js`、`verify-gacha-source.j
 - ガチャ編集画面のID確認は、準備中なら名前の後ろに「（準備中：サイトではリンク無しで表示）」を出す。照合データは1時間キャッシュするため、
   準備中を外して公開した直後はしばらく旧表示のことがある
 
+### CMSでの操作（アシストカード）
+
+アシストCMSの`cards`シート末尾の`hidden`列（`setup5_upgradeAssistCardHiddenColumn`で追加）が正である。
+新規カード登録の「準備中として登録する」、カード編集の「準備中」チェックで切り替え、`asstCardFromRow_()`が
+準備中のときだけ`hidden: true`を付けて`assist-cards.json`へ出す。準備中の判定・切り替えは
+`23_assist_hidden.gs`に置く（`20_assist.gs`の100KB上限のため）。
+
+- 準備中なら画像が空でも保存・公開できる（`asstValidateImagePath_()`が通し、`asstValidateImageFiles_()`は画像の無いカードを問い合わせない）。準備中を外すと画像は必須に戻る
+- 公開済みの判定は、mainに`cards/<cardId>.html`があるか（Range 1バイトで取得）で行う。確認できないときも準備中へ切り替えない
+- モンスターと同じく、保存APIは`hidden`が未指定なら今の値を保つ

@@ -8,7 +8,7 @@ const path = require('path');
 const vm = require('vm');
 
 const REPO = path.resolve(__dirname, '..');
-const SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8');
+const SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
 const MIME_MARKERS = { 'image/jpeg': 1, 'image/png': 2, 'image/webp': 3 };
 
 class Iterator {

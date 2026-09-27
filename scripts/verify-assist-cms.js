@@ -19,6 +19,7 @@ const SUPPORT_FILES = {
   publishGas: '_cms/gas/30_publish.gs',
   lmfdbWriteGas: '_cms/gas/25_lmfdb_write.gs',
   statusGas: '_cms/gas/22_assist_status.gs',
+  hiddenGas: '_cms/gas/23_assist_hidden.gs',
   setupGas: '_cms/gas/40_setup.gs',
   shell: '_cms/gas/index.html',
   commonHtml: '_cms/gas/ui_common.html',
@@ -134,11 +135,12 @@ function validateRoot(root) {
   const publishGas = read(root, SUPPORT_FILES.publishGas);
   const lmfdbWriteGas = read(root, SUPPORT_FILES.lmfdbWriteGas);
   const statusGas = read(root, SUPPORT_FILES.statusGas);
+  const hiddenGas = read(root, SUPPORT_FILES.hiddenGas);
   const setupGas = read(root, SUPPORT_FILES.setupGas);
   const shell = read(root, SUPPORT_FILES.shell);
   const commonHtml = read(root, SUPPORT_FILES.commonHtml);
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
-  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${statusGas}\n${setupGas}`;
+  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${statusGas}\n${hiddenGas}\n${setupGas}`;
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
   const cardCreateApiTest = read(root, CARD_CREATE_API_TEST);
@@ -235,7 +237,7 @@ function validateRoot(root) {
     issues.push('能力並び替えAPIの入力限定・全体検査・同時編集検知・巻き戻し境界が不足');
   }
   const nextCardIdBlock = functionBlock(gas, 'asstNextCardId_');
-  if (!cardCreatePayloadBlock || !/var allowed = \['name','rarity','aura','cardType','monType'\]/.test(cardCreatePayloadBlock) ||
+  if (!cardCreatePayloadBlock || !/var allowed = \['name','rarity','aura','cardType','monType','hidden'\]/.test(cardCreatePayloadBlock) ||
       /payload\.cardId/.test(cardCreatePayloadBlock) || !/\\u0000-\\u001f/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.rarity, ASST_RARITIES/.test(cardCreatePayloadBlock) ||
       !/asstInList_\(payload\.aura, ASST_AURAS/.test(cardCreatePayloadBlock) ||
