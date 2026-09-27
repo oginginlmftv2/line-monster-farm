@@ -125,19 +125,21 @@ function gachaTypeLabels_() {
 function gachaLookupDocument_(kind) {
   var file = kind === 'monster' ? 'monster-ids.json' : 'assist-cards.json';
   var cache = CacheService.getScriptCache();
-  var cacheKey = 'gachaLookup:' + file;
+  var cacheKey = 'gachaLookup:v2:' + file;
   var hit = cache.get(cacheKey);
   if (hit) {
     try { return JSON.parse(hit); } catch (error) { /* 壊れたキャッシュは取り直す */ }
   }
   var source = asstFetchJson_(RAW_BASE + file);
+  // 準備中（hidden）はモンスターならmonsters-editorial.json、カードならassist-cards.jsonが持つ
+  var editorial = kind === 'monster' ? (asstFetchJson_(RAW_BASE + 'monsters-editorial.json').monsters || {}) : {};
   var document = kind === 'monster' ? {
     monsters: (source.monsters || []).map(function (item) {
-      return { id: item.id, name: item.name, image: item.image };
+      return { id: item.id, name: item.name, image: item.image, hidden: !!(editorial[item.id] && editorial[item.id].hidden === true) };
     })
   } : {
     cards: (source.cards || []).map(function (item) {
-      return { cardId: item.cardId, name: item.name, rarity: item.rarity, image: item.image };
+      return { cardId: item.cardId, name: item.name, rarity: item.rarity, image: item.image, hidden: item.hidden === true };
     })
   };
   cache.put(cacheKey, JSON.stringify(document), 3600);
@@ -153,7 +155,7 @@ function gachaLookupPickup_(kind, id) {
     var monster = (document.monsters || []).filter(function (item) {
       return gachaText_(item.id) === id;
     })[0];
-    return monster ? { ok: true, name: gachaText_(monster.name), image: gachaText_(monster.image) } : { ok: false };
+    return monster ? { ok: true, name: gachaText_(monster.name), image: gachaText_(monster.image), hidden: monster.hidden === true } : { ok: false };
   }
   var card = (document.cards || []).filter(function (item) {
     return gachaText_(item.cardId) === id;
@@ -162,7 +164,8 @@ function gachaLookupPickup_(kind, id) {
     ok: true,
     name: gachaText_(card.name),
     rarity: gachaText_(card.rarity),
-    image: gachaText_(card.image)
+    image: gachaText_(card.image),
+    hidden: card.hidden === true
   } : { ok: false };
 }
 

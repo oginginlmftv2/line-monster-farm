@@ -10,7 +10,7 @@ var MON_SHEET_MONSTERS = 'monsters';
 var MON_SHEET_EDIT_LOG = 'edit_log';
 var MON_SHEET_PUBLISH_LOG = 'publish_log';
 var MON_HEADERS = {};
-MON_HEADERS[MON_SHEET_MONSTERS] = ['id','name','aura','mon','mainBlood','subBlood','limited','limitedLabel','image','releasedAt','explanation','formations','visibleChars','indexable','status','author','createdAt','contributors','lastEditor','updatedAt','arrayIndex','url'];
+MON_HEADERS[MON_SHEET_MONSTERS] = ['id','name','aura','mon','mainBlood','subBlood','limited','limitedLabel','image','releasedAt','explanation','formations','visibleChars','indexable','status','author','createdAt','contributors','lastEditor','updatedAt','arrayIndex','url','hidden'];
 MON_HEADERS[MON_SHEET_EDIT_LOG] = ['日時','モンスターID','編集者','種別','文字数','記録した著者名'];
 MON_HEADERS[MON_SHEET_PUBLISH_LOG] = ['日時','実行者','コミットSHA','結果','詳細'];
 var MON_AURA_LIST = ['赤','青','黄','黒','白','緑'];
@@ -75,7 +75,9 @@ function monReadAll_() {
   var sh = monSheet_();
   var last = sh.getLastRow();
   if (last < 2) return [];
-  var values = sh.getRange(2, 1, last - 1, MON_HEADERS[MON_SHEET_MONSTERS].length).getValues();
+  // hidden列を足す setup5_upgradeMonsterHiddenColumn の実行前でも読めるよう、実在する列までを読む
+  var width = Math.min(MON_HEADERS[MON_SHEET_MONSTERS].length, sh.getMaxColumns());
+  var values = sh.getRange(2, 1, last - 1, width).getValues();
   var c = monColIndex_();
   return values.map(function (r, i) {
     return {
@@ -101,7 +103,9 @@ function monReadAll_() {
       lastEditor: String(r[c.lastEditor] || ''),
       updatedAt: String(r[c.updatedAt] || ''),
       arrayIndex: Number(r[c.arrayIndex]),
-      url: String(r[c.url] || '')
+      url: String(r[c.url] || ''),
+      // 準備中（ガチャ事前登録用）。IDは持つがページ・一覧に出さない（docs/gacha-design.md 12章）
+      hidden: r[c.hidden] === true || String(r[c.hidden]).toUpperCase() === 'TRUE'
     };
   });
 }
@@ -146,6 +150,21 @@ function monBasicsIds_() {
 }
 
 // 保存時の見込み（判定そのものは build.js が行う）
+function monRequireHiddenColumn_() {
+  var sh = monSheet_();
+  var column = monColIndex_().hidden + 1;
+  if (sh.getMaxColumns() < column || String(sh.getRange(1, column).getValue()).trim() !== 'hidden') {
+    throw new Error('monsters シートに hidden 列がありません。GASエディタで setup5_upgradeMonsterHiddenColumn を実行してください。');
+  }
+}
+
+// 詳細ページが公開済みか。page-baseline.json は生成した詳細ページだけを持つ。
+// 取得できないときは null を返し、準備中への切り替えを安全側で止める
+function monHasPublishedPage_(id, baseMap) {
+  if (!baseMap) return null;
+  return baseMap[id] != null;
+}
+
 function monIndexable_(predicted, hasExplanation, hasBasics) {
   if (predicted < MON_MIN_CHARS) return false;
   return (hasExplanation && predicted >= MON_THRESHOLD) || hasBasics;
@@ -252,7 +271,8 @@ function api_monBootstrap() {
       releasedAt: m.releasedAt,
       updatedAt: m.updatedAt,
       arrayIndex: m.arrayIndex,
-      url: m.url
+      url: m.url,
+      hidden: m.hidden
     };
   });
 
@@ -285,6 +305,7 @@ function api_monGet(id) {
   m.overhead = monOverhead_(m, baseMap);
   m.baselineLoaded = !!(baseMap && baseMap[m.id] != null);
   m.hasBasics = monBasicsIds_()[m.id] === true;
+  m.hasPage = monHasPublishedPage_(m.id, baseMap);
   return m;
 }
 
@@ -346,13 +367,14 @@ function api_monCreateMonster(payload) {
       '', '',
       0, false, 'draft',
       '', '', '', user.nickname, updatedAt,
-      arrayIndex, ''
+      arrayIndex, '', payload.hidden === true
     ];
     if (row.length !== MON_HEADERS[MON_SHEET_MONSTERS].length) {
       throw new Error('新規行の列数がヘッダーと一致しません。');
     }
 
     var sh = monSheet_();
+    monRequireHiddenColumn_();
     var rowNumber = sh.getLastRow() + 1;
     sh.getRange(rowNumber, 1).setNumberFormat('@');
     sh.getRange(rowNumber, 10).setNumberFormat('@');
@@ -379,7 +401,8 @@ function api_monCreateMonster(payload) {
         releasedAt: '',
         updatedAt: updatedAt,
         arrayIndex: arrayIndex,
-        url: ''
+        url: '',
+        hidden: payload.hidden === true
       }
     };
   } finally {
@@ -469,7 +492,8 @@ function monBuildPublishTextFiles_(all) {
         }
       }
       // 解説も編成も無くても、実装日が入っていれば一覧の並び用にエントリを残す。
-      if (!monster.explanation && !formations.length && !monster.releasedAt) return;
+      // 準備中の体は解説が無くてもエントリを残し、hidden: true で build.js に伝える。
+      if (!monster.explanation && !formations.length && !monster.releasedAt && !monster.hidden) return;
 
       var entry = {
         id: monster.id,
@@ -490,6 +514,7 @@ function monBuildPublishTextFiles_(all) {
       if (monster.createdAt) entry.createdAt = monster.createdAt;
       if (monster.updatedAt) entry.updatedAt = monster.updatedAt;
       if (monster.releasedAt) entry.releasedAt = monster.releasedAt;
+      if (monster.hidden) entry.hidden = true;
       editorial[monster.id] = entry;
     });
 
@@ -748,6 +773,16 @@ function api_monSave(payload) {
 
     // --- 文字数の見込み（★ 判定そのものは build.js が行う）
     var baseMap = monBaselineMap_();
+
+    // --- 準備中。公開済みページがある体を戻すと古いページが残るため止める（build.jsも同じ理由で止める）
+    // 古い画面は hidden を送らないので、未指定なら今の値を保つ
+    var hidden = payload.hidden === undefined ? m.hidden : payload.hidden === true;
+    if (hidden !== m.hidden) monRequireHiddenColumn_();
+    if (hidden && !m.hidden) {
+      var hasPage = monHasPublishedPage_(target, baseMap);
+      if (hasPage === null) throw new Error('公開状況（page-baseline.json）を取得できないため、準備中にできません。少し待ってからやり直してください。');
+      if (hasPage) throw new Error('公開済みのモンスターは準備中に戻せません。');
+    }
     var overhead = monOverhead_(m, baseMap);
     var predicted = overhead + countChars_(explanation);
     var indexable = monIndexable_(predicted, !!explanation, monBasicsIds_()[target] === true);
@@ -777,6 +812,7 @@ function api_monSave(payload) {
       updatedAt                   // T updatedAt
     ];
     sh.getRange(m.row, 3, 1, block.length).setValues([block]);
+    if (hidden !== m.hidden) sh.getRange(m.row, monColIndex_().hidden + 1).setValue(hidden);
 
     // --- 変更履歴
     var log = book_().getSheetByName(MON_SHEET_EDIT_LOG);
@@ -792,7 +828,8 @@ function api_monSave(payload) {
       contributors: contributors,
       createdAt: createdAt,
       lastEditor: user.nickname,
-      kind: kind
+      kind: kind,
+      hidden: hidden
     };
   } finally {
     lock.releaseLock();

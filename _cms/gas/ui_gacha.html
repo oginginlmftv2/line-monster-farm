@@ -128,7 +128,7 @@ function gachaScheduleLookup(kind,slot){
   GACHA_UI.lookupTimers[key]=setTimeout(function(){
     call('api_gachaLookupPickup',[kind,id],function(result){
       if(GACHA_UI.lookupSeq[key]!==seq)return;
-      if(result.ok)output.textContent=result.name+(result.rarity?'（'+result.rarity+'）':'');
+      if(result.ok)output.textContent=result.name+(result.rarity?'（'+result.rarity+'）':'')+(result.hidden?'（準備中：サイトではリンク無しで表示）':'');
       else output.innerHTML='<span style="color:#b42318">IDが見つかりません</span>';
     });
   },300);
