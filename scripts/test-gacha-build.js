@@ -250,6 +250,23 @@ try {
   assert(partialResult.indexHtml.includes('10月1日開始'));
   pass(9, '3体・2枚と開始前表示を生成');
 
+  // 開始前は「開催予定」に分け、一覧の一番上に開始が近い順で出す
+  const soon = gacha({ gachaId: '20261001-1', image: 'gacha-banner/20261001-1.jpg', name: '予定A', startAt: '2026-10-01T15:00+09:00', endAt: '2026-10-15T14:59+09:00' });
+  const later = gacha({ gachaId: '20261001-1', image: 'gacha-banner/20261001-1.jpg', name: '予定B', startAt: '2026-10-05T15:00+09:00', endAt: '2026-10-20T14:59+09:00' });
+  later.gachaId = '20261005-1';
+  fs.copyFileSync(path.join(root, 'gacha-banner/20261001-1.jpg'), path.join(root, 'gacha-banner/20261005-1.jpg'));
+  later.image = 'gacha-banner/20261005-1.jpg';
+  const endedForIndex = gacha({ gachaId: '20260801-1', image: 'gacha-banner/20260801-1.jpg', name: '終了C', startAt: '2026-08-01T15:00+09:00', endAt: '2026-08-15T14:59+09:00', publishedAt: '2026-08-01' });
+  const sectioned = build(root, [gacha(), later, soon, endedForIndex], 'sectioned').indexHtml;
+  const heading = title => sectioned.indexOf(`<h2 class="section-title">${title}</h2>`);
+  assert(heading('開催予定') >= 0 && heading('開催予定') < heading('開催中') && heading('開催中') < heading('終了'));
+  const upcomingPart = sectioned.slice(heading('開催予定'), heading('開催中'));
+  assert(upcomingPart.indexOf('予定A') < upcomingPart.indexOf('予定B'), '開催予定が開始の近い順でない');
+  assert(!sectioned.slice(heading('開催中'), heading('終了')).includes('予定A'), '開始前が開催中に混じっている');
+  const noUpcoming = build(root, [gacha()], 'no-upcoming').indexHtml;
+  assert(!noUpcoming.includes('開催予定</h2>'));
+  pass(35, '開始前は開催予定として一番上に開始が近い順で出し、0件なら見出しを出さない');
+
   assert(activePage.includes('&lt;神殿祭&gt; &amp; &quot;第1回&quot;'));
   assert(activePage.includes('&lt;モンスター&gt; &amp; &quot;引用&quot;'));
   assert(activePage.includes('&lt;カード&gt; &amp; &quot;引用&quot;'));
@@ -511,4 +528,4 @@ for (const [number, label, source] of [
   console.log(`PASS 破壊25: build.jsへのカード後処理差し込み復活を検査17が拒否 → ${postprocessIssues.join(' / ')}`);
 }
 
-console.log('OK 正常34件PASS・破壊16件すべて拒否');
+console.log('OK 正常35件PASS・破壊16件すべて拒否');

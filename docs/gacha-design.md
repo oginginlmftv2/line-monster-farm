@@ -126,7 +126,7 @@ fixtureは`src/data/`へ置かず、`scripts/test-gacha-build.js`が一時ディ
 publishedガチャのピックアップは、終了後もモンスター／カード詳細の「登場ガチャ」に残す。
 `startAt`降順で表示し、該当0件ならセクション自体を出さない。表示はガチャ一覧と同じカード
 （バナー・名前・種別・開催期間）で、`renderGachaCard()`を一覧と共用する。開始前ラベルは
-一覧だけに出す。囲みはページに合わせ、モンスター詳細は`.section-box`、カード詳細は`.section`。
+一覧だけに出す。ガチャ一覧（`gacha/index.html`）は「開催予定（開始前）→ 開催中 → 終了」の順に区分し、開催予定は開始が近い順に並べる。予告は開始3日前ごろで、その時点の開催中ガチャはほぼ引き終わっているため、開催予定を一番上に置く（2026-09-28 管理者判断）。囲みはページに合わせ、モンスター詳細は`.section-box`、カード詳細は`.section`。
 
 カード詳細は生成後のHTMLを読み直さない。`build.js`から`buildAssistPages()`へ
 `gachaAppearancesFor(cardId)`を渡し、`scripts/build-assist-pages.js`のテンプレートが
