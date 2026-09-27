@@ -17,6 +17,7 @@
 | 評価式のテスト | `scripts/test-ability-score.js` | 済。合意した強弱の関係を固定。`verify.js` 検査22が実行 |
 | 評価値・Tier（生成物） | `src/data/ability-scores.json` | `build.js` が毎回生成。`verify.js` 検査22が鮮度を照合 |
 | 読み方の点検 | `scripts/audit-ability-reading.js` → `docs/ability-reading-audit.md` | 手動。能力追加時は `--new`（5章） |
+| 採点方法と結果の説明 | `docs/ability-scoring-report.md`・`.pdf` | 2026-09-27時点のスナップショット（管理者・外部向け） |
 | 手上書き | `src/data/ability-overrides.json` | 空。固有ギミック用 |
 | ページ描画 | `build.js`・`src/lib/ability-recommend.js`（build-spec 5-12） | **済**（2026-09-27）。上位5件・番号なし・発売が新しい順。テストは `scripts/test-ability-recommend.js` |
 
