@@ -475,6 +475,16 @@
       "sourceName": "コスモス",
       "rarity": "SSR",
       "cardId": "c0002-SSR"
+    },
+    {
+      "sourceName": "アルカード",
+      "rarity": "MR",
+      "cardId": "c0003-MR"
+    },
+    {
+      "sourceName": "ブギー",
+      "rarity": "SSR",
+      "cardId": "c0004-SSR"
     }
   ]
 }
