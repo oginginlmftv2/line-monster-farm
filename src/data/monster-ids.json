@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 358,
+ "count": 360,
  "monsters": [
   {
    "id": "0101",
@@ -2784,6 +2784,25 @@
    "localImg": "S__93200814_0.jpg",
    "url": "/monsters/kemono/gujira/1251.html",
    "image": "img/monster/1251.jpg"
+  },
+  {
+   "id": "1252",
+   "sortOrder": 1252,
+   "isNew": true,
+   "name": "オカシラ",
+   "arrayIndex": 359,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "グジラ",
+   "bloodSlug": "gujira",
+   "subBlood": "レアモン",
+   "aura": "青",
+   "limited": true,
+   "limitedLabel": "秋限定",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/kemono/gujira/1252.html",
+   "image": "img/monster/1252.jpg"
   },
   {
    "id": "1301",
@@ -6793,6 +6812,25 @@
    "localImg": "S__93200751_0.jpg",
    "url": "/monsters/genrei/arc/3350.html",
    "image": "img/monster/3350.jpg"
+  },
+  {
+   "id": "3351",
+   "sortOrder": 3351,
+   "isNew": true,
+   "name": "ヴァンパイア",
+   "arrayIndex": 358,
+   "mon": "幻霊",
+   "monSlug": "genrei",
+   "blood": "アーク",
+   "bloodSlug": "arc",
+   "subBlood": "レアモン",
+   "aura": "青",
+   "limited": true,
+   "limitedLabel": "秋限定",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/genrei/arc/3351.html",
+   "image": "img/monster/3351.jpg"
   },
   {
    "id": "3380",
