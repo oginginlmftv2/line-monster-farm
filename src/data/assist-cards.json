@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 95,
+    "cards": 97,
     "withStats": 60,
     "withExplanation": 89,
     "withFormations": 5
@@ -4022,6 +4022,44 @@
       "explanation": "白のオーラ超ワイルド持ちカード。\n白オーラが強い環境のため、グレイスウィッチを持っている人は、自前で持っておくとバトル用の秘伝周回に便利。\nメタビー今までありがとう、ルートヴィッヒ今までお疲れ様。\n\n能力①「コスモスシールド」：条件付きでシールド展開や攻撃アップを付与。\n能力②「コスモスマキシマム」：全ステータスの上昇に加え、有利な相手の技を一定時間使用不可にする効果などを付与。\n\n超根性を付与できる点が非常に優秀。\nピンポイントで強く、使い勝手には少し癖がある玄人向けのカードと言える。",
       "formations": [],
       "sapoRef": null
+    },
+    {
+      "cardId": "c0003-MR",
+      "name": "アルカード",
+      "rarity": "MR",
+      "aura": "青",
+      "cardType": "バイタル",
+      "monType": "幻霊",
+      "image": "",
+      "event2": null,
+      "releasedAt": "2026/09/30",
+      "accessoryStatus": "yes",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "hidden": true
+    },
+    {
+      "cardId": "c0004-SSR",
+      "name": "ブギー",
+      "rarity": "SSR",
+      "aura": "青",
+      "cardType": "丈夫さ",
+      "monType": "獣族",
+      "image": "",
+      "event2": null,
+      "releasedAt": "2026/09/30",
+      "accessoryStatus": "yes",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "hidden": true
     }
   ]
 }
