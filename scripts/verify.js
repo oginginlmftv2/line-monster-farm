@@ -975,7 +975,10 @@ else {
     ng('monster-ids.json または monsters/redirect-map.js がない');
   } else {
     try {
-      const ids = JSON.parse(read('src/data/monster-ids.json')).monsters;
+      // 準備中（monsters-editorial.json の hidden: true）の体は詳細ページが無いので転送対象外
+      const hiddenIds = new Set(Object.values(JSON.parse(read('src/data/monsters-editorial.json')).monsters)
+        .filter(entry => entry.hidden === true).map(entry => entry.id));
+      const ids = JSON.parse(read('src/data/monster-ids.json')).monsters.filter(monster => !hiddenIds.has(monster.id));
       const source = read('monsters/redirect-map.js');
       const objectMatch = source.match(/window\.LMF_REDIRECT_MAP\s*=\s*(\{[\s\S]*\})\s*;/);
       if (!objectMatch) throw new Error('window.LMF_REDIRECT_MAP を解析できない');
@@ -1413,7 +1416,13 @@ if (!exists('src/data/assist-cards.json')) {
   ng('生成カード詳細用のassist-detail.cssがない');
 } else {
   try {
-    const cards = JSON.parse(read('src/data/assist-cards.json')).cards || [];
+    // 準備中（hidden: true）のカードは詳細ページも一覧の行も作らない
+    const allDbCards = JSON.parse(read('src/data/assist-cards.json')).cards || [];
+    const cards = allDbCards.filter(card => card.hidden !== true);
+    const hiddenCardPages = allDbCards.filter(card => card.hidden === true && exists(`cards/${card.cardId}.html`));
+    if (hiddenCardPages.length) {
+      ng(`準備中カードの詳細ページが残っている: ${hiddenCardPages.map(card => card.cardId).join(', ')}`);
+    }
     const abilities = exists('src/data/assist-abilities.json')
       ? JSON.parse(read('src/data/assist-abilities.json')).abilities || []
       : [];
@@ -1608,7 +1617,7 @@ if (!exists('src/data/assist-cards.json')) {
     if (!/parseFloat\(a\.dataset\.score\)/.test(assistHtml)) {
       assistListIssues.push('評価順ソートがdata-scoreを見ていない');
     }
-    const assistDb = JSON.parse(read('src/data/assist-cards.json')).cards;
+    const assistDb = cards;
     const ratedInDb = assistDb.filter(card => card.ratings && Object.values(card.ratings).some(v => v !== null && v !== undefined));
     const scoredInHtml = (listRegion.match(/data-score="\d\.\d"/g) || []).length;
     if (scoredInHtml !== ratedInDb.length) {

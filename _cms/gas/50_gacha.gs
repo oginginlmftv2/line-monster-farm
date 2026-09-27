@@ -193,8 +193,10 @@ function gachaPickupValues_(payload, kind) {
       continue;
     }
     if (!id) throw new Error(kind + (slot + 1) + 'のIDを入力してください。');
-    if (typeof rawRate !== 'number' || !isFinite(rawRate) || rawRate <= 0 || rawRate > 100) {
-      throw new Error(kind + (slot + 1) + 'の排出率は0より大きく100以下の数値で入力してください。');
+    // 排出率は任意。空欄は''でシートへ保存し、公開データではnullにする
+    if (rawRate === '' || rawRate == null) rawRate = '';
+    else if (typeof rawRate !== 'number' || !isFinite(rawRate) || rawRate <= 0 || rawRate > 100) {
+      throw new Error(kind + (slot + 1) + 'の排出率は空欄か、0より大きく100以下の数値で入力してください。');
     }
     if (!gachaLookupPickup_(kind, id).ok) {
       throw new Error(kind + (slot + 1) + 'のIDが見つかりません: ' + id);
@@ -248,16 +250,25 @@ function gachaStampInitialPublishedAt_(rows) {
   });
 }
 
+// 排出率の空欄はbuild.jsの約束どおりnullで公開する
+function gachaPublishRate_(value) {
+  return value === '' || value == null ? null : value;
+}
+
+function gachaValidRate_(rate) {
+  return rate === null || (typeof rate === 'number' && isFinite(rate) && rate > 0 && rate <= 100);
+}
+
 function gachaBuildPublishDocuments_(rows) {
   var gachas = rows.filter(function (row) { return row.status === 'published'; }).map(function (row) {
     var pickupMonsters = [];
     var pickupCards = [];
     for (var slot = 1; slot <= GACHA_PICKUP_SLOTS; slot++) {
       if (row['monster' + slot]) {
-        pickupMonsters.push({ id: row['monster' + slot], rate: row['monsterRate' + slot] });
+        pickupMonsters.push({ id: row['monster' + slot], rate: gachaPublishRate_(row['monsterRate' + slot]) });
       }
       if (row['card' + slot]) {
-        pickupCards.push({ cardId: row['card' + slot], rate: row['cardRate' + slot] });
+        pickupCards.push({ cardId: row['card' + slot], rate: gachaPublishRate_(row['cardRate' + slot]) });
       }
     }
     return {
@@ -304,12 +315,12 @@ function gachaValidatePublishDocuments_(documents, allowEmptyPublishedAt) {
       issues.push(label + ': publishedAtが不正です。');
     }
     gacha.pickupMonsters.forEach(function (pickup) {
-      if (!pickup.id || typeof pickup.rate !== 'number' || !isFinite(pickup.rate) || pickup.rate <= 0 || pickup.rate > 100) {
+      if (!pickup.id || !gachaValidRate_(pickup.rate)) {
         issues.push(label + ': モンスターピックアップが不正です。');
       }
     });
     gacha.pickupCards.forEach(function (pickup) {
-      if (!pickup.cardId || typeof pickup.rate !== 'number' || !isFinite(pickup.rate) || pickup.rate <= 0 || pickup.rate > 100) {
+      if (!pickup.cardId || !gachaValidRate_(pickup.rate)) {
         issues.push(label + ': カードピックアップが不正です。');
       }
     });

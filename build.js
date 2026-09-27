@@ -24,6 +24,8 @@ const PICKUP_SLOTS = 5;
 const GACHA_EXCERPT_CHARS = 140;
 const GACHA_GATE_VISIBLE_CHARS = 800;
 const GACHA_GATE_EXPLANATION = 300;
+// ガチャ枠で画像が無いモンスター・カード（主に準備中）に出す代わりの画像
+const NO_IMAGE = 'img/site/no-image.svg';
 
 // 技（スキル）。列＝技を発動できる間合い、行＝ランク。並びはゲーム内表示に合わせる。
 const SKILL_RANGES = ['遠', '中', '近', '零'];
@@ -158,20 +160,33 @@ function loadInputs() {
     errors.push(`monsters-data.js と monster-ids.json の件数不一致: ${monstersData.length} / ${monsters.length}`);
   }
   if (basicsJson) errors.push(...basics.validateMonsterBasics(basicsJson, idsJson));
+  errors.push(...validateHiddenFlags(editorial, 'monsters-editorial.json', 'id'));
+  errors.push(...validateHiddenFlags(assistCardsJson.cards, 'assist-cards.json', 'cardId'));
   if (errors.length) throw new Error(errors.join('\n'));
 
   const runtimeById = new Map(
     monsters.map(monster => [monster.id, monstersData[monster.arrayIndex]])
   );
-  const monsterById = new Map(monsters.map(monster => [monster.id, monster]));
+  // 準備中（CMSの「準備中」チェック）の体はIDとmonsters-data.jsの行を持つが、詳細ページ・一覧・
+  // sitemap・技表のリンクには出さない。ガチャのピックアップ枠にだけリンク無しで出す（gacha-design 12章）。
+  const hiddenIds = new Set(editorial.filter(entry => entry.hidden === true).map(entry => entry.id));
+  const publicMonsters = monsters.filter(monster => !hiddenIds.has(monster.id));
+  const hiddenMonsterById = new Map(monsters
+    .filter(monster => hiddenIds.has(monster.id))
+    .map(monster => [monster.id, { ...monster, hidden: true }]));
+  const monsterById = new Map(publicMonsters.map(monster => [monster.id, monster]));
 
   return {
     idsJson,
-    monsters,
-    editorial,
+    monsters: publicMonsters,
+    allMonsters: monsters.map(monster => hiddenMonsterById.get(monster.id) || monster),
+    hiddenMonsterById,
+    editorial: editorial.filter(entry => !hiddenIds.has(entry.id)),
+    allEditorial: editorial,
     images,
     cardsData,
     assistCards: assistCardsJson.cards,
+    publicAssistCards: assistCardsJson.cards.filter(card => card.hidden !== true),
     gachasJson,
     gachaTypesJson,
     taxonomy,
@@ -350,10 +365,10 @@ function renderTopMonsterPickups(gachas, context) {
   if (!gachas.length) return renderTopPickupSection(title, TOP_PICKUP_EMPTY);
   const blocks = gachas.filter(gacha => gacha.pickupMonsters.length).map(gacha => `    <h3 class="pickup-gacha-title">${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid wide-grid">\n${gacha.pickupMonsters.map(pickup => {
     const monster = context.monstersById.get(pickup.id);
-    const editorial = context.editorialById.get(pickup.id);
-    const image = gachaMonsterImage(monster);
-    const excerpt = gachaExcerpt(editorial && editorial.explanation);
-    return `      <a href="${escapeHtml(String(monster.url).replace(/^\//, ''))}" class="card wide-card">\n${image ? `        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n` : ''}        <div class="card-info">\n          <div class="card-name">${escapeHtml(monster.name)}</div>\n          ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
+    const image = gachaMonsterImage(monster, context.root);
+    const excerpt = gachaMonsterExcerpt(monster, context);
+    const [open, close] = pickupWrapper(monster.hidden ? '' : String(monster.url).replace(/^\//, ''));
+    return `      ${open}\n        <img class="card-img" src="${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(monster.name)}</div>\n          ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      ${close}`;
   }).join('\n')}\n    </div>`);
   if (!blocks.length) return '';
   return renderTopPickupSection(title, blocks.join('\n'));
@@ -362,13 +377,42 @@ function renderTopMonsterPickups(gachas, context) {
 function renderTopCardPickups(gachas, context) {
   const title = '現在のピックアップアシストカード一覧';
   if (!gachas.length) return renderTopPickupSection(title, TOP_PICKUP_EMPTY);
-  const blocks = gachas.filter(gacha => gacha.pickupCards.length).map(gacha => `    <h3 class="pickup-gacha-title">${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid wide-grid">\n${gacha.pickupCards.map(pickup => {
-    const card = context.cardsById.get(pickup.cardId);
-    const excerpt = gachaExcerpt(card.explanation);
-    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card wide-card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(card.name)}</div>\n          <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
-  }).join('\n')}\n    </div>`);
+  const blocks = gachas.filter(gacha => gacha.pickupCards.length).map(gacha => `    <h3 class="pickup-gacha-title">${escapeHtml(gacha.name)}</h3>\n    <div class="card-grid wide-grid">\n${gacha.pickupCards.map(pickup => renderPickupCardSummary(context.cardsById.get(pickup.cardId), '')).join('\n')}\n    </div>`);
   if (!blocks.length) return '';
   return renderTopPickupSection(title, blocks.join('\n'));
+}
+
+// ピックアップ枠の外側。準備中（hidden）は詳細ページが無いのでリンクにしない
+function pickupWrapper(href) {
+  return href
+    ? [`<a class="card wide-card" href="${escapeHtml(href)}">`, '</a>']
+    : ['<article class="card wide-card">', '</article>'];
+}
+
+// 準備中の体・カードは性能が未確定なので、解説があっても抜粋を出さない
+function gachaMonsterExcerpt(monster, context) {
+  if (monster.hidden) return '';
+  const editorial = context.editorialById.get(monster.id);
+  return gachaExcerpt(editorial && editorial.explanation);
+}
+
+function gachaCardExcerpt(card) {
+  return card.hidden ? '' : gachaExcerpt(card.explanation);
+}
+
+// トップとリセマラのカード枠。rootPrefix はページからサイト直下への相対パス
+function renderPickupCardSummary(card, rootPrefix) {
+  const excerpt = gachaCardExcerpt(card);
+  const [open, close] = pickupWrapper(card.hidden ? '' : `${rootPrefix}cards/${card.cardId}.html`);
+  return `      ${open}\n        <img class="card-img" src="${escapeHtml(rootPrefix + (card.image || NO_IMAGE))}" alt="${escapeHtml(card.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(card.name)}</div>\n          <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      ${close}`;
+}
+
+// ガチャ詳細の枠の下段。排出率は任意で、空（null）のときは行ごと出さない
+function renderPickupExtras(pickup, excerpt) {
+  return [
+    pickup.rate == null ? '' : `<p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>`,
+    excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : '',
+  ].filter(Boolean).map(line => `\n          ${line}`).join('');
 }
 
 function renderGachaUpdates(gachas, context) {
@@ -387,11 +431,9 @@ function renderReroll(gacha, context) {
     href: `gacha/${gacha.gachaId}.html`,
     imageSrc: gacha.image,
   })}\n    </div>`;
-  const cards = gacha.pickupCards.map(pickup => {
-    const card = context.cardsById.get(pickup.cardId);
-    const excerpt = gachaExcerpt(card.explanation);
-    return `      <a href="cards/${escapeHtml(card.cardId)}.html" class="card wide-card">\n        <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">\n        <div class="card-info">\n          <div class="card-name">${escapeHtml(card.name)}</div>\n          <span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span>${excerpt ? `\n          <div class="wide-card-excerpt">${escapeHtml(excerpt)}</div>` : ''}\n        </div>\n      </a>`;
-  }).join('\n');
+  const cards = gacha.pickupCards
+    .map(pickup => renderPickupCardSummary(context.cardsById.get(pickup.cardId), ''))
+    .join('\n');
   const grid = cards ? `\n\n    <div class="card-grid wide-grid reroll-pickup-grid">\n${cards}\n    </div>` : '';
   return `${banner}${grid}\n\n    <div class="expl-body">${formatExplanation(gacha.explanation)}</div>`;
 }
@@ -428,6 +470,11 @@ function validJstTimestamp(value) {
     && local.getUTCDate() === numbers[2]
     && local.getUTCHours() === numbers[3]
     && local.getUTCMinutes() === numbers[4];
+}
+
+// 排出率は任意。未入力は null、入力時は0超100以下の数値
+function validPickupRate(rate) {
+  return rate === null || (typeof rate === 'number' && Number.isFinite(rate) && rate > 0 && rate <= 100);
 }
 
 function validateGachaData({ root = REPO, gachaDb, typeDb, monsterDb, cardDb }) {
@@ -470,16 +517,14 @@ function validateGachaData({ root = REPO, gachaDb, typeDb, monsterDb, cardDb }) 
     if (pickupCards.length > PICKUP_SLOTS) issues.push(`${label}: pickupCardsが${PICKUP_SLOTS}枠を超過`);
     for (const pickup of pickupMonsters) {
       if (!pickup || !monsterIds.has(pickup.id)) issues.push(`${label}: 未知のモンスターID ${pickup && pickup.id}`);
-      if (!pickup || typeof pickup.rate !== 'number' || !Number.isFinite(pickup.rate)
-          || pickup.rate <= 0 || pickup.rate > 100) {
-        issues.push(`${label}: モンスター排出率が0超100以下の数値でない`);
+      if (!pickup || !validPickupRate(pickup.rate)) {
+        issues.push(`${label}: モンスター排出率がnull（未入力）でも0超100以下の数値でもない`);
       }
     }
     for (const pickup of pickupCards) {
       if (!pickup || !cardIds.has(pickup.cardId)) issues.push(`${label}: 未知のcardId ${pickup && pickup.cardId}`);
-      if (!pickup || typeof pickup.rate !== 'number' || !Number.isFinite(pickup.rate)
-          || pickup.rate <= 0 || pickup.rate > 100) {
-        issues.push(`${label}: カード排出率が0超100以下の数値でない`);
+      if (!pickup || !validPickupRate(pickup.rate)) {
+        issues.push(`${label}: カード排出率がnull（未入力）でも0超100以下の数値でもない`);
       }
     }
     if (typeof gacha.image !== 'string'
@@ -505,51 +550,47 @@ function gachaStartLabel(value) {
   return match ? `${Number(match[1])}月${Number(match[2])}日開始` : '開始前';
 }
 
-function gachaMonsterImage(monster) {
-  if (monster.localImg) return `monster/${monster.localImg}`;
-  return String(monster.image || '').replace(/^img\/monster\//, 'monster/');
+// 画像ファイルが実在しない体（画像未登録の準備中など）はNO IMAGEにする
+function gachaMonsterImage(monster, root) {
+  const image = monster.localImg
+    ? `monster/${monster.localImg}`
+    : String(monster.image || '').replace(/^img\/monster\//, 'monster/');
+  return image && fs.existsSync(path.join(root, image)) ? image : NO_IMAGE;
 }
 
-function renderGachaPickupMonster(pickup, monster, editorial, root) {
-  const excerpt = gachaExcerpt(editorial && editorial.explanation);
+function renderGachaPickupMonster(pickup, monster, context) {
+  const excerpt = gachaMonsterExcerpt(monster, context);
   const detailPath = String(monster.url || '').replace(/^\//, '');
-  const hasDetail = detailPath && fs.existsSync(path.join(root, detailPath));
-  const image = gachaMonsterImage(monster);
-  const openingTag = hasDetail
-    ? `<a class="card wide-card" href="../${escapeHtml(detailPath)}">`
-    : '<article class="card wide-card">';
-  const closingTag = hasDetail ? '</a>' : '</article>';
+  const hasDetail = !monster.hidden && detailPath && fs.existsSync(path.join(context.root, detailPath));
+  const image = gachaMonsterImage(monster, context.root);
+  const [openingTag, closingTag] = pickupWrapper(hasDetail ? `../${detailPath}` : '');
   return `      ${openingTag}
-        ${image ? `<img class="card-img" src="../${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">` : ''}
+        <img class="card-img" src="../${escapeHtml(image)}" alt="${escapeHtml(monster.name)}">
         <div class="card-info">
           <h3 class="card-name gacha-pickup-name">${escapeHtml(monster.name)}</h3>
           ${renderBadgeRow({ aura: monster.aura, mon: monster.mon, limitedLabel: limitedLabelOf(monster), small: true, indent: '          ' })}
-          <p class="gacha-pickup-blood">${escapeHtml(monster.blood)}（副血統：${escapeHtml(monster.subBlood)}）</p>
-          <p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>
-          ${excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
+          <p class="gacha-pickup-blood">${escapeHtml(monster.blood)}（副血統：${escapeHtml(monster.subBlood)}）</p>${renderPickupExtras(pickup, excerpt)}
         </div>
       ${closingTag}`;
 }
 
 function renderGachaPickupCard(pickup, card) {
-  const excerpt = gachaExcerpt(card.explanation);
-  return `      <a class="card wide-card" href="../cards/${escapeHtml(card.cardId)}.html">
-        <img class="card-img" src="../${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">
+  const excerpt = gachaCardExcerpt(card);
+  const [openingTag, closingTag] = pickupWrapper(card.hidden ? '' : `../cards/${card.cardId}.html`);
+  return `      ${openingTag}
+        <img class="card-img" src="../${escapeHtml(card.image || NO_IMAGE)}" alt="${escapeHtml(card.name)}">
         <div class="card-info">
           <h3 class="card-name gacha-pickup-name">${escapeHtml(card.name)}</h3>
           ${renderBadgeRow({ aura: card.aura, mon: card.monType, small: true, indent: '          ' })}
-          <p class="gacha-pickup-blood">${escapeHtml(card.rarity)} / ${escapeHtml(card.cardType)}</p>
-          <p class="gacha-pickup-rate">排出率 ${escapeHtml(pickup.rate)}%</p>
-          ${excerpt ? `<p class="wide-card-excerpt" data-gacha-excerpt>${escapeHtml(excerpt)}</p>` : ''}
+          <p class="gacha-pickup-blood">${escapeHtml(card.rarity)} / ${escapeHtml(card.cardType)}</p>${renderPickupExtras(pickup, excerpt)}
         </div>
-      </a>`;
+      ${closingTag}`;
 }
 
 function renderGachaBody(gacha, context, includeExcerpts = true) {
   const monsterCards = gacha.pickupMonsters.map(pickup => {
     const monster = context.monstersById.get(pickup.id);
-    const editorial = context.editorialById.get(pickup.id);
-    const html = renderGachaPickupMonster(pickup, monster, editorial, context.root);
+    const html = renderGachaPickupMonster(pickup, monster, context);
     return includeExcerpts ? html : html.replace(/\s*<p data-gacha-excerpt>[\s\S]*?<\/p>/, '');
   }).join('\n');
   const assistCards = gacha.pickupCards.map(pickup => {
@@ -739,6 +780,22 @@ function buildGachaPages({
       ...pages.filter(page => page.indexable).map(page => ({ canonical: page.canonical, priority: page.priority })),
     ],
   };
+}
+
+// hidden は「準備中」のときだけ true で持つ。false や文字列は書かない約束なので、true以外はFAILにする。
+function validateHiddenFlags(entries, fileName, idKey) {
+  return entries
+    .filter(entry => Object.prototype.hasOwnProperty.call(entry, 'hidden') && entry.hidden !== true)
+    .map(entry => `${fileName}: ${entry[idKey]} の hidden は true だけを書けます（公開時は項目ごと省く）`);
+}
+
+// 準備中の体・カードは生成しない。既に公開済みのページがある状態で準備中へ戻すと、
+// 古いページが残ったままsitemapからだけ消えるため、ビルドを止めて管理画面で戻してもらう。
+function assertHiddenNotPublished(root, relativePaths, label) {
+  const published = relativePaths.filter(relativePath => fs.existsSync(path.join(root, relativePath)));
+  if (published.length) {
+    throw new Error(`公開済みの${label}は準備中に戻せません（管理画面で準備中のチェックを外してください）: ${published.join(', ')}`);
+  }
 }
 
 function createDetailEntries(inputs) {
@@ -1278,7 +1335,7 @@ ${unlocks.map(skill => {
     const entry = (skill.unlockedBy || []).find(item => String(item.monsterId) === monster.id);
     const owner = skill.unique
       ? (skill.owners || [])
-        .map(id => (context.monsterById.get(String(id)) || {}).name)
+        .map(id => monsterNameOf(context, id))
         .filter(Boolean).map(escapeHtml).join('・')
       : `${escapeHtml(monster.blood)}種の全モンスター`;
     return `      <li class="skill-line${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
@@ -2187,10 +2244,17 @@ function sortSkillsInCell(skills) {
   });
 }
 
+// 技の使用者・解放元の名前。準備中の体も名前だけは出す（リンクは付けない）。
+function monsterNameOf(context, id) {
+  const monster = context.monsterById.get(String(id))
+    || (context.hiddenMonsterById && context.hiddenMonsterById.get(String(id)));
+  return monster ? monster.name : '';
+}
+
 // 技チップ。移動先は表に出さず、詳細だけで扱う。
 function renderSkillChip(skill, context) {
   const ownerNames = (skill.owners || [])
-    .map(id => (context.monsterById.get(String(id)) || {}).name)
+    .map(id => monsterNameOf(context, id))
     .filter(Boolean);
   const uniqueLabel = skill.unique
     ? `<span class="skill-chip-unique">固有${ownerNames.length ? `：${escapeHtml(ownerNames.join('・'))}` : ''}</span>`
@@ -2208,7 +2272,9 @@ function renderSkillChip(skill, context) {
 function renderSkillDetailRow(skill, context, abilityById, columnCount) {
   const monsterLink = id => {
     const monster = context.monsterById.get(String(id));
-    if (!monster) return '';
+    const hidden = context.hiddenMonsterById && context.hiddenMonsterById.get(String(id));
+    // 準備中の体は詳細ページが無いので名前だけ出す
+    if (!monster) return hidden ? escapeHtml(hidden.name) : '';
     const target = monster.url.replace(/^\//, '');
     addLink(context, target);
     return `<a href="${ROOT_PREFIX}${escapeHtml(target)}">${escapeHtml(monster.name)}</a>`;
@@ -2432,7 +2498,7 @@ function renderBloodPage(bloodGate, context, abilityById, otherBloodGates) {
     <ul class="skill-unique-list">
 ${uniqueSkills.map(skill => {
     const owners = (skill.owners || [])
-      .map(id => (context.monsterById.get(String(id)) || {}).name)
+      .map(id => monsterNameOf(context, id))
       .filter(Boolean)
       .map(escapeHtml)
       .join('・');
@@ -2818,7 +2884,7 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
   const eligibleMonTypes = monTypeGates.filter(monType => monType.eligible);
 
   console.log('=== 入力 ===');
-  console.log(`  monster-ids        ${inputs.monsters.length}件`);
+  console.log(`  monster-ids        ${inputs.allMonsters.length}件（準備中 ${inputs.hiddenMonsterById.size}件）`);
   console.log(`  monsters-editorial  ${inputs.editorial.length}件`);
   console.log(`  monster-images     ${Object.keys(inputs.images).length}件`);
   console.log(`  taxonomy           血統${taxonomyCounts.bloods}件 / モン類${taxonomyCounts.monTypes}件`);
@@ -2885,16 +2951,23 @@ function main() {
   const context = createBuildContext(inputs, eligibleMonTypes, eligibleBloods);
   // 能力の評価値は詳細ページの描画より先に計算する（相性のいいアシスト能力が使う）
   const abilityScores = createAbilityScores(inputs.assistCards);
+  // 準備中カードの能力は、カードページが無いので相性のいいアシスト能力に出さない
+  const hiddenCardIds = new Set(inputs.assistCards.filter(card => card.hidden === true).map(card => card.cardId));
   context.abilityRecommend = {
-    scoreRows: abilityScores.abilities,
+    scoreRows: abilityScores.abilities.filter(row => !hiddenCardIds.has(row.cardId)),
     abilityById: new Map(readJson('src/data/assist-abilities.json').abilities.map(ability => [ability.abilityId, ability])),
-    cardById: new Map(inputs.assistCards.map(card => [card.cardId, card])),
+    cardById: new Map(inputs.publicAssistCards.map(card => [card.cardId, card])),
     scorer: createAbilityScorer(readJson('src/data/ability-rubric.json')),
     parser: abilityParser,
   };
   const monsterIndex = renderMonsterIndex(
     fs.readFileSync(path.join(REPO, 'monsters.html'), 'utf8'),
     context
+  );
+  assertHiddenNotPublished(
+    REPO,
+    [...inputs.hiddenMonsterById.values()].map(monster => monster.url.replace(/^\//, '')),
+    'モンスター'
   );
   const redirectMap = renderRedirectMap(inputs.monsters);
   const detailPages = detailEntries.map(entry => {
@@ -2974,8 +3047,8 @@ function main() {
     now: resolveBuildNow(),
     gachaDb: inputs.gachasJson,
     typeDb: inputs.gachaTypesJson,
-    monsterDb: inputs.monsters,
-    editorialDb: inputs.editorial,
+    monsterDb: inputs.allMonsters,
+    editorialDb: inputs.allEditorial,
     cardDb: inputs.assistCards,
     indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
     rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
