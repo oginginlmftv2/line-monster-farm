@@ -407,6 +407,51 @@ try {
   assert.deepStrictEqual(shiftedIssues, []);
   pass(32, 'publishedはgachaIdの日付部とstartAtがずれていても他の検査を満たせば受理');
 
+  const noRate = gacha({
+    pickupMonsters: [{ id: monsters[1].id, rate: null }],
+    pickupCards: [{ cardId: cards[1].cardId, rate: null }],
+  });
+  assert.deepStrictEqual(validateGachaData({
+    root, gachaDb: { schemaVersion: 1, gachas: [noRate] }, typeDb, monsterDb: fixtureMonsters, cardDb: cards,
+  }), []);
+  const noRateHtml = build(root, [noRate], 'no-rate').pages[0].html;
+  assert(!noRateHtml.includes('gacha-pickup-rate'));
+  assert(!/^\s+$/m.test(noRateHtml.slice(noRateHtml.indexOf('<main'), noRateHtml.indexOf('</main>'))));
+  pass(33, '排出率null（未入力）を受理し、詳細に排出率の行も空行も出さない');
+
+  // 準備中（hidden）はIDを持つがページが無い。ガチャ枠ではリンク・抜粋を出さず、画像が無ければNO IMAGE
+  const hiddenMonster = { ...monsters[2], id: '9990', name: '準備中モンスター', url: '/monsters/x/y/9990.html', localImg: null, image: 'img/monster/9990.jpg', hidden: true };
+  const hiddenCard = { ...cards[2], cardId: 'c9990-MR', name: '準備中カード', image: '', explanation: '未公開の性能メモ', hidden: true };
+  const hiddenGacha = gacha({
+    pickupMonsters: [{ id: hiddenMonster.id, rate: null }],
+    pickupCards: [{ cardId: hiddenCard.cardId, rate: 1 }],
+  });
+  const hiddenEditorial = editorial.concat({ id: hiddenMonster.id, name: hiddenMonster.name, explanation: '未公開の解説', formations: [], hidden: true });
+  const hiddenBuild = buildGachaPages({
+    root,
+    outputRoot: path.join(root, 'hidden'),
+    now,
+    gachaDb: { schemaVersion: 1, gachas: [hiddenGacha] },
+    typeDb,
+    monsterDb: fixtureMonsters.concat(hiddenMonster),
+    editorialDb: hiddenEditorial,
+    cardDb: cards.concat(hiddenCard),
+    indexSource: indexTemplate,
+    rerollSource: rerollTemplate,
+  });
+  const hiddenOutputs = [hiddenBuild.pages[0].html, hiddenBuild.integratedIndex, hiddenBuild.integratedReroll];
+  for (const html of hiddenOutputs) {
+    assert(html.includes('準備中カード'));
+    assert(!html.includes('c9990-MR.html'), '準備中カードへのリンクがある');
+    assert(!html.includes('9990.html'), '準備中モンスターへのリンクがある');
+    assert(!html.includes('未公開の'), '準備中の解説・抜粋が出ている');
+    assert(html.includes('no-image.svg'), 'NO IMAGEが出ていない');
+  }
+  assert(hiddenBuild.pages[0].html.includes('準備中モンスター'));
+  assert(hiddenBuild.integratedIndex.includes('準備中モンスター'));
+  assert(hiddenBuild.pages[0].html.includes('排出率 1%'));
+  pass(34, '準備中のモンスター・カードは詳細・トップ・リセマラでリンク無し・抜粋無し・NO IMAGEで表示');
+
   for (const [label, monsterCount, cardCount] of [
     ['A', 5, 5],
     ['B', 3, 2],
@@ -430,11 +475,12 @@ expectRejected(13, 'startAt > endAt', (doc, base) => { base.startAt = '2026-09-1
 expectRejected(14, '種別マスタ外', (doc, base) => { base.gachaType = '未知'; }, /gachaTypeがマスタにない/);
 expectRejected(15, '未知モンスターID', (doc, base) => { base.pickupMonsters[0].id = '9999'; }, /未知のモンスターID/);
 expectRejected(16, '未知cardId', (doc, base) => { base.pickupCards[0].cardId = 'missing-card'; }, /未知のcardId/);
-expectRejected(17, '文字列rate', (doc, base) => { base.pickupMonsters[0].rate = '0.5%'; }, /排出率が0超100以下の数値でない/);
+expectRejected(17, '文字列rate', (doc, base) => { base.pickupMonsters[0].rate = '0.5%'; }, /排出率がnull（未入力）でも0超100以下の数値でもない/);
+expectRejected(26, 'rate項目なし（未入力はnullで書く）', (doc, base) => { delete base.pickupCards[0].rate; }, /カード排出率がnull（未入力）でも/);
 expectRejected(18, 'rate 0 / 101', (doc, base) => {
   base.pickupMonsters[0].rate = 0;
   base.pickupCards[0].rate = 101;
-}, /排出率が0超100以下の数値でない/);
+}, /排出率がnull（未入力）でも0超100以下の数値でもない/);
 expectRejected(19, 'ピックアップ6枠', (doc, base) => {
   base.pickupMonsters = Array.from({ length: PICKUP_SLOTS + 1 }, () => ({ ...base.pickupMonsters[0] }));
 }, /枠を超過/);
@@ -464,4 +510,4 @@ for (const [number, label, source] of [
   console.log(`PASS 破壊25: build.jsへのカード後処理差し込み復活を検査17が拒否 → ${postprocessIssues.join(' / ')}`);
 }
 
-console.log('OK 正常32件PASS・破壊15件すべて拒否');
+console.log('OK 正常34件PASS・破壊16件すべて拒否');

@@ -296,7 +296,8 @@ function validateInputs(cards, effectsByCard, abilities) {
   if (missingEffects.length) throw new Error(`assist-effects.json にcardIdがありません: ${missingEffects.join(', ')}`);
   const invalidAbilities = abilities.filter(ability => ability.linkStatus === 'resolved' && !idSet.has(ability.cardId));
   if (invalidAbilities.length) throw new Error(`assist-abilities.json に未知のcardId: ${invalidAbilities[0].cardId}`);
-  const missingImages = cards.filter(card => !fs.existsSync(path.join(REPO, card.image)));
+  // 準備中カードは画像未登録でもよい（ガチャ枠ではNO IMAGEを出す）
+  const missingImages = cards.filter(card => card.hidden !== true && !fs.existsSync(path.join(REPO, card.image)));
   if (missingImages.length) throw new Error(`カード画像がありません: ${missingImages.map(card => card.cardId).join(', ')}`);
   const formationIds = cards.flatMap(card => card.formations.flatMap(formation => formation.cards.concat(formation.rental))).filter(Boolean);
   const unknownFormationIds = [...new Set(formationIds.filter(id => !idSet.has(id)))];
@@ -409,7 +410,7 @@ function renderAssistIndex(source, cards, aptitudes = {}) {
   }
   const unknownIds = currentIds.filter(id => !cardById.has(id));
   if (unknownIds.length) {
-    throw new Error(`assist.html のカード一覧にDB未登録のcardIdがあります: ${unknownIds.join(', ')}`);
+    throw new Error(`assist.html のカード一覧にDB未登録または準備中のcardIdがあります: ${unknownIds.join(', ')}`);
   }
 
   const currentIdSet = new Set(currentIds);
@@ -431,11 +432,18 @@ function buildAssistPages(options = {}) {
   if (abilityData.schemaVersion !== 2 || !Array.isArray(abilityData.abilities)) {
     throw new Error('assist-abilities.json はschemaVersion 2のabilities配列が必須です');
   }
-  const cards = cardData.cards;
+  const allCards = cardData.cards;
   const effectsByCard = effectData.cards;
-  validateInputs(cards, effectsByCard, abilityData.abilities);
-  const cardById = new Map(cards.map(card => [card.cardId, card]));
+  validateInputs(allCards, effectsByCard, abilityData.abilities);
+  const cardById = new Map(allCards.map(card => [card.cardId, card]));
   const aptitudes = validateAptitudes(readJson(INPUTS.aptitudes), cardById);
+  // 準備中（hidden）のカードは詳細ページも一覧の行も作らない。ガチャ枠にだけリンク無しで出る
+  const hiddenCards = allCards.filter(card => card.hidden === true);
+  const publishedHidden = hiddenCards.filter(card => fs.existsSync(path.join(REPO, `cards/${card.cardId}.html`)));
+  if (publishedHidden.length) {
+    throw new Error(`公開済みのカードは準備中に戻せません（管理画面で準備中のチェックを外してください）: ${publishedHidden.map(card => card.cardId).join(', ')}`);
+  }
+  const cards = allCards.filter(card => card.hidden !== true);
   const counts = { new: 0, updated: 0, unchanged: 0 };
   const reports = [];
 
@@ -453,7 +461,7 @@ function buildAssistPages(options = {}) {
   const passed = reports.filter(report => report.indexable);
   console.log('\n=== 静的カード詳細 ===');
   console.log(`  一覧 ${ASSIST_INDEX}: ${assistIndexState}`);
-  console.log(`  生成 ${cards.length}件 / 新規 ${counts.new}件 / 更新 ${counts.updated}件 / 変更なし ${counts.unchanged}件`);
+  console.log(`  生成 ${cards.length}件（準備中 ${hiddenCards.length}件は除外） / 新規 ${counts.new}件 / 更新 ${counts.updated}件 / 変更なし ${counts.unchanged}件`);
   console.log(`  ゲート通過 ${passed.length}件: ${passed.map(report => report.cardId).join(', ')}`);
   console.log(`  可視本文 最小 ${values[0]} / 中央値 ${values[Math.floor(values.length / 2)]} / 最大 ${values[values.length - 1]} / 800字以上 ${reports.filter(report => report.visible >= 800).length}件`);
   console.log(`  index ${passed.length}件（robotsメタなし・広告あり） / noindex ${reports.length - passed.length}件（広告なし）`);

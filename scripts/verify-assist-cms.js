@@ -885,7 +885,10 @@ function validateRoot(root) {
   const duplicateCardIds = duplicates(cardIds);
   if (duplicateCardIds.length || cardIds.some(cardId => !cardId)) issues.push(`cardId重複または空欄: ${duplicateCardIds.join(', ')}`);
   for (const card of cardsDoc.cards) {
-    if (!card.name || !card.image || !card.cardType) issues.push(`${card.cardId}: カード必須文字列が空欄`);
+    // 準備中（hidden: true）のカードは画像未登録でもよい。hidden は true のときだけ書く
+    const hiddenCard = card.hidden === true;
+    if ('hidden' in card && !hiddenCard) issues.push(`${card.cardId}: hiddenはtrueだけを書ける`);
+    if (!card.name || (!card.image && !hiddenCard) || !card.cardType) issues.push(`${card.cardId}: カード必須文字列が空欄`);
     if (!ALLOWED.rarity.has(card.rarity)) issues.push(`${card.cardId}: rarity不正`);
     if (!ALLOWED.aura.has(card.aura)) issues.push(`${card.cardId}: aura不正`);
     if (!ALLOWED.cardType.has(card.cardType)) issues.push(`${card.cardId}: cardType不正`);
@@ -895,7 +898,7 @@ function validateRoot(root) {
     if (!Array.isArray(card.formations)) issues.push(`${card.cardId}: formations不正`);
     if (card.event2 !== null && (typeof card.event2 !== 'string' || !card.event2.trim())) issues.push(`${card.cardId}: event2不正`);
     const expectedImage = new RegExp(`^assist-cards/${card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\.(?:jpg|jpeg|png|webp)$`, 'i');
-    if (!expectedImage.test(card.image || '') || !fs.existsSync(path.join(root, card.image || ''))) issues.push(`${card.cardId}: imageパスまたは実在不正`);
+    if (!(hiddenCard && !card.image) && (!expectedImage.test(card.image || '') || !fs.existsSync(path.join(root, card.image || '')))) issues.push(`${card.cardId}: imageパスまたは実在不正`);
     if (card.releasedAt !== null) {
       const match = /^(\d{4})\/(\d{2})\/(\d{2})$/.exec(card.releasedAt);
       const date = match && new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3])));
