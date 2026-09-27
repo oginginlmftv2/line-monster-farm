@@ -9,7 +9,7 @@ var ASST_SHEET_PUBLISH_LOG = 'assist_publish_log';
 var ASST_IMAGE_MAX_BYTES = 2 * 1024 * 1024;
 var ASST_IMAGE_MIME_EXT = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 var ASST_HEADERS = {};
-ASST_HEADERS[ASST_SHEET_CARDS] = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'];
+ASST_HEADERS[ASST_SHEET_CARDS] = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy','hidden'];
 ASST_HEADERS[ASST_SHEET_EFFECTS] = ['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy','conditional','conditionsJson'];
 ASST_HEADERS[ASST_SHEET_ABILITIES] = ['sourceOrder','abilityId','legacyId','cardId','sourceName','name','description','source','rarity','tagsJson','sortOrder','linkStatus','flagsJson','status','version','updatedAt','updatedBy'];
 ASST_HEADERS[ASST_SHEET_ABILITY_EXTERNAL_REFS] = ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'];
@@ -184,7 +184,7 @@ function asstInList_(value, allowed, label, allowBlank) {
 
 function asstCreateCardPayload_(payload) {
   if (!payload || typeof payload !== 'object' || Array.isArray(payload)) throw new Error('payloadはオブジェクトです。');
-  var allowed = ['name','rarity','aura','cardType','monType'];
+  var allowed = ['name','rarity','aura','cardType','monType','hidden'];
   Object.keys(payload).forEach(function (key) {
     if (allowed.indexOf(key) < 0) throw new Error('未対応のpayload項目です: ' + key);
   });
@@ -198,7 +198,7 @@ function asstCreateCardPayload_(payload) {
   var cardType = asstInList_(payload.cardType, ASST_CARD_TYPES, 'cardType', false);
   var monType = asstInList_(payload.monType, ASST_MON_TYPES, 'monType', true);
   // cardIdは管理者入力を受け取らない。lock取得後にasstNextCardId_()がシートから採番する。
-  return { name: name, rarity: rarity, aura: aura, cardType: cardType, monType: monType };
+  return { name: name, rarity: rarity, aura: aura, cardType: cardType, monType: monType, hidden: payload.hidden === true };
 }
 
 // 新形式cardIdはc<4桁連番>-<レアリティ>。旧形式は3セグメントなので衝突しない。
@@ -245,7 +245,7 @@ function asstCardCreateRow_(card, sourceOrder, updatedAt, updatedBy) {
     aura: card.aura, cardType: card.cardType, monType: card.monType || '', image: '', event2: '',
     releasedAt: '', accessoryStatus: 'unknown', statsJson: asstJsonCell_([]), limitBreakJson: asstJsonCell_(null),
     ratingsJson: asstJsonCell_(null), explanation: '', formationsJson: asstJsonCell_([]),
-    sapoRefJson: asstJsonCell_(null), version: 1, updatedAt: updatedAt, updatedBy: updatedBy
+    sapoRefJson: asstJsonCell_(null), version: 1, updatedAt: updatedAt, updatedBy: updatedBy, hidden: asstHiddenCell_(card.hidden)
   };
   return ASST_HEADERS[ASST_SHEET_CARDS].map(function (header) { return row[header]; });
 }
@@ -426,6 +426,7 @@ function asstDriveImageInventory_(cards, allowMissingFolder) {
 
 function asstValidateImagePath_(card, checkExists, driveImages) {
   var imagePath = asstText_(card.image).trim();
+  if (!imagePath && card.hidden === true) return; // 準備中は画像未登録を許す
   if (!imagePath) throw new Error(card.cardId + ': image空欄');
   var expected = new RegExp('^assist-cards/' + card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.(?:jpg|jpeg|png|webp)$', 'i');
   if (!expected.test(imagePath)) throw new Error(card.cardId + ': imageはcardIdと一致するassist-cards配下の画像パス必須');
@@ -441,7 +442,7 @@ function asstValidateImagePath_(card, checkExists, driveImages) {
 
 function asstValidateImageFiles_(cards, driveImages) {
   var validCards = cards.filter(function (card) {
-    try { asstValidateImagePath_(card, false); return true; } catch (error) { return false; }
+    try { asstValidateImagePath_(card, false); return !!asstText_(card.image); } catch (error) { return false; }
   });
   var mainCards = validCards.filter(function (card) {
     return !driveImages || !driveImages[asstImageFilename_(card.image)];
@@ -1005,7 +1006,7 @@ function api_asstAuditExternalAbilities(payload) {
 }
 
 function asstCardFromRow_(row) {
-  return {
+  return asstWithHidden_({
     cardId: asstText_(row.cardId),
     name: asstText_(row.name),
     rarity: asstText_(row.rarity),
@@ -1022,7 +1023,7 @@ function asstCardFromRow_(row) {
     explanation: asstText_(row.explanation),
     formations: asstParseJsonCell_(row.formationsJson, [], row.cardId + '/formationsJson'),
     sapoRef: asstParseJsonCell_(row.sapoRefJson, null, row.cardId + '/sapoRefJson')
-  };
+  }, row);
 }
 
 function asstEffectFromRow_(row) {
@@ -1410,7 +1411,7 @@ function api_asstBootstrap() {
         cardId: asstText_(row.cardId), name: asstText_(row.name), rarity: asstText_(row.rarity),
         aura: asstText_(row.aura), version: Number(row.version || 1),
         monType: asstText_(row.monType),
-        effects: effectCounts[row.cardId] || 0, abilities: abilityCounts[row.cardId] || 0
+        effects: effectCounts[row.cardId] || 0, abilities: abilityCounts[row.cardId] || 0, hidden: asstCardHidden_(row)
       };
     })
   };
@@ -1536,7 +1537,7 @@ function api_asstCreateCard(payload) {
     var values = asstCardCreateRow_(card, sourceOrder, updatedAt, user.nickname);
     var created = {
       cardId: card.cardId, name: card.name, rarity: card.rarity, aura: card.aura,
-      effects: 0, abilities: 0, version: 1
+      effects: 0, abilities: 0, version: 1, hidden: card.hidden
     };
 
     appendStarted = true;
@@ -1589,6 +1590,7 @@ function api_asstSaveCard(payload) {
     asstInList_(card.cardType, ASST_CARD_TYPES, 'cardType', false);
     asstInList_(card.monType, ASST_MON_TYPES, 'monType', true);
     asstInList_(card.accessoryStatus, ASST_ACCESSORY_STATUSES, 'accessoryStatus', false);
+    card.hidden = asstResolveCardHidden_(card, row);
     asstValidateImagePath_(card, true);
     asstValidateReleasedAt_(card.releasedAt, 'releasedAt');
     asstValidateRatings_(card.ratings, 'ratings');
@@ -1612,12 +1614,12 @@ function api_asstSaveCard(payload) {
       statsJson: asstJsonCell_(card.stats), limitBreakJson: asstJsonCell_(currentCard.limitBreak),
       ratingsJson: asstJsonCell_(card.ratings), explanation: asstText_(card.explanation),
       formationsJson: asstJsonCell_(card.formations), sapoRefJson: asstJsonCell_(currentCard.sapoRef),
-      version: currentVersion + 1, updatedAt: nowIso_(), updatedBy: user.nickname
+      version: currentVersion + 1, updatedAt: nowIso_(), updatedBy: user.nickname, hidden: asstHiddenCell_(card.hidden)
     };
     Object.keys(update).forEach(function (key) { values[ASST_HEADERS[ASST_SHEET_CARDS].indexOf(key)] = update[key]; });
     asstSheet_(ASST_SHEET_CARDS).getRange(row._row, 1, 1, values.length).setValues([values]);
     asstAppendLog_(user, 'save-card', 'PASS', row.cardId + ' version=' + (currentVersion + 1));
-    return { ok: true, version: currentVersion + 1 };
+    return { ok: true, version: currentVersion + 1, hidden: card.hidden };
   } finally {
     asstReleaseScriptLock_(lock);
   }

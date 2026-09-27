@@ -149,7 +149,6 @@ function monBasicsIds_() {
   }
 }
 
-// 保存時の見込み（判定そのものは build.js が行う）
 function monRequireHiddenColumn_() {
   var sh = monSheet_();
   var column = monColIndex_().hidden + 1;
@@ -165,6 +164,7 @@ function monHasPublishedPage_(id, baseMap) {
   return baseMap[id] != null;
 }
 
+// 保存時の見込み（判定そのものは build.js が行う）
 function monIndexable_(predicted, hasExplanation, hasBasics) {
   if (predicted < MON_MIN_CHARS) return false;
   return (hasExplanation && predicted >= MON_THRESHOLD) || hasBasics;

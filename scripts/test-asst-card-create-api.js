@@ -8,9 +8,9 @@ const path = require('path');
 const vm = require('vm');
 
 const REPO = path.resolve(__dirname, '..');
-const SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8');
+const SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
 const NOW = '2026-08-30T12:34:56+09:00';
-const HEADERS = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'];
+const HEADERS = ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy','hidden'];
 const LOG_HEADERS = ['timestamp','user','action','result','detail'];
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
@@ -19,7 +19,7 @@ function row(value = {}) {
     sourceOrder: 1, cardId: 'a1-MR-existing', name: '既存カード', rarity: 'MR', aura: '赤', cardType: 'ガード', monType: '',
     image: 'assist-cards/a1-MR-existing.jpg', event2: '', releasedAt: '', accessoryStatus: 'unknown', statsJson: '[]',
     limitBreakJson: 'null', ratingsJson: 'null', explanation: '', formationsJson: '[]', sapoRefJson: 'null',
-    version: 1, updatedAt: NOW, updatedBy: 'seed',
+    version: 1, updatedAt: NOW, updatedBy: 'seed', hidden: '',
   }, value);
   return HEADERS.map(key => item[key]);
 }
@@ -92,7 +92,7 @@ test('正しい必須属性で末尾へ1行だけ追加し初期値・応答・�
   const result = clone(h.context.api_asstCreateCard(validPayload()));
   assert.deepStrictEqual(result, {
     ok: true, cardId: 'c0001-SSR', sourceOrder: 6, version: 1,
-    card: { cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR', aura: '青', effects: 0, abilities: 0, version: 1 },
+    card: { cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR', aura: '青', effects: 0, abilities: 0, version: 1, hidden: false },
   });
   assert.strictEqual(h.state.cards.length, h.before.cards.length + 1);
   assert.deepStrictEqual(h.state.cards.slice(0, -1), h.before.cards);
@@ -100,7 +100,7 @@ test('正しい必須属性で末尾へ1行だけ追加し初期値・応答・�
   assert.deepStrictEqual(created, {
     sourceOrder: 6, cardId: 'c0001-SSR', name: '新規カード', rarity: 'SSR', aura: '青', cardType: 'ジャッジ', monType: '幻霊',
     image: '', event2: '', releasedAt: '', accessoryStatus: 'unknown', statsJson: '[]', limitBreakJson: 'null', ratingsJson: 'null',
-    explanation: '', formationsJson: '[]', sapoRefJson: 'null', version: 1, updatedAt: NOW, updatedBy: 'tester',
+    explanation: '', formationsJson: '[]', sapoRefJson: 'null', version: 1, updatedAt: NOW, updatedBy: 'tester', hidden: '',
   });
   assert.strictEqual(h.state.assist_log.length, 2);
   assert.deepStrictEqual(h.state.assist_log[1], [NOW, 'tester', 'create-card', 'PASS', 'c0001-SSR sourceOrder=6']);

@@ -11,12 +11,12 @@ const vm = require('vm');
 const REPO = path.resolve(__dirname, '..');
 const SHA = 'a'.repeat(40);
 const NOW = '2026-08-28T12:34:56+09:00';
-const ASSIST_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8');
+const ASSIST_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
 const WRITE_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/25_lmfdb_write.gs'), 'utf8');
 const { buildCardArtifact } = require('./build-assist-pages');
 
 const HEADERS = {
-  cards: ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy'],
+  cards: ['sourceOrder','cardId','name','rarity','aura','cardType','monType','image','event2','releasedAt','accessoryStatus','statsJson','limitBreakJson','ratingsJson','explanation','formationsJson','sapoRefJson','version','updatedAt','updatedBy','hidden'],
   assist_effects: ['cardId','effectId','name','description','unlockRank','sortOrder','updatedAt','updatedBy'],
   abilities: ['sourceOrder','abilityId','legacyId','cardId','sourceName','name','description','source','rarity','tagsJson','sortOrder','linkStatus','flagsJson','status','version','updatedAt','updatedBy'],
   ability_external_refs: ['provider','candidateKey','externalNumericId','firstSeenSha','lastSeenSha','externalFingerprint','comparisonFingerprint','externalSnapshotJson','disposition','abilityId','importedAt','importedBy','decidedAt','decidedBy','reviewFlagsJson','note','version'],
