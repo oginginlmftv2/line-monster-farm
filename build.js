@@ -669,11 +669,18 @@ ${body}
 }
 
 function renderGachaIndex(gachas, now) {
+  // 開催予定を一番上に置く（予告は開始3日前ごろで、その時点の開催中ガチャはほぼ引き終わっているため）
+  const upcoming = [];
   const current = [];
   const ended = [];
+  const nowTime = Date.parse(now);
   for (const gacha of [...gachas].sort((a, b) => b.startAt.localeCompare(a.startAt) || a.gachaId.localeCompare(b.gachaId))) {
-    (Date.parse(now) <= Date.parse(gacha.endAt) ? current : ended).push(gacha);
+    if (nowTime < Date.parse(gacha.startAt)) upcoming.push(gacha);
+    else if (nowTime <= Date.parse(gacha.endAt)) current.push(gacha);
+    else ended.push(gacha);
   }
+  // 開催予定は開始が近い順
+  upcoming.reverse();
   const rows = list => list.map(gacha => renderGachaCard(gacha, {
     href: `${gacha.gachaId}.html`,
     imageSrc: `../${gacha.image}`,
@@ -687,11 +694,11 @@ function renderGachaIndex(gachas, now) {
 <!DOCTYPE html>
 <html lang="ja"><head><meta charset="UTF-8">${GTM_TAG}<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>開催中ガチャ一覧 | LINEモンスターファーム徹底攻略</title>
-  <meta name="description" content="開催中のガチャのピックアップ内容と開催期間を一覧で確認できます。終了済みのガチャもまとめています。">
+  <meta name="description" content="開催予定・開催中のガチャのピックアップ内容と開催期間を一覧で確認できます。終了済みのガチャもまとめています。">
   <link rel="canonical" href="${SITE_URL}/gacha/"><link rel="stylesheet" href="../style.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head><body><header><div class="header-inner"><a href="../index.html" class="logo"><img src="../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a><nav><a href="../monsters.html">モンスター<span class="nav-sub">一覧</span></a><a href="../assist.html">アシストカード<span class="nav-sub">一覧</span></a><a href="index.html" class="active">開催中ガチャ<span class="nav-sub">一覧</span></a></nav></div></header>
-<main class="container"><p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; 開催中ガチャ一覧</p><h1 class="page-title">開催中ガチャ一覧</h1>${section('開催中', current)}${section('終了', ended)}</main>
+<main class="container"><p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; 開催中ガチャ一覧</p><h1 class="page-title">開催中ガチャ一覧</h1>${section('開催予定', upcoming)}${section('開催中', current)}${section('終了', ended)}</main>
 <footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer></body></html>
 `;
 }
