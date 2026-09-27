@@ -83,6 +83,38 @@
       "rerollPriority": false,
       "status": "published",
       "publishedAt": "2026-09-14"
+    },
+    {
+      "gachaId": "20260930-1",
+      "name": "ハロウィンスタフェス",
+      "gachaType": "スタフェス",
+      "image": "gacha-banner/20260930-1.jpg",
+      "startAt": "2026-09-30T15:00+09:00",
+      "endAt": "2026-10-31T14:59+09:00",
+      "explanation": "",
+      "pickupMonsters": [
+        {
+          "id": "3351",
+          "rate": null
+        },
+        {
+          "id": "1252",
+          "rate": null
+        }
+      ],
+      "pickupCards": [
+        {
+          "cardId": "c0003-MR",
+          "rate": null
+        },
+        {
+          "cardId": "c0004-SSR",
+          "rate": null
+        }
+      ],
+      "rerollPriority": true,
+      "status": "published",
+      "publishedAt": "2026-09-28"
     }
   ]
 }
