@@ -34,6 +34,7 @@
 | AdSense申請・インデックス改善を進めるとき | `docs/adsense-indexing-handoff.md` |
 | モンスター基礎データ（素質・適性）の入力・評価式 | `docs/monster-basics-design.md` |
 | 能力スコアリング（説明文パーサ・分類・Tier設計） | `docs/ability-scoring-design.md` |
+| 能力の採点方法と結果の説明（管理者・外部向け） | `docs/ability-scoring-report.md`（PDF版あり） |
 | アシストカードDB・静的ページ・CMSの設計と進捗 | `docs/assist-card-cms-progress.md` |
 | CMS統合の方針と実施順 | `docs/cms-integration-plan.md` |
 | 外部能力DB（lMfDB）の読取専用候補監査 | `docs/lmfdb-integration.md` |
