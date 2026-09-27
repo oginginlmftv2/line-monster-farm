@@ -12,6 +12,7 @@
         <option value="near">あと少し（解説あり・900字〜）</option>
         <option value="has">解説あり</option>
         <option value="none">解説なし</option>
+        <option value="hidden">準備中</option>
       </select>
       <select id="mon_fSort">
         <option value="newest" selected>追加が新しい順</option>
@@ -86,7 +87,8 @@ function monRenderStats(){
   var m = MON.boot.monsters;
   var idx = m.filter(function(x){ return x.indexable; }).length;
   var has = m.filter(function(x){ return x.hasExplanation; }).length;
-  el('mon_stats').textContent = m.length + '体 / 解説 ' + has + ' / インデックス ' + idx;
+  var hidden = m.filter(function(x){ return x.hidden; }).length;
+  el('mon_stats').textContent = m.length + '体 / 解説 ' + has + ' / インデックス ' + idx + (hidden ? ' / 準備中 ' + hidden : '');
 }
 
 // ---------------------------------------------------------------- 一覧
@@ -104,6 +106,7 @@ function monFiltered(){
     if (state === 'near' && !(x.hasExplanation && !x.hasBasics && x.visibleChars >= th - 100 && x.visibleChars < th)) return false;
     if (state === 'has' && !x.hasExplanation) return false;
     if (state === 'none' && x.hasExplanation) return false;
+    if (state === 'hidden' && !x.hidden) return false;
     if (q) {
       var hay = (x.id + ' ' + x.name + ' ' + x.mainBlood + ' ' + x.subBlood + ' ' + x.mon).toLowerCase();
       if (hay.indexOf(q) < 0) return false;
@@ -137,7 +140,7 @@ function monRenderList(){
   var th = MON.boot.threshold;
   var html = list.map(function(x){
     var pct = Math.min(100, Math.round(x.visibleChars / th * 100));
-    var tag = x.indexable ? '公開対象' : (x.hasBasics ? '基礎データで対象' : (th - x.visibleChars) + '字');
+    var tag = x.hidden ? '準備中' : (x.indexable ? '公開対象' : (x.hasBasics ? '基礎データで対象' : (th - x.visibleChars) + '字'));
     return '<button class="row' + (MON.current && MON.current.id === x.id ? ' sel' : '') +
       '" data-id="' + esc(x.id) + '">' +
       '<div class="r1"><span class="id">' + esc(x.id) + '</span>' +
@@ -213,6 +216,9 @@ function monRenderNewForm(){
   html += '<div class="field"><label>副血統</label><select id="mon_n_subBlood">' +
     monOptions(MON.boot.subBloodList, '', '（選択）') + '</select></div>';
   html += '</div>';
+  html += '<div class="field"><label style="font-weight:400"><input type="checkbox" id="mon_n_hidden"> 準備中として登録する（ガチャ事前登録用）</label>' +
+    '<div class="hint">準備中の間は詳細ページ・一覧に出ず、ガチャのピックアップにだけ名前・オーラ・血統がリンク無しで出ます。' +
+    '性能が分かったら編集画面でチェックを外して公開してください。</div></div>';
   html += '<div class="prediction" id="mon_newPrediction">主血統と副血統を選ぶと、予測IDを表示します。</div>';
   html += '<div class="hint">IDは `id-availability.json` による予測です。' +
     '採番の正は generate-ids.js、公開時の最終確定はC8のビルド検算です。</div>';
@@ -280,7 +286,8 @@ function monCreateNewMonster(){
     return;
   }
 
-  var ok = confirm('「' + name + '」を新規登録します。\n' +
+  var hidden = el('mon_n_hidden').checked;
+  var ok = confirm('「' + name + '」を' + (hidden ? '準備中として' : '') + '新規登録します。\n' +
     '予測ID: ' + MON.newPrediction.id + '\n' +
     '血統: ' + mainBlood + ' / ' + subBlood + '\n\n' +
     '登録後は管理画面から名前を変更できません。よろしいですか？');
@@ -310,7 +317,8 @@ function monCreateNewMonster(){
       mon: mon,
       mainBlood: mainBlood,
       subBlood: subBlood,
-      predictedId: MON.newPrediction.id
+      predictedId: MON.newPrediction.id,
+      hidden: hidden
     });
 }
 
@@ -332,6 +340,15 @@ function monRenderEdit(){
 
   html += '<div class="hint">名前を変えるとIDと公開URLが変わり、公開済みページが失われます。' +
     'この画面からは変更できません。</div>';
+
+  // 準備中。公開済みページがある体は戻せない（hasPage が null は公開状況を取得できなかった場合）
+  var lockHidden = !m.hidden && m.hasPage !== false;
+  html += '<div class="field"><label style="font-weight:400"><input type="checkbox" id="mon_f_hidden"' +
+    (m.hidden ? ' checked' : '') + (lockHidden ? ' disabled' : '') + '> 準備中（ガチャ事前登録用）</label>' +
+    '<div class="hint">' + (lockHidden
+      ? (m.hasPage ? '公開済みのため準備中には戻せません。' : '公開状況を取得できないため、準備中に切り替えられません。')
+      : '準備中の間は詳細ページ・一覧に出ず、ガチャのピックアップにだけリンク無しで出ます。チェックを外して公開すると詳細ページが作られます。') +
+    '</div></div>';
 
   html += '<h3>属性</h3>';
   html += '<div class="grid">';
@@ -619,8 +636,12 @@ function monSave(){
     if (!ok2) return;
   }
 
+  var hidden = el('mon_f_hidden').checked;
+  if (MON.current.hidden && !hidden && !confirm('準備中を外します。次の公開で詳細ページが作られ、一覧・ガチャのピックアップにリンクが付きます。\n公開後は準備中に戻せません。よろしいですか？')) return;
+
   var payload = {
     id: MON.current.id,
+    hidden: hidden,
     aura: el('mon_f_aura').value,
     mon: el('mon_f_mon').value,
     mainBlood: mainBlood,
@@ -648,6 +669,7 @@ function monSave(){
       MON.current.mainBlood = payload.mainBlood;
       MON.current.subBlood = payload.subBlood;
       MON.current.explanation = payload.explanation;
+      MON.current.hidden = res.hidden;
 
       // 一覧側も更新する（開き直さずに済むように）
       for (var i = 0; i < MON.boot.monsters.length; i++) {
@@ -662,6 +684,7 @@ function monSave(){
         MON.boot.monsters[i].aura = payload.aura;
         MON.boot.monsters[i].releasedAt = payload.releasedAt;
         MON.boot.monsters[i].updatedAt = res.updatedAt;
+        MON.boot.monsters[i].hidden = res.hidden;
         break;
       }
       monRenderStats();

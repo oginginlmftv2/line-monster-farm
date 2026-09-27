@@ -74,6 +74,16 @@ G4のリポジトリ変更がmainへマージされた後、管理者が次の�
 
 この2列を追加するまで、アシスト画面は`assist_effects`の読み書きに失敗します。列追加とGAS同期は同じ作業でまとめて行います。既存行は空欄のままで`conditional=0`（限定なし）として扱われます。`conditionsJson`は`{"operator":"and"|"or","types":[...]}`だけを許可し、`types`は主血統一致・副血統一致・オーラ一致・モン類一致・種族一致の5種です。条件原文は保存しません。
 
+## G6 モンスターの準備中（hidden列）の反映
+
+`monsters`シートの末尾に`hidden`列を追加します。管理者が次の順で行います。
+
+1. `10_monster.gs`、`40_setup.gs`、`50_gacha.gs`、`ui_monster.html`、`ui_gacha.html`を同名のGASファイルへ同期して保存する
+2. `setup5_upgradeMonsterHiddenColumn`を実行し、`hidden 列を追加しました`と表示されることを確認する。既存列・既存行は変更しないため`ALLOW_DESTRUCTIVE_SETUP`は不要
+3. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+
+列を追加する前でも一覧の読み込みは動き、全件を公開扱いにします。新規登録と準備中の切り替えだけは、列が無いとsetupの実行を促して止まります。既存行は空欄のままで公開扱いです。準備中の体は公開時に`monsters-editorial.json`へ`"hidden": true`で出て、`build.js`が詳細ページ・一覧・sitemapから外します（`docs/gacha-design.md` 12章）。公開済み（`page-baseline.json`にある）体は準備中にできません。
+
 ## P12-16 効果OCRサニタイザの反映
 
 対象は`ui_assist.html`の1ファイルだけです。シートの列追加もsetup関数の実行も不要です。

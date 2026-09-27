@@ -99,7 +99,8 @@ function monImportSeed_() {
       '',
       m.updatedAt || '',
       m.arrayIndex,
-      m.url
+      m.url,
+      false
     ];
   });
 
@@ -192,6 +193,26 @@ function monUpgradeEditLog_() {
   Logger.log(msg);
   return msg;
 }
+// monsters シート末尾へ hidden 列（準備中）を足す。既存列・既存行は変えず、空欄は公開扱い
+function monUpgradeHiddenColumn_() {
+  var sheet = monSheet_();
+  var expected = MON_HEADERS[MON_SHEET_MONSTERS];
+  var width = Math.max(sheet.getLastColumn(), 1);
+  var filled = sheet.getRange(1, 1, 1, width).getValues()[0].map(function (v) { return String(v || '').trim(); }).filter(Boolean);
+  if (filled.join('\0') === expected.join('\0')) return MON_SHEET_MONSTERS + ': 既に' + expected.length + '列です。変更なし。';
+  if (filled.join('\0') !== expected.slice(0, filled.length).join('\0')) {
+    throw new Error(MON_SHEET_MONSTERS + ': 既存の列見出しが想定と異なります。変更していません。実際: ' + filled.join(' / '));
+  }
+  if (sheet.getMaxColumns() < expected.length) {
+    sheet.insertColumnsAfter(sheet.getMaxColumns(), expected.length - sheet.getMaxColumns());
+  }
+  var added = expected.slice(filled.length);
+  var range = sheet.getRange(1, filled.length + 1, 1, added.length);
+  range.setValues([added]);
+  range.setFontWeight('bold').setBackground('#f3ead7');
+  return MON_SHEET_MONSTERS + ': ' + added.join(' / ') + ' 列を追加しました。既存行は空欄のままで、公開（準備中ではない）として扱います。';
+}
+
 function asstFetchJson_(url) {
   var response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
   if (response.getResponseCode() !== 200) {
@@ -394,6 +415,12 @@ function setup5_createAssistImageFolder() {
 function setup5_upgradeAssistEffectColumns() {
   var target = setupTarget_();
   var result = target + '\n' + asstUpgradeEffectColumns_();
+  Logger.log(result);
+  return result;
+}
+function setup5_upgradeMonsterHiddenColumn() {
+  var target = setupTarget_();
+  var result = target + '\n' + monUpgradeHiddenColumn_();
   Logger.log(result);
   return result;
 }
