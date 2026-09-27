@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-09-14T11:04:03Z",
-  "count": 358,
+  "exportedAt": "2026-09-27T15:56:16Z",
+  "count": 360,
   "monsters": [
     {
       "id": "1922",
@@ -1792,6 +1792,16 @@
       "id": "3027",
       "name": "アストロガール",
       "arrayIndex": 357
+    },
+    {
+      "id": "3351",
+      "name": "ヴァンパイア",
+      "arrayIndex": 358
+    },
+    {
+      "id": "1252",
+      "name": "オカシラ",
+      "arrayIndex": 359
     }
   ]
 }
