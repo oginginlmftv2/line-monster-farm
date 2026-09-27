@@ -371,6 +371,22 @@ function api_gachaLookupPickup(kind, id) {
   return gachaLookupPickup_(kind, id);
 }
 
+// 編集画面の「名前で選択」用の候補一覧。紐付けの正はIDのままで、名前は選択の補助にだけ使う
+function api_gachaPickupCandidates(kind) {
+  requireScope_('gacha');
+  kind = gachaText_(kind);
+  if (['monster', 'card'].indexOf(kind) < 0) throw new Error('kindはmonsterかcardです。');
+  var document = gachaLookupDocument_(kind);
+  if (kind === 'monster') {
+    return (document.monsters || []).map(function (item) {
+      return { id: gachaText_(item.id), name: gachaText_(item.name), hidden: item.hidden === true };
+    });
+  }
+  return (document.cards || []).map(function (item) {
+    return { id: gachaText_(item.cardId), name: gachaText_(item.name), rarity: gachaText_(item.rarity), hidden: item.hidden === true };
+  });
+}
+
 function api_gachaSave(payload) {
   var user = requireScope_('gacha');
   if (!user.nickname) throw new Error('membersシートのニックネームが空です。');

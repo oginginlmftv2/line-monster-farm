@@ -368,7 +368,8 @@ try {
   assert(!cardWithoutAppearance.includes('登場ガチャ'));
   pass(28, '該当ガチャ0件のカードには登場ガチャセクションを出力しない');
 
-  assert.strictEqual(buildAssistPages({ dryRun: true }).count, cardDoc.cards.length);
+  // 準備中（hidden）のカードは詳細ページを作らない
+  assert.strictEqual(buildAssistPages({ dryRun: true }).count, cardDoc.cards.filter(card => card.hidden !== true).length);
   pass(29, 'gachaAppearancesFor未指定でもbuild-assist-pagesを空文字扱いで実行');
 
   const noMonsterExcerpt = buildIntegrated(root, [gacha({
