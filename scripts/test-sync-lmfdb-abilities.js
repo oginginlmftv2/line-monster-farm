@@ -22,7 +22,8 @@ function protectedSnapshot() {
     'src/data/assist-cards.json',
     'src/data/assist-effects.json',
     'src/data/assist-abilities.json',
-    ...cards.map(card => `cards/${card.cardId}.html`),
+    // 準備中（hidden）のカードは詳細ページを持たない
+    ...cards.filter(card => card.hidden !== true).map(card => `cards/${card.cardId}.html`),
   ];
   const hash = crypto.createHash('sha256');
   for (const relativePath of paths) {

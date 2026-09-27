@@ -154,7 +154,7 @@ rerollPriority / status / publishedAt / author / updatedAt / lastEditor
 
 draftの採番し直し時は`image`列を空にし、新しいIDで画像を再アップロードする。Drive上の旧ファイルを保存処理からリネーム・削除するとシート保存との補償経路が増えるため行わず、参照だけを確実に外す。公開時にIDと画像名が食い違うことを防ぐため、旧画像パスを保持する実装へ戻してはならない。
 
-ピックアップ照合は`RAW_BASE`の`monster-ids.json`と`assist-cards.json`をCacheService経由で参照する。保存前に名前へ解決できることを確認し、排出率は空欄か、数値型の`0 < rate <= 100`だけを受け入れる。最終的なDB検査の正は引き続き`build.js`の`validateGachaData()`であり、GAS側ではシート投入前の最低限だけを検査する。
+ピックアップ照合は`RAW_BASE`の`monster-ids.json`と`assist-cards.json`をCacheService経由で参照する。保存前に名前へ解決できることを確認し、排出率は空欄か、数値型の`0 < rate <= 100`だけを受け入れる。編集画面の各枠は「名前で選択」欄（`api_gachaPickupCandidates`が返す名前・IDの一覧を`datalist`に出す）でIDを埋められるが、保存・紐付けの正はIDのままで、ID欄への直接入力も残す。同名のカードはレアリティ付きの表示名で区別する。最終的なDB検査の正は引き続き`build.js`の`validateGachaData()`であり、GAS側ではシート投入前の最低限だけを検査する。
 
 画像はScript Propertyの`GACHA_DRIVE_FOLDER_ID`が指すフォルダへ`<gachaId>.<拡張子>`で保存する。JPG・PNG・WebP、2MB以下、マジックバイト一致を必須とし、新規ファイル作成後に同じIDの旧画像をゴミ箱へ移す。シートには`gacha-banner/<ファイル名>`を保存する。入力画像と、ビルドが生成する`gacha/*.html`を同じディレクトリへ置かない。
 

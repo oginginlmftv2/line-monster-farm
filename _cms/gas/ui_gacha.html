@@ -10,7 +10,7 @@
   <button type="button" class="mobile-back" id="gacha_btnBack">← 一覧へ戻る</button>
   <div class="col-edit panel" id="gacha_edit"><div class="center">左の一覧からガチャを選ぶか、新規作成してください。</div></div>
 </div></section><script>
-var GACHA_UI={list:[],types:[],current:null,pendingImage:null,lookupTimers:{},lookupSeq:{}};
+var GACHA_UI={list:[],types:[],current:null,pendingImage:null,lookupTimers:{},lookupSeq:{},candidates:{monster:[],card:[]}};
 var GACHA_UI_SLOTS=5;
 var GACHA_UI_GATE=300;
 
@@ -18,7 +18,46 @@ function gachaBoot(){
   call('api_gachaTypes',[],function(types){
     GACHA_UI.types=types||[];
     gachaReloadList();
+    gachaLoadCandidates();
   });
+}
+// 「名前で選択」の候補。読めなくてもID入力は従来どおり使える
+function gachaLoadCandidates(){
+  if(typeof google==='undefined'||!google.script)return;
+  ['monster','card'].forEach(function(kind){
+    google.script.run.withSuccessHandler(function(list){
+      GACHA_UI.candidates[kind]=list||[];
+      gachaRenderCandidateList(kind);
+      gachaFillPickupNames(kind);
+    }).withFailureHandler(function(){}).api_gachaPickupCandidates(kind);
+  });
+}
+function gachaCandidateLabel(item){return item.name+(item.rarity?'（'+item.rarity+'）':'')+(item.hidden?'［準備中］':'');}
+function gachaRenderCandidateList(kind){
+  var list=el('gacha_'+kind+'_candidates');if(!list)return;
+  list.innerHTML=GACHA_UI.candidates[kind].map(function(item){return '<option value="'+esc(gachaCandidateLabel(item))+'" label="'+esc(item.id)+'"></option>';}).join('');
+}
+// 名前欄の入力からIDを決める。候補の表示名・名前（1件に絞れるとき）・IDのどれでも受け付ける
+function gachaResolveCandidate(kind,text){
+  var value=String(text||'').trim();if(!value)return null;
+  var list=GACHA_UI.candidates[kind];
+  var byLabel=list.filter(function(item){return gachaCandidateLabel(item)===value;});if(byLabel.length===1)return byLabel[0];
+  var byName=list.filter(function(item){return item.name===value;});if(byName.length===1)return byName[0];
+  var byId=list.filter(function(item){return item.id===value;});return byId.length===1?byId[0]:null;
+}
+function gachaFillPickupNames(kind){
+  for(var slot=1;slot<=GACHA_UI_SLOTS;slot++){
+    var idInput=el('gacha_'+kind+slot),nameInput=el('gacha_'+kind+slot+'_name');
+    if(!idInput||!nameInput||nameInput.value)continue;
+    var found=gachaResolveCandidate(kind,idInput.value.trim());if(found)nameInput.value=gachaCandidateLabel(found);
+  }
+}
+function gachaPickNameInput(kind,slot,commit){
+  var nameInput=el('gacha_'+kind+slot+'_name'),idInput=el('gacha_'+kind+slot),text=nameInput.value.trim();
+  if(!text){if(commit){idInput.value='';gachaScheduleLookup(kind,slot);}return;}
+  var found=gachaResolveCandidate(kind,text);
+  if(found){if(idInput.value!==found.id){idInput.value=found.id;gachaScheduleLookup(kind,slot);}nameInput.value=gachaCandidateLabel(found);return;}
+  if(commit)el('gacha_'+kind+slot+'_lookup').innerHTML='<span style="color:#b42318">候補から選んでください（名前の一部を入力すると候補が出ます）</span>';
 }
 
 function gachaReloadList(after){
@@ -74,8 +113,10 @@ function gachaPickupRow(kind,slot,item){
   var rate=item[kind+'Rate'+slot];
   if(rate==null)rate='';
   var label=kind==='monster'?'モンスター':'カード';
-  return '<div class="field"><label>'+label+slot+' ID</label><input type="text" id="gacha_'+kind+slot+'" value="'+esc(id)+'" autocomplete="off">'+
-    '<div class="hint" id="gacha_'+kind+slot+'_lookup">'+(id?'確認中…':'IDを入力すると名前を確認します')+'</div></div>'+
+  var found=id?gachaResolveCandidate(kind,id):null;
+  return '<div class="field"><label>'+label+slot+'（名前で選択）</label><input type="text" id="gacha_'+kind+slot+'_name" list="gacha_'+kind+'_candidates" value="'+esc(found?gachaCandidateLabel(found):'')+'" placeholder="名前の一部を入力して候補から選ぶ" autocomplete="off">'+
+    '<input type="text" id="gacha_'+kind+slot+'" value="'+esc(id)+'" placeholder="ID（直接入力も可）" autocomplete="off" style="margin-top:4px">'+
+    '<div class="hint" id="gacha_'+kind+slot+'_lookup">'+(id?'確認中…':'名前を選ぶとIDが入ります（保存されるのはID）')+'</div></div>'+
     '<div class="field"><label>'+label+slot+' 排出率（%・任意）</label><input type="number" id="gacha_'+kind+'Rate'+slot+'" min="0.01" max="100" step="0.01" value="'+esc(rate)+'"></div>';
 }
 function gachaRenderEditor(item){
@@ -94,7 +135,7 @@ function gachaRenderEditor(item){
     '<div class="hint" id="gacha_imageInfo">JPG・PNG・WebP / 2MB以下。新規ガチャは先に保存してください。</div></div>';
   html+='<h3>解説</h3><div class="progress-big" id="gacha_count"></div><textarea id="gacha_explanation" rows="14">'+esc(item.explanation||'')+'</textarea>';
   ['monster','card'].forEach(function(kind){
-    html+='<h3>'+(kind==='monster'?'モンスター':'アシストカード')+' ピックアップ</h3><div class="grid">';
+    html+='<h3>'+(kind==='monster'?'モンスター':'アシストカード')+' ピックアップ</h3><datalist id="gacha_'+kind+'_candidates"></datalist><div class="grid">';
     for(var slot=1;slot<=GACHA_UI_SLOTS;slot++)html+=gachaPickupRow(kind,slot,item);
     html+='</div>';
   });
@@ -107,9 +148,18 @@ function gachaRenderEditor(item){
   if(el('gacha_btnReload'))el('gacha_btnReload').onclick=function(){gachaOpen(item.gachaId);};
   el('gacha_imageFile').onchange=gachaImageSelected;
   el('gacha_btnUpload').onclick=gachaUploadImage;
-  ['monster','card'].forEach(function(kind){for(var slot=1;slot<=GACHA_UI_SLOTS;slot++){
-    (function(k,s){var input=el('gacha_'+k+s);input.oninput=function(){gachaScheduleLookup(k,s);};if(input.value)gachaScheduleLookup(k,s);})(kind,slot);
-  }});
+  ['monster','card'].forEach(function(kind){
+    gachaRenderCandidateList(kind);
+    for(var slot=1;slot<=GACHA_UI_SLOTS;slot++){
+      (function(k,s){
+        var input=el('gacha_'+k+s),nameInput=el('gacha_'+k+s+'_name');
+        input.oninput=function(){var found=gachaResolveCandidate(k,input.value.trim());nameInput.value=found?gachaCandidateLabel(found):'';gachaScheduleLookup(k,s);};
+        nameInput.oninput=function(){gachaPickNameInput(k,s,false);};
+        nameInput.onchange=function(){gachaPickNameInput(k,s,true);};
+        if(input.value)gachaScheduleLookup(k,s);
+      })(kind,slot);
+    }
+  });
   gachaUpdateCount();
 }
 
@@ -123,12 +173,12 @@ function gachaScheduleLookup(kind,slot){
   var id=el('gacha_'+key).value.trim();
   var output=el('gacha_'+key+'_lookup');
   var seq=(GACHA_UI.lookupSeq[key]||0)+1;GACHA_UI.lookupSeq[key]=seq;
-  if(!id){output.textContent='IDを入力すると名前を確認します';return;}
+  if(!id){output.textContent='名前を選ぶとIDが入ります（保存されるのはID）';return;}
   output.textContent='確認中…';
   GACHA_UI.lookupTimers[key]=setTimeout(function(){
     call('api_gachaLookupPickup',[kind,id],function(result){
       if(GACHA_UI.lookupSeq[key]!==seq)return;
-      if(result.ok)output.textContent=result.name+(result.rarity?'（'+result.rarity+'）':'')+(result.hidden?'（準備中：サイトではリンク無しで表示）':'');
+      if(result.ok)output.textContent='ID '+id+'：'+result.name+(result.rarity?'（'+result.rarity+'）':'')+(result.hidden?'（準備中：サイトではリンク無しで表示）':'');
       else output.innerHTML='<span style="color:#b42318">IDが見つかりません</span>';
     });
   },300);
