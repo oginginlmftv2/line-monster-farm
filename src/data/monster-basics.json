@@ -654,6 +654,316 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "2502",
+      "name": "マグフロッグ",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2504",
+      "name": "メカエル",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2510",
+      "name": "ハムノフジ",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "G"
+      },
+      "range": {
+        "far": "F",
+        "mid": "F",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2516",
+      "name": "サクラガエル",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": -5,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2521",
+      "name": "クサズモー",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "D",
+        "雪山": "E",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2525",
+      "name": "カワズモー",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "G"
+      },
+      "range": {
+        "far": "E",
+        "mid": "G",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2528",
+      "name": "イチゴエル",
+      "talent": {
+        "life": 15,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "F",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "D"
+      },
+      "range": {
+        "far": "E",
+        "mid": "D",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2531",
+      "name": "ナリキロッグ",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2550",
+      "name": "ヨコヅナ",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "D"
+      },
+      "range": {
+        "far": "C",
+        "mid": "E",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2580",
+      "name": "ルートヴィッヒ",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": -5,
+        "accuracy": 15,
+        "evasion": 5,
+        "defense": 10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "2608",
       "name": "アラクネ",
       "talent": {
