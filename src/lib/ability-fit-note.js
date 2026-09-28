@@ -93,7 +93,7 @@ const factsFor = (item, basics) => [aptitudeFact(item.parsed, basics), ...talent
 // 語尾は体言止めか「〜よう」（です・ます、〜ましょうは使わない。2026-09-28 管理者指定）。
 // どの型を使うかは variantSeed（同じ主血統・オーラの体の中での順番）と、ページ内でその種類が出た回数で決める。
 // 同じグループの3体までは、同じ位置に同じ種類の文が来ても型が必ず違う
-const topMark = fact => (fact.top ? '・この体で最も高い' : '');
+const topMark = fact => (fact.top ? '・6項目で最も高い' : '');
 const NOTE_TEMPLATES = {
   'aptitude:start': [
     f => `発動条件は${f.condition}。開始時の${f.ranks}なら、育成開始時の上昇でSスタートを狙える。`,
@@ -112,8 +112,8 @@ const NOTE_TEMPLATES = {
   ],
   talentHigh: [
     f => `${f.label}が育ちやすく（素質${signed(f.value)}%${topMark(f)}）、この能力の${f.label}を上げる効果と噛み合う。`,
-    f => `${f.label}は素質${signed(f.value)}%${f.top ? '（この体で最も高い）' : ''}で伸びやすい。この能力で${f.label}をさらに上げられる。`,
-    f => `素質${signed(f.value)}%${f.top ? '（この体で最も高い）' : ''}の${f.label}を、この能力でさらに押し上げられる。`,
+    f => `${f.label}は素質${signed(f.value)}%${f.top ? '（6項目で最も高い）' : ''}で伸びやすい。この能力で${f.label}をさらに上げられる。`,
+    f => `素質${signed(f.value)}%${f.top ? '（6項目で最も高い）' : ''}の${f.label}を、この能力でさらに押し上げられる。`,
   ],
   talentLow: [
     f => `${f.label}の素質は${signed(f.value)}%と低めで、この能力で${f.label}を補える。`,
