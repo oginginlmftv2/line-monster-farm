@@ -9593,9 +9593,9 @@
       "createdAt": "",
       "updatedAt": "2026-08-20",
       "releasedAt": "2026-07-31",
-      "baseline": 938,
-      "current": 938,
-      "indexable": false
+      "baseline": 1221,
+      "current": 1221,
+      "indexable": true
     },
     {
       "id": "3317",
@@ -9652,8 +9652,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-09-12",
-      "baseline": 841,
-      "current": 2250,
+      "baseline": 1123,
+      "current": 2532,
       "indexable": true
     },
     {
@@ -9689,8 +9689,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 936,
-      "current": 1662,
+      "baseline": 1219,
+      "current": 1945,
       "indexable": true
     },
     {
@@ -9726,8 +9726,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-08-31",
-      "baseline": 950,
-      "current": 2688,
+      "baseline": 1231,
+      "current": 2969,
       "indexable": true
     },
     {
@@ -9763,8 +9763,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-30",
-      "baseline": 1005,
-      "current": 2199,
+      "baseline": 1286,
+      "current": 2480,
       "indexable": true
     },
     {
@@ -9811,8 +9811,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2026-02-19",
-      "baseline": 837,
-      "current": 2287,
+      "baseline": 1123,
+      "current": 2573,
       "indexable": true
     },
     {

@@ -1,0 +1,7 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+アーク	5	0	10	10	5	0	A	A	晩成	ヨイ	ふつう	C	C	B	C	F	B	C	B	E	2026-09-28
+ドライアド	15	-10	10	10	-5	0	B	D	ふつう	ふつう	ふつう	F	B	D	E	C	C	B	C	E	2026-09-28
+イブリース	0	0	15	0	10	-5	A	C	晩成	ややワル	ふつう	C	F	B	D	C	B	E	B	D	2026-09-28
+ハニエル	-5	0	20	10	0	-5	A	C	晩成	ヨイ	ふつう	D	C	C	B	F	E	B	D	B	2026-09-28
+ディアブロ	-5	5	15	10	5	0	A	A	早熟	ワル	ふつう	E	B	B	C	E	B	D	B	D	2026-09-28
+ミカエル	10	-5	15	-5	10	-5	A	B	早熟	ヨイ	ふつう	C	E	C	D	C	E	B	D	B	2026-09-28
