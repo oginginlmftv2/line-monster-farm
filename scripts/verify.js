@@ -2153,6 +2153,54 @@ head('22. 能力スコアリング（説明文パーサ）');
     if (bad.length) ng(`モンスター詳細の並び・相性のいいアシスト能力が仕様と不一致 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
     else ok(`モンスター詳細のセクションの並びが仕様どおり。相性のいいアシスト能力 ${withSection}体（各5件以下・番号なし・発売が新しい順）`);
   } catch (error) { ng(`相性のいいアシスト能力の検査に失敗: ${error.message}`); }
+  // 基礎データのある体だけ、能力ごとの一文と導入文をその体の素質・間合いから書く（build-spec 5-12・2026-09-28）
+  if (!exists('scripts/test-ability-fit-note.js')) ng('相性のいいアシスト能力の一文のテストがない');
+  else {
+    const result = childProcess.spawnSync(process.execPath, ['scripts/test-ability-fit-note.js'], { cwd: REPO, encoding: 'utf8' });
+    if (result.status !== 0) ng(`相性のいいアシスト能力の一文テストFAIL: ${(result.stderr || result.stdout).trim().split('\n').slice(0, 5).join(' / ')}`);
+    else ok('相性のいいアシスト能力の一文（素質の結び方・間合い・ページ内の重複なし・導入文・description）を固定');
+  }
+  try {
+    const basicsById = new Map(JSON.parse(read('src/data/monster-basics.json')).monsters.map(entry => [entry.id, entry]));
+    const TALENT_KEY = { ライフ: 'life', ちから: 'power', かしこさ: 'wisdom', 命中: 'accuracy', 回避: 'evasion', 丈夫さ: 'defense' };
+    const RANGE_KEY = { 遠: 'far', 中: 'mid', 近: 'near', 零: 'zero' };
+    const DEFAULT_LEAD = 'が発動できる、アシストカードのイベントで獲得できる能力です。';
+    const ORDER_NOTE = '<p class="basics-note">※新しいカードの能力から並べています。</p>';
+    const bad = [];
+    let noted = 0;
+    for (const monster of JSON.parse(read('src/data/monster-ids.json')).monsters) {
+      const relative = monster.url.replace(/^\//, '');
+      if (!exists(relative)) continue;
+      const section = read(relative).match(/<h2 class="section-title">相性のいいアシスト能力<\/h2>[\s\S]*?<\/ul>/);
+      if (!section) continue;
+      const basics = basicsById.get(monster.id);
+      if (!read(relative).includes(ORDER_NOTE)) bad.push(`${monster.id} 並び順の注記（※）が無い`);
+      const notes = [...section[0].matchAll(/<li class="skill-section-lead ability-fit-note">▲ ([^<]*)<\/li>/g)].map(match => match[1]);
+      const lead = (section[0].match(/<p class="skill-section-lead">([^<]*)<\/p>/) || [])[1] || '';
+      if (!basics) {
+        if (notes.length) bad.push(`${monster.id} 基礎データが無いのに一文がある`);
+        if (!lead.includes(DEFAULT_LEAD)) bad.push(`${monster.id} 基礎データが無いのに導入文が従来と違う`);
+        continue;
+      }
+      noted++;
+      if (lead.includes(DEFAULT_LEAD)) bad.push(`${monster.id} 導入文が従来の定型文のまま`);
+      if (new Set(notes).size !== notes.length) bad.push(`${monster.id} 同じ一文が2回ある`);
+      // 数値はその体の基礎データと一致する。言い回しが3通りあるので、文（。区切り）ごとに
+      // 「素質±N%」がその文に出る素質名のどれかと一致すること、「遠B」のような間合いとランクが基礎データと一致することを見る
+      for (const sentence of [...notes, lead].join('').split('。')) {
+        for (const match of sentence.matchAll(/素質(?:は|が低め（|が高い（)?([+-]?\d+)%/g)) {
+          const labels = Object.keys(TALENT_KEY).filter(label => sentence.includes(label));
+          if (basics.talent && !labels.some(label => basics.talent[TALENT_KEY[label]] === Number(match[1]))) bad.push(`${monster.id} 「${sentence}」の素質が不一致`);
+        }
+        for (const match of sentence.matchAll(/([遠中近零])(M|SS|S|A|B|C|D|E|F|G)(?![A-Z])/g)) {
+          if (basics.range && basics.range[RANGE_KEY[match[1]]] !== match[2]) bad.push(`${monster.id} ${match[0]} が間合い適性と不一致`);
+        }
+      }
+      if (/です|ます|ましょう/.test([...notes, lead].join(''))) bad.push(`${monster.id} です・ます調が混ざっている`);
+    }
+    if (bad.length) ng(`相性のいいアシスト能力の一文が仕様と不一致 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
+    else ok(`相性のいいアシスト能力の一文：基礎データのある${noted}体だけに出し、数値は基礎データと一致・ページ内の重複なし`);
+  } catch (error) { ng(`相性のいいアシスト能力の一文の検査に失敗: ${error.message}`); }
   // ルーブリックと上書きは JSON として読め、上書きの abilityId は実在する
   for (const file of ['src/data/ability-rubric.json', 'src/data/ability-overrides.json']) {
     if (!exists(file)) { ng(`${file} がない`); continue; }

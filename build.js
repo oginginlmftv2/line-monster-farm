@@ -8,6 +8,7 @@ const basics = require('./src/lib/monster-basics');
 const abilityParser = require('./src/lib/ability-parser');
 const { computeAbilityScores, createScorer: createAbilityScorer } = require('./src/lib/ability-score');
 const { recommendAbilities } = require('./src/lib/ability-recommend');
+const { abilityNotes, abilitySummary, descriptionFact } = require('./src/lib/ability-fit-note');
 
 const REPO = __dirname;
 const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
@@ -1505,19 +1506,35 @@ ${traitRows.join('\n')}
  * 相性のいいアシスト能力（build-spec 5-12・P15-4b）。選び方は src/lib/ability-recommend.js、
  * 方針は docs/ability-scoring-design.md 5-3。点と順位は出さず、選んだ能力を発売が新しい順に並べる。
  */
+/** 同じ主血統・オーラの体をID順に並べたときの順番（言い回しの型をずらす種）。基礎データの有無に関係なく決まるので、登録が増えても変わらない */
+function variantSeed(monster, context) {
+  if (!context.variantSeedById) {
+    context.variantSeedById = new Map();
+    const groups = new Map();
+    for (const entry of [...context.monsterById.values()].sort((a, b) => a.id.localeCompare(b.id))) {
+      const key = `${entry.blood}/${entry.aura}`;
+      const n = groups.get(key) || 0;
+      groups.set(key, n + 1);
+      context.variantSeedById.set(entry.id, n);
+    }
+  }
+  return context.variantSeedById.get(monster.id) || 0;
+}
+
 function renderMonsterAbilities(monster, context) {
   const source = context.abilityRecommend;
   if (!source) return { html: '', names: [] };
   const ownSkills = (context.skillsByBlood.get(monster.blood) || [])
     .filter(skill => !skill.unique || (skill.owners || []).includes(monster.id));
-  const picked = recommendAbilities({
-    monster,
-    ownSkills,
-    basicsEntry: context.basicsById.get(monster.id) || null,
-    ...source,
-  });
+  const basicsEntry = context.basicsById.get(monster.id) || null;
+  const picked = recommendAbilities({ monster, ownSkills, ...source });
   if (!picked.length) return { html: '', names: [] };
-  const items = picked.map(item => {
+  // 選び方には基礎データを使わない。基礎データのある体だけ、能力ごとの一文と導入文をその体の素質・間合いから書く（src/lib/ability-fit-note.js）
+  // 言い回しは同じ主血統・オーラの体の中での順番でずらす（同じグループの3体までは型が必ず違う）
+  const seed = variantSeed(monster, context);
+  const notes = abilityNotes(picked, basicsEntry, seed);
+  const summary = abilitySummary(monster, picked, basicsEntry, seed);
+  const items = picked.map((item, index) => {
     let where = 'イベント報酬';
     if (item.card) {
       addLink(context, `cards/${item.card.cardId}.html`);
@@ -1529,7 +1546,8 @@ function renderMonsterAbilities(monster, context) {
         <span class="skill-line-name">${escapeHtml(item.name)}</span>
         <span class="skill-line-meta">入手：${where}／${escapeHtml(item.categories.join('・'))}</span>
         <span class="skill-line-abilities">${text}</span>
-      </li>`;
+      </li>${notes[index] ? `
+      <li class="skill-section-lead ability-fit-note">▲ ${escapeHtml(notes[index])}</li>` : ''}`;
   }).join('\n');
   const html = `
 
@@ -1537,10 +1555,11 @@ function renderMonsterAbilities(monster, context) {
     <div class="section-header">
       <h2 class="section-title">相性のいいアシスト能力</h2>
     </div>
-    <p class="skill-section-lead">${escapeHtml(monster.name)}（${escapeHtml(monster.aura)}・${escapeHtml(monster.mon)}・${escapeHtml(monster.blood)}種）が発動できる、アシストカードのイベントで獲得できる能力です。新しいカードの能力から並べています。</p>
+    <p class="skill-section-lead">${summary ? escapeHtml(summary) : `${escapeHtml(monster.name)}（${escapeHtml(monster.aura)}・${escapeHtml(monster.mon)}・${escapeHtml(monster.blood)}種）が発動できる、アシストカードのイベントで獲得できる能力です。`}</p>
     <ul class="skill-line-list">
 ${items}
     </ul>
+    <p class="basics-note">※新しいカードの能力から並べています。</p>
   </div>`;
   return { html, names: picked.map(item => item.name) };
 }
@@ -1602,7 +1621,7 @@ function renderDetail(entry, context) {
   // 解説の無い体は、属性と相性のいいアシスト能力から description を作る（体ごとに一意・40〜140字）
   const description = String(entry.explanation || '').trim()
     ? descriptionFrom(entry.explanation)
-    : descriptionFrom(`${monster.name}（${monster.aura}オーラ・${monster.mon}・${monster.blood}種）のデータ。${context.basicsById.has(monster.id) ? '素質・地形と間合いの適性、' : ''}${monster.name}が発動できるアシスト能力${abilities.names.length ? `（${abilities.names.slice(0, 2).join('・')}など）` : ''}をまとめています。`);
+    : descriptionFrom(`${monster.name}（${monster.aura}オーラ・${monster.mon}・${monster.blood}種）のデータ。${descriptionFact(context.basicsById.get(monster.id))}${context.basicsById.has(monster.id) ? '素質・地形と間合いの適性、' : ''}${monster.name}が発動できるアシスト能力${abilities.names.length ? `（${abilities.names.slice(0, 2).join('・')}など）` : ''}をまとめています。`);
   const gachaAppearances = renderGachaAppearances(
     publishedGachas(context.gachasJson), 'monster', monster.id, ROOT_PREFIX, 'box'
   );

@@ -34,6 +34,7 @@ const subBlood = add('サブ血統ロード', '[ロード種]完全回避Lv2<1�
 const flash = add('閃きの完全回避', '完全回避Lv2<1回>', { source: '閃き', releasedAt: '2026/08/01' });
 const state = add('超根性', '[状態変化]残りライフが少ないときに稀に効果発動<br>・通常/追撃/連撃ダメージを受けたときライフ1で耐える<1回>');
 const greenSkill = add('緑技の完全回避', '<緑>技発動時、完全回避Lv2<1回>', { releasedAt: '2026/08/01' });
+const lilacLike = add('零近の全ステ', '[自身黄]バトル中、次の効果<br>・零または近距離適性がS以上の時、全ステータス<+30%>と[業物Lv6]', { releasedAt: '2026/08/02' });
 
 const { computeAbilityScores } = require('../src/lib/ability-score');
 const { rows } = computeAbilityScores({ abilities, cards, rubric, parser });
@@ -85,15 +86,23 @@ assert.ok(withGreen.some(item => item.abilityId === greenSkill), '緑の技を�
   assert.ok(scorer.scoreAbility(shitsuji, { applyMatches: apply => match(apply, redMonster) }).power > 0);
 }
 
-// --- 間合い：名前の付いた間合いのランクを渡す。技DBがあれば「遠距離または中距離技」のどちらかの技を持てば使える
+// --- 間合い：技DBがあれば「遠距離または中距離技」のどちらかの技を持てば使える
 {
-  const { monsterContext, skillMatches } = require('../src/lib/ability-recommend');
-  const basicsEntry = { range: { far: 'B', mid: 'B', near: 'E', zero: 'D' } };
-  const noDb = monsterContext([], basicsEntry);
-  assert.deepStrictEqual(noDb.rangeRanks, { 遠: 'B', 中: 'B', 近: 'E', 零: 'D' });
+  const { skillMatches } = require('../src/lib/ability-recommend');
   const both = parser.parseAbility({ abilityId: 'x', name: 'x', description: '遠距離または中距離技命中時、クリ率上昇Lv6' });
   assert.strictEqual(skillMatches(both, tamamo, [{ aura: '赤', range: '遠' }]), true);
   assert.strictEqual(skillMatches(both, tamamo, [{ aura: '赤', range: '近' }]), false);
+}
+
+// --- 基礎データの間合い適性は選ぶときに見ない（2026-09-28）。開始時に零E・近Eでも「零または近距離適性S以上」の能力は載る
+{
+  const { monsterContext } = require('../src/lib/ability-recommend');
+  const yellow = { ...tamamo, aura: '黄' };
+  const ids = basicsEntry => recommendAbilities({ monster: yellow, ownSkills: [], basicsEntry, ...base, limit: 3 }).map(item => item.abilityId);
+  const low = ids({ range: { far: 'B', mid: 'B', near: 'E', zero: 'E' } });
+  assert.ok(low.includes(lilacLike), '開始時の適性が低くても載る');
+  assert.deepStrictEqual(low, ids(null));
+  assert.deepStrictEqual(Object.keys(monsterContext([])), []);
 }
 
 console.log('test-ability-recommend: OK');
