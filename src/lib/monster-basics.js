@@ -43,7 +43,7 @@ const TALENTS = [
 // 特徴タブの文字列項目。画面で見た値だけを列挙に足す（推測で増やさない）。
 const GROWTH_TYPES = ['早熟', 'ふつう', '晩成'];
 const GOOD_EVIL = ['ヨイ', 'ややヨイ', 'ふつう', 'ややワル', 'ワル'];
-const SIZES = ['小さい', 'ふつう'];
+const SIZES = ['小さい', 'ふつう', '大きい'];
 // 特徴タブのランク項目
 const TRAIT_RANK_FIELDS = [
   { key: 'gutsRecovery', label: 'ガッツ回復力' },

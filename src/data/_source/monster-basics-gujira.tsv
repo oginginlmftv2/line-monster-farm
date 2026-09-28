@@ -1,0 +1,7 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+グジコーン	0	10	0	10	5	-5	D	F	早熟	ヨイ	大きい	E	D	D	B	E	D	C	D	D	2026-09-28
+グジラ	10	10	0	-5	0	5	F	F	晩成	ややヨイ	大きい	D	D	C	D	E	F	E	C	C	2026-09-28
+レッドアーマー	5	5	0	0	-5	15	E	F	ふつう	ややヨイ	大きい	E	C	B	C	F	D	D	B	D	2026-09-28
+コイノボリ	0	20	5	0	-5	0	D	E	早熟	ややワル	大きい	C	F	C	E	B	C	E	C	C	2026-09-28
+ピンクグジラ	-5	15	10	-10	10	0	D	E	早熟	ややワル	大きい	F	D	C	F	B	C	D	D	C	2026-09-28
+グジラキング	15	10	-5	0	-10	10	C	C	晩成	ワル	大きい	C	F	B	D	C	B	B	E	D	2026-09-28
