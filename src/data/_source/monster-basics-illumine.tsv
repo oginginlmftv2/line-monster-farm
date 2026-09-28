@@ -4,3 +4,5 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 イルミネ	0	10	-10	15	10	5	B	A	早熟	ややワル	ふつう	B	E	C	F	B	E	B	C	C	2026-09-28
 ドリーミィ	0	5	-5	10	10	0	A	A	ふつう	ふつう	ふつう	C	C	C	D	E	B	D	D	C	2026-09-28
 セリアン	0	15	-5	5	5	0	A	B	ふつう	ふつう	ふつう	C	D	C	C	E	E	C	B	C	2026-09-28
+シャルティア	10	10	-5	5	0	0	A	A	早熟	ワル	ふつう	E	B	B	C	E	B	C	D	D	2026-09-28
+シュシュポップ3	5	0	0	5	15	-5	B	B	早熟	ふつう	ふつう	B	B	F	E	C	D	B	B	D	2026-09-28
