@@ -716,6 +716,254 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "2906",
+      "name": "ウロボロス・恐",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 20,
+        "evasion": -5,
+        "defense": -10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "B",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2914",
+      "name": "セキリュウ",
+      "talent": {
+        "life": 10,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 0,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "G",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2920",
+      "name": "ネプチューン",
+      "talent": {
+        "life": 0,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2928",
+      "name": "ティアマト",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": -10,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2929",
+      "name": "シンリュウ",
+      "talent": {
+        "life": 0,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2950",
+      "name": "メリオダス・魔神",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "B"
+      },
+      "range": {
+        "far": "A",
+        "mid": "D",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2951",
+      "name": "メリオダス",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "晩成",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2952",
+      "name": "セイリュウ",
+      "talent": {
+        "life": 0,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3016",
       "name": "ハナヨリダンゴ",
       "talent": {
