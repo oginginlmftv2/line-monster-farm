@@ -1,0 +1,15 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+トライデント	0	10	0	5	-5	10	D	E	晩成	ふつう	ふつう	C	D	F	D	C	D	D	D	C	2026-09-28
+テロルシザーズ	10	0	0	10	0	0	D	D	晩成	ややワル	ふつう	E	C	E	G	C	F	D	F	C	2026-09-28
+アクアシザーズ	0	5	0	5	0	10	C	D	ふつう	ややワル	ふつう	E	D	C	G	D	C	E	E	F	2026-09-28
+ニャルラトホテプ	10	10	5	10	-5	-5	B	A	晩成	ふつう	ふつう	F	C	C	B	C	E	C	B	C	2026-09-28
+レッドアイ	0	5	0	5	-5	15	D	E	ふつう	ややワル	ふつう	D	E	E	D	B	D	D	D	C	2026-09-28
+ナーガ	0	10	0	5	0	5	C	D	早熟	ワル	ふつう	C	E	F	F	C	G	C	D	E	2026-09-28
+エッジホッグ	0	10	-5	10	5	0	D	D	ふつう	ふつう	ふつう	E	E	E	C	C	F	D	D	C	2026-09-28
+サイクロップス	0	10	0	10	0	0	D	D	早熟	ヨイ	ふつう	E	C	E	E	C	D	C	C	G	2026-09-28
+ストライクリパー	-5	15	0	20	0	-10	B	C	早熟	ややヨイ	ふつう	D	E	D	B	D	D	C	C	D	2026-09-28
+ジャングラー	10	0	0	10	0	0	B	D	早熟	ややヨイ	ふつう	D	C	E	F	C	D	D	E	D	2026-09-28
+リヴァイアサン	0	5	5	15	0	-5	C	C	早熟	ややワル	ふつう	E	C	B	D	E	D	C	C	D	2026-09-28
+バズラ	10	10	15	0	-10	-5	D	D	ふつう	ヨイ	ふつう	C	E	C	B	F	E	C	B	C	2026-09-28
+ジョカ	5	-5	15	5	0	5	B	B	早熟	ややワル	ふつう	E	B	C	C	E	B	C	E	C	2026-09-28
+ヤマト	5	15	0	10	-5	-5	C	C	早熟	ややワル	ふつう	C	D	G	B	C	E	B	C	C	2026-09-28
