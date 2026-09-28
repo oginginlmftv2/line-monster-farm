@@ -2197,6 +2197,7 @@ head('22. 能力スコアリング（説明文パーサ）');
         }
       }
       if (/です|ます|ましょう/.test([...notes, lead].join(''))) bad.push(`${monster.id} です・ます調が混ざっている`);
+      if (/この体/.test([...notes, lead].join(''))) bad.push(`${monster.id} 「この体」を使っている（「6項目で」に統一）`);
     }
     if (bad.length) ng(`相性のいいアシスト能力の一文が仕様と不一致 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
     else ok(`相性のいいアシスト能力の一文：基礎データのある${noted}体だけに出し、数値は基礎データと一致・ページ内の重複なし`);

@@ -22,7 +22,7 @@ assert.strictEqual(abilitySummary(monster, [item('x', '回避ステ<+400>')], nu
 assert.strictEqual(descriptionFact(null), '');
 
 // --- 素質：ステを上げる効果は、高い素質と「噛み合う」、低い素質を「補う」（型0の文面で確かめる）
-assert.match(note('バトル開始時、回避ステ<+400>', basics({ evasion: 10 })), /^回避が育ちやすく（素質\+10%・この体で最も高い）/);
+assert.match(note('バトル開始時、回避ステ<+400>', basics({ evasion: 10 })), /^回避が育ちやすく（素質\+10%・6項目で最も高い）/);
 assert.match(note('バトル開始時、回避ステ<+400>', basics({ evasion: 10, power: 15 })), /^回避が育ちやすく（素質\+10%）/);
 assert.match(note('バトル開始時、回避ステ<+400>', basics({ evasion: -5 })), /回避の素質は-5%と低め/);
 assert.strictEqual(note('バトル開始時、回避ステ<+400>', basics({ evasion: 5 })), null, '目立たない素質は書かない');
@@ -94,5 +94,12 @@ assert.match(note(apt, basics({}, { far: 'D', mid: 'D' })), /開始時は遠D・
 // --- ③ description の句（同率は画面順で併記。プラスが無ければ空）
 assert.strictEqual(descriptionFact(basics({ power: 10, evasion: 10 })), 'ちから・回避の素質+10%。');
 assert.strictEqual(descriptionFact(basics({ power: -5 })), '');
+
+// 「この体で」は使わない（最も高い素質は「6項目で最も高い」。2026-09-28 管理者指定）
+for (const seed of [0, 1, 2]) {
+  const text = abilityNotes([item('x', 'バトル開始時、回避ステ<+400>')], basics({ evasion: 10 }), seed)[0];
+  assert.match(text, /6項目で最も高い/);
+  assert.doesNotMatch(text, /この体/);
+}
 
 console.log('test-ability-fit-note: OK');
