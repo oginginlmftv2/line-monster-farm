@@ -75,6 +75,15 @@ close(power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), power(apt, 'x', { best
 assert.ok(power(apt, 'x', { bestRange: 'D', rangeCount: 2 }) < power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), 'Dは届きにくい');
 assert.ok(power(apt, 'x', { bestRange: 'B', rangeCount: 1 }) < power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), '1方向だけは割り引く');
 close(power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), power(apt, 'x', { bestRange: 'B', rangeCount: 4 }), 0.01);
+// 名前の付いた間合いの適性（ライラックの花）は、その間合いのランクだけで見る。常時効果なので「1方向だけ」の割引は掛けない（2026-09-28）
+const lilac = '[自身白]バトル中、自身に次の効果<br>・零または近距離適性がS以上の時、全ステータス<+30%>と[業物Lv6]';
+const ranks = (near, zero) => ({ bestRange: 'B', rangeCount: 2, rangeRanks: { 遠: 'B', 中: 'B', 近: near, 零: zero } });
+assert.ok(power(lilac, 'x', ranks('E', 'D')) < power(lilac, 'x', ranks('E', 'C')) * 0.3, '遠Bでも零D・近Eなら届きにくい');
+close(power(lilac, 'x', ranks('E', 'C')), power(lilac, 'x', ranks('B', 'B')), 0.01);
+close(power(lilac, 'x', ranks('E', 'C')), power(lilac, 'x', { bestRange: 'B', rangeCount: 2 }), 0.01);
+// <零距離>技 は技の条件で、間合い適性とは関係しない（九つの目 II。零Dの体でも割り引かない）
+const nine = '[自身白]<零距離>技発動時、発動技と次の技が必中Lv1かつ与ダメ上昇Lv2<1回>';
+close(power(nine, 'x', { bestRange: 'B', rangeCount: 2, rangeRanks: { 遠: 'B', 中: 'B', 近: 'E', 零: 'D' } }), power(nine), 0.01);
 
 // --- 技の発動回数に応じた累積（1回+10%、最大+40%）は、一律の累積割引（×0.6）より強い（威力全開 II）
 {

@@ -7,7 +7,8 @@
  *   - その体が使える能力だけ：適用条件はオーラ・モン類・主血統（サブ血統を見る能力は無い）。能力全体の条件で判定したうえで、
  *     行ごとの条件（料理人 II の [自身黒]必中 など）が合わない行は点に入れない。
  *     技条件は技DBがあれば実際の技の色・種類・間合い、無ければオーラ一致で代用
- *   - 点はその体に合わせて出し直す（技の色の割合、基礎データの間合い適性からS以上に届く見込み）
+ *   - 点はその体に合わせて出し直す（技の色の割合、基礎データの間合い適性からS以上に届く見込み。
+ *     「零または近距離適性」は名前の付いた間合いだけで見る。<零距離>技 は技の条件で、間合い適性とは関係しない）
  *   - 点の上位 LIMIT 件を選び、番号は振らずに発売が新しい順に並べる（点と順位はページに出さない）
  */
 
@@ -15,6 +16,7 @@ const LIMIT = 5;
 const RANK_ORDER = ['M', 'SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
 // 育成でSに届く間合い適性（開始時の値）。C も秘伝・育成の書・イベントで届く（2026-09-27 管理者確認）
 const REACH_S = new Set(['M', 'SS', 'S', 'A', 'B', 'C']);
+const RANGE_LABELS = [['far', '遠'], ['mid', '中'], ['near', '近'], ['zero', '零']];
 
 /** 適用条件（[自身赤]・[怪物]・[主血統ガリ]・[モノリス種]）。血統は主血統だけを見る */
 function applyMatches(apply, monster) {
@@ -41,7 +43,10 @@ function skillMatches(parsed, monster, ownSkills) {
     if (!ok) return false;
   }
   if (cond.type && ownSkills.length && !ownSkills.some(skill => skill.skillType === cond.type)) return false;
-  if (cond.range && ownSkills.length && !ownSkills.some(skill => skill.range === cond.range[0])) return false;
+  if (cond.range && ownSkills.length) {
+    const ranges = cond.ranges || [cond.range[0]];
+    if (!ownSkills.some(skill => ranges.includes(skill.range))) return false;
+  }
   return true;
 }
 
@@ -60,6 +65,8 @@ function monsterContext(ownSkills, basicsEntry) {
     const ranks = Object.values(basicsEntry.range);
     ctx.bestRange = [...ranks].sort((a, b) => RANK_ORDER.indexOf(a) - RANK_ORDER.indexOf(b))[0];
     ctx.rangeCount = ranks.filter(rank => REACH_S.has(rank)).length;
+    // 「零または近距離適性」のように間合いの名前が付いた条件は、その間合いのランクで見る
+    ctx.rangeRanks = Object.fromEntries(RANGE_LABELS.map(([key, label]) => [label, basicsEntry.range[key]]));
   }
   return ctx;
 }

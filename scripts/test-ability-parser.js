@@ -173,6 +173,12 @@ const atoms = line => line.effects.map(e => e.atom);
   assert.ok(line('[自身白]<白>技発動時、自身に次の効果をランダムで付与<3回>').conditions.random);
   assert.ok(line('[怪物]相手が技使用・移動のいずれか不可の時、次の効果').conditions.opponentDisabled);
   assert.strictEqual(line('[自身黒][序盤]間合い適性に応じて最大ライフの割合で特殊ダメージカット').skillCond.aptitude, 'S以上');
+  // 名前の付いた間合いの適性（ライラックの花）と、複数の間合いの技（新緑オーバーライズ）。「近距離適性効果上昇」は条件ではない
+  assert.deepStrictEqual(line('・零または近距離適性がS以上の時、全ステータス<+30%>と[業物Lv6]').skillCond.aptitudeRanges, ['零', '近']);
+  assert.strictEqual(line('[自身青]近距離適性効果上昇Lv2').skillCond.aptitudeRanges, undefined);
+  const farMid = line('[自身緑][序盤]遠距離または中距離技命中時、クリ率上昇Lv6').skillCond;
+  assert.deepStrictEqual([farMid.range, farMid.ranges], ['中距離', ['遠', '中']]);
+  assert.deepStrictEqual(line('[自身白]<零距離>技発動時、発動技と次の技が必中Lv1かつ与ダメ上昇Lv2<1回>').skillCond.ranges, ['零']);
   // 1つのステを複数のステへ加算、自身のステ低下はデメリット
   assert.deepStrictEqual(eff('・自身の丈夫さステ<-20%>'), [['自身ステ低下', 20, '%']]);
   assert.deepStrictEqual(atoms(line('・丈夫さステの<13%>をちから、かしこさ、命中、回避ステに加算')), ['ステ変換']);

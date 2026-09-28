@@ -85,4 +85,15 @@ assert.ok(withGreen.some(item => item.abilityId === greenSkill), '緑の技を�
   assert.ok(scorer.scoreAbility(shitsuji, { applyMatches: apply => match(apply, redMonster) }).power > 0);
 }
 
+// --- 間合い：名前の付いた間合いのランクを渡す。技DBがあれば「遠距離または中距離技」のどちらかの技を持てば使える
+{
+  const { monsterContext, skillMatches } = require('../src/lib/ability-recommend');
+  const basicsEntry = { range: { far: 'B', mid: 'B', near: 'E', zero: 'D' } };
+  const noDb = monsterContext([], basicsEntry);
+  assert.deepStrictEqual(noDb.rangeRanks, { 遠: 'B', 中: 'B', 近: 'E', 零: 'D' });
+  const both = parser.parseAbility({ abilityId: 'x', name: 'x', description: '遠距離または中距離技命中時、クリ率上昇Lv6' });
+  assert.strictEqual(skillMatches(both, tamamo, [{ aura: '赤', range: '遠' }]), true);
+  assert.strictEqual(skillMatches(both, tamamo, [{ aura: '赤', range: '近' }]), false);
+}
+
 console.log('test-ability-recommend: OK');
