@@ -28,7 +28,7 @@ assert.match(note('バトル開始時、回避ステ<+400>', basics({ evasion: -
 assert.strictEqual(note('バトル開始時、回避ステ<+400>', basics({ evasion: 5 })), null, '目立たない素質は書かない');
 // 必中・完全回避・被ダメ低下はステの値に関係なく効くので、「補う」だけ
 assert.strictEqual(note('完全回避Lv2<1回>', basics({ evasion: 15 })), null);
-assert.match(note('完全回避Lv2<1回>', basics({ evasion: -10 })), /回避の素質は-10%と低めで、この能力で回避を補う/);
+assert.match(note('完全回避Lv2<1回>', basics({ evasion: -10 })), /回避の素質は-10%と低めで、この能力で回避を補え/);
 assert.match(note('被ダメ低下Lv6', basics({ defense: -5 })), /丈夫さの素質は-5%/);
 // 相手のステ低下は自分の素質と結ばない。全ステ上昇（5項目以上）は書かない
 assert.strictEqual(note('相手のかしこさステ<-30%>', basics({ wisdom: 15 })), null);
@@ -82,6 +82,13 @@ assert.match(note(apt, basics({}, { far: 'D', mid: 'D' })), /開始時は遠D・
   assert.doesNotMatch(two, /^テストは.*。テストは/);
   // 能力と結べる事実が無ければ、素質と間合いの要約
   assert.strictEqual(abilitySummary(monster, [item('d', '与ダメ上昇Lv7', ['火力'])], basics({ power: 15 })), '素質はちからの+15%が最も高く、開始時にC以上の間合いは遠B・中B。');
+  // 素質が全部0%なら素質には触れない（「全部の0%が最も高い」と書かない）
+  assert.strictEqual(abilitySummary(monster, [item('d', '与ダメ上昇Lv7', ['火力'])], basics()), '開始時にC以上の間合いは遠B・中B。');
+  // 「素質が高い」の型はどれも述語で終わる（「〜の組み合わせ。」のような名詞だけの文にしない）
+  for (const seed of [0, 1, 2]) {
+    const text = abilityNotes([item('x', '命中率<+30%>')], basics({ accuracy: 10 }), seed)[0];
+    assert.doesNotMatch(text, /組み合わせ。|強化/, text);
+  }
 }
 
 // --- ③ description の句（同率は画面順で併記。プラスが無ければ空）

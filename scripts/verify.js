@@ -2188,7 +2188,7 @@ head('22. 能力スコアリング（説明文パーサ）');
       // 数値はその体の基礎データと一致する。言い回しが3通りあるので、文（。区切り）ごとに
       // 「素質±N%」がその文に出る素質名のどれかと一致すること、「遠B」のような間合いとランクが基礎データと一致することを見る
       for (const sentence of [...notes, lead].join('').split('。')) {
-        for (const match of sentence.matchAll(/素質(?:は|が低め（|が高い（)?([+-]?\d+)%/g)) {
+        for (const match of sentence.matchAll(/素質(?:は|が低め（|が高い（|が)?([+-]?\d+)%/g)) {
           const labels = Object.keys(TALENT_KEY).filter(label => sentence.includes(label));
           if (basics.talent && !labels.some(label => basics.talent[TALENT_KEY[label]] === Number(match[1]))) bad.push(`${monster.id} 「${sentence}」の素質が不一致`);
         }
