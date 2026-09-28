@@ -1,3 +1,15 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 タマモノマエ	0	0	0	0	0	0	A	A	晩成	ワル	小さい	E	B	E	B	A	D	A	A	B	2026-09-17
 センリ	+5	-5	0	+10	+15	-5	B	B	早熟	ややワル	小さい	C	C	F	C	E	D	C	D	C	2026-09-17
+キュービ	0	-5	10	20	5	-10	A	B	ふつう	ふつう	小さい	D	D	C	C	D	C	C	E	C	2026-09-28
+アラクネ	10	0	0	10	-10	10	A	B	ふつう	ふつう	小さい	E	D	B	C	E	C	E	C	D	2026-09-28
+ハスタ	0	-10	10	20	5	-5	A	B	ふつう	ふつう	小さい	F	C	B	C	C	C	B	C	E	2026-09-28
+セイラン	-5	0	5	20	10	-10	A	B	ふつう	ふつう	小さい	E	D	C	B	E	C	C	D	D	2026-09-28
+メデューサ	5	-10	20	10	0	-5	B	A	早熟	ややワル	小さい	C	B	E	C	F	D	C	B	D	2026-09-28
+アマテラス	0	20	0	15	-5	-10	B	A	早熟	ヨイ	小さい	C	E	D	C	C	C	C	C	D	2026-09-28
+エンキドゥ	15	0	0	5	10	-10	A	C	ふつう	ヨイ	小さい	F	C	C	C	E	C	C	C	E	2026-09-28
+ハクタク・妖	0	0	15	5	5	-5	B	A	晩成	ややヨイ	小さい	C	C	D	C	E	C	C	C	E	2026-09-28
+オロチ	15	-10	5	0	0	10	A	A	ふつう	ややワル	小さい	F	C	B	C	D	C	B	C	E	2026-09-28
+恐山アンナ	0	5	10	10	0	-5	A	B	ふつう	ふつう	小さい	B	C	D	E	B	D	B	D	B	2026-09-28
+オリヒメ	5	0	10	5	0	0	A	A	晩成	ヨイ	小さい	C	C	C	B	F	B	E	B	C	2026-09-28
+シュナ・リゾート	0	0	10	10	10	-10	A	A	ふつう	ふつう	小さい	F	C	B	C	C	B	B	C	E	2026-09-28
