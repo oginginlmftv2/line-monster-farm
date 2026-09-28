@@ -1,0 +1,11 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+カワズモー	10	10	0	0	0	0	B	F	早熟	ヨイ	ふつう	D	C	C	F	G	E	G	D	C	2026-09-28
+メカエル	0	15	0	10	0	-5	C	E	ふつう	ヨイ	ふつう	C	F	C	F	C	D	E	B	D	2026-09-28
+ハムノフジ	10	10	0	0	0	0	B	E	ふつう	ヨイ	ふつう	E	D	D	C	G	F	F	D	C	2026-09-28
+クサズモー	10	0	5	5	0	0	B	F	早熟	ヨイ	ふつう	E	B	D	E	E	D	E	D	D	2026-09-28
+ヨコヅナ	5	10	-5	5	0	5	C	D	晩成	ヨイ	ふつう	C	D	C	D	D	C	E	C	C	2026-09-28
+サクラガエル	0	0	-5	15	0	10	B	E	ふつう	ヨイ	ふつう	E	D	C	B	E	D	B	E	C	2026-09-28
+イチゴエル	15	10	0	5	-5	-5	B	F	ふつう	ヨイ	ふつう	E	B	C	F	D	E	D	B	C	2026-09-28
+ナリキロッグ	5	10	-5	5	0	5	B	E	早熟	ふつう	ふつう	C	F	E	C	C	C	D	C	D	2026-09-28
+マグフロッグ	10	10	0	0	-10	10	B	F	晩成	ややワル	ふつう	C	C	F	F	B	B	D	B	E	2026-09-28
+ルートヴィッヒ	5	0	-5	15	5	10	B	E	ふつう	ヨイ	ふつう	E	C	B	B	E	C	B	E	B	2026-09-28
