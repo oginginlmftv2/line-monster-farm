@@ -1978,15 +1978,15 @@
     },
     {
       "id": "3016",
-      "baseline": 1247,
-      "current": 1247,
-      "indexable": false
+      "baseline": 1569,
+      "current": 1569,
+      "indexable": true
     },
     {
       "id": "3024",
-      "baseline": 1125,
-      "current": 1125,
-      "indexable": false
+      "baseline": 1525,
+      "current": 1525,
+      "indexable": true
     },
     {
       "id": "3027",
@@ -1996,26 +1996,26 @@
     },
     {
       "id": "3030",
-      "baseline": 1305,
-      "current": 1305,
-      "indexable": false
+      "baseline": 1581,
+      "current": 1581,
+      "indexable": true
     },
     {
       "id": "3050",
-      "baseline": 1355,
-      "current": 1355,
-      "indexable": false
+      "baseline": 1682,
+      "current": 1682,
+      "indexable": true
     },
     {
       "id": "3051",
-      "baseline": 1234,
-      "current": 2158,
+      "baseline": 1529,
+      "current": 2453,
       "indexable": true
     },
     {
       "id": "3052",
-      "baseline": 1315,
-      "current": 2351,
+      "baseline": 1655,
+      "current": 2691,
       "indexable": true
     },
     {

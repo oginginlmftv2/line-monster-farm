@@ -716,6 +716,68 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "3016",
+      "name": "ハナヨリダンゴ",
+      "talent": {
+        "life": -5,
+        "power": 20,
+        "wisdom": -5,
+        "accuracy": 0,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3024",
+      "name": "ラミア",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "G",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3027",
       "name": "アストロガール",
       "talent": {
@@ -745,6 +807,130 @@
         "zero": "C"
       },
       "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "3030",
+      "name": "キジン",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 0,
+        "evasion": 5,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "D",
+        "zero": "A"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3050",
+      "name": "女型の巨人",
+      "talent": {
+        "life": 5,
+        "power": 5,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "B",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3051",
+      "name": "フラン",
+      "talent": {
+        "life": 10,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3052",
+      "name": "シオン・リゾート",
+      "talent": {
+        "life": 10,
+        "power": 15,
+        "wisdom": -5,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "B",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
     },
     {
       "id": "3113",

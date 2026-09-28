@@ -1,2 +1,8 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 アストロガール	0	+10	0	+10	+10	-10	B	B	早熟	ワル	ふつう	C	D	F	B	C	B	C	E	C	2026-09-17
+ラミア	0	15	-5	5	-5	10	C	C	早熟	ややワル	ふつう	C	C	G	D	B	B	D	D	C	2026-09-28
+キジン	5	10	-5	0	5	5	C	C	早熟	ふつう	ふつう	B	D	F	C	B	B	E	D	A	2026-09-28
+ハナヨリダンゴ	-5	20	-5	0	10	0	C	B	ふつう	ややヨイ	ふつう	D	C	C	E	C	D	B	D	C	2026-09-28
+女型の巨人	5	5	-5	5	10	0	B	A	早熟	ややワル	ふつう	C	F	C	C	B	B	B	D	D	2026-09-28
+シオン・リゾート	10	15	-5	0	0	0	B	A	早熟	ややワル	ふつう	F	B	B	E	C	D	D	B	B	2026-09-28
+フラン	10	15	0	0	-5	0	C	D	ふつう	ふつう	ふつう	C	C	C	E	B	B	E	B	D	2026-09-28
