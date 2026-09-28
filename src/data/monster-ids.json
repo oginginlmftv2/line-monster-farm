@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 360,
+ "count": 361,
  "monsters": [
   {
    "id": "0101",
@@ -1606,6 +1606,25 @@
    "localImg": "S__93200750_0.jpg",
    "url": "/monsters/kemono/dino/0650.html",
    "image": "img/monster/0650.jpg"
+  },
+  {
+   "id": "0651",
+   "sortOrder": 651,
+   "isNew": true,
+   "name": "マミーレックス",
+   "arrayIndex": 360,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "ディノ",
+   "bloodSlug": "dino",
+   "subBlood": "レアモン",
+   "aura": "青",
+   "limited": false,
+   "limitedLabel": "イベント限定",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/kemono/dino/0651.html",
+   "image": "img/monster/0651.jpg"
   },
   {
    "id": "0701",
