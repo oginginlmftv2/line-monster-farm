@@ -840,6 +840,37 @@
       "capturedAt": "2026-09-28"
     },
     {
+      "id": "2321",
+      "name": "ハナシャクトリ",
+      "talent": {
+        "life": 15,
+        "power": -5,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "B",
+        "海岸": "E",
+        "雪山": "D",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "2322",
       "name": "クロザザム",
       "talent": {
@@ -926,6 +957,37 @@
       },
       "range": {
         "far": "G",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2350",
+      "name": "スカラベ",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
         "mid": "C",
         "near": "D",
         "zero": "C"

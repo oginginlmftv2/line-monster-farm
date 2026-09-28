@@ -9,3 +9,5 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ブルードリル	5	0	10	10	0	-5	D	D	早熟	ヨイ	小さい	D	D	D	C	E	E	D	C	D	2026-09-28
 コロネ	10	10	0	10	0	-10	E	E	ふつう	ややヨイ	小さい	C	C	D	C	F	E	C	D	B	2026-09-28
 エクスプレス	10	15	0	0	-10	5	C	B	晩成	ややヨイ	小さい	C	D	C	E	C	B	E	B	D	2026-09-28
+スカラベ	10	10	0	0	-5	5	C	D	ふつう	ヨイ	小さい	C	C	F	E	C	D	C	D	C	2026-09-28
+ハナシャクトリ	15	-5	10	0	0	0	C	F	早熟	ヨイ	小さい	D	B	E	D	F	C	D	C	C	2026-09-28
