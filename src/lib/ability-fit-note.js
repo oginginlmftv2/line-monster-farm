@@ -87,7 +87,67 @@ function talentFacts(parsed, basics) {
   return facts;
 }
 
-const factsFor = (item, basics) => [aptitudeFact(item.parsed, basics), ...talentFacts(item.parsed, basics)].filter(Boolean);
+/**
+ * ステの値を参照する能力（2026-09-28・管理者確認）。素質が高いほどそのステが育ち、能力が強く使える。
+ *   ステ変換（バーサーク：丈夫さの13%を4ステへ加算）、ステの割合で追撃（ギフトンアボイド：ちからの10%）、
+ *   ブロック（ロボトルファイトの装甲など：被ダメを割合で減らすので、ライフが多いほど長く耐える）、
+ *   最大ライフに応じたシールド（エスエルシールド）、自分の攻撃ステ上昇（ちから・かしこさのうち素質の高いほう）
+ * 返すのは { key（素質）, what（能力が何をするか。「〜する」の連体形）, why（添える理由。無ければ ''） } の配列
+ */
+function statRefs(parsed) {
+  const refs = [];
+  const add = (key, what, why = '') => { if (!refs.some(r => r.key === key)) refs.push({ key, what, why }); };
+  for (const line of parsed.lines) {
+    const raw = line.raw;
+    const convert = raw.match(/(ライフ|ちから|かしこさ|命中|回避|丈夫さ)ステ(?:ータス)?の<?\d+%>?を([^<>。]*?)に加算/);
+    if (convert) add(TALENT_BY_LABEL[convert[1]], `${convert[1]}の一部を${convert[2].split(/、|・/).length}つのステへ回す`);
+    const followup = raw.match(/(ちから|かしこさ|命中|回避|丈夫さ)(?:ステータス)?の<?\d+%>?(?:で|の)追撃/);
+    if (followup) add(TALENT_BY_LABEL[followup[1]], `${followup[1]}の割合で追撃する`);
+    if (line.effects.some(e => e.atom === '被ダメブロック') || /装甲/.test(raw)) add('life', 'ブロックで被ダメを減らす', '割合で減らすので、ライフが多いほど長く耐えられる。');
+    if (/最大ライフ<?\d+%>?の【/.test(raw)) add('life', '最大ライフに応じたシールドを張る');
+    if (!/相手/.test(raw) && /攻撃ステ(?:ータス)?(?:<\+?\d+%>|\d+%)?(?:上昇|<\+)/.test(raw)) add('attack', '攻撃ステを上げる');
+  }
+  return refs;
+}
+
+/** ステを参照する能力の事実（素質が高い＝活かせる／低い＝伸ばせば強力） */
+function statRefFacts(parsed, basics) {
+  if (!basics.talent) return [];
+  const facts = [];
+  for (const ref of statRefs(parsed)) {
+    // 攻撃ステは技の種類でちから・かしこさのどちらかになるので、素質の高いほうを挙げる
+    const key = ref.key === 'attack' ? (basics.talent.power >= basics.talent.wisdom ? 'power' : 'wisdom') : ref.key;
+    const value = basics.talent[key];
+    const base = { label: TALENT_LABEL[key], value, what: ref.what, why: ref.why, key };
+    if (value >= TALENT_HIGH) facts.push({ kind: 'statHigh', ...base });
+    else if (value <= TALENT_LOW) facts.push({ kind: 'statLow', ...base });
+  }
+  return facts;
+}
+
+/**
+ * ガッツ回復力（特徴のランク）の事実。B以上が高い、D以下が低い（2026-09-28・管理者指定）。
+ * 回復速度の上昇は元の回復力に掛かるので高い体と相性がいい。回復・吸収は低い体を補う
+ */
+function gutsFact(parsed, basics) {
+  const rank = basics.gutsRecovery;
+  if (!rank) return null;
+  // 相手に効く行（「相手のガッツ回復を停止」など）は数えない
+  const raw = parsed.lines.filter(line => !/相手/.test(line.raw)).map(line => line.raw).join('\n');
+  const speed = /ガッツ回復速度/.test(raw);
+  const recover = speed || /ガッツ(?:<\d+>)?回復|ガッツ吸収/.test(raw);
+  if (speed && better(rank, 'B') <= 0) return { kind: 'gutsHigh', rank, key: 'guts' };
+  if (recover && better(rank, 'D') >= 0) return { kind: 'gutsLow', rank, key: 'guts' };
+  return null;
+}
+
+// 事実の候補の順：間合いの条件 → ステを参照する → 素質の高低 → ガッツ回復力
+const factsFor = (item, basics) => [
+  aptitudeFact(item.parsed, basics),
+  ...statRefFacts(item.parsed, basics),
+  ...talentFacts(item.parsed, basics),
+  gutsFact(item.parsed, basics),
+].filter(Boolean);
 
 // ---------------------------------------------------------------- 言い回し（種類ごとに3通り）
 // 語尾は体言止めか「〜よう」（です・ます、〜ましょうは使わない。2026-09-28 管理者指定）。
@@ -115,6 +175,26 @@ const NOTE_TEMPLATES = {
     f => `${f.label}は素質${signed(f.value)}%${f.top ? '（6項目で最も高い）' : ''}で伸びやすい。この能力で${f.label}をさらに上げられる。`,
     f => `素質${signed(f.value)}%${f.top ? '（6項目で最も高い）' : ''}の${f.label}を、この能力でさらに押し上げられる。`,
   ],
+  statHigh: [
+    f => `この能力は${f.what}。${f.label}の素質${signed(f.value)}%で伸びやすく、効果を活かしやすい。${f.why}`,
+    f => `${f.label}の素質${signed(f.value)}%は、${f.what}この能力と好相性。${f.why}`,
+    f => `${f.what}能力なので、素質${signed(f.value)}%で伸びやすい${f.label}がそのまま効く。${f.why}`,
+  ],
+  statLow: [
+    f => `この能力は${f.what}。${f.label}の素質は${signed(f.value)}%と低めだが、伸ばせば強力。${f.why}`,
+    f => `${f.label}の素質${signed(f.value)}%は伸びにくいが、${f.what}この能力は${f.label}を育てるほど強くなる。${f.why}`,
+    f => `${f.what}能力。${f.label}は素質${signed(f.value)}%と低めなので、育成で伸ばしておきたい。${f.why}`,
+  ],
+  gutsHigh: [
+    f => `回復速度の上昇は元のガッツ回復力に掛かるので、ガッツ回復力${f.rank}と相性がいい。`,
+    f => `ガッツ回復力${f.rank}の回復を、この能力の回復速度アップがさらに速める。`,
+    f => `元のガッツ回復力が${f.rank}と高く、回復速度の上昇が大きく効く。`,
+  ],
+  gutsLow: [
+    f => `ガッツ回復力は${f.rank}と低めで、この能力のガッツ回復で補える。`,
+    f => `ガッツ回復力${f.rank}の遅さを、この能力でカバーできる。`,
+    f => `ガッツ回復力${f.rank}は弱点。この能力のガッツ回復で埋め合わせたい。`,
+  ],
   talentLow: [
     f => `${f.label}の素質は${signed(f.value)}%と低めで、この能力で${f.label}を補える。`,
     f => `素質${signed(f.value)}%と伸びにくい${f.label}を、この能力でカバーできる。`,
@@ -122,6 +202,26 @@ const NOTE_TEMPLATES = {
   ],
 };
 const ADVICE_TEMPLATES = {
+  statHigh: [
+    (m, a, f) => `${m}は${f.label}の素質が高い（${signed(f.value)}%）ので、${f.what}${a}を活かしやすい。`,
+    (m, a, f) => `${a}は${f.what}能力。${f.label}の素質${signed(f.value)}%の${m}なら強く使える。`,
+    (m, a, f) => `${f.label}の素質${signed(f.value)}%は${m}の強み。${f.what}${a}と組み合わせよう。`,
+  ],
+  statLow: [
+    (m, a, f) => `${a}は${f.what}能力。${m}は${f.label}の素質が低め（${signed(f.value)}%）だが、伸ばせば強力。`,
+    (m, a, f) => `${m}は${f.label}の素質${signed(f.value)}%と伸びにくいが、${a}のために育成で伸ばしておこう。`,
+    (m, a, f) => `${f.label}の素質${signed(f.value)}%の${m}でも、${f.label}を伸ばせば${a}は強力。`,
+  ],
+  gutsHigh: [
+    (m, a, f) => `${m}はガッツ回復力が${f.rank}と高いので、${a}の回復速度アップがよく効く。`,
+    (m, a, f) => `${a}の回復速度アップは、ガッツ回復力${f.rank}の${m}と好相性。`,
+    (m, a, f) => `ガッツ回復力${f.rank}は${m}の強み。${a}でさらに回転を上げよう。`,
+  ],
+  gutsLow: [
+    (m, a, f) => `${m}はガッツ回復力が${f.rank}と低めなので、${a}のガッツ回復で補おう。`,
+    (m, a, f) => `ガッツ回復力${f.rank}が${m}の弱点。${a}でカバーしよう。`,
+    (m, a, f) => `${a}は、ガッツ回復力${f.rank}の${m}の穴埋め役。`,
+  ],
   'aptitude:low': [
     (m, a, f) => `${a}は${f.condition}が発動条件だが、${m}の開始時は${f.ranks}。秘伝や育成の書で頑張って上げよう。`,
     (m, a, f) => `${a}を活かすなら${f.condition}が必要。開始時が${f.ranks}の${m}は、秘伝と育成の書で引き上げよう。`,
@@ -187,8 +287,9 @@ function abilityNotes(picked, basics, variantSeed = 0) {
   });
 }
 
-// ② で先に挙げる事実の順：条件に届きにくい間合い → 低い素質を補う → Sスタートを狙える間合い → 育成でSを目指せる間合い → 高い素質
-const SUMMARY_ORDER = ['aptitude:low', 'talentLow', 'aptitude:start', 'aptitude:train', 'talentHigh'];
+// ② で先に挙げる事実の順：条件に届きにくい間合い → ステを参照する能力を活かせる → 低い素質・ガッツ回復力を補う →
+// ステを参照する能力のために伸ばしたい → Sスタートを狙える間合い → 育成でSを目指せる間合い → 高い素質 → 高いガッツ回復力
+const SUMMARY_ORDER = ['aptitude:low', 'statHigh', 'talentLow', 'gutsLow', 'statLow', 'aptitude:start', 'aptitude:train', 'talentHigh', 'gutsHigh'];
 
 /** 最も高い素質（同率は画面順で併記） */
 function topTalents(basics) {

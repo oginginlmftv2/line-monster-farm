@@ -102,4 +102,32 @@ for (const seed of [0, 1, 2]) {
   assert.doesNotMatch(text, /この体/);
 }
 
+// --- ステの値を参照する能力（2026-09-28）：素質が高い＝活かせる、低い＝伸ばせば強力
+{
+  const berserk = '[自身黄または無機]オーラ技命中時、次の効果付与<3回><br>・自身の丈夫さステ<-20%><br>・丈夫さステの<13%>をちから、かしこさ、命中、回避ステに加算';
+  assert.match(note(berserk, basics({ defense: 15 })), /丈夫さの一部を4つのステへ回す/);
+  assert.match(note(berserk, basics({ defense: 15 })), /丈夫さの素質\+15%/);
+  assert.match(note(berserk, basics({ defense: -5 })), /丈夫さの素質は-5%と低めだが、伸ばせば強力/);
+  assert.strictEqual(note(berserk, basics({ defense: 5 })), null);
+  // ブロックはライフ（割合で減らすので、ライフが多いほど長く耐える）
+  const robot = '[自身黄]次の効果付与<1回><br>・[装甲Lv5（ブロック<-75%>、技を受けた時<15%>ずつ減少）]';
+  assert.match(note(robot, basics({ life: 10 })), /ブロックで被ダメを減らす.*ライフの素質\+10%.*ライフが多いほど長く耐えられる/);
+  // ステの割合で追撃はそのステ
+  assert.match(note('[無機]技発動時、次の効果が発動<br>・[有利]ちからの<10%>で追撃<20秒><1回>', basics({ power: 15 })), /ちからの割合で追撃する.*ちからの素質\+15%/);
+  // 攻撃ステは、ちから・かしこさのうち素質の高いほう。相手の攻撃ステは数えない
+  assert.match(note('攻撃ステータス<+10%>', basics({ power: 5, wisdom: 15 })), /かしこさ/);
+  assert.strictEqual(note('相手の攻撃ステータス<15%>減少', basics({ power: 15 })), null);
+}
+
+// --- ガッツ回復力（特徴のランク）：B以上が高い、D以下が低い。回復速度は高い体と、回復・吸収は低い体と結ぶ
+{
+  const withGuts = (rank, talent = {}) => ({ ...basics(talent), gutsRecovery: rank });
+  const mental = '[自身緑]残りガッツ60以下の時、次の効果発動<br>・ガッツ回復速度<+30%><br>・技命中時、与ガッツダメ上昇<+10>とガッツ回復<+20>';
+  assert.match(note(mental, withGuts('B')), /ガッツ回復力B/);
+  assert.match(note(mental, withGuts('D')), /ガッツ回復力(?:は)?D/);
+  assert.strictEqual(note(mental, withGuts('C')), null);
+  assert.strictEqual(note('技回避時、ガッツ回復<+30><1回>', withGuts('A')), null, '回復だけの能力は高い体とは結ばない');
+  assert.strictEqual(note('[有利]自身技発動中、相手のガッツ回復を停止', withGuts('E')), null, '相手のガッツは数えない');
+}
+
 console.log('test-ability-fit-note: OK');

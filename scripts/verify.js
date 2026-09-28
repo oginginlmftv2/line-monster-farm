@@ -2192,6 +2192,9 @@ head('22. 能力スコアリング（説明文パーサ）');
           const labels = Object.keys(TALENT_KEY).filter(label => sentence.includes(label));
           if (basics.talent && !labels.some(label => basics.talent[TALENT_KEY[label]] === Number(match[1]))) bad.push(`${monster.id} 「${sentence}」の素質が不一致`);
         }
+        for (const match of sentence.matchAll(/ガッツ回復力(?:は|が)?(M|SS|S|A|B|C|D|E|F|G)(?![A-Z])/g)) {
+          if (basics.gutsRecovery !== match[1]) bad.push(`${monster.id} ガッツ回復力${match[1]} が基礎データと不一致`);
+        }
         for (const match of sentence.matchAll(/([遠中近零])(M|SS|S|A|B|C|D|E|F|G)(?![A-Z])/g)) {
           if (basics.range && basics.range[RANGE_KEY[match[1]]] !== match[2]) bad.push(`${monster.id} ${match[0]} が間合い適性と不一致`);
         }
