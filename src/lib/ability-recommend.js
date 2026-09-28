@@ -7,16 +7,11 @@
  *   - その体が使える能力だけ：適用条件はオーラ・モン類・主血統（サブ血統を見る能力は無い）。能力全体の条件で判定したうえで、
  *     行ごとの条件（料理人 II の [自身黒]必中 など）が合わない行は点に入れない。
  *     技条件は技DBがあれば実際の技の色・種類・間合い、無ければオーラ一致で代用
- *   - 点はその体に合わせて出し直す（技の色の割合、基礎データの間合い適性からS以上に届く見込み。
- *     「零または近距離適性」は名前の付いた間合いだけで見る。<零距離>技 は技の条件で、間合い適性とは関係しない）
+ *   - 点はその体に合わせて出し直す（技の色の割合）。基礎データの間合い適性は見ない（2026-09-28。開始時の値は上げられるため）
  *   - 点の上位 LIMIT 件を選び、番号は振らずに発売が新しい順に並べる（点と順位はページに出さない）
  */
 
 const LIMIT = 5;
-const RANK_ORDER = ['M', 'SS', 'S', 'A', 'B', 'C', 'D', 'E', 'F', 'G'];
-// 育成でSに届く間合い適性（開始時の値）。C も秘伝・育成の書・イベントで届く（2026-09-27 管理者確認）
-const REACH_S = new Set(['M', 'SS', 'S', 'A', 'B', 'C']);
-const RANGE_LABELS = [['far', '遠'], ['mid', '中'], ['near', '近'], ['zero', '零']];
 
 /** 適用条件（[自身赤]・[怪物]・[主血統ガリ]・[モノリス種]）。血統は主血統だけを見る */
 function applyMatches(apply, monster) {
@@ -52,8 +47,12 @@ function skillMatches(parsed, monster, ownSkills) {
 
 const isStateChange = parsed => parsed.lines.some(line => (line.conditions.state || []).includes('状態変化'));
 
-/** ability-score.js の scoreAbility に渡す、その体の事情 */
-function monsterContext(ownSkills, basicsEntry) {
+/**
+ * ability-score.js の scoreAbility に渡す、その体の事情（技の色の割合だけ）。
+ * 基礎データの間合い適性は選ぶときに見ない（2026-09-28・管理者判断）。開始時の適性は秘伝・育成の書・育成で上げられるので、
+ * 条件に対して低いことはページの文（src/lib/ability-fit-note.js）で「上げよう」と書く
+ */
+function monsterContext(ownSkills) {
   const ctx = {};
   if (ownSkills.length) {
     ctx.auraShare = colors => {
@@ -61,26 +60,19 @@ function monsterContext(ownSkills, basicsEntry) {
       return ownSkills.filter(skill => list.includes(skill.aura) || (list.includes('無') && !skill.aura)).length / ownSkills.length;
     };
   }
-  if (basicsEntry && basicsEntry.range) {
-    const ranks = Object.values(basicsEntry.range);
-    ctx.bestRange = [...ranks].sort((a, b) => RANK_ORDER.indexOf(a) - RANK_ORDER.indexOf(b))[0];
-    ctx.rangeCount = ranks.filter(rank => REACH_S.has(rank)).length;
-    // 「零または近距離適性」のように間合いの名前が付いた条件は、その間合いのランクで見る
-    ctx.rangeRanks = Object.fromEntries(RANGE_LABELS.map(([key, label]) => [label, basicsEntry.range[key]]));
-  }
   return ctx;
 }
 
 /**
  * @param monster      monster-ids.json の1体（aura・mon・blood・id）
  * @param ownSkills    その体が使える技（血統の共通技＋自分の固有技）。技DBが無い血統は []
- * @param basicsEntry  monster-basics.json の1体（無ければ null）
  * @param scoreRows    ability-scores.json の abilities（点の高い順）
  * @param abilityById  abilityId → assist-abilities.json の1件
  * @param cardById     cardId → assist-cards.json の1枚
+ * 基礎データ（basicsEntry）は受け取っても選び方には使わない
  */
-function recommendAbilities({ monster, ownSkills, basicsEntry, scoreRows, abilityById, cardById, scorer, parser, limit = LIMIT }) {
-  const ctx = monsterContext(ownSkills, basicsEntry);
+function recommendAbilities({ monster, ownSkills, scoreRows, abilityById, cardById, scorer, parser, limit = LIMIT }) {
+  const ctx = monsterContext(ownSkills);
   const seen = new Set();
   const candidates = [];
   for (const row of scoreRows) {
@@ -104,6 +96,7 @@ function recommendAbilities({ monster, ownSkills, basicsEntry, scoreRows, abilit
       card,
       releasedAt: card && card.releasedAt ? card.releasedAt : null,
       power,
+      parsed,
     });
   }
   // 点の上位から選び、表示は発売が新しい順（発売日の無いものは後ろ。同じ日は abilityId の新しい順）
