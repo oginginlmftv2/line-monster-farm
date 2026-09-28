@@ -1,2 +1,6 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 ワルキューレ	0	0	0	0	0	0	A	A	晩成	ヨイ	ふつう	B	D	D	B	B	B	B	B	B	2026-09-17
+ジェリーヌ	5	0	-5	5	15	0	C	B	晩成	ややヨイ	ふつう	C	E	C	C	F	C	D	E	B	2026-09-28
+イルミネ	0	10	-10	15	10	5	B	A	早熟	ややワル	ふつう	B	E	C	F	B	E	B	C	C	2026-09-28
+ドリーミィ	0	5	-5	10	10	0	A	A	ふつう	ふつう	ふつう	C	C	C	D	E	B	D	D	C	2026-09-28
+セリアン	0	15	-5	5	5	0	A	B	ふつう	ふつう	ふつう	C	D	C	C	E	E	C	B	C	2026-09-28

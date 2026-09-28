@@ -778,6 +778,130 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "3209",
+      "name": "セリアン",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "E",
+        "mid": "C",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3213",
+      "name": "ドリーミィ",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": -5,
+        "accuracy": 10,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3219",
+      "name": "ジェリーヌ",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3232",
+      "name": "イルミネ",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": -10,
+        "accuracy": 15,
+        "evasion": 10,
+        "defense": 5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3290",
       "name": "ワルキューレ",
       "talent": {
