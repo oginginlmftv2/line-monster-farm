@@ -1,0 +1,6 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+メタゾール	-5	0	5	20	-10	10	A	E	ふつう	ヨイ	小さい	D	C	E	F	C	B	D	C	D	2026-09-28
+メタルナー	5	5	-5	15	-5	15	A	B	ふつう	ヨイ	小さい	C	C	F	B	C	C	B	E	B	2026-09-28
+ステルナー	10	0	15	5	-5	-5	A	A	ふつう	ヨイ	小さい	E	B	C	C	F	C	B	E	B	2026-09-28
+ラブラブセイジン	-10	0	10	10	10	0	A	A	ふつう	ややワル	小さい	F	E	C	B	C	B	C	D	D	2026-09-28
+プレゼンター	5	0	-10	20	-5	10	A	B	ふつう	ヨイ	小さい	C	C	F	B	E	C	C	E	B	2026-09-28

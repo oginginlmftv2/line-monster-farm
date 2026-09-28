@@ -716,6 +716,161 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "2701",
+      "name": "ラブラブセイジン",
+      "talent": {
+        "life": -10,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2715",
+      "name": "メタゾール",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 20,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2721",
+      "name": "ステルナー",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2727",
+      "name": "メタルナー",
+      "talent": {
+        "life": 5,
+        "power": 5,
+        "wisdom": -5,
+        "accuracy": 15,
+        "evasion": -5,
+        "defense": 15
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2750",
+      "name": "プレゼンター",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": -10,
+        "accuracy": 20,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "2809",
       "name": "ウルズ",
       "talent": {
