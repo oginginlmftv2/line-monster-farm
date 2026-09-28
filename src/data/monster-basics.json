@@ -654,6 +654,316 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "2305",
+      "name": "イワムシ",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 5,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "E",
+        "雪山": "G",
+        "火山": "D"
+      },
+      "range": {
+        "far": "G",
+        "mid": "D",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2306",
+      "name": "トカゲムシ",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "D"
+      },
+      "range": {
+        "far": "E",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2309",
+      "name": "ブルードリル",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "E",
+        "mid": "D",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2310",
+      "name": "コロネ",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "E",
+        "mid": "C",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2311",
+      "name": "カメンワーム",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": -5
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "G",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "G",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2315",
+      "name": "ザザムワーム",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "F",
+        "火山": "F"
+      },
+      "range": {
+        "far": "E",
+        "mid": "C",
+        "near": "F",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2322",
+      "name": "クロザザム",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": -5,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "ふつう",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "D",
+        "海岸": "E",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2323",
+      "name": "ワーム",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "E",
+        "火山": "E"
+      },
+      "range": {
+        "far": "F",
+        "mid": "D",
+        "near": "F",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2324",
+      "name": "ムラサキチュウ",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "G",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2351",
+      "name": "エクスプレス",
+      "talent": {
+        "life": 10,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "2405",
       "name": "トライデント",
       "talent": {
