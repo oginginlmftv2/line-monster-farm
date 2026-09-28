@@ -97,26 +97,26 @@ const topMark = fact => (fact.top ? '・この体で最も高い' : '');
 const NOTE_TEMPLATES = {
   'aptitude:start': [
     f => `発動条件は${f.condition}。開始時の${f.ranks}なら、育成開始時の上昇でSスタートを狙える。`,
-    f => `${f.condition}が条件。開始時${f.ranks}で、育成開始時の上昇によるSスタートが現実的。`,
+    f => `${f.condition}が条件。開始時の${f.ranks}なら、育成開始時の上昇でSスタートが現実的。`,
     f => `条件の${f.condition}には、開始時の${f.ranks}が近道。開始時の上昇でSスタートを狙いたい。`,
   ],
   'aptitude:train': [
     f => `発動条件は${f.condition}。開始時の${f.ranks}は、秘伝・育成の書や育成中のイベントでSを目指せる。`,
-    f => `${f.condition}が条件。開始時${f.ranks}からでも、秘伝や育成の書、育成中のイベントでSに届く。`,
-    f => `条件の${f.condition}へは開始時${f.ranks}から。育成の書と秘伝、育成中のイベントで押し上げたい。`,
+    f => `${f.condition}が条件。開始時の${f.ranks}からでも、秘伝や育成の書、育成中のイベントでSに届く。`,
+    f => `条件の${f.condition}には、開始時の${f.ranks}から育成の書と秘伝、育成中のイベントで押し上げたい。`,
   ],
   'aptitude:low': [
     f => `発動条件の${f.condition}に対して、開始時は${f.ranks}と低め。秘伝や育成の書で上げておきたい。`,
     f => `${f.condition}が条件だが、開始時は${f.ranks}。秘伝や育成の書で底上げしたい。`,
-    f => `条件の${f.condition}まで、開始時${f.ranks}からは距離がある。育成の書と秘伝で引き上げたい。`,
+    f => `条件の${f.condition}まで、開始時の${f.ranks}からは距離がある。育成の書と秘伝で引き上げたい。`,
   ],
   talentHigh: [
     f => `${f.label}が育ちやすく（素質${signed(f.value)}%${topMark(f)}）、この能力の${f.label}を上げる効果と噛み合う。`,
-    f => `${f.label}の素質${signed(f.value)}%${f.top ? '（この体で最も高い）' : ''}と、この能力の${f.label}強化の組み合わせ。伸びやすいところをさらに伸ばせる。`,
+    f => `${f.label}は素質${signed(f.value)}%${f.top ? '（この体で最も高い）' : ''}で伸びやすい。この能力で${f.label}をさらに上げられる。`,
     f => `素質${signed(f.value)}%${f.top ? '（この体で最も高い）' : ''}の${f.label}を、この能力でさらに押し上げられる。`,
   ],
   talentLow: [
-    f => `${f.label}の素質は${signed(f.value)}%と低めで、この能力で${f.label}を補う形。`,
+    f => `${f.label}の素質は${signed(f.value)}%と低めで、この能力で${f.label}を補える。`,
     f => `素質${signed(f.value)}%と伸びにくい${f.label}を、この能力でカバーできる。`,
     f => `${f.label}は素質${signed(f.value)}%の弱点。この能力で埋め合わせたい。`,
   ],
@@ -124,18 +124,18 @@ const NOTE_TEMPLATES = {
 const ADVICE_TEMPLATES = {
   'aptitude:low': [
     (m, a, f) => `${a}は${f.condition}が発動条件だが、${m}の開始時は${f.ranks}。秘伝や育成の書で頑張って上げよう。`,
-    (m, a, f) => `${a}を活かすなら${f.condition}が必要。開始時${f.ranks}の${m}は、秘伝と育成の書で引き上げよう。`,
-    (m, a, f) => `${m}の開始時${f.ranks}では、${a}の条件（${f.condition}）に届かない。育成の書や秘伝で狙っていこう。`,
+    (m, a, f) => `${a}を活かすなら${f.condition}が必要。開始時が${f.ranks}の${m}は、秘伝と育成の書で引き上げよう。`,
+    (m, a, f) => `${m}の開始時の${f.ranks}では、${a}の条件（${f.condition}）に届かない。育成の書や秘伝で狙っていこう。`,
   ],
   'aptitude:start': [
     (m, a, f) => `${a}は${f.condition}が必要だが、${f.ranks}は育成の書と秘伝でSスタートを狙いやすい。`,
-    (m, a, f) => `${a}の条件は${f.condition}。${m}は開始時${f.ranks}なので、育成の書と秘伝でSスタートが見える。`,
-    (m, a, f) => `${m}の開始時${f.ranks}なら、${a}の${f.condition}もSスタートで満たしやすい。育成の書と秘伝で狙おう。`,
+    (m, a, f) => `${a}の条件は${f.condition}。${m}は開始時が${f.ranks}なので、育成の書と秘伝でSスタートが見える。`,
+    (m, a, f) => `${m}の開始時の${f.ranks}なら、${a}の${f.condition}もSスタートで満たしやすい。育成の書と秘伝で狙おう。`,
   ],
   'aptitude:train': [
     (m, a, f) => `${a}は${f.condition}が必要で、${f.ranks}は秘伝・育成の書や育成中のイベントでSを目指せる。`,
-    (m, a, f) => `${a}の条件は${f.condition}。開始時${f.ranks}からでも、秘伝や育成の書、育成中のイベントで届く。`,
-    (m, a, f) => `${m}の開始時${f.ranks}は、育成中のイベントまで使えば${a}の${f.condition}に届く。秘伝と育成の書も併せて狙おう。`,
+    (m, a, f) => `${a}の条件は${f.condition}。開始時の${f.ranks}からでも、秘伝や育成の書、育成中のイベントで届く。`,
+    (m, a, f) => `${m}の開始時の${f.ranks}は、育成中のイベントまで使えば${a}の${f.condition}に届く。秘伝と育成の書も併せて狙おう。`,
   ],
   talentLow: [
     (m, a, f) => `${m}は${f.label}の素質が低め（${signed(f.value)}%）なので、${a}で${f.label}の低さを補おう。`,
@@ -145,7 +145,7 @@ const ADVICE_TEMPLATES = {
   talentHigh: [
     (m, a, f) => `${m}は${f.label}の素質が高い（${signed(f.value)}%）ので、${a}の${f.label}を上げる効果を活かしやすい。`,
     (m, a, f) => `${f.label}の素質${signed(f.value)}%は${m}の強み。${a}でさらに伸ばそう。`,
-    (m, a, f) => `${a}の${f.label}強化は、${f.label}の素質${signed(f.value)}%の${m}と好相性。`,
+    (m, a, f) => `${a}の${f.label}を上げる効果は、${f.label}の素質が${signed(f.value)}%の${m}と好相性。`,
   ],
 };
 // 助言を書けない体の要約（最も高い素質・開始時にC以上の間合い）
@@ -220,7 +220,8 @@ function abilitySummary(monster, picked, basics, variantSeed = 0, maxAdvice = 2)
     const top = topTalents(basics);
     const good = RANGES.filter(r => better(basics.range[r.key], 'C') <= 0).map(r => `${r.label}${basics.range[r.key]}`);
     const ranges = good.length ? `開始時にC以上の間合いは${good.join('・')}` : '開始時の間合い適性はすべてD以下';
-    parts.push(pick('profile', PROFILE_TEMPLATES)(monster.name, `${top.labels.join('・')}の${signed(top.value)}%`, ranges));
+    // 最も高い素質が0%以下（全部0%など）なら素質には触れず、間合いだけ書く
+    parts.push(top.value > 0 ? pick('profile', PROFILE_TEMPLATES)(monster.name, `${top.labels.join('・')}の${signed(top.value)}%`, ranges) : `${ranges}。`);
   }
   return parts.length ? parts.join('') : null;
 }
