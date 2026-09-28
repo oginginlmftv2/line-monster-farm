@@ -1916,8 +1916,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 958,
-      "current": 1538,
+      "baseline": 1343,
+      "current": 1923,
       "indexable": true
     },
     {
@@ -1953,8 +1953,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 1018,
-      "current": 1617,
+      "baseline": 1325,
+      "current": 1924,
       "indexable": true
     },
     {
@@ -1990,8 +1990,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 940,
-      "current": 1636,
+      "baseline": 1231,
+      "current": 1927,
       "indexable": true
     },
     {
@@ -2027,8 +2027,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 993,
-      "current": 1615,
+      "baseline": 1332,
+      "current": 1954,
       "indexable": true
     },
     {
@@ -2064,8 +2064,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 831,
-      "current": 1506,
+      "baseline": 1148,
+      "current": 1823,
       "indexable": true
     },
     {
@@ -2101,8 +2101,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 962,
-      "current": 1599,
+      "baseline": 1305,
+      "current": 1942,
       "indexable": true
     },
     {
@@ -2138,8 +2138,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 838,
-      "current": 1499,
+      "baseline": 1180,
+      "current": 1841,
       "indexable": true
     },
     {
@@ -2177,8 +2177,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-19",
       "releasedAt": "",
-      "baseline": 1053,
-      "current": 1713,
+      "baseline": 1453,
+      "current": 2113,
       "indexable": true
     },
     {
@@ -2202,8 +2202,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 827,
-      "current": 1443,
+      "baseline": 1168,
+      "current": 1784,
       "indexable": true
     },
     {
@@ -2241,8 +2241,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-20",
       "releasedAt": "2025-11-30",
-      "baseline": 1016,
-      "current": 1799,
+      "baseline": 1288,
+      "current": 2071,
       "indexable": true
     },
     {
@@ -4006,9 +4006,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 956,
-      "current": 956,
-      "indexable": false
+      "baseline": 1254,
+      "current": 1254,
+      "indexable": true
     },
     {
       "id": "1301",
