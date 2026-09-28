@@ -191,12 +191,17 @@ function parseLine(rawLine) {
   const rank = text.match(/R(\d)以上(?:の)?/); if (rank) { line.skillCond.rank = Number(rank[1]); text = text.replace(rank[0], ' '); }
   // 「間合い適性に応じて」は一番下の段（S以上）から効く（全種族魅了）
   if (/間合い適性に応じて/.test(text)) { line.skillCond.aptitude = 'S以上'; text = text.replace(/間合い適性に応じて/, ' '); }
+  // 「零または近距離適性がS以上」は、名前の付いた間合いの適性だけを見る（ライラックの花）
+  const aptRanges = text.match(/((?:[遠中近零](?:距離)?または)*[遠中近零])距離適性が?(?=(?:M|SS|S|A)(?:以上|未満))/);
+  if (aptRanges) { line.skillCond.aptitudeRanges = aptRanges[1].match(/[遠中近零]/g); text = text.replace(aptRanges[0], ' '); }
   const apt = !line.skillCond.aptitude && text.match(/(?:間合い)?(?:適性)?(M|SS|S|A)(以上|未満)(?:：|の間合いで|技)?/); if (apt) { line.skillCond.aptitude = apt[1] + apt[2]; text = text.replace(apt[0], ' '); }
   const pos = text.match(/<(前衛|後衛|相手前衛|相手後衛)>技/); if (pos) { line.skillCond.position = pos[1]; text = text.replace(pos[0], '技'); }
   const selfAura = text.match(/自身<オーラ(赤|青|黄|黒|白|緑)>で/); if (selfAura) { line.apply = line.apply || { aura: [], mon: [], blood: [], op: null, raw: selfAura[0] }; line.apply.aura.push(selfAura[1]); text = text.replace(selfAura[0], ' '); }
   const size = text.match(/自身<(小さい|ふつう|大きい)>で/); if (size) { (line.conditions.size = line.conditions.size || []).push(size[1]); text = text.replace(size[0], ' '); }
   const oppAura = text.match(/相手が<オーラ(赤|青|黄|黒|白|緑)>のとき/); if (oppAura) { (line.conditions.opponent = line.conditions.opponent || []).push('相手' + oppAura[1]); text = text.replace(oppAura[0], ' '); }
-  const dist = text.match(/<?(遠距離|中距離|近距離|零距離)>?(?:技|で)/); if (dist) { line.skillCond.range = dist[1]; text = text.replace(dist[0], ' '); }
+  // 「遠距離または中距離技」は両方の間合いを ranges に持つ。range は従来どおり技の直前の間合い
+  const dist = text.match(/<?((?:[遠中近零]距離または)*)(遠距離|中距離|近距離|零距離)>?(?:技|で)/);
+  if (dist) { line.skillCond.range = dist[2]; line.skillCond.ranges = (dist[1] + dist[2]).match(/[遠中近零](?=距離)/g); text = text.replace(dist[0], ' '); }
   if (/つ前と同じ技|同じ技を使用|連続で使用|連続使用|連続で発動|1回前が/.test(text)) { line.skillCond.repeat = true; text = text.replace(/(?:\d)?つ前と同じ技を使用した(?:とき|時)|同じオーラ技を連続で使用した(?:とき|時)|1回前が[^、]*(?:時|とき)/, ' '); }
   // 3. トリガー
   // 文中で最初に出るトリガーをこの行のものにする。「次の効果」の見出しに2つあるときは、最後のものが後続行のトリガー

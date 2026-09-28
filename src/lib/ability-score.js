@@ -21,6 +21,8 @@ function createScorer(rubric) {
   const d = B.dmgPerLv;
   const held = new Set(rubric.held.abilityIds);
   const heldGrants = new Set(rubric.held.grants);
+  // 開始時の間合い適性から、育成でS以上に届く見込み（C以上＝1）
+  const reachS = rank => rubric.aptitudeReach.S[rank] ?? 1;
 
   // ---------------------------------------------------------------- 物差しへの換算
   const pctToLv = pct => pct / d;
@@ -310,8 +312,11 @@ function createScorer(rubric) {
       // 基礎データのある体は、一番よい間合い適性から「育成でそこに届く見込み」を掛ける
       if (ctx && ctx.bestRange && !/未満/.test(sc.aptitude)) {
         const need = sc.aptitude.replace(/以上/, '');
-        f *= (rubric.aptitudeReach.S[ctx.bestRange] ?? 1) * (rubric.aptitudeReach.beyondS[need] ?? 1);
-        if (ctx.rangeCount != null) f *= ctx.rangeCount >= 2 ? rubric.aptitudeReach.rangeCount['2'] : rubric.aptitudeReach.rangeCount['1'];
+        // 「零または近距離適性がS以上」は、名前の付いた間合いの開始時ランクだけで見る（遠Bでも零D・近Eなら届きにくい）。
+        // 適性が条件を満たせば距離に関係なく効く常時効果なので、「1方向だけ×0.6」は掛けない（管理者確認 2026-09-28）
+        const named = sc.aptitudeRanges && ctx.rangeRanks ? sc.aptitudeRanges.map(r => ctx.rangeRanks[r]).filter(Boolean) : [];
+        f *= (named.length ? Math.max(...named.map(reachS)) : reachS(ctx.bestRange)) * (rubric.aptitudeReach.beyondS[need] ?? 1);
+        if (!named.length && ctx.rangeCount != null) f *= ctx.rangeCount >= 2 ? rubric.aptitudeReach.rangeCount['2'] : rubric.aptitudeReach.rangeCount['1'];
       }
     }
     if (sc.range) f *= S.range;
