@@ -716,6 +716,254 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "2809",
+      "name": "ウルズ",
+      "talent": {
+        "life": -5,
+        "power": -5,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ややヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "D"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2813",
+      "name": "パッチニャーコ",
+      "talent": {
+        "life": 15,
+        "power": 5,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 10,
+        "defense": -10
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2823",
+      "name": "グレモリ",
+      "talent": {
+        "life": 20,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": -10,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "F"
+      },
+      "range": {
+        "far": "E",
+        "mid": "D",
+        "near": "C",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2827",
+      "name": "ワンフォー",
+      "talent": {
+        "life": -5,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 15
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2828",
+      "name": "ユグドラシル",
+      "talent": {
+        "life": 15,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": -5,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "A",
+        "mid": "E",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2850",
+      "name": "キング",
+      "talent": {
+        "life": 0,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "A",
+        "mid": "C",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2851",
+      "name": "メルホイップ",
+      "talent": {
+        "life": 15,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "2852",
+      "name": "モモン&ハムスケ",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "2906",
       "name": "ウロボロス・恐",
       "talent": {
