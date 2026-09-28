@@ -747,6 +747,130 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "3113",
+      "name": "チシャ",
+      "talent": {
+        "life": 15,
+        "power": -5,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": 10,
+        "defense": -10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3117",
+      "name": "トリックン",
+      "talent": {
+        "life": 0,
+        "power": -5,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3131",
+      "name": "ゴースト",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 10,
+        "evasion": 15,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3150",
+      "name": "スプーキー",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3151",
       "name": "メレンゲ",
       "talent": {
