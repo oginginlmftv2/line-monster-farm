@@ -1,0 +1,9 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+グレモリ	20	0	15	-10	-5	0	D	F	早熟	ヨイ	大きい	C	B	C	F	F	E	D	C	B	2026-09-28
+ユグドラシル	15	10	10	-5	-5	5	C	F	晩成	ヨイ	大きい	D	B	B	F	C	A	E	D	B	2026-09-28
+ワンフォー	-5	10	10	0	-10	15	C	B	早熟	ヨイ	大きい	C	C	E	C	F	C	D	B	D	2026-09-28
+パッチニャーコ	15	5	0	0	10	-10	C	D	ふつう	ふつう	大きい	B	C	F	C	E	D	B	C	D	2026-09-28
+キング	0	-10	20	10	5	-5	B	B	ふつう	ヨイ	大きい	E	B	C	B	E	A	C	C	E	2026-09-28
+メルホイップ	15	0	0	0	-5	10	B	C	早熟	ヨイ	大きい	C	B	C	F	E	C	D	C	C	2026-09-28
+モモン&ハムスケ	5	10	0	0	0	5	C	B	早熟	ふつう	大きい	C	B	C	F	C	B	C	E	C	2026-09-28
+ウルズ	-5	-5	10	5	15	0	B	B	早熟	ややヨイ	大きい	C	C	F	B	D	D	C	D	B	2026-09-28
