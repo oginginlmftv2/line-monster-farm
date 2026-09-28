@@ -902,6 +902,68 @@
       "capturedAt": "2026-09-28"
     },
     {
+      "id": "3250",
+      "name": "シャルティア",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3251",
+      "name": "シュシュポップ3",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3290",
       "name": "ワルキューレ",
       "talent": {
