@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-09-27T15:56:16Z",
-  "count": 117,
+  "exportedAt": "2026-09-28T05:16:51Z",
+  "count": 118,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -1945,6 +1945,17 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-20",
       "releasedAt": "2025-11-30"
+    },
+    "0651": {
+      "id": "0651",
+      "name": "マミーレックス",
+      "arrayIndex": 360,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-09-28",
+      "releasedAt": "2026-09-30",
+      "hidden": true
     },
     "0701": {
       "id": "0701",
