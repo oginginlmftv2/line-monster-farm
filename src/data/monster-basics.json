@@ -282,6 +282,192 @@
       "capturedAt": "2026-09-17"
     },
     {
+      "id": "3314",
+      "name": "ミカエル",
+      "talent": {
+        "life": 10,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": -5,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3317",
+      "name": "イブリース",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 0,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3321",
+      "name": "ドライアド",
+      "talent": {
+        "life": 15,
+        "power": -10,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "B",
+        "海岸": "D",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3333",
+      "name": "アーク",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3350",
+      "name": "ハニエル",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "F"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
+      "id": "3380",
+      "name": "ディアブロ",
+      "talent": {
+        "life": -5,
+        "power": 5,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-28"
+    },
+    {
       "id": "3406",
       "name": "シン",
       "talent": {
