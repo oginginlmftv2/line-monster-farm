@@ -623,6 +623,37 @@
       "capturedAt": "2026-09-28"
     },
     {
+      "id": "1353",
+      "name": "ロクショウ",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "E",
+        "mid": "C",
+        "near": "B",
+        "zero": "B"
+      },
+      "capturedAt": "2026-09-29"
+    },
+    {
       "id": "1553",
       "name": "ベタピン",
       "talent": {
@@ -652,6 +683,130 @@
         "zero": "C"
       },
       "capturedAt": "2026-09-17"
+    },
+    {
+      "id": "1625",
+      "name": "カッパマキ",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 15
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-29"
+    },
+    {
+      "id": "1751",
+      "name": "アインズ",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "B",
+        "mid": "C",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-09-29"
+    },
+    {
+      "id": "1752",
+      "name": "バロム",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-09-29"
+    },
+    {
+      "id": "2051",
+      "name": "アルベド",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-09-29"
     },
     {
       "id": "2305",
