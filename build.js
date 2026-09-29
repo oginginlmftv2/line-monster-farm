@@ -1728,18 +1728,24 @@ ${body}</html>
   return { html, indexable, contentCharacters, description };
 }
 
+// 解説が無くても基礎データなどでインデックス対象になる体があるので、解説の有無も見る。
+// グリッドの振り分けとカードの形を同じ判定にしないと、縦型カードが横型グリッドに入って画像が巨大化する
+function hasMonTypeExcerpt(monster, context) {
+  const editorial = context.editorialById.get(monster.id);
+  return context.indexableDetailIds.has(monster.id)
+    && Boolean(editorial && String(editorial.explanation || '').trim());
+}
+
 function renderMonTypeCard(monster, context) {
   const runtime = context.runtimeById.get(monster.id);
   const image = resolveImage(monster.id, context, MON_TYPE_ROOT_PREFIX).url;
   const editorial = context.editorialById.get(monster.id);
-  const isIndexable = context.indexableDetailIds.has(monster.id);
   const href = `${monster.bloodSlug}/${monster.id}.html`;
   const aura = runtime ? runtime.aura : monster.aura;
   const limitedLabel = limitedLabelOf(runtime || monster);
   addLink(context, monster.url.replace(/^\//, ''));
-  // 解説なしは共通の縦型カード、解説ありは横型カード。
-  // 解説が無くても能力セクションなどでインデックス対象になる体があるので、解説の有無も見る
-  if (!isIndexable || !editorial || !String(editorial.explanation || '').trim()) {
+  // 解説なしは共通の縦型カード、解説ありは横型カード。振り分けは hasMonTypeExcerpt と揃える
+  if (!hasMonTypeExcerpt(monster, context)) {
     return renderMonCard({
       href,
       image,
@@ -1801,12 +1807,8 @@ function renderMonType(monType, context) {
 ${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escapeHtml(item.subheading)}</h3>\n`}    <p>${escapeHtml(item.body)}</p>`).join('\n')}
   </section>`).join('');
   const bloodGroups = groups.map(group => {
-    const editorialMembers = group.members.filter(monster => {
-      return context.indexableDetailIds.has(monster.id);
-    });
-    const compactMembers = group.members.filter(monster => {
-      return !context.indexableDetailIds.has(monster.id);
-    });
+    const editorialMembers = group.members.filter(monster => hasMonTypeExcerpt(monster, context));
+    const compactMembers = group.members.filter(monster => !hasMonTypeExcerpt(monster, context));
     const editorialGrid = editorialMembers.length
       ? `
     <div class="card-grid mon-type-grid wide-grid">
