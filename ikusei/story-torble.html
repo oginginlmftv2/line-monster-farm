@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【育成ストーリー解説】トーブルの護り手たち｜陣営・EXトレ・ヴァルド能力まとめ | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="LINEモンスターファームの育成ストーリー「トーブルの護り手たち」を解説。モングラ・グラスラ・ロードの陣営別トレーニング、陣営能力、EXトレ、新ノラモン能力【ヴァルド】、秘伝を実機検証でまとめました。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/ikusei/story-torble.html">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"育成ストーリー解説：トーブルの護り手たち","item":"https://line-monster-farm-tetteikouryaku.com/ikusei/story-torble.html"}]}</script>
+  <link rel="stylesheet" href="../style.css">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+  <style>
+    .toc { background:#fffbf0; border:1px solid #f0a500; border-radius:8px; padding:16px 20px; margin-bottom:24px; }
+    .toc-title { font-weight:bold; font-size:14px; margin-bottom:8px; color:#f0a500; }
+    .toc ol { padding-left:20px; }
+    .toc li { font-size:13px; margin-bottom:4px; }
+    .toc a { color:#333; text-decoration:none; }
+    .toc a:hover { color:#f0a500; }
+    .info-box { background:#f0f8ff; border-left:4px solid #3b82f6; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .warn-box { background:#fff8e1; border-left:4px solid #f0a500; border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .story-meta { font-size:12px; color:#777; margin:-6px 0 14px; }
+    .story-meta strong { color:#444; }
+    .table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin:10px 0; }
+    .data-table { width:100%; border-collapse:collapse; font-size:13px; }
+    .data-table th { background:#1a1a2e; color:#fff; padding:8px 12px; text-align:center; white-space:nowrap; }
+    .data-table td { padding:8px 12px; border-bottom:1px solid #eee; font-size:13px; line-height:1.6; }
+    .data-table tr:nth-child(even) td { background:#f9f9f9; }
+    .data-table td:first-child { font-weight:bold; white-space:nowrap; }
+    .article-img { width:100%; max-width:420px; height:auto; border-radius:8px; border:1px solid #eee; display:block; margin:10px auto; }
+    .train-table td, .train-table th { text-align:center; padding:8px 6px; }
+    .train-table td:first-child { text-align:center; }
+    .train-table td { white-space:nowrap; }
+    .lv-l { color:#1a1a2e; font-weight:bold; }
+    .lv-m { color:#0b7285; font-weight:bold; }
+    .lv-s { color:#868e96; }
+    .train-table .tr-name { display:block; font-size:11px; color:#999; font-weight:normal; }
+    .train-table .main-stat { display:block; font-size:16px; line-height:1.4; }
+    .train-table .subs { display:block; font-size:11px; white-space:nowrap; line-height:1.4; }
+    @media (max-width:480px) {
+      .train-table td, .train-table th { padding:7px 3px; font-size:13px; }
+      .train-table .tr-name { font-size:10px; }
+      .train-table .main-stat { font-size:15px; }
+      .train-table .subs { font-size:10px; }
+    }
+    details.shots { margin:12px 0; border:1px solid #eee; border-radius:8px; padding:8px 12px; background:#fcfcfc; }
+    details.shots summary { cursor:pointer; font-size:13px; font-weight:bold; color:#f0a500; }
+    .shot-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; margin-top:10px; }
+    .shot-grid figure { margin:0; }
+    .shot-grid img { width:100%; height:auto; border-radius:6px; border:1px solid #eee; display:block; }
+    .shot-grid figcaption { font-size:12px; color:#666; text-align:center; margin-top:4px; }
+    /* 陣営テーマ色（ゲーム内の陣営ボタンの色から） */
+    .c-before   { --c:#7a6a58; --t:#f3efe9; }
+    .c-mongura  { --c:#9c7f12; --t:#faf3d6; }
+    .c-gurasura { --c:#7b5cd6; --t:#efeafc; }
+    .c-lord     { --c:#d4535a; --t:#fdeaea; }
+    .camp { display:inline-block; background:var(--c); color:#fff; font-weight:bold; font-size:12px; line-height:1.6; padding:0 8px; border-radius:10px; white-space:nowrap; }
+    .train-table th[class^="c-"] { background:var(--c); }
+    .camp-box { background:#fafafa; border:1px solid #eee; border-radius:8px; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
+    .camp-box-title { font-weight:bold; font-size:14px; margin-bottom:6px; }
+    .camp-list { list-style:none; padding:0; margin:0; }
+    .camp-list li { padding:5px 0; }
+    .camp-list a { color:#f0a500; font-size:12px; text-decoration:none; white-space:nowrap; }
+    .camp-card { background:var(--t); border-left:4px solid var(--c); border-radius:0 8px 8px 0; padding:10px 14px; margin:10px 0; }
+    .camp-card h3 { font-size:14px; margin:0 0 4px; }
+    .camp-card ul { margin:0; }
+    .ab-table th { background:var(--c, #1a1a2e); font-size:12px; padding:6px 8px; }
+    .ab-table td { vertical-align:top; padding:8px; }
+    .ab-table td:first-child { white-space:normal; min-width:6.5em; }
+    .ab-table .names { display:block; font-size:11px; color:#777; font-weight:normal; margin-top:2px; }
+    .ab-table .plus { display:block; margin-top:4px; }
+    .cnt { display:inline-block; font-size:11px; font-weight:bold; padding:0 6px; border-radius:4px; white-space:nowrap; line-height:1.7; }
+    .cnt-once { background:#1a1a2e; color:#fff; }
+    .ex-type-table td:first-child { font-weight:bold; }
+    .ex-table td { background:#fff !important; }
+    .ex-table td.ex-chara { width:5.5em; border-right:1px solid #eee; font-weight:bold; white-space:nowrap; }
+    .ex-table td.ex-body { font-weight:normal; white-space:normal; }
+    .ex-table .ex-name { font-weight:bold; margin-right:4px; }
+    .ex-table .ex-eff { display:block; font-size:12px; color:#555; margin-top:2px; }
+    details.camp-toggle { margin:10px 0; border:1px solid #eee; border-left:4px solid var(--c); border-radius:0 8px 8px 0; padding:10px 12px; background:#fff; }
+    details.camp-toggle > summary { cursor:pointer; font-weight:bold; font-size:14px; }
+    details.camp-toggle[open] > summary { margin-bottom:6px; }
+    .ab-table .how { display:block; font-size:11px; color:#777; margin-top:6px; }
+    .vald-head { font-size:14px; margin:18px 0 6px; }
+    .sub-info { display:block; font-size:11px; color:#888; font-weight:normal; margin-top:2px; }
+    .ntype { display:inline-block; font-size:11px; font-weight:bold; padding:0 6px; border-radius:4px; line-height:1.6; border:1px solid currentColor; background:#fff; }
+    .t-pure { color:#1a1a2e; }
+    .t-mix  { color:#0b7285; }
+    .t-rare { color:#b35900; }
+    .nora-table td, .nora-table th { text-align:center; padding:8px 4px; }
+    .nora-table td:first-child { text-align:left; }
+    .vald-table td:first-child { min-width:7em; }
+    .shot-list { display:grid; gap:10px; margin-top:10px; }
+    .shot-list figure { margin:0; }
+    .shot-list img { width:100%; max-width:600px; height:auto; border-radius:6px; border:1px solid #eee; display:block; margin:0 auto; }
+    .shot-list figcaption { font-size:12px; color:#666; text-align:center; margin-top:4px; }
+    .hiden-img { display:block; max-width:220px; width:100%; height:auto; margin:10px 0; }
+    .hiden-table td, .hiden-table th { text-align:center; vertical-align:middle; }
+    .hiden-table td.na { color:#aaa; font-size:12px; }
+    .related-list { list-style:none; padding:0; margin:0; }
+    .related-list li { border-bottom:1px solid #f0f0f0; }
+    .related-list a { display:block; padding:10px 4px; color:#333; text-decoration:none; font-size:14px; font-weight:bold; }
+    .related-list a:hover { color:#f0a500; }
+    .cond { display:inline-block; font-size:11px; color:#555; background:#f1f1f1; border-radius:4px; padding:0 5px; margin:0 3px 2px 0; }
+    p { font-size:14px; line-height:1.8; margin-bottom:8px; }
+    ul, ol { font-size:13px; line-height:1.8; padding-left:18px; }
+    li { margin-bottom:2px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="../index.html" class="logo"><img src="../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a href="../index.html" style="display:inline-flex;align-items:center;gap:6px;color:#f0a500;text-decoration:none;font-size:14px;font-weight:bold;margin-bottom:20px;">← トップに戻る</a>
+  <h1 class="page-title">📖 育成ストーリー解説：トーブルの護り手たち</h1>
+  <p class="story-meta">作成日：2026.09.29 ／ <strong>検証協力：あつ</strong></p>
+
+  <div class="toc">
+    <div class="toc-title">📋 目次</div>
+    <ol>
+      <li><a href="#overview">ストーリー概要</a></li>
+      <li><a href="#training">陣営別トレーニング</a></li>
+      <li><a href="#ex">EXトレ</a></li>
+      <li><a href="#abilities">陣営の取得能力</a></li>
+      <li><a href="#vald">新ノラモン能力【ヴァルド】</a></li>
+      <li><a href="#hiden">秘伝</a></li>
+      <li><a href="#unknown">確認中の項目</a></li>
+      <li><a href="#related">関連記事</a></li>
+    </ol>
+  </div>
+
+  <div class="section" id="overview">
+    <div class="section-title">ストーリー概要</div>
+    <img src="../ikusei-img/story-torble/banner.jpg" alt="育成ストーリー「トーブルの護り手たち」のバナー。大会はIMa LEGEND FINAL" class="article-img" width="900" height="1003" loading="lazy">
+
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><td class="ex-name">ストーリー名</td><td>トーブルの護り手たち</td></tr>
+        <tr><td class="ex-name">あらすじ</td><td>ノラモンや闇神官によるトラブルが増えてきたトーブルの街。そんな中、ブリーダーにある任務が下される</td></tr>
+        <tr><td class="ex-name">陣営</td><td>育成の途中で <span class="camp c-mongura">モングラ</span> <span class="camp c-gurasura">グラスラ</span> <span class="camp c-lord">ロード</span> から1つ選ぶ（選ぶ前は <span class="camp c-before">陣営選択前</span>）</td></tr>
+        <tr><td class="ex-name">新要素</td><td>修行で出会うノラモンが一新され、新しいノラモン能力<strong>【ヴァルド】</strong>が登場</td></tr>
+      </table>
+    </div>
+
+    <p>育成の前半は「陣営選択前」として進み、途中で陣営を1つ選びます。陣営を選ぶと、<strong>トレーニングの上がり方・EXトレに出てくるキャラ・取得できる能力</strong>がまとめて切り替わります。陣営選択により各コンテンツで有利な効果が得られたり、陣営選択前にしかできない準備（地形適性を上げておくなど）があったりするので、どのコンテンツ用に育成するか＝どの陣営に進むかを先に決めておくのが大切です。</p>
+
+    <div class="camp-box">
+      <div class="camp-box-title">陣営ごとの特徴</div>
+      <ul class="camp-list">
+        <li><span class="camp c-mongura">モングラ</span> ガルド能力2種で総合力を最大+4000上乗せすることが可能 <a href="#abilities">→取得能力</a></li>
+        <li><span class="camp c-gurasura">グラスラ</span> 相手の色・モン類に合わせてグラスラ限定で強力な効果が得られる能力を取得可能 <a href="#abilities">→取得能力</a></li>
+        <li><span class="camp c-lord">ロード</span> 地形・距離・モン類を条件に、ローマスとローレジェでのみ発動するハート／スナイプ／ウィークの15種の能力を取得できる <a href="#abilities">→取得能力</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="section" id="training">
+    <div class="section-title">陣営別トレーニング</div>
+    <p>陣営を選ぶと、トレーニングで一緒に上がる能力（サブ）が変わります。メインで大きく上がる能力（◎）はどの陣営でも同じです。1つのトレで上がるのは、◎1つとサブ2つの<strong>3能力まで</strong>です。</p>
+
+    <div class="table-wrap">
+      <table class="data-table train-table">
+        <tr><th>能力<br>（トレ）</th><th class="c-before">陣営<br>選択前</th><th class="c-mongura">モングラ</th><th class="c-gurasura">グラスラ</th><th class="c-lord">ロード</th></tr>
+        <tr><td>ライフ<span class="tr-name">大食い</span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-m">力○</span> <span class="lv-m">丈○</span></span></td></tr>
+        <tr><td>ちから<span class="tr-name">ドミノ倒し</span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-s">賢△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">命○</span> <span class="lv-m">回○</span></span></td></tr>
+        <tr><td>かしこさ<span class="tr-name">猛勉強</span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-m">ラ○</span> <span class="lv-m">命○</span></span></td></tr>
+        <tr><td>命中<span class="tr-name">しゃてき</span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">力△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-m">回○</span> <span class="lv-m">丈○</span></span></td></tr>
+        <tr><td>回避<span class="tr-name">巨石よけ</span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-m">力○</span> <span class="lv-m">賢○</span></span></td></tr>
+        <tr><td>丈夫さ<span class="tr-name">丸太うけ</span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">命△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-m">ラ○</span> <span class="lv-m">賢○</span></span></td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#777;">ラ＝ライフ、力＝ちから、賢＝かしこさ、命＝命中、回＝回避、丈＝丈夫さ。<span class="lv-l">◎＝大（メイン）</span>、<span class="lv-m">○＝中</span>、<span class="lv-s">△＝小</span>。</p>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">ストーリー全体のトレの特徴</h3>
+    <div class="camp-box">
+      <ul style="margin:0;">
+        <li><strong>猛勉強（かしこさ◎）は、どの陣営でも命中も上がる</strong></li>
+        <li><strong>ドミノ倒し（ちから◎）で命中も上がるのは、<span class="camp c-gurasura">グラスラ</span> <span class="camp c-lord">ロード</span> だけ</strong>。この2つでは、ドミノ倒しでも猛勉強でも命中が上がる。<span class="camp c-before">陣営選択前</span> <span class="camp c-mongura">モングラ</span> では、命中は別のトレ（しゃてき）で上げる必要がある</li>
+      </ul>
+    </div>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">陣営ごとのトレの特徴</h3>
+
+    <div class="camp-card c-before">
+      <h3><span class="camp c-before">陣営選択前</span></h3>
+      <ul>
+        <li>サブが○（中）で上がるのは<strong>丈夫さだけ</strong>（しゃてき・巨石よけ）</li>
+        <li>互いに上げ合うペア：ライフ↔かしこさ、命中↔丈夫さ、回避↔丈夫さ</li>
+        <li>大食いでちから・かしこさが同時に上がる</li>
+      </ul>
+    </div>
+
+    <div class="camp-card c-mongura">
+      <h3><span class="camp c-mongura">モングラ</span></h3>
+      <ul>
+        <li>サブが○（中）で上がるのは<strong>丈夫さだけ</strong>（大食い・ドミノ倒し）</li>
+        <li>互いに上げ合うペア：かしこさ↔命中、ライフ↔丈夫さ、ライフ↔回避</li>
+        <li>しゃてきでちから・かしこさが同時に上がる</li>
+      </ul>
+    </div>
+
+    <div class="camp-card c-gurasura">
+      <h3><span class="camp c-gurasura">グラスラ</span></h3>
+      <ul>
+        <li>サブが○（中）で上がるのは<strong>丈夫さだけ</strong>（ドミノ倒し・猛勉強）</li>
+        <li>互いに上げ合うペア：<strong>ちから↔命中</strong>（この組み合わせはグラスラだけ）</li>
+        <li>大食いでちから・かしこさが同時に上がる</li>
+      </ul>
+    </div>
+
+    <div class="camp-card c-lord">
+      <h3><span class="camp c-lord">ロード</span></h3>
+      <ul>
+        <li><strong>サブがすべて○（中）</strong>。どのトレでもサブが大きく伸びる</li>
+        <li>互いに上げ合うペア：ライフ↔丈夫さ、ちから↔回避</li>
+        <li>ちから・かしこさが同時に上がるトレは<strong>ない</strong></li>
+      </ul>
+    </div>
+
+    <details class="shots">
+      <summary>トレーニング表の画像を見る（4枚）</summary>
+      <p style="font-size:12px;color:#777;margin-top:8px;">ゲーム画面では、<strong>左端のアイコンの行が1つのトレ</strong>、上に並ぶ列が上がる能力です（例：ハートの行＝大食い）。</p>
+      <div class="shot-grid">
+        <figure><img src="../ikusei-img/story-torble/training-before.jpg" alt="トレーニング表（陣営選択前）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-before">陣営選択前</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-mongura.jpg" alt="トレーニング表（モングラ）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-mongura">モングラ</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-gurasura.jpg" alt="トレーニング表（グラスラ）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-gurasura">グラスラ</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-lord.jpg" alt="トレーニング表（ロード）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-lord">ロード</span></figcaption></figure>
+      </div>
+    </details>
+  </div>
+
+  <div class="section" id="ex">
+    <div class="section-title">EXトレ</div>
+    <p>EXトレは、トレーニングすると割り当てられたキャラごとに特別なボーナスが得られるトレーニングです。通常のトレよりもステータスの上がり幅が大きく、使いこなせば総合力育成・バトル育成のどちらでも大きな恩恵があります。陣営によって出てくるキャラや得られるボーナスが違うので、事前に確認しておきましょう。表の <span class="cnt cnt-once">1回</span> は、ゲーム画面で「育成中1回のみ」と表示されるボーナスです。</p>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">EXトレで上がる能力</h3>
+    <p style="font-size:13px;">EXトレはタイプごとに上がる能力が決まっていて、1回で3能力が上がります。</p>
+    <div class="table-wrap">
+      <table class="data-table train-table ex-type-table">
+        <tr><th>EXトレ</th><th>☆（大）</th><th>◎（中）</th><th>○（小）</th></tr>
+        <tr><td>バイタル</td><td><span class="lv-l main-stat">ちから☆</span></td><td><span class="lv-m">ライフ◎</span></td><td><span class="lv-s">命中○</span></td></tr>
+        <tr><td>ガード</td><td><span class="lv-l main-stat">丈夫さ☆</span></td><td><span class="lv-m">回避◎</span></td><td><span class="lv-s">ちから○</span></td></tr>
+        <tr><td>ルミナス</td><td><span class="lv-l main-stat">かしこさ☆</span></td><td><span class="lv-m">ライフ◎</span></td><td><span class="lv-s">丈夫さ○</span></td></tr>
+        <tr><td>テクニック</td><td><span class="lv-l main-stat">命中☆</span></td><td><span class="lv-m">回避◎</span></td><td><span class="lv-s">かしこさ○</span></td></tr>
+      </table>
+    </div>
+
+    <p style="font-size:13px;">このストーリーのEXトレでは、<strong>ライフと回避が☆になるタイプがありません</strong>。どのタイプを選んでも◎止まりなので、EXトレでライフ・回避を一気に伸ばすのは難しくなっています。</p>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">EXトレボーナスの特徴</h3>
+    <div class="camp-box">
+      <ul style="margin:0;">
+        <li><strong>地形適性</strong>：陣営を選んだ後に上げられるのは <span class="camp c-gurasura">グラスラ</span>（カヴァロ）だけ。<span class="camp c-lord">ロード</span> はコウエンの「まれに」だけで、<span class="camp c-mongura">モングラ</span> では上げられない。モングラ・ロードに進むなら、陣営選択前にピーシィで上げておく</li>
+        <li><strong>距離適性</strong>：陣営を選んだ後に上げられるのは <span class="camp c-lord">ロード</span>（クリス）だけ。モングラ・グラスラに進むなら、陣営選択前にエイルで上げておく</li>
+        <li><span class="camp c-gurasura">グラスラ</span> <span class="camp c-lord">ロード</span> には、体力上限アップ・素質アップのキャラがいない（<span class="camp c-mongura">モングラ</span> はハインケル・マルタがいる）</li>
+        <li>陣営の取得能力は、すべてEXトレから直接ひらめくことができる（<a href="#abilities" style="color:#f0a500;">→陣営の取得能力</a>）</li>
+      </ul>
+    </div>
+
+
+    <details class="camp-toggle c-before">
+      <summary><span class="camp c-before">陣営選択前</span> のEXトレ（6人）</summary>
+      <div class="table-wrap c-before">
+        <table class="data-table ab-table ex-table">
+          <tr><th>キャラ</th><th>EXトレと効果</th></tr>
+          <tr><td class="ex-chara" rowspan="1">ブラス</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さ特訓！</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">ようす「〇〇ボーナス」を獲得</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4">タバサ</td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">輝かせたい</span><span class="ex-eff">人気アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">あまやかしたい</span><span class="ex-eff">忠誠度アップ＋あまえ度アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">たまには厳しく</span><span class="ex-eff">忠誠度アップ＋おそれ度アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4">ポルツ</td><td class="ex-body"><span class="ex-name">技習得のサポートグッズ</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">危機対策グッズ</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">現在のフェーズに「ノラモン注意報」</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ピーシィ</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山で特訓！</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">エイル</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">モンティット</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
+        </table>
+      </div>
+      <details class="shots">
+        <summary>陣営選択前のEXトレの画像を見る（12枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ex-before-bras-1.jpg" alt="陣営選択前のEXトレ（ブラス 1）" width="900" height="1948" loading="lazy"><figcaption>ブラス 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-bras-2.jpg" alt="陣営選択前のEXトレ（ブラス 2）" width="900" height="1948" loading="lazy"><figcaption>ブラス 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-tabasa-1.jpg" alt="陣営選択前のEXトレ（タバサ 1）" width="900" height="1948" loading="lazy"><figcaption>タバサ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-tabasa-2.jpg" alt="陣営選択前のEXトレ（タバサ 2）" width="900" height="1948" loading="lazy"><figcaption>タバサ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-porutsu-1.jpg" alt="陣営選択前のEXトレ（ポルツ 1）" width="900" height="1948" loading="lazy"><figcaption>ポルツ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-porutsu-2.jpg" alt="陣営選択前のEXトレ（ポルツ 2）" width="900" height="1948" loading="lazy"><figcaption>ポルツ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-pishii-1.jpg" alt="陣営選択前のEXトレ（ピーシィ 1）" width="900" height="1948" loading="lazy"><figcaption>ピーシィ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-pishii-2.jpg" alt="陣営選択前のEXトレ（ピーシィ 2）" width="900" height="1948" loading="lazy"><figcaption>ピーシィ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-eiru-1.jpg" alt="陣営選択前のEXトレ（エイル 1）" width="900" height="1948" loading="lazy"><figcaption>エイル 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-eiru-2.jpg" alt="陣営選択前のEXトレ（エイル 2）" width="900" height="1948" loading="lazy"><figcaption>エイル 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-montitto-1.jpg" alt="陣営選択前のEXトレ（モンティット 1）" width="900" height="1948" loading="lazy"><figcaption>モンティット 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-before-montitto-2.jpg" alt="陣営選択前のEXトレ（モンティット 2）" width="900" height="1948" loading="lazy"><figcaption>モンティット 2</figcaption></figure>
+        </div>
+      </details>
+    </details>
+
+    <details class="camp-toggle c-mongura">
+      <summary><span class="camp c-mongura">モングラ</span> のEXトレ（7人）</summary>
+      <div class="table-wrap c-mongura">
+        <table class="data-table ab-table ex-table">
+          <tr><th>キャラ</th><th>EXトレと効果</th></tr>
+          <tr><td class="ex-chara" rowspan="4">ハインケル</td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限<strong>大</strong>アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">仲良しになってほしい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">人気アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">あまやかしたい</span><span class="ex-eff">忠誠度アップ＋あまえ度アップ</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">たまには厳しく</span><span class="ex-eff">忠誠度アップ＋おそれ度アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">マルタ</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ステラ</td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ブレインガルド</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ニコラオ</td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>タフネスガルド</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="3">リュナ</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">大会の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">大会秘伝が獲得できるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">能力／チーム戦／モン類の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3のステータス秘伝／陣営秘伝／モン類秘伝がつきやすくなるようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ミズキ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限アップ</span></td></tr>
+        </table>
+      </div>
+      <details class="shots">
+        <summary>モングラのEXトレの画像を見る（11枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-1.jpg" alt="モングラのEXトレ（ハインケル 1）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-2.jpg" alt="モングラのEXトレ（ハインケル 2）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-julia-1.jpg" alt="モングラのEXトレ（ジュリア 1）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-julia-2.jpg" alt="モングラのEXトレ（ジュリア 2）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-maruta-1.jpg" alt="モングラのEXトレ（マルタ 1）" width="900" height="1948" loading="lazy"><figcaption>マルタ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-maruta-2.jpg" alt="モングラのEXトレ（マルタ 2）" width="900" height="1948" loading="lazy"><figcaption>マルタ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-stella.jpg" alt="モングラのEXトレ（ステラ）" width="900" height="1948" loading="lazy"><figcaption>ステラ</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-nikorao.jpg" alt="モングラのEXトレ（ニコラオ）" width="900" height="1948" loading="lazy"><figcaption>ニコラオ</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-ryuna-1.jpg" alt="モングラのEXトレ（リュナ 1）" width="900" height="1948" loading="lazy"><figcaption>リュナ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-ryuna-2.jpg" alt="モングラのEXトレ（リュナ 2）" width="900" height="1948" loading="lazy"><figcaption>リュナ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-mongura-mizuki.jpg" alt="モングラのEXトレ（ミズキ）" width="900" height="1948" loading="lazy"><figcaption>ミズキ</figcaption></figure>
+        </div>
+      </details>
+    </details>
+
+    <details class="camp-toggle c-gurasura">
+      <summary><span class="camp c-gurasura">グラスラ</span> のEXトレ（7人）</summary>
+      <div class="table-wrap c-gurasura">
+        <table class="data-table ab-table ex-table">
+          <tr><th>キャラ</th><th>EXトレと効果</th></tr>
+          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">カヴァロ</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">サフィン</td><td class="ex-body"><span class="ex-name">赤／青／黄／緑／白／黒オーラの対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>色ハント</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">シュウラ</td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>モン類ハント</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ニア</td><td class="ex-body"><span class="ex-name">超モンスターの対策</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ハイレイドブースト</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="3">アイリス</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">大会の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">大会秘伝が獲得できるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">技／間合い／チーム戦の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3の技秘伝／間合い秘伝／陣営秘伝がつきやすくなるようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">モニカ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限を<strong>少し</strong>アップ、忠誠度上限もわずかにアップ</span></td></tr>
+        </table>
+      </div>
+      <details class="shots">
+        <summary>グラスラのEXトレの画像を見る（12枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-1.jpg" alt="グラスラのEXトレ（ジュリア 1）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-2.jpg" alt="グラスラのEXトレ（ジュリア 2）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-kavaro-1.jpg" alt="グラスラのEXトレ（カヴァロ 1）" width="900" height="1948" loading="lazy"><figcaption>カヴァロ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-kavaro-2.jpg" alt="グラスラのEXトレ（カヴァロ 2）" width="900" height="1948" loading="lazy"><figcaption>カヴァロ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-safin-1.jpg" alt="グラスラのEXトレ（サフィン 1）" width="900" height="1948" loading="lazy"><figcaption>サフィン 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-safin-2.jpg" alt="グラスラのEXトレ（サフィン 2）" width="900" height="1948" loading="lazy"><figcaption>サフィン 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-shuura-1.jpg" alt="グラスラのEXトレ（シュウラ 1）" width="900" height="1948" loading="lazy"><figcaption>シュウラ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-shuura-2.jpg" alt="グラスラのEXトレ（シュウラ 2）" width="900" height="1948" loading="lazy"><figcaption>シュウラ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-nia.jpg" alt="グラスラのEXトレ（ニア）" width="900" height="1948" loading="lazy"><figcaption>ニア</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-iris-1.jpg" alt="グラスラのEXトレ（アイリス 1）" width="900" height="1948" loading="lazy"><figcaption>アイリス 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-iris-2.jpg" alt="グラスラのEXトレ（アイリス 2）" width="900" height="1948" loading="lazy"><figcaption>アイリス 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-gurasura-monika.jpg" alt="グラスラのEXトレ（モニカ）" width="900" height="1948" loading="lazy"><figcaption>モニカ</figcaption></figure>
+        </div>
+      </details>
+    </details>
+
+    <details class="camp-toggle c-lord">
+      <summary><span class="camp c-lord">ロード</span> のEXトレ（7人）</summary>
+      <div class="table-wrap c-lord">
+        <table class="data-table ab-table ex-table">
+          <tr><th>キャラ</th><th>EXトレと効果</th></tr>
+          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">クリス</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">コウエン</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ハート</strong>をひらめき、まれに地形適性アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">レイラ</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離の対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>スナイプ</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ルーカス</td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ウィーク</strong>をひらめき、まれにモン類経験値</span></td></tr>
+          <tr><td class="ex-chara" rowspan="2">クヌギ</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-body"><span class="ex-name">技／能力／間合い／チーム戦の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3の技秘伝／ステータス秘伝／間合い秘伝／陣営秘伝がつきやすくなるようす（大会の知識はなし）</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1">ルミナ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と<strong>忠誠度</strong>の上限アップ</span></td></tr>
+        </table>
+      </div>
+      <details class="shots">
+        <summary>ロードのEXトレの画像を見る（13枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ex-lord-julia-1.jpg" alt="ロードのEXトレ（ジュリア 1）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-julia-2.jpg" alt="ロードのEXトレ（ジュリア 2）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-kris-0.jpg" alt="ロードのEXトレ（クリス 1）" width="896" height="1948" loading="lazy"><figcaption>クリス 1</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/ex-lord-kris.jpg" alt="ロードのEXトレ（クリス 2）" width="900" height="1948" loading="lazy"><figcaption>クリス 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-kouen-1.jpg" alt="ロードのEXトレ（コウエン 1）" width="900" height="1948" loading="lazy"><figcaption>コウエン 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-kouen-2.jpg" alt="ロードのEXトレ（コウエン 2）" width="900" height="1948" loading="lazy"><figcaption>コウエン 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-leila-1.jpg" alt="ロードのEXトレ（レイラ 1）" width="900" height="1948" loading="lazy"><figcaption>レイラ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-leila-2.jpg" alt="ロードのEXトレ（レイラ 2）" width="900" height="1948" loading="lazy"><figcaption>レイラ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-lucas-1.jpg" alt="ロードのEXトレ（ルーカス 1）" width="900" height="1948" loading="lazy"><figcaption>ルーカス 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-lucas-2.jpg" alt="ロードのEXトレ（ルーカス 2）" width="900" height="1948" loading="lazy"><figcaption>ルーカス 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-kunugi-1.jpg" alt="ロードのEXトレ（クヌギ 1）" width="900" height="1948" loading="lazy"><figcaption>クヌギ 1</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-kunugi-2.jpg" alt="ロードのEXトレ（クヌギ 2）" width="900" height="1948" loading="lazy"><figcaption>クヌギ 2</figcaption></figure>
+          <figure><img src="../ikusei-img/story-torble/ex-lord-lumina.jpg" alt="ロードのEXトレ（ルミナ）" width="900" height="1948" loading="lazy"><figcaption>ルミナ</figcaption></figure>
+        </div>
+      </details>
+    </details>
+  </div>
+
+  <div class="section" id="abilities">
+    <div class="section-title">陣営の取得能力</div>
+    <p>陣営ごとに、その陣営でしか取得できない能力があります（全30種：<span class="camp c-mongura">モングラ</span> 2種・<span class="camp c-gurasura">グラスラ</span> 13種・<span class="camp c-lord">ロード</span> 15種）。<strong>陣営能力はすべてEXトレから直接ひらめくことができます</strong>（どれも育成中1回のみ）。</p>
+
+    <details class="camp-toggle c-mongura">
+      <summary><span class="camp c-mongura">モングラ</span> の取得能力（2種）</summary>
+      <div class="table-wrap c-mongura">
+        <table class="data-table ab-table">
+          <tr><th>能力</th><th>効果・取り方</th></tr>
+          <tr><td>ブレインガルド</td><td>所持していると総合力+2000<span class="how">取り方：ステラ「総合力の知識」</span></td></tr>
+          <tr><td>タフネスガルド</td><td>所持していると総合力+2000<span class="how">取り方：ニコラオ「総合力の知識」</span></td></tr>
+        </table>
+      </div>
+      <ul>
+        <li>ステラ・ニコラオのEXトレを1回ずつ踏めば2つそろい、<strong>総合力+4000</strong></li>
+        <li>総合力育成で強力なガルド系能力は、どちらも<strong>ロード秘伝のひらめきで能力継承ができる</strong>。ロード秘伝を持った親に持たせておけば、他のストーリーの育成でも発動させられる</li>
+      </ul>
+      <details class="shots">
+        <summary>モングラの取得能力の画像を見る（1枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ability-mongura.jpg" alt="モングラの取得能力（ブレインガルド・タフネスガルド）" width="900" height="1948" loading="lazy"></figure>
+        </div>
+      </details>
+    </details>
+
+    <details class="camp-toggle c-gurasura">
+      <summary><span class="camp c-gurasura">グラスラ</span> の取得能力（13種）</summary>
+      <div class="table-wrap c-gurasura">
+        <table class="data-table ab-table">
+          <tr><th>能力</th><th>効果・取り方</th></tr>
+          <tr><td>色ハント<br>（6種）<span class="names">レッド／ブルー／イエロー／グリーン／ホワイト／ブラック・ハント</span></td><td><span class="cond">グラスラ</span><span class="cond">相手 赤／青／黄／緑／白／黒</span><br>自身がバトルで最初に発動する技に<strong>必中Lv5</strong><span class="how">取り方：サフィン「〇オーラの対策」</span></td></tr>
+          <tr><td>モン類ハント<br>（6種）<span class="names">クリエイト／スピリット／デモン／ビースト／スペクター／イノーガニック・ハント</span></td><td><span class="cond">グラスラ</span><span class="cond">相手 創造／幻霊／魔族／獣族／怪物／無機</span><br>自身がバトルで最初に発動する技に<strong>丈夫さ50%無視</strong><span class="how">取り方：シュウラ「〇類への対策」</span></td></tr>
+          <tr><td>ハイレイドブースト</td><td><span class="cond">グラスラ決戦</span><span class="cond">有利</span><br>バトル開始時、<strong>全ステータス+1000</strong><span class="how">取り方：ニア「超モンスターの対策」</span></td></tr>
+        </table>
+      </div>
+      <ul>
+        <li>ハント系は、相手の色・モン類に対応する1種だけが効く。名前は色が「レッド＝赤」のように英語、モン類が「クリエイト＝創造」のように対応する</li>
+        <li>ハント系の効果がかかるのは、バトルで<strong>最初に発動する技だけ</strong></li>
+      </ul>
+      <details class="shots">
+        <summary>グラスラの取得能力の画像を見る（4枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ability-gurasura-1.jpg" alt="グラスラの取得能力1（レッド〜グリーンハント）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-gurasura-2.jpg" alt="グラスラの取得能力2（グリーン〜クリエイトハント）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-gurasura-3.jpg" alt="グラスラの取得能力3（スピリット〜スペクターハント）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-gurasura-4.jpg" alt="グラスラの取得能力4（ビーストハント〜ハイレイドブースト）" width="900" height="1948" loading="lazy"></figure>
+        </div>
+      </details>
+    </details>
+
+    <details class="camp-toggle c-lord">
+      <summary><span class="camp c-lord">ロード</span> の取得能力（15種）</summary>
+      <div class="table-wrap c-lord">
+        <table class="data-table ab-table">
+          <tr><th>能力</th><th>効果・取り方</th></tr>
+          <tr><td>ハート<br>（5種）<span class="names">マンディー（砂漠）／パレパレ（森林）／トーブル（海岸）／パパス（雪山）／カウレア（火山）・ハート</span></td><td><span class="cond">ローマスまたはローレジェ</span><span class="cond">その地形</span><br>バトル中、ガッツ回復速度+10%<span class="plus"><span class="cond">その地形SS以上</span>相手の命中率-5%</span><span class="how">取り方：コウエン「〇の地形への対策」</span></td></tr>
+          <tr><td>スナイプ<br>（4種）<span class="names">ゼロ（零距離）／ニア（近距離）／ミドル（中距離）／ロング（遠距離）・スナイプ</span></td><td><span class="cond">ローマスまたはローレジェ</span><span class="cond">その距離</span><br>バトル中、命中率+5%<span class="plus"><span class="cond">その距離SS以上</span>与ダメ+5%</span><span class="how">取り方：レイラ「〇距離の対策」</span></td></tr>
+          <tr><td>ウィーク<br>（6種）<span class="names">ウィーク・クリエイト（創造）／スピリット（幻霊）／デモン（魔族）／ビースト（獣族）／スペクター（怪物）／イノーガニック（無機）</span></td><td><span class="cond">ローマスまたはローレジェ</span><span class="cond">相手がそのモン類</span><br>技命中時、与ダメ+5%<span class="plus"><span class="cond">モン類有利</span>攻撃ステ5%の追撃を1回</span><span class="how">取り方：ルーカス「〇類への対策」</span></td></tr>
+        </table>
+      </div>
+      <ul>
+        <li>どれも基本効果に加えて、地形・距離の適性が<strong>SS以上</strong>、またはモン類が有利なときに追加効果が付く</li>
+        <li>ハートの追加効果には地形適性SSが必要。ロードを選んだ後は地形適性をほとんど上げられないので、<strong>陣営選択前に上げておく</strong>（詳しくは上の<a href="#ex" style="color:#f0a500;">EXトレ</a>）</li>
+      </ul>
+      <details class="shots">
+        <summary>ロードの取得能力の画像を見る（4枚）</summary>
+        <div class="shot-grid">
+          <figure><img src="../ikusei-img/story-torble/ability-lord-1.jpg" alt="ロードの取得能力1（マンディー〜パパス・ハート）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-lord-2.jpg" alt="ロードの取得能力2（パパス・カウレア・ハート、ゼロ・ニア・スナイプ）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-lord-3.jpg" alt="ロードの取得能力3（ミドル・ロング・スナイプ、ウィーク・クリエイト・スピリット）" width="900" height="1948" loading="lazy"></figure>
+          <figure><img src="../ikusei-img/story-torble/ability-lord-4.jpg" alt="ロードの取得能力4（ウィーク・デモン〜イノーガニック）" width="900" height="1948" loading="lazy"></figure>
+        </div>
+      </details>
+    </details>
+  </div>
+
+  <div class="section" id="vald">
+    <div class="section-title">新ノラモン能力【ヴァルド】</div>
+    <p>このストーリーでは、修行で出会うノラモンが一新され、新しいノラモン能力<strong>【ヴァルド】</strong>を落とします。ノラモンは距離（零・近・中・遠）ごとに「レアモン・混血・純血」がいて、能力の名前は「ヴァルド＋距離＋系統」（例：ヴァルド<strong>ニア</strong><strong>シールド</strong>＝近距離のシールド）です。距離の読みは、零距離＝ゼロ、近距離＝ニア、中距離＝ミドル、遠距離＝ロングです。</p>
+    <div class="warn-box">ヴァルド系の能力は、これまでのストレイ系のノラモン能力と違い、<strong>現状ロード秘伝で継承できません</strong>。</div>
+    <div class="info-box">ヴァルド能力を取得したときの総合力へのポイント還元率は<strong>100%</strong>です（過去のノラモンのストレイ能力と同様）。総合力育成の際は、積極的に取得してよい能力と言えます。</div>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">出てくるノラモン</h3>
+    <div class="table-wrap">
+      <table class="data-table nora-table">
+        <tr><th>距離</th><th><span class="ntype t-rare">レア</span></th><th><span class="ntype t-mix">混血</span></th><th><span class="ntype t-pure">純血</span></th></tr>
+        <tr><td>零距離</td><td>ニャルラトホテプ</td><td>ラブカ<span class="sub-info">※</span></td><td>カワズモー</td></tr>
+        <tr><td>近距離</td><td>タクティクス</td><td>ハスタ</td><td>ワーム</td></tr>
+        <tr><td>中距離</td><td>セイリュウ</td><td>ステルナー</td><td>ガリ</td></tr>
+        <tr><td>遠距離</td><td>ベルフェゴール</td><td>パッチニャーコ</td><td>ゲル</td></tr>
+      </table>
+    </div>
+    <p style="font-size:12px;color:#777;">※ラブカはレアモンですが、落とす能力は混血の系統です。</p>
+    <p>1体が落とす能力は3種で、<strong>ノラモンのタイプで系統が決まっています</strong>。</p>
+    <ul>
+      <li><span class="ntype t-rare">レア</span>：エイム・トライン・ブリッツ</li>
+      <li><span class="ntype t-mix">混血</span>：シールド・フォース・ゲイル</li>
+      <li><span class="ntype t-pure">純血</span>：ブーム・アームド・マイン</li>
+    </ul>
+    <p>どの距離でも、低確率でレアモン<strong>シロモッチー</strong>が出ます（<a href="#shiro" style="color:#f0a500;">→シロモッチーの能力</a>）。</p>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">ヴァルド能力の効果</h3>
+    <p style="font-size:13px;">距離が違っても、同じ系統なら効果・必要Ptは同じです。どの能力にも、名前の距離の条件（ニアなら［近距離］）が付きます。必要Ptは、ひらめきLv.1の10%OFFなどの割引を適用する<strong>前</strong>の数値です。</p>
+    <h4 class="vald-head"><span class="ntype t-rare">レア</span> の能力</h4>
+    <div class="table-wrap">
+      <table class="data-table ab-table vald-table">
+        <tr><th>系統</th><th>効果</th></tr>
+          <tr><td>エイム<span class="sub-info">100Pt</span></td><td><span class="cond">序盤</span><span class="cond">その距離</span><br>技発動時、命中率と与ダメ上昇+8%</td></tr>
+          <tr><td>トライン<span class="sub-info">110Pt</span></td><td><span class="cond">その距離</span><br>技発動時、残りライフが多いほど全技性能上昇（最大+8）</td></tr>
+          <tr><td>ブリッツ<span class="sub-info">105Pt</span></td><td><span class="cond">その距離</span><br>技命中時、攻撃ステータス+8%・シールド破壊1回</td></tr>
+      </table>
+    </div>
+    <details class="shots">
+      <summary>レアの能力の画像を見る（3枚）</summary>
+      <div class="shot-list">
+        <figure><img src="../ikusei-img/story-torble/vald-long-aim.jpg" alt="ヴァルド能力「ヴァルドロングエイム」" width="900" height="342" loading="lazy"><figcaption>ヴァルドロングエイム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-trine.jpg" alt="ヴァルド能力「ヴァルドゼロトライン」" width="900" height="265" loading="lazy"><figcaption>ヴァルドゼロトライン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-blitz.jpg" alt="ヴァルド能力「ヴァルドゼロブリッツ」" width="900" height="257" loading="lazy"><figcaption>ヴァルドゼロブリッツ</figcaption></figure>
+      </div>
+    </details>
+    <h4 class="vald-head"><span class="ntype t-mix">混血</span> の能力</h4>
+    <div class="table-wrap">
+      <table class="data-table ab-table vald-table">
+        <tr><th>系統</th><th>効果</th></tr>
+          <tr><td>シールド<span class="sub-info">110Pt</span></td><td><span class="cond">中盤</span><span class="cond">その距離</span><br>技発動時、丈夫さステ30%のシールドを展開（最大値+150／20秒／1回）</td></tr>
+          <tr><td>フォース<span class="sub-info">90Pt</span></td><td><span class="cond">その距離</span><br>バトル中、自身のガッツ回復速度+16%・被ガッツダメ軽減5%</td></tr>
+          <tr><td>ゲイル<span class="sub-info">80Pt</span></td><td><span class="cond">その距離</span><br>バトル中、相手の命中率-5%</td></tr>
+      </table>
+    </div>
+    <details class="shots">
+      <summary>混血の能力の画像を見る（4枚）</summary>
+      <div class="shot-list">
+        <figure><img src="../ikusei-img/story-torble/vald-near-shield.jpg" alt="ヴァルド能力「ヴァルドニアシールド」" width="900" height="284" loading="lazy"><figcaption>ヴァルドニアシールド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-force.jpg" alt="ヴァルド能力「ヴァルドゼロフォース」" width="839" height="332" loading="lazy"><figcaption>ヴァルドゼロフォース</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-force.jpg" alt="ヴァルド能力「ヴァルドニアフォース」" width="900" height="325" loading="lazy"><figcaption>ヴァルドニアフォース</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-gale.jpg" alt="ヴァルド能力「ヴァルドニアゲイル」" width="900" height="321" loading="lazy"><figcaption>ヴァルドニアゲイル</figcaption></figure>
+      </div>
+    </details>
+    <h4 class="vald-head"><span class="ntype t-pure">純血</span> の能力</h4>
+    <div class="table-wrap">
+      <table class="data-table ab-table vald-table">
+        <tr><th>系統</th><th>効果</th></tr>
+          <tr><td>ブーム<span class="sub-info">100Pt</span></td><td><span class="cond">その距離</span><br>技命中時、消費ガッツの25%分をガッツダメージに加算</td></tr>
+          <tr><td>アームド<span class="sub-info">105Pt</span></td><td><span class="cond">その距離</span><br>技を受けた時、被ダメブロック10%</td></tr>
+          <tr><td>マイン<span class="sub-info">100Pt</span></td><td><span class="cond">終盤</span><span class="cond">その距離</span><br>技のクリティカル率とクリティカルダメージ+10%</td></tr>
+      </table>
+    </div>
+    <details class="shots">
+      <summary>純血の能力の画像を見る（8枚）</summary>
+      <div class="shot-list">
+        <figure><img src="../ikusei-img/story-torble/vald-zero-boom.jpg" alt="ヴァルド能力「ヴァルドゼロブーム」" width="900" height="285" loading="lazy"><figcaption>ヴァルドゼロブーム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-boom.jpg" alt="ヴァルド能力「ヴァルドロングブーム」" width="900" height="257" loading="lazy"><figcaption>ヴァルドロングブーム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-armed.jpg" alt="ヴァルド能力「ヴァルドニアアームド」" width="900" height="265" loading="lazy"><figcaption>ヴァルドニアアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-middle-armed.jpg" alt="ヴァルド能力「ヴァルドミドルアームド」" width="900" height="325" loading="lazy"><figcaption>ヴァルドミドルアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-armed.jpg" alt="ヴァルド能力「ヴァルドロングアームド」" width="900" height="268" loading="lazy"><figcaption>ヴァルドロングアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-mine.jpg" alt="ヴァルド能力「ヴァルドニアマイン」" width="900" height="265" loading="lazy"><figcaption>ヴァルドニアマイン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-middle-mine.jpg" alt="ヴァルド能力「ヴァルドミドルマイン」" width="900" height="353" loading="lazy"><figcaption>ヴァルドミドルマイン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-mine.jpg" alt="ヴァルド能力「ヴァルドロングマイン」" width="900" height="367" loading="lazy"><figcaption>ヴァルドロングマイン</figcaption></figure>
+      </div>
+    </details>
+    <h4 class="vald-head" id="shiro">シロモッチー の能力</h4>
+    <p style="font-size:13px;">シロモッチーは距離に関係なく低確率で出るレアモンで、距離の付かない能力を落とします。</p>
+    <div class="table-wrap">
+      <table class="data-table ab-table vald-table">
+        <tr><th>能力</th><th>効果</th></tr>
+        <tr><td>ヴァルドエピックグロウ<span class="sub-info">120Pt</span></td><td>バトル中、自身に次の効果<br><span class="cond">オーラ有利</span>すべての技に［業物Lv3］<br><span class="cond">モン類有利</span>前の技の与ダメージが低いほど、次の技の命中率アップ（最大15%）</td></tr>
+        <tr><td>ヴァルドアームドフォート<span class="sub-info">140Pt</span></td><td><span class="cond">序盤</span><span class="cond">有利</span><br>自身に、被ダメブロック10%と継続ダメージ軽減8%</td></tr>
+        <tr><td>3つ目</td><td style="color:#999;">確認中</td></tr>
+      </table>
+    </div>
+    <details class="shots">
+      <summary>シロモッチーの能力の画像を見る（2枚）</summary>
+      <div class="shot-list">
+        <figure><img src="../ikusei-img/story-torble/vald-shiro-epicgrow.jpg" alt="ヴァルド能力「ヴァルドエピックグロウ」" width="840" height="266" loading="lazy"><figcaption>ヴァルドエピックグロウ</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-shiro-armedfort.jpg" alt="ヴァルド能力「ヴァルドアームドフォート」" width="900" height="300" loading="lazy"><figcaption>ヴァルドアームドフォート</figcaption></figure>
+      </div>
+    </details>
+  </div>
+
+  <div class="section" id="hiden">
+    <div class="section-title">秘伝</div>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">陣営秘伝「トーブルの護り手」</h3>
+    <p>陣営秘伝は「トーブルの護り手＋陣営名」で、3陣営×★1〜3の全9種です。★3の陣営秘伝は、EXトレの「チーム戦の知識」（リュナ・アイリス・クヌギ）でつきやすくなります。</p>
+    <img src="../ikusei-img/story-torble/hiden-gurasura-1.jpg" alt="陣営秘伝「トーブルの護り手 グラスラ」★1" class="hiden-img" width="220" height="89" loading="lazy">
+    <div class="table-wrap">
+      <table class="data-table hiden-table">
+        <tr><th>陣営</th><th>★1</th><th>★2</th><th>★3</th></tr>
+        <tr><td><span class="camp c-mongura">モングラ</span></td><td class="na">確認中</td><td class="na">確認中</td><td class="na">確認中</td></tr>
+        <tr><td><span class="camp c-gurasura">グラスラ</span></td><td>ライフ+4<br>かしこさ+4<br>能力ポイント+10<br>忠誠度上限UP+3</td><td class="na">確認中</td><td class="na">確認中</td></tr>
+        <tr><td><span class="camp c-lord">ロード</span></td><td class="na">確認中</td><td class="na">確認中</td><td class="na">確認中</td></tr>
+      </table>
+    </div>
+
+    <h3 style="font-size:15px;margin:22px 0 6px;">EX秘伝「護り手」</h3>
+    <img src="../ikusei-img/story-torble/hiden-ex-2.jpg" alt="EX秘伝「護り手」★2" class="hiden-img" width="316" height="136" loading="lazy">
+    <p>陣営に関係なく取得できる秘伝として「護り手」があります。</p>
+    <div class="table-wrap">
+      <table class="data-table hiden-table">
+        <tr><th>秘伝</th><th>★1</th><th>★2</th><th>★3</th></tr>
+        <tr><td>護り手</td><td class="na">確認中</td><td class="na">確認中</td><td class="na">確認中</td></tr>
+      </table>
+    </div>
+    <p style="font-size:13px;">ほかの秘伝の効果は <a href="hiden-kouka.html" style="color:#f0a500;">秘伝効果一覧</a> を見てください。</p>
+  </div>
+
+  <div class="section" id="unknown">
+    <div class="section-title">確認中の項目</div>
+    <p>次の項目は、まだ確認できていません。分かりしだい追記します。</p>
+    <ul>
+      <li>ヴァルド能力のうち、画像で確かめていない距離の組み合わせ（名前・効果・必要Ptは、ほかの距離と同じとして載せています）</li>
+      <li>シロモッチーの3つ目の能力</li>
+      <li>陣営秘伝「トーブルの護り手」の効果（グラスラ★1以外の8種）</li>
+      <li>EX秘伝「護り手」の効果（★1〜★3）</li>
+    </ul>
+  </div>
+
+  <div class="section" id="related">
+    <div class="section-title">関連記事</div>
+    <ul class="related-list">
+      <li><a href="hiden-kouka.html">📋 秘伝効果一覧</a></li>
+      <li><a href="road-hiden.html">⚔️ ロード秘伝 完全ガイド</a></li>
+      <li><a href="hiden.html">📜 秘伝周回 完全ガイド</a></li>
+      <li><a href="sogo-ikusei.html">📈 総合力育成のコツ</a></li>
+    </ul>
+  </div>
+</div>
+
+<footer>
+  LINEモンスターファーム徹底攻略 &copy; 2026 ／ 非公式ファンサイト
+  ／ <a href="../privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a>
+</footer>
+
+</body>
+</html>
