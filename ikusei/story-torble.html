@@ -38,16 +38,28 @@
     .lv-m { color:#0b7285; font-weight:bold; }
     .lv-s { color:#868e96; }
     .train-table .tr-name { display:block; font-size:11px; color:#999; font-weight:normal; }
-    .train-table .main-stat { display:block; font-size:16px; line-height:1.4; }
+    .train-table .main-stat { display:inline-block; font-size:16px; line-height:1.4; }
     .train-table .subs { display:block; font-size:11px; white-space:nowrap; line-height:1.4; }
     @media (max-width:480px) {
       .train-table td, .train-table th { padding:7px 3px; font-size:13px; }
       .train-table .tr-name { font-size:10px; }
       .train-table .main-stat { font-size:15px; }
       .train-table .subs { font-size:10px; }
+      .train-table td, .train-table th { padding:6px 2px; }
+      .train-table .st { padding:0 2px; }
+      .train-table .main-stat.st { padding:0 3px; }
+      .ex-type-table .main-stat { font-size:14px; }
     }
     details.shots { margin:12px 0; border:1px solid #eee; border-radius:8px; padding:8px 12px; background:#fcfcfc; }
-    details.shots summary { cursor:pointer; font-size:13px; font-weight:bold; color:#f0a500; }
+    details.shots > summary { font-size:13px; font-weight:bold; color:#b37400; }
+    /* 開閉トグル共通：左の▶が開くと▼に回り、右端に「開く／閉じる」を出す */
+    details.shots > summary, details.camp-toggle > summary { cursor:pointer; list-style:none; display:flex; align-items:center; gap:8px; user-select:none; }
+    details.shots > summary::-webkit-details-marker, details.camp-toggle > summary::-webkit-details-marker { display:none; }
+    details.shots > summary::before, details.camp-toggle > summary::before { content:'▶'; font-size:10px; color:#999; transition:transform .15s; flex-shrink:0; }
+    details.shots[open] > summary::before, details.camp-toggle[open] > summary::before { transform:rotate(90deg); }
+    details.shots > summary::after, details.camp-toggle > summary::after { content:'開く'; margin-left:auto; flex-shrink:0; font-size:11px; font-weight:bold; color:#fff; background:#f0a500; border-radius:10px; padding:1px 10px; }
+    details.shots[open] > summary::after, details.camp-toggle[open] > summary::after { content:'閉じる'; color:#777; background:#fff; border:1px solid #ccc; padding:0 9px; }
+    details.shots[open] > summary { padding-bottom:6px; border-bottom:1px dashed #e5e5e5; }
     .shot-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; margin-top:10px; }
     @media (min-width:768px) { .shot-grid { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
     .shot-grid figure { margin:0; }
@@ -59,6 +71,16 @@
     .c-gurasura { --c:#7b5cd6; --t:#efeafc; }
     .c-lord     { --c:#d4535a; --t:#fdeaea; }
     .camp { display:inline-block; background:var(--c); color:#fff; font-weight:bold; font-size:12px; line-height:1.6; padding:0 8px; border-radius:10px; white-space:nowrap; }
+    /* ステータスのテーマカラー（ゲーム内アイコンの色から） */
+    .st-life { --sb:#fff1bf; --sl:#e0a800; }
+    .st-pow  { --sb:#ffdcd8; --sl:#e5534b; }
+    .st-int  { --sb:#dcf3d2; --sl:#3fa34d; }
+    .st-hit  { --sb:#fbdcee; --sl:#d6409f; }
+    .st-eva  { --sb:#d6f1fb; --sl:#2a9fd6; }
+    .st-def  { --sb:#dde4fb; --sl:#4a6fd6; }
+    .st { display:inline-block; background:var(--sb); border-radius:4px; padding:0 4px; margin:1px 0; }
+    .main-stat.st { box-shadow:inset 0 -2px 0 var(--sl); padding:0 6px; }
+    td.st-head { background:var(--sb) !important; box-shadow:inset 4px 0 0 var(--sl); }
     .train-table th[class^="c-"] { background:var(--c); }
     .camp-box { background:#fafafa; border:1px solid #eee; border-radius:8px; padding:12px 16px; margin:14px 0; font-size:13px; line-height:1.7; }
     .camp-box-title { font-weight:bold; font-size:14px; margin-bottom:6px; }
@@ -84,8 +106,8 @@
     .ex-table .ex-name { font-weight:bold; margin-right:4px; }
     .ex-table .ex-eff { display:block; font-size:12px; color:#555; margin-top:2px; }
     details.camp-toggle { margin:10px 0; border:1px solid #eee; border-left:4px solid var(--c); border-radius:0 8px 8px 0; padding:10px 12px; background:#fff; }
-    details.camp-toggle > summary { cursor:pointer; font-weight:bold; font-size:14px; }
-    details.camp-toggle[open] > summary { margin-bottom:6px; }
+    details.camp-toggle > summary { font-weight:bold; font-size:14px; }
+    details.camp-toggle[open] > summary { margin-bottom:8px; padding-bottom:8px; border-bottom:1px dashed #e5e5e5; }
     .ab-table .how { display:block; font-size:11px; color:#777; margin-top:6px; }
     .vald-head { font-size:14px; margin:18px 0 6px; }
     .sub-info { display:block; font-size:11px; color:#888; font-weight:normal; margin-top:2px; }
@@ -177,12 +199,12 @@
     <div class="table-wrap">
       <table class="data-table train-table">
         <tr><th>能力<br>（トレ）</th><th class="c-before">陣営<br>選択前</th><th class="c-mongura">モングラ</th><th class="c-gurasura">グラスラ</th><th class="c-lord">ロード</th></tr>
-        <tr><td>ライフ<span class="tr-name">大食い</span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">ラ◎</span><span class="subs"><span class="lv-m">力○</span> <span class="lv-m">丈○</span></span></td></tr>
-        <tr><td>ちから<span class="tr-name">ドミノ倒し</span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-s">賢△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">力◎</span><span class="subs"><span class="lv-m">命○</span> <span class="lv-m">回○</span></span></td></tr>
-        <tr><td>かしこさ<span class="tr-name">猛勉強</span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">賢◎</span><span class="subs"><span class="lv-m">ラ○</span> <span class="lv-m">命○</span></span></td></tr>
-        <tr><td>命中<span class="tr-name">しゃてき</span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">力△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-s">力△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">命◎</span><span class="subs"><span class="lv-m">回○</span> <span class="lv-m">丈○</span></span></td></tr>
-        <tr><td>回避<span class="tr-name">巨石よけ</span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-m">丈○</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">命△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">回◎</span><span class="subs"><span class="lv-m">力○</span> <span class="lv-m">賢○</span></span></td></tr>
-        <tr><td>丈夫さ<span class="tr-name">丸太うけ</span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">命△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">賢△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-s">ラ△</span> <span class="lv-s">回△</span></span></td><td><span class="lv-l main-stat">丈◎</span><span class="subs"><span class="lv-m">ラ○</span> <span class="lv-m">賢○</span></span></td></tr>
+        <tr><td class="st-head st-life">ライフ<span class="tr-name">大食い</span></td><td><span class="lv-l main-stat st st-life">ラ◎</span><span class="subs"><span class="lv-s st st-pow">力△</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-life">ラ◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-life">ラ◎</span><span class="subs"><span class="lv-s st st-pow">力△</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-life">ラ◎</span><span class="subs"><span class="lv-m st st-pow">力○</span> <span class="lv-m st st-def">丈○</span></span></td></tr>
+        <tr><td class="st-head st-pow">ちから<span class="tr-name">ドミノ倒し</span></td><td><span class="lv-l main-stat st st-pow">力◎</span><span class="subs"><span class="lv-s st st-int">賢△</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-pow">力◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-pow">力◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-hit">命△</span></span></td><td><span class="lv-l main-stat st st-pow">力◎</span><span class="subs"><span class="lv-m st st-hit">命○</span> <span class="lv-m st st-eva">回○</span></span></td></tr>
+        <tr><td class="st-head st-int">かしこさ<span class="tr-name">猛勉強</span></td><td><span class="lv-l main-stat st st-int">賢◎</span><span class="subs"><span class="lv-s st st-life">ラ△</span> <span class="lv-s st st-hit">命△</span></span></td><td><span class="lv-l main-stat st st-int">賢◎</span><span class="subs"><span class="lv-s st st-pow">力△</span> <span class="lv-s st st-hit">命△</span></span></td><td><span class="lv-l main-stat st st-int">賢◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-hit">命△</span></span></td><td><span class="lv-l main-stat st st-int">賢◎</span><span class="subs"><span class="lv-m st st-life">ラ○</span> <span class="lv-m st st-hit">命○</span></span></td></tr>
+        <tr><td class="st-head st-hit">命中<span class="tr-name">しゃてき</span></td><td><span class="lv-l main-stat st st-hit">命◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-pow">力△</span></span></td><td><span class="lv-l main-stat st st-hit">命◎</span><span class="subs"><span class="lv-s st st-pow">力△</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-hit">命◎</span><span class="subs"><span class="lv-s st st-pow">力△</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-hit">命◎</span><span class="subs"><span class="lv-m st st-eva">回○</span> <span class="lv-m st st-def">丈○</span></span></td></tr>
+        <tr><td class="st-head st-eva">回避<span class="tr-name">巨石よけ</span></td><td><span class="lv-l main-stat st st-eva">回◎</span><span class="subs"><span class="lv-m st st-def">丈○</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-eva">回◎</span><span class="subs"><span class="lv-s st st-life">ラ△</span> <span class="lv-s st st-hit">命△</span></span></td><td><span class="lv-l main-stat st st-eva">回◎</span><span class="subs"><span class="lv-s st st-life">ラ△</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-eva">回◎</span><span class="subs"><span class="lv-m st st-pow">力○</span> <span class="lv-m st st-int">賢○</span></span></td></tr>
+        <tr><td class="st-head st-def">丈夫さ<span class="tr-name">丸太うけ</span></td><td><span class="lv-l main-stat st st-def">丈◎</span><span class="subs"><span class="lv-s st st-hit">命△</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-def">丈◎</span><span class="subs"><span class="lv-s st st-life">ラ△</span> <span class="lv-s st st-int">賢△</span></span></td><td><span class="lv-l main-stat st st-def">丈◎</span><span class="subs"><span class="lv-s st st-life">ラ△</span> <span class="lv-s st st-eva">回△</span></span></td><td><span class="lv-l main-stat st st-def">丈◎</span><span class="subs"><span class="lv-m st st-life">ラ○</span> <span class="lv-m st st-int">賢○</span></span></td></tr>
       </table>
     </div>
     <p style="font-size:12px;color:#777;">ラ＝ライフ、力＝ちから、賢＝かしこさ、命＝命中、回＝回避、丈＝丈夫さ。<span class="lv-l">◎＝大（メイン）</span>、<span class="lv-m">○＝中</span>、<span class="lv-s">△＝小</span>。</p>
@@ -233,8 +255,8 @@
       </ul>
     </div>
 
-    <details class="shots">
-      <summary>トレーニング表の画像を見る（4枚）</summary>
+    <details class="shots" open>
+      <summary>トレーニング表の画像（4枚）</summary>
       <p style="font-size:12px;color:#777;margin-top:8px;">ゲーム画面では、<strong>左端のアイコンの行が1つのトレ</strong>、上に並ぶ列が上がる能力です（例：ハートの行＝大食い）。</p>
       <div class="shot-grid">
         <figure><img src="../ikusei-img/story-torble/training-before.jpg" alt="トレーニング表（陣営選択前）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-before">陣営選択前</span></figcaption></figure>
@@ -254,10 +276,10 @@
     <div class="table-wrap">
       <table class="data-table train-table ex-type-table">
         <tr><th>EXトレ</th><th>☆（大）</th><th>◎（中）</th><th>○（小）</th></tr>
-        <tr><td>バイタル</td><td><span class="lv-l main-stat">ちから☆</span></td><td><span class="lv-m">ライフ◎</span></td><td><span class="lv-s">命中○</span></td></tr>
-        <tr><td>ガード</td><td><span class="lv-l main-stat">丈夫さ☆</span></td><td><span class="lv-m">回避◎</span></td><td><span class="lv-s">ちから○</span></td></tr>
-        <tr><td>ルミナス</td><td><span class="lv-l main-stat">かしこさ☆</span></td><td><span class="lv-m">ライフ◎</span></td><td><span class="lv-s">丈夫さ○</span></td></tr>
-        <tr><td>テクニック</td><td><span class="lv-l main-stat">命中☆</span></td><td><span class="lv-m">回避◎</span></td><td><span class="lv-s">かしこさ○</span></td></tr>
+        <tr><td>バイタル</td><td><span class="lv-l main-stat st st-pow">ちから☆</span></td><td><span class="lv-m st st-life">ライフ◎</span></td><td><span class="lv-s st st-hit">命中○</span></td></tr>
+        <tr><td>ガード</td><td><span class="lv-l main-stat st st-def">丈夫さ☆</span></td><td><span class="lv-m st st-eva">回避◎</span></td><td><span class="lv-s st st-pow">ちから○</span></td></tr>
+        <tr><td>ルミナス</td><td><span class="lv-l main-stat st st-int">かしこさ☆</span></td><td><span class="lv-m st st-life">ライフ◎</span></td><td><span class="lv-s st st-def">丈夫さ○</span></td></tr>
+        <tr><td>テクニック</td><td><span class="lv-l main-stat st st-hit">命中☆</span></td><td><span class="lv-m st st-eva">回避◎</span></td><td><span class="lv-s st st-int">かしこさ○</span></td></tr>
       </table>
     </div>
 
@@ -274,7 +296,7 @@
     </div>
 
 
-    <details class="camp-toggle c-before">
+    <details class="camp-toggle c-before" open>
       <summary><span class="camp c-before">陣営選択前</span> のEXトレ（6人）</summary>
       <div class="table-wrap c-before">
         <table class="data-table ab-table ex-table">
@@ -293,8 +315,8 @@
           <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-montitto.jpg" alt="モンティット" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">モンティット</span></td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
         </table>
       </div>
-      <details class="shots">
-        <summary>陣営選択前のEXトレの画像を見る（12枚）</summary>
+      <details class="shots" open>
+        <summary>陣営選択前のEXトレの画像（12枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ex-before-bras-1.jpg" alt="陣営選択前のEXトレ（ブラス 1）" width="900" height="1948" loading="lazy"><figcaption>ブラス 1</figcaption></figure>
           <figure><img src="../ikusei-img/story-torble/ex-before-bras-2.jpg" alt="陣営選択前のEXトレ（ブラス 2）" width="900" height="1948" loading="lazy"><figcaption>ブラス 2</figcaption></figure>
@@ -334,8 +356,8 @@
           <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-mizuki.jpg" alt="ミズキ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ミズキ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限アップ</span></td></tr>
         </table>
       </div>
-      <details class="shots">
-        <summary>モングラのEXトレの画像を見る（11枚）</summary>
+      <details class="shots" open>
+        <summary>モングラのEXトレの画像（11枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-1.jpg" alt="モングラのEXトレ（ハインケル 1）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 1</figcaption></figure>
           <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-2.jpg" alt="モングラのEXトレ（ハインケル 2）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 2</figcaption></figure>
@@ -371,8 +393,8 @@
           <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-monika.jpg" alt="モニカ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">モニカ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限を<strong>少し</strong>アップ、忠誠度上限もわずかにアップ</span></td></tr>
         </table>
       </div>
-      <details class="shots">
-        <summary>グラスラのEXトレの画像を見る（12枚）</summary>
+      <details class="shots" open>
+        <summary>グラスラのEXトレの画像（12枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-1.jpg" alt="グラスラのEXトレ（ジュリア 1）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
           <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-2.jpg" alt="グラスラのEXトレ（ジュリア 2）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
@@ -408,8 +430,8 @@
           <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-lumina.jpg" alt="ルミナ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ルミナ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と<strong>忠誠度</strong>の上限アップ</span></td></tr>
         </table>
       </div>
-      <details class="shots">
-        <summary>ロードのEXトレの画像を見る（13枚）</summary>
+      <details class="shots" open>
+        <summary>ロードのEXトレの画像（13枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ex-lord-julia-1.jpg" alt="ロードのEXトレ（ジュリア 1）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
           <figure><img src="../ikusei-img/story-torble/ex-lord-julia-2.jpg" alt="ロードのEXトレ（ジュリア 2）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
@@ -433,7 +455,7 @@
     <div class="section-title">陣営の取得能力</div>
     <p>陣営ごとに、その陣営でしか取得できない能力があります（全30種：<span class="camp c-mongura">モングラ</span> 2種・<span class="camp c-gurasura">グラスラ</span> 13種・<span class="camp c-lord">ロード</span> 15種）。<strong>陣営能力はすべてEXトレから直接ひらめくことができます</strong>（どれも育成中1回のみ）。</p>
 
-    <details class="camp-toggle c-mongura">
+    <details class="camp-toggle c-mongura" open>
       <summary><span class="camp c-mongura">モングラ</span> の取得能力（2種）</summary>
       <div class="table-wrap c-mongura">
         <table class="data-table ab-table">
@@ -446,8 +468,8 @@
         <li>ステラ・ニコラオのEXトレを1回ずつ踏めば2つそろい、<strong>総合力+4000</strong></li>
         <li>総合力育成で強力なガルド系能力は、どちらも<strong>ロード秘伝のひらめきで能力継承ができる</strong>。ロード秘伝を持った親に持たせておけば、他のストーリーの育成でも発動させられる</li>
       </ul>
-      <details class="shots">
-        <summary>モングラの取得能力の画像を見る（1枚）</summary>
+      <details class="shots" open>
+        <summary>モングラの取得能力の画像（1枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ability-mongura.jpg" alt="モングラの取得能力（ブレインガルド・タフネスガルド）" width="900" height="1948" loading="lazy"></figure>
         </div>
@@ -468,8 +490,8 @@
         <li>ハント系は、相手の色・モン類に対応する1種だけが効く。名前は色が「レッド＝赤」のように英語、モン類が「クリエイト＝創造」のように対応する</li>
         <li>ハント系の効果がかかるのは、バトルで<strong>最初に発動する技だけ</strong></li>
       </ul>
-      <details class="shots">
-        <summary>グラスラの取得能力の画像を見る（4枚）</summary>
+      <details class="shots" open>
+        <summary>グラスラの取得能力の画像（4枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ability-gurasura-1.jpg" alt="グラスラの取得能力1（レッド〜グリーンハント）" width="900" height="1948" loading="lazy"></figure>
           <figure><img src="../ikusei-img/story-torble/ability-gurasura-2.jpg" alt="グラスラの取得能力2（グリーン〜クリエイトハント）" width="900" height="1948" loading="lazy"></figure>
@@ -493,8 +515,8 @@
         <li>どれも基本効果に加えて、地形・距離の適性が<strong>SS以上</strong>、またはモン類が有利なときに追加効果が付く</li>
         <li>ハートの追加効果には地形適性SSが必要。ロードを選んだ後は地形適性をほとんど上げられないので、<strong>陣営選択前に上げておく</strong>（詳しくは上の<a href="#ex" style="color:#f0a500;">EXトレ</a>）</li>
       </ul>
-      <details class="shots">
-        <summary>ロードの取得能力の画像を見る（4枚）</summary>
+      <details class="shots" open>
+        <summary>ロードの取得能力の画像（4枚）</summary>
         <div class="shot-grid">
           <figure><img src="../ikusei-img/story-torble/ability-lord-1.jpg" alt="ロードの取得能力1（マンディー〜パパス・ハート）" width="900" height="1948" loading="lazy"></figure>
           <figure><img src="../ikusei-img/story-torble/ability-lord-2.jpg" alt="ロードの取得能力2（パパス・カウレア・ハート、ゼロ・ニア・スナイプ）" width="900" height="1948" loading="lazy"></figure>
@@ -541,8 +563,8 @@
           <tr><td>ブリッツ<span class="sub-info">105Pt</span></td><td><span class="cond">その距離</span><br>技命中時、攻撃ステータス+8%・シールド破壊1回</td></tr>
       </table>
     </div>
-    <details class="shots">
-      <summary>レアの能力の画像を見る（3枚）</summary>
+    <details class="shots" open>
+      <summary>レアの能力の画像（3枚）</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-long-aim.jpg" alt="ヴァルド能力「ヴァルドロングエイム」" width="836" height="221" loading="lazy"><figcaption>ヴァルドロングエイム</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-zero-trine.jpg" alt="ヴァルド能力「ヴァルドゼロトライン」" width="804" height="239" loading="lazy"><figcaption>ヴァルドゼロトライン</figcaption></figure>
@@ -559,7 +581,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>混血の能力の画像を見る（4枚）</summary>
+      <summary>混血の能力の画像（4枚）</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-near-shield.jpg" alt="ヴァルド能力「ヴァルドニアシールド」" width="802" height="242" loading="lazy"><figcaption>ヴァルドニアシールド</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-zero-force.jpg" alt="ヴァルド能力「ヴァルドゼロフォース」" width="781" height="206" loading="lazy"><figcaption>ヴァルドゼロフォース</figcaption></figure>
@@ -577,7 +599,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>純血の能力の画像を見る（8枚）</summary>
+      <summary>純血の能力の画像（8枚）</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-zero-boom.jpg" alt="ヴァルド能力「ヴァルドゼロブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドゼロブーム</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-long-boom.jpg" alt="ヴァルド能力「ヴァルドロングブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドロングブーム</figcaption></figure>
@@ -600,7 +622,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>シロモッチーの能力の画像を見る（2枚）</summary>
+      <summary>シロモッチーの能力の画像（2枚）</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-shiro-epicgrow.jpg" alt="ヴァルド能力「ヴァルドエピックグロウ」" width="840" height="253" loading="lazy"><figcaption>ヴァルドエピックグロウ</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-shiro-armedfort.jpg" alt="ヴァルド能力「ヴァルドアームドフォート」" width="803" height="269" loading="lazy"><figcaption>ヴァルドアームドフォート</figcaption></figure>
