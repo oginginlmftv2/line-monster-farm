@@ -49,6 +49,7 @@
     details.shots { margin:12px 0; border:1px solid #eee; border-radius:8px; padding:8px 12px; background:#fcfcfc; }
     details.shots summary { cursor:pointer; font-size:13px; font-weight:bold; color:#f0a500; }
     .shot-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; margin-top:10px; }
+    @media (min-width:768px) { .shot-grid { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
     .shot-grid figure { margin:0; }
     .shot-grid img { width:100%; height:auto; border-radius:6px; border:1px solid #eee; display:block; }
     .shot-grid figcaption { font-size:12px; color:#666; text-align:center; margin-top:4px; }
@@ -76,7 +77,9 @@
     .cnt-once { background:#1a1a2e; color:#fff; }
     .ex-type-table td:first-child { font-weight:bold; }
     .ex-table td { background:#fff !important; }
-    .ex-table td.ex-chara { width:5.5em; border-right:1px solid #eee; font-weight:bold; white-space:nowrap; }
+    .ex-table td.ex-chara { width:76px; border-right:1px solid #eee; font-weight:bold; white-space:nowrap; text-align:center; vertical-align:top; }
+    .ex-table .chara-face { display:block; width:60px; height:60px; margin:0 auto 4px; border-radius:8px; border:1px solid #ddd; }
+    .ex-table .chara-name { display:block; font-size:12px; }
     .ex-table td.ex-body { font-weight:normal; white-space:normal; }
     .ex-table .ex-name { font-weight:bold; margin-right:4px; }
     .ex-table .ex-eff { display:block; font-size:12px; color:#555; margin-top:2px; }
@@ -91,12 +94,12 @@
     .t-mix  { color:#0b7285; }
     .t-rare { color:#b35900; }
     .nora-table td, .nora-table th { text-align:center; padding:8px 4px; }
-    .nora-table td:first-child { text-align:left; }
     .vald-table td:first-child { min-width:7em; }
     .shot-list { display:grid; gap:10px; margin-top:10px; }
     .shot-list figure { margin:0; }
     .shot-list img { width:100%; max-width:600px; height:auto; border-radius:6px; border:1px solid #eee; display:block; margin:0 auto; }
     .shot-list figcaption { font-size:12px; color:#666; text-align:center; margin-top:4px; }
+    @media (min-width:768px) { .shot-list { grid-template-columns:repeat(3, minmax(0, 1fr)); } }
     .hiden-img { display:block; max-width:220px; width:100%; height:auto; margin:10px 0; }
     .hiden-table td, .hiden-table th { text-align:center; vertical-align:middle; }
     .hiden-table td.na { color:#aaa; font-size:12px; }
@@ -276,18 +279,18 @@
       <div class="table-wrap c-before">
         <table class="data-table ab-table ex-table">
           <tr><th>キャラ</th><th>EXトレと効果</th></tr>
-          <tr><td class="ex-chara" rowspan="1">ブラス</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さ特訓！</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">ようす「〇〇ボーナス」を獲得</span></td></tr>
-          <tr><td class="ex-chara" rowspan="4">タバサ</td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-bras.jpg" alt="ブラス" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ブラス</span></td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さ特訓！</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">ようす「〇〇ボーナス」を獲得</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-tabasa.jpg" alt="タバサ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">タバサ</span></td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">輝かせたい</span><span class="ex-eff">人気アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">あまやかしたい</span><span class="ex-eff">忠誠度アップ＋あまえ度アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">たまには厳しく</span><span class="ex-eff">忠誠度アップ＋おそれ度アップ</span></td></tr>
-          <tr><td class="ex-chara" rowspan="4">ポルツ</td><td class="ex-body"><span class="ex-name">技習得のサポートグッズ</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-porutsu.jpg" alt="ポルツ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ポルツ</span></td><td class="ex-body"><span class="ex-name">技習得のサポートグッズ</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">危機対策グッズ</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">現在のフェーズに「ノラモン注意報」</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ピーシィ</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山で特訓！</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">エイル</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">モンティット</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-pishii.jpg" alt="ピーシィ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ピーシィ</span></td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山で特訓！</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-eiru.jpg" alt="エイル" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">エイル</span></td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-montitto.jpg" alt="モンティット" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">モンティット</span></td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
         </table>
       </div>
       <details class="shots">
@@ -314,21 +317,21 @@
       <div class="table-wrap c-mongura">
         <table class="data-table ab-table ex-table">
           <tr><th>キャラ</th><th>EXトレと効果</th></tr>
-          <tr><td class="ex-chara" rowspan="4">ハインケル</td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限<strong>大</strong>アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-heinkel.jpg" alt="ハインケル" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ハインケル</span></td><td class="ex-body"><span class="ex-name">大切にしたい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">体力回復＋体力上限<strong>大</strong>アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">仲良しになってほしい</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">人気アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">あまやかしたい</span><span class="ex-eff">忠誠度アップ＋あまえ度アップ</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">たまには厳しく</span><span class="ex-eff">忠誠度アップ＋おそれ度アップ</span></td></tr>
-          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="ジュリア" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ジュリア</span></td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">マルタ</td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ステラ</td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ブレインガルド</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ニコラオ</td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>タフネスガルド</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="3">リュナ</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-maruta.jpg" alt="マルタ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">マルタ</span></td><td class="ex-body"><span class="ex-name">ライフ／ちから／かしこさ／命中／回避／丈夫さの素質！</span><span class="ex-eff">その能力の素質アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-stella.jpg" alt="ステラ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ステラ</span></td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ブレインガルド</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-nikorao.jpg" alt="ニコラオ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ニコラオ</span></td><td class="ex-body"><span class="ex-name">総合力の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>タフネスガルド</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="3"><img src="../ikusei-img/story-torble/chara-ryuna.jpg" alt="リュナ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">リュナ</span></td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">大会の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">大会秘伝が獲得できるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">能力／チーム戦／モン類の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3のステータス秘伝／陣営秘伝／モン類秘伝がつきやすくなるようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ミズキ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-mizuki.jpg" alt="ミズキ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ミズキ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限アップ</span></td></tr>
         </table>
       </div>
       <details class="shots">
@@ -354,18 +357,18 @@
       <div class="table-wrap c-gurasura">
         <table class="data-table ab-table ex-table">
           <tr><th>キャラ</th><th>EXトレと効果</th></tr>
-          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="ジュリア" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ジュリア</span></td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">カヴァロ</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">サフィン</td><td class="ex-body"><span class="ex-name">赤／青／黄／緑／白／黒オーラの対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>色ハント</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">シュウラ</td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>モン類ハント</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ニア</td><td class="ex-body"><span class="ex-name">超モンスターの対策</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ハイレイドブースト</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="3">アイリス</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-kavaro.jpg" alt="カヴァロ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">カヴァロ</span></td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形</span><span class="ex-eff">その地形の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-safin.jpg" alt="サフィン" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">サフィン</span></td><td class="ex-body"><span class="ex-name">赤／青／黄／緑／白／黒オーラの対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>色ハント</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-shuura.jpg" alt="シュウラ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">シュウラ</span></td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>モン類ハント</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-nia.jpg" alt="ニア" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ニア</span></td><td class="ex-body"><span class="ex-name">超モンスターの対策</span> <span class="cnt cnt-once">1回</span><span class="ex-eff"><strong>ハイレイドブースト</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="3"><img src="../ikusei-img/story-torble/chara-iris.jpg" alt="アイリス" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">アイリス</span></td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">大会の知識</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">大会秘伝が獲得できるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">技／間合い／チーム戦の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3の技秘伝／間合い秘伝／陣営秘伝がつきやすくなるようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">モニカ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限を<strong>少し</strong>アップ、忠誠度上限もわずかにアップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-monika.jpg" alt="モニカ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">モニカ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と人気の上限を<strong>少し</strong>アップ、忠誠度上限もわずかにアップ</span></td></tr>
         </table>
       </div>
       <details class="shots">
@@ -392,17 +395,17 @@
       <div class="table-wrap c-lord">
         <table class="data-table ab-table ex-table">
           <tr><th>キャラ</th><th>EXトレと効果</th></tr>
-          <tr><td class="ex-chara" rowspan="4">ジュリア</td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
+          <tr><td class="ex-chara" rowspan="4"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="ジュリア" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ジュリア</span></td><td class="ex-body"><span class="ex-name">技習得の知識</span><span class="ex-eff">技習得率アップのようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">危機対策の知識</span><span class="ex-eff">ノラモンに勝ちやすくなるようす</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">ノラモンの出現情報</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">「ノラモン注意報」が発生</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">修行のチケット</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">修行チケット1枚、または技習得率が少しアップするようす</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">クリス</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">コウエン</td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ハート</strong>をひらめき、まれに地形適性アップ</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">レイラ</td><td class="ex-body"><span class="ex-name">零／近／中／遠距離の対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>スナイプ</strong>をひらめき＋能力Pt</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ルーカス</td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ウィーク</strong>をひらめき、まれにモン類経験値</span></td></tr>
-          <tr><td class="ex-chara" rowspan="2">クヌギ</td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-kris.jpg" alt="クリス" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">クリス</span></td><td class="ex-body"><span class="ex-name">零／近／中／遠距離を鍛えたい</span><span class="ex-eff">その距離の適性アップ、または体力少し回復</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-kouen.jpg" alt="コウエン" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">コウエン</span></td><td class="ex-body"><span class="ex-name">砂漠／森林／海岸／雪山／火山の地形への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ハート</strong>をひらめき、まれに地形適性アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-leila.jpg" alt="レイラ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">レイラ</span></td><td class="ex-body"><span class="ex-name">零／近／中／遠距離の対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>スナイプ</strong>をひらめき＋能力Pt</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-lucas.jpg" alt="ルーカス" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ルーカス</span></td><td class="ex-body"><span class="ex-name">創造／幻霊／魔族／獣族／怪物／無機類への対策</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">対応する<strong>ウィーク</strong>をひらめき、まれにモン類経験値</span></td></tr>
+          <tr><td class="ex-chara" rowspan="2"><img src="../ikusei-img/story-torble/chara-kunugi.jpg" alt="クヌギ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">クヌギ</span></td><td class="ex-body"><span class="ex-name">ひらめきの知識</span><span class="ex-eff">能力のひらめきLvアップ＋能力Pt</span></td></tr>
           <tr><td class="ex-body"><span class="ex-name">技／能力／間合い／チーム戦の知識</span> <span class="cnt cnt-once">1回（各）</span><span class="ex-eff">★3の技秘伝／ステータス秘伝／間合い秘伝／陣営秘伝がつきやすくなるようす（大会の知識はなし）</span></td></tr>
-          <tr><td class="ex-chara" rowspan="1">ルミナ</td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と<strong>忠誠度</strong>の上限アップ</span></td></tr>
+          <tr><td class="ex-chara" rowspan="1"><img src="../ikusei-img/story-torble/chara-lumina.jpg" alt="ルミナ" width="134" height="134" loading="lazy" class="chara-face"><span class="chara-name">ルミナ</span></td><td class="ex-body"><span class="ex-name">全員集合！</span> <span class="cnt cnt-once">1回</span><span class="ex-eff">特別なイベントの発生状態をリセット＋全能力と<strong>忠誠度</strong>の上限アップ</span></td></tr>
         </table>
       </div>
       <details class="shots">
@@ -541,9 +544,9 @@
     <details class="shots">
       <summary>レアの能力の画像を見る（3枚）</summary>
       <div class="shot-list">
-        <figure><img src="../ikusei-img/story-torble/vald-long-aim.jpg" alt="ヴァルド能力「ヴァルドロングエイム」" width="900" height="342" loading="lazy"><figcaption>ヴァルドロングエイム</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-zero-trine.jpg" alt="ヴァルド能力「ヴァルドゼロトライン」" width="900" height="265" loading="lazy"><figcaption>ヴァルドゼロトライン</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-zero-blitz.jpg" alt="ヴァルド能力「ヴァルドゼロブリッツ」" width="900" height="257" loading="lazy"><figcaption>ヴァルドゼロブリッツ</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-aim.jpg" alt="ヴァルド能力「ヴァルドロングエイム」" width="836" height="221" loading="lazy"><figcaption>ヴァルドロングエイム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-trine.jpg" alt="ヴァルド能力「ヴァルドゼロトライン」" width="804" height="239" loading="lazy"><figcaption>ヴァルドゼロトライン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-blitz.jpg" alt="ヴァルド能力「ヴァルドゼロブリッツ」" width="784" height="234" loading="lazy"><figcaption>ヴァルドゼロブリッツ</figcaption></figure>
       </div>
     </details>
     <h4 class="vald-head"><span class="ntype t-mix">混血</span> の能力</h4>
@@ -558,10 +561,10 @@
     <details class="shots">
       <summary>混血の能力の画像を見る（4枚）</summary>
       <div class="shot-list">
-        <figure><img src="../ikusei-img/story-torble/vald-near-shield.jpg" alt="ヴァルド能力「ヴァルドニアシールド」" width="900" height="284" loading="lazy"><figcaption>ヴァルドニアシールド</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-zero-force.jpg" alt="ヴァルド能力「ヴァルドゼロフォース」" width="839" height="332" loading="lazy"><figcaption>ヴァルドゼロフォース</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-near-force.jpg" alt="ヴァルド能力「ヴァルドニアフォース」" width="900" height="325" loading="lazy"><figcaption>ヴァルドニアフォース</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-near-gale.jpg" alt="ヴァルド能力「ヴァルドニアゲイル」" width="900" height="321" loading="lazy"><figcaption>ヴァルドニアゲイル</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-shield.jpg" alt="ヴァルド能力「ヴァルドニアシールド」" width="802" height="242" loading="lazy"><figcaption>ヴァルドニアシールド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-force.jpg" alt="ヴァルド能力「ヴァルドゼロフォース」" width="781" height="206" loading="lazy"><figcaption>ヴァルドゼロフォース</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-force.jpg" alt="ヴァルド能力「ヴァルドニアフォース」" width="800" height="237" loading="lazy"><figcaption>ヴァルドニアフォース</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-gale.jpg" alt="ヴァルド能力「ヴァルドニアゲイル」" width="802" height="242" loading="lazy"><figcaption>ヴァルドニアゲイル</figcaption></figure>
       </div>
     </details>
     <h4 class="vald-head"><span class="ntype t-pure">純血</span> の能力</h4>
@@ -576,14 +579,14 @@
     <details class="shots">
       <summary>純血の能力の画像を見る（8枚）</summary>
       <div class="shot-list">
-        <figure><img src="../ikusei-img/story-torble/vald-zero-boom.jpg" alt="ヴァルド能力「ヴァルドゼロブーム」" width="900" height="285" loading="lazy"><figcaption>ヴァルドゼロブーム</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-long-boom.jpg" alt="ヴァルド能力「ヴァルドロングブーム」" width="900" height="257" loading="lazy"><figcaption>ヴァルドロングブーム</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-near-armed.jpg" alt="ヴァルド能力「ヴァルドニアアームド」" width="900" height="265" loading="lazy"><figcaption>ヴァルドニアアームド</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-middle-armed.jpg" alt="ヴァルド能力「ヴァルドミドルアームド」" width="900" height="325" loading="lazy"><figcaption>ヴァルドミドルアームド</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-long-armed.jpg" alt="ヴァルド能力「ヴァルドロングアームド」" width="900" height="268" loading="lazy"><figcaption>ヴァルドロングアームド</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-near-mine.jpg" alt="ヴァルド能力「ヴァルドニアマイン」" width="900" height="265" loading="lazy"><figcaption>ヴァルドニアマイン</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-middle-mine.jpg" alt="ヴァルド能力「ヴァルドミドルマイン」" width="900" height="353" loading="lazy"><figcaption>ヴァルドミドルマイン</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-long-mine.jpg" alt="ヴァルド能力「ヴァルドロングマイン」" width="900" height="367" loading="lazy"><figcaption>ヴァルドロングマイン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-zero-boom.jpg" alt="ヴァルド能力「ヴァルドゼロブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドゼロブーム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-boom.jpg" alt="ヴァルド能力「ヴァルドロングブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドロングブーム</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-armed.jpg" alt="ヴァルド能力「ヴァルドニアアームド」" width="801" height="242" loading="lazy"><figcaption>ヴァルドニアアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-middle-armed.jpg" alt="ヴァルド能力「ヴァルドミドルアームド」" width="881" height="262" loading="lazy"><figcaption>ヴァルドミドルアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-armed.jpg" alt="ヴァルド能力「ヴァルドロングアームド」" width="802" height="242" loading="lazy"><figcaption>ヴァルドロングアームド</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-near-mine.jpg" alt="ヴァルド能力「ヴァルドニアマイン」" width="801" height="242" loading="lazy"><figcaption>ヴァルドニアマイン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-middle-mine.jpg" alt="ヴァルド能力「ヴァルドミドルマイン」" width="845" height="224" loading="lazy"><figcaption>ヴァルドミドルマイン</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-long-mine.jpg" alt="ヴァルド能力「ヴァルドロングマイン」" width="869" height="231" loading="lazy"><figcaption>ヴァルドロングマイン</figcaption></figure>
       </div>
     </details>
     <h4 class="vald-head" id="shiro">シロモッチー の能力</h4>
@@ -599,8 +602,8 @@
     <details class="shots">
       <summary>シロモッチーの能力の画像を見る（2枚）</summary>
       <div class="shot-list">
-        <figure><img src="../ikusei-img/story-torble/vald-shiro-epicgrow.jpg" alt="ヴァルド能力「ヴァルドエピックグロウ」" width="840" height="266" loading="lazy"><figcaption>ヴァルドエピックグロウ</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/vald-shiro-armedfort.jpg" alt="ヴァルド能力「ヴァルドアームドフォート」" width="900" height="300" loading="lazy"><figcaption>ヴァルドアームドフォート</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-shiro-epicgrow.jpg" alt="ヴァルド能力「ヴァルドエピックグロウ」" width="840" height="253" loading="lazy"><figcaption>ヴァルドエピックグロウ</figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/vald-shiro-armedfort.jpg" alt="ヴァルド能力「ヴァルドアームドフォート」" width="803" height="269" loading="lazy"><figcaption>ヴァルドアームドフォート</figcaption></figure>
       </div>
     </details>
   </div>
