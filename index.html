@@ -107,6 +107,7 @@
 ['2026.08.31', a('gacha/20260831-1.html','ガチャ更新：周年超スタフェス3.5thのピックアップ（ワルキューレ・ラクシャーガ・ジュリア・エルブランシュ）情報を掲載')],
 ['2026.08.31', a('gacha/20260828-1.html','ガチャ更新：周年記念サマーステップアップモンスターガチャのピックアップ（ルートヴィッヒ）情報を掲載')],
 // GACHA:UPDATES:END
+['2026.09.30', a('ikusei/story-torble.html','育成ストーリー解説「トーブルの護り手たち」を新設（陣営別トレーニング・EXトレ・陣営の取得能力・新ノラモン能力【ヴァルド】・秘伝）'), 'pin'],
 ['2026.09.29', a('diary/lol-chou-choujou-yuushou.html','プレイ日記更新（ロードオブレジェンズ「超・頂上決戦」初代王者になりました）・管理人プロフィールに超・頂上決戦優勝を追加'), 'pin'],
 ['2026.09.28', a('monsters/kaibutsu/worm/2323.html','モンスター詳細の「基礎データ」にワーム種10体を追加（計119体）')],
 ['2026.09.28', a('monsters/mazoku/naga/2424.html','モンスター詳細の「基礎データ」にナーガ種14体を追加（計109体）')],
@@ -212,8 +213,9 @@
 
     function rowHtml(r, showBorder) {
       const border = showBorder ? 'border-bottom:1px solid #f0f0f0;' : '';
-      const pin = r[2] === 'pin' ? '<span style="color:#f0a500;font-weight:bold;">📌 固定</span>' : '';
-      return `<tr style="${border}"><td style="${td1}">${r[0]}</td><td style="${td2}">${pin}${r[1]}</td></tr>`;
+      const pin = r[2] === 'pin' ? ' <span aria-label="固定">📌</span>' : '';
+      const body = pin ? `<span>${r[1]}${pin}</span>` : r[1];
+      return `<tr style="${border}"><td style="${td1}">${r[0]}</td><td style="${td2}">${body}</td></tr>`;
     }
 
     function renderHistory() {
@@ -321,6 +323,10 @@
     <!-- 育成サブメニュー -->
     <div class="ikusei-submenu" id="ikusei-submenu">
       <div class="submenu-list">
+        <a href="ikusei/story-torble.html" class="submenu-link">
+          <span class="submenu-icon">📖</span> 育成ストーリー解説：トーブルの護り手たち
+          <span class="submenu-arrow">›</span>
+        </a>
         <a href="ikusei/solomon.html" class="submenu-link">
           <span class="submenu-icon">🗺️</span> ソロモンクエスト用育成
           <span class="submenu-arrow">›</span>
