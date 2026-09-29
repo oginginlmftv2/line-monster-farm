@@ -4231,9 +4231,9 @@
       "createdAt": "",
       "updatedAt": "2026-08-20",
       "releasedAt": "2026-06-14",
-      "baseline": 964,
-      "current": 964,
-      "indexable": false
+      "baseline": 1472,
+      "current": 1472,
+      "indexable": true
     },
     {
       "id": "1354",
@@ -4956,8 +4956,8 @@
       "createdAt": "2026-08-14",
       "updatedAt": "2026-08-14",
       "releasedAt": "2026-08-14",
-      "baseline": 955,
-      "current": 1078,
+      "baseline": 1274,
+      "current": 1397,
       "indexable": true
     },
     {
@@ -5301,8 +5301,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-31",
-      "baseline": 847,
-      "current": 2121,
+      "baseline": 1187,
+      "current": 2461,
       "indexable": true
     },
     {
@@ -5338,8 +5338,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-08-13",
-      "baseline": 840,
-      "current": 2288,
+      "baseline": 1148,
+      "current": 2596,
       "indexable": true
     },
     {
@@ -6251,8 +6251,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-10-31",
-      "baseline": 940,
-      "current": 2203,
+      "baseline": 1399,
+      "current": 2662,
       "indexable": true
     },
     {
