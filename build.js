@@ -2826,8 +2826,8 @@ function renderSitemap(existingXml, pages) {
     .map(match => match[0])
     .filter(block => !generatedUrlPattern.test(block));
 
-  if (existingBlocks.length !== 24) {
-    throw new Error(`sitemap.xml の手書きURLが24件ではありません: ${existingBlocks.length}件`);
+  if (existingBlocks.length !== 25) {
+    throw new Error(`sitemap.xml の手書きURLが25件ではありません: ${existingBlocks.length}件`);
   }
 
   const header = existingXml.slice(0, matches[0].index);
