@@ -23,6 +23,14 @@ const cards = docs.cardsDoc.cards;
 
 function clone(value) { return JSON.parse(JSON.stringify(value)); }
 function example() { return JSON.parse(fs.readFileSync(EXAMPLE, 'utf8')); }
+// 読取例のカード（アルカード c0003-MR）はCMSで取り込み済みになると写しに能力が入る。
+// 例の判定はDBの中身で変わるため、例を使うテストは「このカードの能力を取り込む前」の写しで判定する。
+function docsBeforeExample() {
+  const before = clone(docs);
+  const cardId = example().cardId;
+  before.abilitiesDoc.abilities = before.abilitiesDoc.abilities.filter(ability => ability.cardId !== cardId);
+  return before;
+}
 function item(name, description, extra = {}) { return { name, description, source: 'イベント', ...extra }; }
 
 const cases = [];
@@ -39,10 +47,23 @@ test('照合キーは全角半角・ローマ数字・空白・<br>・末尾の�
   assert.strictEqual(sourceNameKey('ジュリア（ライバル）'), sourceNameKey('ジュリア'));
 });
 
-test('スキルの読取例（アルカードの閃き8件）はFAIL 0・全件新規', () => {
-  const issues = checkPayload(example(), docs);
+test('スキルの読取例（アルカードの閃き8件）は取り込み前ならFAIL 0・全件新規', () => {
+  const issues = checkPayload(example(), docsBeforeExample());
   assert.deepStrictEqual(issues.fail, []);
   assert.deepStrictEqual(issues.results.map(result => result.action), Array(8).fill('create'));
+});
+
+test('読取例を取り込んだ後にもう一度読むと全件「登録済み」（二重登録しない）', () => {
+  const after = docsBeforeExample();
+  const payload = example();
+  payload.abilities.forEach((ability, index) => after.abilitiesDoc.abilities.push({
+    abilityId: `ab-${9100 + index}`, legacyId: null, cardId: payload.cardId, sourceName: 'アルカード', name: ability.name,
+    description: ability.description, source: ability.source, rarity: 'MR', tags: ability.tags, sortOrder: index + 1,
+    linkStatus: 'resolved', flags: [], status: 'draft',
+  }));
+  const issues = checkPayload(payload, after);
+  assert.deepStrictEqual(issues.fail, []);
+  assert.deepStrictEqual(issues.results.map(result => result.action), Array(8).fill('known'));
 });
 
 test('既存カードのresolved能力をそのまま読むと全件「登録済み」', () => {
@@ -106,7 +127,7 @@ test('候補が複数なら link_ambiguous でFAIL。linkTo で選ぶと link', 
 });
 
 test('閃きの汎用名は他カードの同名未紐付け能力と紐付けない（新規）', () => {
-  const issues = checkPayload(example(), docs);
+  const issues = checkPayload(example(), docsBeforeExample());
   const snow = issues.results.find(result => result.name === '[雪山]防塵');
   assert.strictEqual(snow.action, 'create');
   assert(!issues.info.some(line => /元のカード名が違う同名/.test(line)));
@@ -148,7 +169,7 @@ test('本文の半角数字はWARN（Lv1・R4・[最大2回まで] は除く）'
 
 test('emit はCMS貼り付け形（schemaVersion 1・action付き・abilityIdは紐付けだけ）', () => {
   const payload = example();
-  const issues = checkPayload(payload, docs);
+  const issues = checkPayload(payload, docsBeforeExample());
   const out = toCmsPayload(payload, issues.results);
   assert.strictEqual(out.schemaVersion, 1);
   assert.strictEqual(out.cardId, 'c0003-MR');
@@ -265,7 +286,7 @@ test('lMfDB監査の「同じカードに同名あり」はNode版とGAS版で�
     assert(gas.includes(ability.abilityId), ability.abilityId);
     assert.deepStrictEqual(localCardNameMatches(external, ability.cardId, abilities).map(a => a.abilityId), Array.from(gas));
   }
-  const other = context.asstCaptureAuditNameMatches_({ name: '[自身青]不屈', card: 'アルカード' }, null, abilities);
+  const other = context.asstCaptureAuditNameMatches_({ name: '[自身青]不屈', card: 'テスト用の未登録カード' }, null, abilities);
   assert.strictEqual(other.length, 0, '閃きの汎用名は別カードの同名に当てない');
 });
 
