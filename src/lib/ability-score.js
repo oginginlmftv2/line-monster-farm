@@ -157,7 +157,8 @@ function createScorer(rubric) {
         const numeric = (line.conditions.numeric || []).join(' ');
         let cap = C.shieldCap;
         const m1 = numeric.match(/最大耐久値(\d+)/); if (m1) cap = Number(m1[1]);
-        const m2 = numeric.match(/最大値\+(\d+)/); if (m2) cap += Number(m2[1]);
+        // [最大値+200] は耐久値の上限そのもの（どれだけ高くても200まで。管理者確認 2026-09-30）
+        const m2 = numeric.match(/最大値\+(\d+)/); if (m2) cap = Number(m2[1]);
         const dur = String(line.raw).match(/耐久値<?(\d+)>?/); if (dur) cap = Number(dur[1]);
         let amount = cap;
         if (/丈夫さ|回避|ちから|かしこさ/.test(t) && v) amount = Math.min(cap, B.statBase * v / 100);

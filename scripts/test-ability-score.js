@@ -109,6 +109,14 @@ close(power(nine, 'x', { bestRange: 'B', rangeCount: 2, rangeRanks: { 遠: 'B', 
   close(power(block, 'x', { auraShare: () => 1 }), power(block, 'x', { auraShare: () => 0.2 }), 0.01);
 }
 
+// --- [最大値+200] は耐久値の上限そのもの。%が高くても200まで（光香む常闇の衣 II・管理者確認 2026-09-30）
+{
+  const shield = n => power('バトル開始時、最大ライフ30%分の【シールド】展開<20秒><1回>[最大値+' + n + ']');
+  const noCap = power('バトル開始時、最大ライフ30%分の【シールド】展開<20秒><1回>');
+  assert.ok(shield(100) < shield(200) && shield(200) < noCap, '350に足さず、200が上限');
+  close(shield(200) / noCap, 200 / rubric.coefficients.shieldCap, 0.1);
+}
+
 // --- 集計：同名・同説明は1種、Tier境界は全体の上位10/25/50%
 {
   const abilities = [
