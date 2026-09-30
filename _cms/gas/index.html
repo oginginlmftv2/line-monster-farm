@@ -1,7 +1,7 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><title>ライ徹CMS</title><?!= include_('ui_common'); ?></head><body>
 <div id="app_env" class="app-env" hidden></div><div id="app_toast" role="alert" aria-live="assertive" hidden></div><header><h1>ライ徹CMS</h1><span id="app_who"></span></header>
 <nav id="app_tabs" class="app-tabs"></nav>
-<main><div id="app_panel_monster"><?!= include_('ui_monster'); ?></div><div id="app_panel_assist"><?!= include_('ui_assist'); ?></div><div id="app_panel_gacha"><?!= include_('ui_gacha'); ?></div><div id="app_panel_publish"><?!= include_('ui_publish'); ?></div></main>
+<main><div id="app_panel_monster"><?!= include_('ui_monster'); ?></div><div id="app_panel_assist"><?!= include_('ui_assist'); ?><?!= include_('ui_ability_capture'); ?></div><div id="app_panel_gacha"><?!= include_('ui_gacha'); ?></div><div id="app_panel_publish"><?!= include_('ui_publish'); ?></div></main>
 <div id="app_busyOverlay" class="app-busy-overlay" role="status" aria-live="polite"><div id="app_busyText" class="app-busy-dialog">処理中…</div></div>
 <script>
 var APP_PANEL_IDS = { monster: 'mon_root', assist: 'asst_root', gacha: 'gacha_root', publish: 'app_publish_root' };

@@ -14,7 +14,7 @@ ENVIRONMENTはproductionまたはrehearsal、SPREADSHEET_IDは対応bookを指�
 
 ## P12-19 新規カード登録の反映と確認
 
-リポジトリ内の実装対象は `20_assist.gs`、`22_assist_status.gs`（能力の状態まとめ更新API・カード紐付け解除API）、`23_assist_hidden.gs`（カードの準備中）、`25_lmfdb_write.gs`（lMfDB追加・処置API）と `ui_assist.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
+リポジトリ内の実装対象は `20_assist.gs`、`22_assist_status.gs`（能力の状態まとめ更新API・カード紐付け解除API）、`23_assist_hidden.gs`（カードの準備中）、`25_lmfdb_write.gs`（lMfDB追加・処置API）、`26_ability_capture.gs`（能力のスクショ取り込みAPI）と `ui_assist.html`・`ui_ability_capture.html` です。管理者がGASへ反映するときは、この2ファイルを同名ファイルへ同期して保存し、必要なリハーサルを終えてからdeploymentを更新します。CodexはApps Scriptエディタ、スプレッドシート、Drive、deploymentを操作しません。
 
 反映後は次を手動確認します。
 
@@ -129,6 +129,30 @@ Vision OCRの精度が低いため、スクショの読み取りはClaude Code�
 
 貼り付けたJSONはOCR候補と同じくブラウザ内だけに持ち、Driveやシートへは保存しません。
 Vision OCRの導線はそのまま残しています。
+
+## 能力取り込みタブ（Claude読取のアシスト能力）の反映
+
+lMfDBを経由せず、スクショから能力を登録する導線です（`docs/ability-capture-design.md`）。
+スキル `assist-ability-capture` が出したJSONを貼り、サーバーで判定し直してから保存します。
+新規能力は`status: draft`で追加し、未紐付けの既存能力はこのカードへ`resolved`で紐付けます。
+既存能力の本文・状態は変えません。シートの列追加・setup関数・Script Propertiesの変更は不要です。
+
+`26_ability_capture.gs`と`ui_ability_capture.html`は新しいファイルです。GASエディタの「＋」から
+同じ名前（`26_ability_capture`はスクリプト、`ui_ability_capture`はHTML）で先に作ってから貼ります。
+
+1. `26_ability_capture.gs`・`ui_ability_capture.html`を新規作成して貼る。`20_assist.gs`・`ui_assist.html`・`index.html`も同名のGASファイルへ同期して保存する
+2. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+3. カードを開き、タブの末尾に「能力取り込み」があることを確認する
+4. `node scripts/check-assist-ability-payload.js .claude/skills/assist-ability-capture/examples/c0003-MR-hirameki.json --emit /tmp/alucard.json`
+   の出力を、アルカード（`c0003-MR`）以外のカードで貼ると「表示中のカードと違います」で拒否されることを確認する
+5. アルカードで貼り「判定を確認」を押すと、新規8件の判定が出て、シートが変わらないことを確認する
+6. 「原画像と全件を照合した」にチェックを入れて保存すると、`abilities`末尾に8行（`status: draft`・`legacyId`空）が増え、
+   `assist_log`に`apply-ability-capture / PASS`が1件あることを確認する
+7. 能力タブで8件を確認済み（verified）にしてから、アシスト公開を実行する
+8. 「外部能力DBを確認」の「その他」タブに「同じカードに同名あり」の分類が出ても、応答構造エラーにならないことを確認する
+
+`20_assist.gs`の外部能力監査は`26_ability_capture.gs`の`asstCaptureAuditNameMatches_`を呼ぶため、
+**`20_assist.gs`だけを先に反映しないでください**（監査が関数未定義で止まります）。
 
 ## GitHub App認証の反映
 

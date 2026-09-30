@@ -813,7 +813,7 @@ function asstAuditPriority_(classification) {
   return {
     card_match_candidate: 1, unlinked_candidate: 2, ID_REUSE_SUSPECTED: 3,
     existingContentDifferences: 4, representationOnly: 5,
-    duplicate_local_content_match: 6, missing_upstream_observation: 7
+    duplicate_local_content_match: 6, local_card_name_match: 6, missing_upstream_observation: 7
   }[classification] || 99;
 }
 
@@ -822,7 +822,7 @@ function asstAuditCounts_(externalCount, localCount) {
     external: externalCount, local: localCount, newCandidates: 0, knownExact: 0,
     representationOnly: 0, existingContentDifferences: 0, idReuseSuspected: 0,
     missingUpstreamObservations: 0, cardMatchCandidates: 0, unlinkedCandidates: 0,
-    duplicateLocalContentMatches: 0, processed: 0
+    duplicateLocalContentMatches: 0, localCardNameMatches: 0, processed: 0
   };
 }
 
@@ -912,6 +912,12 @@ function asstAuditAnalyze_(externalDocument, localRows, externalSha, externalSha
       counts.existingContentDifferences++; candidates.push(candidate); return;
     }
     candidate.cardIdCandidate = cardMap.map.get(JSON.stringify([external.card, external.rarity])) || null;
+    var nameMatches = asstCaptureAuditNameMatches_(external, candidate.cardIdCandidate, localAbilities);
+    if (nameMatches.length) {
+      candidate.classification = 'local_card_name_match'; candidate.priority = 'low';
+      candidate.nameMatchAbilityIds = nameMatches.map(function (item) { return item.abilityId; });
+      counts.localCardNameMatches++; candidates.push(candidate); return;
+    }
     candidate.classification = candidate.cardIdCandidate ? 'card_match_candidate' : 'unlinked_candidate';
     candidate.priority = 'high';
     candidate.registrationEligible = !candidate.processed;

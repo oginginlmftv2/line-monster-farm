@@ -1701,6 +1701,15 @@ if (!exists('scripts/test-assist-effect-payload.js')) {
   if (result.status !== 0) ng(`アシスト効果読取JSONテストFAIL: ${(result.stderr || result.stdout).trim()}`);
   else ok('効果読取JSONは表記規約・解放ランク順・条件整合・既存DB差分を検査し、CMS貼り付けで同じ形へ変換');
 }
+if (!exists('scripts/test-assist-ability-payload.js')) {
+  ng('アシスト能力読取JSON（Claude読取→CMS取り込み）のテストがない');
+} else {
+  const result = childProcess.spawnSync(process.execPath, ['scripts/test-assist-ability-payload.js'], {
+    cwd: REPO, encoding: 'utf8',
+  });
+  if (result.status !== 0) ng(`アシスト能力読取JSONテストFAIL: ${(result.stdout || result.stderr).trim().split('\n').filter(line => /^FAIL|^\s/.test(line)).slice(0, 10).join(' / ')}`);
+  else ok('能力読取JSONは表記規約と判定（登録済み・紐付け・新規）を検査し、GASの判定・取り込みAPIと一致');
+}
 
 // ---------------------------------------------------------------- 17
 head('17. ガチャDB');

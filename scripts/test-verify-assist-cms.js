@@ -323,6 +323,34 @@ expectFailure('紐付け解除APIのsortOrder繰上げを落とすと拒否', ro
   fs.writeFileSync(file, source.replace(/siblings\.forEach\(function \(row, index\) \{[\s\S]*?\}\);\n/, ''));
 }, /紐付け解除が/);
 
+function breakCaptureSource(root, relative, from, to) {
+  const file = path.join(root, relative);
+  const source = fs.readFileSync(file, 'utf8');
+  if (!source.includes(from)) throw new Error(`${relative} に置換対象がない: ${from}`);
+  fs.writeFileSync(file, source.replace(from, to));
+}
+expectFailure('能力取り込みAPIの判定再計算を落とすと拒否', root => {
+  breakCaptureSource(root, '_cms/gas/26_ability_capture.gs', 'var evaluation = asstCaptureEvaluate_(input, cardRows, abilityRows);', 'var evaluation = { card: asstCaptureCard_(cardRows, input.cardId), results: [] };');
+}, /能力スクショ取り込み/);
+expectFailure('能力取り込みAPIの紐付けで本文を書き換えると拒否', root => {
+  breakCaptureSource(root, '_cms/gas/26_ability_capture.gs', "after[headers.indexOf('linkStatus')] = 'resolved';", "after[headers.indexOf('linkStatus')] = 'resolved';\n        after[headers.indexOf('description')] = item.description;");
+}, /能力スクショ取り込み/);
+expectFailure('能力取り込みの新規をverifiedで作ると拒否', root => {
+  breakCaptureSource(root, '_cms/gas/26_ability_capture.gs', "linkStatus: 'resolved', flags: [], status: 'draft'", "linkStatus: 'resolved', flags: [], status: 'verified'");
+}, /能力スクショ取り込み/);
+expectFailure('能力取り込みプレビューが書き込むと拒否', root => {
+  breakCaptureSource(root, '_cms/gas/26_ability_capture.gs', 'asstRequireUser_();\n  var input = asstCapturePayload_(payload);\n  var evaluation', "asstRequireUser_();\n  asstSheet_(ASST_SHEET_LOG).appendRow([]);\n  var input = asstCapturePayload_(payload);\n  var evaluation");
+}, /能力スクショ取り込み/);
+expectFailure('lMfDB監査の同名能力判定を外すと拒否', root => {
+  breakCaptureSource(root, '_cms/gas/20_assist.gs', 'asstCaptureAuditNameMatches_(external, candidate.cardIdCandidate, localAbilities)', '[]');
+}, /能力スクショ取り込み/);
+expectFailure('能力取り込み画面の照合チェックを外すと拒否', root => {
+  breakCaptureSource(root, '_cms/gas/ui_ability_capture.html', "if(!el('asst_captureConfirmed').checked)", 'if(false)');
+}, /能力スクショ取り込み/);
+expectFailure('能力取り込みAPIのScriptLockを外すと拒否', root => {
+  breakCaptureSource(root, '_cms/gas/26_ability_capture.gs', 'var lock = asstAcquireScriptLock_();', 'var lock = null;');
+}, /ScriptLock/);
+
 expectFailure('紐付け解除APIでstatusを書き換えると拒否', root => {
   const file = path.join(root, '_cms/gas/22_assist_status.gs');
   const source = fs.readFileSync(file, 'utf8');

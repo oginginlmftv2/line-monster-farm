@@ -20,6 +20,8 @@ const SUPPORT_FILES = {
   lmfdbWriteGas: '_cms/gas/25_lmfdb_write.gs',
   statusGas: '_cms/gas/22_assist_status.gs',
   hiddenGas: '_cms/gas/23_assist_hidden.gs',
+  captureGas: '_cms/gas/26_ability_capture.gs',
+  captureHtml: '_cms/gas/ui_ability_capture.html',
   setupGas: '_cms/gas/40_setup.gs',
   shell: '_cms/gas/index.html',
   commonHtml: '_cms/gas/ui_common.html',
@@ -136,11 +138,13 @@ function validateRoot(root) {
   const lmfdbWriteGas = read(root, SUPPORT_FILES.lmfdbWriteGas);
   const statusGas = read(root, SUPPORT_FILES.statusGas);
   const hiddenGas = read(root, SUPPORT_FILES.hiddenGas);
+  const captureGas = read(root, SUPPORT_FILES.captureGas);
+  const captureHtml = read(root, SUPPORT_FILES.captureHtml);
   const setupGas = read(root, SUPPORT_FILES.setupGas);
   const shell = read(root, SUPPORT_FILES.shell);
   const commonHtml = read(root, SUPPORT_FILES.commonHtml);
   const monsterHtml = read(root, SUPPORT_FILES.monsterHtml);
-  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${statusGas}\n${hiddenGas}\n${setupGas}`;
+  const allAssistGas = `${core}\n${gas}\n${lmfdbWriteGas}\n${statusGas}\n${hiddenGas}\n${captureGas}\n${setupGas}`;
   const assistPageBuilder = read(root, ASSIST_PAGE_BUILDER);
   const lmfdbWriteSafetyTest = read(root, LMFDB_WRITE_SAFETY_TEST);
   const cardCreateApiTest = read(root, CARD_CREATE_API_TEST);
@@ -545,10 +549,30 @@ function validateRoot(root) {
       !/'api_asstUnlinkAbility'/.test(unlinkUiBlock)) {
     issues.push('能力の紐付け解除がresolved限定・sortOrder繰上げ・確認ダイアログ・未保存時無効の境界を満たさない');
   }
+  // スクショ取り込み（docs/ability-capture-design.md）: 書込み前に判定を再計算して食い違えば拒否し、
+  // 新規はdraft・紐付けは本文/状態を変えない。プレビューは読取専用。画面は判定確認と照合チェックを経て保存する
+  const captureApplyBlock = functionBlock(captureGas, 'api_asstApplyAbilityCapture');
+  const capturePreviewBlock = functionBlock(captureGas, 'api_asstPreviewAbilityCapture');
+  if (!/asstCaptureEvaluate_\(input, cardRows, abilityRows\)/.test(captureApplyBlock) ||
+      !/判定が一致しないため何も書き込みません/.test(captureApplyBlock) ||
+      !/linkStatus: 'resolved', flags: \[\], status: 'draft'/.test(captureApplyBlock) ||
+      /after\[headers\.indexOf\('(?:description|name|status|legacyId)'\)\]/.test(captureApplyBlock) ||
+      !/asstLmfdbCompensate_\(journal\)/.test(captureApplyBlock) ||
+      !/'apply-ability-capture'/.test(captureApplyBlock) ||
+      /asstAcquireScriptLock_|appendRow|setValues|asstLmfdbJournal/.test(capturePreviewBlock) ||
+      !/function asstCaptureAuditNameMatches_/.test(captureGas) ||
+      !/asstCaptureAuditNameMatches_\(external, candidate\.cardIdCandidate, localAbilities\)/.test(gas) ||
+      !/'local_card_name_match'/.test(html) ||
+      !/asstTabButton\('abilityCapture'/.test(html) ||
+      !/'api_asstPreviewAbilityCapture'/.test(captureHtml) || !/'api_asstApplyAbilityCapture'/.test(captureHtml) ||
+      !/asst_captureConfirmed'\)\.checked/.test(captureHtml) ||
+      !/include_\('ui_ability_capture'\)/.test(shell)) {
+    issues.push('能力スクショ取り込みの判定再計算・draft追加・本文不変・補償・読取専用プレビュー・lMfDB二重候補防止・画面の照合確認が不足');
+  }
   const assistLockFunctions = [
     ['api_asstUploadCardImage', gas], ['api_asstCreateCard', gas], ['api_asstSaveCard', gas], ['api_asstSaveEffects', gas],
     ['api_asstSaveAbility', gas], ['api_asstReorderCardAbilities', gas], ['api_asstSetAbilityStatuses', statusGas],
-    ['api_asstUnlinkAbility', statusGas],
+    ['api_asstUnlinkAbility', statusGas], ['api_asstApplyAbilityCapture', captureGas],
     ['api_asstCreateAbilityFromExternalCandidate', lmfdbWriteGas],
     ['api_asstCreateAbilitiesFromExternalCandidates', lmfdbWriteGas],
     ['api_asstSetExternalCandidateDisposition', lmfdbWriteGas], ['api_asstPublish', publishGas],

@@ -38,6 +38,7 @@
 | アシストカードDB・静的ページ・CMSの設計と進捗 | `docs/assist-card-cms-progress.md` |
 | CMS統合の方針と実施順 | `docs/cms-integration-plan.md` |
 | 外部能力DB（lMfDB）の読取専用候補監査 | `docs/lmfdb-integration.md` |
+| アシスト能力のスクショ取り込み（判定・lMfDBとの紐付け） | `docs/ability-capture-design.md` |
 | コンテンツ運用（ガチャ更新・日記追加） | `CLAUDE.md` |
 
 **索引にない作業を始める前に、関連する `docs/` が無いか確認すること。**
