@@ -4031,21 +4031,21 @@
       "cardType": "バイタル",
       "monType": "幻霊",
       "image": "assist-cards/c0003-MR.jpg",
-      "event2": null,
+      "event2": "雪山",
       "releasedAt": "2026/09/30",
       "accessoryStatus": "yes",
       "stats": [
         {
-          "value": "+32%",
-          "label": "応援効果"
+          "label": "応援効果",
+          "value": "+32%"
         },
         {
-          "value": "+30%",
-          "label": "得意率"
+          "label": "得意率",
+          "value": "+30%"
         },
         {
-          "value": "+32",
-          "label": "初期バイタル"
+          "label": "初期バイタル",
+          "value": "+32"
         }
       ],
       "limitBreak": null,
