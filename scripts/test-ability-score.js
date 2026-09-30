@@ -98,6 +98,25 @@ close(power(nine, 'x', { bestRange: 'B', rangeCount: 2, rangeRanks: { 遠: 'B', 
   close(withHeader, rubric.coefficients.loyaltyExcessGuts * rubric.coefficients.gutsToLv * rubric.modifiers.loyalty * rubric.modifiers.trigger['技発動時'], 0.1);
 }
 
+// --- 「効果量2倍」「効果時間延長」は条件の補正を掛けた分だけ上乗せ（ブギースペル II・昏き満月の祝福 II）
+{
+  const base = '[後半][自身青またはグジラ種]オーラ技発動時、次の効果<br>・命中率<+15%><br>・特殊与ダメ上昇<+20%>';
+  close(power(base + '<br>・[相手サイズ小]この能力の効果量2倍'), power(base) * (1 + rubric.modifiers.opponent), 0.2);
+  const moon = '[前半][自身青]<青>技発動時、次の効果<20秒><1回><br>・相手の攻撃ステ<-30%><br>・自身の攻撃ステ<+30%>';
+  assert.ok(power(moon + '<br>・[有利]この効果の効果時間<+15秒>') > power(moon));
+  // 相手の<赤>技を受けた時は、体の赤技の割合を使わない
+  const block = '[前半][自身青]<赤>技を受けた時、自身に次の効果<20秒><1回><br>・被ダメブロック<40%>';
+  close(power(block, 'x', { auraShare: () => 1 }), power(block, 'x', { auraShare: () => 0.2 }), 0.01);
+}
+
+// --- [最大値+200] は耐久値の上限そのもの。%が高くても200まで（光香む常闇の衣 II・管理者確認 2026-09-30）
+{
+  const shield = n => power('バトル開始時、最大ライフ30%分の【シールド】展開<20秒><1回>[最大値+' + n + ']');
+  const noCap = power('バトル開始時、最大ライフ30%分の【シールド】展開<20秒><1回>');
+  assert.ok(shield(100) < shield(200) && shield(200) < noCap, '350に足さず、200が上限');
+  close(shield(200) / noCap, 200 / rubric.coefficients.shieldCap, 0.1);
+}
+
 // --- 集計：同名・同説明は1種、Tier境界は全体の上位10/25/50%
 {
   const abilities = [

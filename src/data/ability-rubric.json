@@ -18,7 +18,7 @@
     "hitsPerSkill": 2.5
   },
   "coefficients": {
-    "note": "M は命中率・回避率の価値倍率（2026-09-27に3→1.5）。decisive は必中1回の値、完全回避は evadeOverHit 倍。defense は被ダメ低下・ブロック・被ダメカットの攻守比。perUseStackPct は「技の発動回数に応じて…<最大+X%>」の1回あたり（威力全開。管理者確認）。loyaltyExcessGuts は「忠誠度90を超えた分」の見込み（忠誠度は100超も可、120は難しめ）。randomDecisive は「ランダムで付与」された必中・完全回避など（いつ付くか選べず、狙った技に乗るとは限らない）の価値の割合（巫女の占い II・管理者確認）",
+    "note": "M は命中率・回避率の価値倍率（2026-09-27に3→1.5）。decisive は必中1回の値、完全回避は evadeOverHit 倍。defense は被ダメ低下・ブロック・被ダメカットの攻守比。perUseStackPct は「技の発動回数に応じて…<最大+X%>」の1回あたり（威力全開。管理者確認）。loyaltyExcessGuts は「忠誠度90を超えた分」の見込み（忠誠度は100超も可、120は難しめ）。randomDecisive は「ランダムで付与」された必中・完全回避など（いつ付くか選べず、狙った技に乗るとは限らない）の価値の割合（巫女の占い II・管理者確認）。dotShareOfDamage は被ダメのうち火傷・出血などの継続ダメージが占める%（仮置き10%。ブギーブロック II・2026-09-30）",
     "M": 1.5,
     "decisive": 125,
     "decisiveLvStep": 0.2,
@@ -46,7 +46,8 @@
     "grantStackCredit": 1,
     "perUseStackPct": 10,
     "loyaltyExcessGuts": 15,
-    "randomDecisive": 0.5
+    "randomDecisive": 0.5,
+    "dotShareOfDamage": 10
   },
   "flat": {
     "note": "1回あたりの固定値（Lv換算）。回数・トリガー・条件の補正は別に掛かる",
@@ -206,6 +207,6 @@
   },
   "review": {
     "note": "読み方の点検（scripts/audit-ability-reading.js と管理者確認）が済んだ最後の abilityId。CMSで能力が増えたら、これより後の能力を点検してから進める（docs/ability-scoring-design.md 5章）",
-    "reviewedThroughAbilityId": "ab-1253"
+    "reviewedThroughAbilityId": "ab-1278"
   }
 }

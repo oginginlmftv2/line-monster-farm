@@ -189,6 +189,26 @@ const atoms = line => line.effects.map(e => e.atom);
   assert.deepStrictEqual(eff('・相手に[丈夫さ<-30%><20秒>]を付与<1回>'), [['相手ステ低下', 30, '%']]);
   // 「、さらに」「>さらに」は別の行
   assert.strictEqual(parse('x', '回避25%分の【シールド】を展開する<20秒><1回>さらに自身[有利]の時、その技に対し完全回避Lv2<1回>').lines.length, 2);
+  // 2026-09-30 追加分（ブギースペル・ブギーブロック・昏き満月の祝福・光香む常闇の衣・[自身青]不屈）
+  assert.deepStrictEqual(eff('・特殊与ダメ上昇<+20%>').map(e => e[0]), ['与ダメ上昇']);
+  assert.strictEqual(line('・特殊与ダメ上昇<+20%>').effects[0].text, '特殊与ダメ上昇<+20%>');
+  assert.deepStrictEqual(eff('・相手の攻撃ステ<-30%>'), [['相手ステ低下', 30, '%']]);
+  assert.deepStrictEqual(eff('・自身の攻撃ステ<+30%>'), [['ステ上昇', 30, '%']]);
+  assert.deepStrictEqual(eff('・ライフステ<30%>の【シールド】展開[最大値+200]'), [['シールド展開', 30, '%']]);
+  assert.deepStrictEqual(eff('・このシールド展開中、ライフステ<10%>を攻撃ステ加算'), [['攻撃ステ加算', 10, '%']]);
+  assert.deepStrictEqual(eff('[自身青][終盤]ライフ30%未満時、最大ライフ20%以上の被ダメージをカットする'), [['被ダメ低下', 20, '%']]);
+  assert.deepStrictEqual(eff('・[オーラ有利]自身が受ける継続ダメージ軽減<50%>'), [['被ダメ低下', 50, '%']]);
+  assert.strictEqual(line('・[相手サイズ小]この能力の効果量2倍').amplify, 2);
+  assert.strictEqual(line('・[有利]この効果の効果時間<+15秒>').extendDuration, 15);
+  // 「<赤>技を受けた時」の色は相手の技。自分の技条件にしない
+  const boogie = line('[前半][自身青]<赤>技を受けた時、自身に次の効果<20秒><1回>');
+  assert.strictEqual(boogie.skillCond.aura, undefined);
+  assert.deepStrictEqual([boogie.conditions.opponentAura, boogie.trigger], [['相手赤技'], '被ダメ時']);
+  // 「追撃の回数<1回>につき」は累積で、発動回数制限ではない（ワルキューレアペンド）
+  const valk = line('・バトル中に自身が発動した追撃の回数<1回>につき攻撃ステ<+30%>');
+  assert.strictEqual(valk.limit, undefined);
+  assert.ok(valk.conditions.stack);
+  assert.strictEqual(line('・通常/追撃/連撃ダメージを受けたときライフ1で耐える<1回>').residual, '');
 }
 
 console.log('test-ability-parser: OK');
