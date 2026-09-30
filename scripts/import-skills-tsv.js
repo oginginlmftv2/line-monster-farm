@@ -29,7 +29,7 @@ const SOURCE_DIR = 'src/data/_source';
 // 技だけが「血統＋技名」で区別されるため、血統ごとのシートになっている。
 const ABILITY_TSV = 'src/data/_source/skill-abilities.tsv';
 const BUFF_TSV = 'src/data/_source/buffs.tsv';
-const ABILITY_SLOTS = 4;   // ability1〜4 と ability1Unlock〜4Unlock
+const ABILITY_SLOTS = 5;   // ability1〜5 と ability1Unlock〜5Unlock
 
 function readTsv(file) {
   const text = fs.readFileSync(file, 'utf8').replace(/^﻿/, '');
