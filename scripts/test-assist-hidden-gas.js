@@ -68,10 +68,11 @@ test('公開データのカードには準備中のときだけhidden: trueが�
   assert(!('hidden' in gas.asstCardFromRow_(cardRow({ hidden: false }))));
 });
 
-test('準備中なら画像が空でも画像検査を通り、公開済みカードは従来どおり画像必須', () => {
+test('画像が空なら準備中・公開済みとも画像検査を通る（サイトはNO IMAGE）', () => {
   const { gas } = loadGas({ rows: [] });
   assert.doesNotThrow(() => gas.asstValidateImagePath_({ cardId: 'c0093-SSR', image: '', hidden: true }, true));
-  assert.throws(() => gas.asstValidateImagePath_({ cardId: 'c0093-SSR', image: '' }, true), /image空欄/);
+  assert.doesNotThrow(() => gas.asstValidateImagePath_({ cardId: 'c0093-SSR', image: '' }, true));
+  assert.throws(() => gas.asstValidateImagePath_({ cardId: 'c0093-SSR', image: 'assist-cards/other.jpg' }, false), /画像パス必須/);
   assert.deepStrictEqual(Array.from(gas.asstValidateImageFiles_([{ cardId: 'c0093-SSR', image: '', hidden: true }], {})), []);
 });
 
@@ -127,10 +128,11 @@ test('hidden未指定の保存は準備中を保ち、falseを送ると外れる
   assert.strictEqual(writtenHidden(env), '');
 });
 
-test('準備中を外すときは画像が必須に戻る', () => {
+test('画像未登録のまま準備中を外して保存できる', () => {
   const row = cardRow({ hidden: true });
   const env = loadGas({ rows: [row] });
-  assert.throws(() => env.gas.api_asstSaveCard(savePayload(env.gas, row, { hidden: false })), /image空欄/);
+  const released = env.gas.api_asstSaveCard(savePayload(env.gas, row, { hidden: false }));
+  assert.strictEqual(released.hidden, false);
 });
 
 for (const [label, fn] of cases) {

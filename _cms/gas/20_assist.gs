@@ -426,8 +426,7 @@ function asstDriveImageInventory_(cards, allowMissingFolder) {
 
 function asstValidateImagePath_(card, checkExists, driveImages) {
   var imagePath = asstText_(card.image).trim();
-  if (!imagePath && card.hidden === true) return; // 準備中は画像未登録を許す
-  if (!imagePath) throw new Error(card.cardId + ': image空欄');
+  if (!imagePath) return; // 画像未登録はサイトでNO IMAGEを出す
   var expected = new RegExp('^assist-cards/' + card.cardId.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\.(?:jpg|jpeg|png|webp)$', 'i');
   if (!expected.test(imagePath)) throw new Error(card.cardId + ': imageはcardIdと一致するassist-cards配下の画像パス必須');
   if (!checkExists) return;

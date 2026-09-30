@@ -13,6 +13,7 @@ const INPUTS = {
 };
 const DIST_VALUES = ['零距離', '近距離', '中距離', '遠距離'];
 const TERRAIN_VALUES = ['砂漠', '海岸', '雪山', '火山', '森林'];
+const NO_IMAGE = 'img/site/no-image.svg';
 const RANK_ORDER = ['無凸', '1凸', '2凸', '3凸', '4凸'];
 const INDEXABLE_VISIBLE_CHARS = 800;
 const INDEXABLE_EXPLANATION_CHARS = 50;
@@ -248,7 +249,7 @@ function renderPage(card, effects, abilities, cardById, indexable, gachaAppearan
   <section class="section">
     <h2 class="section-title">基本情報</h2>
     <div class="assist-card-visual">
-      <img src="../${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}" width="260">
+      <img src="../${escapeHtml(cardImage(card))}" alt="${escapeHtml(card.name)}" width="260">
       <p><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span></p>
     </div>
     <table class="assist-detail-table assist-detail-table--pairs">
@@ -286,6 +287,11 @@ function buildCardArtifact(card, effects, allAbilities, cardById, gachaAppearanc
   };
 }
 
+// 画像未登録のカードはNO IMAGEにする
+function cardImage(card) {
+  return card.image || NO_IMAGE;
+}
+
 function validateInputs(cards, effectsByCard, abilities) {
   const ids = cards.map(card => card.cardId);
   const idSet = new Set(ids);
@@ -296,8 +302,8 @@ function validateInputs(cards, effectsByCard, abilities) {
   if (missingEffects.length) throw new Error(`assist-effects.json にcardIdがありません: ${missingEffects.join(', ')}`);
   const invalidAbilities = abilities.filter(ability => ability.linkStatus === 'resolved' && !idSet.has(ability.cardId));
   if (invalidAbilities.length) throw new Error(`assist-abilities.json に未知のcardId: ${invalidAbilities[0].cardId}`);
-  // 準備中カードは画像未登録でもよい（ガチャ枠ではNO IMAGEを出す）
-  const missingImages = cards.filter(card => card.hidden !== true && !fs.existsSync(path.join(REPO, card.image)));
+  // 画像未登録（空欄）はNO IMAGEで出す。パスがあるのに実在しないのは誤りなので止める
+  const missingImages = cards.filter(card => card.image && !fs.existsSync(path.join(REPO, card.image)));
   if (missingImages.length) throw new Error(`カード画像がありません: ${missingImages.map(card => card.cardId).join(', ')}`);
   const formationIds = cards.flatMap(card => card.formations.flatMap(formation => formation.cards.concat(formation.rental))).filter(Boolean);
   const unknownFormationIds = [...new Set(formationIds.filter(id => !idSet.has(id)))];
@@ -340,7 +346,7 @@ function renderAssistCard(card, aptitude) {
     aptitude?.terrain?.length ? ` data-terrain="${escapeHtml(aptitude.terrain.join(' '))}"` : '',
   ].join('');
   return `    <a class="card" data-rarity="${escapeHtml(card.rarity)}"${dataAttrs} href="cards/${escapeHtml(card.cardId)}.html">
-      <img class="card-img" src="${escapeHtml(card.image)}" alt="${escapeHtml(card.name)}">
+      <img class="card-img" src="${escapeHtml(cardImage(card))}" alt="${escapeHtml(card.name)}">
       <div class="card-info">
         <div class="card-name-row"><span class="rarity rarity-${escapeHtml(card.rarity)}">${escapeHtml(card.rarity)}</span><span class="card-name">${escapeHtml(card.name)}</span></div>
         <div class="card-score">総合評価 <span class="score-val">${scoreText(sogo)}</span></div>
