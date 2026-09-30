@@ -106,7 +106,7 @@ close(power(nine, 'x', { bestRange: 'B', rangeCount: 2, rangeRanks: { 遠: 'B', 
   assert.ok(power(moon + '<br>・[有利]この効果の効果時間<+15秒>') > power(moon));
   // 相手の<赤>技を受けた時は、体の赤技の割合を使わない
   const block = '[前半][自身青]<赤>技を受けた時、自身に次の効果<20秒><1回><br>・被ダメブロック<40%>';
-  close(power(block, 'x', { auraShare: () => 1 }), power(block, 'x', { auraShare: () => 0.2 }), 0.01);
+  close(power(block, 'x', { auraShare: () => 1, auraCount: () => 4 }), power(block, 'x', { auraShare: () => 0.2, auraCount: () => 1 }), 0.01);
 }
 
 // --- [最大値+200] は耐久値の上限そのもの。%が高くても200まで（光香む常闇の衣 II・管理者確認 2026-09-30）
