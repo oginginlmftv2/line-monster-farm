@@ -1,0 +1,8 @@
+blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critical	ability1	ability1Unlock	ability2	ability2Unlock	ability3	ability3Unlock	ability4	ability4Unlock	ability5	ability5Unlock	unique	owners	unlockedBy	note	skillId	version
+グジラ	中	1	突進	無	ちから	22	零	C+	D	G	C	丈夫さ上昇[大]												グジコーン:2,グジラ:2			
+グジラ	近	1	ひっかき	無	ちから	18		E	D	E	G													ピンクグジラ:2			
+グジラ	零	1	はら	無	ちから	15		C	D+	G	G	ライフ上昇[中]												グジラウス:2			
+グジラ	遠	2	地震	赤	ちから	25		C+	A	G	G	ちから上昇[小]												ピンクグジラ:3,オカシラ:3			
+グジラ	中	2	しゃぼんアタック	青	かしこさ	28		D	C+	A	D	かしこさ上昇[小]		疫：移動不可Lv2										グジラキング:3			
+グジラ	近	2	くしゃみ	青	かしこさ	22		E	C	B	D	ライフ上昇[大]		くしゃみ										コイノボリ:3,グジラ:3			
+グジラ	零	2	頭突き	無	ちから	24		D+	B	F	D	丈夫さ上昇[大]												レッドアーマー:3,グジコーン:3			
