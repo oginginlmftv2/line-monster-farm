@@ -82,7 +82,9 @@ function createScorer(rubric) {
         // 「最大ライフの割合で特殊ダメージカット」は一番下の段（30%以上カット）で見る
         if (/最大ライフの割合/.test(t)) return { kind: 'event', lv: C.decisive * C.damageCut * 0.7 * C.defense, decisive: true };
         if (/最大ライフ/.test(t) && /カット|軽減/.test(t)) return { kind: 'event', lv: C.decisive * C.damageCut * (1 - (v || 0) / 100) * C.defense, decisive: true };
-        if (/(?:追撃|連撃)のダメージ/.test(t)) return { kind: 'state', lv: pctToLv(v || 0) * B.followupShareOfMain / 100 * C.defense };
+        // 「受ける継続ダメージ軽減<50%>」は火傷・出血などの継続ダメージだけ。被ダメに占める割合 dotShareOfDamage で割り引く（ブギーブロック）
+        if (/継続ダメージ/.test(t)) return { kind: 'state', lv: pctToLv((v || 0) * C.dotShareOfDamage / 100) * C.defense };
+        if (/(?:追撃|連撃)(?:のダメージ|被ダメ)/.test(t)) return { kind: 'state', lv: pctToLv(v || 0) * B.followupShareOfMain / 100 * C.defense };
         if (e.unit === 'pt') return { kind: 'state', lv: pctToLv((v || 0) / B.mainDamage * 100) * C.defense };
         return { kind: 'state', lv: (e.unit === 'Lv' ? v : pctToLv(v != null ? v : 10)) * C.defense };
       }
@@ -155,7 +157,8 @@ function createScorer(rubric) {
         const numeric = (line.conditions.numeric || []).join(' ');
         let cap = C.shieldCap;
         const m1 = numeric.match(/最大耐久値(\d+)/); if (m1) cap = Number(m1[1]);
-        const m2 = numeric.match(/最大値\+(\d+)/); if (m2) cap += Number(m2[1]);
+        // [最大値+200] は耐久値の上限そのもの（どれだけ高くても200まで。管理者確認 2026-09-30）
+        const m2 = numeric.match(/最大値\+(\d+)/); if (m2) cap = Number(m2[1]);
         const dur = String(line.raw).match(/耐久値<?(\d+)>?/); if (dur) cap = Number(dur[1]);
         let amount = cap;
         if (/丈夫さ|回避|ちから|かしこさ/.test(t) && v) amount = Math.min(cap, B.statBase * v / 100);
@@ -376,6 +379,13 @@ function createScorer(rubric) {
       for (let j = i + 1; j < parsed.lines.length && parsed.lines[j].effects.length; j++) after.push(j);
       for (const j of after) randomShare.set(j, 1 / after.length);
     });
+    // 「[相手サイズ小]この能力の効果量2倍」は能力全体を (倍率-1)×条件の補正 だけ上乗せ。
+    // 「[有利]この効果の効果時間<+15秒>」は見出しの秒数に 延長×条件の補正 を足す（ブギースペル・昏き満月の祝福）
+    let amplify = 1, extendSec = 0;
+    for (const l of parsed.lines) {
+      if (l.amplify) amplify += (l.amplify - 1) * conditionFactor(l.conditions);
+      if (l.extendDuration) extendSec += l.extendDuration * conditionFactor(l.conditions);
+    }
     const effLines = parsed.lines.map((l, i) => [l, i]).filter(([l]) => l.effects.length);
     const chainLimit = new Map();
     const lastEff = effLines[effLines.length - 1];
@@ -386,9 +396,10 @@ function createScorer(rubric) {
       let line0 = chainLimit.has(lineIndex) ? { ...line0Raw, limit: chainLimit.get(lineIndex) } : line0Raw;
       // 体ごとの評価（monsterCtx.applyMatches）では、行ごとの適用条件（料理人 II の [自身黒]必中 など）が合わない行を数えない
       const lineApplies = !monsterCtx || !monsterCtx.applyMatches || !line0.apply || monsterCtx.applyMatches(line0.apply);
+      if (!line0.effects.length && (line0.amplify || line0.extendDuration)) continue;
       const hasCond = Object.keys(line0.conditions).length || line0.trigger || Object.keys(line0.skillCond).length;
       const isHeader = !line0.effects.length && (/次の効果|以下の効果|次の能力/.test(line0.raw) || hasCond);
-      if (isHeader) { ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw), blocked: !lineApplies }; continue; }
+      if (isHeader) { ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: typeof line0.duration === 'number' ? line0.duration + extendSec : line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw), blocked: !lineApplies }; continue; }
       if (ctx && ctx.blocked) continue;
       if (!lineApplies) {
         if (/次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: {}, skillCond: {}, blocked: true };
@@ -410,7 +421,10 @@ function createScorer(rubric) {
       const underGrant = ctx && ctx.grant && line0.duration == null;
       const persistentGrant = underGrant || (/付与/.test(line.raw) && line.duration == null && !/秒>/.test(line.raw));
       const sc = persistentGrant ? { ...line.skillCond, rank: undefined, type: undefined, range: undefined } : line.skillCond;
-      const factor = (randomShare.get(lineIndex) || 1) * Math.max(MOD.floor, conditionFactor(condsFor(line.effects.map(e => e.atom))) * skillCondFactor(sc, monsterCtx) * (line.trigger ? MOD.trigger[line.trigger] || 1 : 1));
+      // 内訳（scripts/ability-review-report.js が採点方法として見せる）
+      const why = { cond: conditionFactor(condsFor(line.effects.map(e => e.atom))), skill: skillCondFactor(sc, monsterCtx), trigger: line.trigger ? MOD.trigger[line.trigger] || 1 : 1, random: randomShare.get(lineIndex) || 1 };
+      why.floored = why.cond * why.skill * why.trigger < MOD.floor;
+      const factor = why.random * Math.max(MOD.floor, why.cond * why.skill * why.trigger);
       const isNext = /次の技/.test(line.raw) && !/発動技と次の技/.test(line.raw);
       const grantStacks = underGrant && typeof ctx.limit === 'number' ? ctx.limit : 1;
       const perUse = /技の発動回数に応じて/.test(line.raw);
@@ -433,7 +447,8 @@ function createScorer(rubric) {
         // ランダムで付与される必中・完全回避などは、いつ付くか選べないので確定のものより低く見る（巫女の占い II）
         const randomDecisive = randomShare.has(lineIndex) && ev.decisive ? C.randomDecisive : 1;
         const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost) * ramp * randomDecisive;
-        parts.push({ atom: e.atom, lv, penalty: !!ev.penalty, line: line.raw });
+        parts.push({ atom: e.atom, lv: ev.penalty ? lv : lv * amplify, penalty: !!ev.penalty, line: line.raw, text: e.text,
+          detail: { base: ev.lv, kind: ev.kind, qty, factor: ev.penalty ? 1 : factor, ...why, trigger: line.trigger || null, triggerMod: why.trigger, stackBoost: ev.penalty ? 1 : stackBoost, ramp, randomDecisive, amplify: ev.penalty ? 1 : amplify, conditions: line.conditions, skillCond: sc, duration: line.duration ?? null, limit: line.limit ?? null } });
       }
       if (line0.effects.length && /次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw) };
     }
@@ -442,7 +457,7 @@ function createScorer(rubric) {
     for (const p of parts) if (!p.penalty) (byAtom.get(p.atom) || byAtom.set(p.atom, []).get(p.atom)).push(p);
     for (const list of byAtom.values()) {
       list.sort((a, b) => b.lv - a.lv);
-      list.forEach((p, i) => { p.lv *= C.sameAtomDecay[Math.min(i, C.sameAtomDecay.length - 1)]; });
+      list.forEach((p, i) => { const k = C.sameAtomDecay[Math.min(i, C.sameAtomDecay.length - 1)]; p.lv *= k; if (p.detail) p.detail.decay = k; });
     }
     const total = parts.reduce((s, p) => s + p.lv, 0);
     return { abilityId: parsed.abilityId, held: false, heldGrant: hasHeldGrant, power: Math.max(0, Math.round(total * 10) / 10), parts };
