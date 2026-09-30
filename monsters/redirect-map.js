@@ -357,5 +357,6 @@ window.LMF_REDIRECT_MAP = {
   "354": "kemono/kyubi/2613.html",
   "355": "mazoku/suezo/1553.html",
   "356": "kaibutsu/ghost/3151.html",
-  "357": "kaibutsu/kijin/3027.html"
+  "357": "kaibutsu/kijin/3027.html",
+  "359": "kemono/gujira/1252.html"
 };

@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 358,
+  "count": 359,
   "monsters": [
     {
       "id": "0101",
@@ -3981,8 +3981,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1344,
-      "current": 1344,
+      "baseline": 1362,
+      "current": 1362,
       "indexable": true
     },
     {
@@ -4006,9 +4006,34 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1319,
-      "current": 1319,
+      "baseline": 1337,
+      "current": 1337,
       "indexable": true
+    },
+    {
+      "id": "1252",
+      "arrayIndex": 359,
+      "name": "オカシラ",
+      "aura": "青",
+      "mon": "獣族",
+      "mainBlood": "グジラ",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "秋限定",
+      "image": "1252.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kemono/gujira/1252.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-09-30",
+      "releasedAt": "2026-09-30",
+      "baseline": 1022,
+      "current": 1022,
+      "indexable": false
     },
     {
       "id": "1301",
