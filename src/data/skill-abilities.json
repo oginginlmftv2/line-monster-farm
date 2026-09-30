@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 178
+    "abilities": 194
   },
   "abilities": [
     {
@@ -2177,6 +2177,198 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 178,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0179",
+      "name": "連撃：ぐるぐるプレス",
+      "version": 1,
+      "baseName": "連撃：ぐるぐるプレス",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 179,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0180",
+      "name": "ぐるぐるプレス",
+      "version": 1,
+      "baseName": "ぐるぐるプレス",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・技命中時、与ダメ上昇＜+20%＞＜1回＞\n・[相手サイズ小]命中率と与ダメ上昇＜+10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 180,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0181",
+      "name": "連撃：突進つきあげ",
+      "version": 1,
+      "baseName": "連撃：突進つきあげ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 181,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0182",
+      "name": "捕捉：突進つきあげ",
+      "version": 1,
+      "baseName": "捕捉：突進つきあげ",
+      "level": null,
+      "description": "対象技命中時、命中率上昇Lv3＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 182,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0183",
+      "name": "ライフ上昇[超大]",
+      "version": 1,
+      "baseName": "ライフ上昇[超大]",
+      "level": null,
+      "description": "ライフパラ+100",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 183,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0184",
+      "name": "アイボルテージ",
+      "version": 1,
+      "baseName": "アイボルテージ",
+      "level": null,
+      "description": "対象技発動時、すべての技の消費ガッツ減少10%、さらに自身技発動ごとに10%ずつ減少＜累積40%まで＞\n次の技命中時、この能力を解除＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 184,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0185",
+      "name": "クイックボルテージ",
+      "version": 1,
+      "baseName": "クイックボルテージ",
+      "level": null,
+      "description": "対象技発動時、すべての技の最終命中率上昇5%、さらに自身技発動ごとに5%ずつ上昇＜累積20%まで＞\n次の技命中時、この能力を解除＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 185,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0186",
+      "name": "ボディープレス",
+      "version": 1,
+      "baseName": "ボディープレス",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・技命中時、与ダメ上昇＜+25%＞＜1回＞\n・[相手サイズ小]命中率と与ダメ上昇＜+15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 186,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0187",
+      "name": "海の怒り",
+      "version": 1,
+      "baseName": "海の怒り",
+      "level": null,
+      "description": "対象技命中時、ちからステータスの20%を攻撃ステータスに加算＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 187,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0188",
+      "name": "連撃：大津波",
+      "version": 1,
+      "baseName": "連撃：大津波",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 188,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0189",
+      "name": "連撃：ウェーブプレス",
+      "version": 1,
+      "baseName": "連撃：ウェーブプレス",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜50%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 189,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0190",
+      "name": "ウェーブプレス",
+      "version": 1,
+      "baseName": "ウェーブプレス",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・ライフステータス＜+300＞\n・残りライフが少ないほど攻撃ステータス上昇＜最大+30%＞\n・対象技発動時、有利オーラに変換＜2回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 190,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0191",
+      "name": "連撃：つきあげ",
+      "version": 1,
+      "baseName": "連撃：つきあげ",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 191,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0192",
+      "name": "つきあげ",
+      "version": 1,
+      "baseName": "つきあげ",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・与ダメ上昇＜+20%＞\n・[相手サイズ小]与ダメ上昇＜+10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 192,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0193",
+      "name": "波流：キングウェーブ",
+      "version": 1,
+      "baseName": "波流：キングウェーブ",
+      "level": null,
+      "description": "対象技命中時、全ての技の命中ステータスを上昇Lv5、ガッツ消費量減少20%＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 193,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0194",
+      "name": "渦流：キングウェーブ",
+      "version": 1,
+      "baseName": "渦流：キングウェーブ",
+      "level": null,
+      "description": "対象技命中時、すべての技にかしこさステータスの50%を攻撃ステータス加算、さらに自身技命中毎に10%ずつ減少＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 194,
       "status": "verified"
     }
   ]
