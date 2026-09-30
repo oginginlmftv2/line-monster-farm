@@ -67,9 +67,11 @@ assert.ok(power('技を回避した回数に応じて次の効果を付与<各1�
 // ライフ条件はしきい値で分ける
 assert.ok(power('ライフ10%以下で、完全回避Lv2<1回>') < power('ライフ30%以下で、完全回避Lv2<1回>'));
 
-// --- 体ごと：技の色の割合、間合い適性（開始時の値）から届く見込み、B以上の間合いの数
+// --- 体ごと：R4以上の該当オーラ技の数（4つで0.8）、間合い適性（開始時の値）から届く見込み、B以上の間合いの数
 const auraSkill = '<緑>技発動時、完全回避Lv2<1回>';
-assert.ok(power(auraSkill, 'x', { auraShare: () => 0.2 }) < power(auraSkill, 'x', { auraShare: () => 0.8 }));
+assert.ok(power(auraSkill, 'x', { auraCount: () => 1 }) < power(auraSkill, 'x', { auraCount: () => 4 }));
+close(power(auraSkill, 'x', { auraCount: () => 4 }), power(auraSkill, 'x', { auraCount: () => 6 }), 0.01); // 4つで頭打ち
+close(power(auraSkill, 'x', { auraCount: () => 4 }) / power(auraSkill), 0.8 / rubric.modifiers.skillCond.aura, 0.05);
 const apt = '適性S以上の間合いで技を受けた時、最大ライフ30%以上の被ダメカット';
 close(power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), power(apt, 'x', { bestRange: 'B', rangeCount: 2 }), 0.01); // C も B と同じく届く（2026-09-27）
 assert.ok(power(apt, 'x', { bestRange: 'D', rangeCount: 2 }) < power(apt, 'x', { bestRange: 'C', rangeCount: 2 }), 'Dは届きにくい');

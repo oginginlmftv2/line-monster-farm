@@ -6,8 +6,8 @@
  *   - 載せるのはアシストのイベントで獲得できる能力（source＝イベント）。閃き・EXトレ・状態変化は載せない
  *   - その体が使える能力だけ：適用条件はオーラ・モン類・主血統（サブ血統を見る能力は無い）。能力全体の条件で判定したうえで、
  *     行ごとの条件（料理人 II の [自身黒]必中 など）が合わない行は点に入れない。
- *     技条件は技DBがあれば実際の技の色・種類・間合い、無ければオーラ一致で代用
- *   - 点はその体に合わせて出し直す（技の色の割合）。基礎データの間合い適性は見ない（2026-09-28。開始時の値は上げられるため）
+ *     技条件は技DBがあれば実際の技の色・種類・間合い、無ければオーラ一致で代用。技の色はR4以上の技だけを見る
+ *   - 点はその体に合わせて出し直す（R4以上の該当オーラ技の数）。基礎データの間合い適性は見ない（2026-09-28。開始時の値は上げられるため）
  *   - 点の上位 LIMIT 件を選び、番号は振らずに発売が新しい順に並べる（点と順位はページに出さない）
  */
 
@@ -27,13 +27,17 @@ function applyMatches(apply, monster) {
 }
 
 /** 技条件（＜緑＞技・ちから技・零距離技）。技DBがあれば実際の技、無ければオーラ一致で代用 */
-function skillMatches(parsed, monster, ownSkills) {
+// 技の色の条件で数えるのはR4以上の技だけ（デッキに入れる強い技。R3以下は数えない。2026-09-30・管理者判断）
+const AURA_MIN_RANK = 4;
+const sameAura = (skill, colors) => colors.includes(skill.aura) || (colors.includes('無') && !skill.aura);
+
+function skillMatches(parsed, monster, ownSkills, minRank = AURA_MIN_RANK) {
   const first = parsed.lines.find(line => line.effects.length || /次の効果|以下の効果/.test(line.raw)) || parsed.lines[0];
   const cond = first ? first.skillCond : {};
   if (cond.aura) {
     const colors = cond.aura.split('または');
     const ok = ownSkills.length
-      ? ownSkills.some(skill => colors.includes(skill.aura) || (colors.includes('無') && !skill.aura))
+      ? ownSkills.some(skill => (skill.rank || 0) >= minRank && sameAura(skill, colors))
       : colors.includes(monster.aura) || colors.includes('無');
     if (!ok) return false;
   }
@@ -48,16 +52,16 @@ function skillMatches(parsed, monster, ownSkills) {
 const isStateChange = parsed => parsed.lines.some(line => (line.conditions.state || []).includes('状態変化'));
 
 /**
- * ability-score.js の scoreAbility に渡す、その体の事情（技の色の割合だけ）。
+ * ability-score.js の scoreAbility に渡す、その体の事情（R4以上の該当オーラ技の数だけ）。
  * 基礎データの間合い適性は選ぶときに見ない（2026-09-28・管理者判断）。開始時の適性は秘伝・育成の書・育成で上げられるので、
  * 条件に対して低いことはページの文（src/lib/ability-fit-note.js）で「上げよう」と書く
  */
-function monsterContext(ownSkills) {
+function monsterContext(ownSkills, minRank = AURA_MIN_RANK) {
   const ctx = {};
   if (ownSkills.length) {
-    ctx.auraShare = colors => {
+    ctx.auraCount = colors => {
       const list = colors.split('または');
-      return ownSkills.filter(skill => list.includes(skill.aura) || (list.includes('無') && !skill.aura)).length / ownSkills.length;
+      return ownSkills.filter(skill => (skill.rank || 0) >= minRank && sameAura(skill, list)).length;
     };
   }
   return ctx;
@@ -72,7 +76,8 @@ function monsterContext(ownSkills) {
  * 基礎データ（basicsEntry）は受け取っても選び方には使わない
  */
 function recommendAbilities({ monster, ownSkills, scoreRows, abilityById, cardById, scorer, parser, limit = LIMIT }) {
-  const ctx = monsterContext(ownSkills);
+  const minRank = scorer.auraMinRank || AURA_MIN_RANK;
+  const ctx = monsterContext(ownSkills, minRank);
   const seen = new Set();
   const candidates = [];
   for (const row of scoreRows) {
@@ -84,7 +89,7 @@ function recommendAbilities({ monster, ownSkills, scoreRows, abilityById, cardBy
     if (isStateChange(parsed)) continue;
     // 能力全体の適用条件（先頭に出る条件）で使えるかを決め、そのうえで行ごとの条件が合わない行は点に入れない
     // （料理人 II：怪物なら使えるが、必中の行は自身黒だけ）
-    if (!applyMatches(parsed.apply, monster) || !skillMatches(parsed, monster, ownSkills)) continue;
+    if (!applyMatches(parsed.apply, monster) || !skillMatches(parsed, monster, ownSkills, minRank)) continue;
     const power = scorer.scoreAbility(parsed, { ...ctx, applyMatches: apply => applyMatches(apply, monster) }).power;
     if (!(power > 0)) continue;
     const card = row.cardId ? cardById.get(row.cardId) || null : null;

@@ -299,8 +299,8 @@ function createScorer(rubric) {
   function skillCondFactor(sc, ctx) {
     const S = MOD.skillCond;
     let f = 1;
-    // 技DBのある体は、その色の技が技全体に占める割合を使う（無い体は平均の0.5）
-    if (sc.aura) f *= ctx && ctx.auraShare ? Math.max(0.2, ctx.auraShare(sc.aura)) : S.aura;
+    // 技DBのある体は、R4以上の該当オーラ技の数で見る（4つで0.8。無い体は平均の0.5）
+    if (sc.aura) f *= ctx && ctx.auraCount ? Math.min(S.auraCount.max, ctx.auraCount(sc.aura) * S.auraCount.perSkill) : S.aura;
     if (sc.stance) {
       const s = String(sc.stance);
       f *= /なし/.test(s) ? S.stanceNone : /不利以外/.test(s) ? MOD.stance['不利以外'] : /有利/.test(s) ? S.stanceAdvantage : S.stanceAura;
@@ -448,7 +448,7 @@ function createScorer(rubric) {
     return { abilityId: parsed.abilityId, held: false, heldGrant: hasHeldGrant, power: Math.max(0, Math.round(total * 10) / 10), parts };
   }
 
-  return { scoreAbility, effectValue, conditionFactor, skillCondFactor, confusionRate, statToLv, hitPpToLv };
+  return { auraMinRank: MOD.skillCond.auraCount.minRank, scoreAbility, effectValue, conditionFactor, skillCondFactor, confusionRate, statToLv, hitPpToLv };
 }
 
 function mergeLists(a, b) {

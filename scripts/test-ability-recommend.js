@@ -67,8 +67,16 @@ assert.strictEqual(applyMatches(parser.parseAbility({ abilityId: 'x', name: 'x',
 assert.strictEqual(applyMatches(parser.parseAbility({ abilityId: 'x', name: 'x', description: '[無機][自身赤]完全回避Lv2<1回>' }).apply, tamamo), false);
 
 // --- 技DBがあれば技の色で判定（オーラが赤でも緑の技を持っていれば緑技の条件を満たす）
-const withGreen = recommendAbilities({ monster: tamamo, ownSkills: [{ aura: '緑', skillType: 'ちから', range: '近' }], basicsEntry: null, ...base, limit: 20 });
-assert.ok(withGreen.some(item => item.abilityId === greenSkill), '緑の技を持つ体には緑技の能力が載る');
+const withGreen = recommendAbilities({ monster: tamamo, ownSkills: [{ aura: '緑', skillType: 'ちから', range: '近', rank: 4 }], basicsEntry: null, ...base, limit: 20 });
+assert.ok(withGreen.some(item => item.abilityId === greenSkill), 'R4以上の緑の技を持つ体には緑技の能力が載る');
+// R3以下の緑技しか無ければ数えない（2026-09-30）
+const lowGreen = recommendAbilities({ monster: tamamo, ownSkills: [{ aura: '緑', skillType: 'ちから', range: '近', rank: 3 }], basicsEntry: null, ...base, limit: 20 });
+assert.ok(!lowGreen.some(item => item.abilityId === greenSkill), 'R3以下の緑技だけでは載らない');
+{
+  const { monsterContext: ctxOf } = require('../src/lib/ability-recommend');
+  const own = [{ aura: '青', rank: 4 }, { aura: '青', rank: 6 }, { aura: '青', rank: 3 }, { aura: '赤', rank: 5 }, { rank: 4 }];
+  assert.deepStrictEqual([ctxOf(own).auraCount('青'), ctxOf(own).auraCount('青または無'), ctxOf(own).auraCount('緑')], [2, 3, 0]);
+}
 
 // --- 適用条件は行ごと（料理人 II：怪物なら使えるが、必中の行は自身黒だけ）
 {

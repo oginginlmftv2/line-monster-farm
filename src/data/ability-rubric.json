@@ -134,6 +134,12 @@
     },
     "skillCond": {
       "aura": 0.5,
+      "auraCount": {
+        "note": "技DBのある体の<色>技の条件。R4以上（minRank）の該当オーラ技の数×perSkill、max で頭打ち。デッキは最低4枚なので4つで0.8。R3以下は数えない（2026-09-30・管理者判断）。0なら候補から外す",
+        "minRank": 4,
+        "perSkill": 0.2,
+        "max": 0.8
+      },
       "stanceAura": 0.7,
       "stanceNone": 0.3,
       "stanceAdvantage": 0.3,
