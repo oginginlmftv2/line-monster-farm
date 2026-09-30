@@ -93,14 +93,14 @@ var ASST_AUDIT_CATEGORIES=[
   ['card_match_candidate','カード対応候補',true],['unlinked_candidate','未紐付け候補',true],
   ['ID_REUSE_SUSPECTED','ID再利用疑い',true],['existingContentDifferences','既存内容差分',true],
   ['representationOnly','表記違い',false],['duplicate_local_content_match','重複内容一致',false],
-  ['missing_upstream_observation','外部欠落観測',false]
+  ['local_card_name_match','同じカードに同名あり',false],['missing_upstream_observation','外部欠落観測',false]
 ];
 var ASST_AUDIT_TABS=[
   ['card_match_candidate',['card_match_candidate'],['cardMatchCandidates']],
   ['unlinked_candidate',['unlinked_candidate'],['unlinkedCandidates']],
   ['ID_REUSE_SUSPECTED',['ID_REUSE_SUSPECTED'],['idReuseSuspected']],
   ['existingContentDifferences',['existingContentDifferences'],['existingContentDifferences']],
-  ['other',['representationOnly','duplicate_local_content_match','missing_upstream_observation'],['representationOnly','duplicateLocalContentMatches','missingUpstreamObservations']]
+  ['other',['representationOnly','duplicate_local_content_match','local_card_name_match','missing_upstream_observation'],['representationOnly','duplicateLocalContentMatches','localCardNameMatches','missingUpstreamObservations']]
 ];
 function asstOpenExternalAudit(){
   ASST.audit.active=true;document.body.classList.add('editing');asstRenderExternalAudit();
@@ -268,7 +268,7 @@ function asstAuditOriginal(candidate){var value=candidate.externalSnapshot||{};r
 function asstAuditNfkc(value){if(Array.isArray(value))return value.map(function(item){return String(item).normalize('NFKC');});return String(value==null?'':value).normalize('NFKC');}
 function asstAuditDisplayValue(value){return Array.isArray(value)?(value.length?value.join(' / '):'（なし）'):(value===''?'（空欄）':value);}
 function asstAuditReadOnly(label,value){return '<div class="asstField"><label>'+esc(label)+'</label><div class="readonly'+(asstAuditLongValue(label)?' asst-audit-long':'')+'">'+esc(asstAuditDisplayValue(value))+'</div></div>';}
-function asstAuditComparisonKind(candidate){if(candidate.classification==='ID_REUSE_SUSPECTED')return 'ID再利用疑い';if(candidate.classification==='duplicate_local_content_match')return candidate.comparison==='exact'?'完全一致（複数）':'NFKC一致（複数）';if(candidate.classification==='representationOnly')return 'NFKC一致';if(candidate.classification==='existingContentDifferences')return '同一ID・内容差分';return '新規候補';}
+function asstAuditComparisonKind(candidate){if(candidate.classification==='ID_REUSE_SUSPECTED')return 'ID再利用疑い';if(candidate.classification==='duplicate_local_content_match')return candidate.comparison==='exact'?'完全一致（複数）':'NFKC一致（複数）';if(candidate.classification==='representationOnly')return 'NFKC一致';if(candidate.classification==='existingContentDifferences')return '同一ID・内容差分';if(candidate.classification==='local_card_name_match')return '同じカードに同名の能力あり（新規にしない）';return '新規候補';}
 function asstRenderAuditComparison(candidate){
   var same=candidate.sameIdComparison,html='<h3>比較情報</h3><div class="grid">'+asstAuditReadOnly('比較区分',asstAuditComparisonKind(candidate))+asstAuditReadOnly('完全一致した既存abilityId',candidate.exactMatchAbilityIds||[])+asstAuditReadOnly('NFKC一致した既存abilityId',candidate.nfkcMatchAbilityIds||[])+asstAuditReadOnly('同一legacyId比較のabilityId',same?same.abilityId:'—')+asstAuditReadOnly('changedFields',same?same.changedFields:(candidate.changedFields||[]))+asstAuditReadOnly('normalizedChangedFields',same?same.normalizedChangedFields:[])+'</div>';
   if(candidate.externalSnapshot){var original=asstAuditOriginal(candidate);html+='<h3>比較用NFKC結果</h3><div class="grid">';['sourceName','name','description','source','rarity','tags'].forEach(function(field){html+=asstAuditReadOnly(field,asstAuditNfkc(original[field]));});html+='</div>';}
@@ -623,7 +623,7 @@ function asstOpenCard(cardId,openedMessage){
 function asstTabButton(key,label,count){ return '<button class="tab'+(ASST.tab===key?' active':'')+'" data-tab="'+key+'">'+label+(count==null?'':' ('+count+')')+'</button>'; }
 function asstEditorTabs(){
   var d=ASST.detail;
-  return '<div class="tabs">'+asstTabButton('card','カード')+asstTabButton('effects','効果',d?d.effects.length:null)+asstTabButton('ocr','効果OCR')+asstTabButton('abilities','能力',d?d.abilities.length:null)+'</div>';
+  return '<div class="tabs">'+asstTabButton('card','カード')+asstTabButton('effects','効果',d?d.effects.length:null)+asstTabButton('ocr','効果OCR')+asstTabButton('abilities','能力',d?d.abilities.length:null)+asstTabButton('abilityCapture','能力取り込み')+'</div>';
 }
 function asstBindEditorTabs(){el('asst_editor').querySelectorAll('[data-tab]').forEach(function(button){button.onclick=function(){if(!ASST.detail)return;ASST.tab=button.dataset.tab;asstRenderEditor();};});}
 function asstRenderEditor(){
@@ -635,12 +635,14 @@ function asstRenderEditor(){
   if(ASST.tab==='effects')html+=asstRenderEffectsForm(d);
   if(ASST.tab==='ocr')html+=asstRenderEffectOcr(d);
   if(ASST.tab==='abilities')html+=asstRenderAbilities(d);
+  if(ASST.tab==='abilityCapture')html+=asstRenderAbilityCapture(d);
   el('asst_editor').innerHTML=html;
   el('asst_btnBackCard').onclick=function(){ document.body.classList.remove('editing'); };
   asstBindEditorTabs();
   if(el('asst_btnSaveCard'))asstBindCardForm();
   if(el('asst_btnSaveEffects'))asstBindEffectsForm();
   if(el('asst_ocrFiles'))asstBindEffectOcr();
+  if(el('asst_capturePasteText'))asstBindAbilityCapture();
   asstBindAbilityRows();
 }
 function asstOptionList(values,selected,blank){ return (blank?'<option value="">—</option>':'')+values.map(function(value){ return '<option value="'+esc(value)+'"'+(value===selected?' selected':'')+'>'+esc(cmsLabel(value))+'</option>'; }).join(''); }

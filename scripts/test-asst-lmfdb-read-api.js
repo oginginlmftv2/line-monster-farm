@@ -20,7 +20,8 @@ const { renderLmfdbCardMap } = require('./lmfdb-card-map');
 const CARDS_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-cards.json'), 'utf8'));
 const ABILITIES_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/assist-abilities.json'), 'utf8'));
 const CARD_MAP_DOCUMENT = JSON.parse(fs.readFileSync(path.join(REPO, 'src/data/lmfdb-card-map.json'), 'utf8'));
-const GAS_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
+const GAS_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8')
+  + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/26_ability_capture.gs'), 'utf8');
 
 function digest(value) {
   return crypto.createHash('sha256').update(value).digest('hex');

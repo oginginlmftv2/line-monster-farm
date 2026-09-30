@@ -11,6 +11,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const os = require('os');
 const path = require('path');
+const { abilityNameKey, sourceNameKey } = require('../src/lib/ability-name-key');
 
 const REPO = path.resolve(__dirname, '..');
 const DEFAULT_REMOTE_REF = 'main';
@@ -392,6 +393,16 @@ function consecutiveRanges(ids) {
   return ranges;
 }
 
+// 外部候補と同じカード・同じ能力名（比較用キー）のローカル能力。カードは対応表のcardId（resolved）か、
+// 能力のsourceName（末尾の括弧補足を除く）で見る。GASの asstCaptureAuditNameMatches_ と同じ規則。
+function localCardNameMatches(external, cardIdCandidate, localAbilities) {
+  const nameKey = abilityNameKey(external.name);
+  const cardKey = sourceNameKey(external.card);
+  return localAbilities.filter(ability => abilityNameKey(ability.name) === nameKey
+    && ((cardIdCandidate && ability.linkStatus === 'resolved' && ability.cardId === cardIdCandidate)
+      || sourceNameKey(ability.sourceName) === cardKey));
+}
+
 function emptyCounts(externalCount, localCount, ids, duplicateCount) {
   return {
     external: externalCount,
@@ -408,6 +419,7 @@ function emptyCounts(externalCount, localCount, ids, duplicateCount) {
     cardMatchCandidates: 0,
     unlinkedCandidates: 0,
     duplicateLocalContentMatches: 0,
+    localCardNameMatches: 0,
   };
 }
 
@@ -467,6 +479,7 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
   const idReuseSuspected = [];
   const newCandidates = [];
   const duplicateLocalContentMatches = [];
+  const localCardNameMatchList = [];
 
   for (const external of abilities) {
     const externalComparable = exactComparableFromExternal(external);
@@ -541,6 +554,23 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
 
     const cardIdCandidate = localValidation.mappingByKey
       .get(mappingKey(external.card, external.rarity)) || null;
+    // スクショ取り込み（docs/ability-capture-design.md）で同じカードに同名の能力を登録済みなら、
+    // 本文が違っても新規候補にしない（スクショが正。二重登録を防ぐ）。
+    const nameMatches = localCardNameMatches(external, cardIdCandidate, localAbilities);
+    if (nameMatches.length) {
+      localCardNameMatchList.push({
+        classification: 'local_card_name_match',
+        actionable: false,
+        priority: 'low',
+        externalId: external.id,
+        name: external.name,
+        sourceName: external.card,
+        cardIdCandidate,
+        localAbilityIds: nameMatches.map(ability => ability.abilityId),
+        fields: differingFields(exactComparableFromLocal(nameMatches[0]), externalComparable),
+      });
+      continue;
+    }
     newCandidates.push({
       classification: cardIdCandidate ? 'card_match_candidate' : 'unlinked_candidate',
       externalId: external.id,
@@ -606,6 +636,7 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
       cardMatchCandidates,
       unlinkedCandidates,
       duplicateLocalContentMatches: duplicateLocalContentMatches.length,
+      localCardNameMatches: localCardNameMatchList.length,
     },
     warnings,
     details: {
@@ -622,6 +653,7 @@ function analyze(externalDocument, local, input, contentHash, options = {}) {
         ? duplicateLocalContentMatches : [],
       duplicateLocalContentDetailsHidden: !options.showDuplicateDetails
         && duplicateLocalContentMatches.length > 0,
+      localCardNameMatches: localCardNameMatchList,
     },
   };
 }
@@ -651,6 +683,7 @@ function formatReport(report) {
   lines.push(`  未紐付け候補: ${report.counts.unlinkedCandidates}`);
   lines.push(`外部欠落観測（削除候補ではない）: ${report.counts.missingUpstreamObservations}`);
   lines.push(`重複内容一致（対応不要）: ${report.counts.duplicateLocalContentMatches}件`);
+  lines.push(`同じカードに同名の能力あり（新規候補にしない）: ${report.counts.localCardNameMatches}件`);
   lines.push(`source内訳: ${Object.entries(report.breakdown.source).map(([key, value]) => `${key} ${value}`).join(' / ') || 'なし'}`);
   lines.push(`rarity内訳: ${Object.entries(report.breakdown.rarity).map(([key, value]) => `${key} ${value}`).join(' / ') || 'なし'}`);
   lines.push(`BLOCK理由: ${formatCodes(report.blockReasons)}`);
@@ -717,6 +750,7 @@ module.exports = {
   analyze,
   formatReport,
   loadExternal,
+  localCardNameMatches,
   parseArgs,
   run,
   sha256,

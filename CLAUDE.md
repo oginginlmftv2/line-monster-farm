@@ -220,6 +220,15 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 「候補JSONを貼り付け」へ貼って保存します。DBの正はCMSのシートなので、
 `src/data/assist-effects.json`を直接編集しません。CMSのVision OCRは精度が低いため補助扱いです。
 
+### アシスト能力の登録もClaudeのスキルで読む
+
+能力（イベント能力・閃き能力）のスクショは、スキル `assist-ability-capture` で読み取り、
+`scripts/check-assist-ability-payload.js --emit` が出したJSONをCMSのカード詳細「能力取り込み」タブへ貼って保存します。
+正はスクショで、lMfDB由来の既存能力とは「カード＋能力名」で照合します。同名の未紐付け能力があれば新規を作らず紐付け、
+新規はdraftで入るので、能力タブで確認済みにしてから公開します。イベント詳細の画面にはカード名が出ないため、
+スクショと一緒にカード名を伝えてください。`src/data/assist-abilities.json`は直接編集しません。
+設計は`docs/ability-capture-design.md`です。
+
 モンスター編成で新カードを使う場合は、先に`cards/cards-data.js`へカードIDを登録します。
 未登録IDは`build.js`の警告に出るため0件にしてください。
 

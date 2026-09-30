@@ -7,6 +7,7 @@
     "22_assist_status.gs",
     "23_assist_hidden.gs",
     "25_lmfdb_write.gs",
+    "26_ability_capture.gs",
     "30_publish.gs",
     "40_setup.gs",
     "50_gacha.gs",
@@ -14,6 +15,7 @@
     "ui_common.html",
     "ui_monster.html",
     "ui_assist.html",
+    "ui_ability_capture.html",
     "ui_gacha.html",
     "ui_publish.html",
     "README.md"

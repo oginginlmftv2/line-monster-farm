@@ -11,7 +11,8 @@ const vm = require('vm');
 const REPO = path.resolve(__dirname, '..');
 const SHA = 'a'.repeat(40);
 const NOW = '2026-08-28T12:34:56+09:00';
-const ASSIST_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8');
+const ASSIST_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/20_assist.gs'), 'utf8') + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/23_assist_hidden.gs'), 'utf8')
+  + '\n' + fs.readFileSync(path.join(REPO, '_cms/gas/26_ability_capture.gs'), 'utf8');
 const WRITE_SOURCE = fs.readFileSync(path.join(REPO, '_cms/gas/25_lmfdb_write.gs'), 'utf8');
 const { buildCardArtifact } = require('./build-assist-pages');
 

@@ -1,0 +1,69 @@
+<script>
+// アシスト能力のスクショ取り込み（カード詳細の「能力取り込み」タブ）。設計は docs/ability-capture-design.md。
+// Claudeがスクショから起こし scripts/check-assist-ability-payload.js --emit で検査したJSONを貼り、
+// サーバーで判定し直した結果（api_asstPreviewAbilityCapture）を見てから保存（api_asstApplyAbilityCapture）する。
+// 貼り付け内容と判定はメモリだけに置き、カードを開き直すと消える。
+var ASST_CAPTURE_LABELS={known:'登録済み',known_diff:'登録済み（本文が違う）',link:'既存の未紐付け能力を紐付け',create:'新規（下書きで追加）',link_ambiguous:'紐付け候補が複数',invalid_link:'紐付け先が不正'};
+function asstCaptureState(){if(!ASST.capture||ASST.capture.cardId!==ASST.selectedId)ASST.capture={cardId:ASST.selectedId,payload:null,preview:null,text:''};return ASST.capture;}
+function asstCaptureParse(text,cardId){
+  var payload;try{payload=JSON.parse(text);}catch(error){throw new Error('JSONとして読めません: '+error.message);}
+  if(!payload||typeof payload!=='object'||Array.isArray(payload))throw new Error('JSONはオブジェクトです。');
+  if(payload.schemaVersion!==1)throw new Error('schemaVersionが1ではありません。check-assist-ability-payload.js --emit の出力を貼ってください。');
+  if(payload.cardId!==cardId)throw new Error('JSONのcardId（'+payload.cardId+'）が表示中のカード（'+cardId+'）と違います。');
+  if(!Array.isArray(payload.abilities)||!payload.abilities.length)throw new Error('abilitiesが空です。');
+  payload.abilities.forEach(function(item,index){if(!item||!ASST_CAPTURE_LABELS[item.action])throw new Error((index+1)+'件目のactionが不正です。検査を通したJSONを貼ってください。');});
+  return payload;
+}
+function asstCaptureCounts(results){var counts={known:0,known_diff:0,link:0,create:0};results.forEach(function(result){if(counts[result.requestedAction]!==undefined)counts[result.requestedAction]++;});return counts;}
+function asstRenderCaptureResult(result){
+  var existing=result.existing,diff=existing&&result.action!=='known'&&existing.description;
+  var item=ASST.capture.payload.abilities[result.index]||{};
+  return '<div class="ability-item'+(result.ok?'':' draft')+'"><div><strong>'+esc(result.index+1)+'. '+esc(result.name)+'</strong>'+
+    '<div class="muted">'+esc(ASST_CAPTURE_LABELS[result.action]||result.action)+(result.abilityId?' / '+esc(result.abilityId):'')+
+    (existing?' / 既存: '+esc(existing.sourceName)+' '+esc(cmsLabel(existing.linkStatus))+' '+esc(cmsLabel(existing.status))+(existing.legacyId!==null&&existing.legacyId!==undefined?' / 移行データ（本文ロック）':''):'')+'</div>'+
+    (result.ok?'':'<div class="message err">'+esc(result.reason)+'</div>')+
+    (diff?'<div class="muted">既存の本文: '+esc(existing.description)+'</div><div class="muted">今回の本文: '+esc(item.description)+'</div>':'')+
+    (result.action==='create'?'<div class="muted">本文: '+esc(item.description)+' / '+esc(item.source)+(item.tags&&item.tags.length?' / タグ: '+esc(item.tags.join('、')):'')+'</div>':'')+
+    '</div></div>';
+}
+function asstRenderAbilityCapture(d){
+  var state=asstCaptureState(),preview=state.preview;
+  var html='<p class="muted">Claudeのスキル assist-ability-capture でスクショを読み、check-assist-ability-payload.js --emit が出したJSONを貼ります。「判定を確認」はシートを変えません。'+
+    '保存すると、新規の能力は下書き（draft）で追加され、未紐付けの既存能力はこのカードへ紐付けます。既存能力の本文と状態は変えません。本文が違う登録済み能力は、能力タブの「編集」で直してください。</p>'+
+    '<fieldset><legend>読取JSONを貼り付け（Claude読取）</legend><div class="asstField wide"><textarea id="asst_capturePasteText" rows="8" placeholder=\'{"schemaVersion":1,"cardId":"'+esc(ASST.selectedId)+'","abilities":[...]}\'>'+esc(state.text)+'</textarea></div>'+
+    '<p><button type="button" id="asst_btnCapturePreview"'+(APP_LOCAL_PREVIEW?' disabled':'')+'>判定を確認（読み取りのみ）</button> <span class="muted">判定はこの時点のシートで計算し直します</span></p></fieldset>';
+  if(preview){
+    var counts=asstCaptureCounts(preview.results),writes=counts.link+counts.create;
+    html+='<h3>判定（'+esc(preview.card.name)+' / '+esc(preview.card.rarity)+'）</h3><p class="muted">新規 '+esc(counts.create)+'件 / 紐付け '+esc(counts.link)+'件 / 登録済み '+esc(counts.known)+'件 / 登録済み・本文差分 '+esc(counts.known_diff)+'件</p>'+
+      '<div class="ability-list">'+preview.results.map(asstRenderCaptureResult).join('')+'</div>';
+    if(!preview.ok)html+='<p class="message err">判定が貼り付け時と食い違う能力があります。スキルで検査をやり直したJSONを貼ってください。</p>';
+    html+='<div class="actions"><label><input type="checkbox" id="asst_captureConfirmed"> 原画像と全件を照合した</label>'+
+      '<button type="button" class="primary" id="asst_btnCaptureApply"'+(preview.ok&&writes?'':' disabled')+'>新規 '+esc(counts.create)+'件・紐付け '+esc(counts.link)+'件を保存</button>'+
+      '<button type="button" id="asst_btnCaptureDiscard">破棄</button></div>';
+  }
+  return html;
+}
+function asstPreviewAbilityCapture(){
+  var state=asstCaptureState();
+  try{state.text=el('asst_capturePasteText').value.trim();if(!state.text)throw new Error('JSONを貼り付けてください。');state.payload=asstCaptureParse(state.text,ASST.selectedId);state.preview=null;}
+  catch(error){show(error.message,true);return;}
+  call('api_asstPreviewAbilityCapture',[state.payload],function(result){state.preview=result;asstRenderEditor();show(result.ok?'判定しました。内容を確認して保存してください。':'判定が食い違う能力があります。',!result.ok);});
+}
+function asstApplyAbilityCapture(){
+  var state=asstCaptureState(),preview=state.preview;
+  if(!preview||!preview.ok)return;
+  if(!el('asst_captureConfirmed').checked){show('原画像と全件を照合し、確認チェックを入れてください。',true);return;}
+  var counts=asstCaptureCounts(preview.results);
+  if(!confirm('能力を保存します。\n\n新規 '+counts.create+'件（下書きで追加）\n紐付け '+counts.link+'件（未紐付けの既存能力をこのカードへ）\n\nサイトにはまだ公開されません。よろしいですか？'))return;
+  call('api_asstApplyAbilityCapture',[state.payload],function(result){
+    ASST.capture=null;
+    asstOpenCard(ASST.selectedId,'保存しました。新規 '+result.created.length+'件（下書き）/ 紐付け '+result.linked.length+'件。能力タブで確認し、確認済み（verified）にしてから公開してください。');
+    ASST.tab='abilities';
+  });
+}
+function asstBindAbilityCapture(){
+  el('asst_btnCapturePreview').onclick=asstPreviewAbilityCapture;
+  if(el('asst_btnCaptureApply'))el('asst_btnCaptureApply').onclick=asstApplyAbilityCapture;
+  if(el('asst_btnCaptureDiscard'))el('asst_btnCaptureDiscard').onclick=function(){if(!confirm('貼り付けたJSONと判定を破棄しますか？'))return;ASST.capture=null;asstRenderEditor();};
+}
+</script>
