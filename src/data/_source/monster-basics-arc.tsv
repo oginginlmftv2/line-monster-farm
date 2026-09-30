@@ -5,3 +5,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ハニエル	-5	0	20	10	0	-5	A	C	晩成	ヨイ	ふつう	D	C	C	B	F	E	B	D	B	2026-09-28
 ディアブロ	-5	5	15	10	5	0	A	A	早熟	ワル	ふつう	E	B	B	C	E	B	D	B	D	2026-09-28
 ミカエル	10	-5	15	-5	10	-5	A	B	早熟	ヨイ	ふつう	C	E	C	D	C	E	B	D	B	2026-09-28
+ヴァンパイア	10	-5	10	5	0	0	A	C	晩成	ややワル	ふつう	E	C	D	C	C	B	E	C	C	2026-09-30

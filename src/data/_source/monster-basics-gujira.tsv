@@ -6,3 +6,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ピンクグジラ	-5	15	10	-10	10	0	D	E	早熟	ややワル	大きい	F	D	C	F	B	C	D	D	C	2026-09-28
 グジラキング	15	10	-5	0	-10	10	C	C	晩成	ワル	大きい	C	F	B	D	C	B	B	E	D	2026-09-28
 グジラウス	5	15	0	-5	0	5	D	E	晩成	ヨイ	大きい	D	C	C	C	E	C	B	E	C	2026-09-28
+オカシラ	20	15	-10	-5	-5	5	D	D	晩成	ややヨイ	大きい	G	D	C	C	B	D	D	C	B	2026-09-30
