@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 170
+    "abilities": 174
   },
   "abilities": [
     {
@@ -2079,6 +2079,56 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 170,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0171",
+      "name": "連撃：黎明よ終焉を照らせ",
+      "version": 1,
+      "baseName": "連撃：黎明よ終焉を照らせ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 171,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0172",
+      "name": "黎明よ終焉を照らせ",
+      "version": 1,
+      "baseName": "黎明よ終焉を照らせ",
+      "level": null,
+      "description": "バトル中、次の効果\n・対象技発動時、[業]Lvを＜3＞上昇\n・[業]Lv1毎にガッツ回復速度上昇＜+5%＞＜最大+50%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 172,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0173",
+      "name": "ファー・エクステンド",
+      "version": 1,
+      "baseName": "ファー・エクステンド",
+      "level": null,
+      "description": "バトル中、[遠距離]適性に応じて、自身のすべての遠距離技に次の効果\n・B以上：残り時間が少ないほど与ダメ上昇[最大20%]\n・S以上：ダメージ＜20%＞の追撃を＜1回＞\n・SS以上：消費ガッツの＜20%＞回復",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 173,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0174",
+      "name": "テクニックエクステンド",
+      "version": 1,
+      "baseName": "テクニックエクステンド",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・[業物Lv5]\n・[有利]命中率＜+5%＞",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 174,
       "status": "verified"
     }
   ]
