@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 97,
-    "withStats": 60,
+    "withStats": 62,
     "withExplanation": 89,
     "withFormations": 5
   },
@@ -4034,13 +4034,25 @@
       "event2": null,
       "releasedAt": "2026/09/30",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+32%",
+          "label": "応援効果"
+        },
+        {
+          "value": "+30%",
+          "label": "得意率"
+        },
+        {
+          "value": "+32",
+          "label": "初期バイタル"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     },
     {
       "cardId": "c0004-SSR",
@@ -4050,16 +4062,28 @@
       "cardType": "丈夫さ",
       "monType": "獣族",
       "image": "",
-      "event2": null,
+      "event2": "超根性",
       "releasedAt": "2026/09/30",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+25%",
+          "label": "応援効果"
+        },
+        {
+          "value": "+30%",
+          "label": "得意率"
+        },
+        {
+          "value": "+28",
+          "label": "初期丈夫さ"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     }
   ]
 }
