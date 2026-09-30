@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 194
+    "abilities": 203
   },
   "abilities": [
     {
@@ -2369,6 +2369,114 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 194,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0195",
+      "name": "トリート",
+      "version": 1,
+      "baseName": "トリート",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・クリティカル率上昇＜10%＞\n・[相手サイズ中または小]クリティカルダメージ＜+20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 195,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0196",
+      "name": "連撃：パンプキンプレス",
+      "version": 1,
+      "baseName": "連撃：パンプキンプレス",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 196,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0197",
+      "name": "パンプキンプレス",
+      "version": 1,
+      "baseName": "パンプキンプレス",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・相手の技をランダムで1つ使用不可\n・[相手サイズ中または小]相手の技をランダムで1つ使用不可",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 197,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0198",
+      "name": "[相手黒]与ダメ上昇",
+      "version": 1,
+      "baseName": "[相手黒]与ダメ上昇",
+      "level": null,
+      "description": "相手＜オーラ黒＞かつ技が命中したとき与ダメ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 198,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0199",
+      "name": "[相手中]クリ上昇",
+      "version": 1,
+      "baseName": "[相手中]クリ上昇",
+      "level": null,
+      "description": "技を発動したとき相手＜ふつう＞でクリ率上昇Lv2＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 199,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0200",
+      "name": "シールド[小]",
+      "version": 1,
+      "baseName": "シールド[小]",
+      "level": null,
+      "description": "対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 200,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0201",
+      "name": "剛陣Lv5",
+      "version": 1,
+      "baseName": "剛陣",
+      "level": 5,
+      "description": "[自身有利]対象技命中時、与ダメとクリティカル率上昇Lv5＜10秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 201,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0202",
+      "name": "連撃：ホワイトサージ",
+      "version": 1,
+      "baseName": "連撃：ホワイトサージ",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv12を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 202,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0203",
+      "name": "ホワイトサージ",
+      "version": 1,
+      "baseName": "ホワイトサージ",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ライフステ＜+20%＞を攻撃ステに加算＜1回＞\n・[相手サイズ中または小]命中率＜+10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 203,
       "status": "verified"
     }
   ]
