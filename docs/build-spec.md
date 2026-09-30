@@ -244,7 +244,7 @@ noindex のページは sitemap に載せず、**AdSenseスクリプトも出力
 2. monster-images.json に該当IDがあればそれ            → monster/<filename>
 3. どちらも無ければ GameWith のURL
    https://img.gamewith.jp/article_tools/monsterfarm-line/gacha/Lmonfar_monster_<gwImg>.png
-4. gwImg も無ければ画像なし（<img> を出力しない）
+4. gwImg も無ければ NO IMAGE           → img/site/no-image.svg
 ```
 
 この順序は `monsters.html` の既存実装と同じ。変更しないこと。

@@ -1078,11 +1078,12 @@ if (!exists('src/data/assist-cards.json')) {
       ok('自動採番cardIdのレアリティはすべてcard.rarityと一致');
     }
 
-    const missingImages = cards.filter(card => typeof card.image !== 'string' || !exists(card.image));
+    // 空欄は画像未登録（NO IMAGEで出す）。exists('')はルートを見て真になるため明示的に分ける
+    const missingImages = cards.filter(card => typeof card.image !== 'string' || (card.image !== '' && !exists(card.image)));
     if (missingImages.length) {
       ng(`assist-cards.jsonに存在しない画像参照がある: ${missingImages.slice(0, 5).map(card => card.cardId).join(', ')}`);
     } else {
-      ok(`assist-cards.jsonの全画像が実在（${cards.length}件）`);
+      ok(`assist-cards.jsonの画像参照はすべて実在または未登録（${cards.length}件）`);
     }
 
     const allowed = {
@@ -1468,7 +1469,7 @@ if (!exists('src/data/assist-cards.json')) {
       const canonical = html.match(/<link\b(?=[^>]*\brel=["']canonical["'])(?=[^>]*\bhref=["']([^"']*)["'])[^>]*>/i)?.[1];
       const h1 = html.match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i)?.[1];
       const expectedCanonical = `https://line-monster-farm-tetteikouryaku.com/cards/${card.cardId}.html`;
-      const expectedImage = `src="../${card.image}"`;
+      const expectedImage = `src="../${card.image || 'img/site/no-image.svg'}"`;
       const rawRatingCount = Object.values(card.ratings || {}).filter(value => value !== null).length;
       const expectedRatingCount = rawRatingCount ? rawRatingCount + 2 : 0;
       const actualRatingCount = (html.match(/<div class="assist-rating-card(?:\s|\")/g) || []).length;
@@ -1496,11 +1497,11 @@ if (!exists('src/data/assist-cards.json')) {
       ok(`生成カード ${cards.length}件すべてtitle / description / canonical / h1があり固有`);
     }
 
-    const missingImages = cards.filter(card => !exists(card.image));
+    const missingImages = cards.filter(card => card.image && !exists(card.image));
     if (missingImages.length) {
       ng(`生成カードの画像参照が実在しない: ${missingImages.slice(0, 5).map(card => card.image).join(', ')}`);
     } else {
-      ok(`生成カード ${cards.length}件の画像参照がすべて実在`);
+      ok(`生成カード ${cards.length}件の画像参照はすべて実在または未登録（NO IMAGE）`);
     }
 
     const stripTags = value => String(value || '').replace(/<[^>]+>/g, '');

@@ -494,6 +494,14 @@ expectFailure('存在しない画像パスを拒否', root => {
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /imageパスまたは実在不正/);
 
+expectNoIssue('画像未登録（空文字）の公開カードを許す', root => {
+  const file = path.join(root, 'src/data/assist-cards.json');
+  const doc = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''));
+  delete doc.cards[0].hidden;
+  doc.cards[0].image = '';
+  fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
+}, new RegExp(`^${JSON.parse(fs.readFileSync(path.join(repo, 'src/data/assist-cards.json'), 'utf8').replace(/^\uFEFF/, '')).cards[0].cardId}: (?:カード必須文字列が空欄|imageパスまたは実在不正)`));
+
 expectFailure('実在しない実装日を拒否', root => {
   const file = path.join(root, 'src/data/assist-cards.json');
   const doc = JSON.parse(fs.readFileSync(file, 'utf8').replace(/^\uFEFF/, ''));

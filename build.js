@@ -25,7 +25,7 @@ const PICKUP_SLOTS = 5;
 const GACHA_EXCERPT_CHARS = 140;
 const GACHA_GATE_VISIBLE_CHARS = 800;
 const GACHA_GATE_EXPLANATION = 300;
-// ガチャ枠で画像が無いモンスター・カード（主に準備中）に出す代わりの画像
+// 画像が無いモンスター・カードに出す代わりの画像（詳細・一覧・ガチャ枠共通）
 const NO_IMAGE = 'img/site/no-image.svg';
 
 // 技（スキル）。列＝技を発動できる間合い、行＝ランク。並びはゲーム内表示に合わせる。
@@ -949,7 +949,8 @@ function resolveImage(id, context, rootPrefix = ROOT_PREFIX) {
       source: 'gamewith',
     };
   }
-  return { url: null, filename: null, source: null };
+  // 画像未登録の体（公開済みでも）はNO IMAGEを出す
+  return { url: `${rootPrefix}${NO_IMAGE}`, filename: null, source: null };
 }
 
 // releasedAt を比較用キーへ正規化する。YYYY-MM はその月の01日、
