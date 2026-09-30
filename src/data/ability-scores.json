@@ -7,16 +7,16 @@
     "src/data/ability-rubric.json"
   ],
   "counts": {
-    "target": 829,
-    "groups": 576,
+    "target": 839,
+    "groups": 580,
     "tier": [
-      73,
+      74,
       102,
       192,
-      462
+      471
     ],
     "held": 0,
-    "unreviewed": 0
+    "unreviewed": 10
   },
   "tierCut": {
     "1": 17.5,
@@ -60,6 +60,7 @@
     {"abilityId":"ab-0583","name":"[幻霊]堅固","group":"ab-0583","source":"閃き","cardId":"b22h-MR-noa","releasedAt":"2025/08/31","categories":["回避・防御"],"power":48.7,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0696","name":"[怪物]堅固","group":"ab-0435","source":"閃き","cardId":null,"releasedAt":null,"categories":["回避・防御"],"power":48.7,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":true,"tier":1},
     {"abilityId":"ab-0716","name":"[無機]堅固","group":"ab-0363","source":"閃き","cardId":"f18l-MR-esueru","releasedAt":"2026/04/14","categories":["回避・防御"],"power":48.7,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":true,"tier":1},
+    {"abilityId":"ab-1261","name":"[幻霊]堅固","group":"ab-0583","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["回避・防御"],"power":48.7,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":false,"tier":1},
     {"abilityId":"ab-0081","name":"シザースインサイト II","group":"ab-0081","source":"イベント","cardId":"a4g-SSR-karukinosu","releasedAt":"2026/03/14","categories":["命中"],"power":46.6,"held":false,"mainAtoms":["必中","命中率上昇"],"reviewed":true,"tier":1},
     {"abilityId":"ab-1240","name":"バーサーク II","group":"ab-1240","source":"イベント","cardId":"c25j-SSR-metabee","releasedAt":"2026/05/31","categories":["火力","命中","回避・防御"],"power":44.2,"held":false,"mainAtoms":["ステ変換","クリ率上昇","クリダメ上昇"],"reviewed":true,"tier":1},
     {"abilityId":"ab-1148","name":"セラフィナパッション II","group":"ab-1148","source":"イベント","cardId":"g1-MR-serafina","releasedAt":"2026/07/31","categories":["回避・防御"],"power":41.5,"held":false,"mainAtoms":["ステ上昇","シールド展開"],"reviewed":true,"tier":1},
@@ -535,6 +536,8 @@
     {"abilityId":"ab-1222","name":"[雪山]精神攻撃","group":"ab-1132","source":"閃き","cardId":"b16i-MR-diana","releasedAt":"2026/04/30","categories":["ガッツ"],"power":1.2,"held":false,"mainAtoms":["ガッツダメ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1233","name":"[悪天候]回避＋１００","group":"ab-0370","source":"閃き","cardId":"b5g-SSR-norun","releasedAt":"2026/04/30","categories":["回避・防御"],"power":1.2,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1250","name":"[森林]守護","group":"ab-0451","source":"閃き","cardId":"c25j-SSR-metabee","releasedAt":"2026/05/31","categories":["回避・防御"],"power":1.2,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1255","name":"[自身青]ちから＋３%","group":"ab-0277","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["火力"],"power":1.2,"held":false,"mainAtoms":["ステ上昇"],"reviewed":false,"tier":4},
+    {"abilityId":"ab-1256","name":"[幻霊]ちから＋３%","group":"ab-0278","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["火力"],"power":1.2,"held":false,"mainAtoms":["ステ上昇"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0100","name":"聖夜を駆けるブリーダー II","group":"ab-0100","source":"イベント","cardId":null,"releasedAt":null,"categories":["命中"],"power":1.1,"held":false,"mainAtoms":["ステ変換"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0172","name":"フェアリーブースト II","group":"ab-0172","source":"イベント","cardId":"a13i-MR-miriamu","releasedAt":"2024/03/31","categories":["火力"],"power":1.1,"held":false,"mainAtoms":["攻撃ステ加算"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0222","name":"リストンリネージ II","group":"ab-0222","source":"イベント","cardId":"c18k-MR-risuton","releasedAt":"2024/09/30","categories":["火力"],"power":1.1,"held":false,"mainAtoms":["与ダメ上昇"],"reviewed":true,"tier":4},
@@ -547,6 +550,7 @@
     {"abilityId":"ab-0966","name":"慈愛サーチ II","group":"ab-0966","source":"イベント","cardId":null,"releasedAt":null,"categories":["命中"],"power":1.1,"held":false,"mainAtoms":["命中率上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1169","name":"[晴れ]かしこさ＋１００","group":"ab-0354","source":"閃き","cardId":"g2-SSR-monodasu","releasedAt":"2026/07/31","categories":["火力"],"power":1.1,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1183","name":"解き放たれた力 II","group":"ab-1183","source":"イベント","cardId":"c27j-MR-godemperor","releasedAt":"2026/06/14","categories":["火力"],"power":1.1,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1260","name":"[晴れ]ちから＋１００","group":"ab-1260","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["火力"],"power":1.1,"held":false,"mainAtoms":["ステ上昇"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0148","name":"トーブルのエース II","group":"ab-0148","source":"イベント","cardId":null,"releasedAt":null,"categories":["火力"],"power":1,"held":false,"mainAtoms":["攻撃ステ加算"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0160","name":"ナイアーラフィールド II","group":"ab-0160","source":"イベント","cardId":"c23i-MR-naiara","releasedAt":"2025/07/15","categories":["火力","弱体"],"power":1,"held":false,"mainAtoms":["ステ上昇","追撃","シールド破壊"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0166","name":"ハムハムチェイサー II","group":"ab-0166","source":"イベント","cardId":"c18k-MR-risuton","releasedAt":"2024/09/30","categories":["火力"],"power":1,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
@@ -576,6 +580,7 @@
     {"abilityId":"ab-1057","name":"ミヤビシフト II","group":"ab-0972","source":"閃き","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.9,"held":false,"mainAtoms":["与ダメ上昇","クリ率上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1077","name":"ミヤビシフト II","group":"ab-0972","source":"閃き","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.9,"held":false,"mainAtoms":["与ダメ上昇","クリ率上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1146","name":"超必死","group":"ab-0499","source":"イベント","cardId":"c0001-MR","releasedAt":"2026/09/14","categories":["火力"],"power":0.9,"held":false,"mainAtoms":["クリ率上昇"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1263","name":"光香む常闇の衣 II","group":"ab-1263","source":"イベント","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["回避・防御"],"power":0.9,"held":false,"mainAtoms":["シールド展開"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0029","name":"オレの最高の相棒 IV","group":"ab-0029","source":"イベント","cardId":"a25i-MR-borusyakku","releasedAt":"2025/07/31","categories":["火力"],"power":0.8,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0051","name":"究明之王 II","group":"ab-0051","source":"イベント","cardId":"b7-SSR-verudora","releasedAt":"2024/08/17","categories":["火力","回避・防御"],"power":0.8,"held":false,"mainAtoms":["シールド展開","追撃"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0271","name":"[砂漠]回避＋１００","group":"ab-0271","source":"閃き","cardId":"b21i-MR-rimuru","releasedAt":"2026/01/31","categories":["回避・防御"],"power":0.8,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
@@ -721,6 +726,7 @@
     {"abilityId":"ab-1047","name":"マンナンチャージ II","group":"ab-0832","source":"閃き","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.5,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1067","name":"マンナンチャージ II","group":"ab-0832","source":"閃き","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.5,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1168","name":"[海岸]かしこさ＋１００","group":"ab-0581","source":"閃き","cardId":"g2-SSR-monodasu","releasedAt":"2026/07/31","categories":["火力"],"power":0.5,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1259","name":"[火山]ちから＋１００","group":"ab-0393","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["火力"],"power":0.5,"held":false,"mainAtoms":["ステ上昇"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0016","name":"インフェルノスマッシュ II","group":"ab-0016","source":"イベント","cardId":"c14k-MR-suzuka","releasedAt":"2024/04/30","categories":["火力"],"power":0.4,"held":false,"mainAtoms":["クリ率上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0067","name":"この世界は残酷だ… II","group":"ab-0067","source":"イベント","cardId":"d2l-SSR-mikasa","releasedAt":"2024/11/13","categories":["火力"],"power":0.4,"held":false,"mainAtoms":["与ダメ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0073","name":"ゴーストチェイサー II","group":"ab-0073","source":"イベント","cardId":"e12i-MR-raburesu","releasedAt":"2024/02/28","categories":["火力"],"power":0.4,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
@@ -801,6 +807,7 @@
     {"abilityId":"ab-1086","name":"ディアナチェイサー II","group":"ab-1086","source":"イベント","cardId":"b16i-MR-diana","releasedAt":"2026/04/30","categories":["弱体"],"power":0.2,"held":false,"mainAtoms":["シールド破壊"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1243","name":"[黄]破壊","group":"ab-1243","source":"閃き","cardId":"c25j-SSR-metabee","releasedAt":"2026/05/31","categories":["火力"],"power":0.2,"held":false,"mainAtoms":["クリダメ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1246","name":"[砂漠]強打","group":"ab-0447","source":"閃き","cardId":"c25j-SSR-metabee","releasedAt":"2026/05/31","categories":["火力"],"power":0.2,"held":false,"mainAtoms":["クリダメ上昇"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1254","name":"[自身青]不屈","group":"ab-1254","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["支援"],"power":0.2,"held":false,"mainAtoms":["無効化・解除"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0186","name":"魔は仲間を見捨てない II","group":"ab-0186","source":"イベント","cardId":"b5i-SSR-rimurugurasan","releasedAt":"2026/01/31","categories":["火力"],"power":0.1,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0250","name":"ワールドチェイサー II","group":"ab-0250","source":"イベント","cardId":"d11g-MR-ratatosuku","releasedAt":"2024/02/28","categories":["火力"],"power":0.1,"held":false,"mainAtoms":["追撃"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0311","name":"[森林]防塵","group":"ab-0311","source":"閃き","cardId":"e20i-MR-nadeshiko","releasedAt":"2025/12/31","categories":["回避・防御"],"power":0.1,"held":false,"mainAtoms":["シールド展開"],"reviewed":true,"tier":4},
@@ -843,6 +850,8 @@
     {"abilityId":"ab-0915","name":"アモンガード II","group":"ab-0915","source":"イベント","cardId":null,"releasedAt":null,"categories":["回避・防御"],"power":0.1,"held":false,"mainAtoms":["被ダメ低下"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0977","name":"ソーラーインベイド II","group":"ab-0977","source":"イベント","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.1,"held":false,"mainAtoms":["与ダメ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1007","name":"パムパスアタック II","group":"ab-0848","source":"閃き","cardId":null,"releasedAt":null,"categories":["火力"],"power":0.1,"held":false,"mainAtoms":["与ダメ上昇"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1257","name":"[雪山]防塵","group":"ab-0360","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["回避・防御"],"power":0.1,"held":false,"mainAtoms":["シールド展開"],"reviewed":false,"tier":4},
+    {"abilityId":"ab-1258","name":"[火山]防塵","group":"ab-0312","source":"閃き","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":["回避・防御"],"power":0.1,"held":false,"mainAtoms":["シールド展開"],"reviewed":false,"tier":4},
     {"abilityId":"ab-0039","name":"悲しみを怒りへと IV","group":"ab-0039","source":"イベント","cardId":"a25i-MR-borusyakku","releasedAt":"2025/07/31","categories":["火力"],"power":0,"held":false,"mainAtoms":["ステ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0047","name":"キャトルスタイル II","group":"ab-0047","source":"イベント","cardId":"e17g-MR-kyatoru","releasedAt":"2024/08/31","categories":["ガッツ"],"power":0,"held":false,"mainAtoms":["ガッツ回復"],"reviewed":true,"tier":4},
     {"abilityId":"ab-0138","name":"超本気","group":"ab-0138","source":"イベント","cardId":"a6i-SSR-mirimuresort","releasedAt":"2026/02/14","categories":["弱体"],"power":0,"held":false,"mainAtoms":[],"reviewed":true,"tier":4},
@@ -852,6 +861,7 @@
     {"abilityId":"ab-0688","name":"超本気","group":"ab-0138","source":"イベント","cardId":null,"releasedAt":null,"categories":["弱体"],"power":0,"held":false,"mainAtoms":[],"reviewed":true,"tier":4},
     {"abilityId":"ab-0839","name":"超逆上","group":"ab-0641","source":"イベント","cardId":null,"releasedAt":null,"categories":["回避・防御","ガッツ"],"power":0,"held":false,"mainAtoms":["ガッツ回復","ガッツダメ上昇"],"reviewed":true,"tier":4},
     {"abilityId":"ab-1179","name":"超本気","group":"ab-0138","source":"イベント","cardId":"c27j-MR-godemperor","releasedAt":"2026/06/14","categories":["弱体"],"power":0,"held":false,"mainAtoms":[],"reviewed":true,"tier":4},
-    {"abilityId":"ab-1194","name":"超逆上","group":"ab-0641","source":"イベント","cardId":"a13i-MR-nishiki","releasedAt":"2026/05/14","categories":["回避・防御","ガッツ"],"power":0,"held":false,"mainAtoms":["ガッツ回復","ガッツダメ上昇"],"reviewed":true,"tier":4}
+    {"abilityId":"ab-1194","name":"超逆上","group":"ab-0641","source":"イベント","cardId":"a13i-MR-nishiki","releasedAt":"2026/05/14","categories":["回避・防御","ガッツ"],"power":0,"held":false,"mainAtoms":["ガッツ回復","ガッツダメ上昇"],"reviewed":true,"tier":4},
+    {"abilityId":"ab-1265","name":"昏き満月の祝福 II","group":"ab-1265","source":"イベント","cardId":"c0003-MR","releasedAt":"2026/09/30","categories":[],"power":0,"held":false,"mainAtoms":[],"reviewed":false,"tier":4}
   ]
 }
