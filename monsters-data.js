@@ -360,7 +360,7 @@ const monstersData = [
   { name: 'ベタピン', aura: '白', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '1553.jpg', mon: '魔族', mainMon: 'スエゾー', subMon: 'レアモン' },
   { name: 'メレンゲ', aura: '赤', limited: true, limitedLabel: '超神殿祭限定', gwImg: null, localImg: '3151.jpg', mon: '怪物', mainMon: 'ゴースト', subMon: 'レアモン' },
   { name: 'アストロガール', aura: '白', limited: false, limitedLabel: '', gwImg: null, localImg: '3027.jpg', mon: '怪物', mainMon: 'キジン', subMon: 'メタルナー' },
-  { name: 'ヴァンパイア', aura: '青', limited: true, limitedLabel: '秋限定', gwImg: null, localImg: null, mon: '幻霊', mainMon: 'アーク', subMon: 'レアモン' },
+  { name: 'ヴァンパイア', aura: '青', limited: true, limitedLabel: '秋限定', gwImg: null, localImg: '3351.jpg', mon: '幻霊', mainMon: 'アーク', subMon: 'レアモン' },
   { name: 'オカシラ', aura: '青', limited: true, limitedLabel: '秋限定', gwImg: null, localImg: '1252.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'レアモン' },
   { name: 'マミーレックス', aura: '青', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '0651.jpg', mon: '獣族', mainMon: 'ディノ', subMon: 'レアモン' },
 ];
