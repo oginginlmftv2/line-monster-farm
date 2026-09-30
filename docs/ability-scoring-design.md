@@ -17,6 +17,8 @@
 | 評価式のテスト | `scripts/test-ability-score.js` | 済。合意した強弱の関係を固定。`verify.js` 検査22が実行 |
 | 評価値・Tier（生成物） | `src/data/ability-scores.json` | `build.js` が毎回生成。`verify.js` 検査22が鮮度を照合 |
 | 読み方の点検 | `scripts/audit-ability-reading.js` → `docs/ability-reading-audit.md` | 手動。能力追加時は `--new`（5章） |
+| 点・Tierの差分と採点の内訳 | `scripts/ability-review-report.js` | 手動。origin/main との差分表と、能力ごとの説明文＋内訳（5-1の手順4） |
+| 点検の手順 | スキル `ability-score-review`（`.claude/skills/`） | 5-1を1回ぶん回してPRにする |
 | 採点方法と結果の説明 | `docs/ability-scoring-report.md`・`.pdf` | 2026-09-27時点のスナップショット（管理者・外部向け） |
 | 手上書き | `src/data/ability-overrides.json` | 空。固有ギミック用 |
 | ページ描画 | `build.js`・`src/lib/ability-recommend.js`（build-spec 5-12） | **済**（2026-09-27）。上位5件・番号なし・発売が新しい順。テストは `scripts/test-ability-recommend.js` |
@@ -511,7 +513,8 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
 2. `node scripts/audit-ability-reading.js --new` で、新しい能力だけを読み違いの型ごとに点検する
 3. 引っかかった型は3-1のルールで直す。語彙はパーサ、値は rubric、式は ability-score.js。
    直したら `node scripts/build-ability-parse.js`（カバレッジ表）→ `node build.js` → `node scripts/audit-ability-reading.js`（全体）
-4. 新しい能力の点・順位を管理者に見せ、違和感が無ければ `review.reviewedThroughAbilityId` を最後のIDに進める
+4. 新しい能力の点・順位を管理者に見せ、違和感が無ければ `review.reviewedThroughAbilityId` を最後のIDに進める。
+   見せるときは `node scripts/ability-review-report.js` で、**説明文の全文と採点の内訳を能力ごとに並べる**（管理者指定 2026-09-30）
 5. `scripts/test-ability-parser.js`・`scripts/test-ability-score.js`・`scripts/verify.js` がFAIL 0
 
 ### 5-2. 読み違いの型（2026-09-27の仮ビルドで見つかったもの）
@@ -562,6 +565,6 @@ CMSのアシスト公開は `build.js` を回すので、**`src/data/ability-sco
   中身は `node scripts/audit-ability-reading.js --new --summary`：能力・出どころ・点・順位・Tier・分類・
   詳細ページに載る体の数・読み方点検の引っかかり・説明文。未点検が無ければ「ありません」の1行。
   `continue-on-error` なので、このステップが失敗しても公開は止まらない
-- **C（Claudeのセッション）**：表を見た管理者の依頼で、Claudeのセッションが5-1の手順で読み方とTierを検証し、
+- **C（Claudeのセッション）**：表を見た管理者の依頼で、Claudeのセッションがスキル `ability-score-review`（5-1の手順）で読み方とTierを検証し、
   直すPRを作る。確認が取れたら `review.reviewedThroughAbilityId` を進める
 - 公開サイトに確認用のページ（noindex含む）は作らない。Tierを公開しない方針のため

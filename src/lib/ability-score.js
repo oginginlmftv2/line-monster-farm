@@ -421,7 +421,10 @@ function createScorer(rubric) {
       const underGrant = ctx && ctx.grant && line0.duration == null;
       const persistentGrant = underGrant || (/付与/.test(line.raw) && line.duration == null && !/秒>/.test(line.raw));
       const sc = persistentGrant ? { ...line.skillCond, rank: undefined, type: undefined, range: undefined } : line.skillCond;
-      const factor = (randomShare.get(lineIndex) || 1) * Math.max(MOD.floor, conditionFactor(condsFor(line.effects.map(e => e.atom))) * skillCondFactor(sc, monsterCtx) * (line.trigger ? MOD.trigger[line.trigger] || 1 : 1));
+      // 内訳（scripts/ability-review-report.js が採点方法として見せる）
+      const why = { cond: conditionFactor(condsFor(line.effects.map(e => e.atom))), skill: skillCondFactor(sc, monsterCtx), trigger: line.trigger ? MOD.trigger[line.trigger] || 1 : 1, random: randomShare.get(lineIndex) || 1 };
+      why.floored = why.cond * why.skill * why.trigger < MOD.floor;
+      const factor = why.random * Math.max(MOD.floor, why.cond * why.skill * why.trigger);
       const isNext = /次の技/.test(line.raw) && !/発動技と次の技/.test(line.raw);
       const grantStacks = underGrant && typeof ctx.limit === 'number' ? ctx.limit : 1;
       const perUse = /技の発動回数に応じて/.test(line.raw);
@@ -444,7 +447,8 @@ function createScorer(rubric) {
         // ランダムで付与される必中・完全回避などは、いつ付くか選べないので確定のものより低く見る（巫女の占い II）
         const randomDecisive = randomShare.has(lineIndex) && ev.decisive ? C.randomDecisive : 1;
         const lv = ev.lv * qty * (ev.penalty ? 1 : factor) * (ev.penalty ? 1 : stackBoost) * ramp * randomDecisive;
-        parts.push({ atom: e.atom, lv: ev.penalty ? lv : lv * amplify, penalty: !!ev.penalty, line: line.raw });
+        parts.push({ atom: e.atom, lv: ev.penalty ? lv : lv * amplify, penalty: !!ev.penalty, line: line.raw, text: e.text,
+          detail: { base: ev.lv, kind: ev.kind, qty, factor: ev.penalty ? 1 : factor, ...why, trigger: line.trigger || null, triggerMod: why.trigger, stackBoost: ev.penalty ? 1 : stackBoost, ramp, randomDecisive, amplify: ev.penalty ? 1 : amplify, conditions: line.conditions, skillCond: sc, duration: line.duration ?? null, limit: line.limit ?? null } });
       }
       if (line0.effects.length && /次の効果|以下の効果/.test(line0.raw)) ctx = { conditions: line0.conditions, trigger: line0.childTrigger || line0.trigger, skillCond: line0.skillCond, limit: line0.limit, duration: line0.duration, raw: line0.raw, grant: /付与/.test(line0.raw) };
     }
@@ -453,7 +457,7 @@ function createScorer(rubric) {
     for (const p of parts) if (!p.penalty) (byAtom.get(p.atom) || byAtom.set(p.atom, []).get(p.atom)).push(p);
     for (const list of byAtom.values()) {
       list.sort((a, b) => b.lv - a.lv);
-      list.forEach((p, i) => { p.lv *= C.sameAtomDecay[Math.min(i, C.sameAtomDecay.length - 1)]; });
+      list.forEach((p, i) => { const k = C.sameAtomDecay[Math.min(i, C.sameAtomDecay.length - 1)]; p.lv *= k; if (p.detail) p.detail.decay = k; });
     }
     const total = parts.reduce((s, p) => s + p.lv, 0);
     return { abilityId: parsed.abilityId, held: false, heldGrant: hasHeldGrant, power: Math.max(0, Math.round(total * 10) / 10), parts };

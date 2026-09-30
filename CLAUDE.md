@@ -220,6 +220,12 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 「候補JSONを貼り付け」へ貼って保存します。DBの正はCMSのシートなので、
 `src/data/assist-effects.json`を直接編集しません。CMSのVision OCRは精度が低いため補助扱いです。
 
+### 能力が増えたら、能力評価をClaudeのスキルで点検する
+
+CMSのアシスト公開で能力が増えると、Actionsの結果画面に「未点検の能力」が出ます。
+「新能力追加したので能力評価を」と頼むと、スキル `ability-score-review` が読み方を点検し、
+説明文と採点の内訳を並べて見せたうえで、直すPRを作ります（`docs/ability-scoring-design.md` 5-1）。
+
 ### アシスト能力の登録もClaudeのスキルで読む
 
 能力（イベント能力・閃き能力）のスクショは、スキル `assist-ability-capture` で読み取り、
