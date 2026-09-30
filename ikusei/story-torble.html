@@ -117,11 +117,9 @@
     .t-rare { color:#b35900; }
     .nora-table td, .nora-table th { text-align:center; padding:8px 4px; }
     .vald-table td:first-child { min-width:7em; }
-    .shot-list { display:grid; gap:10px; margin-top:10px; }
     .shot-list figure { margin:0; }
-    .shot-list img { width:100%; max-width:600px; height:auto; border-radius:6px; border:1px solid #eee; display:block; margin:0 auto; }
+    .shot-list img { width:100%; height:auto; border-radius:6px; border:1px solid #eee; display:block; margin:0 auto; }
     .shot-list figcaption { font-size:12px; color:#666; text-align:center; margin-top:4px; }
-    @media (min-width:768px) { .shot-list { grid-template-columns:repeat(3, minmax(0, 1fr)); } }
     .hiden-img { display:block; max-width:220px; width:100%; height:auto; margin:10px 0; }
     .hiden-table td, .hiden-table th { text-align:center; vertical-align:middle; }
     .hiden-table td.na { color:#aaa; font-size:12px; }
@@ -129,6 +127,13 @@
     .related-list li { border-bottom:1px solid #f0f0f0; }
     .related-list a { display:block; padding:10px 4px; color:#333; text-decoration:none; font-size:14px; font-weight:bold; }
     .related-list a:hover { color:#f0a500; }
+    .card-groups { display:grid; gap:14px; margin-top:10px; }
+    .card-chara { display:flex; align-items:center; gap:8px; font-weight:bold; font-size:13px; margin-bottom:6px; }
+    .card-chara img { width:36px; height:36px; border-radius:6px; border:1px solid #ddd; }
+    /* 切り出した画像の並び：スマホ2列・PC4列（EXトレ・取得能力・ヴァルド能力で共通） */
+    .card-grid, .shot-list { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:6px; margin-top:10px; }
+    @media (min-width:768px) { .card-grid, .shot-list { grid-template-columns:repeat(4, minmax(0, 1fr)); } }
+    .card-grid img { width:100%; height:auto; display:block; border-radius:4px; }
     .cond { display:inline-block; font-size:11px; color:#555; background:#f1f1f1; border-radius:4px; padding:0 5px; margin:0 3px 2px 0; }
     p { font-size:14px; line-height:1.8; margin-bottom:8px; }
     ul, ol { font-size:13px; line-height:1.8; padding-left:18px; }
@@ -256,13 +261,13 @@
     </div>
 
     <details class="shots" open>
-      <summary>トレーニング表の画像（4枚）</summary>
+      <summary>トレーニング表の画像</summary>
       <p style="font-size:12px;color:#777;margin-top:8px;">ゲーム画面では、<strong>左端のアイコンの行が1つのトレ</strong>、上に並ぶ列が上がる能力です（例：ハートの行＝大食い）。</p>
       <div class="shot-grid">
-        <figure><img src="../ikusei-img/story-torble/training-before.jpg" alt="トレーニング表（陣営選択前）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-before">陣営選択前</span></figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/training-mongura.jpg" alt="トレーニング表（モングラ）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-mongura">モングラ</span></figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/training-gurasura.jpg" alt="トレーニング表（グラスラ）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-gurasura">グラスラ</span></figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/training-lord.jpg" alt="トレーニング表（ロード）" width="900" height="1948" loading="lazy"><figcaption><span class="camp c-lord">ロード</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-before.jpg" alt="トレーニング表（陣営選択前）" width="864" height="862" loading="lazy"><figcaption><span class="camp c-before">陣営選択前</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-mongura.jpg" alt="トレーニング表（モングラ）" width="864" height="862" loading="lazy"><figcaption><span class="camp c-mongura">モングラ</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-gurasura.jpg" alt="トレーニング表（グラスラ）" width="864" height="862" loading="lazy"><figcaption><span class="camp c-gurasura">グラスラ</span></figcaption></figure>
+        <figure><img src="../ikusei-img/story-torble/training-lord.jpg" alt="トレーニング表（ロード）" width="864" height="862" loading="lazy"><figcaption><span class="camp c-lord">ロード</span></figcaption></figure>
       </div>
     </details>
   </div>
@@ -316,20 +321,67 @@
         </table>
       </div>
       <details class="shots" open>
-        <summary>陣営選択前のEXトレの画像（12枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ex-before-bras-1.jpg" alt="陣営選択前のEXトレ（ブラス 1）" width="900" height="1948" loading="lazy"><figcaption>ブラス 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-bras-2.jpg" alt="陣営選択前のEXトレ（ブラス 2）" width="900" height="1948" loading="lazy"><figcaption>ブラス 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-tabasa-1.jpg" alt="陣営選択前のEXトレ（タバサ 1）" width="900" height="1948" loading="lazy"><figcaption>タバサ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-tabasa-2.jpg" alt="陣営選択前のEXトレ（タバサ 2）" width="900" height="1948" loading="lazy"><figcaption>タバサ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-porutsu-1.jpg" alt="陣営選択前のEXトレ（ポルツ 1）" width="900" height="1948" loading="lazy"><figcaption>ポルツ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-porutsu-2.jpg" alt="陣営選択前のEXトレ（ポルツ 2）" width="900" height="1948" loading="lazy"><figcaption>ポルツ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-pishii-1.jpg" alt="陣営選択前のEXトレ（ピーシィ 1）" width="900" height="1948" loading="lazy"><figcaption>ピーシィ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-pishii-2.jpg" alt="陣営選択前のEXトレ（ピーシィ 2）" width="900" height="1948" loading="lazy"><figcaption>ピーシィ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-eiru-1.jpg" alt="陣営選択前のEXトレ（エイル 1）" width="900" height="1948" loading="lazy"><figcaption>エイル 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-eiru-2.jpg" alt="陣営選択前のEXトレ（エイル 2）" width="900" height="1948" loading="lazy"><figcaption>エイル 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-montitto-1.jpg" alt="陣営選択前のEXトレ（モンティット 1）" width="900" height="1948" loading="lazy"><figcaption>モンティット 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-before-montitto-2.jpg" alt="陣営選択前のEXトレ（モンティット 2）" width="900" height="1948" loading="lazy"><figcaption>モンティット 2</figcaption></figure>
+        <summary>陣営選択前のEXトレの画像</summary>
+        <div class="card-groups">
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-bras.jpg" alt="" width="134" height="134" loading="lazy">ブラス</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-bras-1.jpg" alt="ブラスのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-bras-2.jpg" alt="ブラスのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-bras-3.jpg" alt="ブラスのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-bras-4.jpg" alt="ブラスのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-bras-5.jpg" alt="ブラスのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-bras-6.jpg" alt="ブラスのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-tabasa.jpg" alt="" width="134" height="134" loading="lazy">タバサ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-tabasa-1.jpg" alt="タバサのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-tabasa-2.jpg" alt="タバサのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-tabasa-3.jpg" alt="タバサのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-tabasa-4.jpg" alt="タバサのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-porutsu.jpg" alt="" width="134" height="134" loading="lazy">ポルツ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-porutsu-1.jpg" alt="ポルツのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-porutsu-2.jpg" alt="ポルツのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-porutsu-3.jpg" alt="ポルツのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-porutsu-4.jpg" alt="ポルツのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-pishii.jpg" alt="" width="134" height="134" loading="lazy">ピーシィ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-pishii-1.jpg" alt="ピーシィのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-pishii-2.jpg" alt="ピーシィのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-pishii-3.jpg" alt="ピーシィのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-pishii-4.jpg" alt="ピーシィのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-pishii-5.jpg" alt="ピーシィのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-eiru.jpg" alt="" width="134" height="134" loading="lazy">エイル</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-eiru-1.jpg" alt="エイルのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-eiru-2.jpg" alt="エイルのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-eiru-3.jpg" alt="エイルのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-eiru-4.jpg" alt="エイルのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-montitto.jpg" alt="" width="134" height="134" loading="lazy">モンティット</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-1.jpg" alt="モンティットのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-2.jpg" alt="モンティットのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-3.jpg" alt="モンティットのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-4.jpg" alt="モンティットのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-5.jpg" alt="モンティットのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-before-montitto-6.jpg" alt="モンティットのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
         </div>
       </details>
     </details>
@@ -357,19 +409,65 @@
         </table>
       </div>
       <details class="shots" open>
-        <summary>モングラのEXトレの画像（11枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-1.jpg" alt="モングラのEXトレ（ハインケル 1）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-heinkel-2.jpg" alt="モングラのEXトレ（ハインケル 2）" width="900" height="1948" loading="lazy"><figcaption>ハインケル 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-julia-1.jpg" alt="モングラのEXトレ（ジュリア 1）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-julia-2.jpg" alt="モングラのEXトレ（ジュリア 2）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-maruta-1.jpg" alt="モングラのEXトレ（マルタ 1）" width="900" height="1948" loading="lazy"><figcaption>マルタ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-maruta-2.jpg" alt="モングラのEXトレ（マルタ 2）" width="900" height="1948" loading="lazy"><figcaption>マルタ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-stella.jpg" alt="モングラのEXトレ（ステラ）" width="900" height="1948" loading="lazy"><figcaption>ステラ</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-nikorao.jpg" alt="モングラのEXトレ（ニコラオ）" width="900" height="1948" loading="lazy"><figcaption>ニコラオ</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-ryuna-1.jpg" alt="モングラのEXトレ（リュナ 1）" width="900" height="1948" loading="lazy"><figcaption>リュナ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-ryuna-2.jpg" alt="モングラのEXトレ（リュナ 2）" width="900" height="1948" loading="lazy"><figcaption>リュナ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-mongura-mizuki.jpg" alt="モングラのEXトレ（ミズキ）" width="900" height="1948" loading="lazy"><figcaption>ミズキ</figcaption></figure>
+        <summary>モングラのEXトレの画像</summary>
+        <div class="card-groups">
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-heinkel.jpg" alt="" width="134" height="134" loading="lazy">ハインケル</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-heinkel-1.jpg" alt="ハインケルのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-heinkel-2.jpg" alt="ハインケルのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-heinkel-3.jpg" alt="ハインケルのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-heinkel-4.jpg" alt="ハインケルのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="" width="134" height="134" loading="lazy">ジュリア</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-julia-1.jpg" alt="ジュリアのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-julia-2.jpg" alt="ジュリアのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-julia-3.jpg" alt="ジュリアのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-julia-4.jpg" alt="ジュリアのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-maruta.jpg" alt="" width="134" height="134" loading="lazy">マルタ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-1.jpg" alt="マルタのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-2.jpg" alt="マルタのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-3.jpg" alt="マルタのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-4.jpg" alt="マルタのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-5.jpg" alt="マルタのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-maruta-6.jpg" alt="マルタのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-stella.jpg" alt="" width="134" height="134" loading="lazy">ステラ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-stella-1.jpg" alt="ステラのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-nikorao.jpg" alt="" width="134" height="134" loading="lazy">ニコラオ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-nikorao-1.jpg" alt="ニコラオのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-ryuna.jpg" alt="" width="134" height="134" loading="lazy">リュナ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-ryuna-1.jpg" alt="リュナのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-ryuna-2.jpg" alt="リュナのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-ryuna-3.jpg" alt="リュナのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-ryuna-4.jpg" alt="リュナのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-mongura-ryuna-5.jpg" alt="リュナのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-mizuki.jpg" alt="" width="134" height="134" loading="lazy">ミズキ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-mongura-mizuki-1.jpg" alt="ミズキのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
         </div>
       </details>
     </details>
@@ -394,20 +492,71 @@
         </table>
       </div>
       <details class="shots" open>
-        <summary>グラスラのEXトレの画像（12枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-1.jpg" alt="グラスラのEXトレ（ジュリア 1）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-julia-2.jpg" alt="グラスラのEXトレ（ジュリア 2）" width="900" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-kavaro-1.jpg" alt="グラスラのEXトレ（カヴァロ 1）" width="900" height="1948" loading="lazy"><figcaption>カヴァロ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-kavaro-2.jpg" alt="グラスラのEXトレ（カヴァロ 2）" width="900" height="1948" loading="lazy"><figcaption>カヴァロ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-safin-1.jpg" alt="グラスラのEXトレ（サフィン 1）" width="900" height="1948" loading="lazy"><figcaption>サフィン 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-safin-2.jpg" alt="グラスラのEXトレ（サフィン 2）" width="900" height="1948" loading="lazy"><figcaption>サフィン 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-shuura-1.jpg" alt="グラスラのEXトレ（シュウラ 1）" width="900" height="1948" loading="lazy"><figcaption>シュウラ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-shuura-2.jpg" alt="グラスラのEXトレ（シュウラ 2）" width="900" height="1948" loading="lazy"><figcaption>シュウラ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-nia.jpg" alt="グラスラのEXトレ（ニア）" width="900" height="1948" loading="lazy"><figcaption>ニア</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-iris-1.jpg" alt="グラスラのEXトレ（アイリス 1）" width="900" height="1948" loading="lazy"><figcaption>アイリス 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-iris-2.jpg" alt="グラスラのEXトレ（アイリス 2）" width="900" height="1948" loading="lazy"><figcaption>アイリス 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-gurasura-monika.jpg" alt="グラスラのEXトレ（モニカ）" width="900" height="1948" loading="lazy"><figcaption>モニカ</figcaption></figure>
+        <summary>グラスラのEXトレの画像</summary>
+        <div class="card-groups">
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="" width="134" height="134" loading="lazy">ジュリア</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-julia-1.jpg" alt="ジュリアのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-julia-2.jpg" alt="ジュリアのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-julia-3.jpg" alt="ジュリアのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-julia-4.jpg" alt="ジュリアのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-kavaro.jpg" alt="" width="134" height="134" loading="lazy">カヴァロ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-kavaro-1.jpg" alt="カヴァロのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-kavaro-2.jpg" alt="カヴァロのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-kavaro-3.jpg" alt="カヴァロのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-kavaro-4.jpg" alt="カヴァロのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-kavaro-5.jpg" alt="カヴァロのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-safin.jpg" alt="" width="134" height="134" loading="lazy">サフィン</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-1.jpg" alt="サフィンのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-2.jpg" alt="サフィンのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-3.jpg" alt="サフィンのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-4.jpg" alt="サフィンのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-5.jpg" alt="サフィンのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-safin-6.jpg" alt="サフィンのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-shuura.jpg" alt="" width="134" height="134" loading="lazy">シュウラ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-1.jpg" alt="シュウラのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-2.jpg" alt="シュウラのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-3.jpg" alt="シュウラのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-4.jpg" alt="シュウラのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-5.jpg" alt="シュウラのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-shuura-6.jpg" alt="シュウラのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-nia.jpg" alt="" width="134" height="134" loading="lazy">ニア</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-nia-1.jpg" alt="ニアのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-iris.jpg" alt="" width="134" height="134" loading="lazy">アイリス</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-iris-1.jpg" alt="アイリスのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-iris-2.jpg" alt="アイリスのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-iris-3.jpg" alt="アイリスのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-iris-4.jpg" alt="アイリスのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-gurasura-iris-5.jpg" alt="アイリスのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-monika.jpg" alt="" width="134" height="134" loading="lazy">モニカ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-gurasura-monika-1.jpg" alt="モニカのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
         </div>
       </details>
     </details>
@@ -431,21 +580,72 @@
         </table>
       </div>
       <details class="shots" open>
-        <summary>ロードのEXトレの画像（13枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ex-lord-julia-1.jpg" alt="ロードのEXトレ（ジュリア 1）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-julia-2.jpg" alt="ロードのEXトレ（ジュリア 2）" width="896" height="1948" loading="lazy"><figcaption>ジュリア 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-kris-0.jpg" alt="ロードのEXトレ（クリス 1）" width="896" height="1948" loading="lazy"><figcaption>クリス 1</figcaption></figure>
-        <figure><img src="../ikusei-img/story-torble/ex-lord-kris.jpg" alt="ロードのEXトレ（クリス 2）" width="900" height="1948" loading="lazy"><figcaption>クリス 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-kouen-1.jpg" alt="ロードのEXトレ（コウエン 1）" width="900" height="1948" loading="lazy"><figcaption>コウエン 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-kouen-2.jpg" alt="ロードのEXトレ（コウエン 2）" width="900" height="1948" loading="lazy"><figcaption>コウエン 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-leila-1.jpg" alt="ロードのEXトレ（レイラ 1）" width="900" height="1948" loading="lazy"><figcaption>レイラ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-leila-2.jpg" alt="ロードのEXトレ（レイラ 2）" width="900" height="1948" loading="lazy"><figcaption>レイラ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-lucas-1.jpg" alt="ロードのEXトレ（ルーカス 1）" width="900" height="1948" loading="lazy"><figcaption>ルーカス 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-lucas-2.jpg" alt="ロードのEXトレ（ルーカス 2）" width="900" height="1948" loading="lazy"><figcaption>ルーカス 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-kunugi-1.jpg" alt="ロードのEXトレ（クヌギ 1）" width="900" height="1948" loading="lazy"><figcaption>クヌギ 1</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-kunugi-2.jpg" alt="ロードのEXトレ（クヌギ 2）" width="900" height="1948" loading="lazy"><figcaption>クヌギ 2</figcaption></figure>
-          <figure><img src="../ikusei-img/story-torble/ex-lord-lumina.jpg" alt="ロードのEXトレ（ルミナ）" width="900" height="1948" loading="lazy"><figcaption>ルミナ</figcaption></figure>
+        <summary>ロードのEXトレの画像</summary>
+        <div class="card-groups">
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-julia.jpg" alt="" width="134" height="134" loading="lazy">ジュリア</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-julia-1.jpg" alt="ジュリアのEXトレ（1）" width="792" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-julia-2.jpg" alt="ジュリアのEXトレ（2）" width="792" height="160" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-julia-3.jpg" alt="ジュリアのEXトレ（3）" width="793" height="160" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-julia-4.jpg" alt="ジュリアのEXトレ（4）" width="792" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-kris.jpg" alt="" width="134" height="134" loading="lazy">クリス</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-kris-1.jpg" alt="クリスのEXトレ（1）" width="792" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kris-2.jpg" alt="クリスのEXトレ（2）" width="792" height="160" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kris-3.jpg" alt="クリスのEXトレ（3）" width="793" height="160" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kris-4.jpg" alt="クリスのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-kouen.jpg" alt="" width="134" height="134" loading="lazy">コウエン</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-kouen-1.jpg" alt="コウエンのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kouen-2.jpg" alt="コウエンのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kouen-3.jpg" alt="コウエンのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kouen-4.jpg" alt="コウエンのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kouen-5.jpg" alt="コウエンのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-leila.jpg" alt="" width="134" height="134" loading="lazy">レイラ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-leila-1.jpg" alt="レイラのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-leila-2.jpg" alt="レイラのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-leila-3.jpg" alt="レイラのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-leila-4.jpg" alt="レイラのEXトレ（4）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-lucas.jpg" alt="" width="134" height="134" loading="lazy">ルーカス</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-1.jpg" alt="ルーカスのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-2.jpg" alt="ルーカスのEXトレ（2）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-3.jpg" alt="ルーカスのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-4.jpg" alt="ルーカスのEXトレ（4）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-5.jpg" alt="ルーカスのEXトレ（5）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-lucas-6.jpg" alt="ルーカスのEXトレ（6）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-kunugi.jpg" alt="" width="134" height="134" loading="lazy">クヌギ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-kunugi-1.jpg" alt="クヌギのEXトレ（1）" width="797" height="162" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kunugi-2.jpg" alt="クヌギのEXトレ（2）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kunugi-3.jpg" alt="クヌギのEXトレ（3）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kunugi-4.jpg" alt="クヌギのEXトレ（4）" width="797" height="161" loading="lazy">
+            <img src="../ikusei-img/story-torble/exc-lord-kunugi-5.jpg" alt="クヌギのEXトレ（5）" width="797" height="160" loading="lazy">
+          </div>
+        </div>
+        <div class="card-group">
+          <div class="card-chara"><img src="../ikusei-img/story-torble/chara-lumina.jpg" alt="" width="134" height="134" loading="lazy">ルミナ</div>
+          <div class="card-grid">
+            <img src="../ikusei-img/story-torble/exc-lord-lumina-1.jpg" alt="ルミナのEXトレ（1）" width="797" height="162" loading="lazy">
+          </div>
+        </div>
         </div>
       </details>
     </details>
@@ -469,9 +669,10 @@
         <li>総合力育成で強力なガルド系能力は、どちらも<strong>ロード秘伝のひらめきで能力継承ができる</strong>。ロード秘伝を持った親に持たせておけば、他のストーリーの育成でも発動させられる</li>
       </ul>
       <details class="shots" open>
-        <summary>モングラの取得能力の画像（1枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ability-mongura.jpg" alt="モングラの取得能力（ブレインガルド・タフネスガルド）" width="900" height="1948" loading="lazy"></figure>
+        <summary>モングラの取得能力の画像</summary>
+        <div class="card-grid">
+          <img src="../ikusei-img/story-torble/abc-mongura-1.jpg" alt="ブレインガルド" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-mongura-2.jpg" alt="タフネスガルド" width="800" height="229" loading="lazy">
         </div>
       </details>
     </details>
@@ -491,12 +692,21 @@
         <li>ハント系の効果がかかるのは、バトルで<strong>最初に発動する技だけ</strong></li>
       </ul>
       <details class="shots" open>
-        <summary>グラスラの取得能力の画像（4枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ability-gurasura-1.jpg" alt="グラスラの取得能力1（レッド〜グリーンハント）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-gurasura-2.jpg" alt="グラスラの取得能力2（グリーン〜クリエイトハント）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-gurasura-3.jpg" alt="グラスラの取得能力3（スピリット〜スペクターハント）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-gurasura-4.jpg" alt="グラスラの取得能力4（ビーストハント〜ハイレイドブースト）" width="900" height="1948" loading="lazy"></figure>
+        <summary>グラスラの取得能力の画像</summary>
+        <div class="card-grid">
+          <img src="../ikusei-img/story-torble/abc-gurasura-1.jpg" alt="レッドハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-2.jpg" alt="ブルーハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-3.jpg" alt="イエローハント" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-4.jpg" alt="グリーンハント" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-5.jpg" alt="ホワイトハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-6.jpg" alt="ブラックハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-7.jpg" alt="クリエイトハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-8.jpg" alt="スピリットハント" width="800" height="216" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-9.jpg" alt="デモンハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-10.jpg" alt="ビーストハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-11.jpg" alt="スペクターハント" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-12.jpg" alt="イノーガニックハント" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-gurasura-13.jpg" alt="ハイレイドブースト" width="800" height="228" loading="lazy">
         </div>
       </details>
     </details>
@@ -516,12 +726,23 @@
         <li>ハートの追加効果には地形適性SSが必要。ロードを選んだ後は地形適性をほとんど上げられないので、<strong>陣営選択前に上げておく</strong>（詳しくは上の<a href="#ex" style="color:#f0a500;">EXトレ</a>）</li>
       </ul>
       <details class="shots" open>
-        <summary>ロードの取得能力の画像（4枚）</summary>
-        <div class="shot-grid">
-          <figure><img src="../ikusei-img/story-torble/ability-lord-1.jpg" alt="ロードの取得能力1（マンディー〜パパス・ハート）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-lord-2.jpg" alt="ロードの取得能力2（パパス・カウレア・ハート、ゼロ・ニア・スナイプ）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-lord-3.jpg" alt="ロードの取得能力3（ミドル・ロング・スナイプ、ウィーク・クリエイト・スピリット）" width="900" height="1948" loading="lazy"></figure>
-          <figure><img src="../ikusei-img/story-torble/ability-lord-4.jpg" alt="ロードの取得能力4（ウィーク・デモン〜イノーガニック）" width="900" height="1948" loading="lazy"></figure>
+        <summary>ロードの取得能力の画像</summary>
+        <div class="card-grid">
+          <img src="../ikusei-img/story-torble/abc-lord-1.jpg" alt="マンディー・ハート" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-2.jpg" alt="パレパレ・ハート" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-3.jpg" alt="トーブル・ハート" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-4.jpg" alt="パパス・ハート" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-5.jpg" alt="カウレア・ハート" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-6.jpg" alt="ゼロ・スナイプ" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-7.jpg" alt="ニア・スナイプ" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-8.jpg" alt="ミドル・スナイプ" width="800" height="229" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-9.jpg" alt="ロング・スナイプ" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-10.jpg" alt="ウィーク・クリエイト" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-11.jpg" alt="ウィーク・スピリット" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-12.jpg" alt="ウィーク・デモン" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-13.jpg" alt="ウィーク・ビースト" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-14.jpg" alt="ウィーク・スペクター" width="800" height="228" loading="lazy">
+          <img src="../ikusei-img/story-torble/abc-lord-15.jpg" alt="ウィーク・イノーガニック" width="800" height="228" loading="lazy">
         </div>
       </details>
     </details>
@@ -564,7 +785,7 @@
       </table>
     </div>
     <details class="shots" open>
-      <summary>レアの能力の画像（3枚）</summary>
+      <summary>レアの能力の画像</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-long-aim.jpg" alt="ヴァルド能力「ヴァルドロングエイム」" width="836" height="221" loading="lazy"><figcaption>ヴァルドロングエイム</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-zero-trine.jpg" alt="ヴァルド能力「ヴァルドゼロトライン」" width="804" height="239" loading="lazy"><figcaption>ヴァルドゼロトライン</figcaption></figure>
@@ -581,7 +802,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>混血の能力の画像（4枚）</summary>
+      <summary>混血の能力の画像</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-near-shield.jpg" alt="ヴァルド能力「ヴァルドニアシールド」" width="802" height="242" loading="lazy"><figcaption>ヴァルドニアシールド</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-zero-force.jpg" alt="ヴァルド能力「ヴァルドゼロフォース」" width="781" height="206" loading="lazy"><figcaption>ヴァルドゼロフォース</figcaption></figure>
@@ -599,7 +820,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>純血の能力の画像（8枚）</summary>
+      <summary>純血の能力の画像</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-zero-boom.jpg" alt="ヴァルド能力「ヴァルドゼロブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドゼロブーム</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-long-boom.jpg" alt="ヴァルド能力「ヴァルドロングブーム」" width="802" height="242" loading="lazy"><figcaption>ヴァルドロングブーム</figcaption></figure>
@@ -622,7 +843,7 @@
       </table>
     </div>
     <details class="shots">
-      <summary>シロモッチーの能力の画像（2枚）</summary>
+      <summary>シロモッチーの能力の画像</summary>
       <div class="shot-list">
         <figure><img src="../ikusei-img/story-torble/vald-shiro-epicgrow.jpg" alt="ヴァルド能力「ヴァルドエピックグロウ」" width="840" height="253" loading="lazy"><figcaption>ヴァルドエピックグロウ</figcaption></figure>
         <figure><img src="../ikusei-img/story-torble/vald-shiro-armedfort.jpg" alt="ヴァルド能力「ヴァルドアームドフォート」" width="803" height="269" loading="lazy"><figcaption>ヴァルドアームドフォート</figcaption></figure>
