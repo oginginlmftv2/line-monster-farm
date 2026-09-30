@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 136,
+    "skills": 144,
     "bloods": 6
   },
   "skills": [
@@ -1907,6 +1907,364 @@
       "status": "verified"
     },
     {
+      "skillId": "sk-0137",
+      "name": "ぐるぐるプレス",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 30,
+      "damage": "A",
+      "accuracy": "E",
+      "gutsDown": "G",
+      "critical": "D+",
+      "abilities": [
+        {
+          "abilityId": "sab-0179",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0180",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1251",
+          "rarity": 4
+        },
+        {
+          "monsterId": "1252",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 49,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0138",
+      "name": "突進つきあげ",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "中",
+      "rank": 3,
+      "moveTo": "零",
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 34,
+      "damage": "B",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0181",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0182",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1208",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 50,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0139",
+      "name": "しっぽビンタ",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 29,
+      "damage": "B",
+      "accuracy": "A",
+      "gutsDown": "F",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0183",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0184",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0185",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1201",
+          "rarity": 4
+        },
+        {
+          "monsterId": "1250",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 51,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0140",
+      "name": "ボディープレス",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "零",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 35,
+      "damage": "S",
+      "accuracy": "E",
+      "gutsDown": "E",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0177",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0186",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1202",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 52,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0141",
+      "name": "大津波",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 36,
+      "damage": "A",
+      "accuracy": "B+",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0187",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0188",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1202",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 53,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0142",
+      "name": "ウェーブプレス",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "ちから",
+      "guts": 46,
+      "damage": "B+",
+      "accuracy": "B",
+      "gutsDown": "C",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0189",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0190",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0141",
+          "unlock": {
+            "monsterId": "1252",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0142",
+          "unlock": {
+            "monsterId": "1252",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1252",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 54,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0143",
+      "name": "つきあげ",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "零",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "ちから",
+      "guts": 40,
+      "damage": "B+",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0191",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0192",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0021",
+          "unlock": {
+            "monsterId": "1251",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0039",
+          "unlock": {
+            "monsterId": "1251",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1251",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 55,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0144",
+      "name": "キングウェーブ",
+      "version": 1,
+      "blood": "グジラ",
+      "range": "遠",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 40,
+      "damage": "S",
+      "accuracy": "S",
+      "gutsDown": "B",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0193",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0194",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "1250",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "1250",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1250",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 56,
+      "status": "verified"
+    },
+    {
       "skillId": "sk-0039",
       "name": "ヴェノムエッジ",
       "version": 1,
@@ -1941,7 +2299,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 49,
+      "sortOrder": 57,
       "status": "verified"
     },
     {
@@ -1975,7 +2333,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 50,
+      "sortOrder": 58,
       "status": "verified"
     },
     {
@@ -2013,7 +2371,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 51,
+      "sortOrder": 59,
       "status": "verified"
     },
     {
@@ -2055,7 +2413,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 52,
+      "sortOrder": 60,
       "status": "verified"
     },
     {
@@ -2097,7 +2455,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 53,
+      "sortOrder": 61,
       "status": "verified"
     },
     {
@@ -2149,7 +2507,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 54,
+      "sortOrder": 62,
       "status": "verified"
     },
     {
@@ -2187,7 +2545,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 55,
+      "sortOrder": 63,
       "status": "verified"
     },
     {
@@ -2225,7 +2583,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 56,
+      "sortOrder": 64,
       "status": "verified"
     },
     {
@@ -2277,7 +2635,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 57,
+      "sortOrder": 65,
       "status": "verified"
     },
     {
@@ -2315,7 +2673,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 58,
+      "sortOrder": 66,
       "status": "verified"
     },
     {
@@ -2353,7 +2711,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 59,
+      "sortOrder": 67,
       "status": "verified"
     },
     {
@@ -2387,7 +2745,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 60,
+      "sortOrder": 68,
       "status": "verified"
     },
     {
@@ -2439,7 +2797,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 61,
+      "sortOrder": 69,
       "status": "verified"
     },
     {
@@ -2491,7 +2849,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 62,
+      "sortOrder": 70,
       "status": "verified"
     },
     {
@@ -2524,7 +2882,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 63,
+      "sortOrder": 71,
       "status": "verified"
     },
     {
@@ -2557,7 +2915,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 64,
+      "sortOrder": 72,
       "status": "verified"
     },
     {
@@ -2592,7 +2950,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 65,
+      "sortOrder": 73,
       "status": "verified"
     },
     {
@@ -2627,7 +2985,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 66,
+      "sortOrder": 74,
       "status": "verified"
     },
     {
@@ -2662,7 +3020,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 67,
+      "sortOrder": 75,
       "status": "verified"
     },
     {
@@ -2697,7 +3055,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 68,
+      "sortOrder": 76,
       "status": "verified"
     },
     {
@@ -2732,7 +3090,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 69,
+      "sortOrder": 77,
       "status": "verified"
     },
     {
@@ -2767,7 +3125,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 70,
+      "sortOrder": 78,
       "status": "verified"
     },
     {
@@ -2816,7 +3174,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 71,
+      "sortOrder": 79,
       "status": "verified"
     },
     {
@@ -2865,7 +3223,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 72,
+      "sortOrder": 80,
       "status": "verified"
     },
     {
@@ -2900,7 +3258,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 73,
+      "sortOrder": 81,
       "status": "verified"
     },
     {
@@ -2942,7 +3300,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 74,
+      "sortOrder": 82,
       "status": "verified"
     },
     {
@@ -2975,7 +3333,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 75,
+      "sortOrder": 83,
       "status": "verified"
     },
     {
@@ -3019,7 +3377,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 76,
+      "sortOrder": 84,
       "status": "verified"
     },
     {
@@ -3057,7 +3415,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 77,
+      "sortOrder": 85,
       "status": "verified"
     },
     {
@@ -3091,7 +3449,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 78,
+      "sortOrder": 86,
       "status": "verified"
     },
     {
@@ -3125,7 +3483,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 79,
+      "sortOrder": 87,
       "status": "verified"
     },
     {
@@ -3159,7 +3517,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 80,
+      "sortOrder": 88,
       "status": "verified"
     },
     {
@@ -3197,7 +3555,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 81,
+      "sortOrder": 89,
       "status": "verified"
     },
     {
@@ -3235,7 +3593,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 82,
+      "sortOrder": 90,
       "status": "verified"
     },
     {
@@ -3281,7 +3639,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 83,
+      "sortOrder": 91,
       "status": "verified"
     },
     {
@@ -3333,7 +3691,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 84,
+      "sortOrder": 92,
       "status": "verified"
     },
     {
@@ -3371,7 +3729,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 85,
+      "sortOrder": 93,
       "status": "verified"
     },
     {
@@ -3423,7 +3781,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 86,
+      "sortOrder": 94,
       "status": "verified"
     },
     {
@@ -3475,7 +3833,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 87,
+      "sortOrder": 95,
       "status": "verified"
     },
     {
@@ -3513,7 +3871,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 88,
+      "sortOrder": 96,
       "status": "verified"
     },
     {
@@ -3565,7 +3923,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 89,
+      "sortOrder": 97,
       "status": "verified"
     },
     {
@@ -3599,7 +3957,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 90,
+      "sortOrder": 98,
       "status": "verified"
     },
     {
@@ -3623,7 +3981,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "血統技図鑑に未掲載（技登録不可）",
-      "sortOrder": 91,
+      "sortOrder": 99,
       "status": "verified"
     },
     {
@@ -3654,7 +4012,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 92,
+      "sortOrder": 100,
       "status": "verified"
     },
     {
@@ -3685,7 +4043,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 93,
+      "sortOrder": 101,
       "status": "verified"
     },
     {
@@ -3720,7 +4078,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 94,
+      "sortOrder": 102,
       "status": "verified"
     },
     {
@@ -3755,7 +4113,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 95,
+      "sortOrder": 103,
       "status": "verified"
     },
     {
@@ -3786,7 +4144,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 96,
+      "sortOrder": 104,
       "status": "verified"
     },
     {
@@ -3835,7 +4193,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 97,
+      "sortOrder": 105,
       "status": "verified"
     },
     {
@@ -3866,7 +4224,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 98,
+      "sortOrder": 106,
       "status": "verified"
     },
     {
@@ -3904,7 +4262,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 99,
+      "sortOrder": 107,
       "status": "verified"
     },
     {
@@ -3956,7 +4314,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 100,
+      "sortOrder": 108,
       "status": "verified"
     },
     {
@@ -3990,7 +4348,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 101,
+      "sortOrder": 109,
       "status": "verified"
     },
     {
@@ -4028,7 +4386,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 102,
+      "sortOrder": 110,
       "status": "verified"
     },
     {
@@ -4061,7 +4419,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 103,
+      "sortOrder": 111,
       "status": "verified"
     },
     {
@@ -4087,7 +4445,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 104,
+      "sortOrder": 112,
       "status": "verified"
     },
     {
@@ -4118,7 +4476,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 105,
+      "sortOrder": 113,
       "status": "verified"
     },
     {
@@ -4172,7 +4530,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 106,
+      "sortOrder": 114,
       "status": "verified"
     },
     {
@@ -4214,7 +4572,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 107,
+      "sortOrder": 115,
       "status": "verified"
     },
     {
@@ -4256,7 +4614,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 108,
+      "sortOrder": 116,
       "status": "verified"
     },
     {
@@ -4291,7 +4649,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 109,
+      "sortOrder": 117,
       "status": "verified"
     },
     {
@@ -4322,7 +4680,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 110,
+      "sortOrder": 118,
       "status": "verified"
     },
     {
@@ -4353,7 +4711,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 111,
+      "sortOrder": 119,
       "status": "verified"
     },
     {
@@ -4384,7 +4742,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 112,
+      "sortOrder": 120,
       "status": "verified"
     },
     {
@@ -4430,7 +4788,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 113,
+      "sortOrder": 121,
       "status": "verified"
     },
     {
@@ -4472,7 +4830,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 114,
+      "sortOrder": 122,
       "status": "verified"
     },
     {
@@ -4514,7 +4872,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 115,
+      "sortOrder": 123,
       "status": "verified"
     },
     {
@@ -4570,7 +4928,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 116,
+      "sortOrder": 124,
       "status": "verified"
     },
     {
@@ -4601,7 +4959,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 117,
+      "sortOrder": 125,
       "status": "verified"
     },
     {
@@ -4636,7 +4994,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 118,
+      "sortOrder": 126,
       "status": "verified"
     },
     {
@@ -4667,7 +5025,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 119,
+      "sortOrder": 127,
       "status": "verified"
     },
     {
@@ -4702,7 +5060,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 120,
+      "sortOrder": 128,
       "status": "verified"
     },
     {
@@ -4737,7 +5095,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 121,
+      "sortOrder": 129,
       "status": "verified"
     },
     {
@@ -4768,7 +5126,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 122,
+      "sortOrder": 130,
       "status": "verified"
     },
     {
@@ -4806,7 +5164,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 123,
+      "sortOrder": 131,
       "status": "verified"
     },
     {
@@ -4852,7 +5210,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 124,
+      "sortOrder": 132,
       "status": "verified"
     },
     {
@@ -4890,7 +5248,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 125,
+      "sortOrder": 133,
       "status": "verified"
     },
     {
@@ -4942,7 +5300,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 126,
+      "sortOrder": 134,
       "status": "verified"
     },
     {
@@ -4977,7 +5335,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 127,
+      "sortOrder": 135,
       "status": "verified"
     },
     {
@@ -5012,7 +5370,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 128,
+      "sortOrder": 136,
       "status": "verified"
     },
     {
@@ -5047,7 +5405,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 129,
+      "sortOrder": 137,
       "status": "verified"
     },
     {
@@ -5082,7 +5440,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 130,
+      "sortOrder": 138,
       "status": "verified"
     },
     {
@@ -5117,7 +5475,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 131,
+      "sortOrder": 139,
       "status": "verified"
     },
     {
@@ -5166,7 +5524,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 132,
+      "sortOrder": 140,
       "status": "verified"
     },
     {
@@ -5204,7 +5562,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 133,
+      "sortOrder": 141,
       "status": "verified"
     },
     {
@@ -5256,7 +5614,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 134,
+      "sortOrder": 142,
       "status": "verified"
     },
     {
@@ -5294,7 +5652,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 135,
+      "sortOrder": 143,
       "status": "verified"
     },
     {
@@ -5337,7 +5695,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 136,
+      "sortOrder": 144,
       "status": "verified"
     }
   ]
