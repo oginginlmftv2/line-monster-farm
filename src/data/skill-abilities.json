@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 223
+    "abilities": 228
   },
   "abilities": [
     {
@@ -2737,6 +2737,72 @@
         "bf-0031"
       ],
       "sortOrder": 223,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0224",
+      "name": "呪：裂傷Lv3",
+      "version": 1,
+      "baseName": "呪：裂傷",
+      "level": 3,
+      "description": "対象技命中時、相手に[裂傷Lv3]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0031"
+      ],
+      "sortOrder": 224,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0225",
+      "name": "連撃：シャドウブロウ",
+      "version": 1,
+      "baseName": "連撃：シャドウブロウ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜35%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 225,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0226",
+      "name": "シャドウブロウ",
+      "version": 1,
+      "baseName": "シャドウブロウ",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・相手に[火傷Lv3＜20秒＞]付与\n・自身のガッツ回復速度上昇＜+25%＞＜20秒＞",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 226,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0227",
+      "name": "連撃：エレキブロウ",
+      "version": 1,
+      "baseName": "連撃：エレキブロウ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜40%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 227,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0228",
+      "name": "エレキブロウ",
+      "version": 1,
+      "baseName": "エレキブロウ",
+      "level": null,
+      "description": "対象技命中時、次の効果＜3回＞\n・相手に[火傷Lv1＜20秒＞]付与\n・自身のガッツ＜20＞回復",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 228,
       "status": "verified"
     }
   ]
