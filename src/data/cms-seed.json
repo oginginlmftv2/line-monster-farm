@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 359,
+  "count": 361,
   "monsters": [
     {
       "id": "0101",
@@ -2202,8 +2202,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 1170,
-      "current": 1786,
+      "baseline": 1194,
+      "current": 1810,
       "indexable": true
     },
     {
@@ -2241,8 +2241,33 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-08-20",
       "releasedAt": "2025-11-30",
-      "baseline": 1288,
-      "current": 2071,
+      "baseline": 1312,
+      "current": 2095,
+      "indexable": true
+    },
+    {
+      "id": "0651",
+      "arrayIndex": 360,
+      "name": "マミーレックス",
+      "aura": "青",
+      "mon": "獣族",
+      "mainBlood": "ディノ",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "イベント限定",
+      "image": "0651.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kemono/dino/0651.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-09-30",
+      "releasedAt": "2026-09-30",
+      "baseline": 1354,
+      "current": 1354,
       "indexable": true
     },
     {
@@ -9751,8 +9776,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-08-31",
-      "baseline": 1640,
-      "current": 3378,
+      "baseline": 1639,
+      "current": 3377,
       "indexable": true
     },
     {
@@ -9788,8 +9813,33 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-30",
-      "baseline": 1913,
-      "current": 3107,
+      "baseline": 1933,
+      "current": 3127,
+      "indexable": true
+    },
+    {
+      "id": "3351",
+      "arrayIndex": 358,
+      "name": "ヴァンパイア",
+      "aura": "青",
+      "mon": "幻霊",
+      "mainBlood": "アーク",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "秋限定",
+      "image": null,
+      "imageSource": null,
+      "gwImg": null,
+      "url": "/monsters/genrei/arc/3351.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-09-30",
+      "releasedAt": "2026-09-30",
+      "baseline": 1415,
+      "current": 1415,
       "indexable": true
     },
     {
@@ -9836,8 +9886,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2026-02-19",
-      "baseline": 1730,
-      "current": 3180,
+      "baseline": 1733,
+      "current": 3183,
       "indexable": true
     },
     {

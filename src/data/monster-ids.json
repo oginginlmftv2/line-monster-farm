@@ -1619,10 +1619,10 @@
    "bloodSlug": "dino",
    "subBlood": "レアモン",
    "aura": "青",
-   "limited": false,
+   "limited": true,
    "limitedLabel": "イベント限定",
    "gwImg": null,
-   "localImg": null,
+   "localImg": "0651.jpg",
    "url": "/monsters/kemono/dino/0651.html",
    "image": "img/monster/0651.jpg"
   },
