@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 174
+    "abilities": 178
   },
   "abilities": [
     {
@@ -2129,6 +2129,54 @@
         "bf-0021"
       ],
       "sortOrder": 174,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0175",
+      "name": "丈夫さ上昇[大]",
+      "version": 1,
+      "baseName": "丈夫さ上昇[大]",
+      "level": null,
+      "description": "丈夫さパラ+40",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 175,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0176",
+      "name": "疫：移動不可Lv2",
+      "version": 1,
+      "baseName": "疫：移動不可",
+      "level": 2,
+      "description": "対象技命中時、相手に[移動不可＜10秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 176,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0177",
+      "name": "ライフ上昇[大]",
+      "version": 1,
+      "baseName": "ライフ上昇[大]",
+      "level": null,
+      "description": "ライフパラ+40",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 177,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0178",
+      "name": "くしゃみ",
+      "version": 1,
+      "baseName": "くしゃみ",
+      "level": null,
+      "description": "対象技命中時、相手の回避率＜-15%＞＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 178,
       "status": "verified"
     }
   ]
