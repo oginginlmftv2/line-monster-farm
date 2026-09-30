@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1248,
-    "resolved": 726,
+    "abilities": 1260,
+    "resolved": 738,
     "ambiguous": 7,
     "unlinked": 515,
     "duplicateCandidates": 44
@@ -22467,6 +22467,219 @@
         "忠誠度"
       ],
       "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1254",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[自身青]不屈",
+      "description": "[自身青][終盤]ライフ３０％未満時、最大ライフ２０％以上の被ダメージをカットする<br>[自身青][終盤]ライフ３０％未満時、連撃/追撃を無効＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1255",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[自身青]ちから＋３%",
+      "description": "[自身青]ちからステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "オーラ青"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1256",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[幻霊]ちから＋３%",
+      "description": "[幻霊]ちからステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "幻霊"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1257",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[雪山]防塵",
+      "description": "[雪山]バトル開始時、ライフ１０％分[最大耐久値１００]の【シールド】を展開する＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "シールド"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1258",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[火山]防塵",
+      "description": "[火山]バトル開始時、ライフ１０％分[最大耐久値１００]の【シールド】を展開する＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "シールド"
+      ],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1259",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[火山]ちから＋１００",
+      "description": "[火山]ちからステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1260",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[晴れ]ちから＋１００",
+      "description": "[晴れ]ちからステータス＋１００",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1261",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "[幻霊]堅固",
+      "description": "[幻霊][序盤]ライフ７０％以上時、最大ライフ４０％以上の被ダメをカット<br>[幻霊][序盤]連撃/追撃のダメージを５０％ダウン＜１回＞",
+      "source": "閃き",
+      "rarity": "MR",
+      "tags": [
+        "幻霊",
+        "シールド"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1262",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "光香む常闇の衣 I",
+      "description": "[前半][自身青]＜青＞技発動時、ライフステ＜２０％＞の【シールド】展開＜２０秒＞＜１回＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "シールド"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1263",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "光香む常闇の衣 II",
+      "description": "[前半][自身青]＜青＞技発動時、自身に次の効果＜２０秒＞＜１回＞<br>・ライフステ＜３０％＞の【シールド】展開[最大値＋２００]<br>・このシールド展開中、ライフステ＜１０％＞を攻撃ステ加算",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "シールド",
+        "攻撃強化"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1264",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "昏き満月の祝福 I",
+      "description": "[前半][自身青]＜青＞技発動時、次の効果＜２０秒＞＜１回＞<br>・相手の攻撃ステ＜－１５％＞<br>・自身の攻撃ステ＜＋１５％＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "攻撃強化",
+        "デバフ"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1265",
+      "legacyId": null,
+      "cardId": "c0003-MR",
+      "sourceName": "アルカード",
+      "name": "昏き満月の祝福 II",
+      "description": "[前半][自身青]＜青＞技発動時、次の効果＜２０秒＞＜１回＞<br>・相手の攻撃ステ＜－３０％＞<br>・自身の攻撃ステ＜＋３０％＞<br>・[有利]この効果の効果時間＜＋１５秒＞",
+      "source": "イベント",
+      "rarity": "MR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "攻撃強化",
+        "デバフ",
+        "有利時"
+      ],
+      "sortOrder": 4,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
