@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 1260,
-    "resolved": 738,
+    "abilities": 1273,
+    "resolved": 751,
     "ambiguous": 7,
     "unlinked": 515,
     "duplicateCandidates": 44
@@ -22680,6 +22680,232 @@
         "有利時"
       ],
       "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1266",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "超根性",
+      "description": "[状態変化]残りライフが少ないときに稀に効果発動<br>・通常/追撃/連撃ダメージを受けたときライフ１で耐える＜１回＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "ライフ低下時"
+      ],
+      "sortOrder": 1,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1267",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "ブギースペル I",
+      "description": "[後半][グジラ種]オーラ技発動時、次の効果<br>・命中率＜＋６％＞<br>・与ダメ上昇＜＋１０％＞<br>・[相手サイズ小]この能力の効果量２倍",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "後半",
+        "命中強化",
+        "攻撃強化"
+      ],
+      "sortOrder": 2,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1268",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "ブギースペル II",
+      "description": "[後半][自身青またはグジラ種]オーラ技発動時、次の効果<br>・命中率＜＋１５％＞<br>・特殊与ダメ上昇＜＋２０％＞<br>・[相手サイズ小]この能力の効果量２倍",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "後半",
+        "オーラ青",
+        "命中強化",
+        "攻撃強化"
+      ],
+      "sortOrder": 3,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1269",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "ブギーブロック I",
+      "description": "[前半][自身青]＜赤＞技を受けた時、自身に次の効果＜２０秒＞＜１回＞<br>・追撃被ダメ軽減＜２０％＞<br>・[オーラ有利]自身が受ける継続ダメージ軽減＜２０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 4,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1270",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "ブギーブロック II",
+      "description": "[前半][自身青]＜赤＞技を受けた時、自身に次の効果＜２０秒＞＜１回＞<br>・被ダメブロック＜４０％＞<br>・[オーラ有利]自身が受ける継続ダメージ軽減＜５０％＞",
+      "source": "イベント",
+      "rarity": "SSR",
+      "tags": [
+        "前半",
+        "オーラ青",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 5,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1271",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[青]破壊",
+      "description": "＜オーラ青＞技発動時、クリダメ上昇Lv4＜２０秒＞＜１回＞",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青"
+      ],
+      "sortOrder": 6,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1272",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[自身青]丈夫さ＋３％",
+      "description": "[自身青]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "オーラ青",
+        "丈夫さ強化"
+      ],
+      "sortOrder": 7,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1273",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[獣族]丈夫さ＋３%",
+      "description": "[獣族]丈夫さステータスを３％上昇",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "獣族"
+      ],
+      "sortOrder": 8,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1274",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[火山]強打",
+      "description": "[火山]クリダメ上昇Lv3",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 9,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1275",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[火山]丈夫さ＋１００",
+      "description": "[火山]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 10,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1276",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[悪天候]丈夫さ＋１００",
+      "description": "[悪天候]丈夫さステータス＋１００",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [],
+      "sortOrder": 11,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1277",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[獣族]守護",
+      "description": "[獣族]被ダメ低下Lv4",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "獣族",
+        "被ダメ軽減"
+      ],
+      "sortOrder": 12,
+      "linkStatus": "resolved",
+      "flags": [],
+      "status": "verified"
+    },
+    {
+      "abilityId": "ab-1278",
+      "legacyId": null,
+      "cardId": "c0004-SSR",
+      "sourceName": "ブギー",
+      "name": "[海岸]守護",
+      "description": "[海岸]被ダメ低下Lv4",
+      "source": "閃き",
+      "rarity": "SSR",
+      "tags": [
+        "被ダメ軽減"
+      ],
+      "sortOrder": 13,
       "linkStatus": "resolved",
       "flags": [],
       "status": "verified"
