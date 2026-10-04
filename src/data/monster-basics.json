@@ -1057,6 +1057,347 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0302",
+      "name": "サバット",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0303",
+      "name": "ケンタウロス",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "C",
+        "海岸": "G",
+        "雪山": "F",
+        "火山": "E"
+      },
+      "range": {
+        "far": "G",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0304",
+      "name": "デュランダル",
+      "talent": {
+        "life": -5,
+        "power": 5,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "D",
+        "火山": "D"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0305",
+      "name": "イースター",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "D"
+      },
+      "range": {
+        "far": "F",
+        "mid": "E",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0308",
+      "name": "アンタレス",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "B",
+        "雪山": "F",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "G",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0309",
+      "name": "シリウス",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "E",
+        "海岸": "D",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0317",
+      "name": "デルピエロ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": -5,
+        "defense": -5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0350",
+      "name": "ヤブサメ",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0351",
+      "name": "オーディーン",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0352",
+      "name": "スナイプ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0353",
+      "name": "ゴッドエンペラー",
+      "talent": {
+        "life": 0,
+        "power": 20,
+        "wisdom": 15,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "A",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0430",
       "name": "ラクシャーガ",
       "talent": {

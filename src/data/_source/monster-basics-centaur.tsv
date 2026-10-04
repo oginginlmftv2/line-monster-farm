@@ -1,0 +1,12 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+ゴッドエンペラー	0	20	15	0	-10	-5	A	B	晩成	ワル	ふつう	B	D	F	C	B	D	A	B	E	2026-10-05
+ヤブサメ	0	5	0	5	10	0	D	D	早熟	ヨイ	ふつう	F	C	E	C	C	B	D	C	E	2026-10-05
+オーディーン	10	0	15	0	0	-5	A	B	晩成	ヨイ	ふつう	E	C	D	C	C	C	C	D	C	2026-10-05
+アンタレス	0	0	0	5	5	10	E	C	ふつう	ややヨイ	ふつう	D	D	B	F	E	D	G	C	C	2026-10-05
+デルピエロ	0	0	20	10	-5	-5	D	D	晩成	ワル	ふつう	C	E	C	F	B	B	D	D	D	2026-10-05
+デュランダル	-5	5	0	15	10	-5	E	D	ふつう	ヨイ	ふつう	B	C	F	D	D	D	D	B	D	2026-10-05
+シリウス	0	0	10	10	5	-5	C	C	早熟	ヨイ	ふつう	D	E	D	B	E	D	C	D	D	2026-10-05
+イースター	0	15	5	5	-5	0	E	E	晩成	ヨイ	ふつう	C	C	F	E	D	F	E	C	C	2026-10-05
+ケンタウロス	0	5	10	10	0	-5	E	D	早熟	ヨイ	ふつう	B	C	G	F	E	G	D	C	C	2026-10-05
+サバット	0	10	5	5	0	0	E	D	早熟	ややワル	ふつう	C	C	F	E	C	D	E	C	C	2026-10-05
+スナイプ	0	0	15	10	0	-5	C	C	晩成	ややワル	ふつう	B	D	D	D	E	C	D	D	C	2026-10-05
