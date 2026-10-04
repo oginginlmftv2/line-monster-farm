@@ -21,8 +21,9 @@
 ## 2. 流れ
 
 ```text
-スクショ（1カードぶん）＋カード名
-  → スキル assist-ability-capture が読取JSONを書く
+スクショ（何回かに分かれて届く）
+  → スキル assist-ability-capture がカード名を聞き取り、カードごとの控えに貯める
+  → 入力者が「JSON作って」と指示してから、読取JSONを書く（途中で作ると作り直しになるため）
   → scripts/check-assist-ability-payload.js … 表記規約と判定（リポジトリの写しで計算）
   → --emit の貼り付け用JSON（判定 action 付き）
   → CMS カード詳細「能力取り込み」タブに貼る
