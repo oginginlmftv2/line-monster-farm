@@ -150,8 +150,8 @@ PCでは素質6マス・特徴5マスをそれぞれ1行に収め、SP（480px�
 ## 4. 運用
 
 1. スキル `monster-basics-capture` でスクショ（1回10体まで）を読み、TSVへ転記。
-   スマホからの添付のほか、PCのiPhoneミラーリングで撮って `~/Pictures/lmf-capture/basics/` に置いた画像も読める
-   （ほかの作業の画像が混ざっても、画面の中身で仕分けて対象外は触らない。手順はスキルの「PCから取り込む」）
+   スマホからの添付のほか、PCのiPhoneミラーリングをLMFShotの `basics` モードで撮った画像も読める
+   （撮影モードで保存先を作業ごとに分けるので、秘伝調査などの画像は混ざらない。撮影ツールは `tools/mirror-capture/`）
 2. `node scripts/import-monster-basics-tsv.js` → FAIL 0
 3. `node build.js` → `node scripts/test-monster-basics.js` → `node scripts/verify.js` FAIL 0
 4. `CLAUDE.md`「現在の実数」を `build.js` ログの値へ更新してコミット
