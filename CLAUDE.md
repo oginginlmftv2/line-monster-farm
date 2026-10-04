@@ -289,7 +289,9 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 移動速度・成長タイプ・ヨイワル・サイズ・地形適性・間合い適性を読み、詳細ページの「基礎データ」に
 出します。CMS対象外で、リポジトリのTSVとJSONで管理します（技DBと同じ区分）。
 
-1. スクショ（1メッセージ10体まで、1体3枚）を添付し、スキル `monster-basics-capture` で読む
+1. スクショ（1回10体まで、1体3枚）を添付し、スキル `monster-basics-capture` で読む
+   - PCのiPhoneミラーリングで撮る場合は、キャプチャアプリの保存先を `~/Pictures/lmf-capture/basics/` にして
+     「フォルダの基礎データを読んで」と頼む。取り込んだ画像は `done/<日付>/` へ移り、対象外の画像は残る
    - 名前→IDの照合とオーラ・モン類の突き合わせに通った体だけ転記する
 2. `src/data/_source/monster-basics-<血統slug>.tsv` へ1体1行で追記
 3. `node scripts/import-monster-basics-tsv.js` → FAIL 0 で `src/data/monster-basics.json` が書き直される
