@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-09-30T10:22:57Z",
+  "exportedAt": "2026-10-04T23:30:10Z",
   "count": 118,
   "monsters": {
     "1080": {
@@ -1649,8 +1649,9 @@
       "explanation": "",
       "explanationLength": 0,
       "formations": [],
-      "updatedAt": "2026-08-20",
-      "releasedAt": "2025-06-14"
+      "author": "ソラシド",
+      "updatedAt": "2026-10-05",
+      "releasedAt": "2026-06-14"
     },
     "0430": {
       "id": "0430",
