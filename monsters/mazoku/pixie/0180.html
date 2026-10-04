@@ -55,23 +55,98 @@
   </div>
 
 
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">基礎データ</h2>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">素質</h3>
+      <div class="basics-grid basics-grid-6">
+        <div class="basics-cell"><span class="basics-cell-label">ライフ</span><b class="basics-percent">+5%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">ちから</span><b class="basics-percent">0%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">かしこさ</span><b class="basics-percent">+15%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">命中</span><b class="basics-percent">+5%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">回避</span><b class="basics-percent">+10%</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">丈夫さ</span><b class="basics-percent">-5%</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>素質合計</dt><dd><span class="basics-score">+30%</span></dd></div>
+        <div><dt>最高素質</dt><dd>かしこさ +15%</dd></div>
+      </dl>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">特徴</h3>
+      <div class="basics-grid basics-grid-trait">
+        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">ガッツ回復力</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell basics-cell-trait-rank"><span class="basics-cell-label">移動速度</span><b class="basics-rank basics-rank-A">A</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">成長タイプ</span><b class="basics-text">ふつう</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">ヨイワル</span><b class="basics-text">ふつう</b></div>
+        <div class="basics-cell basics-cell-trait-enum"><span class="basics-cell-label">サイズ</span><b class="basics-text">小さい</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="section-box">
+    <div class="section-header">
+      <h2 class="section-title">適性データ</h2>
+    </div>
+    <div class="basics-rating-grid">
+      <div class="basics-rating-card">
+        <div class="basics-rating-label">地形適性評価</div>
+        <span class="basics-rating-value">3.1</span><span class="basics-rating-max">/ 5.0</span>
+      </div>
+      <div class="basics-rating-card">
+        <div class="basics-rating-label">間合い適性評価</div>
+        <span class="basics-rating-value">2.8</span><span class="basics-rating-max">/ 5.0</span>
+      </div>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">地形適性</h3>
+      <div class="basics-grid">
+        <div class="basics-cell"><span class="basics-cell-label">砂漠</span><b class="basics-rank basics-rank-B">B</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">森林</span><b class="basics-rank basics-rank-B">B</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">海岸</span><b class="basics-rank basics-rank-E">E</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">雪山</span><b class="basics-rank basics-rank-C">C</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">火山</span><b class="basics-rank basics-rank-E">E</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>得意（B以上）</dt><dd>砂漠<b class="basics-rank basics-rank-B">B</b>・森林<b class="basics-rank basics-rank-B">B</b></dd></div>
+        <div><dt>苦手（D以下）</dt><dd>海岸<b class="basics-rank basics-rank-E">E</b>・火山<b class="basics-rank basics-rank-E">E</b></dd></div>
+      </dl>
+    </div>
+    <div class="basics-block">
+      <h3 class="basics-title">間合い適性</h3>
+      <div class="basics-grid basics-grid-4">
+        <div class="basics-cell"><span class="basics-cell-label">遠</span><b class="basics-rank basics-rank-C">C</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">中</span><b class="basics-rank basics-rank-C">C</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">近</span><b class="basics-rank basics-rank-C">C</b></div>
+        <div class="basics-cell"><span class="basics-cell-label">零</span><b class="basics-rank basics-rank-D">D</b></div>
+      </div>
+      <dl class="basics-summary">
+        <div><dt>得意（B以上）</dt><dd>なし</dd></div>
+        <div><dt>苦手（D以下）</dt><dd>零<b class="basics-rank basics-rank-D">D</b></dd></div>
+      </dl>
+    </div>
+    <p class="basics-note">適性評価は当サイト独自の指標です。B以上は育成でSに届く適性、D以下はSに届きにくい適性として、高いランクを少し重く見て5.0満点で算出しています。</p>
+  </div>
 
   <div class="section-box">
     <div class="section-header">
       <h2 class="section-title">相性のいいアシスト能力</h2>
     </div>
-    <p class="skill-section-lead">グレイスウィッチ（白・魔族・ピクシー種）が発動できる、アシストカードのイベントで獲得できる能力です。</p>
+    <p class="skill-section-lead">グレイスウィッチは丈夫さの素質が低め（-5%）なので、花嫁の祝福 IIで丈夫さの低さを補おう。ライラックの花 IIの条件は零・近距離適性S以上。開始時の零D・近Cからでも、秘伝や育成の書、育成中のイベントで届く。</p>
     <ul class="skill-line-list">
       <li class="skill-line">
         <span class="skill-line-name">ライラックの花 II</span>
         <span class="skill-line-meta">入手：<a href="../../../cards/aab-MR-julia.html">ジュリア</a>（MR・2026/08）／回避・防御・火力・命中・支援</span>
         <span class="skill-line-abilities">[自身白]バトル中、自身に次の効果<br>零または近距離適性がS以上の時、全ステータス&lt;+30%&gt;と[業物Lv6]<br>[有利]R4以上の技発動時、ダメージ&lt;30%&gt;の追撃&lt;1回&gt;</span>
       </li>
+      <li class="skill-section-lead ability-fit-note">▲ 発動条件は零・近距離適性S以上。開始時の零D・近Cは、秘伝・育成の書や育成中のイベントでSを目指せる。</li>
       <li class="skill-line">
         <span class="skill-line-name">データ操作 II</span>
         <span class="skill-line-meta">入手：<a href="../../../cards/c28j-SSR-rokusho.html">ロクショウ</a>（SSR・2026/06）／命中・回避・防御・支援</span>
         <span class="skill-line-abilities">[自身白またはニャー種]バトル中、次の効果<br>移動速度&lt;+4&gt;<br>[前半]命中率&lt;+30%&gt;、回避率&lt;+30%&gt;<br>[ニャー種]地形適応効果&lt;+30%&gt;</span>
       </li>
+      <li class="skill-section-lead ability-fit-note">▲ 回避は素質+10%で伸びやすい。この能力で回避をさらに上げられる。</li>
       <li class="skill-line">
         <span class="skill-line-name">ニシキスマッシュ II</span>
         <span class="skill-line-meta">入手：<a href="../../../cards/a13i-MR-nishiki.html">ニシキ</a>（MR・2026/05）／命中・回避・防御</span>
@@ -82,6 +157,7 @@
         <span class="skill-line-meta">入手：<a href="../../../cards/e3h-SSR-marijji.html">マリッジ</a>（SSR・2025/05）／回避・防御・支援</span>
         <span class="skill-line-abilities">[自身白][序盤]間合い適性S以上の時、次の効果が発動<br>最大ライフ&lt;30%&gt;以上の被ダメ軽減<br>SS以上かつ[相手黒]の時、追撃無効</span>
       </li>
+      <li class="skill-section-lead ability-fit-note">▲ 発動条件は間合い適性S以上。開始時の遠C・中C・近Cは、秘伝・育成の書や育成中のイベントでSを目指せる。</li>
       <li class="skill-line">
         <span class="skill-line-name">九つの目 II</span>
         <span class="skill-line-meta">入手：イベント報酬／命中・火力</span>

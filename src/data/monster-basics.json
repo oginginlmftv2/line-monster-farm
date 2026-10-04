@@ -3,6 +3,595 @@
   "note": "スクショから転記した生の値だけを持つ。評価値は保存せず build.js が src/lib/monster-basics.js で計算する。手で編集せず src/data/_source/monster-basics-*.tsv を直して scripts/import-monster-basics-tsv.js を実行する。",
   "monsters": [
     {
+      "id": "0101",
+      "name": "ピクシー",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "G"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "E",
+        "zero": "G"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0102",
+      "name": "ダイナ",
+      "talent": {
+        "life": 10,
+        "power": 5,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "F",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0103",
+      "name": "ユニコ",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 15,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "E",
+        "雪山": "E",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "G",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0109",
+      "name": "ミント",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 10,
+        "evasion": 15,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "D",
+        "海岸": "D",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0111",
+      "name": "エンジェル",
+      "talent": {
+        "life": -5,
+        "power": 10,
+        "wisdom": 20,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0115",
+      "name": "スエコ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0117",
+      "name": "リリム",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0120",
+      "name": "マーキュリー",
+      "talent": {
+        "life": 0,
+        "power": -10,
+        "wisdom": 10,
+        "accuracy": 10,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0121",
+      "name": "リーフ",
+      "talent": {
+        "life": 0,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "F"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0123",
+      "name": "ナハトファルター",
+      "talent": {
+        "life": 5,
+        "power": -5,
+        "wisdom": 10,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0124",
+      "name": "ラベンダーキール",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "G"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0126",
+      "name": "カチョウフウゲツ",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 15,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "D",
+        "雪山": "B",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0150",
+      "name": "ミリム・リゾート",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "B",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0151",
+      "name": "シラヌイ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0152",
+      "name": "ミリム",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "B",
+        "mid": "B",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0153",
+      "name": "ピクシーオリジン",
+      "talent": {
+        "life": -5,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0154",
+      "name": "ウィッチ",
+      "talent": {
+        "life": -5,
+        "power": 10,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": -10
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "E",
+        "雪山": "E",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "A",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0155",
+      "name": "ミーア",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "G"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "G"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0180",
+      "name": "グレイスウィッチ",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0190",
       "name": "ティターニア",
       "talent": {
