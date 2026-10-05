@@ -1429,6 +1429,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0404",
+      "name": "ヘンガー",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "D"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0405",
       "name": "ガイアー",
       "talent": {

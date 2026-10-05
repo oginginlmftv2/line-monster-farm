@@ -9,3 +9,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ダークヘンガー	-10	10	10	0	0	10	F	E	ふつう	ふつう	ふつう	C	D	F	C	C	D	D	C	C	2026-10-05
 ガーラント	-5	15	0	10	0	0	F	D	早熟	ややワル	ふつう	C	E	E	E	C	D	E	C	E	2026-10-05
 ガイアー	-5	10	10	5	0	0	F	E	晩成	ヨイ	ふつう	C	D	F	D	C	D	D	D	C	2026-10-05
+ヘンガー	0	5	0	5	10	0	E	D	ふつう	ヨイ	ふつう	B	D	F	E	D	D	E	D	D	2026-10-05

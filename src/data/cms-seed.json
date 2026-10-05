@@ -1305,9 +1305,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 965,
-      "current": 965,
-      "indexable": false
+      "baseline": 1326,
+      "current": 1326,
+      "indexable": true
     },
     {
       "id": "0405",
