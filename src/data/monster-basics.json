@@ -1739,6 +1739,378 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0502",
+      "name": "タイラント",
+      "talent": {
+        "life": -5,
+        "power": 20,
+        "wisdom": 15,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 0
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "E",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0505",
+      "name": "ゴーレム",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "G",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "D"
+      },
+      "range": {
+        "far": "G",
+        "mid": "E",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0508",
+      "name": "ダゴン",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "F",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "F"
+      },
+      "range": {
+        "far": "E",
+        "mid": "G",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0511",
+      "name": "アメンホテプ",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "F",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0517",
+      "name": "アンゴルモア",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "E",
+        "海岸": "D",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "E",
+        "near": "F",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0521",
+      "name": "エコロガーデアン",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "E",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "G",
+        "near": "E",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0524",
+      "name": "マーブルガイ",
+      "talent": {
+        "life": 0,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0525",
+      "name": "フロッグロック",
+      "talent": {
+        "life": 10,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": -5,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "F",
+      "growthType": "早熟",
+      "goodEvil": "ややヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "B",
+        "雪山": "E",
+        "火山": "D"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0550",
+      "name": "シュタイン",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0551",
+      "name": "巨人(エレン)",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": -10,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "G",
+        "火山": "B"
+      },
+      "range": {
+        "far": "A",
+        "mid": "B",
+        "near": "E",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0553",
+      "name": "ニューボトル",
+      "talent": {
+        "life": 0,
+        "power": 20,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "G"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0554",
+      "name": "シュシュポッポ",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": -5,
+        "accuracy": -5,
+        "evasion": 5,
+        "defense": 15
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0602",
       "name": "ベビードラゴン",
       "talent": {
