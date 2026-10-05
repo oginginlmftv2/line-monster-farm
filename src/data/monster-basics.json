@@ -4374,6 +4374,254 @@
       "capturedAt": "2026-09-30"
     },
     {
+      "id": "1301",
+      "name": "ママニャー",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "G",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "D",
+        "zero": "F"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1309",
+      "name": "ワン",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "E",
+        "海岸": "D",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "G",
+        "mid": "C",
+        "near": "E",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1310",
+      "name": "ミミニャー",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": -10,
+        "accuracy": 10,
+        "evasion": 20,
+        "defense": -5
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ややヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "E",
+        "mid": "C",
+        "near": "D",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1313",
+      "name": "ニャー",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "F",
+      "growthType": "晩成",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "F",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1326",
+      "name": "イナリ",
+      "talent": {
+        "life": 5,
+        "power": -5,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "D"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "E",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1350",
+      "name": "ニャースター",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": -10,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ワル",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1351",
+      "name": "メリーベア",
+      "talent": {
+        "life": 15,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 10,
+        "defense": -10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "F",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1352",
+      "name": "メタビー",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "A",
+        "near": "D",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
       "id": "1353",
       "name": "ロクショウ",
       "talent": {
@@ -4403,6 +4651,68 @@
         "zero": "B"
       },
       "capturedAt": "2026-09-29"
+    },
+    {
+      "id": "1354",
+      "name": "モチビー",
+      "talent": {
+        "life": 0,
+        "power": 5,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "D"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1380",
+      "name": "ニャハト",
+      "talent": {
+        "life": 20,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "B",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "A",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-06"
     },
     {
       "id": "1553",
