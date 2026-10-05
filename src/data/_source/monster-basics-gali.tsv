@@ -10,3 +10,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ガリオン	0	10	5	10	0	-5	E	D	ふつう	ヨイ	ふつう	C	E	F	C	F	D	F	F	C	2026-10-05
 レクサス	0	10	0	10	0	0	E	D	ふつう	ややヨイ	ふつう	C	C	F	C	G	D	D	C	F	2026-10-05
 アクアリウス	0	0	10	5	0	5	E	D	ふつう	ややヨイ	ふつう	D	D	C	D	D	C	C	D	E	2026-10-05
+エクスマキナ	-5	5	0	15	0	10	E	D	ふつう	ヨイ	ふつう	B	B	C	E	E	D	E	B	A	2026-10-05

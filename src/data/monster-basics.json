@@ -3785,6 +3785,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "1104",
+      "name": "エクスマキナ",
+      "talent": {
+        "life": -5,
+        "power": 5,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "B",
+        "zero": "A"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "1106",
       "name": "レクサス",
       "talent": {
