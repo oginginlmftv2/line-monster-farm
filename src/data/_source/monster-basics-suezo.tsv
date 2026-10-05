@@ -1,2 +1,13 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 ベタピン	-5	0	+10	+15	0	0	C	C	ふつう	ふつう	小さい	C	E	F	C	F	D	D	C	C	2026-09-17
+キンゾー	0	5	10	5	0	0	B	C	早熟	ヨイ	小さい	G	C	D	C	B	C	C	C	D	2026-10-06
+パーシバル	15	-5	10	0	5	-5	C	E	ふつう	ヨイ	小さい	C	C	F	B	F	B	C	E	D	2026-10-06
+ヒガンバナ	10	0	15	5	0	-10	B	C	晩成	ヨイ	小さい	C	B	D	F	B	B	C	C	E	2026-10-06
+シロゾー	0	0	10	10	0	0	B	D	晩成	ワル	小さい	C	D	D	D	G	D	D	C	C	2026-10-06
+プラムラー	5	-10	15	10	0	0	B	F	早熟	ややヨイ	小さい	C	C	D	D	D	B	D	D	D	2026-10-06
+ムシメ	5	0	10	10	-5	0	D	F	晩成	ふつう	小さい	C	B	E	G	F	E	D	E	C	2026-10-06
+メロンボ	0	10	0	15	-5	0	C	E	ふつう	ややワル	小さい	C	B	F	E	G	F	D	C	D	2026-10-06
+イワゾー	0	10	5	0	0	5	D	F	晩成	ふつう	小さい	C	C	F	F	E	G	D	E	C	2026-10-06
+ツノマル	-5	0	10	10	5	0	C	D	早熟	ややヨイ	小さい	E	D	D	B	E	D	C	D	D	2026-10-06
+ピンキー	0	0	10	10	0	0	B	D	早熟	ややワル	小さい	D	C	E	E	E	C	D	E	G	2026-10-06
+スエゾー	-5	5	10	10	0	0	C	F	早熟	ワル	小さい	C	C	E	G	E	E	C	E	F	2026-10-06
