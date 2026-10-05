@@ -1,0 +1,10 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+タクティクス	-5	10	-5	0	20	5	C	D	早熟	ややワル	ふつう	C	C	F	E	B	B	C	C	E	2026-10-05
+レジーナ	-5	5	5	10	0	5	C	D	早熟	ややワル	ふつう	B	E	B	F	C	A	E	C	C	2026-10-05
+麻倉葉(武装)	0	20	-5	10	0	-5	B	B	ふつう	ヨイ	ふつう	C	D	E	B	B	B	B	C	E	2026-10-05
+麻倉葉	0	5	5	10	5	-5	D	B	ふつう	ヨイ	ふつう	C	C	F	B	D	B	C	D	E	2026-10-05
+ショーグン	5	0	0	10	0	5	D	D	早熟	ヨイ	ふつう	C	E	E	C	C	D	B	D	C	2026-10-05
+デュラハン	0	15	0	0	-5	20	D	D	ふつう	ややワル	ふつう	B	B	F	C	E	E	C	C	A	2026-10-05
+コクシムソウ	0	15	0	0	-5	10	D	D	早熟	ふつう	ふつう	C	C	F	B	D	B	E	D	B	2026-10-05
+ベスビオス	0	10	10	0	-5	5	E	D	早熟	ワル	ふつう	C	C	E	D	C	D	D	C	C	2026-10-05
+グレイシア	-5	10	-5	15	0	5	C	D	早熟	ヨイ	ふつう	C	C	E	C	E	D	E	D	D	2026-10-05
