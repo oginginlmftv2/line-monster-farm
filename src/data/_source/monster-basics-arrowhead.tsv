@@ -6,3 +6,5 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 マスタードアロー	0	0	5	5	0	10	E	D	早熟	ややワル	ふつう	E	B	C	F	G	D	C	C	G	2026-10-05
 アローヘッド	10	0	0	0	0	10	F	C	ふつう	ふつう	ふつう	F	C	C	D	G	E	G	C	D	2026-10-05
 レマクラスト	0	10	-5	15	0	0	F	C	ふつう	ヨイ	ふつう	C	F	C	F	C	D	E	B	D	2026-10-05
+スモーピオン	-5	10	0	15	-10	10	D	B	ふつう	ワル	ふつう	C	C	C	D	E	C	C	E	C	2026-10-05
+セルケト	5	0	5	10	0	0	E	C	晩成	ワル	ふつう	C	D	C	F	B	B	D	E	B	2026-10-05

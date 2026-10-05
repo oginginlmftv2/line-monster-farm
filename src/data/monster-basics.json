@@ -2855,6 +2855,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0817",
+      "name": "セルケト",
+      "talent": {
+        "life": 5,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 10,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0820",
       "name": "アクアマリン",
       "talent": {
@@ -2944,6 +2975,37 @@
         "mid": "C",
         "near": "C",
         "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0852",
+      "name": "スモーピオン",
+      "talent": {
+        "life": -5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "C",
+        "mid": "C",
+        "near": "E",
+        "zero": "C"
       },
       "capturedAt": "2026-10-05"
     },
