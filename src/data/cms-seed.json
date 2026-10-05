@@ -2553,8 +2553,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 947,
-      "current": 1128,
+      "baseline": 1248,
+      "current": 1429,
       "indexable": true
     },
     {
@@ -2590,9 +2590,9 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 825,
-      "current": 970,
-      "indexable": false
+      "baseline": 1200,
+      "current": 1345,
+      "indexable": true
     },
     {
       "id": "0808",
@@ -2638,8 +2638,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 952,
-      "current": 1163,
+      "baseline": 1426,
+      "current": 1637,
       "indexable": true
     },
     {
@@ -2675,8 +2675,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 990,
-      "current": 1135,
+      "baseline": 1377,
+      "current": 1522,
       "indexable": true
     },
     {
@@ -2712,8 +2712,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 831,
-      "current": 1009,
+      "baseline": 1097,
+      "current": 1275,
       "indexable": true
     },
     {
@@ -2749,8 +2749,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 931,
-      "current": 1108,
+      "baseline": 1352,
+      "current": 1529,
       "indexable": true
     },
     {
@@ -2797,8 +2797,8 @@
       "createdAt": "2025-09-30",
       "updatedAt": "2025-09-30",
       "releasedAt": "2025-09-30",
-      "baseline": 917,
-      "current": 1245,
+      "baseline": 1295,
+      "current": 1623,
       "indexable": true
     },
     {
@@ -2845,8 +2845,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 926,
-      "current": 1089,
+      "baseline": 1378,
+      "current": 1541,
       "indexable": true
     },
     {
@@ -2882,8 +2882,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 943,
-      "current": 1149,
+      "baseline": 1428,
+      "current": 1634,
       "indexable": true
     },
     {
