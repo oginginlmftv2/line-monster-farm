@@ -1,2 +1,12 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 ロクショウ	0	15	0	10	0	-5	B	D	ふつう	ふつう	小さい	B	B	F	E	C	E	C	B	B	2026-09-29
+メタビー	0	5	10	5	5	-5	C	E	早熟	ふつう	小さい	B	B	F	C	E	B	A	D	E	2026-10-06
+モチビー	0	5	10	5	5	-5	C	E	早熟	ふつう	小さい	C	C	E	C	D	C	C	D	D	2026-10-06
+ニャハト	20	-5	15	5	-5	0	C	E	早熟	ヨイ	小さい	D	B	B	C	F	D	A	E	B	2026-10-06
+ニャースター	10	10	-10	10	0	0	C	D	早熟	ワル	小さい	E	C	B	C	F	D	B	D	C	2026-10-06
+メリーベア	15	0	0	5	10	-10	D	E	早熟	ヨイ	小さい	F	F	B	C	C	D	C	D	C	2026-10-06
+イナリ	5	-5	0	15	10	-5	D	D	ふつう	ふつう	小さい	F	D	C	B	D	C	C	E	C	2026-10-06
+ニャー	5	0	0	5	10	0	E	F	晩成	ふつう	小さい	F	D	C	C	E	D	C	F	D	2026-10-06
+ミミニャー	5	0	-10	10	20	-5	E	E	ふつう	ややヨイ	小さい	E	D	C	B	E	E	C	D	B	2026-10-06
+ワン	0	0	0	10	10	0	D	D	早熟	ヨイ	小さい	E	E	D	C	E	G	C	E	D	2026-10-06
+ママニャー	0	0	5	5	15	-5	C	D	早熟	ややワル	小さい	G	C	C	C	F	C	D	D	F	2026-10-06
