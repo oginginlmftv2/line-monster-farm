@@ -1,0 +1,9 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+ブリザード	0	-5	15	10	5	0	D	A	晩成	ややワル	大きい	F	D	C	B	B	B	D	B	E	2026-10-06
+ビンチョー	10	-10	20	0	10	-5	A	B	ふつう	ヨイ	大きい	B	E	E	C	B	A	B	E	D	2026-10-06
+フレスベルグ	0	0	10	0	0	10	C	A	晩成	ややヨイ	大きい	D	E	C	B	F	C	D	C	C	2026-10-06
+フェニックス	5	-5	15	5	0	0	B	C	晩成	ワル	大きい	C	D	F	B	B	C	B	E	B	2026-10-06
+ラプタ	10	20	-5	0	0	-5	D	A	晩成	ヨイ	大きい	B	C	C	F	C	B	B	C	E	2026-10-06
+アオサギビ	0	-10	20	10	5	-5	C	A	早熟	ヨイ	大きい	D	D	C	C	C	C	A	C	E	2026-10-06
+ヒノトリ	15	-10	20	5	5	-5	C	B	晩成	ヨイ	大きい	B	D	C	F	B	D	B	A	E	2026-10-06
+ワイバーン・炎	5	15	10	5	-15	0	E	D	早熟	ややワル	大きい	C	D	E	F	B	C	D	B	F	2026-10-06

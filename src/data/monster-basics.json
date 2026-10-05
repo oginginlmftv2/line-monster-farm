@@ -4715,6 +4715,254 @@
       "capturedAt": "2026-10-06"
     },
     {
+      "id": "1402",
+      "name": "ワイバーン・炎",
+      "talent": {
+        "life": 5,
+        "power": 15,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": -15,
+        "defense": 0
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "E",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "B",
+        "zero": "F"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1404",
+      "name": "ラプタ",
+      "talent": {
+        "life": 10,
+        "power": 20,
+        "wisdom": -5,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": -5
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "B",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1414",
+      "name": "ヒノトリ",
+      "talent": {
+        "life": 15,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 5,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "A",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1420",
+      "name": "アオサギビ",
+      "talent": {
+        "life": 0,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "A",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1432",
+      "name": "フレスベルグ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "E",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "F"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1450",
+      "name": "ブリザード",
+      "talent": {
+        "life": 0,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "A",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "B"
+      },
+      "range": {
+        "far": "B",
+        "mid": "D",
+        "near": "B",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1451",
+      "name": "ビンチョー",
+      "talent": {
+        "life": 10,
+        "power": -10,
+        "wisdom": 20,
+        "accuracy": 0,
+        "evasion": 10,
+        "defense": -5
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "B",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "E",
+        "海岸": "E",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "A",
+        "mid": "B",
+        "near": "E",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
+      "id": "1452",
+      "name": "フェニックス",
+      "talent": {
+        "life": 5,
+        "power": -5,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "F",
+        "雪山": "B",
+        "火山": "B"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "E",
+        "zero": "B"
+      },
+      "capturedAt": "2026-10-06"
+    },
+    {
       "id": "1553",
       "name": "ベタピン",
       "talent": {
