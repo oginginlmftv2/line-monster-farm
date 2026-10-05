@@ -1,0 +1,12 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+ヴァージアハピ	0	5	5	5	10	-5	C	D	ふつう	ふつう	小さい	F	C	C	C	E	C	D	D	C	2026-10-05
+サンタ	5	15	-5	0	5	0	C	C	ふつう	ヨイ	小さい	D	C	G	B	C	C	E	B	C	2026-10-05
+マミー	5	15	0	5	0	-5	B	D	晩成	ワル	小さい	B	G	B	D	C	B	E	B	C	2026-10-05
+ハムオウジ	0	30	0	0	0	-10	E	D	ふつう	ヨイ	小さい	B	D	C	C	G	C	D	D	C	2026-10-05
+トルクレンチ	10	10	0	10	0	-10	E	D	晩成	ややヨイ	小さい	C	C	D	C	F	E	D	C	B	2026-10-05
+ダークハム	0	10	5	-5	0	10	E	E	ふつう	ふつう	小さい	D	E	E	D	B	D	D	D	C	2026-10-05
+ハムリーフ	10	0	0	5	5	0	C	D	早熟	ヨイ	小さい	D	C	D	D	E	D	E	D	D	2026-10-05
+ウロコウサギ	0	5	0	10	5	0	D	D	ふつう	ややヨイ	小さい	E	C	G	D	D	F	E	C	E	2026-10-05
+ブルーフレア	0	-5	0	15	10	0	E	D	ふつう	ややヨイ	小さい	D	D	C	D	D	C	E	D	C	2026-10-05
+ハム	0	10	0	0	10	0	E	D	ふつう	ややヨイ	小さい	E	C	E	C	G	F	F	D	C	2026-10-05
+クロスフォーアイ	0	5	5	10	0	0	D	D	早熟	ややワル	小さい	D	B	E	D	F	D	C	G	C	2026-10-05
