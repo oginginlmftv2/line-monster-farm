@@ -1280,9 +1280,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 962,
-      "current": 962,
-      "indexable": false
+      "baseline": 1361,
+      "current": 1361,
+      "indexable": true
     },
     {
       "id": "0404",
@@ -1330,9 +1330,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 877,
-      "current": 877,
-      "indexable": false
+      "baseline": 1290,
+      "current": 1290,
+      "indexable": true
     },
     {
       "id": "0406",
@@ -1355,9 +1355,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 957,
-      "current": 957,
-      "indexable": false
+      "baseline": 1458,
+      "current": 1458,
+      "indexable": true
     },
     {
       "id": "0409",
@@ -1380,9 +1380,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 973,
-      "current": 973,
-      "indexable": false
+      "baseline": 1403,
+      "current": 1403,
+      "indexable": true
     },
     {
       "id": "0417",
@@ -1405,9 +1405,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 901,
-      "current": 901,
-      "indexable": false
+      "baseline": 1306,
+      "current": 1306,
+      "indexable": true
     },
     {
       "id": "0422",
@@ -1430,9 +1430,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 904,
-      "current": 904,
-      "indexable": false
+      "baseline": 1389,
+      "current": 1389,
+      "indexable": true
     },
     {
       "id": "0430",
@@ -1492,8 +1492,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-07-31",
-      "baseline": 977,
-      "current": 2545,
+      "baseline": 1455,
+      "current": 3023,
       "indexable": true
     },
     {
@@ -1517,9 +1517,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 962,
-      "current": 962,
-      "indexable": false
+      "baseline": 1445,
+      "current": 1445,
+      "indexable": true
     },
     {
       "id": "0452",
@@ -1542,9 +1542,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 936,
-      "current": 936,
-      "indexable": false
+      "baseline": 1400,
+      "current": 1400,
+      "indexable": true
     },
     {
       "id": "0502",
