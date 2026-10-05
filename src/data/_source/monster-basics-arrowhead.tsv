@@ -1,0 +1,8 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+スピナー	0	10	0	10	-10	10	D	B	晩成	ややワル	ふつう	C	F	C	D	C	D	C	C	D	2026-10-05
+ヒュプノス	0	0	10	5	-5	10	C	B	早熟	ややワル	ふつう	C	C	C	D	E	B	E	C	C	2026-10-05
+アクアマリン	10	-10	0	15	-5	10	D	B	晩成	ややヨイ	ふつう	D	D	B	D	E	D	B	C	E	2026-10-05
+プライヤロックス	5	10	0	-5	-5	15	F	D	晩成	ややヨイ	ふつう	C	D	C	F	D	D	D	D	C	2026-10-05
+マスタードアロー	0	0	5	5	0	10	E	D	早熟	ややワル	ふつう	E	B	C	F	G	D	C	C	G	2026-10-05
+アローヘッド	10	0	0	0	0	10	F	C	ふつう	ふつう	ふつう	F	C	C	D	G	E	G	C	D	2026-10-05
+レマクラスト	0	10	-5	15	0	0	F	C	ふつう	ヨイ	ふつう	C	F	C	F	C	D	E	B	D	2026-10-05

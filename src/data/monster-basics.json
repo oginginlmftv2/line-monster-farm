@@ -2731,6 +2731,223 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0804",
+      "name": "レマクラスト",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 15,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "E",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0805",
+      "name": "プライヤロックス",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": -5,
+        "evasion": -5,
+        "defense": 15
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "D",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "D",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "D"
+      },
+      "range": {
+        "far": "D",
+        "mid": "D",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0808",
+      "name": "アローヘッド",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "G"
+      },
+      "range": {
+        "far": "E",
+        "mid": "G",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0815",
+      "name": "マスタードアロー",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "F",
+        "火山": "G"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "C",
+        "zero": "G"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0820",
+      "name": "アクアマリン",
+      "talent": {
+        "life": 10,
+        "power": -10,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ややヨイ",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "D",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "C",
+        "zero": "E"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0850",
+      "name": "ヒュプノス",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 10,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": 10
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "B",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "E"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
+      "id": "0851",
+      "name": "スピナー",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "B",
+      "growthType": "晩成",
+      "goodEvil": "ややワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-05"
+    },
+    {
       "id": "0990",
       "name": "ヴァナルガンド",
       "talent": {
