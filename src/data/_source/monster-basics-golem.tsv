@@ -1,0 +1,13 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+シュシュポッポ	10	0	-5	-5	5	15	C	B	早熟	ヨイ	大きい	C	B	C	E	F	C	C	B	E	2026-10-05
+シュタイン	5	10	0	0	-5	10	E	E	ふつう	ややワル	大きい	C	C	F	E	C	D	B	D	D	2026-10-05
+巨人(エレン)	10	10	-10	0	0	10	C	B	晩成	ややヨイ	大きい	C	C	C	G	B	A	B	E	D	2026-10-05
+ニューボトル	0	20	0	0	-10	10	E	E	早熟	ややワル	大きい	C	D	C	B	G	C	D	D	B	2026-10-05
+フロッグロック	10	15	0	-5	-10	10	D	F	早熟	ややヨイ	大きい	D	D	B	E	D	D	D	C	C	2026-10-05
+タイラント	-5	20	15	0	-10	0	F	F	早熟	ワル	大きい	C	D	F	D	B	C	E	C	C	2026-10-05
+アンゴルモア	0	10	10	0	0	0	E	F	晩成	ワル	大きい	D	E	D	D	C	C	E	F	C	2026-10-05
+ダゴン	0	10	0	0	0	10	F	F	ふつう	ふつう	大きい	C	E	C	F	F	E	G	C	D	2026-10-05
+ゴーレム	0	10	0	0	0	10	F	F	晩成	ややヨイ	大きい	C	G	D	D	D	G	E	D	C	2026-10-05
+マーブルガイ	0	15	0	0	-5	10	E	F	早熟	ワル	大きい	C	C	F	F	C	E	B	D	D	2026-10-05
+エコロガーデアン	10	0	5	0	0	5	D	F	早熟	ヨイ	大きい	D	D	E	D	E	C	G	E	D	2026-10-05
+アメンホテプ	0	10	10	0	-5	5	F	F	ふつう	ヨイ	大きい	C	F	D	D	C	C	D	D	D	2026-10-05
