@@ -273,6 +273,8 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
      `rarity` は登録に必要な★の数（1〜10）。ページには「セイラン（★4以上）」と出る
 3. `node build.js` → 技が1件以上ある血統だけページが生成される
 4. `node scripts/test-skill-build.js` と `node scripts/verify.js` がFAIL 0
+   - スクショはスキル `monster-skill-capture` で読む。PCのiPhoneミラーリングで撮る場合は、LMFShot を撮影モード `skills` で使い
+     「フォルダの技を読んで」と頼む（`tools/mirror-capture/README.md`）
 5. 上の「現在の実数」の血統ページ数・技件数を`build.js`のログの値へ更新し、
    このファイルの「最終更新」も直す（同じPRで行う）
 

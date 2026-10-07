@@ -18,9 +18,11 @@ swiftc -O -o "$CAP/bin/mirror-winid" "$SRC/mirror-winid.swift"
 if [ ! -f "$CAP/modes.conf" ]; then
   HIDEN="~/Pictures/lmf-capture/hiden"
   [ -d "$HOME/claude/lmf-aisho/shots" ] && HIDEN="~/claude/lmf-aisho/shots"
-  printf '# モード\t表示名\t保存先（~ はホーム）。行を足せばモードが増える\nbasics\t基礎データ\t~/Pictures/lmf-capture/basics\nhiden\t秘伝調査\t%s\n' "$HIDEN" > "$CAP/modes.conf"
+  printf '# モード\t表示名\t保存先（~ はホーム）。行を足せばモードが増える\nbasics\t基礎データ\t~/Pictures/lmf-capture/basics\nskills\t技\t~/Pictures/lmf-capture/skills\nhiden\t秘伝調査\t%s\n' "$HIDEN" > "$CAP/modes.conf"
   echo "modes.conf を作りました: $CAP/modes.conf"
 fi
+# あとから増えたモードを既存の modes.conf にも足す（利用者が書き換えた行には触らない）
+grep -q "^skills	" "$CAP/modes.conf" || printf 'skills\t技\t~/Pictures/lmf-capture/skills\n' >> "$CAP/modes.conf"
 # 今まで撮影は秘伝調査にしか使っていないので、未設定なら秘伝調査から始める
 [ -s "$CAP/mode" ] || "$CAP/bin/lmf-mode" hiden --by install >/dev/null
 
