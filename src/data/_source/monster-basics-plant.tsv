@@ -1,0 +1,13 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+キンプンソウ	5	0	15	10	-5	-5	C	E	早熟	ヨイ	ふつう	C	C	E	E	E	C	D	G	C	2026-10-07
+ミツボシソウ	15	-10	10	10	0	-5	A	C	早熟	ヨイ	ふつう	D	C	C	B	F	B	D	C	D	2026-10-07
+ドレッドハーブ	15	-5	5	5	0	0	A	D	早熟	ややワル	ふつう	C	C	C	E	F	E	C	C	C	2026-10-07
+ベニヒメソウ	0	-5	15	5	10	-5	A	C	晩成	ふつう	ふつう	C	C	E	F	C	B	D	D	C	2026-10-07
+ウロコクサ	10	5	0	15	-10	0	B	E	ふつう	ややヨイ	ふつう	C	C	D	D	D	C	C	C	E	2026-10-07
+ガンセキソウ	5	5	15	0	-5	0	C	F	晩成	ややヨイ	ふつう	C	C	F	E	D	C	F	E	C	2026-10-07
+ウサギソウ	5	0	0	5	15	-5	C	E	ふつう	ヨイ	ふつう	D	C	E	C	E	C	F	C	C	2026-10-07
+ジャアクソウ	10	0	0	10	0	0	B	E	早熟	ややワル	ふつう	D	C	G	F	C	D	C	E	G	2026-10-07
+オボロゲソウ	10	-5	15	0	-5	5	B	E	ふつう	ややヨイ	ふつう	D	C	B	F	D	C	E	C	C	2026-10-07
+プラント	10	-5	10	5	0	0	A	F	早熟	ヨイ	ふつう	D	C	E	D	G	C	G	E	D	2026-10-07
+ヒネクレソウ	5	0	10	10	-5	0	B	F	早熟	ややワル	ふつう	D	D	D	E	E	E	C	E	F	2026-10-07
+ウスバカゲソウ	10	0	5	10	-5	0	C	F	晩成	ややヨイ	ふつう	C	C	D	E	E	C	C	F	C	2026-10-07
