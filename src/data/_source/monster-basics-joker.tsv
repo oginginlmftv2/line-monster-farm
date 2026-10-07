@@ -1,3 +1,10 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 アインズ	10	0	15	0	0	-5	B	B	ふつう	ワル	大きい	C	B	C	C	F	B	C	C	E	2026-09-29
 バロム	0	5	10	10	-5	0	C	B	早熟	ワル	大きい	C	B	F	D	B	C	D	C	C	2026-09-29
+アインズ・マスク	10	0	10	5	0	-5	C	B	ふつう	ワル	大きい	C	B	F	C	F	D	C	E	D	2026-10-07
+スプラッター	0	5	5	10	0	0	D	C	早熟	ワル	大きい	B	D	F	C	C	B	C	E	C	2026-10-07
+ラー	0	5	20	10	-10	-5	C	D	ふつう	ヨイ	大きい	C	E	E	C	C	A	D	B	E	2026-10-07
+フレアデス	-5	10	15	10	-5	-5	E	D	早熟	ワル	大きい	C	B	C	G	B	C	B	D	D	2026-10-07
+ガウェイン	0	-5	15	5	5	0	D	F	晩成	ふつう	大きい	F	B	C	C	C	B	B	C	E	2026-10-07
+ジョーカー	0	0	20	15	-5	-10	D	D	晩成	ワル	大きい	D	D	C	F	B	B	D	D	D	2026-10-07
+サクラチル	0	-5	10	10	5	0	C	D	ふつう	ややワル	大きい	F	E	F	C	C	D	D	E	D	2026-10-07
