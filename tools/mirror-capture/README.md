@@ -25,6 +25,8 @@ MacのiPhoneミラーリングに映したゲーム画面を、ショートカ�
   shot.log      撮影の記録（日時・結果・モード・保存先）
   basics/       基礎データ（スキル monster-basics-capture が読む）
   skills/       技（スキル monster-skill-capture が読む）
+  abilities/    アシスト能力（スキル assist-ability-capture が読む）
+  effects/      アシスト効果（スキル assist-effect-capture が読む）
   unsorted/     モードが未設定・不明のときの保存先
 ```
 

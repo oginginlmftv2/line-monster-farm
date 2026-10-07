@@ -217,7 +217,8 @@ Geminiに以下を貼り付けてYouTube URLを添えて送ります。出力の
 
 カード詳細の「アシスト効果」タブのスクショは、スキル `assist-effect-capture` で読み取り、
 `scripts/check-assist-effect-payload.js --emit` が出したJSONをCMS「効果OCR」タブの
-「候補JSONを貼り付け」へ貼って保存します。DBの正はCMSのシートなので、
+「候補JSONを貼り付け」へ貼って保存します。PCのiPhoneミラーリングで撮る場合は、LMFShot を撮影モード `effects` で使い
+「フォルダの効果を読んで」と頼みます。DBの正はCMSのシートなので、
 `src/data/assist-effects.json`を直接編集しません。CMSのVision OCRは精度が低いため補助扱いです。
 
 ### 能力が増えたら、能力評価をClaudeのスキルで点検する
@@ -230,6 +231,7 @@ CMSのアシスト公開で能力が増えると、Actionsの結果画面に「�
 
 能力（イベント能力・閃き能力）のスクショは、スキル `assist-ability-capture` で読み取り、
 `scripts/check-assist-ability-payload.js --emit` が出したJSONをCMSのカード詳細「能力取り込み」タブへ貼って保存します。
+PCのiPhoneミラーリングで撮る場合は、LMFShot を撮影モード `abilities` で使い「フォルダの能力を読んで」と頼みます。
 正はスクショで、lMfDB由来の既存能力とは「カード＋能力名」で照合します。同名の未紐付け能力があれば新規を作らず紐付け、
 新規はdraftで入るので、能力タブで確認済みにしてから公開します。イベント詳細の画面にはカード名が出ないため、
 スクショと一緒にカード名を伝えてください。`src/data/assist-abilities.json`は直接編集しません。
