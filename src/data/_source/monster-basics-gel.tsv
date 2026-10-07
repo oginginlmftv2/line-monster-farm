@@ -1,0 +1,15 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+エコスライム	5	10	0	5	0	0	B	D	早熟	ヨイ	ふつう	D	B	C	F	E	C	C	D	D	2026-10-07
+マグマグミ	5	0	5	0	-5	15	C	C	ふつう	ワル	ふつう	C	C	D	E	C	B	C	D	D	2026-10-07
+エスカノール	0	20	-5	0	-5	10	B	B	ふつう	ややヨイ	ふつう	B	F	E	B	C	D	B	B	D	2026-10-07
+エスカノール・夜	0	5	0	5	10	0	C	D	晩成	ふつう	ふつう	C	F	E	B	D	D	D	B	D	2026-10-07
+カガミモチ	0	-5	20	0	-5	10	D	D	ふつう	ヨイ	ふつう	D	C	D	F	C	D	C	D	C	2026-10-07
+メタルゲル	0	0	10	0	-5	15	C	C	ふつう	ふつう	ふつう	D	D	C	D	C	C	D	D	C	2026-10-07
+パー・プリン	0	0	15	10	-5	0	D	D	早熟	ワル	ふつう	C	E	C	E	C	C	C	D	D	2026-10-07
+ゲル	0	0	5	5	0	10	D	D	ふつう	ふつう	ふつう	G	C	C	F	D	C	E	E	F	2026-10-07
+メダマゼリー	-10	0	20	15	-5	0	D	D	早熟	ややワル	ふつう	D	B	C	F	D	C	C	C	E	2026-10-07
+イシガキゲル	0	5	10	0	-5	10	E	E	晩成	ややヨイ	ふつう	D	E	D	E	D	D	G	E	C	2026-10-07
+ネンドマン	-5	0	5	10	10	0	D	D	ふつう	ややヨイ	ふつう	E	D	C	C	E	C	F	C	C	2026-10-07
+ゲルキゾク	0	0	15	5	-5	5	E	D	ふつう	ヨイ	ふつう	C	E	C	F	D	C	D	C	G	2026-10-07
+ウロコゲル	0	0	0	10	0	10	D	D	ふつう	ふつう	ふつう	E	C	D	E	E	E	E	C	F	2026-10-07
+カンテンムシ	15	-5	5	10	-5	0	D	D	晩成	ややヨイ	ふつう	D	C	C	F	E	D	E	E	C	2026-10-07
