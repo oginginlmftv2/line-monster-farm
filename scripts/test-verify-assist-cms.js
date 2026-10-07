@@ -283,7 +283,7 @@ expectFailure('能力schemaVersion 1への後退を拒否', root => {
 expectFailure('既存移行能力1,079件の変更を拒否', root => {
   const file = path.join(root, 'src/data/assist-abilities.json');
   const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
-  doc.abilities[0].name += '変更';
+  doc.abilities[0].legacyId += 10000;
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /既存移行能力1,079件/);
 
@@ -304,10 +304,12 @@ expectNoIssue('既存移行能力の紐付け解除（cardId/sortOrder null・un
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /既存移行能力1,079件|sortOrder不連続|resolved以外/);
 
-expectFailure('既存移行能力の説明文変更を拒否', root => {
+expectNoIssue('既存移行能力の本文修正（name/description/tags）は許可', root => {
   const file = path.join(root, 'src/data/assist-abilities.json');
   const doc = JSON.parse(fs.readFileSync(file, 'utf8'));
-  doc.abilities[5].description += '追記';
+  doc.abilities[5].name += '修正';
+  doc.abilities[5].description += '修正';
+  doc.abilities[5].tags = [...doc.abilities[5].tags, '修正'];
   fs.writeFileSync(file, `${JSON.stringify(doc, null, 2)}\n`);
 }, /既存移行能力1,079件/);
 

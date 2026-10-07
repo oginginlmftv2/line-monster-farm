@@ -67,11 +67,12 @@ const ALLOWED = {
 };
 const RATING_KEYS = ['ikusei', 'karyo', 'battle', 'ta'];
 const MIGRATED_ABILITY_COUNT = 1079;
-// 既存移行能力の内容（abilityId / legacyId / sourceName / name / description / source / rarity / tags / flags）と
-// 配列順のロック。カード紐付け（cardId / sortOrder / linkStatus）はapi_asstUnlinkAbility・並び替え・
-// 再紐付けで、status（draft / verified）はapi_asstSetAbilityStatusesで運用上変わるためハッシュから除く。
-const MIGRATED_ABILITY_RECORDS_SHA256 = '9375731afea921779dae348afb159005039f744c6968498e87c52506b36bfd1e';
-const MIGRATED_ABILITY_UNLOCKED_KEYS = ['cardId', 'sortOrder', 'linkStatus', 'status'];
+// 既存移行能力の識別（abilityId / legacyId / sourceName / source / rarity / flags）と配列順のロック。
+// カード紐付け（cardId / sortOrder / linkStatus）はapi_asstUnlinkAbility・並び替え・再紐付けで、
+// status（draft / verified）はapi_asstSetAbilityStatusesで、本文（name / description / tags）は
+// 移行元の誤記をCMSの能力編集で直すため、運用上変わるのでハッシュから除く。
+const MIGRATED_ABILITY_RECORDS_SHA256 = '7267b6635c05b16b2939421775342509b03f80f8cd76833b99199d4d2ed5550c';
+const MIGRATED_ABILITY_UNLOCKED_KEYS = ['cardId', 'sortOrder', 'linkStatus', 'status', 'name', 'description', 'tags'];
 
 function migratedAbilityRecordsSha256(abilities) {
   const locked = abilities.slice(0, MIGRATED_ABILITY_COUNT).map(record => {
@@ -903,7 +904,7 @@ function validateRoot(root) {
   }
   if (abilitiesDoc.abilities.length < MIGRATED_ABILITY_COUNT ||
       migratedAbilityRecordsSha256(abilitiesDoc.abilities) !== MIGRATED_ABILITY_RECORDS_SHA256) {
-    issues.push('既存移行能力1,079件の内容・値・ID・配列順（紐付け・statusを除く）が基準から変化');
+    issues.push('既存移行能力1,079件の内容・値・ID・配列順（紐付け・status・本文を除く）が基準から変化');
   }
 
   const cardIds = cardsDoc.cards.map(card => card.cardId);
