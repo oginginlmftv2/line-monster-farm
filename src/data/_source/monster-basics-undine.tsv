@@ -1,2 +1,11 @@
 name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
 アルベド	10	0	5	0	-5	10	A	B	ふつう	ワル	小さい	E	B	F	C	B	D	B	C	D	2026-09-29
+ヤオビクニ	0	-5	0	15	10	0	B	B	ふつう	ヨイ	小さい	F	C	B	C	F	C	E	B	D	2026-10-07
+ラブカ	0	0	5	0	10	5	B	A	早熟	ややワル	小さい	E	C	C	C	D	C	E	B	C	2026-10-07
+オケアノス	0	-10	20	10	5	-5	B	B	ふつう	ヨイ	小さい	F	C	B	B	E	B	E	B	D	2026-10-07
+ウェディング	0	-10	20	15	0	-5	A	A	晩成	ふつう	小さい	C	B	C	D	G	B	E	B	D	2026-10-07
+メロウ	-5	0	10	10	10	-5	C	B	早熟	ややヨイ	小さい	F	C	C	C	G	D	C	C	F	2026-10-07
+スネグーラチカ	0	-5	15	5	5	0	B	A	晩成	ややヨイ	小さい	C	C	C	B	F	A	B	E	D	2026-10-07
+セイレーン	0	-10	20	10	5	-5	C	B	晩成	ややワル	小さい	C	E	B	E	B	B	B	E	D	2026-10-07
+マドレーナ	10	0	0	10	10	-10	C	B	晩成	ややワル	小さい	C	D	C	C	F	D	C	D	C	2026-10-07
+ウンディーネ	0	-5	10	15	5	-5	B	B	晩成	ヨイ	小さい	E	C	C	D	F	C	C	D	G	2026-10-07
