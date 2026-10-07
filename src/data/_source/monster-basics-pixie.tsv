@@ -19,3 +19,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ピクシー	0	0	5	5	10	0	A	A	早熟	ややワル	小さい	F	C	C	D	G	C	D	E	G	2026-10-05
 リリム	-5	0	20	10	5	-10	B	A	晩成	ワル	小さい	D	C	D	D	C	B	D	D	D	2026-10-05
 ミーア	0	0	15	5	5	-5	A	A	ふつう	ヨイ	小さい	F	C	C	C	G	C	C	D	G	2026-10-05
+レイリー	10	15	5	5	-5	-10	B	E	ふつう	ヨイ	小さい	F	B	C	E	C	C	D	C	C	2026-10-07

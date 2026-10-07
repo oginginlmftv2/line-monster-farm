@@ -344,6 +344,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0125",
+      "name": "レイリー",
+      "talent": {
+        "life": 10,
+        "power": 15,
+        "wisdom": 5,
+        "accuracy": 5,
+        "evasion": -5,
+        "defense": -10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "E",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-07"
+    },
+    {
       "id": "0126",
       "name": "カチョウフウゲツ",
       "talent": {
@@ -6199,6 +6230,37 @@
         "mid": "C",
         "near": "E",
         "zero": "C"
+      },
+      "capturedAt": "2026-10-07"
+    },
+    {
+      "id": "1851",
+      "name": "リムル・リゾート",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": -5,
+        "evasion": 5,
+        "defense": 10
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "晩成",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "F",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "B",
+        "near": "E",
+        "zero": "B"
       },
       "capturedAt": "2026-10-07"
     },
