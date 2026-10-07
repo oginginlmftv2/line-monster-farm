@@ -1,0 +1,12 @@
+name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthType	goodEvil	size	砂漠	森林	海岸	雪山	火山	遠	中	近	零	capturedAt
+スイカクレイ	20	10	-10	-5	0	5	D	E	ふつう	ふつう	小さい	C	C	C	D	E	C	E	D	B	2026-10-07
+リムル・グラサン	10	0	0	-5	5	10	C	D	晩成	ヨイ	小さい	E	C	C	D	C	D	C	E	C	2026-10-07
+ムネンド	10	10	0	0	10	-10	C	E	晩成	ふつう	小さい	B	C	E	D	F	D	D	C	B	2026-10-07
+リムル(仮面)	10	0	0	-10	10	10	B	C	晩成	ヨイ	小さい	F	B	C	C	C	B	B	E	C	2026-10-07
+リムル	10	0	0	-10	10	10	B	C	晩成	ヨイ	小さい	E	C	C	D	C	C	C	E	D	2026-10-07
+ジャック	15	5	-5	0	5	0	D	C	早熟	ヨイ	小さい	D	C	E	C	C	E	C	C	B	2026-10-07
+フラッペ	5	0	0	10	10	-5	C	D	早熟	ヨイ	小さい	D	E	D	D	E	G	C	E	D	2026-10-07
+アクアクレイ	10	0	0	0	0	10	D	E	ふつう	ふつう	小さい	D	D	C	D	D	C	E	D	C	2026-10-07
+ネンドロ	10	5	-5	0	10	0	D	F	晩成	ややヨイ	小さい	C	E	F	C	F	D	G	E	C	2026-10-07
+アモン	10	5	0	10	0	-5	D	E	ふつう	ヨイ	小さい	C	D	F	C	E	G	D	C	C	2026-10-07
+ドクドク	15	0	5	5	0	-5	D	E	晩成	ワル	小さい	C	F	C	E	B	B	D	D	D	2026-10-07

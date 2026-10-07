@@ -5463,9 +5463,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 907,
-      "current": 907,
-      "indexable": false
+      "baseline": 1299,
+      "current": 1299,
+      "indexable": true
     },
     {
       "id": "1809",
@@ -5488,9 +5488,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 967,
-      "current": 967,
-      "indexable": false
+      "baseline": 1372,
+      "current": 1372,
+      "indexable": true
     },
     {
       "id": "1817",
@@ -5513,9 +5513,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 860,
-      "current": 860,
-      "indexable": false
+      "baseline": 1178,
+      "current": 1178,
+      "indexable": true
     },
     {
       "id": "1818",
@@ -5538,9 +5538,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 996,
-      "current": 996,
-      "indexable": false
+      "baseline": 1448,
+      "current": 1448,
+      "indexable": true
     },
     {
       "id": "1819",
@@ -5563,9 +5563,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1002,
-      "current": 1002,
-      "indexable": false
+      "baseline": 1329,
+      "current": 1329,
+      "indexable": true
     },
     {
       "id": "1825",
@@ -5588,9 +5588,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 971,
-      "current": 971,
-      "indexable": false
+      "baseline": 1380,
+      "current": 1380,
+      "indexable": true
     },
     {
       "id": "1850",
@@ -5625,8 +5625,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "",
-      "baseline": 1025,
-      "current": 1441,
+      "baseline": 1426,
+      "current": 1842,
       "indexable": true
     },
     {
@@ -5687,9 +5687,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1012,
-      "current": 1012,
-      "indexable": false
+      "baseline": 1402,
+      "current": 1402,
+      "indexable": true
     },
     {
       "id": "1853",
@@ -5712,9 +5712,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1021,
-      "current": 1021,
-      "indexable": false
+      "baseline": 1429,
+      "current": 1429,
+      "indexable": true
     },
     {
       "id": "1854",
@@ -5737,9 +5737,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 992,
-      "current": 992,
-      "indexable": false
+      "baseline": 1488,
+      "current": 1488,
+      "indexable": true
     },
     {
       "id": "1855",
@@ -5762,9 +5762,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 979,
-      "current": 979,
-      "indexable": false
+      "baseline": 1323,
+      "current": 1323,
+      "indexable": true
     },
     {
       "id": "1905",
