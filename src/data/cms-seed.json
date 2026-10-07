@@ -311,9 +311,9 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 964,
-      "current": 964,
-      "indexable": false
+      "baseline": 1369,
+      "current": 1369,
+      "indexable": true
     },
     {
       "id": "0126",
@@ -5662,8 +5662,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2026-01-31",
-      "baseline": 1033,
-      "current": 2110,
+      "baseline": 1423,
+      "current": 2500,
       "indexable": true
     },
     {

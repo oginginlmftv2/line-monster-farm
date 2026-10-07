@@ -10,3 +10,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ネンドロ	10	5	-5	0	10	0	D	F	晩成	ややヨイ	小さい	C	E	F	C	F	D	G	E	C	2026-10-07
 アモン	10	5	0	10	0	-5	D	E	ふつう	ヨイ	小さい	C	D	F	C	E	G	D	C	C	2026-10-07
 ドクドク	15	0	5	5	0	-5	D	E	晩成	ワル	小さい	C	F	C	E	B	B	D	D	D	2026-10-07
+リムル・リゾート	10	0	0	-5	5	10	B	C	晩成	ヨイ	小さい	F	C	B	C	C	C	B	E	B	2026-10-07
