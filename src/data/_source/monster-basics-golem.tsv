@@ -11,3 +11,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 マーブルガイ	0	15	0	0	-5	10	E	F	早熟	ワル	大きい	C	C	F	F	C	E	B	D	D	2026-10-05
 エコロガーデアン	10	0	5	0	0	5	D	F	早熟	ヨイ	大きい	D	D	E	D	E	C	G	E	D	2026-10-05
 アメンホテプ	0	10	10	0	-5	5	F	F	ふつう	ヨイ	大きい	C	F	D	D	C	C	D	D	D	2026-10-05
+サンドゴーレム	10	10	0	0	-10	10	E	E	晩成	ふつう	大きい	C	C	E	B	F	D	C	D	C	2026-10-08

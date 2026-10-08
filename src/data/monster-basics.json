@@ -2080,6 +2080,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "0552",
+      "name": "サンドゴーレム",
+      "talent": {
+        "life": 10,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "E",
+      "moveSpeed": "E",
+      "growthType": "晩成",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "E",
+        "雪山": "B",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "D",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-08"
+    },
+    {
       "id": "0553",
       "name": "ニューボトル",
       "talent": {
@@ -7782,6 +7813,37 @@
         "zero": "C"
       },
       "capturedAt": "2026-10-07"
+    },
+    {
+      "id": "2250",
+      "name": "スターギフト",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 15,
+        "accuracy": -5,
+        "evasion": -10,
+        "defense": 20
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "G",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "C"
+      },
+      "range": {
+        "far": "C",
+        "mid": "D",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-08"
     },
     {
       "id": "2251",
