@@ -115,6 +115,30 @@
       "rerollPriority": true,
       "status": "published",
       "publishedAt": "2026-09-28"
+    },
+    {
+      "gachaId": "20261014-1",
+      "name": "ハロウィン神殿祭",
+      "gachaType": "神殿祭",
+      "image": "gacha-banner/20261014-1.jpg",
+      "startAt": "2026-10-14T15:00+09:00",
+      "endAt": "2026-10-31T14:59+09:00",
+      "explanation": "",
+      "pickupMonsters": [
+        {
+          "id": "2751",
+          "rate": null
+        }
+      ],
+      "pickupCards": [
+        {
+          "cardId": "c0005-MR",
+          "rate": null
+        }
+      ],
+      "rerollPriority": false,
+      "status": "published",
+      "publishedAt": "2026-10-13"
     }
   ]
 }
