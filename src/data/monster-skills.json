@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 169,
-    "bloods": 7
+    "skills": 182,
+    "bloods": 8
   },
   "skills": [
     {
@@ -6698,6 +6698,544 @@
       "unlockedBy": [],
       "note": "",
       "sortOrder": 169,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0170",
+      "name": "右掌",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 15,
+      "damage": "E+",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "D",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2701",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 170,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0171",
+      "name": "左掌",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "零",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 10,
+      "damage": "F",
+      "accuracy": "A",
+      "gutsDown": "E",
+      "critical": "G",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2715",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 171,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0172",
+      "name": "小変化",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": "近",
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 25,
+      "damage": "D",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0229",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0230",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0016",
+          "unlock": {
+            "monsterId": "2715",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0205",
+          "unlock": {
+            "monsterId": "2715",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2715",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 172,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0173",
+      "name": "ちょうちゅう",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "中",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 30,
+      "damage": "D",
+      "accuracy": "A+",
+      "gutsDown": "D",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2721",
+          "rarity": 3
+        },
+        {
+          "monsterId": "2750",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 173,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0174",
+      "name": "テツざんこう",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "零",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 26,
+      "damage": "B",
+      "accuracy": "D",
+      "gutsDown": "D+",
+      "critical": "C+",
+      "abilities": [
+        {
+          "abilityId": "sab-0016",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2727",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 174,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0175",
+      "name": "メタビーム",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 35,
+      "damage": "G",
+      "accuracy": "B",
+      "gutsDown": "S+",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0231",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0232",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2715",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 175,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0176",
+      "name": "右たん脚",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "中",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 25,
+      "damage": "C",
+      "accuracy": "B",
+      "gutsDown": "D",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0023",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0233",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2701",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 176,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0177",
+      "name": "ポン拳",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 21,
+      "damage": "C",
+      "accuracy": "A",
+      "gutsDown": "D",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0021",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2727",
+          "rarity": 4
+        },
+        {
+          "monsterId": "2750",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 177,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0178",
+      "name": "すんけい",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "零",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 30,
+      "damage": "D",
+      "accuracy": "E",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0234",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2721",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 178,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0179",
+      "name": "ツイン掌打",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "ちから",
+      "guts": 22,
+      "damage": "B+",
+      "accuracy": "E",
+      "gutsDown": "D",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0021",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0235",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0042",
+          "unlock": {
+            "monsterId": "2727",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0049",
+          "unlock": {
+            "monsterId": "2727",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2727",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 179,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0180",
+      "name": "連たん脚",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 30,
+      "damage": "B",
+      "accuracy": "C",
+      "gutsDown": "D",
+      "critical": "S",
+      "abilities": [
+        {
+          "abilityId": "sab-0236",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0240",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0017",
+          "unlock": {
+            "monsterId": "2701",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0142",
+          "unlock": {
+            "monsterId": "2701",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2701",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 180,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0181",
+      "name": "宙ポン拳",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "中",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 31,
+      "damage": "C",
+      "accuracy": "A",
+      "gutsDown": "D",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0237",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0128",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "2721",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "2721",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2721",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 181,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0182",
+      "name": "閃光掌",
+      "version": 1,
+      "blood": "メタルナー",
+      "range": "零",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "ちから",
+      "guts": 33,
+      "damage": "D",
+      "accuracy": "A+",
+      "gutsDown": "A",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0238",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0239",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "2750",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "2750",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "2750",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 182,
       "status": "verified"
     }
   ]

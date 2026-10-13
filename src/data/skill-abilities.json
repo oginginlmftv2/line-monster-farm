@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 228
+    "abilities": 240
   },
   "abilities": [
     {
@@ -2803,6 +2803,154 @@
         "bf-0030"
       ],
       "sortOrder": 228,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0229",
+      "name": "[相手白]被ダメ低下",
+      "version": 1,
+      "baseName": "[相手白]被ダメ低下",
+      "level": null,
+      "description": "相手＜オーラ白＞かつ技が命中したとき被ダメ低下Lv4＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 229,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0230",
+      "name": "恵：ブロックLv4",
+      "version": 1,
+      "baseName": "恵：ブロック",
+      "level": 4,
+      "description": "対象技発動時、自身に[ブロックLv4＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 230,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0231",
+      "name": "[遠]ガッツダメ上昇",
+      "version": 1,
+      "baseName": "[遠]ガッツダメ上昇",
+      "level": null,
+      "description": "技を命中させると間合いが遠距離のときガッツダメLv3(10秒)",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 231,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0232",
+      "name": "ルールブレイク",
+      "version": 1,
+      "baseName": "ルールブレイク",
+      "level": null,
+      "description": "対象技命中時、相手の最大ガッツを30に固定する＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 232,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0233",
+      "name": "[相手白]クリ上昇",
+      "version": 1,
+      "baseName": "[相手白]クリ上昇",
+      "level": null,
+      "description": "相手＜オーラ白＞かつ技が命中したときクリ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 233,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0234",
+      "name": "連撃：すんけい",
+      "version": 1,
+      "baseName": "連撃：すんけい",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv12を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 234,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0235",
+      "name": "祝：強撃Lv2",
+      "version": 1,
+      "baseName": "祝：強撃",
+      "level": 2,
+      "description": "対象技命中時、自身に[強撃Lv2]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0009"
+      ],
+      "sortOrder": 235,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0236",
+      "name": "連撃：連たん脚",
+      "version": 1,
+      "baseName": "連撃：連たん脚",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 236,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0237",
+      "name": "連撃：宙ポン拳",
+      "version": 1,
+      "baseName": "連撃：宙ポン拳",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を5回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 237,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0238",
+      "name": "閃光",
+      "version": 1,
+      "baseName": "閃光",
+      "level": null,
+      "description": "対象技命中時、相手のガッツ回復速度を＜0＞にする＜15秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 238,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0239",
+      "name": "追撃Lv4",
+      "version": 1,
+      "baseName": "追撃",
+      "level": 4,
+      "description": "技命中時、ダメージ＜40％＞の追撃＜20秒＞",
+      "tags": [],
+      "buffs": [
+        "bf-0008"
+      ],
+      "sortOrder": 239,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0240",
+      "name": "[相手白]与ダメ上昇",
+      "version": 1,
+      "baseName": "[相手白]与ダメ上昇",
+      "level": null,
+      "description": "相手＜オーラ白＞かつ技が命中したとき与ダメ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 240,
       "status": "verified"
     }
   ]
