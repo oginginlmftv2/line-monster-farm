@@ -58,5 +58,14 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0198": {
+    "name": "ゴッドファイナル",
+    "blood": "ガリ",
+    "source": "ガリ-20261014-0123/icons/11.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }

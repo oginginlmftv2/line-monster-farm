@@ -1,0 +1,993 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ガリ種の技一覧（16技）と所属モンスター12体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="ガリ種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"創造","item":"https://line-monster-farm-tetteikouryaku.com/monsters/souzou/"},{"@type":"ListItem","position":4,"name":"ガリ種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">創造</a> &gt; ガリ種</p>
+  <h1 class="page-title">ガリ種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0188" aria-controls="sk-0188" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0188.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">スピンカッター</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ17</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0189" aria-controls="sk-0189" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0189.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">プレス</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ25</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0190" aria-controls="sk-0190" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0190.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ナックル</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ13</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0188" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0188.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>スピンカッター<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>17</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1111.html">ガリ</a>（★2以上）・<a href="../../../monsters/souzou/gali/1115.html">ヒトツメオウジ</a>（★2以上）・<a href="../../../monsters/souzou/gali/1119.html">アクアリウス</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝・神性</p>
+            <p class="skill-ability-desc">対象技発動後、自身に[神性]付与またはLv1上昇＜1回＞[最大Lv4]、[神性]はLvに応じて自身に次の効果<br>1以上：全技に[業物Lv5]と＜無＞技発動時[乱変転]<br>3以上：全技に有利オーラ効果＜+50%＞<br>4：次の発動技に[変転]、発動後に[神性]Lvを2減少</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">変転</span>対象技命中時、有利オーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">乱変転</span>対象技をランダムな色のオーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0189" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0189.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>プレス<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1121.html">カラフルマスク</a>（★2以上）・<a href="../../../monsters/souzou/gali/1124.html">シオンカメン</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1124.html">シオンカメン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">アディッショナルダメージ
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1124.html">シオンカメン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ダメージ+10/ガッツ回復Lv1</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0190" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0190.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ナックル<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>13</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1106.html">レクサス</a>（★2以上）・<a href="../../../monsters/souzou/gali/1110.html">ガリオン</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝・神性</p>
+            <p class="skill-ability-desc">対象技発動後、自身に[神性]付与またはLv1上昇＜1回＞[最大Lv4]、[神性]はLvに応じて自身に次の効果<br>1以上：全技に[業物Lv5]と＜無＞技発動時[乱変転]<br>3以上：全技に有利オーラ効果＜+50%＞<br>4：次の発動技に[変転]、発動後に[神性]Lvを2減少</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">変転</span>対象技命中時、有利オーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">乱変転</span>対象技をランダムな色のオーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0191" aria-controls="sk-0191" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0191.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">大スピンカッター</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ21</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0192" aria-controls="sk-0192" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0192.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">ストレート</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ15</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0193" aria-controls="sk-0193" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0193.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ハリケーン</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ15</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0191" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0191.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>大スピンカッター<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D+</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>21</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1101.html">ピクセル</a>（★3以上）・<a href="../../../monsters/souzou/gali/1119.html">アクアリウス</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[中]</p>
+            <p class="skill-ability-desc">ちからパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝・神性</p>
+            <p class="skill-ability-desc">対象技発動後、自身に[神性]付与またはLv1上昇＜1回＞[最大Lv4]、[神性]はLvに応じて自身に次の効果<br>1以上：全技に[業物Lv5]と＜無＞技発動時[乱変転]<br>3以上：全技に有利オーラ効果＜+50%＞<br>4：次の発動技に[変転]、発動後に[神性]Lvを2減少</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">変転</span>対象技命中時、有利オーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">乱変転</span>対象技をランダムな色のオーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0192" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0192.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>ストレート<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>15</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1152.html">ハレハレ</a>（★3以上）・<a href="../../../monsters/souzou/gali/1151.html">ハオ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]</p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0193" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0193.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ハリケーン<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>15</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1106.html">レクサス</a>（★3以上）・<a href="../../../monsters/souzou/gali/1115.html">ヒトツメオウジ</a>（★3以上）・<a href="../../../monsters/souzou/gali/1121.html">カラフルマスク</a>（★3以上）・<a href="../../../monsters/souzou/gali/1150.html">オシリス</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]</p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝・神性</p>
+            <p class="skill-ability-desc">対象技発動後、自身に[神性]付与またはLv1上昇＜1回＞[最大Lv4]、[神性]はLvに応じて自身に次の効果<br>1以上：全技に[業物Lv5]と＜無＞技発動時[乱変転]<br>3以上：全技に有利オーラ効果＜+50%＞<br>4：次の発動技に[変転]、発動後に[神性]Lvを2減少</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">変転</span>対象技命中時、有利オーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">乱変転</span>対象技をランダムな色のオーラに変換</p>
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1106.html">レクサス</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ダメージブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1106.html">レクサス</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、与ダメージ9%上昇/ガッツ回復Lv1</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0194" aria-controls="sk-0194" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0194.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">ホーリーサンダー</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ30</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0195" aria-controls="sk-0195" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0195.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">ホーリーアイシクル</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ25</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0196" aria-controls="sk-0196" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0196.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">ホーリーアース</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ28</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0197" aria-controls="sk-0197" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0197.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span><span class="skill-chip-name">ホーリーファイヤー</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ31</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0194" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0194.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>ホーリーサンダー<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C+</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>S</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1104.html">エクスマキナ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">閃雷Lv6</p>
+            <p class="skill-ability-desc">対象技命中時、クリティカル率が上昇Lv6＜20秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0195" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0195.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>ホーリーアイシクル<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1152.html">ハレハレ</a>（★4以上）・<a href="../../../monsters/souzou/gali/1151.html">ハオ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">氷痕Lv8</p>
+            <p class="skill-ability-desc">対象技命中時、相手の回避率が減少Lv8＜20秒＞＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0196" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0196.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>ホーリーアース<span class="skill-detail-place">近距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>28</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1150.html">オシリス</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">調和Lv5</p>
+            <p class="skill-ability-desc">対象技命中時、ガッツ回復速度が上昇Lv5＜20秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0197" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0197.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>ホーリーファイヤー<span class="skill-detail-place">零距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>31</td><th>クリティカル率</th><td>D+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1101.html">ピクセル</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">燃焼Lv5</p>
+            <p class="skill-ability-desc">対象技命中時、相手のガッツ回復速度が減少Lv5＜10秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0198" aria-controls="sk-0198" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0198.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">ゴッドファイナル</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0199" aria-controls="sk-0199" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0199.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">ゴッドエレメンタル</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ45</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0200" aria-controls="sk-0200" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0200.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">ゴッドアタック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ39</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0201" aria-controls="sk-0201" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0201.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">ゴッドブレス</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ36</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0198" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0198.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>ゴッドファイナル<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1152.html">ハレハレ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ゴッドファイナル</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・命中ステを[神性]のLv×＜20%＞上昇<br>・攻撃ステを[神性]のLv×＜10%＞上昇</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0199" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0199.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>ゴッドエレメンタル<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>45</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1101.html">ピクセル</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">変転</p>
+            <p class="skill-ability-desc">対象技命中時、有利属性に変換＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">変転</span>対象技命中時、有利オーラに変換</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1101.html">ピクセル</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">かしこさパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">レンジブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1101.html">ピクセル</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の間合い適性効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0200" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0200.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>ゴッドアタック<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>B+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>39</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1104.html">エクスマキナ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神撃：ゴッドアタック</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜20%＞の追撃を[神性]のLv回数与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">神格</p>
+            <p class="skill-ability-desc">対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--buff"><span class="skill-buff-name">業物</span>ダメージ・命中率・ガッツダウン・クリティカルの技性能上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0201" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0201.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>ゴッドブレス<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>B+</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>A+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>36</td><th>クリティカル率</th><td>C+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1151.html">ハオ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：ゴッドブレス</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv8を1回与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラパワー</p>
+            <p class="skill-ability-desc">対象技命中時、所持しているオーラ技の数だけ与ダメ上昇＜1個につき3%＞、相手に被ダメ上昇Lv4＜20秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0202" aria-controls="sk-0202" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0202.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">ゴッドライジング</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0203" aria-controls="sk-0203" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0203.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">クロノトリック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ39</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0202" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0202.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>ゴッドライジング<span class="skill-detail-place">中距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1150.html">オシリス</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：エレメント</p>
+            <p class="skill-ability-desc">対象技命中時、編成中のオーラ＜赤/青/黄/緑/＞技の数に応じて、各技ダメージ＜10%＞分の追撃を与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ポラリス</p>
+            <p class="skill-ability-desc">対象技命中時、編成中のオーラ＜白/黒＞技のダメージステータスの＜10%＞を加算</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1150.html">オシリス</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1150.html">オシリス</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0203" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0203.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>クロノトリック<span class="skill-detail-place">零距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>S+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>39</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/souzou/gali/1104.html">エクスマキナ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">クロノトリック</p>
+            <p class="skill-ability-desc">対象技発動後、次の効果<br>・発動技と次の2回までの技に、すべての技性能＜+8＞、消費ガッツ＜-4＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：クロノトリック</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜30%＞の追撃を＜1回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1104.html">エクスマキナ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/souzou/gali/1104.html">エクスマキナ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">ガリ種のモンスター（12体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="1101.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200769_0.jpg" alt="ピクセル" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ピクセル</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ピクシー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1104.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__30269443.jpg" alt="エクスマキナ" loading="lazy">
+            <span class="mon-card-limited">超神殿際限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">エクスマキナ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ヘンガー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1106.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200523_0.jpg" alt="レクサス" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">レクサス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ディノ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1110.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200637_0.jpg" alt="ガリオン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ガリオン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ハム</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1111.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200566_0.jpg" alt="ガリ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ガリ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ガリ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1115.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200670_0.jpg" alt="ヒトツメオウジ" loading="lazy">
+            <span class="mon-card-limited">イベント限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ヒトツメオウジ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：スエゾー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1119.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200600_0.jpg" alt="アクアリウス" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アクアリウス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ゲル</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1121.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200520_0.jpg" alt="カラフルマスク" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">カラフルマスク</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：プラント</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1124.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200706_0.jpg" alt="シオンカメン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シオンカメン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：ナーガ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1150.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200461_0.jpg" alt="オシリス" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">オシリス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1151.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93208580_0.jpg" alt="ハオ" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハオ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1152.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200464_0.jpg" alt="ハレハレ" loading="lazy">
+            <span class="mon-card-limited">春限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハレハレ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">創造</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+      <a class="menu-link" href="../metalner/index.html"><span class="icon">✨</span> メタルナー種の技</a>
+      <a class="menu-link" href="../index.html"><span class="icon">✨</span> 創造のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>
