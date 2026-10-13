@@ -219,10 +219,14 @@ def gray(c):
 
 
 def reference_icons(blood):
-    """その血統の図鑑アイコン（123pxのもの）を skillId → 82pxの画像 で返す。専用技の切り抜き（82px）は使わない"""
+    """その血統の図鑑アイコン（123pxのもの）を skillId → 82pxの画像 で返す。専用技の切り抜き（82px）は使わない。
+    図鑑でも暗転していて色を戻した（推測）アイコンは raw/index.json に dim で載っているので、正解として使わない"""
+    guessed = {sk for sk, m in load_json(os.path.join(RAW, 'index.json'), {}).items() if m.get('dim')}
     out = {}
     for s in skills():
         p = os.path.join(ICONS, s['skillId'] + '.png')
+        if s['skillId'] in guessed:
+            continue
         if s['blood'] == blood and not s.get('unique') and os.path.exists(p) and Image.open(p).size[0] > 100:
             out[s['skillId']] = Image.open(p).convert('RGB').resize((CELL, CELL), Image.LANCZOS)
     return out

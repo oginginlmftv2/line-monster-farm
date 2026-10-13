@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 246
+    "abilities": 262
   },
   "abilities": [
     {
@@ -3023,6 +3023,206 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 246,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0247",
+      "name": "祝・神性",
+      "version": 1,
+      "baseName": "祝・神性",
+      "level": null,
+      "description": "対象技発動後、自身に[神性]付与またはLv1上昇＜1回＞[最大Lv4]、[神性]はLvに応じて自身に次の効果\n1以上：全技に[業物Lv5]と＜無＞技発動時[乱変転]\n3以上：全技に有利オーラ効果＜+50%＞\n4：次の発動技に[変転]、発動後に[神性]Lvを2減少",
+      "tags": [],
+      "buffs": [
+        "bf-0006",
+        "bf-0007",
+        "bf-0021"
+      ],
+      "sortOrder": 247,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0248",
+      "name": "神格",
+      "version": 1,
+      "baseName": "神格",
+      "level": null,
+      "description": "対象技発動時、[業物Lv3]を[神性]Lvの回数だけ発動",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 248,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0249",
+      "name": "閃雷Lv6",
+      "version": 1,
+      "baseName": "閃雷",
+      "level": 6,
+      "description": "対象技命中時、クリティカル率が上昇Lv6＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 249,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0250",
+      "name": "氷痕Lv8",
+      "version": 1,
+      "baseName": "氷痕",
+      "level": 8,
+      "description": "対象技命中時、相手の回避率が減少Lv8＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 250,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0251",
+      "name": "調和Lv5",
+      "version": 1,
+      "baseName": "調和",
+      "level": 5,
+      "description": "対象技命中時、ガッツ回復速度が上昇Lv5＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 251,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0252",
+      "name": "燃焼Lv5",
+      "version": 1,
+      "baseName": "燃焼",
+      "level": 5,
+      "description": "対象技命中時、相手のガッツ回復速度が減少Lv5＜10秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 252,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0253",
+      "name": "ゴッドファイナル",
+      "version": 1,
+      "baseName": "ゴッドファイナル",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・命中ステを[神性]のLv×＜20%＞上昇\n・攻撃ステを[神性]のLv×＜10%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 253,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0254",
+      "name": "変転",
+      "version": 1,
+      "baseName": "変転",
+      "level": null,
+      "description": "対象技命中時、有利属性に変換＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0006"
+      ],
+      "sortOrder": 254,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0255",
+      "name": "ダメージブースト",
+      "version": 1,
+      "baseName": "ダメージブースト",
+      "level": null,
+      "description": "対象技発動時、与ダメージ9%上昇/ガッツ回復Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 255,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0256",
+      "name": "神撃：ゴッドアタック",
+      "version": 1,
+      "baseName": "神撃：ゴッドアタック",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を[神性]のLv回数与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 256,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0257",
+      "name": "連撃：ゴッドブレス",
+      "version": 1,
+      "baseName": "連撃：ゴッドブレス",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv8を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 257,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0258",
+      "name": "オーラパワー",
+      "version": 1,
+      "baseName": "オーラパワー",
+      "level": null,
+      "description": "対象技命中時、所持しているオーラ技の数だけ与ダメ上昇＜1個につき3%＞、相手に被ダメ上昇Lv4＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 258,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0259",
+      "name": "連撃：エレメント",
+      "version": 1,
+      "baseName": "連撃：エレメント",
+      "level": null,
+      "description": "対象技命中時、編成中のオーラ＜赤/青/黄/緑/＞技の数に応じて、各技ダメージ＜10%＞分の追撃を与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 259,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0260",
+      "name": "ポラリス",
+      "version": 1,
+      "baseName": "ポラリス",
+      "level": null,
+      "description": "対象技命中時、編成中のオーラ＜白/黒＞技のダメージステータスの＜10%＞を加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 260,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0261",
+      "name": "クロノトリック",
+      "version": 1,
+      "baseName": "クロノトリック",
+      "level": null,
+      "description": "対象技発動後、次の効果\n・発動技と次の2回までの技に、すべての技性能＜+8＞、消費ガッツ＜-4＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 261,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0262",
+      "name": "連撃：クロノトリック",
+      "version": 1,
+      "baseName": "連撃：クロノトリック",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 262,
       "status": "verified"
     }
   ]
