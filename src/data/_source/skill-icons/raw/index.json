@@ -1,0 +1,62 @@
+{
+  "sk-0183": {
+    "name": "ホーリー掌打",
+    "blood": "メタルナー",
+    "source": "20261014-002936.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0184": {
+    "name": "ハートブレイク",
+    "blood": "メタルナー",
+    "source": "20261014-004355.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0185": {
+    "name": "ハートビーム",
+    "blood": "メタルナー",
+    "source": "20261014-004401.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0186": {
+    "name": "リサイクル",
+    "blood": "メタルナー",
+    "source": "20261014-004413.png",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0187": {
+    "name": "大極変化",
+    "blood": "メタルナー",
+    "source": "20261014-004423.png",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  }
+}

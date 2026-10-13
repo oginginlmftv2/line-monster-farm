@@ -137,6 +137,29 @@ LMFShot はミラーリング窓だけを撮る。2026-10-05時点の実測は *
   「今どのタブが選ばれているか」で読むと間違える
 - 「連動能力」は記録しない（DBに列が無い）
 
+#### 専用技のアイコンも取り込む
+
+専用技は図鑑に載らないので、アイコンは**技タブの画像のマス**から切り抜く
+（`tools/skill-autocapture/skill_icon.py`。PCのミラーリングで撮った 828×1836 の画像だけ。スマホのスクショは座標が違うので使えない）。
+TSVを取り込んで技IDが決まったあとに行う。
+
+```bash
+PY=~/claude/lmf-aisho/analysis/.venv/bin/python
+$PY tools/skill-autocapture/skill_icon.py add <技タブの画像> <技ID>     # 黄枠のマス＝説明欄の技を取り込む
+$PY tools/skill-autocapture/skill_icon.py calib <技タブの画像> <血統>   # 同じ画像の暗い共通技を色フィルタの見本に足す
+$PY tools/skill-autocapture/skill_icon.py fit && $PY tools/skill-autocapture/skill_icon.py rebuild   # 見本が増えたら
+$PY tools/skill-autocapture/skill_icon.py sheet                          # 確認用の一覧（src/data/_source/skill-icons/raw/review.png）
+```
+
+- 黄色い枠は消す。右下の消費ガッツの数字は残る（入力者が許容済み）
+- **覚えていない技（暗いマス）は色フィルタを逆算して色を戻す。戻した色は推測**で、元画像は `src/data/_source/skill-icons/raw/` に残す
+- 色フィルタの見本は、その血統の図鑑アイコン（`skill-icons/` の123pxのもの）がある共通技だけ。
+  図鑑アイコンが無い血統の専用技は、先にその血統を自動撮影するか、明るい（覚えた）マスで撮る
+- `sheet` の一覧を入力者に送り、**サイトに出す前に目で確かめてもらう**
+- `calib` の照合は一致度0.8未満を見本にしない（取り違え防止）。見本が増えたら `fit` → `rebuild` で全部作り直す
+- **見本は「オーラ色（背景）× ちから（黄色の絵）／かしこさ（緑の絵）」の組み合わせごとにそろえる。**
+  絵の色はちから＝黄、かしこさ＝緑の2系統だけで、背景がオーラ色に寄せてある。見本に無い組み合わせは色がずれる
+
 ## 読み取り表
 
 | 列 | 画面のどこ | 注意 |
