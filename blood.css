@@ -512,6 +512,9 @@
   }
   .blood-page .skill-chip--has-icon .skill-chip-meta,
   .blood-page .skill-chip--has-icon .skill-chip-unique { grid-column: 1 / -1; }
+  /* 技種／ガッツはアイコンに詰まって見えるので3px下げる。下の余白を同じだけ削り、チップの高さは変えない */
+  .blood-page .skill-chip--has-icon { padding-bottom: 3px; }
+  .blood-page .skill-chip--has-icon .skill-chip-meta { margin-top: 3px; }
   /* アイコンのある血統は、空の列もチップの列と同じ幅にする（列幅がそろう） */
   .blood-page .skill-matrix:has(.skill-chip--has-icon) .skill-cell { min-width: 129px; }
   .blood-page .skill-detail-name .skill-icon--detail { width: 44px; }
