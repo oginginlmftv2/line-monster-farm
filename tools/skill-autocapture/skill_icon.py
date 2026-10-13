@@ -12,9 +12,10 @@
   PY=~/claude/lmf-aisho/analysis/.venv/bin/python
   $PY skill_icon.py add <技タブ.png> sk-0183          # 枠の付いたマス（＝説明欄の技）を sk-0183 として取り込む
   $PY skill_icon.py add <技タブ.png> sk-0183 --cell 4,2   # 行,列（1始まり）で指定する
-  $PY skill_icon.py calib <技タブ.png> メタルナー      # 暗い共通技のマスを見本に足す（図鑑のアイコンと自動で照合）
-  $PY skill_icon.py fit                                # 見本から色フィルタを推定し直す
-  $PY skill_icon.py rebuild                            # 取り込み済みの専用技アイコンを作り直す
+  $PY skill_icon.py calib <技タブ.png> メタルナー      # 暗い共通技のマスを見本に足す（照合できないマスは保留）
+  $PY skill_icon.py refresh                            # 保留の照合し直し→推定し直し→作り直し→一覧（毎回回す）
+  $PY skill_icon.py place <自動撮影フォルダ> メタルナー  # 自動撮影のアイコンを技IDの名前で skill-icons/ へ置く
+  $PY skill_icon.py fit | rebuild | recalib            # refresh の中身を個別に
   $PY skill_icon.py sheet [出力.png]                   # 目で確かめる一覧（元｜色を戻した版）
 
 置き場所（リポジトリ）:
@@ -23,6 +24,7 @@
   src/data/_source/skill-icons/raw/index.json     元画像の出どころ・暗いか・枠があったか
   src/data/_source/skill-icons/calib/*.png        色フィルタ推定用の見本（暗い共通技のマス）と index.json
   src/data/_source/skill-icons/calib/filter.json  推定した色フィルタ
+  src/data/_source/skill-icons/calib/pending/     照合できなかった暗いマス（図鑑アイコンが増えたら refresh で見本へ）
 """
 import os, sys, json, datetime
 import numpy as np
@@ -33,6 +35,7 @@ ICONS = os.path.join(REPO, 'skill-icons')
 RAW = os.path.join(REPO, 'src/data/_source/skill-icons/raw')
 CALIB = os.path.join(REPO, 'src/data/_source/skill-icons/calib')
 FILTER = os.path.join(CALIB, 'filter.json')
+PENDING = os.path.join(CALIB, 'pending')
 SKILLS = os.path.join(REPO, 'src/data/monster-skills.json')
 FONT = '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'
 
@@ -159,6 +162,7 @@ def fit():
                            fit_error=round(float(err), 1), fitted_at=datetime.date.today().isoformat(),
                            note='元のRGB(0-1) = [暗いマスのRGB(0-1), 1] @ W'))
     print(f'色フィルタを推定しました：見本{len(idx)}件 / 誤差{err:.1f}（0-255）→ {os.path.relpath(FILTER, REPO)}')
+    coverage()
 
 
 def restore(c):
@@ -210,45 +214,137 @@ def ncc(a, b):
     return float((a * b).sum() / (np.sqrt((a * a).sum() * (b * b).sum()) + 1e-9))
 
 
+def gray(c):
+    return blur(c).mean(2)[FIT_MASK]
+
+
+def reference_icons(blood):
+    """その血統の図鑑アイコン（123pxのもの）を skillId → 82pxの画像 で返す。専用技の切り抜き（82px）は使わない"""
+    out = {}
+    for s in skills():
+        p = os.path.join(ICONS, s['skillId'] + '.png')
+        if s['blood'] == blood and not s.get('unique') and os.path.exists(p) and Image.open(p).size[0] > 100:
+            out[s['skillId']] = Image.open(p).convert('RGB').resize((CELL, CELL), Image.LANCZOS)
+    return out
+
+
+def unique_raws(blood):
+    """取り込み済みの専用技の元画像（暗いまま・82px）"""
+    out = {}
+    for sk, m in load_json(os.path.join(RAW, 'index.json'), {}).items():
+        if m.get('blood') == blood and m.get('dim'):
+            out[sk] = Image.open(os.path.join(RAW, sk + '.png')).convert('RGB')
+    return out
+
+
+def match(cell_img, refs, raw=False):
+    """暗いマスがどの図鑑アイコンか。取り違えを防ぐため、1位が十分高く2位と差があるときだけ返す。
+    色フィルタがあれば色を戻してから色ごと比べる（2026-10-14 実測：正しい技0.94〜0.98、専用技0.56〜0.62）。
+    無ければ白黒で比べる（正しい技でも0.74〜0.92まで落ちるので、基準は0.8）"""
+    if not refs:
+        return None, 0.0
+    if raw:   # 暗いマスどうし
+        feat = lambda im: blur(im)[FIT_MASK].ravel()
+        g, th, margin = feat(cell_img), 0.9, 0.0
+    elif os.path.exists(FILTER):
+        feat = lambda im: blur(im)[FIT_MASK].ravel()
+        g, th, margin = feat(restore(cell_img)), 0.9, 0.08
+    else:
+        feat = gray
+        g, th, margin = gray(cell_img), 0.8, 0.05
+    score = sorted(((ncc(g, feat(v)), k) for k, v in refs.items()), reverse=True)
+    s1, k1 = score[0]
+    s2 = score[1][0] if len(score) > 1 else 0
+    return (k1 if s1 >= th and s1 - s2 >= margin else None), s1
+
+
 def cmd_calib(shot, blood):
+    """技タブの暗い共通技のマスを見本に足す。照合できないマスは保留（pending）に残し、
+    あとで図鑑アイコンが増えたら refresh で照合し直す"""
     im = Image.open(shot)
-    cands = [s for s in skills() if s['blood'] == blood and not s.get('unique')
-             and os.path.exists(os.path.join(ICONS, s['skillId'] + '.png'))
-             and Image.open(os.path.join(ICONS, s['skillId'] + '.png')).size[0] > 100]  # 図鑑で撮ったものだけ
-    if not cands:
-        raise SystemExit(f'{blood}種の図鑑アイコンが skill-icons/ に無い')
-    gray = lambda c: blur(c).mean(2)[FIT_MASK]
-    refs = {s['skillId']: gray(Image.open(os.path.join(ICONS, s['skillId'] + '.png')).convert('RGB').resize((CELL, CELL), Image.LANCZOS)) for s in cands}
-    names = {s['skillId']: s['name'] for s in cands}
+    refs = reference_icons(blood)
+    names = {s['skillId']: s['name'] for s in skills()}
     idx = load_json(os.path.join(CALIB, 'index.json'), {})
-    os.makedirs(CALIB, exist_ok=True)
-    added = 0
+    pend = load_json(os.path.join(PENDING, 'index.json'), {})
+    os.makedirs(PENDING, exist_ok=True)
+    stem = os.path.splitext(os.path.basename(shot))[0]
+    added = held = 0
     for r, c, x, y in find_cells(im):
         info = cell_info(im, x, y)
         if info['empty'] or not info['dim'] or info['framed']:
             continue
         cc = crop(im, x, y)
-        g = gray(cc)
-        score = sorted(((ncc(g, v), k) for k, v in refs.items()), reverse=True)
-        (s1, k1), (s2, _) = score[0], score[1] if len(score) > 1 else (0, None)
-        if s1 < 0.8 or s1 - s2 < 0.05:
-            print(f'  {r}行{c}列：照合できず（最良 {names[k1]} {s1:.2f}）→ 見本にしない')
-            continue
-        f = f'{k1}-{os.path.splitext(os.path.basename(shot))[0]}.png'
-        cc.save(os.path.join(CALIB, f))
-        idx[f] = k1
-        added += 1
-        print(f'  {r}行{c}列：{names[k1]}（{k1}、一致度{s1:.2f}）')
+        k1, s1 = match(cc, refs)
+        if k1:
+            f = f'{k1}-{stem}.png'
+            cc.save(os.path.join(CALIB, f)); idx[f] = k1; added += 1
+            print(f'  {r}行{c}列：{names[k1]}（{k1}、一致度{s1:.2f}）')
+        else:
+            f = f'{blood}-{stem}-r{r}c{c}.png'
+            cc.save(os.path.join(PENDING, f)); pend[f] = dict(blood=blood, source=os.path.basename(shot)); held += 1
     save_json(os.path.join(CALIB, 'index.json'), idx)
-    print(f'見本を{added}件足しました（合計{len(idx)}件）。fit で推定し直す')
+    save_json(os.path.join(PENDING, 'index.json'), pend)
+    print(f'見本を{added}件足しました（合計{len(idx)}件）。照合できないマス{held}件は保留（合計{len(pend)}件）')
+
+
+def cmd_recalib():
+    """保留のマスを、今ある図鑑アイコンで照合し直す。見つかったら見本へ移す"""
+    pend = load_json(os.path.join(PENDING, 'index.json'), {})
+    idx = load_json(os.path.join(CALIB, 'index.json'), {})
+    names = {s['skillId']: s['name'] for s in skills()}
+    refs_by_blood, uniques_by_blood = {}, {}
+    moved = 0
+    for f, m in list(pend.items()):
+        refs = refs_by_blood.setdefault(m['blood'], reference_icons(m['blood']))
+        img = Image.open(os.path.join(PENDING, f)).convert('RGB')
+        k1, s1 = match(img, refs)
+        if not k1:
+            u, su = match(img, uniques_by_blood.setdefault(m['blood'], unique_raws(m['blood'])), raw=True)
+            if u:   # 取り込み済みの専用技のマス。見本にはならないので保留から外す
+                os.remove(os.path.join(PENDING, f)); del pend[f]
+                print(f'  保留から外す：専用技 {names[u]}（{u}、一致度{su:.2f}）')
+            continue
+        nf = f'{k1}-{os.path.splitext(m["source"])[0]}.png'
+        os.replace(os.path.join(PENDING, f), os.path.join(CALIB, nf))
+        idx[nf] = k1; del pend[f]; moved += 1
+        print(f'  保留→見本：{names[k1]}（{k1}、一致度{s1:.2f}）')
+    save_json(os.path.join(CALIB, 'index.json'), idx)
+    save_json(os.path.join(PENDING, 'index.json'), pend)
+    print(f'保留から見本へ{moved}件（見本{len(idx)}件・保留{len(pend)}件）')
+    return moved
+
+
+def coverage():
+    """見本と専用技の「オーラ色 × 技種」の内訳。専用技にあって見本に無い組み合わせは色がずれやすい"""
+    by_id = {s['skillId']: s for s in skills()}
+    idx = load_json(os.path.join(CALIB, 'index.json'), {})
+    have = {}
+    for sk in idx.values():
+        key = (by_id[sk]['aura'], by_id[sk]['skillType'])
+        have[key] = have.get(key, 0) + 1
+    need = {}
+    for sk, m in load_json(os.path.join(RAW, 'index.json'), {}).items():
+        if m.get('dim') and sk in by_id:
+            key = (by_id[sk]['aura'], by_id[sk]['skillType'])
+            need.setdefault(key, []).append(by_id[sk]['name'])
+    print('見本の内訳（オーラ色×技種：件数）：' + '、'.join(f'{a}×{t} {n}' for (a, t), n in sorted(have.items())))
+    missing = {k: v for k, v in need.items() if k not in have}
+    if missing:
+        print('⚠️ 見本の無い組み合わせ（色を戻した結果がずれやすい）：' +
+              '、'.join(f"{a}×{t}（{'・'.join(v)}）" for (a, t), v in sorted(missing.items())))
+    return missing
 
 
 def cmd_rebuild():
     idx = load_json(os.path.join(RAW, 'index.json'), {})
     for sk, meta in idx.items():
         raw = Image.open(os.path.join(RAW, sk + '.png')).convert('RGB')
-        make_icon(raw, meta).save(os.path.join(ICONS, sk + '.png'))
-        print(f"作り直し {sk} {meta['name']}")
+        p = os.path.join(ICONS, sk + '.png')
+        before = np.asarray(Image.open(p).convert('RGB')).astype(int) if os.path.exists(p) else None
+        new = make_icon(raw, meta)
+        new.save(p)
+        diff = np.abs(np.asarray(new).astype(int) - before).mean() if before is not None and before.shape == np.asarray(new).shape else None
+        print(f"作り直し {sk} {meta['name']}" + (f'（変化 {diff:.1f}）' if diff is not None else ''))
 
 
 def cmd_sheet(out=None):
@@ -272,6 +368,49 @@ def cmd_sheet(out=None):
     print(out)
 
 
+def cmd_refresh():
+    """見本を増やして色フィルタを推定し直し、暗い専用技アイコンを全部作り直す（取り込みのたびに必ず回す）。
+    推定し直すと色で照合できる保留が増えることがあるので、増えなくなるまで繰り返す"""
+    fitted = False
+    for _ in range(3):
+        if not cmd_recalib():
+            break
+        fit(); fitted = True
+    if not load_json(os.path.join(CALIB, 'index.json'), {}):
+        print('見本がまだ無いので推定はしない')
+        return
+    if not fitted:
+        fit()
+    cmd_rebuild()
+    if load_json(os.path.join(RAW, 'index.json'), {}):
+        cmd_sheet()
+
+
+def cmd_place(run_dir, blood):
+    """自動撮影（skillcap.py）の icons/NN.png を、技DBの技IDの名前で skill-icons/ へ置く。
+    manifest の技名は文字認識なので、同じ血統・同じ間合いの共通技から名前の近いものを選び、対応を表示する"""
+    import csv, difflib
+    rows = list(csv.DictReader(open(os.path.join(run_dir, 'manifest.tsv')).readlines()[1:], delimiter='\t'))
+    cands = [s for s in skills() if s['blood'] == blood and not s.get('unique')]
+    used = set()
+    plan = []
+    for r in rows:
+        pool = [s for s in cands if s['range'] == r['range'] and s['skillId'] not in used]
+        best = max(pool, key=lambda s: max(difflib.SequenceMatcher(None, s['name'], r[k]).ratio() for k in ('name', 'grid_name')), default=None)
+        score = max(difflib.SequenceMatcher(None, best['name'], r[k]).ratio() for k in ('name', 'grid_name')) if best else 0
+        if not best or score < 0.5:
+            plan.append((r, None, score)); continue
+        used.add(best['skillId']); plan.append((r, best, score))
+    bad = [p for p in plan if p[1] is None]
+    for r, s, sc in plan:
+        print(f"  {r['n']:>2} {r['range']} {r['name']:<10} → " + (f"{s['skillId']} {s['name']}（一致{sc:.2f}）" if s else '対応する技が無い'))
+    if bad:
+        raise SystemExit('対応の付かないアイコンがあるので置かない（TSVの取り込みが済んでいるか確認）')
+    for r, s, _ in plan:
+        Image.open(os.path.join(run_dir, r['icon'])).save(os.path.join(ICONS, s['skillId'] + '.png'))
+    print(f'{len(plan)}件を skill-icons/ に置きました')
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if not a:
@@ -286,6 +425,12 @@ if __name__ == '__main__':
         fit()
     elif cmd == 'rebuild':
         cmd_rebuild()
+    elif cmd == 'recalib':
+        cmd_recalib()
+    elif cmd == 'refresh':
+        cmd_refresh()
+    elif cmd == 'place':
+        cmd_place(a[1], a[2])
     elif cmd == 'sheet':
         cmd_sheet(a[1] if len(a) > 1 else None)
     else:

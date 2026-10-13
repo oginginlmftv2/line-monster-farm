@@ -101,5 +101,17 @@ overview.png     一覧画像
 - 技アイコンの絵はちから技＝黄色系、かしこさ技＝緑系の2系統だけ。背景はオーラ色に寄せてある。
   **見本は「オーラ色 × ちから／かしこさ」の組み合わせごとにそろえる**（2026-10-14 入力者確認）。
   メタルナー種の見本33件は黄・緑の絵と、白・黒・青・緑・黄・無の背景だけ。赤背景（ラブラブセイジンの専用技）は見本が無い
-- 元画像 `src/data/_source/skill-icons/raw/`、見本 `src/data/_source/skill-icons/calib/`、推定した変換 `src/data/_source/skill-icons/calib/filter.json`。
+- 元画像 `src/data/_source/skill-icons/raw/`、見本 `src/data/_source/skill-icons/calib/`、推定した変換 `src/data/_source/skill-icons/calib/filter.json`、
+  照合待ちの暗いマス `src/data/_source/skill-icons/calib/pending/`。
   `skill-icons/` には `sk-NNNN.png` 以外を置かない（verify.js がFAILにする）
+
+### 精度を上げ続ける仕組み（refresh）
+
+- `calib` は技タブの暗いマスを全部拾う。図鑑アイコンと照合できたものは見本、できないものは保留（pending）
+- `refresh` は 保留の照合し直し → 色フィルタの推定し直し → 専用技アイコンの作り直し → 一覧（review.png）。
+  推定し直すと色で照合できる保留が増えるので、増えなくなるまで繰り返す。取り込み済みの専用技のマスは保留から外す
+- 照合は、色フィルタがあれば色を戻して色ごと比べる（正しい技0.94〜0.98・専用技0.56〜0.62、基準0.9・2位と0.08差）。
+  無ければ白黒（基準0.8・差0.05）
+- 自動撮影の `icons/NN.png` は `place <撮影フォルダ> <血統>` で技IDの名前にして置く（間合い＋名前の近さで対応付け、表を表示）
+- 2026-10-14 時点の見本：52件（無×ちから18・黒×ちから12・白×ちから8・黄×ちから5・緑×かしこさ5・青×ちから4）。
+  赤×かしこさは見本が無い
