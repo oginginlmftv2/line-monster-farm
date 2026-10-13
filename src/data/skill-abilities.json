@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 240
+    "abilities": 246
   },
   "abilities": [
     {
@@ -2951,6 +2951,78 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 240,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0241",
+      "name": "連撃：ハートブレイク",
+      "version": 1,
+      "baseName": "連撃：ハートブレイク",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を5回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 241,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0242",
+      "name": "[相手緑]脆弱Lv2",
+      "version": 1,
+      "baseName": "[相手緑]脆弱",
+      "level": 2,
+      "description": "[相手緑]対象技命中時、相手に被ダメ上昇Lv2＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 242,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0243",
+      "name": "照準",
+      "version": 1,
+      "baseName": "照準",
+      "level": null,
+      "description": "対象技命中時、技発動中の一定時間、相手のガッツ回復速度を0にする＜5秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 243,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0244",
+      "name": "シールド[小]：リサイクル",
+      "version": 1,
+      "baseName": "シールド[小]：リサイクル",
+      "level": null,
+      "description": "対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 244,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0245",
+      "name": "破壊[黄]：リサイクル",
+      "version": 1,
+      "baseName": "破壊[黄]：リサイクル",
+      "level": null,
+      "description": "[相手黄]対象技命中時、相手のシールドを破壊＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 245,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0246",
+      "name": "大極変化",
+      "version": 1,
+      "baseName": "大極変化",
+      "level": null,
+      "description": "[前半] 全ての技がオーラ無になる\n[後半] 全ての技が有利オーラになる",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 246,
       "status": "verified"
     }
   ]
