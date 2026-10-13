@@ -36,6 +36,10 @@ const SKILL_AURAS = ['赤', '青', '黄', '黒', '白', '緑', '無'];
 // ダメージ・命中率・ガッツダウン・クリティカル率の評価。各段に + 付きが存在する。
 // 評価は SS〜G。SS はランク6の技で初出（キュービ種 王狐炎衝）
 const SKILL_GRADE_PATTERN = /^(?:SS|[SABCDEFG])\+?$/;
+// 技アイコン。撮影した画像を skill-icons/<skillId>.png に置けば表示される。
+// あり・なしの正はファイルの有無で、技DBの icon 列は使わない（取り込み直しやCMS化で値が消えないように）。
+const SKILL_ICON_DIR = 'skill-icons';
+const SKILL_ICON_FILE_PATTERN = /^(sk-\d{4})\.png$/;
 // 技登録に必要なレアリティ（★1〜10）
 const SKILL_RARITY_MIN = 1;
 const SKILL_RARITY_MAX = 10;
@@ -101,6 +105,24 @@ function countTaxonomyEntries(taxonomy) {
   };
 }
 
+// skill-icons/ にある技アイコンを skillId → 寸法 で返す。寸法はPNGのヘッダから読み、
+// width/height 属性に書いて読み込み中のレイアウトのずれを防ぐ。
+function loadSkillIcons(repo) {
+  const icons = new Map();
+  const dir = path.join(repo, SKILL_ICON_DIR);
+  if (!fs.existsSync(dir)) return icons;
+  for (const file of fs.readdirSync(dir).sort()) {
+    const match = file.match(SKILL_ICON_FILE_PATTERN);
+    if (!match) continue;
+    const header = fs.readFileSync(path.join(dir, file)).subarray(0, 24);
+    if (header.length < 24 || header.toString('latin1', 12, 16) !== 'IHDR') {
+      throw new Error(`${SKILL_ICON_DIR}/${file}: PNGとして読めません`);
+    }
+    icons.set(match[1], { width: header.readUInt32BE(16), height: header.readUInt32BE(20) });
+  }
+  return icons;
+}
+
 function loadInputs() {
   const required = [
     'src/data/monster-ids.json',
@@ -136,6 +158,7 @@ function loadInputs() {
   const skillAbilitiesJson = fs.existsSync(skillAbilitiesPath) ? readJson('src/data/skill-abilities.json') : null;
   const skillBuffsPath = path.join(REPO, 'src/data/skill-buffs.json');
   const skillBuffsJson = fs.existsSync(skillBuffsPath) ? readJson('src/data/skill-buffs.json') : null;
+  const skillIcons = loadSkillIcons(REPO);
   // 基礎データ（素質・特徴・適性）は任意入力。無ければセクションを出さずにビルドを通す。
   const basicsPath = path.join(REPO, 'src/data/monster-basics.json');
   const basicsJson = fs.existsSync(basicsPath) ? readJson('src/data/monster-basics.json') : null;
@@ -200,6 +223,7 @@ function loadInputs() {
     skillsJson,
     skillAbilitiesJson,
     skillBuffsJson,
+    skillIcons,
     basicsJson,
     sitemap: fs.readFileSync(path.join(REPO, 'sitemap.xml'), 'utf8'),
     runtimeById,
@@ -1304,20 +1328,37 @@ function skillAnchor(skill) {
   return `index.html#${escapeHtml(skill.skillId)}`;
 }
 
-function renderSkillSummaryRow(skill, context) {
+// モンスター詳細の技1行。アイコンがある技だけ、左端に行の高さいっぱいのアイコンを置き、
+// 文字をまとめて右へ寄せる。無い技は従来のマークアップのまま（見た目を変えない）。
+function renderSkillLine(skill, context, lines) {
   const tone = SKILL_TYPE_TONE[skill.skillType];
   const toneClass = tone ? ` skill-line--${tone}` : '';
+  const icon = renderSkillIcon(skill, context, 'skill-icon skill-icon--line');
+  if (!icon) {
+    return `      <li class="skill-line${toneClass}">
+${lines.map(line => `        ${line}`).join('\n')}
+      </li>`;
+  }
+  return `      <li class="skill-line${toneClass} skill-line--has-icon">
+        ${icon}
+        <div class="skill-line-body">
+${lines.map(line => `          ${line}`).join('\n')}
+        </div>
+      </li>`;
+}
+
+function renderSkillSummaryRow(skill, context) {
   const move = skill.moveTo ? `／${escapeHtml(skill.range)}→${escapeHtml(skill.moveTo)}` : '';
   const abilities = (skill.abilities || [])
     .map(link => (context.abilityById.get(String(link.abilityId)) || {}).name)
     .filter(Boolean)
     .map(escapeHtml)
     .join('・');
-  return `      <li class="skill-line${toneClass}">
-        <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>
-        <span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}${move}</span>${abilities ? `
-        <span class="skill-line-abilities">技能力：${abilities}</span>` : ''}
-      </li>`;
+  return renderSkillLine(skill, context, [
+    `<a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>`,
+    `<span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}${move}</span>`,
+    ...(abilities ? [`<span class="skill-line-abilities">技能力：${abilities}</span>`] : []),
+  ]);
 }
 
 function renderMonsterSkillSections(monster, context) {
@@ -1353,11 +1394,11 @@ ${unlocks.map(skill => {
         .map(id => monsterNameOf(context, id))
         .filter(Boolean).map(escapeHtml).join('・')
       : `${escapeHtml(monster.blood)}種の全モンスター`;
-    return `      <li class="skill-line${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
-        <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>
-        <span class="skill-line-req">★${entry ? entry.rarity : '?'}以上で登録可能</span>
-        <span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}／使えるのは${owner}</span>
-      </li>`;
+    return renderSkillLine(skill, context, [
+      `<a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>`,
+      `<span class="skill-line-req">★${entry ? entry.rarity : '?'}以上で登録可能</span>`,
+      `<span class="skill-line-meta">${escapeHtml(skill.range)}距離ランク${skill.rank}／${escapeHtml(skill.skillType)}／ガッツ${skill.guts}／使えるのは${owner}</span>`,
+    ]);
   }).join('\n')}
     </ul>
   </div>`
@@ -2156,6 +2197,9 @@ function validateSkillData(skillDb, abilityDb, idsJson, buffDb) {
     if (!SKILL_AURAS.includes(skill.aura)) errors.push(`${where}: aura は ${SKILL_AURAS.join('/')} です: ${skill.aura}`);
     if (!String(skill.skillType || '').trim()) errors.push(`${where}: skillType が空です`);
     if (!Number.isInteger(skill.guts) || skill.guts < 0) errors.push(`${where}: guts は0以上の整数です: ${skill.guts}`);
+    if (skill.icon !== undefined && skill.icon !== null) {
+      errors.push(`${where}: icon は null です。技アイコンは ${SKILL_ICON_DIR}/<skillId>.png の有無で決まります: ${skill.icon}`);
+    }
     for (const field of ['damage', 'accuracy', 'gutsDown', 'critical']) {
       const value = skill[field];
       if (value !== null && !SKILL_GRADE_PATTERN.test(String(value))) {
@@ -2286,6 +2330,14 @@ function monsterNameOf(context, id) {
   return monster ? monster.name : '';
 }
 
+// 技アイコン。無い技は何も出さない（枠も置かない）。隣に技名があるので alt は空にする。
+// 生成ページはどれも ROOT_PREFIX（3階層下）にある。
+function renderSkillIcon(skill, context, className = 'skill-icon') {
+  const icon = context.skillIcons && context.skillIcons.get(String(skill.skillId));
+  if (!icon) return '';
+  return `<img class="${className}" src="${ROOT_PREFIX}${SKILL_ICON_DIR}/${escapeHtml(skill.skillId)}.png" width="${icon.width}" height="${icon.height}" alt="" loading="lazy" decoding="async">`;
+}
+
 // 技チップ。移動先は表に出さず、詳細だけで扱う。
 function renderSkillChip(skill, context) {
   const ownerNames = (skill.owners || [])
@@ -2296,6 +2348,17 @@ function renderSkillChip(skill, context) {
     : '';
   const tone = SKILL_TYPE_TONE[skill.skillType];
   const toneClass = tone ? ` skill-chip--${tone}` : '';
+  const icon = renderSkillIcon(skill, context);
+  // アイコンがある技だけ、オーラと技名を1つにまとめてアイコンの横へ並べる。
+  // 無い技は従来のマークアップのまま（見た目を変えない）。
+  if (icon) {
+    return `            <button type="button" class="skill-chip${toneClass} skill-chip--has-icon" data-skill="${escapeHtml(skill.skillId)}" aria-controls="${escapeHtml(skill.skillId)}" aria-expanded="false">
+              ${icon}
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span><span class="skill-chip-name">${escapeHtml(skill.name)}</span></span>
+              <span class="skill-chip-meta">${escapeHtml(skill.skillType)}／ガッツ${skill.guts}</span>${uniqueLabel ? `
+              ${uniqueLabel}` : ''}
+            </button>`;
+  }
   return `            <button type="button" class="skill-chip${toneClass}" data-skill="${escapeHtml(skill.skillId)}" aria-controls="${escapeHtml(skill.skillId)}" aria-expanded="false">
               <span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>
               <span class="skill-chip-name">${escapeHtml(skill.name)}</span>
@@ -2384,7 +2447,7 @@ ${items.join('\n')}
             <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
             <div class="skill-detail-anim"><div class="skill-detail-clip">
 ${skill.unique ? `            <p class="skill-detail-unique">固有技</p>
-` : ''}            <h3 class="skill-detail-name"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}<span class="skill-detail-place">${escapeHtml(skill.range)}距離ランク${skill.rank}</span></h3>
+` : ''}            <h3 class="skill-detail-name">${renderSkillIcon(skill, context, 'skill-icon skill-icon--detail')}<span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}<span class="skill-detail-place">${escapeHtml(skill.range)}距離ランク${skill.rank}</span></h3>
             <table class="skill-detail-table${detailTone}">
               <tbody>
 ${pairs.map(([labelA, valueA, labelB, valueB]) => `                <tr><th>${escapeHtml(labelA)}</th><td>${valueA}</td><th>${escapeHtml(labelB)}</th><td>${valueB}</td></tr>`).join('\n')}
@@ -2399,6 +2462,13 @@ ${abilityCards || '          <p class="skill-detail-none">なし</p>'}${note}
         </tr>`;
 }
 
+// 表に出すランク。その血統の最高ランクより上の行は出さない（技が無い空行が続くだけのため）。
+// 途中のランクが空でも行は残す（ランクの並びが飛ぶと読み違える）。
+function skillTableRanks(skills) {
+  const maxRank = Math.max(0, ...skills.map(skill => skill.rank));
+  return SKILL_RANKS.filter(rank => rank <= maxRank);
+}
+
 // 行＝ランク1〜6、列＝技を発動できる間合い。技詳細は押した行の直下へ開く。
 function renderSkillTable(skills, context, abilityById) {
   const columnCount = SKILL_RANGES.length + 1;
@@ -2408,7 +2478,7 @@ function renderSkillTable(skills, context, abilityById) {
     if (!cells.has(key)) cells.set(key, []);
     cells.get(key).push(skill);
   }
-  const rows = SKILL_RANKS.map(rank => {
+  const rows = skillTableRanks(skills).map(rank => {
     const rankSkills = [];
     const columns = SKILL_RANGES.map(range => {
       const inCell = sortSkillsInCell(cells.get(`${range}|${rank}`) || []);
@@ -3162,6 +3232,14 @@ module.exports = {
   SKILL_RARITY_MAX,
   SKILL_BUFF_KINDS,
   NON_BUFF_TOKENS,
+  SKILL_ICON_DIR,
+  SKILL_ICON_FILE_PATTERN,
+  loadSkillIcons,
+  renderSkillIcon,
+  renderSkillChip,
+  renderSkillDetailRow,
+  renderSkillSummaryRow,
+  skillTableRanks,
   validateSkillData,
   selectCurrentVersions,
   skillVersionKey,

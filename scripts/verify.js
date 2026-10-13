@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const childProcess = require('child_process');
-const { PICKUP_SLOTS, validateGachaData, validateSkillData, SKILL_RANGES, SKILL_RANKS } = require('../build');
+const { PICKUP_SLOTS, validateGachaData, validateSkillData, SKILL_RANGES, SKILL_RANKS, SKILL_ICON_DIR, SKILL_ICON_FILE_PATTERN, loadSkillIcons, skillTableRanks } = require('../build');
 
 const REPO = process.cwd();
 const LOCK = path.join(REPO, 'src', 'data', 'repo-guard.lock.json');
@@ -1858,6 +1858,25 @@ head('19. 技DB・血統ページ');
     }
   }
 
+  // 技アイコンの有無の正は skill-icons/ のファイル（技DBの icon 列は null 固定）
+  let skillIcons = new Map();
+  try { skillIcons = loadSkillIcons(REPO); } catch (error) { issues.push(error.message); }
+  // 生成ページの技アイコン参照。実在するファイルだけを指し、寸法・alt・遅延読み込みを持つこと
+  const checkSkillIconRefs = (rel, html) => {
+    for (const match of html.matchAll(/<img class="skill-icon[^"]*"[^>]*>/g)) {
+      const tag = match[0];
+      const src = (tag.match(/ src="\.\.\/\.\.\/\.\.\/([^"]+)"/) || [])[1] || '';
+      const id = (src.match(new RegExp(`^${SKILL_ICON_DIR}/(sk-\\d{4})\\.png$`)) || [])[1];
+      if (!id || !skillIcons.has(id)) {
+        issues.push(`${rel}: 存在しない技アイコンを参照している: ${src || tag}`);
+        continue;
+      }
+      const size = skillIcons.get(id);
+      if (!tag.includes(` width="${size.width}" height="${size.height}"`)) issues.push(`${rel}: ${id} のアイコンに実寸の width/height が無い`);
+      if (!tag.includes(' alt=""') || !tag.includes(' loading="lazy"')) issues.push(`${rel}: ${id} のアイコンに alt="" と loading="lazy" が無い`);
+    }
+  };
+
   // 生成された血統ページと技DBの血統が一致していること
   if (!issues.length) {
     const ids = JSON.parse(read('src/data/monster-ids.json'));
@@ -1877,6 +1896,16 @@ head('19. 技DB・血統ページ');
     const abilityById = new Map(abilities.map(ability => [String(ability.abilityId), ability]));
     const buffById = new Map(buffs.map(buff => [String(buff.buffId), buff]));
     const found = new Set();
+    // 技アイコンの置き場。名前は <skillId>.png だけで、技DBに実在する技のものだけを置く
+    if (exists(SKILL_ICON_DIR)) {
+      const knownSkillIds = new Set(skills.map(skill => skill.skillId));
+      for (const file of fs.readdirSync(path.join(REPO, SKILL_ICON_DIR))) {
+        if (file.startsWith('.')) continue;
+        const match = file.match(SKILL_ICON_FILE_PATTERN);
+        if (!match) issues.push(`${SKILL_ICON_DIR}/${file}: ファイル名は <skillId>.png（例 sk-0170.png）にする`);
+        else if (!knownSkillIds.has(match[1])) issues.push(`${SKILL_ICON_DIR}/${file}: 技DBに無い技のアイコン`);
+      }
+    }
     for (const monDir of fs.readdirSync(path.join(REPO, 'monsters'), { withFileTypes: true })) {
       if (!monDir.isDirectory()) continue;
       for (const bloodDir of fs.readdirSync(path.join(REPO, 'monsters', monDir.name), { withFileTypes: true })) {
@@ -1898,9 +1927,23 @@ head('19. 技DB・血統ページ');
           issues.push(`${rel}: ${range}距離の列が無い`);
         }
       }
+      // 行はランク1からその血統の最高ランクまで。それより上の空行は出さない
+      const shownRanks = skillTableRanks(bloodSkills);
       for (const rank of SKILL_RANKS) {
-        if (!html.includes(`>ランク${rank}</span></th>`)) issues.push(`${rel}: ランク${rank}の行が無い`);
+        const has = html.includes(`>ランク${rank}</span></th>`);
+        if (shownRanks.includes(rank) && !has) issues.push(`${rel}: ランク${rank}の行が無い`);
+        if (!shownRanks.includes(rank) && has) issues.push(`${rel}: 技の無いランク${rank}の行が出ている（最高ランク${shownRanks.length}まで）`);
       }
+      // 技アイコンはファイルがある技だけ、チップと詳細に1枚ずつ
+      for (const skill of bloodSkills) {
+        const expectedIcons = skillIcons.has(skill.skillId) ? 1 : 0;
+        const chipIcons = html.split(`<img class="skill-icon" src="../../../${SKILL_ICON_DIR}/${skill.skillId}.png"`).length - 1;
+        const detailIcons = html.split(`<img class="skill-icon skill-icon--detail" src="../../../${SKILL_ICON_DIR}/${skill.skillId}.png"`).length - 1;
+        if (chipIcons !== expectedIcons || detailIcons !== expectedIcons) {
+          issues.push(`${rel}: ${skill.skillId} の技アイコン チップ${chipIcons}枚・詳細${detailIcons}枚（${expectedIcons}枚ずつ必要）`);
+        }
+      }
+      checkSkillIconRefs(rel, html);
       // 技詳細は最初からDOMに存在し hidden で隠れていること（モーダル差し込みにしない）
       const chips = (html.match(/class="skill-chip[ "]/g) || []).length;
       const details = (html.match(/class="skill-detail[^"]*" id="sk-\d{4}" hidden/g) || []).length;
@@ -1973,14 +2016,26 @@ head('19. 技DB・血統ページ');
         if (!shown && owners.has(monster.id)) {
           issues.push(`${rel}: ${skill.name} が掲載されていない`);
         }
+        // 技アイコンは固有技・解放できる技の行にだけ出す（解放できる技能力の行には出さない）
+        const lineIcons = html.split(`<img class="skill-icon skill-icon--line" src="../../../${SKILL_ICON_DIR}/${skill.skillId}.png"`).length - 1;
+        const lineCount = (skill.unique && skill.owners.includes(monster.id) ? 1 : 0)
+          + ((skill.unlockedBy || []).some(entry => String(entry.monsterId) === monster.id) ? 1 : 0);
+        const expectedLineIcons = skillIcons.has(skill.skillId) ? lineCount : 0;
+        if (lineIcons !== expectedLineIcons) {
+          issues.push(`${rel}: ${skill.skillId} の技アイコン${lineIcons}枚（${expectedLineIcons}枚必要）`);
+        }
       }
+    }
+    for (const monster of ids.monsters) {
+      const rel = monster.url.replace(/^\//, '');
+      if (exists(rel)) checkSkillIconRefs(rel, read(rel));
     }
     void byId;
   }
 
   if (issues.length) ng(`技DB検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(' / ')}`);
   else if (!skills.length) sk(`技DBは空（血統ページ0件）。間合い ${SKILL_RANGES.join('/')} × ランク1〜${SKILL_RANKS.length}`);
-  else ok(`技DBが整合（技${skills.length}件・血統ページ${new Set(skills.map(s => s.blood)).size}件）`);
+  else ok(`技DBが整合（技${skills.length}件・血統ページ${new Set(skills.map(s => s.blood)).size}件・技アイコン${skillIcons.size}枚）`);
 }
 
 // ---------------------------------------------------------------- 20

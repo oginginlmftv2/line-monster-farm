@@ -272,6 +272,30 @@
   line-height: 1.6;
 }
 
+/* 技アイコン（skill-icons/<skillId>.png）。アイコンがある技の行だけ .skill-line--has-icon が付き、
+   枠の左端に上下いっぱいで置く。大きさは固定で、行の最小の高さもそれにそろえる。
+   行の高さに合わせて伸縮させる指定はCSSでは循環する（アイコンの幅で文字の折り返しが変わり、
+   行の高さが変わる）ため使わない。文字が多くて行が高くなったときは、アイコンは上下中央に置く。 */
+.monster-detail-page .skill-line--has-icon {
+  --skill-icon-size: 64px;
+  display: grid;
+  grid-template-columns: var(--skill-icon-size) minmax(0, 1fr);
+  column-gap: 10px;
+  align-items: center;
+  min-height: var(--skill-icon-size);
+  padding: 0 12px 0 0;
+  overflow: hidden;
+}
+.monster-detail-page .skill-line--has-icon .skill-icon {
+  display: block;
+  width: var(--skill-icon-size);
+  height: auto;
+}
+.monster-detail-page .skill-line-body {
+  min-width: 0;
+  padding: 8px 0;
+}
+
 /* 基礎データ（素質・特徴）と適性データ（地形・間合い）。build.js の renderMonsterBasics が出す */
 .monster-detail-page .basics-block {
   margin-top: 14px;

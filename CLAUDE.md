@@ -273,6 +273,8 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
    - 固有技は `unique: true` にして `owners` へ使えるモンスターの4桁IDを配列で入れる
    - `unlockedBy` は技登録の解放元。`{ "monsterId": "2626", "rarity": 4 }` の配列で、
      `rarity` は登録に必要な★の数（1〜10）。ページには「セイラン（★4以上）」と出る
+   - 技アイコンは `skill-icons/<技ID>.png` に置く（撮影ツールの `icons/NN.png` をそのままコピー）。
+     置けば技表とモンスター詳細に出る。`icon` 列には書かない（ファイルの有無が正）
 3. `node build.js` → 技が1件以上ある血統だけページが生成される
 4. `node scripts/test-skill-build.js` と `node scripts/verify.js` がFAIL 0
    - スクショはスキル `monster-skill-capture` で読む。PCのiPhoneミラーリングで撮る場合は、LMFShot を撮影モード `skills` で使い
