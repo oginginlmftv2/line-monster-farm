@@ -325,8 +325,16 @@ def capture_skill(n, ci, cy, out, im, t):
                 ab_names=' / '.join(abnames), icon=f'icons/{tag}.png')
 
 
+def ensure_jocr():
+    """jocr（文字認識）はコミットしないので、無ければビルドする（別のworktree・別のセッションで使うとき）"""
+    if not os.path.exists(JOCR):
+        log('jocr をビルドします')
+        subprocess.run(['swiftc', '-O', JOCR + '.swift', '-o', JOCR], check=True)
+
+
 def main():
     blood = sys.argv[1]
+    ensure_jocr()
     lock = open(LOCK).read() if os.path.exists(LOCK) else ''
     if '技登録' not in lock:
         sys.exit('ops/phone.lock が技登録で取られていない。相性検証の撮影とぶつかるので止まる')
