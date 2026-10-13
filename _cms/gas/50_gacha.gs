@@ -122,11 +122,12 @@ function gachaTypeLabels_() {
   return labels.filter(function (label, index) { return labels.indexOf(label) === index; });
 }
 
-function gachaLookupDocument_(kind) {
+// fresh=trueはキャッシュを読まずに取り直す。CMS公開直後の新規モンスター・カードを候補へ出すため
+function gachaLookupDocument_(kind, fresh) {
   var file = kind === 'monster' ? 'monster-ids.json' : 'assist-cards.json';
   var cache = CacheService.getScriptCache();
   var cacheKey = 'gachaLookup:v2:' + file;
-  var hit = cache.get(cacheKey);
+  var hit = fresh ? null : cache.get(cacheKey);
   if (hit) {
     try { return JSON.parse(hit); } catch (error) { /* 壊れたキャッシュは取り直す */ }
   }
@@ -150,16 +151,19 @@ function gachaLookupPickup_(kind, id) {
   kind = gachaText_(kind);
   id = gachaText_(id);
   if (['monster', 'card'].indexOf(kind) < 0 || !id) return { ok: false };
-  var document = gachaLookupDocument_(kind);
-  if (kind === 'monster') {
-    var monster = (document.monsters || []).filter(function (item) {
-      return gachaText_(item.id) === id;
+  var find = function (document) {
+    var list = kind === 'monster' ? (document.monsters || []) : (document.cards || []);
+    return list.filter(function (item) {
+      return gachaText_(kind === 'monster' ? item.id : item.cardId) === id;
     })[0];
+  };
+  // キャッシュに無いIDは公開直後の可能性があるので、1回だけ取り直す
+  var found = find(gachaLookupDocument_(kind)) || find(gachaLookupDocument_(kind, true));
+  if (kind === 'monster') {
+    var monster = found;
     return monster ? { ok: true, name: gachaText_(monster.name), image: gachaText_(monster.image), hidden: monster.hidden === true } : { ok: false };
   }
-  var card = (document.cards || []).filter(function (item) {
-    return gachaText_(item.cardId) === id;
-  })[0];
+  var card = found;
   return card ? {
     ok: true,
     name: gachaText_(card.name),
@@ -376,7 +380,8 @@ function api_gachaPickupCandidates(kind) {
   requireScope_('gacha');
   kind = gachaText_(kind);
   if (['monster', 'card'].indexOf(kind) < 0) throw new Error('kindはmonsterかcardです。');
-  var document = gachaLookupDocument_(kind);
+  // ガチャ画面を開くたびに取り直す（1時間キャッシュのままだと公開済みの新規が候補に出ない）
+  var document = gachaLookupDocument_(kind, true);
   if (kind === 'monster') {
     return (document.monsters || []).map(function (item) {
       return { id: gachaText_(item.id), name: gachaText_(item.name), hidden: item.hidden === true };
