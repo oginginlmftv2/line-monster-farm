@@ -485,6 +485,11 @@
       "sourceName": "ブギー",
       "rarity": "SSR",
       "cardId": "c0004-SSR"
+    },
+    {
+      "sourceName": "オーガマ",
+      "rarity": "MR",
+      "cardId": "c0005-MR"
     }
   ]
 }
