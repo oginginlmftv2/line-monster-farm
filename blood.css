@@ -164,6 +164,39 @@
   font-size: 11px;
 }
 
+/* 技アイコン（skill-icons/<skillId>.png、撮影した123×124pxをそのまま縮めて出す）。
+   アイコンがある技のチップだけ .skill-chip--has-icon が付く。無い技のチップは従来どおり。
+   アイコン左下に写り込んだオーラの丸は絵の一部として残し、オーラはドットで示す
+   （オーラ無の技には丸が無く、縮めると白・黒の丸も見分けられないため）。 */
+.blood-page .skill-icon {
+  display: block;
+  height: auto;
+  flex: none;
+}
+
+/* PC：アイコンを左に置き、オーラ＋技名と技種／ガッツの2行を右に並べる */
+.blood-page .skill-chip--has-icon {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  column-gap: 7px;
+  align-items: center;
+}
+.blood-page .skill-chip--has-icon .skill-icon {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  width: 28px;
+  border-radius: 4px;
+}
+.blood-page .skill-chip--has-icon > :not(.skill-icon) { grid-column: 2; }
+/* オーラ＋技名は1行に保つ。アイコンのぶん列が狭いと日本語は1文字単位で折り返すため。
+   列は minmax(0, …) にしない（技名の幅が表の列幅の計算に入らず、チップからはみ出す） */
+.blood-page .skill-chip-title { white-space: nowrap; }
+
+.blood-page .skill-detail-name .skill-icon--detail {
+  width: 56px;
+  border-radius: 6px;
+}
+
 /* 技詳細（行内アコーディオン） */
 /* 表のセルが白なので、開いた詳細は色を付けて境界を作る。
    色は技種に合わせ、見出し列・チップと同じ意味づけを保つ。 */
@@ -452,6 +485,36 @@
   .blood-page .skill-chip .skill-aura { margin-right: 2px; }
   .blood-page .skill-chip-meta { font-size: 10px; }
   .blood-page .skill-chip-unique { font-size: 10px; }
+  /* SP：アイコンはオーラ＋技名の左。技種／ガッツは別の行で、アイコンの下から書き始める。
+     技名は2行まで折り返し、1行の技も2行の技もチップの高さ・幅を同じにそろえる。
+     技名の欄は「ドット＋5文字」の幅（最長10文字の技名が2行に収まる）で固定し、高さは常に2行分取る。
+     3行目に入る長さは省略記号で切る（現在の技名は最長10文字なので起きない）。 */
+  .blood-page .skill-chip--has-icon {
+    grid-template-columns: 32px 74px;
+    column-gap: 3px;
+    width: auto;
+    line-height: 1.2;
+  }
+  .blood-page .skill-chip--has-icon .skill-icon { grid-row: 1; width: 32px; border-radius: 4px; }
+  .blood-page .skill-chip--has-icon .skill-chip-title {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 2.4em; /* line-height 1.2 × 2行 */
+    white-space: normal;
+  }
+  .blood-page .skill-chip--has-icon .skill-chip-title .skill-aura { flex: none; margin-right: 0; }
+  .blood-page .skill-chip--has-icon .skill-chip-name {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+  .blood-page .skill-chip--has-icon .skill-chip-meta,
+  .blood-page .skill-chip--has-icon .skill-chip-unique { grid-column: 1 / -1; }
+  /* アイコンのある血統は、空の列もチップの列と同じ幅にする（列幅がそろう） */
+  .blood-page .skill-matrix:has(.skill-chip--has-icon) .skill-cell { min-width: 129px; }
+  .blood-page .skill-detail-name .skill-icon--detail { width: 44px; }
   /* 4列均等のまま見出しを1行に収めるため、内側の余白を詰めて列幅を稼ぐ */
   .blood-page .skill-detail-clip { padding: 12px 8px 16px 10px; }
   .blood-page .skill-detail-table th,

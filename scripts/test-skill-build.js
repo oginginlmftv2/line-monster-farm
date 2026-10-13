@@ -14,6 +14,13 @@ const {
   SKILL_BUFF_KINDS,
   validateSkillData,
   detectBuffs,
+  SKILL_ICON_DIR,
+  loadSkillIcons,
+  renderSkillChip,
+  renderSkillDetailRow,
+  renderSkillSummaryRow,
+  skillTableRanks,
+  visibleChars,
 } = require('../build');
 
 const repo = path.resolve(__dirname, '..');
@@ -168,6 +175,65 @@ const passNormal = label => { normal++; console.log(`PASS 正常${normal}: ${lab
   passNormal('バフ判定は完全一致だけを拾い、未登録の候補を報告する');
 }
 
+// ---------------------------------------------------------------- 技アイコン・ランク行
+// 描画関数へは skill-icons/ を読んだ結果（skillId → 寸法）を渡す。fixtureではファイルを置かずに組み立てる。
+const renderContext = icons => ({
+  skillIcons: new Map(icons),
+  monsterById: new Map(members.map(monster => [monster.id, monster])),
+  hiddenMonsterById: new Map(),
+  abilityById: new Map(abilityDb().abilities.map(ability => [ability.abilityId, ability])),
+  buffById: new Map(buffDb().buffs.map(buff => [buff.buffId, buff])),
+  linkTargets: [],
+});
+const iconOf = skillId => [skillId, { width: 123, height: 124 }];
+{
+  const plain = renderSkillChip(baseSkill(), renderContext([]));
+  assert(!plain.includes('<img') && !plain.includes('skill-chip--has-icon'), 'アイコンが無い技のチップに img や has-icon が出ている');
+  const withIcon = renderSkillChip(baseSkill(), renderContext([iconOf('sk-0001')]));
+  assert(withIcon.includes(`<img class="skill-icon" src="../../../${SKILL_ICON_DIR}/sk-0001.png" width="123" height="124" alt="" loading="lazy" decoding="async">`));
+  assert(withIcon.includes('skill-chip--has-icon') && withIcon.includes('<span class="skill-chip-title">'));
+  assert(withIcon.includes('skill-aura-黒'), 'アイコンがあってもオーラのドットは残す');
+  // 同じセルでアイコンがある技と無い技が混ざっても、無い技は従来のまま
+  const other = renderSkillChip(uniqueSkill(), renderContext([iconOf('sk-0001')]));
+  assert(!other.includes('<img'));
+  passNormal('チップのアイコンはファイルがある技だけに出て、無い技は従来のマークアップのまま');
+}
+{
+  const plain = renderSkillDetailRow(baseSkill(), renderContext([]), renderContext([]).abilityById, 5);
+  const withIcon = renderSkillDetailRow(baseSkill(), renderContext([iconOf('sk-0001')]), renderContext([]).abilityById, 5);
+  assert(!plain.includes('<img'));
+  assert(withIcon.includes('<h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0001.png"'));
+  assert.strictEqual(visibleChars(`<body>${plain}</body>`), visibleChars(`<body>${withIcon}</body>`), 'アイコンで可視文字数が変わった');
+  passNormal('技詳細の見出しにアイコンが出て、可視文字数は変わらない');
+}
+{
+  const skill = uniqueSkill();
+  const plain = renderSkillSummaryRow(skill, renderContext([]));
+  const withIcon = renderSkillSummaryRow(skill, renderContext([iconOf(skill.skillId)]));
+  assert(plain.startsWith('      <li class="skill-line skill-line--power">\n        <a class="skill-line-name"'), 'アイコンが無い行のマークアップが変わった');
+  assert(withIcon.includes('skill-line--has-icon') && withIcon.includes('<div class="skill-line-body">'));
+  assert(withIcon.includes(`<img class="skill-icon skill-icon--line" src="../../../${SKILL_ICON_DIR}/${skill.skillId}.png"`));
+  assert.strictEqual(visibleChars(`<body>${plain}</body>`), visibleChars(`<body>${withIcon}</body>`));
+  passNormal('モンスター詳細の技の行も、アイコンがある技だけ左端にアイコンを置く');
+}
+{
+  // 本番の skill-icons/ は読むだけ。名前は <skillId>.png、寸法はPNGヘッダから取れる
+  const icons = loadSkillIcons(path.resolve(__dirname, '..'));
+  for (const [skillId, size] of icons) {
+    assert(/^sk-\d{4}$/.test(skillId));
+    assert(size.width > 0 && size.height > 0, `${skillId} の寸法が読めない`);
+  }
+  assert.strictEqual(loadSkillIcons(path.join(__dirname, 'no-such-dir')).size, 0, '置き場が無ければ0件');
+  passNormal(`skill-icons/ を読める（${icons.size}枚）`);
+}
+{
+  const at = rank => ({ ...baseSkill(), rank });
+  assert.deepStrictEqual(skillTableRanks([at(1), at(5)]), [1, 2, 3, 4, 5]);
+  assert.deepStrictEqual(skillTableRanks([at(2), at(4)]), [1, 2, 3, 4], '途中の空ランクは残し、最高ランクより上だけ出さない');
+  assert.deepStrictEqual(skillTableRanks([at(6)]), SKILL_RANKS);
+  passNormal('技表の行はランク1から血統の最高ランクまで');
+}
+
 // ---------------------------------------------------------------- 破壊
 const broken = [
   ['同じskillId・同じversionが2件', [baseSkill(), { ...baseSkill(), name: '別の技', rank: 5 }], abilityDb(), /同じ skillId に同じ version が2件/],
@@ -199,6 +265,7 @@ const broken = [
   ['隣り合う版で技能力の内容が同じ', [baseSkill()], { schemaVersion: 1, abilities: [abilityDb().abilities[0], { ...abilityDb().abilities[0], version: 2 }] }, /内容が同じです/],
   ['同じ名前に別のskillId', [baseSkill(), { ...baseSkill(), skillId: 'sk-0009', version: 2, guts: 30 }], abilityDb(), /skillId が2つあります/],
   ['存在しないバフID', [baseSkill()], { schemaVersion: 1, abilities: abilityDb().abilities.map(a => ({ ...a, buffs: ['bf-9999'] })) }, /存在しないバフID/],
+  ['iconに値が入っている', [{ ...baseSkill(), icon: 'sk-0001.png' }], abilityDb(), /icon は null/],
   ['能力の説明が空', [baseSkill()], { schemaVersion: 1, abilities: abilityDb().abilities.map(a => ({ ...a, description: '' })) }, /description が空/],
 ];
 

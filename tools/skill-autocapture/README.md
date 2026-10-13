@@ -83,5 +83,7 @@ overview.png     一覧画像
 
 ## 技アイコン
 
-`icons/NN.png` は、取り込みで技IDが決まったあと `skill-icons/<技ID>.png` へコピーして保管する
-（サイトへの表示は未実装。`monster-skills.json` の `icon` 列は null のまま）。
+`icons/NN.png` は、取り込みで技IDが決まったあと `skill-icons/<技ID>.png` へコピーする。
+置けば次の `node build.js` で、血統ページの技チップ・技詳細とモンスター詳細の技の行に出る
+（`docs/build-spec.md` 5-9・5-10）。表示の有無はファイルがあるかで決まり、`monster-skills.json` の `icon` 列は null のまま。
+画像は作り直さず、撮影したものをそのまま置く。技DBに無い技IDの画像を置くと `verify.js` がFAILにする。
