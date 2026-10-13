@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-04T23:30:10Z",
-  "count": 118,
+  "exportedAt": "2026-10-13T07:50:30Z",
+  "count": 119,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -352,7 +352,8 @@
       ],
       "author": "レオナ",
       "createdAt": "2026-04-30",
-      "updatedAt": "2026-04-30"
+      "updatedAt": "2026-10-07",
+      "releasedAt": "2026-01-31"
     },
     "1851": {
       "id": "1851",
@@ -860,6 +861,17 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-30"
+    },
+    "2751": {
+      "id": "2751",
+      "name": "マホウビン",
+      "arrayIndex": 361,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-10-13",
+      "releasedAt": "2026-10-14",
+      "hidden": true
     },
     "2809": {
       "id": "2809",
