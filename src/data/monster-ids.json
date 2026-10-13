@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 361,
+ "count": 362,
  "monsters": [
   {
    "id": "0101",
@@ -6071,6 +6071,25 @@
    "localImg": "S__93200752_0.jpg",
    "url": "/monsters/souzou/metalner/2750.html",
    "image": "img/monster/2750.jpg"
+  },
+  {
+   "id": "2751",
+   "sortOrder": 2751,
+   "isNew": true,
+   "name": "マホウビン",
+   "arrayIndex": 361,
+   "mon": "創造",
+   "monSlug": "souzou",
+   "blood": "メタルナー",
+   "bloodSlug": "metalner",
+   "subBlood": "レアモン",
+   "aura": "青",
+   "limited": false,
+   "limitedLabel": "",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/souzou/metalner/2751.html",
+   "image": "img/monster/2751.jpg"
   },
   {
    "id": "2809",
