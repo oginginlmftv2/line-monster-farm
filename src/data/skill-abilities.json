@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 262
+    "abilities": 269
   },
   "abilities": [
     {
@@ -3223,6 +3223,90 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 262,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0263",
+      "name": "ちっちぇえな",
+      "version": 1,
+      "baseName": "ちっちぇえな",
+      "level": null,
+      "description": "[序盤]対象技命中時、ガッツ消費量減少20%、相手の命中率減少Lv3＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 263,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0264",
+      "name": "読心",
+      "version": 1,
+      "baseName": "読心",
+      "level": null,
+      "description": "[自身オーラ有利][前半]対象技発動時、技のクリティカル率上昇Lv7、クリティカルダメージ上昇Lv7、＜15秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 264,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0265",
+      "name": "呪詛返し",
+      "version": 1,
+      "baseName": "呪詛返し",
+      "level": null,
+      "description": "[序盤][相手幻霊]対象技命中時、被ダメージの100%を攻撃ステータスに加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 265,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0266",
+      "name": "未来王",
+      "version": 1,
+      "baseName": "未来王",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を1回与える\nさらに1つ前と同じオーラの技を使用していれば追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 266,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0267",
+      "name": "宙撃：遠Lv2",
+      "version": 1,
+      "baseName": "宙撃：遠",
+      "level": 2,
+      "description": "対象技命中時、遠距離適性SS以上で特殊与ダメ上昇Lv2",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 267,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0268",
+      "name": "オーラシフト",
+      "version": 1,
+      "baseName": "オーラシフト",
+      "level": null,
+      "description": "バトル中にはじめてオーラ技を撃った時、対象技がそのオーラに変換",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 268,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0269",
+      "name": "ライジングボルト",
+      "version": 1,
+      "baseName": "ライジングボルト",
+      "level": null,
+      "description": "対象技発動時、次の効果＜30秒＞＜1回＞\n・＜黄＞技にダメージ＜10%＞の追撃を＜1回＞与える\n・[有利]ダメージ＜10%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 269,
       "status": "verified"
     }
   ]

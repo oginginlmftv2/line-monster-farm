@@ -67,5 +67,65 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-10-14"
+  },
+  "sk-0204": {
+    "name": "ちっちぇえな",
+    "blood": "ガリ",
+    "source": "20261014-014712.png",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0205": {
+    "name": "炎の槍",
+    "blood": "ガリ",
+    "source": "20261014-014720.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0206": {
+    "name": "S・O・F",
+    "blood": "ガリ",
+    "source": "20261014-014727.png",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0207": {
+    "name": "断罪のスピン",
+    "blood": "ガリ",
+    "source": "20261014-014742.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0208": {
+    "name": "ライジングボルト",
+    "blood": "ガリ",
+    "source": "20261014-014805.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
   }
 }

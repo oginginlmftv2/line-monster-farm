@@ -233,10 +233,11 @@ def reference_icons(blood):
 
 
 def unique_raws(blood):
-    """取り込み済みの専用技の元画像（暗いまま・82px）"""
+    """取り込み済みの専用技の元画像（暗いまま・82px）。図鑑で暗転していた共通技（raw に載る123px）は除く"""
+    uniq = {s['skillId'] for s in skills() if s.get('unique')}
     out = {}
     for sk, m in load_json(os.path.join(RAW, 'index.json'), {}).items():
-        if m.get('blood') == blood and m.get('dim'):
+        if m.get('blood') == blood and m.get('dim') and sk in uniq:
             out[sk] = Image.open(os.path.join(RAW, sk + '.png')).convert('RGB')
     return out
 
