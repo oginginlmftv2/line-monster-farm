@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 361,
+  "count": 362,
   "monsters": [
     {
       "id": "0101",
@@ -8555,8 +8555,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1771,
-      "current": 1771,
+      "baseline": 1787,
+      "current": 1787,
       "indexable": true
     },
     {
@@ -8592,9 +8592,34 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-11-30",
-      "baseline": 1796,
-      "current": 2630,
+      "baseline": 1812,
+      "current": 2646,
       "indexable": true
+    },
+    {
+      "id": "2751",
+      "arrayIndex": 361,
+      "name": "マホウビン",
+      "aura": "青",
+      "mon": "創造",
+      "mainBlood": "メタルナー",
+      "subBlood": "レアモン",
+      "limited": false,
+      "limitedLabel": "",
+      "image": "2751.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/souzou/metalner/2751.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-10-14",
+      "releasedAt": "2026-10-14",
+      "baseline": 1051,
+      "current": 1051,
+      "indexable": false
     },
     {
       "id": "2809",
