@@ -211,4 +211,15 @@ const atoms = line => line.effects.map(e => e.atom);
   assert.strictEqual(line('・通常/追撃/連撃ダメージを受けたときライフ1で耐える<1回>').residual, '');
 }
 
+// --- オーガマ（2026-10-14）：「<青>または<無>技」は技の色の条件、「、[有利]時さらに」は条件の違う2つの効果
+{
+  const chaser = parse('オーガマチェイサー II', '[前半][創造]技命中時、次の効果<br>・ダメージ＜１０％＞の追撃＜１回＞<br>・＜青＞または＜無＞技時、シールド破壊＜２回＞<br>・[有利]かしこさステ＜１０％＞で追撃＜３回＞');
+  const brk = chaser.lines.find(l => atoms(l).includes('シールド破壊'));
+  assert.strictEqual(brk.skillCond.aura, '青または無');
+  assert.strictEqual(brk.residual, '');
+  const fatal = parse('オーガマフェイタル II', '[前半][創造]自身に次の効果<br>・クリティカル確定＜１回＞<br>・クリ率＜＋２０％＞、[有利]時さらに＜＋３０％＞<br>・[有利]クリティカル時、クリダメ＜＋５０％＞');
+  const crit = fatal.lines.filter(l => l.effects.some(e => e.atom === 'クリ率上昇'));
+  assert.deepStrictEqual(crit.map(l => [l.effects[0].value, !!l.conditions.stance]), [[20, false], [30, true]]);
+}
+
 console.log('test-ability-parser: OK');
