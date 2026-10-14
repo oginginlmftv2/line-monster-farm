@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 468
+    "abilities": 474
   },
   "abilities": [
     {
@@ -5759,6 +5759,78 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 468,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0469",
+      "name": "そうちょうちゅう",
+      "version": 1,
+      "baseName": "そうちょうちゅう",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・[貫通Lv2]\n・相手のガッツ回復を停止＜5秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 469,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0470",
+      "name": "リサイクル",
+      "version": 1,
+      "baseName": "リサイクル",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・相手のガッツ回復を停止＜10秒＞\n・[有利]自身に[シールド破壊＜1回＞]付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 470,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0471",
+      "name": "ツイン掌打",
+      "version": 1,
+      "baseName": "ツイン掌打",
+      "level": null,
+      "description": "[有利]バトル中、自身に次の効果\n・対象技発動中、相手のガッツ回復速度を＜0＞にする＜5秒＞\n・[前半]被ダメブロック＜30％＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 471,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0472",
+      "name": "宙ポン拳",
+      "version": 1,
+      "baseName": "宙ポン拳",
+      "level": null,
+      "description": "技命中時、次の効果＜10秒＞＜1回＞\n・相手の攻撃ステータス＜－25％＞\n・[有利]相手のガッツ回復を停止",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 472,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0473",
+      "name": "連撃：六大開拳",
+      "version": 1,
+      "baseName": "連撃：六大開拳",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ダメージ＜10％＞の追撃を＜7回＞与える\n・相手のかしこさステ＜10％＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 473,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0474",
+      "name": "六大開拳",
+      "version": 1,
+      "baseName": "六大開拳",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・シールド破壊＜1回＞\n・[有利]対象技発動中、相手のガッツ回復速度を＜0＞にする＜6秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 474,
       "status": "verified"
     }
   ]

@@ -1864,8 +1864,8 @@
     },
     {
       "id": "2701",
-      "baseline": 1984,
-      "current": 1984,
+      "baseline": 1987,
+      "current": 1987,
       "indexable": true
     },
     {
@@ -1876,8 +1876,8 @@
     },
     {
       "id": "2721",
-      "baseline": 1773,
-      "current": 1773,
+      "baseline": 1767,
+      "current": 1767,
       "indexable": true
     },
     {
@@ -1894,9 +1894,9 @@
     },
     {
       "id": "2751",
-      "baseline": 1051,
-      "current": 1051,
-      "indexable": false
+      "baseline": 1795,
+      "current": 1795,
+      "indexable": true
     },
     {
       "id": "2809",
