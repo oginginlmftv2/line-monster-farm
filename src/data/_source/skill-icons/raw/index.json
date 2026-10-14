@@ -925,5 +925,53 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-10-14"
+  },
+  "sk-0060": {
+    "name": "ファイトFC",
+    "blood": "イルミネ",
+    "source": "20261014-202439.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0061": {
+    "name": "エミットハンマー",
+    "blood": "イルミネ",
+    "source": "20261014-202443.png",
+    "cell": [
+      5,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0059": {
+    "name": "清浄投擲槍",
+    "blood": "イルミネ",
+    "source": "20261014-202453.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0058": {
+    "name": "朱の新星",
+    "blood": "イルミネ",
+    "source": "20261014-202459.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
   }
 }
