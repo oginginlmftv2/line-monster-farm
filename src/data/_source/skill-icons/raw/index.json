@@ -787,5 +787,143 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0147": {
+    "name": "スノーアタック",
+    "blood": "グジラ",
+    "source": "20261014-201331.png",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0148": {
+    "name": "きよしこの夜",
+    "blood": "グジラ",
+    "source": "20261014-201333.png",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0146": {
+    "name": "パンプキンプレス",
+    "blood": "グジラ",
+    "source": "20261014-201351.png",
+    "cell": [
+      5,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0150": {
+    "name": "ホワイトサージ",
+    "blood": "グジラ",
+    "source": "20261014-201359.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0143": {
+    "name": "つきあげ",
+    "blood": "グジラ",
+    "source": "skill-icons/sk-0143.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0166": {
+    "name": "屍炎",
+    "blood": "ディノ",
+    "source": "20261014-201518.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0169": {
+    "name": "エレキブロウ",
+    "blood": "ディノ",
+    "source": "20261014-201531.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0167": {
+    "name": "聖角投げ",
+    "blood": "ディノ",
+    "source": "20261014-201535.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0168": {
+    "name": "シャドウブロウ",
+    "blood": "ディノ",
+    "source": "20261014-201546.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0149": {
+    "name": "おおはら",
+    "blood": "グジラ",
+    "source": "20261014-201630.png",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0145": {
+    "name": "トリート",
+    "blood": "グジラ",
+    "source": "20261014-201634.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0165": {
+    "name": "蒼嵐尾",
+    "blood": "ディノ",
+    "source": "skill-icons/sk-0165.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }
