@@ -1062,6 +1062,26 @@ function renderMonsterIndex(source, context) {
   return renderMonsterCount(renderMonsterIndexPicker(withCards, context), context.monsters.length);
 }
 
+// トップの「モン類から探す」（2026-10-14〜生成）。体数は所属の実数、アイコンはモン類アイコン
+function renderTopMonTypeNav(source, context) {
+  const startMarker = '<!-- BUILD:MON-TYPE-NAV:START -->';
+  const endMarker = '<!-- BUILD:MON-TYPE-NAV:END -->';
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start
+      || source.indexOf(startMarker, start + 1) !== -1 || source.indexOf(endMarker, end + 1) !== -1) {
+    throw new Error('index.html の BUILD:MON-TYPE-NAV マーカーはSTART・END各1個が必要です');
+  }
+  const links = context.eligibleMonTypes.map(monType => {
+    addLink(context, `monsters/${monType.slug}/index.html`);
+    const count = context.monsters.filter(monster => monster.monSlug === monType.slug).length;
+    return `      <a href="monsters/${escapeHtml(monType.slug)}/" class="menu-link">
+        <span class="icon">${renderMonTypeIcon(monType.slug, '', 28)}</span> ${escapeHtml(monType.name)}（${count}体）
+      </a>`;
+  }).join('\n');
+  return source.slice(0, start + startMarker.length) + `\n${links}\n` + source.slice(end);
+}
+
 // 「血統から探す」枠（build-spec 5-5）。全モン類の血統をアイコンで並べ、モン類名はモン類ページへ送る。
 function renderMonsterIndexPicker(source, context) {
   const startMarker = '    <!-- BUILD:BLOOD-PICKER:START -->';
@@ -3380,6 +3400,8 @@ function main() {
       return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
         - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
     }));
+  // トップの「モン類から探す」を先に差し替え、ガチャの差し替えへ渡す（ガチャが無い回は下で単独に書く）
+  const topIndexSource = renderTopMonTypeNav(fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'), context);
   const assistBuild = buildAssistPages({
     dryRun: DRY_RUN,
     gachaAppearancesFor: cardId => renderGachaAppearances(
@@ -3396,7 +3418,7 @@ function main() {
     monsterDb: inputs.allMonsters,
     editorialDb: inputs.allEditorial,
     cardDb: inputs.assistCards,
-    indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
+    indexSource: topIndexSource,
     rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
   });
   const bloodSitemapPages = bloodPages
@@ -3422,6 +3444,10 @@ function main() {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
+  if (!gachaBuild.outputs.some(output => output.path === 'index.html')) {
+    outputCounts[writeIfChanged('index.html', topIndexSource)]++;
+    outputCounts.total++;
+  }
   outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
   outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
   outputCounts[writeIfChanged(
