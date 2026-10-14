@@ -154,5 +154,32 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-10-14"
+  },
+  "sk-0287": {
+    "name": "剣閃百撃",
+    "blood": "デュラハン",
+    "source": "デュラハン-20261014-0848/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0288": {
+    "name": "最終奥義",
+    "blood": "デュラハン",
+    "source": "デュラハン-20261014-0848/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0304": {
+    "name": "ぐるぐるアタック",
+    "blood": "ゴーレム",
+    "source": "ゴーレム-20261014-0841/icons/12.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }
