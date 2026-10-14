@@ -834,6 +834,11 @@ for f in img/blood/*.png; do s=$(basename "$f" .png); sips -s format jpeg -s for
 このマーカー間のみを書き換える。マーカーが無ければビルドを停止する
 （黙って上書きしない）。head・導入文・フィルタ・フッターは手書きのまま。
 
+**トップ（index.html）の「モン類から探す」（2026-10-14〜）**も `<!-- BUILD:MON-TYPE-NAV:START/END -->` の間を
+`build.js`（`renderTopMonTypeNav()`）が書き換える。体数は所属の実数、アイコンはモン類アイコン（5-13）。
+index.html はガチャのピックアップ（`GACHA:*` マーカー）も生成するので、先にこの枠を差し替えた本文をガチャの処理へ渡し、
+公開中のガチャが無い回だけ単独で書き出す。`scripts/verify.js` 検査24が体数と実数の一致を見る。
+
 **「血統から探す」枠（2026-10-14〜・P-004）**もマーカー間だけを `build.js` が書き換える。
 
 ```html

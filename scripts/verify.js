@@ -2385,6 +2385,16 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
   // モン類・オーラのアイコン（ゲーム画面から切り抜いた固定の画像）
   for (const monSlug of MON_ORDER) if (!exists(`img/mon-type/${monSlug}.png`)) issues.push(`モン類アイコンが無い: img/mon-type/${monSlug}.png`);
   for (const aura of ['red', 'blue', 'yellow', 'green', 'white', 'black']) if (!exists(`img/aura/${aura}.png`)) issues.push(`オーラアイコンが無い: img/aura/${aura}.png`);
+  // トップの「モン類から探す」は build.js が生成し、体数は所属の実数
+  // 準備中（monsters-editorial.json の hidden: true）の体はページにも体数にも出さない
+  const hiddenMonsterIds = new Set(Object.values(JSON.parse(read('src/data/monsters-editorial.json')).monsters)
+    .filter(entry => entry && entry.hidden === true).map(entry => String(entry.id)));
+  const top = read('index.html');
+  const topNav = top.slice(top.indexOf('<!-- BUILD:MON-TYPE-NAV:START -->'), top.indexOf('<!-- BUILD:MON-TYPE-NAV:END -->'));
+  for (const monSlug of MON_ORDER) {
+    const count = ids.monsters.filter(m => m.monSlug === monSlug && !hiddenMonsterIds.has(m.id)).length;
+    if (count && !new RegExp(`href="monsters/${monSlug}/"[\\s\\S]*?（${count}体）`).test(topNav)) issues.push(`index.html: モン類から探すの ${monSlug} が無いか体数が実数（${count}体）と違う`);
+  }
   if (smallBytes > 200 * 1024) issues.push(`表示用の血統アイコン${allBloods.length}枚の合計が200KBを超えた（${Math.round(smallBytes / 1024)}KB）`);
   const index = read('monsters.html');
   const indexPicker = index.slice(index.indexOf('<!-- BUILD:BLOOD-PICKER:START -->'), index.indexOf('<!-- BUILD:BLOOD-PICKER:END -->'));
