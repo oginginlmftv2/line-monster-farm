@@ -2382,6 +2382,9 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
     if (!exists(`img/blood/128/${slug}.jpg`)) issues.push(`表示用の血統アイコンが無い: img/blood/128/${slug}.jpg`);
     else smallBytes += fs.statSync(path.join(REPO, `img/blood/128/${slug}.jpg`)).size;
   }
+  // モン類・オーラのアイコン（ゲーム画面から切り抜いた固定の画像）
+  for (const monSlug of MON_ORDER) if (!exists(`img/mon-type/${monSlug}.png`)) issues.push(`モン類アイコンが無い: img/mon-type/${monSlug}.png`);
+  for (const aura of ['red', 'blue', 'yellow', 'green', 'white', 'black']) if (!exists(`img/aura/${aura}.png`)) issues.push(`オーラアイコンが無い: img/aura/${aura}.png`);
   if (smallBytes > 200 * 1024) issues.push(`表示用の血統アイコン${allBloods.length}枚の合計が200KBを超えた（${Math.round(smallBytes / 1024)}KB）`);
   const index = read('monsters.html');
   const indexPicker = index.slice(index.indexOf('<!-- BUILD:BLOOD-PICKER:START -->'), index.indexOf('<!-- BUILD:BLOOD-PICKER:END -->'));

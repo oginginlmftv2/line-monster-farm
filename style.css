@@ -1159,6 +1159,41 @@ a.blood-picker-link:focus-visible {
   font-weight: bold;
 }
 
+/* モン類アイコン・オーラアイコン（img/mon-type/・img/aura/。build.js の renderMonTypeIcon()・renderAuraIcon()） */
+.mon-type-icon,
+.aura-icon {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.menu-link .icon .mon-type-icon {
+  display: block;
+  width: 28px;
+  height: 28px;
+}
+
+.blood-picker-head .mon-type-icon {
+  width: 22px;
+  height: 22px;
+  margin: -3px 6px 0 0;
+}
+
+/* 血統ページへのボタン（menu-link）の血統アイコン。build.js の renderBloodLinkIcon() */
+.menu-link-blood-icon {
+  flex: none;
+  width: 32px;
+  height: auto;
+}
+
+/* ボタン1本だけの menu-grid。列を内容幅で止め、ラベルを半端な位置で折り返さない */
+.menu-grid--single {
+  grid-template-columns: minmax(0, max-content);
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
 /* SP：6列のまま詰める。長い血統名（ケンタウロスなど6文字）は2行に折り返す */
 @media (max-width: 640px) {
   .blood-picker-lead {

@@ -87,10 +87,22 @@ const NON_BUFF_TOKENS = [
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
 
-// モン類アイコン。トップページの「モン類から探す」と同一。
-const MON_ICONS = {
-  souzou: '✨', genrei: '🐉', mazoku: '👿', kemono: '🐺', kaibutsu: '👹', muki: '💎',
-};
+// モン類アイコン（img/mon-type/<monSlug>.png）とオーラアイコン（img/aura/<色>.png）。
+// ゲームの絞り込み画面から切り抜いた透過PNG（表示の2倍の大きさ）。作り方は build-spec 5-13
+const MON_TYPE_ICON_DIR = 'img/mon-type';
+const AURA_ICON_DIR = 'img/aura';
+const AURA_ICON_SLUG = { 赤: 'red', 青: 'blue', 黄: 'yellow', 緑: 'green', 白: 'white', 黒: 'black' };
+
+// alt を空にするのは、すぐ隣にモン類名・オーラ名の文字があるとき（読み上げが二重になるため）
+function renderMonTypeIcon(monSlug, rootPrefix, size, alt = '', className = 'mon-type-icon') {
+  return `<img class="${className}" src="${rootPrefix}${MON_TYPE_ICON_DIR}/${escapeHtml(monSlug)}.png" alt="${escapeHtml(alt)}" width="${size}" height="${size}">`;
+}
+
+function renderAuraIcon(aura, rootPrefix, size, alt = aura) {
+  const slug = AURA_ICON_SLUG[aura];
+  if (!slug) return escapeHtml(aura);
+  return `<img class="aura-icon" src="${rootPrefix}${AURA_ICON_DIR}/${slug}.png" alt="${escapeHtml(alt)}" width="${size}" height="${size}">`;
+}
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
@@ -1467,8 +1479,8 @@ ${abilityUnlocks.map(({ skill, link }) => {
       <h2 class="section-title">${escapeHtml(monster.blood)}種の技</h2>
     </div>
     <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
-    <div class="menu-grid">
-      <a class="menu-link" href="${bloodHref}"><span class="icon">${MON_ICONS[monster.monSlug] || ''}</span>${escapeHtml(monster.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+    <div class="menu-grid menu-grid--single">
+      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
     </div>
   </div>`;
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
@@ -1900,6 +1912,12 @@ function bloodIconOf(context, slug) {
   return { src: `${BLOOD_ICON_SMALL_DIR}/${slug}.jpg`, ...context.bloodIconSizes.get(slug) };
 }
 
+// 血統ページへのボタン（menu-link）の左に置く血統アイコン。文字が続くので alt は空にする
+function renderBloodLinkIcon(context, slug, rootPrefix) {
+  const icon = bloodIconOf(context, slug);
+  return `<img class="menu-link-blood-icon" src="${rootPrefix}${icon.src}" alt="" width="32" height="${Math.round(32 * icon.height / icon.width)}" loading="lazy" decoding="async">`;
+}
+
 // モン類ごとの血統。並びは BLOOD_ORDER（ゲームの並びが確かめられるまで既存順を使う）。
 function bloodsByMonType(context) {
   const result = new Map(MON_ORDER.map(slug => [slug, []]));
@@ -1965,7 +1983,7 @@ function renderBloodPicker(context, { where, monSlugs, currentMonSlug = '', curr
     let head = '';
     if (showHeads) {
       const name = items[0].mon;
-      const label = `${escapeHtml(name)}<span class="blood-picker-count">${total}体・${items.length}血統</span>`;
+      const label = `${renderMonTypeIcon(monSlug, rootPrefix, 22)}${escapeHtml(name)}<span class="blood-picker-count">${total}体・${items.length}血統</span>`;
       if (context.eligibleMonSlugs.has(monSlug)) {
         addLink(context, `monsters/${monSlug}/index.html`);
         head = `\n${indent}  <h3 class="blood-picker-head"><a href="${toMonsters}${monSlug}/">${label}</a></h3>`;
@@ -2038,7 +2056,8 @@ ${group.cardIds.map(cardId => {
 
 // モン類ページ冒頭の概要。数字は表で出し、同じ文型に数字を差し込む定型文は作らない。
 const MON_TYPE_RECENT_COUNT = 5;
-const AURA_ORDER = ['赤', '青', '黄', '黒', '白', '緑'];
+// オーラ別の表の列順。ゲームの絞り込み画面と同じ並び
+const AURA_ORDER = ['赤', '青', '黄', '緑', '白', '黒'];
 
 function renderMonTypeOverview(monType, monsters, context) {
   const items = bloodsByMonType(context).get(monType.slug) || [];
@@ -2056,11 +2075,16 @@ function renderMonTypeOverview(monType, monsters, context) {
     return runtime && runtime.aura ? runtime.aura : monster.aura;
   };
   const auras = AURA_ORDER.concat([...new Set(monsters.map(auraOf))].filter(aura => !AURA_ORDER.includes(aura)).sort());
-  const auraCounts = auras.map(aura => [aura, monsters.filter(monster => auraOf(monster) === aura).length]);
-  const limitedCount = monsters.filter(monster => {
+  const isLimited = monster => {
     const runtime = context.runtimeById.get(monster.id);
     return runtime ? !!runtime.limited : !!monster.limited;
-  }).length;
+  };
+  // 1行＝1血統（BLOOD_ORDER）、最後に合計。0体のマスは薄く出す
+  const auraCells = list => auras.map(aura => {
+    const count = list.filter(monster => auraOf(monster) === aura).length;
+    return `<td class="aura-col aura-col-${AURA_ICON_SLUG[aura] || 'other'}${count ? '' : ' is-zero'}">${count}</td>`;
+  }).join('') + `<td class="limited-col${list.some(isLimited) ? '' : ' is-zero'}">${list.filter(isLimited).length}</td>`;
+  const auraRows = items.map(item => `          <tr><th scope="row"><a href="#blood-${escapeHtml(item.slug)}">${escapeHtml(item.blood)}</a></th>${auraCells(item.members)}</tr>`).join('\n');
   // 最近サイトに追加された順（monsters-data.js の末尾ほど新しい）。実装日があれば添える
   const recent = [...monsters]
     .sort((a, b) => b.arrayIndex - a.arrayIndex)
@@ -2092,8 +2116,11 @@ ${bloodRows}
     <h3>オーラ別の体数</h3>
     <div class="mon-type-table-scroll">
       <table class="mon-type-table mon-type-aura-table">
-        <thead><tr>${auraCounts.map(([aura]) => `<th>${escapeHtml(aura)}</th>`).join('')}<th>限定</th></tr></thead>
-        <tbody><tr>${auraCounts.map(([, count]) => `<td>${count}</td>`).join('')}<td>${limitedCount}</td></tr></tbody>
+        <thead><tr><th scope="col">血統</th>${auras.map(aura => `<th scope="col" class="aura-col aura-col-${AURA_ICON_SLUG[aura] || 'other'}">${renderAuraIcon(aura, MON_TYPE_ROOT_PREFIX, 22)}</th>`).join('')}<th scope="col" class="limited-col">限定</th></tr></thead>
+        <tbody>
+${auraRows}
+        </tbody>
+        <tfoot><tr><th scope="row">合計</th>${auraCells(monsters)}</tr></tfoot>
       </table>
     </div>
     <h3>最近追加されたモンスター</h3>
@@ -2144,7 +2171,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
       addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
       skillNav = `
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/"><span class="icon">${MON_ICONS[bloodPage.monSlug] || ''}</span>${escapeHtml(group.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
       </div>`;
     }
     return `
@@ -2156,7 +2183,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
   const otherLinks = otherMonTypes.map(other => {
     addLink(context, `monsters/${other.slug}/index.html`);
     const count = context.monsters.filter(monster => monster.monSlug === other.slug).length;
-    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/"><span class="icon">${MON_ICONS[other.slug] || ''}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
+    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/"><span class="icon">${renderMonTypeIcon(other.slug, MON_TYPE_ROOT_PREFIX, 28)}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
   }).join('\n');
 
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
@@ -2193,7 +2220,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 
 <main class="container">
   <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monType.name)}</p>
-  <h1 class="page-title">${escapeHtml(monType.name)}のモンスター</h1>
+  <h1 class="page-title mon-type-page-title">${renderMonTypeIcon(monType.slug, MON_TYPE_ROOT_PREFIX, 40, '', 'mon-type-title-icon')}${escapeHtml(monType.name)}のモンスター</h1>
 ${renderMonTypeOverview(monType, monsters, context)}
 ${editorialSections}
 
@@ -2884,7 +2911,7 @@ ${uniqueSkills.map(skill => {
   const monTypeLink = hasMonTypePage
     ? `
     <div class="menu-grid blood-related-mon-type">
-      <a class="menu-link" href="../"><span class="icon">${MON_ICONS[bloodGate.monSlug] || ''}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>
+      <a class="menu-link" href="../"><span class="icon">${renderMonTypeIcon(bloodGate.monSlug, ROOT_PREFIX, 28)}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>
     </div>`
     : '';
   const relatedSection = `

@@ -32,7 +32,7 @@
 
 <main class="container">
   <p class="page-breadcrumb"><a href="../../index.html">トップ</a> &gt; <a href="../../monsters.html">モンスター一覧</a> &gt; 魔族</p>
-  <h1 class="page-title">魔族のモンスター</h1>
+  <h1 class="page-title mon-type-page-title"><img class="mon-type-title-icon" src="../../img/mon-type/mazoku.png" alt="" width="40" height="40">魔族のモンスター</h1>
 
   <section class="section">
     <h2 class="section-title">魔族の血統から探す</h2>
@@ -70,8 +70,16 @@
     <h3>オーラ別の体数</h3>
     <div class="mon-type-table-scroll">
       <table class="mon-type-table mon-type-aura-table">
-        <thead><tr><th>赤</th><th>青</th><th>黄</th><th>黒</th><th>白</th><th>緑</th><th>限定</th></tr></thead>
-        <tbody><tr><td>16</td><td>17</td><td>17</td><td>12</td><td>9</td><td>11</td><td>31</td></tr></tbody>
+        <thead><tr><th scope="col">血統</th><th scope="col" class="aura-col aura-col-red"><img class="aura-icon" src="../../img/aura/red.png" alt="赤" width="22" height="22"></th><th scope="col" class="aura-col aura-col-blue"><img class="aura-icon" src="../../img/aura/blue.png" alt="青" width="22" height="22"></th><th scope="col" class="aura-col aura-col-yellow"><img class="aura-icon" src="../../img/aura/yellow.png" alt="黄" width="22" height="22"></th><th scope="col" class="aura-col aura-col-green"><img class="aura-icon" src="../../img/aura/green.png" alt="緑" width="22" height="22"></th><th scope="col" class="aura-col aura-col-white"><img class="aura-icon" src="../../img/aura/white.png" alt="白" width="22" height="22"></th><th scope="col" class="aura-col aura-col-black"><img class="aura-icon" src="../../img/aura/black.png" alt="黒" width="22" height="22"></th><th scope="col" class="limited-col">限定</th></tr></thead>
+        <tbody>
+          <tr><th scope="row"><a href="#blood-pixie">ピクシー</a></th><td class="aura-col aura-col-red">5</td><td class="aura-col aura-col-blue">3</td><td class="aura-col aura-col-yellow">4</td><td class="aura-col aura-col-green">3</td><td class="aura-col aura-col-white">4</td><td class="aura-col aura-col-black">2</td><td class="limited-col">8</td></tr>
+          <tr><th scope="row"><a href="#blood-dragon">ドラゴン</a></th><td class="aura-col aura-col-red">6</td><td class="aura-col aura-col-blue">2</td><td class="aura-col aura-col-yellow">1</td><td class="aura-col aura-col-green is-zero">0</td><td class="aura-col aura-col-white">1</td><td class="aura-col aura-col-black">4</td><td class="limited-col">6</td></tr>
+          <tr><th scope="row"><a href="#blood-dullahan">デュラハン</a></th><td class="aura-col aura-col-red">2</td><td class="aura-col aura-col-blue">1</td><td class="aura-col aura-col-yellow">1</td><td class="aura-col aura-col-green">3</td><td class="aura-col aura-col-white">1</td><td class="aura-col aura-col-black">1</td><td class="limited-col">4</td></tr>
+          <tr><th scope="row"><a href="#blood-suezo">スエゾー</a></th><td class="aura-col aura-col-red">2</td><td class="aura-col aura-col-blue">1</td><td class="aura-col aura-col-yellow">4</td><td class="aura-col aura-col-green">2</td><td class="aura-col aura-col-white">2</td><td class="aura-col aura-col-black">1</td><td class="limited-col">4</td></tr>
+          <tr><th scope="row"><a href="#blood-nendoro">ネンドロ</a></th><td class="aura-col aura-col-red is-zero">0</td><td class="aura-col aura-col-blue">6</td><td class="aura-col aura-col-yellow">3</td><td class="aura-col aura-col-green">2</td><td class="aura-col aura-col-white is-zero">0</td><td class="aura-col aura-col-black">1</td><td class="limited-col">6</td></tr>
+          <tr><th scope="row"><a href="#blood-naga">ナーガ</a></th><td class="aura-col aura-col-red">1</td><td class="aura-col aura-col-blue">4</td><td class="aura-col aura-col-yellow">4</td><td class="aura-col aura-col-green">1</td><td class="aura-col aura-col-white">1</td><td class="aura-col aura-col-black">3</td><td class="limited-col">3</td></tr>
+        </tbody>
+        <tfoot><tr><th scope="row">合計</th><td class="aura-col aura-col-red">16</td><td class="aura-col aura-col-blue">17</td><td class="aura-col aura-col-yellow">17</td><td class="aura-col aura-col-green">11</td><td class="aura-col aura-col-white">9</td><td class="aura-col aura-col-black">12</td><td class="limited-col">31</td></tr></tfoot>
       </table>
     </div>
     <h3>最近追加されたモンスター</h3>
@@ -135,7 +143,7 @@
     <div class="mon-type-blood-group" id="blood-pixie">
       <h3 class="mon-type-blood-title">ピクシー（21体）</h3>
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="pixie/"><span class="icon">👿</span>ピクシー種の技一覧（17技）</a>
+        <a class="menu-link" href="pixie/"><img class="menu-link-blood-icon" src="../../img/blood/128/pixie.jpg" alt="" width="32" height="33" loading="lazy" decoding="async"><span>ピクシー種の技一覧<span class="nowrap">（17技）</span></span></a>
       </div>
     <div class="card-grid mon-type-grid wide-grid">
         <a class="card mon-type-card wide-card" href="pixie/0120.html">
@@ -422,7 +430,7 @@
     <div class="mon-type-blood-group" id="blood-dragon">
       <h3 class="mon-type-blood-title">ドラゴン（14体）</h3>
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="dragon/"><span class="icon">👿</span>ドラゴン種の技一覧（17技）</a>
+        <a class="menu-link" href="dragon/"><img class="menu-link-blood-icon" src="../../img/blood/128/dragon.jpg" alt="" width="32" height="33" loading="lazy" decoding="async"><span>ドラゴン種の技一覧<span class="nowrap">（17技）</span></span></a>
       </div>
     <div class="card-grid mon-type-grid wide-grid">
         <a class="card mon-type-card wide-card" href="dragon/0227.html">
@@ -1140,7 +1148,7 @@
     <div class="mon-type-blood-group" id="blood-dullahan">
       <h3 class="mon-type-blood-title">デュラハン（9体）</h3>
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="dullahan/"><span class="icon">👿</span>デュラハン種の技一覧（17技）</a>
+        <a class="menu-link" href="dullahan/"><img class="menu-link-blood-icon" src="../../img/blood/128/dullahan.jpg" alt="" width="32" height="33" loading="lazy" decoding="async"><span>デュラハン種の技一覧<span class="nowrap">（17技）</span></span></a>
       </div>
     <div class="card-grid mon-type-grid wide-grid">
         <a class="card mon-type-card wide-card" href="dullahan/0701.html">
@@ -1262,11 +1270,11 @@
   <section class="section">
     <h2 class="section-title">他のモン類</h2>
     <div class="menu-grid">
-      <a class="menu-link" href="../souzou/"><span class="icon">✨</span> 創造（37体）</a>
-      <a class="menu-link" href="../genrei/"><span class="icon">🐉</span> 幻霊（63体）</a>
-      <a class="menu-link" href="../kemono/"><span class="icon">🐺</span> 獣族（69体）</a>
-      <a class="menu-link" href="../kaibutsu/"><span class="icon">👹</span> 怪物（52体）</a>
-      <a class="menu-link" href="../muki/"><span class="icon">💎</span> 無機（58体）</a>
+      <a class="menu-link" href="../souzou/"><span class="icon"><img class="mon-type-icon" src="../../img/mon-type/souzou.png" alt="" width="28" height="28"></span> 創造（37体）</a>
+      <a class="menu-link" href="../genrei/"><span class="icon"><img class="mon-type-icon" src="../../img/mon-type/genrei.png" alt="" width="28" height="28"></span> 幻霊（63体）</a>
+      <a class="menu-link" href="../kemono/"><span class="icon"><img class="mon-type-icon" src="../../img/mon-type/kemono.png" alt="" width="28" height="28"></span> 獣族（69体）</a>
+      <a class="menu-link" href="../kaibutsu/"><span class="icon"><img class="mon-type-icon" src="../../img/mon-type/kaibutsu.png" alt="" width="28" height="28"></span> 怪物（52体）</a>
+      <a class="menu-link" href="../muki/"><span class="icon"><img class="mon-type-icon" src="../../img/mon-type/muki.png" alt="" width="28" height="28"></span> 無機（58体）</a>
     </div>
   </section>
 </main>
