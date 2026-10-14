@@ -1,0 +1,56 @@
+# LINEモンスターファーム徹底攻略
+
+> スマホゲーム「LINE:モンスターファーム」の非公式攻略サイトです。管理人ぎん（グランドスラム5回優勝）が、実戦経験をもとに育成方法・秘伝・大会攻略・モンスターとアシストカードの評価をまとめています。
+
+運営者のプロフィールは https://line-monster-farm-tetteikouryaku.com/profile.html にあります。
+
+## 主要ページ
+
+- [トップ](https://line-monster-farm-tetteikouryaku.com/): 開催中ガチャのピックアップ、育成記事・一覧ページへの入口、更新履歴
+- [モンスター一覧](https://line-monster-farm-tetteikouryaku.com/monsters.html): 全モンスターを種族・オーラ色で絞り込める一覧。各モンスターの詳細ページへ進める
+- [アシストカード一覧](https://line-monster-farm-tetteikouryaku.com/assist.html): アシストカードの総合評価・一致評価・距離／地形適性での絞り込み
+- [開催中ガチャ一覧](https://line-monster-farm-tetteikouryaku.com/gacha/): 開催予定・開催中・終了済みのガチャのピックアップと開催期間
+- [リセマラランキング](https://line-monster-farm-tetteikouryaku.com/reroll.html): 開催中ガチャから初心者が最初に狙うべきアシストカード
+
+## 育成・攻略記事
+
+- [秘伝周回 完全ガイド](https://line-monster-farm-tetteikouryaku.com/ikusei/hiden.html): 秘伝の種類、おすすめ大会ルート、超修行、ボスモンの出現条件
+- [秘伝効果一覧](https://line-monster-farm-tetteikouryaku.com/ikusei/hiden-kouka.html): 全秘伝の効果と付与条件を種類別に掲載
+- [ロード秘伝 完全ガイド](https://line-monster-farm-tetteikouryaku.com/ikusei/road-hiden.html): ロード秘伝の発動の仕組み、星数の上げ方、パッケージ（仕込み）のやり方
+- [初心者向け総合力育成方法](https://line-monster-farm-tetteikouryaku.com/ikusei/sogo.html): 編成・持ち込みアイテム・デビュー期からプロ期までの立ち回り
+- [総合力育成のコツ](https://line-monster-farm-tetteikouryaku.com/ikusei/sogo-ikusei.html): 陣営秘伝の選び方、忠誠度管理、超スパルタ、絶好調チャンスの使いどころ
+- [グランドスラム 攻略 〜決戦編〜](https://line-monster-farm-tetteikouryaku.com/ikusei/grand-slam.html): 選定・秘伝準備・育成・決戦編成・バトルの立ち回り
+- [グランドスラム 攻略 〜超連戦編〜](https://line-monster-farm-tetteikouryaku.com/ikusei/grand-slam-chorenzen.html): 決戦との違いを踏まえた超連戦の準備と立ち回り
+- [ロードオブマスターズ 攻略](https://line-monster-farm-tetteikouryaku.com/ikusei/lord-of-masters.html): モンスター選定・アシカ編成・秘伝準備・育成のポイント
+- [ソロモンクエスト 攻略](https://line-monster-farm-tetteikouryaku.com/ikusei/solomon.html): ハイスコアを狙う秘伝準備・供モン育成・実践の立ち回り
+- [育成ストーリー解説：トーブルの護り手たち](https://line-monster-farm-tetteikouryaku.com/ikusei/story-torble.html): 陣営別トレーニング、陣営能力、EXトレ、ヴァルド能力、秘伝の実機検証
+
+## はじめての人向け
+
+- [これから始める人へ](https://line-monster-farm-tetteikouryaku.com/newbie.html): リセマラ・天井・ダイヤの集め方
+- [初心者ガイド](https://line-monster-farm-tetteikouryaku.com/beginner.html): ゲームの基本、育成の流れ、初期設定、各コンテンツの参加方法
+- [お役立ちテクニック・小技まとめ](https://line-monster-farm-tetteikouryaku.com/tips.html): 知っておくと得するテクニックと仕様
+
+## 血統ごとの技一覧
+
+各血統の共通技を間合い・ランク別にまとめたページです。
+
+- [アーク種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/arc/)
+- [ゴースト種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/ghost/)
+- [キジン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kijin/)
+- [キュービ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/)
+- [グジラ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/gujira/)
+- [ディノ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/dino/)
+- [ケンタウロス種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/centaur/)
+- [ピクシー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/pixie/)
+- [ドラゴン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/)
+- [デュラハン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/)
+- [イルミネ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/illumine/)
+- [ヘンガー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/henger/)
+- [ゴーレム種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/)
+- [ガリ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/)
+- [メタルナー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/souzou/metalner/)
+
+## その他
+
+- [管理人のプレイ日記](https://line-monster-farm-tetteikouryaku.com/diary.html): 大会の結果や感想、育成方法の連載記事

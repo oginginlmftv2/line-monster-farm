@@ -2286,6 +2286,78 @@ head('22. 能力スコアリング（説明文パーサ）');
   }
 }
 
+// ---------------------------------------------------------------- 23
+// 手書き記事の構造化データとllms.txt（P-002）。build.jsが生成しないので、
+// 記事の改名・見出し変更・URL変更でJSON-LDやllms.txtだけが古く残るのをここで止める。
+head('23. 手書き記事の構造化データとllms.txt');
+{
+  const SITE_URL = 'https://line-monster-farm-tetteikouryaku.com';
+  const ARTICLE_PAGES = [
+    'ikusei/grand-slam-chorenzen.html', 'ikusei/grand-slam.html', 'ikusei/hiden-kouka.html',
+    'ikusei/hiden.html', 'ikusei/lord-of-masters.html', 'ikusei/road-hiden.html',
+    'ikusei/sogo-ikusei.html', 'ikusei/sogo.html', 'ikusei/solomon.html',
+    'ikusei/story-torble.html', 'beginner.html', 'newbie.html', 'reroll.html',
+  ];
+  const stripTags = s => s.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+  const bad = [];
+  for (const file of ARTICLE_PAGES) {
+    if (!exists(file)) { bad.push(`${file}: ファイルがない`); continue; }
+    const html = read(file);
+    const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    const items = [];
+    for (const [, body] of blocks) {
+      try { items.push(JSON.parse(body)); } catch (error) { bad.push(`${file}: JSON-LDが読めない（${error.message}）`); }
+    }
+    const url = `${SITE_URL}/${file}`;
+    const article = items.find(item => item['@type'] === 'Article');
+    const crumbs = items.find(item => item['@type'] === 'BreadcrumbList');
+    if (!article) bad.push(`${file}: Articleがない`);
+    else {
+      // 見出しは本文のh1（絵文字を除く）から始まること。副題つきは「h1 副題」
+      const h1 = stripTags((html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/) || [])[1] || '')
+        .replace(/^[^\p{L}\p{N}]+/u, '');
+      if (!h1 || !String(article.headline || '').startsWith(h1)) bad.push(`${file}: headline「${article.headline}」が本文のh1「${h1}」と不一致`);
+      if (article.mainEntityOfPage !== url) bad.push(`${file}: mainEntityOfPageがURLと不一致`);
+      if (!article.author || article.author['@type'] !== 'Person' || !article.author.name) bad.push(`${file}: authorがPersonでない`);
+      if (!article.publisher || article.publisher['@type'] !== 'Organization') bad.push(`${file}: publisherがOrganizationでない`);
+      const dateRe = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRe.test(article.datePublished || '') || !dateRe.test(article.dateModified || '')
+        || article.dateModified < article.datePublished) bad.push(`${file}: datePublished/dateModifiedが不正`);
+    }
+    if (!crumbs) bad.push(`${file}: BreadcrumbListがない`);
+    else {
+      const list = crumbs.itemListElement || [];
+      if (!list.length || list[list.length - 1].item !== url) bad.push(`${file}: パンくずの末尾がURLと不一致`);
+    }
+    if (!html.includes(`<link rel="canonical" href="${url}">`)) bad.push(`${file}: canonicalがURLと不一致`);
+  }
+  if (bad.length) ng(`手書き記事のJSON-LDが不正 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
+  else ok(`手書き記事${ARTICLE_PAGES.length}本のArticle・BreadcrumbListはJSONとして読め、見出し・URLが本文と一致`);
+
+  if (!exists('llms.txt')) ng('llms.txt がない');
+  else {
+    const text = read('llms.txt');
+    const links = [...text.matchAll(/\]\((https:\/\/line-monster-farm-tetteikouryaku\.com\/[^)\s]*)\)/g)].map(m => m[1]);
+    const toFile = link => {
+      const rel = link.slice(SITE_URL.length + 1);
+      return rel === '' || rel.endsWith('/') ? `${rel}index.html` : rel;
+    };
+    const missing = links.filter(link => !exists(toFile(link)));
+    if (!links.length) ng('llms.txt にサイト内リンクがない');
+    else if (missing.length) ng(`llms.txt のリンク先が無い ${missing.length}件: ${missing.slice(0, 5).join(', ')}`);
+    else ok(`llms.txt のサイト内リンク ${links.length}件はすべて実在`);
+    // 血統ページはbuild.jsが技DBから増やす。llms.txtは手書きなので、載せ忘れはWARNで知らせる
+    const bloodPages = fs.readdirSync(path.join(REPO, 'monsters'), { withFileTypes: true })
+      .filter(d => d.isDirectory())
+      .flatMap(d => fs.readdirSync(path.join(REPO, 'monsters', d.name), { withFileTypes: true })
+        .filter(b => b.isDirectory() && exists(`monsters/${d.name}/${b.name}/index.html`))
+        .map(b => `monsters/${d.name}/${b.name}/`));
+    const unlisted = bloodPages.filter(p => !links.includes(`${SITE_URL}/${p}`));
+    if (unlisted.length) wn(`llms.txt に未掲載の血統ページ ${unlisted.length}件: ${unlisted.slice(0, 5).join(', ')}（手で追記する）`);
+    else ok(`血統ページ ${bloodPages.length}件はすべて llms.txt に掲載`);
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);

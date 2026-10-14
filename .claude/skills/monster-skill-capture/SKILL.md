@@ -399,6 +399,10 @@ node build.js && node scripts/verify.js
 
 `verify.js` が FAIL 0 でなければ、原因を報告して止まる。**FAILを残したまま次の技へ進まない。**
 
+その血統で初めて血統ページができたときは、ルートの `llms.txt` の「血統ごとの技一覧」へ
+`- [<血統>種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/<モン類slug>/<血統slug>/)` を1行足す
+（手書きなので build.js は足さない。載せ忘れは verify.js 検査23が WARN で知らせる）。
+
 ## 絶対に守ること
 
 - **読み取れない値は推測しない。**空欄にして「この値が読めなかった」と報告する。
