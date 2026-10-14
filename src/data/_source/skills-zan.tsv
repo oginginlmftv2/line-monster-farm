@@ -1,0 +1,10 @@
+blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critical	ability1	ability1Unlock	ability2	ability2Unlock	ability3	ability3Unlock	ability4	ability4Unlock	ability5	ability5Unlock	unique	owners	unlockedBy	note	skillId	version
+ザン	遠	1	ミラージュシフト	無	ちから	21	近	D	B	G	D+	[有利]心眼Lv2（ザン種）												シン:2			
+ザン	零	1	レッグアーク	黒	ちから	23		E	D+	C	D	斬撃												レツ:2			
+ザン	遠	2	スタナーブリッツ	黄	かしこさ	26		C	B	C	E	カース												ザン:3			
+ザン	中	2	ソニックナイフ	黒	ちから	25	零	D	C+	G	B	多重属性[赤]		斬撃										レツ:3			
+ザン	零	2	ダブルサマー	無	ちから	28	近	C+	C	G	C	連撃：ダブルサマー		斬撃										シン:3			
+ザン	中	4	アサルトレイド	無	ちから	44		B+	A	E	C	連撃：アサルトレイド		斬撃：壊										ザン:5			
+ザン	零	4	ライジングレイヴ	黄	ちから	42		A	B	A	A	多重属性[緑]		斬撃：巧		ちから上昇[中]	シン:6	ガードディクリーズ	シン:10					シン:5			
+ザン	遠	5	アクシズバレット	赤	ちから	50		B	D	F	S	連撃：アクシズバレット		斬撃：裂		テクニックレイズ	レツ:6	テクニックオーバー	レツ:10					レツ:5			
+ザン	近	5	ダークホウスト	黒	ちから	48		A	S	G	B+	連撃：ダークホウスト		斬撃：剛		テクニックレイズ	ザン:6	テクニックオーバー	ザン:10					ザン:5			
