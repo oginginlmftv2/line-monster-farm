@@ -2371,12 +2371,19 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
     bloodsByMon.get(member.monSlug).push(member.bloodSlug);
   }
   const allBloods = MON_ORDER.flatMap(monSlug => bloodsByMon.get(monSlug) || []);
-  const pickerSlugs = html => [...html.matchAll(/<img class="blood-picker-icon" src="[^"]*img\/blood\/([a-z]+)\.png" alt="([^"]*)" width="\d+" height="\d+"/g)]
+  const pickerSlugs = html => [...html.matchAll(/<img class="blood-picker-icon" src="[^"]*img\/blood\/128\/([a-z]+)\.jpg" alt="([^"]*)" width="\d+" height="\d+"/g)]
     .map(m => (m[2] ? m[1] : `${m[1]}(alt無し)`));
-  if (!exists('blood-picker.css')) issues.push('必須ファイルがない: blood-picker.css');
-  for (const slug of allBloods) if (!exists(`img/blood/${slug}.png`)) issues.push(`血統アイコンが無い: img/blood/${slug}.png`);
+  // CSSは style.css の共通部品の節に置き、使うページで追加の読み込みを要らなくする
+  if (!/\.blood-picker-grid \{/.test(read('style.css'))) issues.push('style.css に共通部品「血統アイコン枠」の節が無い');
+  // 表示用の軽い版（128px）は元PNGと別に置く。34枚の合計は200KB以下（build-spec 5-13）
+  let smallBytes = 0;
+  for (const slug of allBloods) {
+    if (!exists(`img/blood/${slug}.png`)) issues.push(`血統アイコンの元画像が無い: img/blood/${slug}.png`);
+    if (!exists(`img/blood/128/${slug}.jpg`)) issues.push(`表示用の血統アイコンが無い: img/blood/128/${slug}.jpg`);
+    else smallBytes += fs.statSync(path.join(REPO, `img/blood/128/${slug}.jpg`)).size;
+  }
+  if (smallBytes > 200 * 1024) issues.push(`表示用の血統アイコン${allBloods.length}枚の合計が200KBを超えた（${Math.round(smallBytes / 1024)}KB）`);
   const index = read('monsters.html');
-  if (!index.includes('<link rel="stylesheet" href="blood-picker.css">')) issues.push('monsters.html: blood-picker.css を読み込んでいない');
   const indexPicker = index.slice(index.indexOf('<!-- BUILD:BLOOD-PICKER:START -->'), index.indexOf('<!-- BUILD:BLOOD-PICKER:END -->'));
   if (indexPicker.length < 50) issues.push('monsters.html: 血統から探すの生成マーカーが無いか空');
   else if (pickerSlugs(indexPicker).join(',') !== allBloods.join(',')) issues.push('monsters.html: 血統の枠がモン類順・BLOOD_ORDER順の全血統と一致しない');
@@ -2387,7 +2394,6 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
     const html = read(rel);
     if (pickerSlugs(html).join(',') !== slugs.join(',')) issues.push(`${rel}: 血統の枠がそのモン類の血統と一致しない`);
     for (const slug of slugs) if (!html.includes(`id="blood-${slug}"`)) issues.push(`${rel}: 血統見出しのアンカー #blood-${slug} が無い`);
-    if (!html.includes('blood-picker.css')) issues.push(`${rel}: blood-picker.css を読み込んでいない`);
   }
   // monsters/ 以下の生成ページは、モン類・血統ページへ canonical と同じ末尾スラッシュの形でリンクする
   const walk = dir => fs.readdirSync(path.join(REPO, dir), { withFileTypes: true })
@@ -2400,7 +2406,7 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
     }
     const depth = rel.split('/').length;
     if (depth === 4 && rel.endsWith('/index.html')) {
-      if (!/<h1 class="page-title blood-page-title"><img class="blood-title-icon" src="\.\.\/\.\.\/\.\.\/img\/blood\/[a-z]+\.png"/.test(html)) issues.push(`${rel}: 見出しに血統アイコンが無い`);
+      if (!/<h1 class="page-title blood-page-title"><img class="blood-title-icon" src="\.\.\/\.\.\/\.\.\/img\/blood\/128\/[a-z]+\.jpg"/.test(html)) issues.push(`${rel}: 見出しに血統アイコンが無い`);
       if (!html.includes('aria-current="page"')) issues.push(`${rel}: 関連ページの血統の枠に今の血統の印が無い`);
     }
   }

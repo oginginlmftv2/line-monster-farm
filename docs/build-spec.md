@@ -431,7 +431,7 @@ h1: <モン類>のモンスター
 - `description`: 運営者の文があれば最初の本文の冒頭100字前後（句点で切る）。
   無ければ所属体数と血統名から作る（`monTypeDescription()`）
 - 出力先: `monsters/<monSlug>/index.html`
-- CSS: `style.css` + `monster-type.css` + `blood-picker.css`
+- CSS: `style.css` + `monster-type.css`（血統の枠の見た目は style.css の共通部品・5-13）
 - **リンクは canonical と同じ末尾スラッシュの形**（`./<血統slug>/`・`../<monSlug>/`）。`index.html` を付けない
   （`scripts/verify.js` 検査24。詳細ページのパンくず・技リンク、血統ページも同じ）
 
@@ -479,7 +479,7 @@ h1: <モン類>のモンスター
 
 ```
 パンくず   トップ > モンスター一覧 > <モン類> > <血統>種
-h1         [血統アイコン] <血統>種の技一覧   ← img/blood/<血統slug>.png。文字と重ねて読まれないよう alt=""
+h1         [血統アイコン] <血統>種の技一覧   ← img/blood/128/<血統slug>.jpg（5-13）。文字と重ねて読まれないよう alt=""
 section1   間合い・ランク別の技（技表）
 section2   固有技（固有技がある場合だけ）
 section3   <血統>種のモンスター（所属全件・renderMonCard）
@@ -490,7 +490,7 @@ section4   関連ページ：<モン類>の血統
            モン類ページ（../）へのボタン
 ```
 
-CSSは `style.css` + `blood.css` + `blood-picker.css`。
+CSSは `style.css` + `blood.css`（血統の枠の見た目は style.css の共通部品・5-13）。
 
 **技表**
 
@@ -723,20 +723,57 @@ BreadcrumbList の JSON-LD も同じ条件で1段増やす。
 ### 5-13. 血統アイコンの選択枠（2026-10-14・P-004）
 
 `build.js` の `renderBloodPicker()` が出す共通部品。monsters.html（5-5）・モン類ページ（5-3）・
-血統ページ（5-9）で使う。見た目は `blood-picker.css` だけが持つ。
+血統ページ（5-9）で使う。**見た目は `style.css` の「共通部品：血統アイコン枠」の節だけが持つ**。
+style.css は全ページが読み込むので、別のページで使うときに追加の `<link>` やCSSの書き写しは要らない
+（責任者判断 2026-10-14「同じトンマナを流用するときに困らない運用が一番」。AGENTS.md 6章の
+「新しいCSSを追加しない」は、既存クラスで足りる見た目を作り直さないための規則で、この節はその共通クラスを増やしたもの）。
 
 - ゲームの血統選択画面のように、**1モン類＝1行（最大6血統）**の格子でアイコンを並べる。
-  PC（900px以上）の monsters.html は2モン類ずつ横に並べ、縦の長さを抑える
-- 1マス＝アイコン（`img/blood/<血統slug>.png`、表示幅64px・SP44px）＋血統名＋体数。
-  血統ページがある血統だけ `技<件数>` の印を付ける
+  PC（900px以上）で複数モン類を出すときは2モン類ずつ横に並べ、縦の長さを抑える
+- 1マス＝アイコン（表示幅64px・SP44px）＋血統名＋体数。血統ページがある血統だけ `技<件数>` の印を付ける
 - リンク先は、血統ページがあればそのページ、無ければモン類ページの血統見出し `#blood-<血統slug>`
 - 並びはモン類が `MON_ORDER`、血統が `BLOOD_ORDER`（ゲーム画面の並びを確かめられたら合わせる）
-- アイコンの `alt` は血統名、`width`/`height` はPNGのヘッダから比率で出す。ファイルが無ければビルドを止める
-- monsters.html・モン類ページ（ページ上部）は即時に読み込み、血統ページ（末尾の関連ページ）は `loading="lazy"`
+- アイコンの `alt` は血統名、`width`/`height` は元PNGのヘッダから比率で出す。ファイルが無ければビルドを止める
+- ページ上部に出る monsters.html・モン類ページは `loading="lazy"` にしない。血統ページ（末尾の関連ページ）だけ遅延させる
 - **SP（375px）で横スクロールを出さない。**6列のまま詰め、6文字の血統名は2行に折り返す。
   名前欄は2行分の高さを取って体数の位置をそろえ、`line-break: strict` で行頭の「ー」を避ける
-- `scripts/verify.js` 検査24が、monsters.html・モン類ページの枠と全血統の一致、`#blood-` アンカー、
-  血統ページの見出しアイコン、`monsters/` 以下の末尾スラッシュ形のリンクを検査する
+
+#### アイコン画像
+
+| 用途 | パス | 中身 |
+|---|---|---|
+| 元画像（消さない） | `img/blood/<血統slug>.png` | 144×146 のPNG（透過なしRGB）。37枚（レアモン・ノーブル・ロード種を含む） |
+| ページ表示用 | `img/blood/128/<血統slug>.jpg` | 表示幅64pxの2倍に縮めたJPEG（品質65）。主血統34枚で合計約193KB（元PNGは約713KB） |
+
+表示用は元PNGから作る。元PNGは透過が無いのでJPEGにしても見た目は変わらない。macOSでは次の1行で作れる
+（Windowsでは同じ縮小・品質のJPEGを任意の画像ツールで書き出せばよい）。
+
+```bash
+for f in img/blood/*.png; do s=$(basename "$f" .png); sips -s format jpeg -s formatOptions 65 -Z 130 "$f" --out "img/blood/128/$s.jpg"; done
+```
+
+`scripts/verify.js` 検査24が、主血統34枚の元画像と表示用の有無、表示用の合計200KB以下を検査する。
+
+#### 別のページで使うとき
+
+1. ページを `build.js` で生成していることが前提（手書きページは5-5のようにマーカーを置き、`build.js` に書き換えさせる）
+2. `renderBloodPicker(context, options)` を呼んで、返ったHTMLをそのまま置く。CSSの追加は要らない
+
+| option | 意味 |
+|---|---|
+| `where` | ページの位置。`'root'`（サイト直下）/ `'monType'`（`monsters/<mon>/`）/ `'blood'`（`monsters/<mon>/<blood>/`）。画像とリンクの相対パスを決める。別の深さのページで使うときはここに1つ足す |
+| `monSlugs` | 並べるモン類の配列（`MON_ORDER` の値）。2つ以上ならPCで2列になる |
+| `showHeads` | モン類名の見出し（モン類ページへのリンク・体数・血統数）を出すか |
+| `currentMonSlug` / `currentBlood` | 今いるモン類・血統。同じモン類の内側は短い相対リンクにし、今の血統はリンクにせず印を付ける |
+| `indent` | 出力HTMLの字下げ |
+
+クラス名（style.css）：`.blood-picker`（全体。複数モン類は `.blood-picker--all`）／`.blood-picker-group`（1モン類）／
+`.blood-picker-head`・`.blood-picker-count`（見出し）／`.blood-picker-grid`（格子）／`.blood-picker-item`（1マス）／
+`.blood-picker-link`（リンク。`.has-page` は血統ページあり、`.is-current` は今の血統）／`.blood-picker-icon`・
+`.blood-picker-name`・`.blood-picker-meta`・`.blood-picker-skill`（中身）／`.blood-picker-lead`（枠の上の説明文）
+
+`scripts/verify.js` 検査24が、monsters.html・モン類ページの枠と全血統の一致、`#blood-` アンカー、
+血統ページの見出しアイコン、style.css の節、`monsters/` 以下の末尾スラッシュ形のリンクを検査する。
 
 ### 5-4. sitemap.xml の再生成
 
@@ -772,7 +809,6 @@ BreadcrumbList の JSON-LD も同じ条件で1段増やす。
 - 置き場所はカード一覧（`BUILD:MONSTER-CARDS`）より前。中身は血統アイコンの選択枠（5-13）の全モン類版で、
   モン類名の見出しがモン類ページへのリンクを兼ねる（以前ページ末尾にあった「モン類から探す」6本はここへ移した）
 - 34血統ぶんの名前・体数・技数・リンクだけを出し、軽く保つ（monsters.html は約260KB）
-- `blood-picker.css` を head で読み込む
 
 並び順は静的化前のJSと同一：gwImg が null のものが先頭（arrayIndex 降順）、
 続いて gwImg の降順。**この順序を変更しないこと。**

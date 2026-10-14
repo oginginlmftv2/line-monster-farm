@@ -1036,3 +1036,173 @@ td img {
     padding: 4px 3px;
   }
 }
+
+/* ================================================================
+   共通部品：血統アイコン枠（.blood-picker）
+   build.js の renderBloodPicker() が出すHTML専用。ゲームの血統選択画面のように
+   1モン類＝1行（最大6血統）で格子状に並べる。style.css に置くので、
+   どのページで使っても追加の読み込みや書き写しは要らない。
+   使い方・クラス名は docs/build-spec.md 5-13
+   ================================================================ */
+
+.blood-picker-lead {
+  margin: -8px 0 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #666;
+}
+
+.blood-picker-group + .blood-picker-group {
+  margin-top: 18px;
+}
+
+/* PC：monsters.html の全モン類は2列に並べ、縦の長さを抑える */
+@media (min-width: 900px) {
+  .blood-picker--all {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 36px;
+  }
+
+  .blood-picker--all .blood-picker-group + .blood-picker-group {
+    margin-top: 0;
+  }
+}
+
+.blood-picker-head {
+  margin: 0 0 8px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.blood-picker-head a {
+  color: #1a1a2e;
+  text-decoration: none;
+  border-bottom: 2px solid #f0a500;
+}
+
+.blood-picker-head a::after {
+  content: " ›";
+  color: #f0a500;
+}
+
+.blood-picker-count {
+  margin-left: 8px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #777;
+}
+
+.blood-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 6px;
+  max-width: 600px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.blood-picker-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 6px 2px 8px;
+  border-radius: 10px;
+  color: #333;
+  text-align: center;
+  text-decoration: none;
+}
+
+a.blood-picker-link:hover,
+a.blood-picker-link:focus-visible {
+  background: #fff7e0;
+}
+
+.blood-picker-link.is-current {
+  background: #fff3cd;
+  box-shadow: inset 0 0 0 2px #f0a500;
+}
+
+.blood-picker-icon {
+  display: block;
+  width: 64px;
+  max-width: 100%;
+  height: auto;
+}
+
+.blood-picker-name {
+  margin-top: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  /* 行頭に「ー」や小書きのカナを置かない */
+  line-break: strict;
+}
+
+.blood-picker-meta {
+  margin-top: 2px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: #777;
+}
+
+.blood-picker-skill {
+  display: block;
+  margin-top: 2px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: #fdf0d0;
+  color: #9a6400;
+  font-weight: bold;
+}
+
+/* SP：6列のまま詰める。長い血統名（ケンタウロスなど6文字）は2行に折り返す */
+@media (max-width: 640px) {
+  .blood-picker-lead {
+    margin-top: -6px;
+    font-size: 12px;
+  }
+
+  .blood-picker-grid {
+    gap: 3px;
+  }
+
+  .blood-picker-link {
+    padding: 4px 0 6px;
+    border-radius: 8px;
+  }
+
+  .blood-picker-icon {
+    width: 44px;
+  }
+
+  /* 名前は2行分の高さを取り、1行の血統と2行の血統で体数の位置をそろえる */
+  .blood-picker-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.4em;
+    font-size: 10px;
+    line-height: 1.2;
+  }
+
+  .blood-picker-group + .blood-picker-group {
+    margin-top: 12px;
+  }
+
+  .blood-picker-head {
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .blood-picker-meta {
+    font-size: 10px;
+  }
+
+  .blood-picker-skill {
+    padding: 0 3px;
+  }
+}

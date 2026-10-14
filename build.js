@@ -1858,9 +1858,11 @@ function groupMonTypeMonsters(monsters) {
   }).sort((a, b) => b.members.length - a.members.length || a.firstId - b.firstId);
 }
 
-// 血統アイコン（img/blood/<slug>.png）。ゲームの血統選択画面と同じ絵を、表示幅64pxで出す。
-// 高さはPNGのヘッダから比率で求め、width/height 属性に書いて読み込み中のずれを防ぐ。
+// 血統アイコン。ゲームの血統選択画面と同じ絵（元は img/blood/<slug>.png・144px）を、表示幅64pxで出す。
+// ページには表示幅の2倍（128px）に縮めた軽い版 img/blood/128/<slug>.jpg を使う（作り方は build-spec 5-13）。
+// 高さは元PNGのヘッダから比率で求め、width/height 属性に書いて読み込み中のずれを防ぐ。
 const BLOOD_ICON_DIR = 'img/blood';
+const BLOOD_ICON_SMALL_DIR = 'img/blood/128';
 const BLOOD_ICON_WIDTH = 64;
 
 function bloodIconOf(context, slug) {
@@ -1874,12 +1876,15 @@ function bloodIconOf(context, slug) {
     }
     const width = header.readUInt32BE(16);
     const height = header.readUInt32BE(20);
+    if (!fs.existsSync(path.join(REPO, BLOOD_ICON_SMALL_DIR, `${slug}.jpg`))) {
+      throw new Error(`${BLOOD_ICON_SMALL_DIR}/${slug}.jpg がありません（build-spec 5-13 の手順で作る）`);
+    }
     context.bloodIconSizes.set(slug, {
       width: BLOOD_ICON_WIDTH,
       height: Math.round(BLOOD_ICON_WIDTH * height / width),
     });
   }
-  return { src: `${BLOOD_ICON_DIR}/${slug}.png`, ...context.bloodIconSizes.get(slug) };
+  return { src: `${BLOOD_ICON_SMALL_DIR}/${slug}.jpg`, ...context.bloodIconSizes.get(slug) };
 }
 
 // モン類ごとの血統。並びは BLOOD_ORDER（ゲームの並びが確かめられるまで既存順を使う）。
@@ -1902,7 +1907,7 @@ function bloodsByMonType(context) {
   return result;
 }
 
-// 血統アイコンの選択枠（monsters.html・モン類ページ・血統ページ共通。CSSは blood-picker.css）。
+// 血統アイコンの選択枠（monsters.html・モン類ページ・血統ページ共通。CSSは style.css の「共通部品：血統アイコン枠」）。
 // 血統ページがある血統はそのページへ、無い血統はモン類ページの血統見出し（#blood-<slug>）へ送る。
 // where: 'root'（monsters.html）/ 'monType'（monsters/<mon>/）/ 'blood'（monsters/<mon>/<blood>/）
 function renderBloodPicker(context, { where, monSlugs, currentMonSlug = '', currentBlood = '', showHeads = false, indent = '  ' }) {
@@ -2122,7 +2127,6 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
   <script type="application/ld+json">${monTypeBreadcrumbJson(monType)}</script>
   <link rel="stylesheet" href="${MON_TYPE_ROOT_PREFIX}style.css">
   <link rel="stylesheet" href="${MON_TYPE_ROOT_PREFIX}monster-type.css">
-  <link rel="stylesheet" href="${MON_TYPE_ROOT_PREFIX}blood-picker.css">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head>
 <body class="mon-type-page">
@@ -3002,7 +3006,6 @@ ${memberCards}
   <script type="application/ld+json">${bloodBreadcrumbJson(bloodGate, hasMonTypePage)}</script>
   <link rel="stylesheet" href="${ROOT_PREFIX}style.css">
   <link rel="stylesheet" href="${ROOT_PREFIX}blood.css">
-  <link rel="stylesheet" href="${ROOT_PREFIX}blood-picker.css">
   <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>${adsense}
 </head>
 ${body}</html>
