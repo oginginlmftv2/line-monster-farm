@@ -363,5 +363,5 @@ const monstersData = [
   { name: 'ヴァンパイア', aura: '青', limited: true, limitedLabel: '秋限定', gwImg: null, localImg: '3351.jpg', mon: '幻霊', mainMon: 'アーク', subMon: 'レアモン' },
   { name: 'オカシラ', aura: '青', limited: true, limitedLabel: '秋限定', gwImg: null, localImg: '1252.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'レアモン' },
   { name: 'マミーレックス', aura: '青', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '0651.jpg', mon: '獣族', mainMon: 'ディノ', subMon: 'レアモン' },
-  { name: 'マホウビン', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: null, mon: '創造', mainMon: 'メタルナー', subMon: 'レアモン' },
+  { name: 'マホウビン', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: '2751.jpg', mon: '創造', mainMon: 'メタルナー', subMon: 'レアモン' },
 ];
