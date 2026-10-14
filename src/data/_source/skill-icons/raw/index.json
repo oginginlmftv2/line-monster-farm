@@ -973,5 +973,86 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0525": {
+    "name": "トリオビーム∞",
+    "blood": "モノリス",
+    "source": "モノリス-20261014-2040/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0526": {
+    "name": "クリムゾンブレイク",
+    "blood": "モノリス",
+    "source": "モノリス-20261014-2040/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0539": {
+    "name": "ジーザスクロー",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0540": {
+    "name": "赫焔螺斬牙",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0541": {
+    "name": "無貌の讃歌",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0551": {
+    "name": "画竜点睛",
+    "blood": "シンリュウ",
+    "source": "シンリュウ-20261014-2151/icons/10.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0555": {
+    "name": "青龍天咆",
+    "blood": "シンリュウ",
+    "source": "シンリュウ-20261014-2151/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0571": {
+    "name": "ハナツバミ",
+    "blood": "ワーム",
+    "source": "ワーム-20261014-2103/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0572": {
+    "name": "エヴォリューション",
+    "blood": "ワーム",
+    "source": "ワーム-20261014-2103/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }
