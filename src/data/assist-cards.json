@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 98,
-    "withStats": 62,
+    "withStats": 63,
     "withExplanation": 91,
     "withFormations": 5
   },
@@ -4106,18 +4106,25 @@
       "event2": null,
       "releasedAt": "2026/10/14",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "label": "応援効果",
+          "value": "+34%"
+        },
+        {
+          "label": "得意率",
+          "value": "+35%"
+        },
+        {
+          "label": "初期メンタル",
+          "value": "+28"
+        }
+      ],
       "limitBreak": null,
-      "ratings": {
-        "ta": null,
-        "ikusei": null,
-        "karyo": null,
-        "battle": null
-      },
+      "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     }
   ]
 }
