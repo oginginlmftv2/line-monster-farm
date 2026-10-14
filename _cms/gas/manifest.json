@@ -11,12 +11,14 @@
     "30_publish.gs",
     "40_setup.gs",
     "50_gacha.gs",
+    "60_mon_type.gs",
     "index.html",
     "ui_common.html",
     "ui_monster.html",
     "ui_assist.html",
     "ui_ability_capture.html",
     "ui_gacha.html",
+    "ui_mon_type.html",
     "ui_publish.html",
     "README.md"
   ]

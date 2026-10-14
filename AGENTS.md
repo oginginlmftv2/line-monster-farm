@@ -129,7 +129,8 @@ Firestoreの解説データは `docId = String(配列インデックス)` で保
 - 現在の`コード.gs`先頭コメントには旧予定パス`cms/gas/コード.gs`が残る。
   完全一致の基準を保つため、別承認のGAS同期タスクまで変更しない
 - `monsters-data.js`、`src/data/monsters-editorial.json`、
-  `src/data/cms-id-predictions.json` をリポジトリ側で直接編集しない。次のCMS公開で上書きされる
+  `src/data/cms-id-predictions.json`、`src/data/taxonomy.json`（モン類の文と掲載カード）を
+  リポジトリ側で直接編集しない。次のCMS公開で上書きされる
 - `monster/<4桁ID>.<拡張子>` はDrive経由で管理する。リポジトリ側で差し替えない
 - `cms/publish` はGAS専用ブランチ。手動push・マージ・通常作業への流用は禁止
 - `cms/protected-test`と`p11-7/*`はP11-7の保護経路test専用で、Pages配信・本番CMS公開に使わない。

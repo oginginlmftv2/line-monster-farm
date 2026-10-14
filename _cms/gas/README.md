@@ -173,3 +173,28 @@ Appは対象repositoryにInstallし、Repository permissionsはContents: Read an
 ## token更新
 
 GitHub Appを使う場合、定期的なtoken更新はありません。PAT（GITHUB_TOKEN）を使い続ける場合は、新tokenを最小権限で発行し、値を文書・ログ・チャットへ貼らずにスクリプト プロパティを更新します。rehearsalにはGitHub認証を設定しません。
+
+## P-004 b モン類の文と掲載カード（mon_types）の反映
+
+モン類ページの「運営者のひとこと」と「<モン類>のアシストカード」を、管理画面の「モン類」タブで編集できるようにします。
+正はシート`mon_types`で、モンスター公開のときに`src/data/taxonomy.json`として書き出します（`docs/build-spec.md` 3-3）。
+`monster`権限があるメンバーに「モン類」タブが出ます。新しいscopeは要りません。
+
+**順番：リポジトリのPR（`verify-cms-source.js`が`taxonomy.json`を許可する変更を含む）を`main`へマージしてから**GASへ反映します。
+先にGASだけ反映してモンスター公開すると、`main`側の検査が`taxonomy.json`を許可外として止めます。
+
+`60_mon_type.gs`と`ui_mon_type.html`は新しいファイルです。GASエディタの「＋」から同じ名前
+（`60_mon_type`はスクリプト、`ui_mon_type`はHTML）で先に作ってから貼ります。
+
+1. `60_mon_type.gs`・`ui_mon_type.html`を新規作成して貼る。`00_core.gs`・`30_publish.gs`・`40_setup.gs`・`index.html`も同名のGASファイルへ同期して保存する
+2. `setup1_createSheets`を実行し、`作成: mon_types`と出ることを確認する。新規シート追加だけなので`ALLOW_DESTRUCTIVE_SETUP`は不要
+3. `setup3_importMonTypesFromMain`を実行し、`mon_types に 6 行を取り込みました。`と出ることを確認する。
+   `main`の`taxonomy.json`をそのまま取り込む。行が1つでもあれば何もしない（上書きしない）ので鍵は不要
+4. 「デプロイ」→「デプロイを管理」→「編集」→「新しいバージョン」→「デプロイ」で再deploymentする
+5. 管理画面を開き直し、「モンスター」の隣に「モン類」タブが出て、6モン類の一覧（最終更新 2026-08-19・カード枚数）が出ることを確認する
+6. 1件開いて何も変えずに「モンスターを公開」しても、`taxonomy.json`に差分が出ない（公開コミットに含まれても内容が同じ）ことを、
+   公開結果の「公開成功」で確認する。取り込み→書き出しが同じバイト列になることは`scripts/test-mon-type-gas.js`が確かめている
+
+シートを作る前・取り込む前にモンスター公開しても、`taxonomy.json`は公開コミットに含めず、`main`の内容がそのまま残ります。
+`mon_types`の行は消さないでください（6行そろっていないとモンスター公開を止めます）。文を出したくないモン類は、本文と掲載カードを空にして保存します。
+掲載カードに選べるのは公開中（準備中でない）のカードだけです。
