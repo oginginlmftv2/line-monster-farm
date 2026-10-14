@@ -218,7 +218,8 @@ def cells(im):
             inner = a[y0 + 18:y1 - 18, x - 45:x + 45]
             g = inner
             gray = (np.abs(g[..., 0] - g[..., 1]) < 14) & (np.abs(g[..., 1] - g[..., 2]) < 14) & (g.mean(2) < 140)
-            out.append((ci, cy, gray.mean() > 0.6, inner.copy()))
+            # ×マスはほぼ完全な灰色（R≒B）。暗い色のアイコン（イルミネ種ノクターン）を×と取り違えないよう、灰色の割合を厳しくする
+            out.append((ci, cy, gray.mean() > 0.9, inner.copy()))
     out.sort(key=lambda c: (c[1], c[0]))
     return out
 
@@ -304,7 +305,8 @@ def capture_skill(n, ci, cy, out, im, t):
     im.save(det)
     dname = detail_name(t)
     crop_icon(im, t, os.path.join(out, 'icons', f'{tag}.png'))
-    slots = ability_slots(im, t)
+    # アイコンだけ撮るモード：能力詳細は開かない（技DB登録済みの血統にアイコンを足すとき）
+    slots = [] if ICONS_ONLY else ability_slots(im, t)
     abfiles, abnames = [], []
     for k, (x, y) in enumerate(slots, 1):
         tap(x, y)
@@ -335,6 +337,11 @@ def ensure_jocr():
         subprocess.run(['swiftc', '-O', JOCR + '.swift', '-o', JOCR], check=True)
 
 
+ICONS_ONLY = '--icons-only' in sys.argv
+if ICONS_ONLY:
+    sys.argv.remove('--icons-only')
+
+
 def main():
     blood = sys.argv[1]
     ensure_jocr()
@@ -343,7 +350,7 @@ def main():
         sys.exit('ops/phone.lock が技登録で取られていない。相性検証の撮影とぶつかるので止まる')
     os.makedirs(TMP, exist_ok=True)
     stamp = datetime.datetime.now().strftime('%Y%m%d-%H%M')
-    out = os.path.join(os.path.dirname(TMP), f'{blood}-{stamp}')
+    out = os.path.join(os.path.dirname(TMP), f'{blood}-{stamp}' + ('-icons' if ICONS_ONLY else ''))
     os.makedirs(os.path.join(out, 'icons'), exist_ok=True)
     t0 = time.time()
     total = open_blood(blood)
@@ -399,7 +406,7 @@ def main():
                 break
     cols = ['n', 'name', 'grid_name', 'range', 'top', 'detail', 'abilities', 'ab_files', 'ab_names', 'icon', 'sec']
     with open(os.path.join(out, 'manifest.tsv'), 'w') as f:
-        f.write(f'# blood={blood}\ttotal={total}\tcaptured={len(rows)}\tsec={round(time.time() - t0)}\n')
+        f.write(f'# blood={blood}\ttotal={total}\tcaptured={len(rows)}\tsec={round(time.time() - t0)}' + ('\tmode=icons-only' if ICONS_ONLY else '') + '\n')
         f.write('\t'.join(cols) + '\n')
         for r in rows:
             f.write('\t'.join(str(r[c]) for c in cols) + '\n')
