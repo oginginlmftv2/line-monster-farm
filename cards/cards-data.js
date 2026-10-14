@@ -33,7 +33,7 @@ const cardsData = {
   'f5l-SSR-sharutia':         { name: 'シャルティア',      rarity: 'SSR', oura: '赤', type: '回避',       mon: '無機', ext: 'jpg', dist: '遠距離' },
   'f7-MR-demiurugosu':        { name: 'デミウルゴス',      rarity: 'MR',  oura: '黒', type: '友人',       mon: null,   ext: 'jpg' },
   'f18k-MR-ainzu':            { name: 'アインズ',          rarity: 'MR',  oura: '黒', type: 'フォース',   mon: '怪物', ext: 'jpg', event2: '超本気' },
-  'd14k-MR-sukeakurou':       { name: 'スケアクロウ',      rarity: 'MR',  oura: '緑', type: 'フィジカル', mon: '怪物', ext: 'jpg', terrain: '砂漠' },
+  'd14k-MR-sukeakurou':       { name: 'スプーキー',        rarity: 'MR',  oura: '緑', type: 'フィジカル', mon: '怪物', ext: 'jpg', terrain: '砂漠' },
   'd9-SSR-airisu':            { name: 'アイリス(ライバル)', rarity: 'SSR', oura: '緑', type: 'ライバル',  mon: null,   ext: 'jpg' },
   'b7-MR-kurisu':             { name: 'クリス',            rarity: 'MR',  oura: '青', type: '友人',       mon: null,   ext: 'jpg' },
   'd18k-MR-furan':            { name: 'ブライド',          rarity: 'MR',  oura: '緑', type: 'フォース',   mon: '怪物', ext: 'jpg', event2: '超根性' },
