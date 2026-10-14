@@ -4102,22 +4102,22 @@
       "aura": "青",
       "cardType": "メンタル",
       "monType": "創造",
-      "image": "",
+      "image": "assist-cards/c0005-MR.jpg",
       "event2": null,
       "releasedAt": "2026/10/14",
       "accessoryStatus": "yes",
       "stats": [
         {
-          "label": "応援効果",
-          "value": "+34%"
+          "value": "+34%",
+          "label": "応援効果"
         },
         {
-          "label": "得意率",
-          "value": "+35%"
+          "value": "+35%",
+          "label": "得意率"
         },
         {
-          "label": "初期メンタル",
-          "value": "+28"
+          "value": "+28",
+          "label": "初期メンタル"
         }
       ],
       "limitBreak": null,
