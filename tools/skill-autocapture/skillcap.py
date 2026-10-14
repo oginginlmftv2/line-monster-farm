@@ -218,7 +218,8 @@ def cells(im):
             inner = a[y0 + 18:y1 - 18, x - 45:x + 45]
             g = inner
             gray = (np.abs(g[..., 0] - g[..., 1]) < 14) & (np.abs(g[..., 1] - g[..., 2]) < 14) & (g.mean(2) < 140)
-            out.append((ci, cy, gray.mean() > 0.6, inner.copy()))
+            # ×マスはほぼ完全な灰色（R≒B）。暗い色のアイコン（イルミネ種ノクターン）を×と取り違えないよう、灰色の割合を厳しくする
+            out.append((ci, cy, gray.mean() > 0.9, inner.copy()))
     out.sort(key=lambda c: (c[1], c[0]))
     return out
 
