@@ -1,0 +1,820 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ハム種の技一覧（14技）と所属モンスター12体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="ハム種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/kemono/hamu/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"獣族","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/"},{"@type":"ListItem","position":4,"name":"ハム種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kemono/hamu/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../">獣族</a> &gt; ハム種</p>
+  <h1 class="page-title blood-page-title"><img class="blood-title-icon" src="../../../img/blood/128/hamu.jpg" alt="" width="64" height="65">ハム種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0338" aria-controls="sk-0338" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0338.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">飛び蹴り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0339" aria-controls="sk-0339" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0339.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ワン・ツー</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ14</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0340" aria-controls="sk-0340" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0340.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">正拳</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0338" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0338.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>飛び蹴り<span class="skill-detail-place">遠距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1010.html">ハム</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1011.html">ハムオウジ</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1019.html">ブルーフレア</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0339" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0339.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ワン・ツー<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>14</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1006.html">ウロコウサギ</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1021.html">ハムリーフ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0340" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0340.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>正拳<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1001.html">ヴァージアハピ</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1015.html">クロスフォーアイ</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1022.html">ダークハム</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1051.html">サンタ</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1050.html">マミー</a>（★2以上）・<a href="../../../monsters/kemono/hamu/1080.html">ハムクロース</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0343" aria-controls="sk-0343" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0343.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">おなら</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ13</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0341" aria-controls="sk-0341" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0341.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">バックナックル</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0342" aria-controls="sk-0342" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0342.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">後ろ蹴り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ30</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0343" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0343.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>おなら<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>G</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>13</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1019.html">ブルーフレア</a>（★3以上）・<a href="../../../monsters/kemono/hamu/1021.html">ハムリーフ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[小]</p>
+            <p class="skill-ability-desc">かしこさパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0341" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0341.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>バックナックル<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>F</td></tr>
+                <tr><th>移動先</th><td>近→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1015.html">クロスフォーアイ</a>（★3以上）・<a href="../../../monsters/kemono/hamu/1022.html">ダークハム</a>（★3以上）・<a href="../../../monsters/kemono/hamu/1023.html">トルクレンチ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0342" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0342.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>後ろ蹴り<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1011.html">ハムオウジ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]</p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0344" aria-controls="sk-0344" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0344.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span><span class="skill-chip-name">超飛び蹴り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ28</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0347" aria-controls="sk-0347" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0347.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">大砲屁</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ24</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0345" aria-controls="sk-0345" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0345.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">回し蹴り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0346" aria-controls="sk-0346" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0346.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ドラゴンパンチ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ18</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0344" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0344.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>超飛び蹴り<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>D+</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>28</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1001.html">ヴァージアハピ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0347" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0347.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>大砲屁<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>24</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1051.html">サンタ</a>（★4以上）・<a href="../../../monsters/kemono/hamu/1080.html">ハムクロース</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手青]回避率上昇</p>
+            <p class="skill-ability-desc">相手＜オーラ青＞かつ技が命中したとき回避上昇Lv4＜20秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]</p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0345" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0345.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>回し蹴り<span class="skill-detail-place">近距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>近→零</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1011.html">ハムオウジ</a>（★4以上）・<a href="../../../monsters/kemono/hamu/1050.html">マミー</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0346" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0346.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ドラゴンパンチ<span class="skill-detail-place">零距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1023.html">トルクレンチ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[小]</p>
+            <p class="skill-ability-desc">回避パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0348" aria-controls="sk-0348" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0348.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">瞬撃</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ43</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0349" aria-controls="sk-0349" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0349.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span><span class="skill-chip-name">ドラゴンキック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ44</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0350" aria-controls="sk-0350" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0350.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">超バックナックル</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ25</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0351" aria-controls="sk-0351" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0351.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">暗けい</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ45</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0348" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0348.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>瞬撃<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>43</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1050.html">マミー</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手大]命中率上昇</p>
+            <p class="skill-ability-desc">技を発動したとき相手＜大きい＞と命中上昇Lv2＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]</p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/kemono/hamu/1050.html">マミー</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ライフパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/kemono/hamu/1050.html">マミー</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の有利オーラ効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0349" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0349.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>ドラゴンキック<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>44</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1051.html">サンタ</a>（★5以上）・<a href="../../../monsters/kemono/hamu/1080.html">ハムクロース</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[中]</p>
+            <p class="skill-ability-desc">ちからパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[中]クリ上昇</p>
+            <p class="skill-ability-desc">技を命中させると間合いが中距離のときクリLv3（10秒）</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0350" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0350.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>超バックナックル<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>G</td></tr>
+                <tr><th>移動先</th><td>近→零</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1001.html">ヴァージアハピ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[中]</p>
+            <p class="skill-ability-desc">命中パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[近]与ダメ上昇</p>
+            <p class="skill-ability-desc">技を命中させると間合いが近距離のとき与ダメLv3（10秒）</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0351" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0351.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>暗けい<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>45</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/kemono/hamu/1011.html">ハムオウジ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[中]</p>
+            <p class="skill-ability-desc">ライフパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[零]回避率上昇</p>
+            <p class="skill-ability-desc">技が命中したとき零距離での回避上昇Lv3＜20秒＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">ハム種のモンスター（12体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="1001.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200810_0.jpg" alt="ヴァージアハピ" loading="lazy">
+            <span class="mon-card-limited">エイプリルフール限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ヴァージアハピ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ピクシー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1006.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200521_0.jpg" alt="ウロコウサギ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ウロコウサギ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ディノ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1010.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200659_0.jpg" alt="ハム" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハム</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ハム</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1011.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200567_0.jpg" alt="ハムオウジ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハムオウジ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ガリ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1015.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200663_0.jpg" alt="クロスフォーアイ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">クロスフォーアイ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：スエゾー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1019.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200589_0.jpg" alt="ブルーフレア" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ブルーフレア</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ゲル</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1021.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200514_0.jpg" alt="ハムリーフ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハムリーフ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：プラント</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1022.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200690_0.jpg" alt="ダークハム" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ダークハム</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：モノリス</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1023.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200668_0.jpg" alt="トルクレンチ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">トルクレンチ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ワーム</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1050.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200735_0.jpg" alt="マミー" loading="lazy">
+            <span class="mon-card-limited">秋限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">マミー</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1051.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200794_0.jpg" alt="サンタ" loading="lazy">
+            <span class="mon-card-limited">冬限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">サンタ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="1080.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200388_0.jpg" alt="ハムクロース" loading="lazy">
+            <span class="mon-card-limited">クリスマス限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ハムクロース</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">獣族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ノーブル</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ：獣族の血統</h2>
+    <div class="blood-picker">
+    <div class="blood-picker-group">
+      <ul class="blood-picker-grid">
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../centaur/"><img class="blood-picker-icon" src="../../../img/blood/128/centaur.jpg" alt="ケンタウロス" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ケンタウロス</span><span class="blood-picker-meta">11体<span class="blood-picker-skill">技16</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../dino/"><img class="blood-picker-icon" src="../../../img/blood/128/dino.jpg" alt="ディノ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ディノ</span><span class="blood-picker-meta">11体<span class="blood-picker-skill">技19</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../liger/"><img class="blood-picker-icon" src="../../../img/blood/128/liger.jpg" alt="ライガー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ライガー</span><span class="blood-picker-meta">13体<span class="blood-picker-skill">技16</span></span></a></li>
+        <li class="blood-picker-item"><span class="blood-picker-link is-current" aria-current="page"><img class="blood-picker-icon" src="../../../img/blood/128/hamu.jpg" alt="ハム" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ハム</span><span class="blood-picker-meta">12体<span class="blood-picker-skill">技14</span></span></span></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../gujira/"><img class="blood-picker-icon" src="../../../img/blood/128/gujira.jpg" alt="グジラ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">グジラ</span><span class="blood-picker-meta">8体<span class="blood-picker-skill">技21</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../kyubi/"><img class="blood-picker-icon" src="../../../img/blood/128/kyubi.jpg" alt="キュービ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">キュービ</span><span class="blood-picker-meta">14体<span class="blood-picker-skill">技38</span></span></a></li>
+      </ul>
+    </div>
+    </div>
+    <div class="menu-grid blood-related-mon-type">
+      <a class="menu-link" href="../"><span class="icon"><img class="mon-type-icon" src="../../../img/mon-type/kemono.png" alt="" width="28" height="28"></span> 獣族のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から ./#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>

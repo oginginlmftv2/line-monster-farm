@@ -208,6 +208,9 @@ def cells(im):
         for r0, r1 in merged:
             if r0 == 0 or r1 == len(on):
                 continue  # 端で切れているマスは次のスクロールで
+            # アイコンの上側が背景に近い淡い色だと上端が欠ける（アローヘッド種で実測）。下端から1マスぶん取り直す
+            if 60 <= r1 - r0 < CELL_H[0] and r1 - 121 > 0:
+                r0 = r1 - 121
             if not (CELL_H[0] <= r1 - r0 <= CELL_H[1]):
                 continue
             y0, y1 = GRID_Y[0] + r0, GRID_Y[0] + r1
