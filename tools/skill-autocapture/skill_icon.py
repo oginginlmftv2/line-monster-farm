@@ -411,9 +411,21 @@ def cmd_place(run_dir, blood):
         print(f"  {r['n']:>2} {r['range']} {r['name']:<10} → " + (f"{s['skillId']} {s['name']}（一致{sc:.2f}）" if s else '対応する技が無い'))
     if bad:
         raise SystemExit('対応の付かないアイコンがあるので置かない（TSVの取り込みが済んでいるか確認）')
+    # 未登録の技は図鑑の技詳細でもアイコンが暗転している。暗いまま置かず、元画像を raw/ に残して色を戻す
+    idx = load_json(os.path.join(RAW, 'index.json'), {})
+    dims = []
     for r, s, _ in plan:
-        Image.open(os.path.join(run_dir, r['icon'])).save(os.path.join(ICONS, s['skillId'] + '.png'))
-    print(f'{len(plan)}件を skill-icons/ に置きました')
+        im = Image.open(os.path.join(run_dir, r['icon'])).convert('RGB')
+        if np.percentile(np.asarray(im).astype(float).mean(axis=2), 98) < DIM_MAX:
+            im.save(os.path.join(RAW, s['skillId'] + '.png'))
+            idx[s['skillId']] = dict(name=s['name'], blood=blood, cell=None, dim=True, framed=False,
+                                     source=f"{os.path.basename(run_dir.rstrip('/'))}/{r['icon']}（血統技図鑑の技詳細。図鑑でも暗転）",
+                                     added_at=datetime.date.today().isoformat())
+            im = make_icon(im, idx[s['skillId']])
+            dims.append(s['name'])
+        im.save(os.path.join(ICONS, s['skillId'] + '.png'))
+    save_json(os.path.join(RAW, 'index.json'), idx)
+    print(f'{len(plan)}件を skill-icons/ に置きました' + (f"（暗転していた{len(dims)}件は色を戻した推測版：{'・'.join(dims)}）" if dims else ''))
 
 
 if __name__ == '__main__':

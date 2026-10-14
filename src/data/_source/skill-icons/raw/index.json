@@ -973,5 +973,212 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0525": {
+    "name": "トリオビーム∞",
+    "blood": "モノリス",
+    "source": "モノリス-20261014-2040/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0526": {
+    "name": "クリムゾンブレイク",
+    "blood": "モノリス",
+    "source": "モノリス-20261014-2040/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0539": {
+    "name": "ジーザスクロー",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0540": {
+    "name": "赫焔螺斬牙",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0541": {
+    "name": "無貌の讃歌",
+    "blood": "ナーガ",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "ナーガ-20261014-2135/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-14"
+  },
+  "sk-0551": {
+    "name": "画竜点睛",
+    "blood": "シンリュウ",
+    "source": "シンリュウ-20261014-2151/icons/10.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0555": {
+    "name": "青龍天咆",
+    "blood": "シンリュウ",
+    "source": "シンリュウ-20261014-2151/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0571": {
+    "name": "ハナツバミ",
+    "blood": "ワーム",
+    "source": "ワーム-20261014-2103/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0572": {
+    "name": "エヴォリューション",
+    "blood": "ワーム",
+    "source": "ワーム-20261014-2103/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0349": {
+    "name": "ドラゴンキック",
+    "blood": "ハム",
+    "source": "ハム-20261014-1315/icons/12.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0377": {
+    "name": "デスファイナル",
+    "blood": "ジョーカー",
+    "source": "ジョーカー-20261014-1352/icons/10.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0380": {
+    "name": "アビススラッシュ",
+    "blood": "ジョーカー",
+    "source": "ジョーカー-20261014-1352/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0382": {
+    "name": "シンギュラリティ",
+    "blood": "ジョーカー",
+    "source": "ジョーカー-20261014-1352/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0383": {
+    "name": "ネクロスラッシュ",
+    "blood": "ジョーカー",
+    "source": "ジョーカー-20261014-1352/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0415": {
+    "name": "宵闇ざくら",
+    "blood": "モッチー",
+    "source": "モッチー-20261014-1346/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0416": {
+    "name": "もっさまん",
+    "blood": "モッチー",
+    "source": "モッチー-20261014-1346/icons/17.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0429": {
+    "name": "サムライキック",
+    "blood": "ネンドロ",
+    "source": "ネンドロ-20261014-1357/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0431": {
+    "name": "延髄斬り",
+    "blood": "ネンドロ",
+    "source": "ネンドロ-20261014-1357/icons/15.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0445": {
+    "name": "にゃんぷうき",
+    "blood": "ニャー",
+    "source": "ニャー-20261014-1329/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0456": {
+    "name": "乱れ咲き",
+    "blood": "プラント",
+    "source": "プラント-20261014-1409/icons/11.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0459": {
+    "name": "蒼花爆散",
+    "blood": "プラント",
+    "source": "プラント-20261014-1409/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0488": {
+    "name": "ホワイトストーム",
+    "blood": "ウンディーネ",
+    "source": "ウンディーネ-20261014-1402/icons/14.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0490": {
+    "name": "ホワイトエレジー",
+    "blood": "ウンディーネ",
+    "source": "ウンディーネ-20261014-1402/icons/16.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }
