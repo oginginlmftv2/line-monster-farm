@@ -36,20 +36,32 @@
 各血統の共通技を間合い・ランク別にまとめたページです。
 
 - [アーク種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/arc/)
+- [ゲル種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/gel/)
+- [モッチー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/mocchi/)
+- [プラント種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/plant/)
+- [ウンディーネ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/genrei/undine/)
 - [ゴースト種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/ghost/)
 - [キジン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kijin/)
+- [アローヘッド種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/arrowhead/)
+- [ジョーカー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/joker/)
 - [キュービ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/)
 - [グジラ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/gujira/)
 - [ディノ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/dino/)
 - [ケンタウロス種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/centaur/)
+- [ハム種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/hamu/)
+- [ライガー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/kemono/liger/)
 - [ピクシー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/pixie/)
 - [ドラゴン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/)
 - [デュラハン種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/)
+- [ネンドロ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/nendoro/)
+- [スエゾー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/suezo/)
 - [イルミネ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/illumine/)
 - [ヘンガー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/henger/)
 - [ゴーレム種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/)
+- [ニャー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/muki/nyaa/)
 - [ガリ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/souzou/gali/)
 - [メタルナー種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/souzou/metalner/)
+- [ヒノトリ種の技一覧](https://line-monster-farm-tetteikouryaku.com/monsters/souzou/hinotori/)
 
 ## その他
 

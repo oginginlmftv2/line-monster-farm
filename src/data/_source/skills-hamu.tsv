@@ -1,0 +1,15 @@
+blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critical	ability1	ability1Unlock	ability2	ability2Unlock	ability3	ability3Unlock	ability4	ability4Unlock	ability5	ability5Unlock	unique	owners	unlockedBy	note	skillId	version
+ハム	遠	1	飛び蹴り	無	ちから	22	零	E	D	G	C													ハム:2,ハムオウジ:2,ブルーフレア:2			
+ハム	中	1	ワン・ツー	無	ちから	14		F	C	G	G													ウロコウサギ:2,ハムリーフ:2			
+ハム	零	1	正拳	無	ちから	20		E	C	G	D													ヴァージアハピ:2,クロスフォーアイ:2,ダークハム:2,サンタ:2,マミー:2,ハムクロース:2			
+ハム	近	2	バックナックル	無	ちから	20	零	C	F	G	D	ちから上昇[小]												クロスフォーアイ:3,ダークハム:3,トルクレンチ:3			
+ハム	零	2	後ろ蹴り	無	ちから	30		D	A	F	D	命中上昇[小]												ハムオウジ:3			
+ハム	中	2	おなら	黄	かしこさ	13		G	B	D	G	かしこさ上昇[小]												ブルーフレア:3,ハムリーフ:3			
+ハム	遠	3	超飛び蹴り	赤	ちから	28	零	B	D+	G	B	ちから上昇[小]												ヴァージアハピ:4			
+ハム	近	3	回し蹴り	無	ちから	40	零	B	B	E	C	丈夫さ上昇[小]												ハムオウジ:4,マミー:4			
+ハム	零	3	ドラゴンパンチ	無	ちから	18		D	D	G	B	回避上昇[小]												トルクレンチ:4			
+ハム	中	3	大砲屁	黄	かしこさ	24		F	B	A	D	[相手青]回避率上昇		ライフ上昇[小]										サンタ:4,ハムクロース:4			
+ハム	遠	4	瞬撃	緑	ちから	43	零	A	B	D	F	[相手大]命中率上昇		回避上昇[中]		ライフ上昇[中]	マミー:6	オーラブースト	マミー:10					マミー:5			
+ハム	中	4	ドラゴンキック	赤	ちから	44		A	D	D	A	ちから上昇[中]		[中]クリ上昇										サンタ:5,ハムクロース:5			
+ハム	近	4	超バックナックル	黄	ちから	25	零	A	G	F	D	命中上昇[中]		[近]与ダメ上昇										ヴァージアハピ:5			
+ハム	零	4	暗けい	黒	ちから	45		B	A	C	D	ライフ上昇[中]		[零]回避率上昇										ハムオウジ:5			
