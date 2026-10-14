@@ -181,5 +181,17 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-10-14"
+  },
+  "sk-0492": {
+    "name": "そうちょうちゅう",
+    "blood": "メタルナー",
+    "source": "20261014-151957.png",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
   }
 }
