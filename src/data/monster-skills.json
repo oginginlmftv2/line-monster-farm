@@ -5,8 +5,8 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 274,
-    "bloods": 13
+    "skills": 307,
+    "bloods": 15
   },
   "skills": [
     {
@@ -3078,6 +3078,719 @@
       "status": "verified"
     },
     {
+      "skillId": "sk-0275",
+      "name": "地走り",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "遠",
+      "rank": 1,
+      "moveTo": "零",
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 25,
+      "damage": "B",
+      "accuracy": "D",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0017",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0753",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 73,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0276",
+      "name": "まっぷたつ",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 15,
+      "damage": "E",
+      "accuracy": "D",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0702",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0709",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 74,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0277",
+      "name": "居合い斬り",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "零",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 18,
+      "damage": "E",
+      "accuracy": "C",
+      "gutsDown": "G",
+      "critical": "A",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0750",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 75,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0278",
+      "name": "大車輪",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": "零",
+      "aura": "緑",
+      "skillType": "ちから",
+      "guts": 20,
+      "damage": "B",
+      "accuracy": "C",
+      "gutsDown": "G",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0021",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0017",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0707",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0752",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 76,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0279",
+      "name": "ダッシュ斬り",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "中",
+      "rank": 2,
+      "moveTo": "零",
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 12,
+      "damage": "E",
+      "accuracy": "A+",
+      "gutsDown": "G",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0023",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0702",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0709",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0751",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 77,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0280",
+      "name": "Vの字斬り",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 27,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "E",
+      "abilities": [],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0754",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 78,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0281",
+      "name": "フルスイング",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "零",
+      "rank": 2,
+      "moveTo": "中",
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 18,
+      "damage": "C",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0701",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 79,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0282",
+      "name": "雷神剣",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 30,
+      "damage": "A",
+      "accuracy": "E",
+      "gutsDown": "E",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0023",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0332",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0754",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 80,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0283",
+      "name": "風神剣",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "中",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 27,
+      "damage": "D",
+      "accuracy": "A",
+      "gutsDown": "C",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0333",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0013",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0108",
+          "unlock": {
+            "monsterId": "0709",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0308",
+          "unlock": {
+            "monsterId": "0709",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0701",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0707",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0709",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0751",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 81,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0284",
+      "name": "五月雨斬り",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 22,
+      "damage": "D",
+      "accuracy": "S",
+      "gutsDown": "D",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0334",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0016",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0753",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0752",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0750",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 82,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0285",
+      "name": "真・風神剣",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 40,
+      "damage": "C",
+      "accuracy": "A",
+      "gutsDown": "C",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0032",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0040",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0068",
+          "unlock": {
+            "monsterId": "0754",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0069",
+          "unlock": {
+            "monsterId": "0754",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0754",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 83,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0286",
+      "name": "秘技・黒影剣",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 31,
+      "damage": "B",
+      "accuracy": "E",
+      "gutsDown": "D",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0012",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0335",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0702",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 84,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0287",
+      "name": "剣閃百撃",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 35,
+      "damage": "B",
+      "accuracy": "A",
+      "gutsDown": "E",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0021",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0128",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0141",
+          "unlock": {
+            "monsterId": "0701",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0142",
+          "unlock": {
+            "monsterId": "0701",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0701",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 85,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0288",
+      "name": "最終奥義",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "零",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 37,
+      "damage": "S",
+      "accuracy": "C+",
+      "gutsDown": "E",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0336",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0337",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0707",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 86,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0289",
+      "name": "終ノ光",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "遠",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 55,
+      "damage": "S",
+      "accuracy": "A",
+      "gutsDown": "B",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0338",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0339",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "0750",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "0750",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0750",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 87,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0290",
+      "name": "ダイセツダン",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "中",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 47,
+      "damage": "S+",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0100",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0340",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "0753",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "0753",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0753",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 88,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0291",
+      "name": "冥王剣",
+      "version": 1,
+      "blood": "デュラハン",
+      "range": "近",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 40,
+      "damage": "S+",
+      "accuracy": "S",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0341",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0342",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0752",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 89,
+      "status": "verified"
+    },
+    {
       "skillId": "sk-0188",
       "name": "スピンカッター",
       "version": 1,
@@ -3116,7 +3829,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 73,
+      "sortOrder": 90,
       "status": "verified"
     },
     {
@@ -3164,7 +3877,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 74,
+      "sortOrder": 91,
       "status": "verified"
     },
     {
@@ -3202,7 +3915,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 75,
+      "sortOrder": 92,
       "status": "verified"
     },
     {
@@ -3244,7 +3957,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 76,
+      "sortOrder": 93,
       "status": "verified"
     },
     {
@@ -3282,7 +3995,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 77,
+      "sortOrder": 94,
       "status": "verified"
     },
     {
@@ -3346,7 +4059,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 78,
+      "sortOrder": 95,
       "status": "verified"
     },
     {
@@ -3384,7 +4097,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 79,
+      "sortOrder": 96,
       "status": "verified"
     },
     {
@@ -3426,7 +4139,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 80,
+      "sortOrder": 97,
       "status": "verified"
     },
     {
@@ -3464,7 +4177,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 81,
+      "sortOrder": 98,
       "status": "verified"
     },
     {
@@ -3502,7 +4215,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 82,
+      "sortOrder": 99,
       "status": "verified"
     },
     {
@@ -3540,7 +4253,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 83,
+      "sortOrder": 100,
       "status": "verified"
     },
     {
@@ -3592,7 +4305,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 84,
+      "sortOrder": 101,
       "status": "verified"
     },
     {
@@ -3630,7 +4343,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 85,
+      "sortOrder": 102,
       "status": "verified"
     },
     {
@@ -3668,7 +4381,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 86,
+      "sortOrder": 103,
       "status": "verified"
     },
     {
@@ -3720,7 +4433,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 87,
+      "sortOrder": 104,
       "status": "verified"
     },
     {
@@ -3772,7 +4485,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 88,
+      "sortOrder": 105,
       "status": "verified"
     },
     {
@@ -3803,7 +4516,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 89,
+      "sortOrder": 106,
       "status": "verified"
     },
     {
@@ -3834,7 +4547,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 90,
+      "sortOrder": 107,
       "status": "verified"
     },
     {
@@ -3873,7 +4586,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 91,
+      "sortOrder": 108,
       "status": "verified"
     },
     {
@@ -3908,7 +4621,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 92,
+      "sortOrder": 109,
       "status": "verified"
     },
     {
@@ -3939,7 +4652,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 93,
+      "sortOrder": 110,
       "status": "verified"
     },
     {
@@ -3968,7 +4681,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 94,
+      "sortOrder": 111,
       "status": "verified"
     },
     {
@@ -3997,7 +4710,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 95,
+      "sortOrder": 112,
       "status": "verified"
     },
     {
@@ -4031,7 +4744,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 96,
+      "sortOrder": 113,
       "status": "verified"
     },
     {
@@ -4065,7 +4778,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 97,
+      "sortOrder": 114,
       "status": "verified"
     },
     {
@@ -4099,7 +4812,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 98,
+      "sortOrder": 115,
       "status": "verified"
     },
     {
@@ -4133,7 +4846,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 99,
+      "sortOrder": 116,
       "status": "verified"
     },
     {
@@ -4171,7 +4884,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 100,
+      "sortOrder": 117,
       "status": "verified"
     },
     {
@@ -4209,7 +4922,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 101,
+      "sortOrder": 118,
       "status": "verified"
     },
     {
@@ -4261,7 +4974,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 102,
+      "sortOrder": 119,
       "status": "verified"
     },
     {
@@ -4313,7 +5026,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 103,
+      "sortOrder": 120,
       "status": "verified"
     },
     {
@@ -4365,7 +5078,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 104,
+      "sortOrder": 121,
       "status": "verified"
     },
     {
@@ -4417,7 +5130,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 105,
+      "sortOrder": 122,
       "status": "verified"
     },
     {
@@ -4441,7 +5154,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 106,
+      "sortOrder": 123,
       "status": "verified"
     },
     {
@@ -4475,7 +5188,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 107,
+      "sortOrder": 124,
       "status": "verified"
     },
     {
@@ -4513,7 +5226,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 108,
+      "sortOrder": 125,
       "status": "verified"
     },
     {
@@ -4546,7 +5259,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 109,
+      "sortOrder": 126,
       "status": "verified"
     },
     {
@@ -4577,7 +5290,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 110,
+      "sortOrder": 127,
       "status": "verified"
     },
     {
@@ -4612,7 +5325,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 111,
+      "sortOrder": 128,
       "status": "verified"
     },
     {
@@ -4647,7 +5360,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 112,
+      "sortOrder": 129,
       "status": "verified"
     },
     {
@@ -4699,7 +5412,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 113,
+      "sortOrder": 130,
       "status": "verified"
     },
     {
@@ -4730,7 +5443,743 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 114,
+      "sortOrder": 131,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0292",
+      "name": "のびーるパンチ",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "中",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 20,
+      "damage": "D",
+      "accuracy": "D",
+      "gutsDown": "B",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0505",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0508",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0511",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0553",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0550",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 132,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0293",
+      "name": "でこぴん",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 16,
+      "damage": "D+",
+      "accuracy": "D",
+      "gutsDown": "G",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0521",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0524",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 133,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0294",
+      "name": "キック",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "零",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 16,
+      "damage": "C",
+      "accuracy": "D+",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0517",
+          "rarity": 2
+        },
+        {
+          "monsterId": "0552",
+          "rarity": 2
+        }
+      ],
+      "note": "",
+      "sortOrder": 134,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0295",
+      "name": "地震",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 26,
+      "damage": "C",
+      "accuracy": "D",
+      "gutsDown": "C",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0321",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0013",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0517",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 135,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0296",
+      "name": "大ビンタ",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "中",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 26,
+      "damage": "C",
+      "accuracy": "A",
+      "gutsDown": "G",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0323",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0502",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 136,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0297",
+      "name": "アッパー",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 26,
+      "damage": "B",
+      "accuracy": "D",
+      "gutsDown": "G",
+      "critical": "D+",
+      "abilities": [
+        {
+          "abilityId": "sab-0023",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0524",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0551",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 137,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0298",
+      "name": "ビンタ",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "零",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 18,
+      "damage": "D",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0108",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0016",
+          "unlock": {
+            "monsterId": "0511",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0298",
+          "unlock": {
+            "monsterId": "0511",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0511",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0525",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0550",
+          "rarity": 3
+        },
+        {
+          "monsterId": "0554",
+          "rarity": 3
+        }
+      ],
+      "note": "",
+      "sortOrder": 138,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0299",
+      "name": "大でこぴん",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 31,
+      "damage": "A",
+      "accuracy": "E",
+      "gutsDown": "E",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0324",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0502",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 139,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0300",
+      "name": "フライングプレス",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "中",
+      "rank": 3,
+      "moveTo": "零",
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 30,
+      "damage": "S",
+      "accuracy": "F+",
+      "gutsDown": "B",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0324",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0525",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 140,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0301",
+      "name": "合掌",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 22,
+      "damage": "B+",
+      "accuracy": "D+",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0324",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0042",
+          "unlock": {
+            "monsterId": "0550",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0022",
+          "unlock": {
+            "monsterId": "0550",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0550",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0554",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 141,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0302",
+      "name": "ハエたたき",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "零",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 19,
+      "damage": "B",
+      "accuracy": "C",
+      "gutsDown": "C",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0322",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0324",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0552",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0553",
+          "rarity": 4
+        },
+        {
+          "monsterId": "0551",
+          "rarity": 4
+        }
+      ],
+      "note": "",
+      "sortOrder": 142,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0303",
+      "name": "竜巻アタック",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 39,
+      "damage": "S",
+      "accuracy": "E+",
+      "gutsDown": "C",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0325",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0326",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0068",
+          "unlock": {
+            "monsterId": "0502",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0069",
+          "unlock": {
+            "monsterId": "0502",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0502",
+          "rarity": 5
+        },
+        {
+          "monsterId": "0525",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 143,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0304",
+      "name": "ぐるぐるアタック",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 46,
+      "damage": "S+",
+      "accuracy": "D+",
+      "gutsDown": "A",
+      "critical": "C+",
+      "abilities": [
+        {
+          "abilityId": "sab-0327",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0326",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0042",
+          "unlock": {
+            "monsterId": "0552",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0049",
+          "unlock": {
+            "monsterId": "0552",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0552",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 144,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0305",
+      "name": "大ハエタタキ",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "近",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 41,
+      "damage": "S",
+      "accuracy": "C",
+      "gutsDown": "S",
+      "critical": "G",
+      "abilities": [
+        {
+          "abilityId": "sab-0328",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0326",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0551",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 145,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0306",
+      "name": "大キック",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "零",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "ちから",
+      "guts": 43,
+      "damage": "S+",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0329",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0326",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0042",
+          "unlock": {
+            "monsterId": "0553",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0039",
+          "unlock": {
+            "monsterId": "0553",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0553",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 146,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0307",
+      "name": "掌打",
+      "version": 1,
+      "blood": "ゴーレム",
+      "range": "近",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 48,
+      "damage": "S+",
+      "accuracy": "D",
+      "gutsDown": "C",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0330",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0331",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "0554",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "0554",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "0554",
+          "rarity": 5
+        }
+      ],
+      "note": "",
+      "sortOrder": 147,
       "status": "verified"
     },
     {
@@ -4768,7 +6217,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 115,
+      "sortOrder": 148,
       "status": "verified"
     },
     {
@@ -4797,7 +6246,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 116,
+      "sortOrder": 149,
       "status": "verified"
     },
     {
@@ -4831,7 +6280,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 117,
+      "sortOrder": 150,
       "status": "verified"
     },
     {
@@ -4869,7 +6318,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 118,
+      "sortOrder": 151,
       "status": "verified"
     },
     {
@@ -4907,7 +6356,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 119,
+      "sortOrder": 152,
       "status": "verified"
     },
     {
@@ -4949,7 +6398,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 120,
+      "sortOrder": 153,
       "status": "verified"
     },
     {
@@ -4987,7 +6436,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 121,
+      "sortOrder": 154,
       "status": "verified"
     },
     {
@@ -5029,7 +6478,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 122,
+      "sortOrder": 155,
       "status": "verified"
     },
     {
@@ -5067,7 +6516,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 123,
+      "sortOrder": 156,
       "status": "verified"
     },
     {
@@ -5113,7 +6562,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 124,
+      "sortOrder": 157,
       "status": "verified"
     },
     {
@@ -5151,7 +6600,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 125,
+      "sortOrder": 158,
       "status": "verified"
     },
     {
@@ -5189,7 +6638,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 126,
+      "sortOrder": 159,
       "status": "verified"
     },
     {
@@ -5241,7 +6690,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 127,
+      "sortOrder": 160,
       "status": "verified"
     },
     {
@@ -5293,7 +6742,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 128,
+      "sortOrder": 161,
       "status": "verified"
     },
     {
@@ -5345,7 +6794,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 129,
+      "sortOrder": 162,
       "status": "verified"
     },
     {
@@ -5376,7 +6825,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 130,
+      "sortOrder": 163,
       "status": "verified"
     },
     {
@@ -5411,7 +6860,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 131,
+      "sortOrder": 164,
       "status": "verified"
     },
     {
@@ -5446,7 +6895,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 132,
+      "sortOrder": 165,
       "status": "verified"
     },
     {
@@ -5481,7 +6930,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 133,
+      "sortOrder": 166,
       "status": "verified"
     },
     {
@@ -5512,7 +6961,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 134,
+      "sortOrder": 167,
       "status": "verified"
     },
     {
@@ -5547,7 +6996,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 135,
+      "sortOrder": 168,
       "status": "verified"
     },
     {
@@ -5576,7 +7025,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 136,
+      "sortOrder": 169,
       "status": "verified"
     },
     {
@@ -5605,7 +7054,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 137,
+      "sortOrder": 170,
       "status": "verified"
     },
     {
@@ -5642,7 +7091,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 138,
+      "sortOrder": 171,
       "status": "verified"
     },
     {
@@ -5698,7 +7147,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 139,
+      "sortOrder": 172,
       "status": "verified"
     },
     {
@@ -5762,7 +7211,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 140,
+      "sortOrder": 173,
       "status": "verified"
     },
     {
@@ -5810,7 +7259,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 141,
+      "sortOrder": 174,
       "status": "verified"
     },
     {
@@ -5848,7 +7297,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 142,
+      "sortOrder": 175,
       "status": "verified"
     },
     {
@@ -5890,7 +7339,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 143,
+      "sortOrder": 176,
       "status": "verified"
     },
     {
@@ -5932,7 +7381,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 144,
+      "sortOrder": 177,
       "status": "verified"
     },
     {
@@ -5970,7 +7419,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 145,
+      "sortOrder": 178,
       "status": "verified"
     },
     {
@@ -6022,7 +7471,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 146,
+      "sortOrder": 179,
       "status": "verified"
     },
     {
@@ -6074,7 +7523,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 147,
+      "sortOrder": 180,
       "status": "verified"
     },
     {
@@ -6116,7 +7565,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 148,
+      "sortOrder": 181,
       "status": "verified"
     },
     {
@@ -6168,7 +7617,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 149,
+      "sortOrder": 182,
       "status": "verified"
     },
     {
@@ -6206,7 +7655,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 150,
+      "sortOrder": 183,
       "status": "verified"
     },
     {
@@ -6262,7 +7711,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 151,
+      "sortOrder": 184,
       "status": "verified"
     },
     {
@@ -6300,7 +7749,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 152,
+      "sortOrder": 185,
       "status": "verified"
     },
     {
@@ -6334,7 +7783,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 153,
+      "sortOrder": 186,
       "status": "verified"
     },
     {
@@ -6372,7 +7821,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 154,
+      "sortOrder": 187,
       "status": "verified"
     },
     {
@@ -6414,7 +7863,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 155,
+      "sortOrder": 188,
       "status": "verified"
     },
     {
@@ -6456,7 +7905,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 156,
+      "sortOrder": 189,
       "status": "verified"
     },
     {
@@ -6508,7 +7957,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 157,
+      "sortOrder": 190,
       "status": "verified"
     },
     {
@@ -6546,7 +7995,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 158,
+      "sortOrder": 191,
       "status": "verified"
     },
     {
@@ -6584,7 +8033,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 159,
+      "sortOrder": 192,
       "status": "verified"
     },
     {
@@ -6636,7 +8085,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 160,
+      "sortOrder": 193,
       "status": "verified"
     },
     {
@@ -6674,7 +8123,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 161,
+      "sortOrder": 194,
       "status": "verified"
     },
     {
@@ -6712,7 +8161,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 162,
+      "sortOrder": 195,
       "status": "verified"
     },
     {
@@ -6746,7 +8195,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 163,
+      "sortOrder": 196,
       "status": "verified"
     },
     {
@@ -6798,7 +8247,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 164,
+      "sortOrder": 197,
       "status": "verified"
     },
     {
@@ -6850,7 +8299,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 165,
+      "sortOrder": 198,
       "status": "verified"
     },
     {
@@ -6883,7 +8332,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 166,
+      "sortOrder": 199,
       "status": "verified"
     },
     {
@@ -6916,7 +8365,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 167,
+      "sortOrder": 200,
       "status": "verified"
     },
     {
@@ -6951,7 +8400,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 168,
+      "sortOrder": 201,
       "status": "verified"
     },
     {
@@ -6986,7 +8435,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 169,
+      "sortOrder": 202,
       "status": "verified"
     },
     {
@@ -7021,7 +8470,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 170,
+      "sortOrder": 203,
       "status": "verified"
     },
     {
@@ -7056,7 +8505,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 171,
+      "sortOrder": 204,
       "status": "verified"
     },
     {
@@ -7091,7 +8540,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 172,
+      "sortOrder": 205,
       "status": "verified"
     },
     {
@@ -7126,7 +8575,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 173,
+      "sortOrder": 206,
       "status": "verified"
     },
     {
@@ -7175,7 +8624,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 174,
+      "sortOrder": 207,
       "status": "verified"
     },
     {
@@ -7224,7 +8673,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 175,
+      "sortOrder": 208,
       "status": "verified"
     },
     {
@@ -7259,7 +8708,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 176,
+      "sortOrder": 209,
       "status": "verified"
     },
     {
@@ -7301,7 +8750,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 177,
+      "sortOrder": 210,
       "status": "verified"
     },
     {
@@ -7334,7 +8783,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 178,
+      "sortOrder": 211,
       "status": "verified"
     },
     {
@@ -7378,7 +8827,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 179,
+      "sortOrder": 212,
       "status": "verified"
     },
     {
@@ -7416,7 +8865,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 180,
+      "sortOrder": 213,
       "status": "verified"
     },
     {
@@ -7450,7 +8899,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 181,
+      "sortOrder": 214,
       "status": "verified"
     },
     {
@@ -7484,7 +8933,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 182,
+      "sortOrder": 215,
       "status": "verified"
     },
     {
@@ -7518,7 +8967,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 183,
+      "sortOrder": 216,
       "status": "verified"
     },
     {
@@ -7556,7 +9005,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 184,
+      "sortOrder": 217,
       "status": "verified"
     },
     {
@@ -7594,7 +9043,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 185,
+      "sortOrder": 218,
       "status": "verified"
     },
     {
@@ -7640,7 +9089,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 186,
+      "sortOrder": 219,
       "status": "verified"
     },
     {
@@ -7692,7 +9141,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 187,
+      "sortOrder": 220,
       "status": "verified"
     },
     {
@@ -7730,7 +9179,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 188,
+      "sortOrder": 221,
       "status": "verified"
     },
     {
@@ -7782,7 +9231,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 189,
+      "sortOrder": 222,
       "status": "verified"
     },
     {
@@ -7834,7 +9283,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 190,
+      "sortOrder": 223,
       "status": "verified"
     },
     {
@@ -7872,7 +9321,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 191,
+      "sortOrder": 224,
       "status": "verified"
     },
     {
@@ -7924,7 +9373,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 192,
+      "sortOrder": 225,
       "status": "verified"
     },
     {
@@ -7958,7 +9407,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 193,
+      "sortOrder": 226,
       "status": "verified"
     },
     {
@@ -7982,7 +9431,7 @@
       "owners": [],
       "unlockedBy": [],
       "note": "血統技図鑑に未掲載（技登録不可）",
-      "sortOrder": 194,
+      "sortOrder": 227,
       "status": "verified"
     },
     {
@@ -8013,7 +9462,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 195,
+      "sortOrder": 228,
       "status": "verified"
     },
     {
@@ -8044,7 +9493,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 196,
+      "sortOrder": 229,
       "status": "verified"
     },
     {
@@ -8079,7 +9528,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 197,
+      "sortOrder": 230,
       "status": "verified"
     },
     {
@@ -8114,7 +9563,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 198,
+      "sortOrder": 231,
       "status": "verified"
     },
     {
@@ -8145,7 +9594,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 199,
+      "sortOrder": 232,
       "status": "verified"
     },
     {
@@ -8194,7 +9643,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 200,
+      "sortOrder": 233,
       "status": "verified"
     },
     {
@@ -8225,7 +9674,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 201,
+      "sortOrder": 234,
       "status": "verified"
     },
     {
@@ -8263,7 +9712,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 202,
+      "sortOrder": 235,
       "status": "verified"
     },
     {
@@ -8315,7 +9764,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 203,
+      "sortOrder": 236,
       "status": "verified"
     },
     {
@@ -8349,7 +9798,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 204,
+      "sortOrder": 237,
       "status": "verified"
     },
     {
@@ -8387,7 +9836,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 205,
+      "sortOrder": 238,
       "status": "verified"
     },
     {
@@ -8420,7 +9869,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 206,
+      "sortOrder": 239,
       "status": "verified"
     },
     {
@@ -8446,7 +9895,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 207,
+      "sortOrder": 240,
       "status": "verified"
     },
     {
@@ -8477,7 +9926,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 208,
+      "sortOrder": 241,
       "status": "verified"
     },
     {
@@ -8531,7 +9980,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 209,
+      "sortOrder": 242,
       "status": "verified"
     },
     {
@@ -8573,7 +10022,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 210,
+      "sortOrder": 243,
       "status": "verified"
     },
     {
@@ -8615,7 +10064,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 211,
+      "sortOrder": 244,
       "status": "verified"
     },
     {
@@ -8650,7 +10099,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 212,
+      "sortOrder": 245,
       "status": "verified"
     },
     {
@@ -8681,7 +10130,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 213,
+      "sortOrder": 246,
       "status": "verified"
     },
     {
@@ -8712,7 +10161,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 214,
+      "sortOrder": 247,
       "status": "verified"
     },
     {
@@ -8743,7 +10192,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 215,
+      "sortOrder": 248,
       "status": "verified"
     },
     {
@@ -8789,7 +10238,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 216,
+      "sortOrder": 249,
       "status": "verified"
     },
     {
@@ -8831,7 +10280,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 217,
+      "sortOrder": 250,
       "status": "verified"
     },
     {
@@ -8873,7 +10322,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 218,
+      "sortOrder": 251,
       "status": "verified"
     },
     {
@@ -8929,7 +10378,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 219,
+      "sortOrder": 252,
       "status": "verified"
     },
     {
@@ -8960,7 +10409,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 220,
+      "sortOrder": 253,
       "status": "verified"
     },
     {
@@ -8995,7 +10444,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 221,
+      "sortOrder": 254,
       "status": "verified"
     },
     {
@@ -9026,7 +10475,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 222,
+      "sortOrder": 255,
       "status": "verified"
     },
     {
@@ -9061,7 +10510,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 223,
+      "sortOrder": 256,
       "status": "verified"
     },
     {
@@ -9096,7 +10545,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 224,
+      "sortOrder": 257,
       "status": "verified"
     },
     {
@@ -9127,7 +10576,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 225,
+      "sortOrder": 258,
       "status": "verified"
     },
     {
@@ -9165,7 +10614,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 226,
+      "sortOrder": 259,
       "status": "verified"
     },
     {
@@ -9211,7 +10660,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 227,
+      "sortOrder": 260,
       "status": "verified"
     },
     {
@@ -9249,7 +10698,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 228,
+      "sortOrder": 261,
       "status": "verified"
     },
     {
@@ -9301,7 +10750,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 229,
+      "sortOrder": 262,
       "status": "verified"
     },
     {
@@ -9336,7 +10785,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 230,
+      "sortOrder": 263,
       "status": "verified"
     },
     {
@@ -9371,7 +10820,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 231,
+      "sortOrder": 264,
       "status": "verified"
     },
     {
@@ -9406,7 +10855,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 232,
+      "sortOrder": 265,
       "status": "verified"
     },
     {
@@ -9441,7 +10890,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 233,
+      "sortOrder": 266,
       "status": "verified"
     },
     {
@@ -9476,7 +10925,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 234,
+      "sortOrder": 267,
       "status": "verified"
     },
     {
@@ -9525,7 +10974,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 235,
+      "sortOrder": 268,
       "status": "verified"
     },
     {
@@ -9563,7 +11012,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 236,
+      "sortOrder": 269,
       "status": "verified"
     },
     {
@@ -9615,7 +11064,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 237,
+      "sortOrder": 270,
       "status": "verified"
     },
     {
@@ -9653,7 +11102,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 238,
+      "sortOrder": 271,
       "status": "verified"
     },
     {
@@ -9696,7 +11145,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 239,
+      "sortOrder": 272,
       "status": "verified"
     },
     {
@@ -9725,7 +11174,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 240,
+      "sortOrder": 273,
       "status": "verified"
     },
     {
@@ -9754,7 +11203,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 241,
+      "sortOrder": 274,
       "status": "verified"
     },
     {
@@ -9806,7 +11255,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 242,
+      "sortOrder": 275,
       "status": "verified"
     },
     {
@@ -9844,7 +11293,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 243,
+      "sortOrder": 276,
       "status": "verified"
     },
     {
@@ -9878,7 +11327,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 244,
+      "sortOrder": 277,
       "status": "verified"
     },
     {
@@ -9916,7 +11365,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 245,
+      "sortOrder": 278,
       "status": "verified"
     },
     {
@@ -9954,7 +11403,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 246,
+      "sortOrder": 279,
       "status": "verified"
     },
     {
@@ -9992,7 +11441,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 247,
+      "sortOrder": 280,
       "status": "verified"
     },
     {
@@ -10026,7 +11475,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 248,
+      "sortOrder": 281,
       "status": "verified"
     },
     {
@@ -10078,7 +11527,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 249,
+      "sortOrder": 282,
       "status": "verified"
     },
     {
@@ -10130,7 +11579,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 250,
+      "sortOrder": 283,
       "status": "verified"
     },
     {
@@ -10182,7 +11631,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 251,
+      "sortOrder": 284,
       "status": "verified"
     },
     {
@@ -10234,7 +11683,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 252,
+      "sortOrder": 285,
       "status": "verified"
     },
     {
@@ -10269,7 +11718,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 253,
+      "sortOrder": 286,
       "status": "verified"
     },
     {
@@ -10300,7 +11749,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 254,
+      "sortOrder": 287,
       "status": "verified"
     },
     {
@@ -10335,7 +11784,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 255,
+      "sortOrder": 288,
       "status": "verified"
     },
     {
@@ -10370,7 +11819,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 256,
+      "sortOrder": 289,
       "status": "verified"
     },
     {
@@ -10405,7 +11854,7 @@
       ],
       "unlockedBy": [],
       "note": "",
-      "sortOrder": 257,
+      "sortOrder": 290,
       "status": "verified"
     },
     {
@@ -10461,7 +11910,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 258,
+      "sortOrder": 291,
       "status": "verified"
     },
     {
@@ -10513,7 +11962,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 259,
+      "sortOrder": 292,
       "status": "verified"
     },
     {
@@ -10546,7 +11995,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 260,
+      "sortOrder": 293,
       "status": "verified"
     },
     {
@@ -10608,7 +12057,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 261,
+      "sortOrder": 294,
       "status": "verified"
     },
     {
@@ -10654,7 +12103,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 262,
+      "sortOrder": 295,
       "status": "verified"
     },
     {
@@ -10708,7 +12157,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 263,
+      "sortOrder": 296,
       "status": "verified"
     },
     {
@@ -10750,7 +12199,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 264,
+      "sortOrder": 297,
       "status": "verified"
     },
     {
@@ -10820,7 +12269,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 265,
+      "sortOrder": 298,
       "status": "verified"
     },
     {
@@ -10866,7 +12315,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 266,
+      "sortOrder": 299,
       "status": "verified"
     },
     {
@@ -10908,7 +12357,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 267,
+      "sortOrder": 300,
       "status": "verified"
     },
     {
@@ -10960,7 +12409,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 268,
+      "sortOrder": 301,
       "status": "verified"
     },
     {
@@ -11012,7 +12461,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 269,
+      "sortOrder": 302,
       "status": "verified"
     },
     {
@@ -11064,7 +12513,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 270,
+      "sortOrder": 303,
       "status": "verified"
     },
     {
@@ -11116,7 +12565,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 271,
+      "sortOrder": 304,
       "status": "verified"
     },
     {
@@ -11168,7 +12617,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 272,
+      "sortOrder": 305,
       "status": "verified"
     },
     {
@@ -11206,7 +12655,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 273,
+      "sortOrder": 306,
       "status": "verified"
     },
     {
@@ -11244,7 +12693,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 274,
+      "sortOrder": 307,
       "status": "verified"
     }
   ]

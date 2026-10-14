@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 320
+    "abilities": 342
   },
   "abilities": [
     {
@@ -3935,6 +3935,272 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 320,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0321",
+      "name": "地震",
+      "version": 1,
+      "baseName": "地震",
+      "level": null,
+      "description": "対象技命中時、相手の攻撃ステータス＜-10%＞＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 321,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0322",
+      "name": "不滅の守り",
+      "version": 1,
+      "baseName": "不滅の守り",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・ライフ＜+45＞丈夫さ＜+60＞\n・相手よりガッツが少ないとき、ブロック＜+8%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 322,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0323",
+      "name": "命中上昇[大]",
+      "version": 1,
+      "baseName": "命中上昇[大]",
+      "level": null,
+      "description": "命中パラ+40",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 323,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0324",
+      "name": "祝：丈夫さ+100",
+      "version": 1,
+      "baseName": "祝：丈夫さ+100",
+      "level": null,
+      "description": "対象技発動時、自身に[丈夫さ+100]を付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 324,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0325",
+      "name": "連撃：竜巻アタック",
+      "version": 1,
+      "baseName": "連撃：竜巻アタック",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 325,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0326",
+      "name": "不滅の攻め",
+      "version": 1,
+      "baseName": "不滅の攻め",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・丈夫さの30%を命中ステータスに加算\n・相手よりガッツが多いとき、被ダメージの35%を攻撃ステータスに加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 326,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0327",
+      "name": "疫：暗闇Lv4",
+      "version": 1,
+      "baseName": "疫：暗闇",
+      "level": 4,
+      "description": "対象技命中時、[暗闇Lv4＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0024"
+      ],
+      "sortOrder": 327,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0328",
+      "name": "連撃：大ハエタタキ",
+      "version": 1,
+      "baseName": "連撃：大ハエタタキ",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 328,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0329",
+      "name": "[自身有利]不沈Lv1",
+      "version": 1,
+      "baseName": "[自身有利]不沈",
+      "level": 1,
+      "description": "[自身有利]対象技命中時、丈夫さの10%を攻撃ステータスに加算＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 329,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0330",
+      "name": "掌打",
+      "version": 1,
+      "baseName": "掌打",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・丈夫さの20%を攻撃ステータス加算\n・クリティカル時、ダメージ＜30%＞の追撃を＜1回＞与える\n・[有利]消費ガッツ＜-20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 330,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0331",
+      "name": "不滅の気迫",
+      "version": 1,
+      "baseName": "不滅の気迫",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・ライフ＜+300＞\n・残りライフが多いほど被ダメ減少＜20%＞\n・[有利]クリティカル率＜+15%＞、クリティカルダメージ＜+30%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 331,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0332",
+      "name": "[相手青]ガッツ回復",
+      "version": 1,
+      "baseName": "[相手青]ガッツ回復",
+      "level": null,
+      "description": "相手＜オーラ青＞かつ技が命中したときガッツ回復Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 332,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0333",
+      "name": "旋風：風神剣",
+      "version": 1,
+      "baseName": "旋風：風神剣",
+      "level": null,
+      "description": "対象技命中時、自身に与ダメ上昇Lv5、命中率上昇Lv5を与える＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 333,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0334",
+      "name": "連撃：五月雨斬り",
+      "version": 1,
+      "baseName": "連撃：五月雨斬り",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を5回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 334,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0335",
+      "name": "[零]命中率上昇",
+      "version": 1,
+      "baseName": "[零]命中率上昇",
+      "level": null,
+      "description": "技を命中させると間合いが零距離のとき命中Lv3(10秒)",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 335,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0336",
+      "name": "最終奥義",
+      "version": 1,
+      "baseName": "最終奥義",
+      "level": null,
+      "description": "対象技発動時、モン類Lv5以上でちからステ上昇＋100、モン類Lv10以上で命中ステ上昇＋100",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 336,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0337",
+      "name": "背水Lv3",
+      "version": 1,
+      "baseName": "背水",
+      "level": 3,
+      "description": "[終盤]対象技命中時、残りライフが少ないほど攻撃ステータス上昇[最大30%]、さらに残り10秒の時、技ダメージ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 337,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0338",
+      "name": "チェックメイト",
+      "version": 1,
+      "baseName": "チェックメイト",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動\n・ダメージ＜50%＞の追撃を＜1回＞与える\n・相手に「チェック（ライフ以外ステータス＜-10%＞）」を付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 338,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0339",
+      "name": "ファランクス",
+      "version": 1,
+      "baseName": "ファランクス",
+      "level": null,
+      "description": "対象技発動後、次の効果発動\n・自身に[丈夫さ+200]を付与\n・遠距離技の消費ガッツ＜-10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 339,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0340",
+      "name": "[相手白]裂傷Lv3",
+      "version": 1,
+      "baseName": "[相手白]裂傷",
+      "level": 3,
+      "description": "[相手白]対象技命中時、相手に被ダメージ上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 340,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0341",
+      "name": "冥王剣",
+      "version": 1,
+      "baseName": "冥王剣",
+      "level": null,
+      "description": "対象技発動時、自身にすべての技ステータス上昇Lv6、被ダメブロック低下Lv5、回避率低下Lv10を付与する＜4回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 341,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0342",
+      "name": "連撃：冥王剣",
+      "version": 1,
+      "baseName": "連撃：冥王剣",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 342,
       "status": "verified"
     }
   ]

@@ -1611,7 +1611,15 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/dino/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/</loc>
     <priority>0.6</priority>
   </url>
   <url>

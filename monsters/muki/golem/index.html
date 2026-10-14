@@ -1,0 +1,982 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ゴーレム種の技一覧（16技）と所属モンスター13体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="ゴーレム種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"無機","item":"https://line-monster-farm-tetteikouryaku.com/monsters/muki/"},{"@type":"ListItem","position":4,"name":"ゴーレム種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/muki/golem/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">無機</a> &gt; ゴーレム種</p>
+  <h1 class="page-title">ゴーレム種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0292" aria-controls="sk-0292" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0292.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">のびーるパンチ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0293" aria-controls="sk-0293" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0293.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">でこぴん</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ16</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0294" aria-controls="sk-0294" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0294.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">キック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ16</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0292" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0292.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>のびーるパンチ<span class="skill-detail-place">中距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0505.html">ゴーレム</a>（★2以上）・<a href="../../../monsters/muki/golem/0508.html">ダゴン</a>（★2以上）・<a href="../../../monsters/muki/golem/0511.html">アメンホテプ</a>（★2以上）・<a href="../../../monsters/muki/golem/0553.html">ニューボトル</a>（★2以上）・<a href="../../../monsters/muki/golem/0550.html">シュタイン</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0293" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0293.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>でこぴん<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0521.html">エコロガーデアン</a>（★2以上）・<a href="../../../monsters/muki/golem/0524.html">マーブルガイ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0294" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0294.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>キック<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0517.html">アンゴルモア</a>（★2以上）・<a href="../../../monsters/muki/golem/0552.html">サンドゴーレム</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0295" aria-controls="sk-0295" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0295.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">地震</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ26</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0296" aria-controls="sk-0296" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0296.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">大ビンタ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ26</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0297" aria-controls="sk-0297" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0297.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">アッパー</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ26</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0298" aria-controls="sk-0298" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0298.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ビンタ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ18</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0295" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0295.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>地震<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>26</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0517.html">アンゴルモア</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">地震</p>
+            <p class="skill-ability-desc">対象技命中時、相手の攻撃ステータス＜-10%＞＜20秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[小]</p>
+            <p class="skill-ability-desc">かしこさパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0296" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0296.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>大ビンタ<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>26</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0502.html">タイラント</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[大]</p>
+            <p class="skill-ability-desc">命中パラ+40</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0297" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0297.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>アッパー<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>26</td><th>クリティカル率</th><td>D+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0524.html">マーブルガイ</a>（★3以上）・<a href="../../../monsters/muki/golem/0551.html">巨人(エレン)</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0298" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0298.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ビンタ<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0511.html">アメンホテプ</a>（★3以上）・<a href="../../../monsters/muki/golem/0525.html">フロッグロック</a>（★3以上）・<a href="../../../monsters/muki/golem/0550.html">シュタイン</a>（★3以上）・<a href="../../../monsters/muki/golem/0554.html">シュシュポッポ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0511.html">アメンホテプ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ガッツリカバリー
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0511.html">アメンホテプ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動後、ガッツダメージに応じてガッツ回復＜消費ガッツの25%まで＞/ガッツ回復Lv1</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0299" aria-controls="sk-0299" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0299.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">大でこぴん</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ31</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0300" aria-controls="sk-0300" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0300.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">フライングプレス</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ30</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0301" aria-controls="sk-0301" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0301.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">合掌</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0302" aria-controls="sk-0302" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0302.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ハエたたき</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ19</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0299" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0299.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>大でこぴん<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>31</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0502.html">タイラント</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：丈夫さ+100</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[丈夫さ+100]を付与</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0300" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0300.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>フライングプレス<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>F+</td></tr>
+                <tr><th>移動先</th><td>中→零</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0525.html">フロッグロック</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：丈夫さ+100</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[丈夫さ+100]を付与</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0301" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0301.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>合掌<span class="skill-detail-place">近距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0550.html">シュタイン</a>（★4以上）・<a href="../../../monsters/muki/golem/0554.html">シュシュポッポ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：丈夫さ+100</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[丈夫さ+100]を付与</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0550.html">シュタイン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ちからパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラインパクト
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0550.html">シュタイン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">自身のオーラと発動技のオーラ一致、または＜オーラなし＞技発動時、与ダメ上昇/ガッツ回復Lv2</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0302" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0302.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ハエたたき<span class="skill-detail-place">零距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>19</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0552.html">サンドゴーレム</a>（★4以上）・<a href="../../../monsters/muki/golem/0553.html">ニューボトル</a>（★4以上）・<a href="../../../monsters/muki/golem/0551.html">巨人(エレン)</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の守り</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+45＞丈夫さ＜+60＞<br>・相手よりガッツが少ないとき、ブロック＜+8%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">祝：丈夫さ+100</p>
+            <p class="skill-ability-desc">対象技発動時、自身に[丈夫さ+100]を付与</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0303" aria-controls="sk-0303" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0303.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">竜巻アタック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ39</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0304" aria-controls="sk-0304" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0304.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">ぐるぐるアタック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ46</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0305" aria-controls="sk-0305" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0305.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">大ハエタタキ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ41</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0306" aria-controls="sk-0306" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0306.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">大キック</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ43</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0303" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0303.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>竜巻アタック<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>E+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>39</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0502.html">タイラント</a>（★5以上）・<a href="../../../monsters/muki/golem/0525.html">フロッグロック</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：竜巻アタック</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv1を3回与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の攻め</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・丈夫さの30%を命中ステータスに加算<br>・相手よりガッツが多いとき、被ダメージの35%を攻撃ステータスに加算</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0502.html">タイラント</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0502.html">タイラント</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の有利オーラ効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0304" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0304.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>ぐるぐるアタック<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>D+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>46</td><th>クリティカル率</th><td>C+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0552.html">サンドゴーレム</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">疫：暗闇Lv4</p>
+            <p class="skill-ability-desc">対象技命中時、[暗闇Lv4＜20秒＞]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">暗闇</span>命中率減少</p>
+            </div>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の攻め</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・丈夫さの30%を命中ステータスに加算<br>・相手よりガッツが多いとき、被ダメージの35%を攻撃ステータスに加算</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0552.html">サンドゴーレム</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ちからパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">レンジブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0552.html">サンドゴーレム</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の間合い適性効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0305" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0305.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>大ハエタタキ<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>S</td></tr>
+                <tr><th>消費ガッツ</th><td>41</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0551.html">巨人(エレン)</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：大ハエタタキ</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv3を1回与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の攻め</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・丈夫さの30%を命中ステータスに加算<br>・相手よりガッツが多いとき、被ダメージの35%を攻撃ステータスに加算</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0306" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0306.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>大キック<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>43</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0553.html">ニューボトル</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[自身有利]不沈Lv1</p>
+            <p class="skill-ability-desc">[自身有利]対象技命中時、丈夫さの10%を攻撃ステータスに加算＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の攻め</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・丈夫さの30%を命中ステータスに加算<br>・相手よりガッツが多いとき、被ダメージの35%を攻撃ステータスに加算</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0553.html">ニューボトル</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ちからパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ガードディクリーズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0553.html">ニューボトル</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、相手の回避と丈夫さの基礎ステータス20%低下/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0307" aria-controls="sk-0307" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0307.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">掌打</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ48</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0307" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0307.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>掌打<span class="skill-detail-place">近距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>48</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/muki/golem/0554.html">シュシュポッポ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">掌打</p>
+            <p class="skill-ability-desc">対象技発動時、次の効果<br>・丈夫さの20%を攻撃ステータス加算<br>・クリティカル時、ダメージ＜30%＞の追撃を＜1回＞与える<br>・[有利]消費ガッツ＜-20%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">不滅の気迫</p>
+            <p class="skill-ability-desc">バトル開始時、次の効果<br>・ライフ＜+300＞<br>・残りライフが多いほど被ダメ減少＜20%＞<br>・[有利]クリティカル率＜+15%＞、クリティカルダメージ＜+30%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0554.html">シュシュポッポ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/muki/golem/0554.html">シュシュポッポ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">ゴーレム種のモンスター（13体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="0502.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200766_0.jpg" alt="タイラント" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">タイラント</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：ドラゴン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0505.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200693_0.jpg" alt="ゴーレム" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ゴーレム</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：ゴーレム</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0508.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200775_0.jpg" alt="ダゴン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ダゴン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：アローヘッド</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0511.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200571_0.jpg" alt="アメンホテプ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アメンホテプ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：ガリ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0517.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200692_0.jpg" alt="アンゴルモア" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">アンゴルモア</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：ジョーカー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0521.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200538_0.jpg" alt="エコロガーデアン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">エコロガーデアン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：プラント</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0524.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200696_0.jpg" alt="マーブルガイ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">マーブルガイ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：ナーガ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0525.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200429_0.jpg" alt="フロッグロック" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">フロッグロック</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：カワズモー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0550.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200542_0.jpg" alt="シュタイン" loading="lazy">
+            <span class="mon-card-limited">イベント限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シュタイン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0551.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200396_0.jpg" alt="巨人(エレン)" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">巨人(エレン)</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0552.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200572_0.jpg" alt="サンドゴーレム" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">サンドゴーレム</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0553.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200609_0.jpg" alt="ニューボトル" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ニューボトル</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0554.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__71286791_0.jpg" alt="シュシュポッポ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シュシュポッポ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">無機</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+      <a class="menu-link" href="../henger/index.html"><span class="icon">💎</span> ヘンガー種の技</a>
+      <a class="menu-link" href="../illumine/index.html"><span class="icon">💎</span> イルミネ種の技</a>
+      <a class="menu-link" href="../index.html"><span class="icon">💎</span> 無機のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>

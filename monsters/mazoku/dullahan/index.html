@@ -1,0 +1,932 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>デュラハン種の技一覧（17技）と所属モンスター9体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="デュラハン種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"魔族","item":"https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/"},{"@type":"ListItem","position":4,"name":"デュラハン種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dullahan/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">魔族</a> &gt; デュラハン種</p>
+  <h1 class="page-title">デュラハン種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0275" aria-controls="sk-0275" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0275.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">地走り</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ25</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0276" aria-controls="sk-0276" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0276.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">まっぷたつ</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ15</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0277" aria-controls="sk-0277" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0277.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">居合い斬り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ18</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0275" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0275.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>地走り<span class="skill-detail-place">遠距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>25</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0753.html">ショーグン</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[小]</p>
+            <p class="skill-ability-desc">回避パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0276" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0276.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>まっぷたつ<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>15</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0702.html">ベスビオス</a>（★2以上）・<a href="../../../monsters/mazoku/dullahan/0709.html">グレイシア</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0277" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0277.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>居合い斬り<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0750.html">タクティクス</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0278" aria-controls="sk-0278" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0278.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">大車輪</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0279" aria-controls="sk-0279" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0279.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">ダッシュ斬り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ12</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0280" aria-controls="sk-0280" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0280.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">Vの字斬り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ27</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0281" aria-controls="sk-0281" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0281.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">フルスイング</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ18</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0278" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0278.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>大車輪<span class="skill-detail-place">遠距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>遠→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0707.html">デュラハン</a>（★3以上）・<a href="../../../monsters/mazoku/dullahan/0752.html">麻倉葉(武装)</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[中]</p>
+            <p class="skill-ability-desc">命中パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[小]</p>
+            <p class="skill-ability-desc">回避パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0279" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0279.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>ダッシュ斬り<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A+</td></tr>
+                <tr><th>移動先</th><td>中→零</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>12</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0702.html">ベスビオス</a>（★3以上）・<a href="../../../monsters/mazoku/dullahan/0709.html">グレイシア</a>（★3以上）・<a href="../../../monsters/mazoku/dullahan/0751.html">麻倉葉</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0280" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0280.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>Vの字斬り<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>F</td></tr>
+                <tr><th>消費ガッツ</th><td>27</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0754.html">コクシムソウ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0281" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0281.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>フルスイング<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>零→中</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>18</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0701.html">レジーナ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0282" aria-controls="sk-0282" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0282.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">雷神剣</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ30</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0283" aria-controls="sk-0283" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0283.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">風神剣</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ27</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0284" aria-controls="sk-0284" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0284.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">五月雨斬り</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0282" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0282.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>雷神剣<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0754.html">コクシムソウ</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ちから上昇[小]</p>
+            <p class="skill-ability-desc">ちからパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手青]ガッツ回復</p>
+            <p class="skill-ability-desc">相手＜オーラ青＞かつ技が命中したときガッツ回復Lv3</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0283" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0283.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>風神剣<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>27</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0701.html">レジーナ</a>（★4以上）・<a href="../../../monsters/mazoku/dullahan/0707.html">デュラハン</a>（★4以上）・<a href="../../../monsters/mazoku/dullahan/0709.html">グレイシア</a>（★4以上）・<a href="../../../monsters/mazoku/dullahan/0751.html">麻倉葉</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">旋風：風神剣</p>
+            <p class="skill-ability-desc">対象技命中時、自身に与ダメ上昇Lv5、命中率上昇Lv5を与える＜20秒＞＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[小]</p>
+            <p class="skill-ability-desc">かしこさパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0709.html">グレイシア</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">アディショナルチェイサー
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0709.html">グレイシア</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">攻撃ステータス10%の追加ダメージ/ガッツ回復Lv1</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0284" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0284.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>五月雨斬り<span class="skill-detail-place">近距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>S</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0753.html">ショーグン</a>（★4以上）・<a href="../../../monsters/mazoku/dullahan/0752.html">麻倉葉(武装)</a>（★4以上）・<a href="../../../monsters/mazoku/dullahan/0750.html">タクティクス</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：五月雨斬り</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv1を5回与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]</p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0285" aria-controls="sk-0285" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0285.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">真・風神剣</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0286" aria-controls="sk-0286" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0286.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">秘技・黒影剣</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ31</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0287" aria-controls="sk-0287" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0287.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">剣閃百撃</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ35</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0288" aria-controls="sk-0288" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0288.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">最終奥義</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ37</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0285" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0285.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>真・風神剣<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>C</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0754.html">コクシムソウ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[中]</p>
+            <p class="skill-ability-desc">かしこさパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[遠]与ダメ上昇</p>
+            <p class="skill-ability-desc">技が命中したとき遠距離の与ダメ上昇Lv3＜10秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0754.html">コクシムソウ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">オーラブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0754.html">コクシムソウ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の有利オーラ効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0286" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0286.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>秘技・黒影剣<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>E</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>31</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0702.html">ベスビオス</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]</p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[零]命中率上昇</p>
+            <p class="skill-ability-desc">技を命中させると間合いが零距離のとき命中Lv3(10秒)</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0287" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0287.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>剣閃百撃<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>35</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0701.html">レジーナ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[中]</p>
+            <p class="skill-ability-desc">命中パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[全距離]与ダメ上昇</p>
+            <p class="skill-ability-desc">技が命中したとき与ダメ上昇Lv2＜10秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0701.html">レジーナ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">ライフパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">フィールドブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0701.html">レジーナ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、地形適性効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0288" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0288.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>最終奥義<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>37</td><th>クリティカル率</th><td>E</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0707.html">デュラハン</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">最終奥義</p>
+            <p class="skill-ability-desc">対象技発動時、モン類Lv5以上でちからステ上昇＋100、モン類Lv10以上で命中ステ上昇＋100</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">背水Lv3</p>
+            <p class="skill-ability-desc">[終盤]対象技命中時、残りライフが少ないほど攻撃ステータス上昇[最大30%]、さらに残り10秒の時、技ダメージ上昇Lv3</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0289" aria-controls="sk-0289" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0289.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">終ノ光</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ55</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0290" aria-controls="sk-0290" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0290.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">ダイセツダン</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ47</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0291" aria-controls="sk-0291" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0291.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">冥王剣</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0289" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0289.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>終ノ光<span class="skill-detail-place">遠距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>55</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0750.html">タクティクス</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">チェックメイト</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果を発動<br>・ダメージ＜50%＞の追撃を＜1回＞与える<br>・相手に「チェック（ライフ以外ステータス＜-10%＞）」を付与</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ファランクス</p>
+            <p class="skill-ability-desc">対象技発動後、次の効果発動<br>・自身に[丈夫さ+200]を付与<br>・遠距離技の消費ガッツ＜-10%＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0750.html">タクティクス</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0750.html">タクティクス</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0290" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0290.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>ダイセツダン<span class="skill-detail-place">中距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>47</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0753.html">ショーグン</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">クリダメ上昇[中]</p>
+            <p class="skill-ability-desc">技が命中したときクリダメ上昇Lv2＜10秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手白]裂傷Lv3</p>
+            <p class="skill-ability-desc">[相手白]対象技命中時、相手に被ダメージ上昇</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0753.html">ショーグン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/mazoku/dullahan/0753.html">ショーグン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0291" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0291.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>冥王剣<span class="skill-detail-place">近距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>S</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/mazoku/dullahan/0752.html">麻倉葉(武装)</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">冥王剣</p>
+            <p class="skill-ability-desc">対象技発動時、自身にすべての技ステータス上昇Lv6、被ダメブロック低下Lv5、回避率低下Lv10を付与する＜4回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：冥王剣</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv3を1回与える</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">デュラハン種のモンスター（9体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="0701.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200809_0.jpg" alt="レジーナ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">レジーナ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ピクシー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0702.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200801_0.jpg" alt="ベスビオス" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ベスビオス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ドラゴン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0707.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200570_0.jpg" alt="デュラハン" loading="lazy">
+            <span class="mon-card-limited">周年限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">デュラハン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-白"><span class="aura-dot"></span>白</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：デュラハン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0709.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200611_0.jpg" alt="グレイシア" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">グレイシア</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：ライガー</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0750.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200404_0.jpg" alt="タクティクス" loading="lazy">
+            <span class="mon-card-limited">超スタフェス限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">タクティクス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黒"><span class="aura-dot"></span>黒</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0751.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200422_0.jpg" alt="麻倉葉" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">麻倉葉</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0752.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200390_0.jpg" alt="麻倉葉(武装)" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">麻倉葉(武装)</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0753.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200734_0.jpg" alt="ショーグン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ショーグン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="0754.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200457_0.jpg" alt="コクシムソウ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">コクシムソウ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">魔族</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ</h2>
+    <div class="menu-grid">
+      <a class="menu-link" href="../pixie/index.html"><span class="icon">👿</span> ピクシー種の技</a>
+      <a class="menu-link" href="../dragon/index.html"><span class="icon">👿</span> ドラゴン種の技</a>
+      <a class="menu-link" href="../index.html"><span class="icon">👿</span> 魔族のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>
