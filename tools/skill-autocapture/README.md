@@ -142,4 +142,4 @@ TSVと技DBは触らない（`import-skills-tsv.js` は回さない）。
 | イルミネ | sk-0054 | バスターソード |
 | キジン | sk-0101 | 威圧 |
 
-ほかに、アイコンが無い専用技が52件ある（`unique: true` で `skill-icons/` に無いもの）。
+ほかに、アイコンが無い専用技が52件ある。対象57件の一覧は `docs/skill-icon-manual-capture.md`。
