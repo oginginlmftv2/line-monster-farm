@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 269
+    "abilities": 320
   },
   "abilities": [
     {
@@ -3307,6 +3307,634 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 269,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0270",
+      "name": "魔力吸収",
+      "version": 1,
+      "baseName": "魔力吸収",
+      "level": null,
+      "description": "対象技クリティカル時、[エーテル]を＜1個＞付与",
+      "tags": [],
+      "buffs": [
+        "bf-0020"
+      ],
+      "sortOrder": 270,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0271",
+      "name": "魔力吸引",
+      "version": 1,
+      "baseName": "魔力吸引",
+      "level": null,
+      "description": "対象技命中時、[エーテル]を＜2個＞付与",
+      "tags": [],
+      "buffs": [
+        "bf-0020"
+      ],
+      "sortOrder": 271,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0272",
+      "name": "魔力解放",
+      "version": 1,
+      "baseName": "魔力解放",
+      "level": null,
+      "description": "[エーテル]＜1個＞以上で対象技命中時、クリティカル確定",
+      "tags": [],
+      "buffs": [
+        "bf-0020"
+      ],
+      "sortOrder": 272,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0273",
+      "name": "バン",
+      "version": 1,
+      "baseName": "バン",
+      "level": null,
+      "description": "自身の残りガッツ＜70＞以上で対象技発動時、次の効果\n・消費ガッツ＜50%＞増加\n・すべての技ステータス＜+5＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 273,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0274",
+      "name": "ビッグバン",
+      "version": 1,
+      "baseName": "ビッグバン",
+      "level": null,
+      "description": "対象技発動時、自身の残りガッツが70以上のとき、消費ガッツ100%増加しすべての技ステータスが上昇Lv10、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 274,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0275",
+      "name": "連撃：アストラルレイ",
+      "version": 1,
+      "baseName": "連撃：アストラルレイ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 275,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0276",
+      "name": "[有利]貫通Lv3",
+      "version": 1,
+      "baseName": "[有利]貫通",
+      "level": 3,
+      "description": "[有利]かつ対象技命中時、丈夫さ＜30%＞無視",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 276,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0277",
+      "name": "コズミックバン",
+      "version": 1,
+      "baseName": "コズミックバン",
+      "level": null,
+      "description": "前衛技発動時、自身に「コズミック（命中率＜+3%＞、クリティカル率＜+4%＞）」を付与[最大5まで]\n対象技命中時、自身の＜コズミック＞の数 ×すべての技ステータス＜+4＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 277,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0278",
+      "name": "連撃：コズミックバン",
+      "version": 1,
+      "baseName": "連撃：コズミックバン",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜40%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 278,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0279",
+      "name": "ファイトクラウド",
+      "version": 1,
+      "baseName": "ファイトクラウド",
+      "level": null,
+      "description": "対象技発動時、次の効果発動\n・自身の残りライフが多いほど技ステータス上昇[最大10]\n・自身ライフ50%以上：ちからステ＜30%＞上昇\n・ちからとかしこさの高い方を攻撃ステータスとして使用。攻撃ステータスの25%をさらに加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 279,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0280",
+      "name": "連撃：ファイトクラウド",
+      "version": 1,
+      "baseName": "連撃：ファイトクラウド",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 280,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0281",
+      "name": "[相手青]与ダメ上昇",
+      "version": 1,
+      "baseName": "[相手青]与ダメ上昇",
+      "level": null,
+      "description": "相手＜オーラ青＞かつ技が命中したとき与ダメ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 281,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0282",
+      "name": "[有利]急所Lv3",
+      "version": 1,
+      "baseName": "[有利]急所",
+      "level": 3,
+      "description": "[有利]かつ対象技クリティカル時、クリダメ＜30%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 282,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0283",
+      "name": "連撃：ひっかきコンボ",
+      "version": 1,
+      "baseName": "連撃：ひっかきコンボ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 283,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0284",
+      "name": "疫：衰弱Lv3",
+      "version": 1,
+      "baseName": "疫：衰弱",
+      "level": 3,
+      "description": "対象技命中時、相手に[衰弱Lv3＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0023"
+      ],
+      "sortOrder": 284,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0285",
+      "name": "恵：連撃強化Lv2",
+      "version": 1,
+      "baseName": "恵：連撃強化",
+      "level": 2,
+      "description": "対象技発動時、自身に[連撃強化Lv2＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0005"
+      ],
+      "sortOrder": 285,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0286",
+      "name": "脆弱Lv2",
+      "version": 1,
+      "baseName": "脆弱",
+      "level": 2,
+      "description": "対象技命中時、相手に被ダメ上昇Lv2＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 286,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0287",
+      "name": "会心連撃Lv5",
+      "version": 1,
+      "baseName": "会心連撃",
+      "level": 5,
+      "description": "対象技クリティカル時、連撃Lv5を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 287,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0288",
+      "name": "ちから上昇[大]",
+      "version": 1,
+      "baseName": "ちから上昇[大]",
+      "level": null,
+      "description": "ちからパラ+40",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 288,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0289",
+      "name": "[相手中]Gダメ上昇",
+      "version": 1,
+      "baseName": "[相手中]Gダメ上昇",
+      "level": null,
+      "description": "技を発動したとき相手＜ふつう＞でガッツダメ上昇Lv2＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 289,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0290",
+      "name": "連撃：クラッシュバースト",
+      "version": 1,
+      "baseName": "連撃：クラッシュバースト",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 290,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0291",
+      "name": "破撃：ルインクロス",
+      "version": 1,
+      "baseName": "破撃：ルインクロス",
+      "level": null,
+      "description": "対象技命中時、すべての技ステータス上昇Lv2＜20秒＞＜1回＞\n対象技命中時、相手＜白または黒オーラ＞以外の時シールド破壊しすべての技ステータス上昇Lv3＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 291,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0292",
+      "name": "滅撃：ルインクロス",
+      "version": 1,
+      "baseName": "滅撃：ルインクロス",
+      "level": null,
+      "description": "対象技命中時、自身オーラ有利時に与ダメ上昇Lv10　モン類有利時にクリダメ上昇Lv5",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 292,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0293",
+      "name": "連撃：アクセルドライブ",
+      "version": 1,
+      "baseName": "連撃：アクセルドライブ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜50%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 293,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0294",
+      "name": "[有利]連撃Lv3",
+      "version": 1,
+      "baseName": "[有利]連撃",
+      "level": 3,
+      "description": "[有利]かつ対象技命中時、ダメージ＜30%＞の追撃＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 294,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0295",
+      "name": "クラッシュエンド",
+      "version": 1,
+      "baseName": "クラッシュエンド",
+      "level": null,
+      "description": "対象技命中時、バトル中の技命中回数に応じて追撃＜30%＞＜最大3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 295,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0296",
+      "name": "連撃：クラッシュエンド",
+      "version": 1,
+      "baseName": "連撃：クラッシュエンド",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 296,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0297",
+      "name": "疾走",
+      "version": 1,
+      "baseName": "疾走",
+      "level": null,
+      "description": "人気度または忠誠度が120以上の時、移動速度上昇＜+1＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 297,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0298",
+      "name": "ガッツリカバリー",
+      "version": 1,
+      "baseName": "ガッツリカバリー",
+      "level": null,
+      "description": "対象技発動後、ガッツダメージに応じてガッツ回復＜消費ガッツの25%まで＞/ガッツ回復Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 298,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0299",
+      "name": "[近]命中率上昇",
+      "version": 1,
+      "baseName": "[近]命中率上昇",
+      "level": null,
+      "description": "技が命中したとき近距離の命中上昇Lv3＜10秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 299,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0300",
+      "name": "[相手中]与ダメ上昇",
+      "version": 1,
+      "baseName": "[相手中]与ダメ上昇",
+      "level": null,
+      "description": "技を発動したとき相手＜ふつう＞で与ダメ上昇Lv2＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 300,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0301",
+      "name": "祝：強襲Lv4",
+      "version": 1,
+      "baseName": "祝：強襲",
+      "level": 4,
+      "description": "対象技発動時、自身に[強襲Lv4]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0002"
+      ],
+      "sortOrder": 301,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0302",
+      "name": "連撃：Zスマッシュ",
+      "version": 1,
+      "baseName": "連撃：Zスマッシュ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜40%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 302,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0303",
+      "name": "[零]回避率上昇",
+      "version": 1,
+      "baseName": "[零]回避率上昇",
+      "level": null,
+      "description": "技が命中したとき零距離での回避上昇Lv3＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 303,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0304",
+      "name": "フォトンドライブ",
+      "version": 1,
+      "baseName": "フォトンドライブ",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・相手より[ちから]が高いとき、相手の【シールド】を破壊\n・相手より[かしこさ]が高いとき、有利オーラに変換",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 304,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0305",
+      "name": "連撃：フォトンドライブ",
+      "version": 1,
+      "baseName": "連撃：フォトンドライブ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜50%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 305,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0306",
+      "name": "連撃：ダークマター",
+      "version": 1,
+      "baseName": "連撃：ダークマター",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 306,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0307",
+      "name": "ダークマター",
+      "version": 1,
+      "baseName": "ダークマター",
+      "level": null,
+      "description": "対象技命中時、次の効果与＜1回＞\n・与ガッツダメージ分ガッツ吸収＜消費ガッツ100%まで＞\n・[有利]相手のかしこさステ＜-15%＞＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 307,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0308",
+      "name": "アディショナルチェイサー",
+      "version": 1,
+      "baseName": "アディショナルチェイサー",
+      "level": null,
+      "description": "攻撃ステータス10%の追加ダメージ/ガッツ回復Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 308,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0309",
+      "name": "[有利]変転",
+      "version": 1,
+      "baseName": "[有利]変転",
+      "level": null,
+      "description": "[有利]対象技命中時、有利オーラに変換＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 309,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0310",
+      "name": "[有利]貫通Lv2",
+      "version": 1,
+      "baseName": "[有利]貫通",
+      "level": 2,
+      "description": "[有利]かつ対象技命中時、丈夫さ＜20%＞無視",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 310,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0311",
+      "name": "恵：狙撃Lv2",
+      "version": 1,
+      "baseName": "恵：狙撃",
+      "level": 2,
+      "description": "対象技発動時、自身に[狙撃Lv2＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0012"
+      ],
+      "sortOrder": 311,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0312",
+      "name": "バースト・シーケンス",
+      "version": 1,
+      "baseName": "バースト・シーケンス",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ガッツ消費量の＜150%＞与ダメ上昇\n・[オーバーヒート]4以上の時、消費ガッツ＜30%＞回復",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 312,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0313",
+      "name": "連撃：スーパーミサイル",
+      "version": 1,
+      "baseName": "連撃：スーパーミサイル",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 313,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0314",
+      "name": "連撃：ダブルセイバー",
+      "version": 1,
+      "baseName": "連撃：ダブルセイバー",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 314,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0315",
+      "name": "オーバードライブ改",
+      "version": 1,
+      "baseName": "オーバードライブ改",
+      "level": null,
+      "description": "状態変化中に対象技発動時、自身に次の効果＜20秒＞＜1回＞\n・全ての技発動時、ダメージ＜20%＞追撃を＜1回＞与える\n・[業物Lv5]\n・被ダメ上昇＜12%＞",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 315,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0316",
+      "name": "[有利]必殺Lv5",
+      "version": 1,
+      "baseName": "[有利]必殺",
+      "level": 5,
+      "description": "[有利]対象技命中時、クリ率＜25%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 316,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0317",
+      "name": "連撃：マルチバースト",
+      "version": 1,
+      "baseName": "連撃：マルチバースト",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜4回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 317,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0318",
+      "name": "リミットブレイク",
+      "version": 1,
+      "baseName": "リミットブレイク",
+      "level": null,
+      "description": "対象技命中時、自身に次の効果＜20秒＞＜1回＞\n・耐久値＜200＞の【シールド】展開\n・＜5秒＞ごとに自身の最大ライフ＜5%＞の継続ダメージ\n・攻撃ステータスと移動速度＜+15%＞\n・すべての技命中時、ダメ＜20%＞の追撃＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 318,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0319",
+      "name": "連撃：リミットブレイク",
+      "version": 1,
+      "baseName": "連撃：リミットブレイク",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ダメージ＜30%＞の追撃を＜1回＞与える\n・2回目以降の発動では追撃を＜2回＞に増加",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 319,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0320",
+      "name": "ニア・エクステンド",
+      "version": 1,
+      "baseName": "ニア・エクステンド",
+      "level": null,
+      "description": "バトル中、[近距離]適性に応じて、自身のすべての近距離技に次の効果\n・B以上：残り時間が少ないほど与ダメ上昇[最大20%]\n・S以上：ダメージ＜20%＞の追撃を＜1回＞\n・SS以上：消費ガッツの＜20%＞を回復",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 320,
       "status": "verified"
     }
   ]

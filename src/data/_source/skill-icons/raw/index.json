@@ -127,5 +127,32 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0220": {
+    "name": "メテオドライブ",
+    "blood": "ケンタウロス",
+    "source": "ケンタウロス-20261014-0827/icons/11.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0241": {
+    "name": "クラッシュエンド",
+    "blood": "ドラゴン",
+    "source": "ドラゴン-20261014-0821/icons/17.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0270": {
+    "name": "投げ飛ばし",
+    "blood": "ピクシー",
+    "source": "ピクシー-20261014-0814/icons/13.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
   }
 }
