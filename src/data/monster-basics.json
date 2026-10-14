@@ -9706,6 +9706,37 @@
       "capturedAt": "2026-09-28"
     },
     {
+      "id": "2751",
+      "name": "マホウビン",
+      "talent": {
+        "life": -5,
+        "power": 10,
+        "wisdom": -5,
+        "accuracy": 5,
+        "evasion": 15,
+        "defense": 0
+      },
+      "gutsRecovery": "A",
+      "moveSpeed": "A",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "C",
+        "海岸": "F",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "C",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-14"
+    },
+    {
       "id": "2809",
       "name": "ウルズ",
       "talent": {

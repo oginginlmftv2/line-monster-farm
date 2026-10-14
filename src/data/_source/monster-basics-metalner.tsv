@@ -4,3 +4,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ステルナー	10	0	15	5	-5	-5	A	A	ふつう	ヨイ	小さい	E	B	C	C	F	C	B	E	B	2026-09-28
 ラブラブセイジン	-10	0	10	10	10	0	A	A	ふつう	ややワル	小さい	F	E	C	B	C	B	C	D	D	2026-09-28
 プレゼンター	5	0	-10	20	-5	10	A	B	ふつう	ヨイ	小さい	C	C	F	B	E	C	C	E	B	2026-09-28
+マホウビン	-5	10	-5	5	15	0	A	A	早熟	ふつう	小さい	E	C	F	C	B	D	C	B	D	2026-10-14
