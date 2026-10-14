@@ -186,7 +186,7 @@ GitHub Appを使う場合、定期的なtoken更新はありません。PAT（GI
 `60_mon_type.gs`と`ui_mon_type.html`は新しいファイルです。GASエディタの「＋」から同じ名前
 （`60_mon_type`はスクリプト、`ui_mon_type`はHTML）で先に作ってから貼ります。
 
-1. `60_mon_type.gs`・`ui_mon_type.html`を新規作成して貼る。`00_core.gs`・`30_publish.gs`・`40_setup.gs`・`index.html`も同名のGASファイルへ同期して保存する
+1. `60_mon_type.gs`・`ui_mon_type.html`を新規作成して貼る。`00_core.gs`・`30_publish.gs`・`40_setup.gs`・`index.html`・`ui_publish.html`も同名のGASファイルへ同期して保存する（`ui_publish.html`は「公開結果を確認」系のボタンを別の折りたたみ枠に分けた変更）
 2. `setup1_createSheets`を実行し、`作成: mon_types`と出ることを確認する。新規シート追加だけなので`ALLOW_DESTRUCTIVE_SETUP`は不要
 3. `setup3_importMonTypesFromMain`を実行し、`mon_types に 6 行を取り込みました。`と出ることを確認する。
    `main`の`taxonomy.json`をそのまま取り込む。行が1つでもあれば何もしない（上書きしない）ので鍵は不要
