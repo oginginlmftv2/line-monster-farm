@@ -193,5 +193,599 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-14"
+  },
+  "sk-0128": {
+    "name": "裂け聖炎の刃よ",
+    "blood": "アーク",
+    "source": "20261014-195607.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0126": {
+    "name": "聖夜の鐘よ鳴響け",
+    "blood": "アーク",
+    "source": "20261014-195617.png",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0127": {
+    "name": "絶望の時間",
+    "blood": "アーク",
+    "source": "20261014-195622.png",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0062": {
+    "name": "王武天覇",
+    "blood": "イルミネ",
+    "source": "20261014-195709.png",
+    "cell": [
+      6,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0063": {
+    "name": "王武星",
+    "blood": "イルミネ",
+    "source": "20261014-195712.png",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0053": {
+    "name": "グレネード",
+    "blood": "イルミネ",
+    "source": "20261014-195744.png",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0055": {
+    "name": "おもちゃの爆弾",
+    "blood": "イルミネ",
+    "source": "20261014-195752.png",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0054": {
+    "name": "バスターソード",
+    "blood": "イルミネ",
+    "source": "20261014-195800.png",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0056": {
+    "name": "シールドバッシュ・氷",
+    "blood": "イルミネ",
+    "source": "20261014-195806.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0057": {
+    "name": "アサシンクロウ・氷",
+    "blood": "イルミネ",
+    "source": "20261014-195808.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0048": {
+    "name": "ノクターン",
+    "blood": "イルミネ",
+    "source": "skill-icons/sk-0048.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0050": {
+    "name": "クリムゾンノヴァ",
+    "blood": "イルミネ",
+    "source": "skill-icons/sk-0050.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0040": {
+    "name": "プラズマ",
+    "blood": "イルミネ",
+    "source": "skill-icons/sk-0040.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0109": {
+    "name": "ホイップハンマー",
+    "blood": "ゴースト",
+    "source": "20261014-200048.png",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0077": {
+    "name": "ハトのおとしもの",
+    "blood": "ゴースト",
+    "source": "20261014-200052.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0082": {
+    "name": "カード・クラブ",
+    "blood": "ゴースト",
+    "source": "20261014-200105.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0083": {
+    "name": "グリンネーション",
+    "blood": "ゴースト",
+    "source": "20261014-200111.png",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0081": {
+    "name": "トリックパンチ",
+    "blood": "ゴースト",
+    "source": "20261014-200116.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0080": {
+    "name": "びっくりドクロ",
+    "blood": "ゴースト",
+    "source": "20261014-200129.png",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0101": {
+    "name": "威圧",
+    "blood": "キジン",
+    "source": "20261014-200254.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0103": {
+    "name": "硬質化パンチ",
+    "blood": "キジン",
+    "source": "20261014-200317.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0102": {
+    "name": "回し蹴り",
+    "blood": "キジン",
+    "source": "20261014-200322.png",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0104": {
+    "name": "硬質化キック",
+    "blood": "キジン",
+    "source": "20261014-200332.png",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0105": {
+    "name": "ウォール",
+    "blood": "キジン",
+    "source": "20261014-200341.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0106": {
+    "name": "闘魔解放",
+    "blood": "キジン",
+    "source": "20261014-200357.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0107": {
+    "name": "断頭鬼刃",
+    "blood": "キジン",
+    "source": "20261014-200359.png",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0494": {
+    "name": "南瓜門",
+    "blood": "キジン",
+    "source": "20261014-200422.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0495": {
+    "name": "悪戯",
+    "blood": "キジン",
+    "source": "20261014-200435.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0088": {
+    "name": "殴りかかり",
+    "blood": "キジン",
+    "source": "skill-icons/sk-0088.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0097": {
+    "name": "帝釈崩天",
+    "blood": "キジン",
+    "source": "skill-icons/sk-0097.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0099": {
+    "name": "阿鼻地獄",
+    "blood": "キジン",
+    "source": "skill-icons/sk-0099.png（図鑑で暗く撮れた版）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-10-14"
+  },
+  "sk-0038": {
+    "name": "王狐炎衝",
+    "blood": "キュービ",
+    "source": "20261014-200807.png",
+    "cell": [
+      6,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0030": {
+    "name": "火ノ鳥神楽",
+    "blood": "キュービ",
+    "source": "20261014-200818.png",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0011": {
+    "name": "提灯落とし・炎",
+    "blood": "キュービ",
+    "source": "20261014-200820.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0032": {
+    "name": "天叢雲剣",
+    "blood": "キュービ",
+    "source": "20261014-200825.png",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0013": {
+    "name": "八塩折之酒",
+    "blood": "キュービ",
+    "source": "20261014-200827.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0022": {
+    "name": "蒼炎車",
+    "blood": "キュービ",
+    "source": "20261014-200829.png",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0033": {
+    "name": "降魔調伏",
+    "blood": "キュービ",
+    "source": "20261014-200838.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0021": {
+    "name": "幻の左",
+    "blood": "キュービ",
+    "source": "20261014-200840.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0014": {
+    "name": "提灯落とし・闇",
+    "blood": "キュービ",
+    "source": "20261014-200843.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0024": {
+    "name": "霊子暴走",
+    "blood": "キュービ",
+    "source": "20261014-200851.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0034": {
+    "name": "聖なる福音",
+    "blood": "キュービ",
+    "source": "20261014-200854.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0029": {
+    "name": "神蛇翠火",
+    "blood": "キュービ",
+    "source": "20261014-200912.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0031": {
+    "name": "神獣白澤",
+    "blood": "キュービ",
+    "source": "20261014-200918.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0019": {
+    "name": "煙幕",
+    "blood": "キュービ",
+    "source": "20261014-200925.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0020": {
+    "name": "蝶の舞",
+    "blood": "キュービ",
+    "source": "20261014-200944.png",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0012": {
+    "name": "警戒",
+    "blood": "キュービ",
+    "source": "20261014-200945.png",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0023": {
+    "name": "超狐火・星",
+    "blood": "キュービ",
+    "source": "20261014-200953.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0496": {
+    "name": "求愛",
+    "blood": "キュービ",
+    "source": "20261014-200955.png",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0007": {
+    "name": "王狐焔",
+    "blood": "キュービ",
+    "source": "20261014-201017.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
+  },
+  "sk-0006": {
+    "name": "狐火・藍",
+    "blood": "キュービ",
+    "source": "20261014-201023.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-14"
   }
 }

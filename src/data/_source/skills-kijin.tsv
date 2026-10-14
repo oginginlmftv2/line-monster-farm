@@ -23,3 +23,5 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 キジン	遠	3	闘魔解放	無	ちから	24		C	B	B	G	闘魔解放										1	シオン・リゾート				
 キジン	近	4	断頭鬼刃	黒	ちから	50		S+	B	G	S	一刀両断		魂喰い		ライフ上昇[中]	シオン・リゾート:6	フィールドブースト	シオン・リゾート:10			1	シオン・リゾート				
 キジン	中	1	ネビュラ	白	ちから	16	遠	E	B	C	G	ネビュラ										1	アストロガール				
+キジン	遠	4	南瓜門	緑	ちから	35		S	C+	A	B	疫：乱心		恵：狙撃Lv2								1	フラン				
+キジン	遠	2	悪戯	黒	ちから	27		B	B	D	D	充填Lv4										1	フラン				
