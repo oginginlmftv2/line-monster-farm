@@ -87,10 +87,22 @@ const NON_BUFF_TOKENS = [
 // モン類の表示順（公式順）。表示に関わる並びはすべてこれを使うこと。
 const MON_ORDER = ['souzou', 'genrei', 'mazoku', 'kemono', 'kaibutsu', 'muki'];
 
-// モン類アイコン。トップページの「モン類から探す」と同一。
-const MON_ICONS = {
-  souzou: '✨', genrei: '🐉', mazoku: '👿', kemono: '🐺', kaibutsu: '👹', muki: '💎',
-};
+// モン類アイコン（img/mon-type/<monSlug>.png）とオーラアイコン（img/aura/<色>.png）。
+// ゲームの絞り込み画面から切り抜いた透過PNG（表示の2倍の大きさ）。作り方は build-spec 5-13
+const MON_TYPE_ICON_DIR = 'img/mon-type';
+const AURA_ICON_DIR = 'img/aura';
+const AURA_ICON_SLUG = { 赤: 'red', 青: 'blue', 黄: 'yellow', 緑: 'green', 白: 'white', 黒: 'black' };
+
+// alt を空にするのは、すぐ隣にモン類名・オーラ名の文字があるとき（読み上げが二重になるため）
+function renderMonTypeIcon(monSlug, rootPrefix, size, alt = '', className = 'mon-type-icon') {
+  return `<img class="${className}" src="${rootPrefix}${MON_TYPE_ICON_DIR}/${escapeHtml(monSlug)}.png" alt="${escapeHtml(alt)}" width="${size}" height="${size}">`;
+}
+
+function renderAuraIcon(aura, rootPrefix, size, alt = aura) {
+  const slug = AURA_ICON_SLUG[aura];
+  if (!slug) return escapeHtml(aura);
+  return `<img class="aura-icon" src="${rootPrefix}${AURA_ICON_DIR}/${slug}.png" alt="${escapeHtml(alt)}" width="${size}" height="${size}">`;
+}
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(REPO, relativePath), 'utf8'));
@@ -859,6 +871,8 @@ function resolveBuildNow() {
   return process.env.GACHA_BUILD_NOW || new Date().toISOString();
 }
 
+// モン類ページの生成条件（build-spec 3-3）：所属1体以上。
+// taxonomy.json の運営者の文は任意で、あれば出す（形が崩れていれば出さずにログへ理由を書く）。
 function gateMonTypes(inputs) {
   const taxonomyMonTypes = inputs.taxonomy && inputs.taxonomy.monTypes
     ? inputs.taxonomy.monTypes
@@ -869,36 +883,32 @@ function gateMonTypes(inputs) {
 
   return MON_ORDER.map(slug => {
     const name = monTypeNames.get(slug) || slug;
-    const entry = taxonomyMonTypes[slug];
     const reasons = [];
-    if (!entry) {
-      reasons.push('taxonomy.json にデータがありません');
-      return { slug, name, entry: null, totalLength: 0, reasons, eligible: false };
-    }
+    const notes = [];
+    const memberCount = inputs.monsters.filter(monster => monster.monSlug === slug).length;
+    if (!memberCount) reasons.push('所属モンスターが0体です');
 
-    const sections = Array.isArray(entry.sections) ? entry.sections : [];
-    if (sections.length !== 3) {
-      reasons.push(`sections が${sections.length}件。3件必要`);
-    }
-    sections.forEach((section, index) => {
-      const items = Array.isArray(section.items) ? section.items : [];
-      if (!items.length) reasons.push(`section ${index + 1} の items が0件。1件以上必要`);
-    });
+    const entry = taxonomyMonTypes[slug] || null;
+    const sections = entry && Array.isArray(entry.sections)
+      ? entry.sections.filter(section => section && section.heading
+        && Array.isArray(section.items) && section.items.some(item => item && String(item.body || '').trim()))
+      : [];
+    if (!entry) notes.push('運営者の文なし（taxonomy.json に項目がありません）');
+    else if (!sections.length) notes.push('運営者の文なし（sections に本文がありません）');
     const totalLength = sections.reduce((sectionTotal, section) => {
-      const items = Array.isArray(section.items) ? section.items : [];
-      return sectionTotal + items.reduce((itemTotal, item) => {
+      return sectionTotal + section.items.reduce((itemTotal, item) => {
         return itemTotal + String(item.subheading || '').length + String(item.body || '').length;
       }, 0);
     }, 0);
-    if (totalLength < 400) {
-      reasons.push(`合計${totalLength}字。400字必要。${400 - totalLength}字不足`);
-    }
     return {
       slug,
-      name: entry.name || name,
+      name: (entry && entry.name) || name,
       entry,
+      sections,
       totalLength,
+      memberCount,
       reasons,
+      notes,
       eligible: reasons.length === 0,
     };
   });
@@ -1049,7 +1059,46 @@ function renderMonsterIndex(source, context) {
   const withCards = source.slice(0, start + startMarker.length)
     + `\n${cards}\n`
     + source.slice(end);
-  return renderMonsterCount(withCards, context.monsters.length);
+  return renderMonsterCount(renderMonsterIndexPicker(withCards, context), context.monsters.length);
+}
+
+// トップの「モン類から探す」（2026-10-14〜生成）。体数は所属の実数、アイコンはモン類アイコン
+function renderTopMonTypeNav(source, context) {
+  const startMarker = '<!-- BUILD:MON-TYPE-NAV:START -->';
+  const endMarker = '<!-- BUILD:MON-TYPE-NAV:END -->';
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start
+      || source.indexOf(startMarker, start + 1) !== -1 || source.indexOf(endMarker, end + 1) !== -1) {
+    throw new Error('index.html の BUILD:MON-TYPE-NAV マーカーはSTART・END各1個が必要です');
+  }
+  const links = context.eligibleMonTypes.map(monType => {
+    addLink(context, `monsters/${monType.slug}/index.html`);
+    const count = context.monsters.filter(monster => monster.monSlug === monType.slug).length;
+    return `      <a href="monsters/${escapeHtml(monType.slug)}/" class="menu-link">
+        <span class="icon">${renderMonTypeIcon(monType.slug, '', 28)}</span> ${escapeHtml(monType.name)}（${count}体）
+      </a>`;
+  }).join('\n');
+  return source.slice(0, start + startMarker.length) + `\n${links}\n` + source.slice(end);
+}
+
+// 「血統から探す」枠（build-spec 5-5）。全モン類の血統をアイコンで並べ、モン類名はモン類ページへ送る。
+function renderMonsterIndexPicker(source, context) {
+  const startMarker = '    <!-- BUILD:BLOOD-PICKER:START -->';
+  const endMarker = '    <!-- BUILD:BLOOD-PICKER:END -->';
+  const start = source.indexOf(startMarker);
+  const end = source.indexOf(endMarker);
+  if (start === -1 || end === -1 || end < start) {
+    throw new Error('monsters.html の血統枠生成マーカーが見つかりません');
+  }
+  if (source.indexOf(startMarker, start + startMarker.length) !== -1
+      || source.indexOf(endMarker, end + endMarker.length) !== -1) {
+    throw new Error('monsters.html の血統枠生成マーカーが重複しています');
+  }
+  const picker = renderBloodPicker(context, { where: 'root', monSlugs: MON_ORDER, showHeads: true, indent: '    ' });
+  return source.slice(0, start + startMarker.length)
+    + `\n${picker}\n`
+    + source.slice(end);
 }
 
 // 説明文中のモンスター総数を実数へ差し替える。
@@ -1330,8 +1379,8 @@ function skillsForMonster(monster, context) {
 }
 
 function skillAnchor(skill) {
-  // 血統ページは詳細ページと同じディレクトリにある
-  return `index.html#${escapeHtml(skill.skillId)}`;
+  // 血統ページは詳細ページと同じディレクトリにある。リンクは canonical と同じ末尾スラッシュの形にする
+  return `./#${escapeHtml(skill.skillId)}`;
 }
 
 // モンスター詳細の技1行。アイコンがある技だけ、左端に行の高さいっぱいのアイコンを置き、
@@ -1371,7 +1420,7 @@ function renderMonsterSkillSections(monster, context) {
   const bloodPage = context.bloodPageByBlood.get(monster.blood);
   if (!bloodPage) return '';
   const { unique, unlocks, abilityUnlocks } = skillsForMonster(monster, context);
-  const bloodHref = 'index.html';
+  const bloodHref = './';
   const uniqueSection = unique.length
     ? `
 
@@ -1437,8 +1486,8 @@ ${abilityUnlocks.map(({ skill, link }) => {
       <h2 class="section-title">${escapeHtml(monster.blood)}種の技</h2>
     </div>
     <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
-    <div class="menu-grid">
-      <a class="menu-link" href="${bloodHref}"><span class="icon">${MON_ICONS[monster.monSlug] || ''}</span>${escapeHtml(monster.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+    <div class="menu-grid menu-grid--single">
+      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
     </div>
   </div>`;
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
@@ -1629,14 +1678,14 @@ function renderDetail(entry, context) {
   const breadcrumbMonType = context.eligibleMonSlugs.has(monster.monSlug)
     ? (() => {
       addLink(context, `monsters/${monster.monSlug}/index.html`);
-      return `<a href="../index.html">${escapeHtml(monster.mon)}</a>`;
+      return `<a href="../">${escapeHtml(monster.mon)}</a>`;
     })()
     : escapeHtml(monster.mon);
   // 血統ページがある血統だけパンくずへ挟む
   const breadcrumbBlood = context.bloodPageByBlood.has(monster.blood)
     ? (() => {
       addLink(context, `monsters/${monster.monSlug}/${monster.bloodSlug}/index.html`);
-      return ` &gt; <a href="index.html">${escapeHtml(monster.blood)}種</a>`;
+      return ` &gt; <a href="./">${escapeHtml(monster.blood)}種</a>`;
     })()
     : '';
   const navMonsters = navLink(context, 'monsters.html', 'モンスター一覧');
@@ -1841,13 +1890,220 @@ function groupMonTypeMonsters(monsters) {
   }).sort((a, b) => b.members.length - a.members.length || a.firstId - b.firstId);
 }
 
+// 血統アイコン。ゲームの血統選択画面と同じ絵（元は img/blood/<slug>.png・144px）を、表示幅64pxで出す。
+// ページには表示幅の2倍（128px）に縮めた軽い版 img/blood/128/<slug>.jpg を使う（作り方は build-spec 5-13）。
+// 高さは元PNGのヘッダから比率で求め、width/height 属性に書いて読み込み中のずれを防ぐ。
+const BLOOD_ICON_DIR = 'img/blood';
+const BLOOD_ICON_SMALL_DIR = 'img/blood/128';
+const BLOOD_ICON_WIDTH = 64;
+
+function bloodIconOf(context, slug) {
+  if (!context.bloodIconSizes) context.bloodIconSizes = new Map();
+  if (!context.bloodIconSizes.has(slug)) {
+    const file = path.join(REPO, BLOOD_ICON_DIR, `${slug}.png`);
+    if (!fs.existsSync(file)) throw new Error(`${BLOOD_ICON_DIR}/${slug}.png がありません`);
+    const header = fs.readFileSync(file).subarray(0, 24);
+    if (header.length < 24 || header.toString('latin1', 12, 16) !== 'IHDR') {
+      throw new Error(`${BLOOD_ICON_DIR}/${slug}.png: PNGとして読めません`);
+    }
+    const width = header.readUInt32BE(16);
+    const height = header.readUInt32BE(20);
+    if (!fs.existsSync(path.join(REPO, BLOOD_ICON_SMALL_DIR, `${slug}.jpg`))) {
+      throw new Error(`${BLOOD_ICON_SMALL_DIR}/${slug}.jpg がありません（build-spec 5-13 の手順で作る）`);
+    }
+    context.bloodIconSizes.set(slug, {
+      width: BLOOD_ICON_WIDTH,
+      height: Math.round(BLOOD_ICON_WIDTH * height / width),
+    });
+  }
+  return { src: `${BLOOD_ICON_SMALL_DIR}/${slug}.jpg`, ...context.bloodIconSizes.get(slug) };
+}
+
+// 血統ページへのボタン（menu-link）の左に置く血統アイコン。文字が続くので alt は空にする
+function renderBloodLinkIcon(context, slug, rootPrefix) {
+  const icon = bloodIconOf(context, slug);
+  return `<img class="menu-link-blood-icon" src="${rootPrefix}${icon.src}" alt="" width="32" height="${Math.round(32 * icon.height / icon.width)}" loading="lazy" decoding="async">`;
+}
+
+// モン類ごとの血統。並びは BLOOD_ORDER（ゲームの並びが確かめられるまで既存順を使う）。
+function bloodsByMonType(context) {
+  const result = new Map(MON_ORDER.map(slug => [slug, []]));
+  for (const blood of context.idsJson.bloodOrder) {
+    const members = context.monsters.filter(monster => monster.blood === blood);
+    if (!members.length) continue;
+    const monSlug = members[0].monSlug;
+    if (!result.has(monSlug)) result.set(monSlug, []);
+    result.get(monSlug).push({
+      blood,
+      slug: context.idsJson.bloodSlug[blood],
+      mon: members[0].mon,
+      monSlug,
+      members,
+      bloodPage: context.bloodPageByBlood.get(blood) || null,
+    });
+  }
+  return result;
+}
+
+// 血統アイコンの選択枠（monsters.html・モン類ページ・血統ページ共通。CSSは style.css の「共通部品：血統アイコン枠」）。
+// 血統ページがある血統はそのページへ、無い血統はモン類ページの血統見出し（#blood-<slug>）へ送る。
+// where: 'root'（monsters.html）/ 'monType'（monsters/<mon>/）/ 'blood'（monsters/<mon>/<blood>/）
+function renderBloodPicker(context, { where, monSlugs, currentMonSlug = '', currentBlood = '', showHeads = false, indent = '  ' }) {
+  const rootPrefix = { root: '', monType: MON_TYPE_ROOT_PREFIX, blood: ROOT_PREFIX }[where];
+  const toMonsters = { root: 'monsters/', monType: '../', blood: '../../' }[where];
+  const groups = bloodsByMonType(context);
+  const hrefFor = item => {
+    const sameMonType = item.monSlug === currentMonSlug;
+    if (item.bloodPage) {
+      addLink(context, `monsters/${item.monSlug}/${item.slug}/index.html`);
+      if (sameMonType && where === 'monType') return `${item.slug}/`;
+      if (sameMonType && where === 'blood') return `../${item.slug}/`;
+      return `${toMonsters}${item.monSlug}/${item.slug}/`;
+    }
+    if (!context.eligibleMonSlugs.has(item.monSlug)) return '';
+    addLink(context, `monsters/${item.monSlug}/index.html`);
+    if (sameMonType && where === 'monType') return `#blood-${item.slug}`;
+    if (sameMonType && where === 'blood') return `../#blood-${item.slug}`;
+    return `${toMonsters}${item.monSlug}/#blood-${item.slug}`;
+  };
+  // ページ上部に出る monsters.html・モン類ページは即時に読む。血統ページでは末尾の関連ページなので遅延させる
+  const lazy = where === 'blood' ? ' loading="lazy"' : '';
+  const renderItem = (item, pad) => {
+    const icon = bloodIconOf(context, item.slug);
+    const skillMeta = item.bloodPage
+      ? `<span class="blood-picker-skill">技${item.bloodPage.skills.length}</span>`
+      : '';
+    const inner = `<img class="blood-picker-icon" src="${rootPrefix}${icon.src}" alt="${escapeHtml(item.blood)}" width="${icon.width}" height="${icon.height}"${lazy} decoding="async">`
+      + `<span class="blood-picker-name">${escapeHtml(item.blood)}</span>`
+      + `<span class="blood-picker-meta">${item.members.length}体${skillMeta}</span>`;
+    if (item.blood === currentBlood) {
+      return `${pad}<li class="blood-picker-item"><span class="blood-picker-link is-current" aria-current="page">${inner}</span></li>`;
+    }
+    const href = hrefFor(item);
+    const tag = href ? `a class="blood-picker-link${item.bloodPage ? ' has-page' : ''}" href="${escapeHtml(href)}"` : 'span class="blood-picker-link"';
+    return `${pad}<li class="blood-picker-item"><${tag}>${inner}</${tag.split(' ')[0]}></li>`;
+  };
+  const blocks = monSlugs.map(monSlug => {
+    const items = groups.get(monSlug) || [];
+    if (!items.length) return '';
+    const total = items.reduce((sum, item) => sum + item.members.length, 0);
+    let head = '';
+    if (showHeads) {
+      const name = items[0].mon;
+      const label = `${renderMonTypeIcon(monSlug, rootPrefix, 22)}${escapeHtml(name)}<span class="blood-picker-count">${total}体・${items.length}血統</span>`;
+      if (context.eligibleMonSlugs.has(monSlug)) {
+        addLink(context, `monsters/${monSlug}/index.html`);
+        head = `\n${indent}  <h3 class="blood-picker-head"><a href="${toMonsters}${monSlug}/">${label}</a></h3>`;
+      } else {
+        head = `\n${indent}  <h3 class="blood-picker-head">${label}</h3>`;
+      }
+    }
+    return `
+${indent}<div class="blood-picker-group">${head}
+${indent}  <ul class="blood-picker-grid">
+${items.map(item => renderItem(item, `${indent}    `)).join('\n')}
+${indent}  </ul>
+${indent}</div>`;
+  }).join('');
+  return `${indent}<div class="blood-picker${monSlugs.length > 1 ? ' blood-picker--all' : ''}">${blocks}
+${indent}</div>`;
+}
+
+// meta description。運営者の文があれば最初の本文から、無ければ所属の数字から作る。
+function monTypeDescription(monType, context) {
+  const firstItem = monType.sections.length
+    ? monType.sections[0].items.find(item => item && String(item.body || '').trim())
+    : null;
+  if (firstItem) return descriptionFrom(firstItem.body);
+  const items = bloodsByMonType(context).get(monType.slug) || [];
+  const count = items.reduce((sum, item) => sum + item.members.length, 0);
+  return descriptionFrom(`${monType.name}のモンスター${count}体を、${items.map(item => item.blood).join('・')}の${items.length}血統に分けて一覧にしています。`
+    + '血統ごとの体数と技の数、オーラ別の体数、最近追加されたモンスターも載せています。');
+}
+
+// モン類ページ冒頭の概要。数字は表で出し、同じ文型に数字を差し込む定型文は作らない。
+const MON_TYPE_RECENT_COUNT = 5;
+// オーラ別の表の列順。ゲームの絞り込み画面と同じ並び
+const AURA_ORDER = ['赤', '青', '黄', '緑', '白', '黒'];
+
+function renderMonTypeOverview(monType, monsters, context) {
+  const items = bloodsByMonType(context).get(monType.slug) || [];
+  const bloodRows = items.map(item => {
+    const nameCell = `<a href="#blood-${escapeHtml(item.slug)}">${escapeHtml(item.blood)}</a>`;
+    let pageCell = '—';
+    if (item.bloodPage) {
+      addLink(context, `monsters/${item.monSlug}/${item.slug}/index.html`);
+      pageCell = `<a href="${escapeHtml(item.slug)}/">${escapeHtml(item.blood)}種の技一覧</a>`;
+    }
+    return `        <tr><td>${nameCell}</td><td class="num">${item.members.length}体</td><td class="num">${item.bloodPage ? `${item.bloodPage.skills.length}技` : '未登録'}</td><td>${pageCell}</td></tr>`;
+  }).join('\n');
+  const auraOf = monster => {
+    const runtime = context.runtimeById.get(monster.id);
+    return runtime && runtime.aura ? runtime.aura : monster.aura;
+  };
+  const auras = AURA_ORDER.concat([...new Set(monsters.map(auraOf))].filter(aura => !AURA_ORDER.includes(aura)).sort());
+  const isLimited = monster => {
+    const runtime = context.runtimeById.get(monster.id);
+    return runtime ? !!runtime.limited : !!monster.limited;
+  };
+  // 1行＝1血統（BLOOD_ORDER）、最後に合計。0体のマスは薄く出す
+  const auraCells = list => auras.map(aura => {
+    const count = list.filter(monster => auraOf(monster) === aura).length;
+    return `<td class="aura-col aura-col-${AURA_ICON_SLUG[aura] || 'other'}${count ? '' : ' is-zero'}">${count}</td>`;
+  }).join('') + `<td class="limited-col${list.some(isLimited) ? '' : ' is-zero'}">${list.filter(isLimited).length}</td>`;
+  const auraRows = items.map(item => `          <tr><th scope="row"><a href="#blood-${escapeHtml(item.slug)}">${escapeHtml(item.blood)}</a></th>${auraCells(item.members)}</tr>`).join('\n');
+  // 最近サイトに追加された順（monsters-data.js の末尾ほど新しい）。実装日があれば添える
+  const recent = [...monsters]
+    .sort((a, b) => b.arrayIndex - a.arrayIndex)
+    .slice(0, MON_TYPE_RECENT_COUNT)
+    .map(monster => {
+      addLink(context, monster.url.replace(/^\//, ''));
+      const released = releasedAtKey((context.editorialById.get(monster.id) || {}).releasedAt);
+      const date = released ? `・実装 ${escapeHtml(released.replace(/-01$/, '').replace(/-/g, '/'))}` : '';
+      return `      <li><a href="${escapeHtml(monster.bloodSlug)}/${escapeHtml(monster.id)}.html">${escapeHtml(monster.name)}</a><span class="mon-type-recent-meta">（${escapeHtml(monster.blood)}種・${escapeHtml(auraOf(monster))}${date}）</span></li>`;
+    }).join('\n');
+  return `
+  <section class="section">
+    <h2 class="section-title">${escapeHtml(monType.name)}の血統から探す</h2>
+    <p class="blood-picker-lead">「技」の数が出ている血統は技一覧のページへ、それ以外はこのページの血統別モンスターへ移動します。</p>
+${renderBloodPicker(context, { where: 'monType', monSlugs: [monType.slug], currentMonSlug: monType.slug, indent: '    ' })}
+  </section>
+
+  <section class="section mon-type-overview">
+    <h2 class="section-title">${escapeHtml(monType.name)}のデータ</h2>
+    <h3>血統ごとの体数と技</h3>
+    <div class="mon-type-table-scroll">
+      <table class="mon-type-table">
+        <thead><tr><th>血統</th><th class="num">体数</th><th class="num">技</th><th>技一覧</th></tr></thead>
+        <tbody>
+${bloodRows}
+        </tbody>
+      </table>
+    </div>
+    <h3>オーラ別の体数</h3>
+    <div class="mon-type-table-scroll">
+      <table class="mon-type-table mon-type-aura-table">
+        <thead><tr><th scope="col">血統</th>${auras.map(aura => `<th scope="col" class="aura-col aura-col-${AURA_ICON_SLUG[aura] || 'other'}">${renderAuraIcon(aura, MON_TYPE_ROOT_PREFIX, 22)}</th>`).join('')}<th scope="col" class="limited-col">限定</th></tr></thead>
+        <tbody>
+${auraRows}
+        </tbody>
+        <tfoot><tr><th scope="row">合計</th>${auraCells(monsters)}</tr></tfoot>
+      </table>
+    </div>
+    <h3>最近追加されたモンスター</h3>
+    <ul class="mon-type-recent">
+${recent}
+    </ul>
+  </section>`;
+}
+
 function renderMonType(monType, context) {
   const monsters = context.monsters
     .filter(monster => monster.monSlug === monType.slug)
     .sort((a, b) => Number(a.id) - Number(b.id));
   const groups = groupMonTypeMonsters(monsters);
   const title = `${monType.name}のモンスター一覧（${monsters.length}体・${groups.length}血統）| LINEモンスターファーム徹底攻略`;
-  const description = descriptionFrom(monType.entry.sections[0].items[0].body);
+  const description = monTypeDescription(monType, context);
   const canonical = `${SITE_URL}/monsters/${monType.slug}/`;
   const breadcrumbTop = rootLink(context, 'index.html', 'トップ', MON_TYPE_ROOT_PREFIX);
   const breadcrumbMonsters = rootLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
@@ -1855,7 +2111,7 @@ function renderMonType(monType, context) {
   const navAssist = navLink(context, 'assist.html', 'アシストカード一覧', MON_TYPE_ROOT_PREFIX);
   const navGacha = navLink(context, 'gacha/', '開催中ガチャ一覧', MON_TYPE_ROOT_PREFIX);
   const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー', MON_TYPE_ROOT_PREFIX);
-  const editorialSections = monType.entry.sections.map(section => `
+  const editorialSections = monType.sections.map(section => `
   <section class="section">
     <h2 class="section-title">${escapeHtml(section.heading)}</h2>
 ${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escapeHtml(item.subheading)}</h3>\n`}    <p>${escapeHtml(item.body)}</p>`).join('\n')}
@@ -1886,11 +2142,11 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
       addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
       skillNav = `
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/index.html"><span class="icon">${MON_ICONS[bloodPage.monSlug] || ''}</span>${escapeHtml(group.blood)}種の技一覧（${bloodPage.skills.length}技）</a>
+        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
       </div>`;
     }
     return `
-    <div class="mon-type-blood-group">
+    <div class="mon-type-blood-group" id="blood-${escapeHtml(group.members[0].bloodSlug)}">
       <h3 class="mon-type-blood-title">${heading}</h3>${skillNav}${editorialGrid}${compactGrid}
     </div>`;
   }).join('');
@@ -1898,7 +2154,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
   const otherLinks = otherMonTypes.map(other => {
     addLink(context, `monsters/${other.slug}/index.html`);
     const count = context.monsters.filter(monster => monster.monSlug === other.slug).length;
-    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html"><span class="icon">${MON_ICONS[other.slug] || ''}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
+    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/"><span class="icon">${renderMonTypeIcon(other.slug, MON_TYPE_ROOT_PREFIX, 28)}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
   }).join('\n');
 
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
@@ -1935,7 +2191,8 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
 
 <main class="container">
   <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${escapeHtml(monType.name)}</p>
-  <h1 class="page-title">${escapeHtml(monType.name)}のモンスター</h1>
+  <h1 class="page-title mon-type-page-title">${renderMonTypeIcon(monType.slug, MON_TYPE_ROOT_PREFIX, 40, '', 'mon-type-title-icon')}${escapeHtml(monType.name)}のモンスター</h1>
+${renderMonTypeOverview(monType, monsters, context)}
 ${editorialSections}
 
   <section class="section">
@@ -2567,9 +2824,10 @@ function bloodDescription(bloodGate) {
   );
 }
 
-function renderBloodPage(bloodGate, context, abilityById, otherBloodGates) {
+function renderBloodPage(bloodGate, context, abilityById) {
   const skills = bloodGate.skills;
   const uniqueSkills = skills.filter(skill => skill.unique);
+  const bloodTitleIcon = bloodIconOf(context, bloodGate.slug);
   const title = `${bloodGate.blood}種の技一覧（${skills.length}技）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
   const description = bloodDescription(bloodGate);
   const canonical = `${SITE_URL}/monsters/${bloodGate.monSlug}/${bloodGate.slug}/`;
@@ -2579,7 +2837,7 @@ function renderBloodPage(bloodGate, context, abilityById, otherBloodGates) {
   const breadcrumbMonType = hasMonTypePage
     ? (() => {
       addLink(context, `monsters/${bloodGate.monSlug}/index.html`);
-      return `<a href="../index.html">${escapeHtml(bloodGate.mon)}</a>`;
+      return `<a href="../">${escapeHtml(bloodGate.mon)}</a>`;
     })()
     : escapeHtml(bloodGate.mon);
   const navMonsters = navLink(context, 'monsters.html', 'モンスター一覧');
@@ -2619,25 +2877,20 @@ ${uniqueSkills.map(skill => {
   </section>`
     : '';
 
-  const siblings = otherBloodGates.filter(other => other.monSlug === bloodGate.monSlug);
-  const siblingLinks = siblings.map(other => {
-    addLink(context, `monsters/${other.monSlug}/${other.slug}/index.html`);
-    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/index.html"><span class="icon">${MON_ICONS[other.monSlug] || ''}</span> ${escapeHtml(other.blood)}種の技</a>`;
-  }).join('\n');
+  // 関連ページ：同じモン類の血統を、技の無い血統も含めてアイコンの枠で並べる（今の血統は印だけ）。
+  // 技一覧のある血統はそのページへ、無い血統はモン類ページの血統見出しへ送る
   const monTypeLink = hasMonTypePage
-    ? `      <a class="menu-link" href="../index.html"><span class="icon">${MON_ICONS[bloodGate.monSlug] || ''}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>`
-    : '';
-  const navLinks = [siblingLinks, monTypeLink].filter(Boolean).join('\n');
-  const relatedSection = navLinks
     ? `
+    <div class="menu-grid blood-related-mon-type">
+      <a class="menu-link" href="../"><span class="icon">${renderMonTypeIcon(bloodGate.monSlug, ROOT_PREFIX, 28)}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>
+    </div>`
+    : '';
+  const relatedSection = `
 
   <section class="section">
-    <h2 class="section-title">関連ページ</h2>
-    <div class="menu-grid">
-${navLinks}
-    </div>
-  </section>`
-    : '';
+    <h2 class="section-title">関連ページ：${escapeHtml(bloodGate.mon)}の血統</h2>
+${renderBloodPicker(context, { where: 'blood', monSlugs: [bloodGate.monSlug], currentMonSlug: bloodGate.monSlug, currentBlood: bloodGate.blood, indent: '    ' })}${monTypeLink}
+  </section>`;
 
   const body = `<body class="blood-page">
 
@@ -2654,7 +2907,7 @@ ${navLinks}
 
 <main class="container">
   <p class="page-breadcrumb">${breadcrumbTop} &gt; ${breadcrumbMonsters} &gt; ${breadcrumbMonType} &gt; ${escapeHtml(bloodGate.blood)}種</p>
-  <h1 class="page-title">${escapeHtml(bloodGate.blood)}種の技一覧</h1>
+  <h1 class="page-title blood-page-title"><img class="blood-title-icon" src="${ROOT_PREFIX}${bloodTitleIcon.src}" alt="" width="${bloodTitleIcon.width}" height="${bloodTitleIcon.height}">${escapeHtml(bloodGate.blood)}種の技一覧</h1>
 
   <section class="section">
     <h2 class="section-title">間合い・ランク別の技</h2>
@@ -2763,7 +3016,7 @@ ${memberCards}
     openSkill(id);
   });
 
-  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  // モンスター詳細から ./#sk-0001 で来たときに、その技を開いて見せる
   function openFromHash() {
     var id = location.hash.slice(1);
     if (!/^sk-\\d{4}$/.test(id)) return;
@@ -3019,6 +3272,9 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
   for (const monType of excludedMonTypes) {
     console.log(`    ${monType.name}: ${monType.reasons.join(' / ')}`);
   }
+  for (const monType of eligibleMonTypes.filter(item => item.notes.length)) {
+    console.log(`    ${monType.name}: ${monType.notes.join(' / ')}`);
+  }
   const skippedBloods = bloodGates.filter(bloodGate => !bloodGate.eligible);
   const skillCount = ((inputs.skillsJson && inputs.skillsJson.skills) || []).length;
   if (!skillCount) {
@@ -3039,7 +3295,7 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
   console.log('');
   console.log('=== 警告 ===');
   if (!inputs.taxonomy) {
-    console.log('  taxonomy.json が無いため、詳細ページのみ生成し、モン類ページをスキップしました');
+    console.log('  taxonomy.json が無いため、モン類ページを運営者の文なしで生成しました');
   }
   for (const formation of context.skippedEmptyFormations) {
     console.log(`  空の編成をスキップ: ${formation.id} ${formation.name} ${formation.title}`);
@@ -3111,7 +3367,7 @@ function main() {
       path: `monsters/${monType.slug}/index.html`,
       html,
       title: `${monType.name}のモンスター一覧（${monsters.length}体・${bloodCount}血統）| LINEモンスターファーム徹底攻略`,
-      description: descriptionFrom(monType.entry.sections[0].items[0].body),
+      description: monTypeDescription(monType, context),
       canonical: `${SITE_URL}/monsters/${monType.slug}/`,
       priority: '0.6',
       indexable: true,
@@ -3121,8 +3377,7 @@ function main() {
   const bloodPages = eligibleBloods.map(bloodGate => renderBloodPage(
     bloodGate,
     context,
-    context.abilityById,
-    eligibleBloods.filter(other => other.blood !== bloodGate.blood)
+    context.abilityById
   ));
   const pages = detailPages.concat(monTypePages, bloodPages);
   const idAvailability = createIdAvailability(inputs.idsJson);
@@ -3145,6 +3400,8 @@ function main() {
       return inputs.sitemap.indexOf(`<loc>${a.canonical}</loc>`)
         - inputs.sitemap.indexOf(`<loc>${b.canonical}</loc>`);
     }));
+  // トップの「モン類から探す」を先に差し替え、ガチャの差し替えへ渡す（ガチャが無い回は下で単独に書く）
+  const topIndexSource = renderTopMonTypeNav(fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'), context);
   const assistBuild = buildAssistPages({
     dryRun: DRY_RUN,
     gachaAppearancesFor: cardId => renderGachaAppearances(
@@ -3161,7 +3418,7 @@ function main() {
     monsterDb: inputs.allMonsters,
     editorialDb: inputs.allEditorial,
     cardDb: inputs.assistCards,
-    indexSource: fs.readFileSync(path.join(REPO, 'index.html'), 'utf8'),
+    indexSource: topIndexSource,
     rerollSource: fs.readFileSync(path.join(REPO, 'reroll.html'), 'utf8'),
   });
   const bloodSitemapPages = bloodPages
@@ -3187,6 +3444,10 @@ function main() {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
   outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
+  if (!gachaBuild.outputs.some(output => output.path === 'index.html')) {
+    outputCounts[writeIfChanged('index.html', topIndexSource)]++;
+    outputCounts.total++;
+  }
   outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
   outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
   outputCounts[writeIfChanged(
@@ -3230,6 +3491,7 @@ if (require.main === module) {
 }
 
 module.exports = {
+  MON_ORDER,
   SKILL_RANGES,
   SKILL_RANKS,
   SKILL_AURAS,

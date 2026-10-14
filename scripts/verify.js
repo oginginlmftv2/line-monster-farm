@@ -17,7 +17,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const childProcess = require('child_process');
-const { PICKUP_SLOTS, validateGachaData, validateSkillData, SKILL_RANGES, SKILL_RANKS, SKILL_ICON_DIR, SKILL_ICON_FILE_PATTERN, loadSkillIcons, skillTableRanks } = require('../build');
+const { MON_ORDER, PICKUP_SLOTS, validateGachaData, validateSkillData, SKILL_RANGES, SKILL_RANKS, SKILL_ICON_DIR, SKILL_ICON_FILE_PATTERN, loadSkillIcons, skillTableRanks } = require('../build');
 
 const REPO = process.cwd();
 const LOCK = path.join(REPO, 'src', 'data', 'repo-guard.lock.json');
@@ -1956,7 +1956,7 @@ head('19. 技DB・血統ページ');
       if (!html.includes('<noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>')) {
         issues.push(`${rel}: JS無効時に技詳細を開くnoscriptが無い`);
       }
-      // モンスター詳細からのアンカー（index.html#sk-0001）で開けること
+      // モンスター詳細からのアンカー（./#sk-0001）で開けること
       if (!/if \(!\/\^sk-\\d\{4\}\$\/\.test\(id\)\) return;/.test(html)) {
         issues.push(`${rel}: アンカーで技を開くスクリプトが壊れている（正規表現のエスケープを確認）`);
       }
@@ -2009,7 +2009,7 @@ head('19. 技DB・血統ページ');
         const rel = monster.url.replace(/^\//, '');
         if (!exists(rel)) continue;
         const html = read(rel);
-        const shown = html.includes(`index.html#${skill.skillId}`);
+        const shown = html.includes(`href="./#${skill.skillId}"`);
         if (shown && !owners.has(monster.id)) {
           issues.push(`${rel}: ${skill.name} は固有技でも解放技でもないのに掲載されている`);
         }
@@ -2356,6 +2356,75 @@ head('23. 手書き記事の構造化データとllms.txt');
     if (unlisted.length) wn(`llms.txt に未掲載の血統ページ ${unlisted.length}件: ${unlisted.slice(0, 5).join(', ')}（手で追記する）`);
     else ok(`血統ページ ${bloodPages.length}件はすべて llms.txt に掲載`);
   }
+}
+
+head('24. 血統アイコンの選択枠と階層リンク（P-004）');
+{
+  // build-spec 5-13。monsters.html・モン類ページ・血統ページは同じ部品（renderBloodPicker）を使う
+  const issues = [];
+  const ids = JSON.parse(read('src/data/monster-ids.json'));
+  const bloodsByMon = new Map();
+  for (const blood of ids.bloodOrder) {
+    const member = ids.monsters.find(m => m.blood === blood);
+    if (!member) continue;
+    if (!bloodsByMon.has(member.monSlug)) bloodsByMon.set(member.monSlug, []);
+    bloodsByMon.get(member.monSlug).push(member.bloodSlug);
+  }
+  const allBloods = MON_ORDER.flatMap(monSlug => bloodsByMon.get(monSlug) || []);
+  const pickerSlugs = html => [...html.matchAll(/<img class="blood-picker-icon" src="[^"]*img\/blood\/128\/([a-z]+)\.jpg" alt="([^"]*)" width="\d+" height="\d+"/g)]
+    .map(m => (m[2] ? m[1] : `${m[1]}(alt無し)`));
+  // CSSは style.css の共通部品の節に置き、使うページで追加の読み込みを要らなくする
+  if (!/\.blood-picker-grid \{/.test(read('style.css'))) issues.push('style.css に共通部品「血統アイコン枠」の節が無い');
+  // 表示用の軽い版（128px）は元PNGと別に置く。34枚の合計は200KB以下（build-spec 5-13）
+  let smallBytes = 0;
+  for (const slug of allBloods) {
+    if (!exists(`img/blood/${slug}.png`)) issues.push(`血統アイコンの元画像が無い: img/blood/${slug}.png`);
+    if (!exists(`img/blood/128/${slug}.jpg`)) issues.push(`表示用の血統アイコンが無い: img/blood/128/${slug}.jpg`);
+    else smallBytes += fs.statSync(path.join(REPO, `img/blood/128/${slug}.jpg`)).size;
+  }
+  // モン類・オーラのアイコン（ゲーム画面から切り抜いた固定の画像）
+  for (const monSlug of MON_ORDER) if (!exists(`img/mon-type/${monSlug}.png`)) issues.push(`モン類アイコンが無い: img/mon-type/${monSlug}.png`);
+  for (const aura of ['red', 'blue', 'yellow', 'green', 'white', 'black']) if (!exists(`img/aura/${aura}.png`)) issues.push(`オーラアイコンが無い: img/aura/${aura}.png`);
+  // トップの「モン類から探す」は build.js が生成し、体数は所属の実数
+  // 準備中（monsters-editorial.json の hidden: true）の体はページにも体数にも出さない
+  const hiddenMonsterIds = new Set(Object.values(JSON.parse(read('src/data/monsters-editorial.json')).monsters)
+    .filter(entry => entry && entry.hidden === true).map(entry => String(entry.id)));
+  const top = read('index.html');
+  const topNav = top.slice(top.indexOf('<!-- BUILD:MON-TYPE-NAV:START -->'), top.indexOf('<!-- BUILD:MON-TYPE-NAV:END -->'));
+  for (const monSlug of MON_ORDER) {
+    const count = ids.monsters.filter(m => m.monSlug === monSlug && !hiddenMonsterIds.has(m.id)).length;
+    if (count && !new RegExp(`href="monsters/${monSlug}/"[\\s\\S]*?（${count}体）`).test(topNav)) issues.push(`index.html: モン類から探すの ${monSlug} が無いか体数が実数（${count}体）と違う`);
+  }
+  if (smallBytes > 200 * 1024) issues.push(`表示用の血統アイコン${allBloods.length}枚の合計が200KBを超えた（${Math.round(smallBytes / 1024)}KB）`);
+  const index = read('monsters.html');
+  const indexPicker = index.slice(index.indexOf('<!-- BUILD:BLOOD-PICKER:START -->'), index.indexOf('<!-- BUILD:BLOOD-PICKER:END -->'));
+  if (indexPicker.length < 50) issues.push('monsters.html: 血統から探すの生成マーカーが無いか空');
+  else if (pickerSlugs(indexPicker).join(',') !== allBloods.join(',')) issues.push('monsters.html: 血統の枠がモン類順・BLOOD_ORDER順の全血統と一致しない');
+  if (index.indexOf('<!-- BUILD:BLOOD-PICKER:START -->') > index.indexOf('<!-- BUILD:MONSTER-CARDS:START -->')) issues.push('monsters.html: 血統から探すがカード一覧より後ろにある');
+  for (const [monSlug, slugs] of bloodsByMon) {
+    const rel = `monsters/${monSlug}/index.html`;
+    if (!exists(rel)) { issues.push(`所属があるのにモン類ページが無い: ${rel}`); continue; }
+    const html = read(rel);
+    if (pickerSlugs(html).join(',') !== slugs.join(',')) issues.push(`${rel}: 血統の枠がそのモン類の血統と一致しない`);
+    for (const slug of slugs) if (!html.includes(`id="blood-${slug}"`)) issues.push(`${rel}: 血統見出しのアンカー #blood-${slug} が無い`);
+  }
+  // monsters/ 以下の生成ページは、モン類・血統ページへ canonical と同じ末尾スラッシュの形でリンクする
+  const walk = dir => fs.readdirSync(path.join(REPO, dir), { withFileTypes: true })
+    .flatMap(d => (d.isDirectory() ? walk(`${dir}/${d.name}`) : d.name.endsWith('.html') ? [`${dir}/${d.name}`] : []));
+  for (const rel of walk('monsters')) {
+    const html = read(rel);
+    for (const m of html.matchAll(/href="([^"#]*index\.html)(?:#[^"]*)?"/g)) {
+      const target = path.posix.normalize(path.posix.join(path.posix.dirname(rel), m[1]));
+      if (target.startsWith('monsters/')) { issues.push(`${rel}: ${m[1]} は末尾スラッシュの形にする`); break; }
+    }
+    const depth = rel.split('/').length;
+    if (depth === 4 && rel.endsWith('/index.html')) {
+      if (!/<h1 class="page-title blood-page-title"><img class="blood-title-icon" src="\.\.\/\.\.\/\.\.\/img\/blood\/128\/[a-z]+\.jpg"/.test(html)) issues.push(`${rel}: 見出しに血統アイコンが無い`);
+      if (!html.includes('aria-current="page"')) issues.push(`${rel}: 関連ページの血統の枠に今の血統の印が無い`);
+    }
+  }
+  if (issues.length) ng(`血統の枠・階層リンクの検査FAIL ${issues.length}件: ${issues.slice(0, 5).join(' / ')}`);
+  else ok(`血統の枠は monsters.html・モン類${bloodsByMon.size}本・血統ページで全${allBloods.length}血統と一致し、階層リンクは末尾スラッシュの形`);
 }
 
 // ---------------------------------------------------------------- 結果
