@@ -15,6 +15,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"怪物","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/"},{"@type":"ListItem","position":4,"name":"ゴースト種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/ghost/"}]}</script>
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../../blood.css">
+  <link rel="stylesheet" href="../../../blood-picker.css">
   <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head>
@@ -32,8 +33,8 @@
 </header>
 
 <main class="container">
-  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">怪物</a> &gt; ゴースト種</p>
-  <h1 class="page-title">ゴースト種の技一覧</h1>
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../">怪物</a> &gt; ゴースト種</p>
+  <h1 class="page-title blood-page-title"><img class="blood-title-icon" src="../../../img/blood/ghost.png" alt="" width="64" height="65">ゴースト種の技一覧</h1>
 
   <section class="section">
     <h2 class="section-title">間合い・ランク別の技</h2>
@@ -906,10 +907,21 @@
   </section>
 
   <section class="section">
-    <h2 class="section-title">関連ページ</h2>
-    <div class="menu-grid">
-      <a class="menu-link" href="../kijin/index.html"><span class="icon">👹</span> キジン種の技</a>
-      <a class="menu-link" href="../index.html"><span class="icon">👹</span> 怪物のモンスター一覧</a>
+    <h2 class="section-title">関連ページ：怪物の血統</h2>
+    <div class="blood-picker">
+    <div class="blood-picker-group">
+      <ul class="blood-picker-grid">
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-arrowhead"><img class="blood-picker-icon" src="../../../img/blood/arrowhead.png" alt="アローヘッド" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">アローヘッド</span><span class="blood-picker-meta">9体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-joker"><img class="blood-picker-icon" src="../../../img/blood/joker.png" alt="ジョーカー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ジョーカー</span><span class="blood-picker-meta">9体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-worm"><img class="blood-picker-icon" src="../../../img/blood/worm.png" alt="ワーム" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ワーム</span><span class="blood-picker-meta">12体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-kawazumo"><img class="blood-picker-icon" src="../../../img/blood/kawazumo.png" alt="カワズモー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">カワズモー</span><span class="blood-picker-meta">10体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../kijin/"><img class="blood-picker-icon" src="../../../img/blood/kijin.png" alt="キジン" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">キジン</span><span class="blood-picker-meta">7体<span class="blood-picker-skill">技24</span></span></a></li>
+        <li class="blood-picker-item"><span class="blood-picker-link is-current" aria-current="page"><img class="blood-picker-icon" src="../../../img/blood/ghost.png" alt="ゴースト" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ゴースト</span><span class="blood-picker-meta">5体<span class="blood-picker-skill">技21</span></span></span></li>
+      </ul>
+    </div>
+    </div>
+    <div class="menu-grid blood-related-mon-type">
+      <a class="menu-link" href="../"><span class="icon">👹</span> 怪物のモンスター一覧</a>
     </div>
   </section>
 </main>
@@ -1008,7 +1020,7 @@
     openSkill(id);
   });
 
-  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  // モンスター詳細から ./#sk-0001 で来たときに、その技を開いて見せる
   function openFromHash() {
     var id = location.hash.slice(1);
     if (!/^sk-\d{4}$/.test(id)) return;

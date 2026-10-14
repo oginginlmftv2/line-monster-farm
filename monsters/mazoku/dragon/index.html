@@ -15,6 +15,7 @@
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"魔族","item":"https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/"},{"@type":"ListItem","position":4,"name":"ドラゴン種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/dragon/"}]}</script>
   <link rel="stylesheet" href="../../../style.css">
   <link rel="stylesheet" href="../../../blood.css">
+  <link rel="stylesheet" href="../../../blood-picker.css">
   <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head>
@@ -32,8 +33,8 @@
 </header>
 
 <main class="container">
-  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../index.html">魔族</a> &gt; ドラゴン種</p>
-  <h1 class="page-title">ドラゴン種の技一覧</h1>
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../">魔族</a> &gt; ドラゴン種</p>
+  <h1 class="page-title blood-page-title"><img class="blood-title-icon" src="../../../img/blood/dragon.png" alt="" width="64" height="65">ドラゴン種の技一覧</h1>
 
   <section class="section">
     <h2 class="section-title">間合い・ランク別の技</h2>
@@ -883,11 +884,21 @@
   </section>
 
   <section class="section">
-    <h2 class="section-title">関連ページ</h2>
-    <div class="menu-grid">
-      <a class="menu-link" href="../pixie/index.html"><span class="icon">👿</span> ピクシー種の技</a>
-      <a class="menu-link" href="../dullahan/index.html"><span class="icon">👿</span> デュラハン種の技</a>
-      <a class="menu-link" href="../index.html"><span class="icon">👿</span> 魔族のモンスター一覧</a>
+    <h2 class="section-title">関連ページ：魔族の血統</h2>
+    <div class="blood-picker">
+    <div class="blood-picker-group">
+      <ul class="blood-picker-grid">
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../pixie/"><img class="blood-picker-icon" src="../../../img/blood/pixie.png" alt="ピクシー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ピクシー</span><span class="blood-picker-meta">21体<span class="blood-picker-skill">技17</span></span></a></li>
+        <li class="blood-picker-item"><span class="blood-picker-link is-current" aria-current="page"><img class="blood-picker-icon" src="../../../img/blood/dragon.png" alt="ドラゴン" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ドラゴン</span><span class="blood-picker-meta">14体<span class="blood-picker-skill">技17</span></span></span></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../dullahan/"><img class="blood-picker-icon" src="../../../img/blood/dullahan.png" alt="デュラハン" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">デュラハン</span><span class="blood-picker-meta">9体<span class="blood-picker-skill">技17</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-suezo"><img class="blood-picker-icon" src="../../../img/blood/suezo.png" alt="スエゾー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">スエゾー</span><span class="blood-picker-meta">12体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-nendoro"><img class="blood-picker-icon" src="../../../img/blood/nendoro.png" alt="ネンドロ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ネンドロ</span><span class="blood-picker-meta">12体</span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link" href="../#blood-naga"><img class="blood-picker-icon" src="../../../img/blood/naga.png" alt="ナーガ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ナーガ</span><span class="blood-picker-meta">14体</span></a></li>
+      </ul>
+    </div>
+    </div>
+    <div class="menu-grid blood-related-mon-type">
+      <a class="menu-link" href="../"><span class="icon">👿</span> 魔族のモンスター一覧</a>
     </div>
   </section>
 </main>
@@ -986,7 +997,7 @@
     openSkill(id);
   });
 
-  // モンスター詳細から index.html#sk-0001 で来たときに、その技を開いて見せる
+  // モンスター詳細から ./#sk-0001 で来たときに、その技を開いて見せる
   function openFromHash() {
     var id = location.hash.slice(1);
     if (!/^sk-\d{4}$/.test(id)) return;

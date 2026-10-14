@@ -94,3 +94,64 @@
     margin-bottom: 20px;
   }
 }
+
+/* 冒頭の「<モン類>のデータ」。表と数字で出す（build-spec 5-3） */
+.mon-type-page .mon-type-overview > h3 {
+  margin: 26px 0 10px;
+}
+
+.mon-type-page .mon-type-overview > h3:first-of-type {
+  margin-top: 4px;
+}
+
+.mon-type-page .mon-type-table-scroll {
+  overflow-x: auto;
+}
+
+.mon-type-page .mon-type-table {
+  font-size: 13px;
+}
+
+.mon-type-page .mon-type-table th {
+  padding: 8px 10px;
+  white-space: nowrap;
+}
+
+.mon-type-page .mon-type-table td {
+  padding: 8px 10px;
+}
+
+.mon-type-page .mon-type-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mon-type-page .mon-type-aura-table th,
+.mon-type-page .mon-type-aura-table td {
+  text-align: center;
+}
+
+.mon-type-page .mon-type-recent {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.mon-type-page .mon-type-recent li + li {
+  margin-top: 4px;
+}
+
+.mon-type-page .mon-type-recent-meta {
+  font-size: 12px;
+  color: #777;
+}
+
+@media (max-width: 640px) {
+  .mon-type-page .mon-type-table {
+    font-size: 12px;
+  }
+
+  .mon-type-page .mon-type-table th,
+  .mon-type-page .mon-type-table td {
+    padding: 7px 6px;
+  }
+}
