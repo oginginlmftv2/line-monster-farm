@@ -57,6 +57,18 @@ overview.png     一覧画像
 
 撮れた数が技図鑑の技数と合わなければ、終了コード2で止まる。
 
+### アイコンだけ撮る（`--icons-only`）
+
+技DBに登録済みで、アイコンが無い血統（自動撮影より前に手入力した血統）に使う。
+能力詳細を開かず、図鑑トップと技詳細だけを撮ってアイコンを切り抜く。出力は `<血統>-<日時>-icons/`。
+
+```bash
+~/claude/lmf-aisho/analysis/.venv/bin/python -u tools/skill-autocapture/skillcap.py キュービ --icons-only
+```
+
+置くのは `skill_icon.py place <撮影フォルダ> <血統>`（下の「技アイコン」）。足すのはPNGだけで、
+TSVと技DBは触らない（`import-skills-tsv.js` は回さない）。
+
 ## 1技の流れ
 
 1. マスをタップ → 上部の技が切り替わったら撮る（図鑑トップ）
