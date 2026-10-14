@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-14T06:31:54Z",
+  "exportedAt": "2026-10-14T13:08:21Z",
   "count": 119,
   "monsters": {
     "1080": {
@@ -866,9 +866,12 @@
       "id": "2751",
       "name": "マホウビン",
       "arrayIndex": 361,
-      "explanation": "",
-      "explanationLength": 0,
+      "explanation": "・注目はランク5技の六大開拳。有利な相手には技を撃つたびにガッツ回復速度を0にできて、回数の制限もありません。幻霊だけでなくオーラ有利の相手にも効くので、環境を動かす可能性もあると思います。\n・専用技のそうちょうちゅうも、相手のガッツ回復を5秒止められます。とにかく相手のガッツを止めたい、という作りになっているんですよね。\n・ガッツ回復と移動速度はかなり速く、メタルナー種には技調整も入りました。メタルナーが好きな人は取りにいっていいと思います。",
+      "explanationLength": 224,
       "formations": [],
+      "author": "ぎん",
+      "authorUrl": "/profile.html",
+      "createdAt": "2026-10-14",
       "updatedAt": "2026-10-14",
       "releasedAt": "2026-10-14"
     },
