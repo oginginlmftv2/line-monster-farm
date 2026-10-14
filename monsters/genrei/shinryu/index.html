@@ -1,0 +1,855 @@
+<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
+<!-- 元データ: src/data/monster-skills.json / src/data/skill-abilities.json / src/data/monster-ids.json -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-PC4NG733');</script>
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../img/site/favicon.png">
+  <link rel="apple-touch-icon" href="../../../img/site/apple-touch-icon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>シンリュウ種の技一覧（15技）と所属モンスター8体 | LINEモンスターファーム徹底攻略</title>
+  <meta name="description" content="シンリュウ種の技を間合い・ランク別にまとめた一覧表です。遠中近零それぞれの技名、消費ガッツ、ダメージや命中率の評価、技能力、固有技と技登録の解放元モンスターまで掲載しています。">
+  <link rel="canonical" href="https://line-monster-farm-tetteikouryaku.com/monsters/genrei/shinryu/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"LINEモンスターファーム徹底攻略","item":"https://line-monster-farm-tetteikouryaku.com/"},{"@type":"ListItem","position":2,"name":"モンスター一覧","item":"https://line-monster-farm-tetteikouryaku.com/monsters.html"},{"@type":"ListItem","position":3,"name":"幻霊","item":"https://line-monster-farm-tetteikouryaku.com/monsters/genrei/"},{"@type":"ListItem","position":4,"name":"シンリュウ種","item":"https://line-monster-farm-tetteikouryaku.com/monsters/genrei/shinryu/"}]}</script>
+  <link rel="stylesheet" href="../../../style.css">
+  <link rel="stylesheet" href="../../../blood.css">
+  <noscript><style>.skill-detail[hidden]{display:table-row}.skill-unique-wrap[hidden]{display:block}.skill-unique-toggle{display:none}</style></noscript>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
+</head>
+<body class="blood-page">
+
+<header>
+  <div class="header-inner">
+    <a href="../../../index.html" class="logo"><img src="../../../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a>
+    <nav>
+      <a href="../../../monsters.html">モンスター<span class="nav-sub">一覧</span></a>
+      <a href="../../../assist.html">アシストカード<span class="nav-sub">一覧</span></a>
+      <a href="../../../gacha/">開催中ガチャ<span class="nav-sub">一覧</span></a>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <p class="page-breadcrumb"><a href="../../../index.html">トップ</a> &gt; <a href="../../../monsters.html">モンスター一覧</a> &gt; <a href="../">幻霊</a> &gt; シンリュウ種</p>
+  <h1 class="page-title blood-page-title"><img class="blood-title-icon" src="../../../img/blood/128/shinryu.jpg" alt="" width="64" height="65">シンリュウ種の技一覧</h1>
+
+  <section class="section">
+    <h2 class="section-title">間合い・ランク別の技</h2>
+    <p class="skill-matrix-note">技名を押すと詳細がその場で開きます。空欄は未実装の枠です。</p>
+    <div class="skill-matrix-scroll">
+      <table class="skill-matrix">
+        <thead>
+          <tr>
+            <th scope="col"><span class="skill-visually-hidden">ランク</span></th>
+            <th scope="col" class="skill-range-head skill-range-far">遠距離</th>
+            <th scope="col" class="skill-range-head skill-range-mid">中距離</th>
+            <th scope="col" class="skill-range-head skill-range-near">近距離</th>
+            <th scope="col" class="skill-range-head skill-range-zero">零距離</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク1</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0542" aria-controls="sk-0542" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0542.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">天下り</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0543" aria-controls="sk-0543" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0543.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">龍爪</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0544" aria-controls="sk-0544" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0544.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">龍尾</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ16</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0542" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0542.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>天下り<span class="skill-detail-place">遠距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>D</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>C</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2914.html">セキリュウ</a>（★2以上）・<a href="../../../monsters/genrei/shinryu/2920.html">ネプチューン</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0543" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0543.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>龍爪<span class="skill-detail-place">近距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2952.html">セイリュウ</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0544" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0544.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>龍尾<span class="skill-detail-place">零距離ランク1</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>F</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>16</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2906.html">ウロボロス・恐</a>（★2以上）・<a href="../../../monsters/genrei/shinryu/2950.html">メリオダス・魔神</a>（★2以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <p class="skill-detail-none">なし</p>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク2</span></th>
+          <td class="skill-cell skill-cell--empty skill-col-far"></td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0545" aria-controls="sk-0545" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0545.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">龍焔</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ22</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0546" aria-controls="sk-0546" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0546.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">まきつき</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ20</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0547" aria-controls="sk-0547" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0547.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-無" aria-hidden="true"></span><span class="skill-chip-name">龍尾扇</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ23</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0545" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0545.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>龍焔<span class="skill-detail-place">中距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>22</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2952.html">セイリュウ</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[小]</p>
+            <p class="skill-ability-desc">回避パラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[有利]連撃Lv3</p>
+            <p class="skill-ability-desc">[有利]かつ対象技命中時、ダメージ＜30%＞の追撃＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0546" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0546.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>まきつき<span class="skill-detail-place">近距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>E</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>20</td><th>クリティカル率</th><td>F</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2906.html">ウロボロス・恐</a>（★3以上）・<a href="../../../monsters/genrei/shinryu/2928.html">ティアマト</a>（★3以上）・<a href="../../../monsters/genrei/shinryu/2950.html">メリオダス・魔神</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[小]</p>
+            <p class="skill-ability-desc">命中パラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">疫：衰弱Lv3</p>
+            <p class="skill-ability-desc">対象技命中時、相手に[衰弱Lv3＜20秒＞]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">衰弱</span>被ダメージ上昇</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0547" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0547.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-無" aria-hidden="true"></span>龍尾扇<span class="skill-detail-place">零距離ランク2</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>23</td><th>クリティカル率</th><td>G</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2929.html">シンリュウ</a>（★3以上）・<a href="../../../monsters/genrei/shinryu/2951.html">メリオダス</a>（★3以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ライフ上昇[小]</p>
+            <p class="skill-ability-desc">ライフパラ+20</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク3</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0548" aria-controls="sk-0548" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0548.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">水神の怒り</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ45</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0549" aria-controls="sk-0549" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0549.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">激龍焔</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ24</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-near"></td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0550" aria-controls="sk-0550" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0550.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span><span class="skill-chip-name">破空爆砕</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ30</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0548" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0548.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>水神の怒り<span class="skill-detail-place">遠距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>B</td></tr>
+                <tr><th>消費ガッツ</th><td>45</td><th>クリティカル率</th><td>S</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2920.html">ネプチューン</a>（★4以上）・<a href="../../../monsters/genrei/shinryu/2929.html">シンリュウ</a>（★4以上）・<a href="../../../monsters/genrei/shinryu/2951.html">メリオダス</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[小]</p>
+            <p class="skill-ability-desc">かしこさパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[遠]クリ上昇</p>
+            <p class="skill-ability-desc">技が命中したとき遠距離のクリ率上昇Lv3＜10秒＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0549" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0549.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>激龍焔<span class="skill-detail-place">中距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>D</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>A</td></tr>
+                <tr><th>消費ガッツ</th><td>24</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2906.html">ウロボロス・恐</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">回避上昇[中]</p>
+            <p class="skill-ability-desc">回避パラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">疫：暗闇Lv2</p>
+            <p class="skill-ability-desc">対象技命中時、[暗闇Lv2＜20秒＞]を付与＜1回＞</p>
+            <div class="skill-ability-buffs">
+              <p class="skill-buff skill-buff--debuff"><span class="skill-buff-name">暗闇</span>命中率減少</p>
+            </div>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0550" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0550.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-緑" aria-hidden="true"></span>破空爆砕<span class="skill-detail-place">零距離ランク3</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>D+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>30</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2914.html">セキリュウ</a>（★4以上）・<a href="../../../monsters/genrei/shinryu/2928.html">ティアマト</a>（★4以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[小]</p>
+            <p class="skill-ability-desc">丈夫さパラ+20</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">貫通Lv2</p>
+            <p class="skill-ability-desc">対象技命中時、相手の丈夫さ＜20%＞無視</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク4</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0551" aria-controls="sk-0551" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0551.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">画竜点睛</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-mid">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0552" aria-controls="sk-0552" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0552.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-白" aria-hidden="true"></span><span class="skill-chip-name">天落とし</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ28</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0553" aria-controls="sk-0553" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0553.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span><span class="skill-chip-name">登り龍</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ40</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-col-zero">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0554" aria-controls="sk-0554" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0554.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span><span class="skill-chip-name">アクアスプラッシュ</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ43</span>
+            </button>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0551" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0551.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>画竜点睛<span class="skill-detail-place">遠距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>A+</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2929.html">シンリュウ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[自身有利]不沈Lv1</p>
+            <p class="skill-ability-desc">[自身有利]対象技命中時、丈夫さの10%を攻撃ステータスに加算＜1回＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">命中上昇[中]</p>
+            <p class="skill-ability-desc">命中パラ+30</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0552" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0552.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-白" aria-hidden="true"></span>天落とし<span class="skill-detail-place">中距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>C+</td></tr>
+                <tr><th>発動間合い</th><td>中距離</td><th>命中率</th><td>B</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>28</td><th>クリティカル率</th><td>A</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2928.html">ティアマト</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：天落とし</p>
+            <p class="skill-ability-desc">対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[有利]刻撃Lv2</p>
+            <p class="skill-ability-desc">[有利]対象技命中時、自身のモン類レベル ×＜2%＞を主ダメージに乗算する</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2928.html">ティアマト</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">かしこさパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">レンジブースト
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2928.html">ティアマト</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技の間合い適性効果アップ/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0553" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0553.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-赤" aria-hidden="true"></span>登り龍<span class="skill-detail-place">近距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>G</td></tr>
+                <tr><th>消費ガッツ</th><td>40</td><th>クリティカル率</th><td>D</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2914.html">セキリュウ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：登り龍</p>
+            <p class="skill-ability-desc">対象技命中時、追加でダメージLv3を1回与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[中]</p>
+            <p class="skill-ability-desc">かしこさパラ+30</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0554" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0554.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黒" aria-hidden="true"></span>アクアスプラッシュ<span class="skill-detail-place">零距離ランク4</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>B</td></tr>
+                <tr><th>発動間合い</th><td>零距離</td><th>命中率</th><td>C</td></tr>
+                <tr><th>移動先</th><td>零→遠</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>43</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2920.html">ネプチューン</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">丈夫さ上昇[中]</p>
+            <p class="skill-ability-desc">丈夫さパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">[相手白]与ダメ上昇</p>
+            <p class="skill-ability-desc">相手＜オーラ白＞かつ技が命中したとき与ダメ上昇Lv3</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">かしこさ上昇[中]
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2920.html">ネプチューン</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">かしこさパラ+30</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">ガードディクリーズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2920.html">ネプチューン</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、相手の回避と丈夫さの基礎ステータス20%低下/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-rank-row">
+          <th scope="row" class="skill-rank"><span class="skill-rank-label">ランク5</span></th>
+          <td class="skill-cell skill-col-far">
+            <button type="button" class="skill-chip skill-chip--wits skill-chip--has-icon" data-skill="sk-0555" aria-controls="sk-0555" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0555.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-青" aria-hidden="true"></span><span class="skill-chip-name">青龍天咆</span></span>
+              <span class="skill-chip-meta">かしこさ／ガッツ50</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-mid"></td>
+          <td class="skill-cell skill-col-near">
+            <button type="button" class="skill-chip skill-chip--power skill-chip--has-icon" data-skill="sk-0556" aria-controls="sk-0556" aria-expanded="false">
+              <img class="skill-icon" src="../../../skill-icons/sk-0556.png" width="123" height="124" alt="" loading="lazy" decoding="async">
+              <span class="skill-chip-title"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span><span class="skill-chip-name">裁きの雷霆</span></span>
+              <span class="skill-chip-meta">ちから／ガッツ48</span>
+            </button>
+          </td>
+          <td class="skill-cell skill-cell--empty skill-col-zero"></td>
+        </tr>
+        <tr class="skill-detail skill-detail--wits" id="sk-0555" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0555.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-青" aria-hidden="true"></span>青龍天咆<span class="skill-detail-place">遠距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--wits">
+              <tbody>
+                <tr><th>技種</th><td>かしこさ</td><th>ダメージ</th><td>S</td></tr>
+                <tr><th>発動間合い</th><td>遠距離</td><th>命中率</th><td>B+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>D</td></tr>
+                <tr><th>消費ガッツ</th><td>50</td><th>クリティカル率</th><td>B</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2952.html">セイリュウ</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">青帝</p>
+            <p class="skill-ability-desc">対象技命中時、自身のモン類レベル の＜50%＞を技ダメージに加算</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">連撃：青龍天咆</p>
+            <p class="skill-ability-desc">対象技命中時、次の効果が発動<br>・ダメージ＜10%＞の追撃を＜2回＞与える<br>・[有利]ダメージ＜10%＞の追撃を＜1回＞与える</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックレイズ
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2952.html">セイリュウ</a>を★6以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv1</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">テクニックオーバー
+              <span class="skill-ability-unlock"><a href="../../../monsters/genrei/shinryu/2952.html">セイリュウ</a>を★10以上で解放</span></p>
+            <p class="skill-ability-desc">対象技発動時、技ステータス上昇Lv2/ガッツ回復Lv4</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        <tr class="skill-detail skill-detail--power" id="sk-0556" hidden>
+          <td colspan="5">
+            <div class="skill-detail-inner">
+            <button type="button" class="skill-detail-close" aria-label="技詳細を閉じる">×</button>
+            <div class="skill-detail-anim"><div class="skill-detail-clip">
+            <h3 class="skill-detail-name"><img class="skill-icon skill-icon--detail" src="../../../skill-icons/sk-0556.png" width="123" height="124" alt="" loading="lazy" decoding="async"><span class="skill-aura skill-aura-黄" aria-hidden="true"></span>裁きの雷霆<span class="skill-detail-place">近距離ランク5</span></h3>
+            <table class="skill-detail-table skill-detail-table--power">
+              <tbody>
+                <tr><th>技種</th><td>ちから</td><th>ダメージ</th><td>S+</td></tr>
+                <tr><th>発動間合い</th><td>近距離</td><th>命中率</th><td>A+</td></tr>
+                <tr><th>移動先</th><td>移動なし</td><th>ガッツダウン</th><td>E</td></tr>
+                <tr><th>消費ガッツ</th><td>48</td><th>クリティカル率</th><td>B+</td></tr>
+                <tr class="skill-detail-wide"><th>技登録の解放元</th><td colspan="3"><a href="../../../monsters/genrei/shinryu/2950.html">メリオダス・魔神</a>（★5以上）</td></tr>
+              </tbody>
+            </table>
+        <h4 class="skill-detail-subtitle">技能力</h4>
+          <div class="skill-ability">
+            <p class="skill-ability-name">感電</p>
+            <p class="skill-ability-desc">対象技命中時、技発動中の一定時間、相手のガッツ回復速度を0にする＜5秒＞</p>
+          </div>
+          <div class="skill-ability">
+            <p class="skill-ability-name">シールド[小]</p>
+            <p class="skill-ability-desc">対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞</p>
+          </div>
+            </div></div>
+            </div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">シンリュウ種のモンスター（8体）</h2>
+    <div class="mon-card-grid">
+        <a class="mon-card" href="2906.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200438_0.jpg" alt="ウロボロス・恐" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ウロボロス・恐</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：ディノ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2914.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200805_0.jpg" alt="セキリュウ" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">セキリュウ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-赤"><span class="aura-dot"></span>赤</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：ヒノトリ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2920.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200613_0.jpg" alt="ネプチューン" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ネプチューン</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：ウンディーネ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2928.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200417_0.jpg" alt="ティアマト" loading="lazy">
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">ティアマト</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-緑"><span class="aura-dot"></span>緑</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：ユグドラシル</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2929.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200604_0.jpg" alt="シンリュウ" loading="lazy">
+            <span class="mon-card-limited">超スタフェス限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">シンリュウ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：シンリュウ</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2950.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200740_0.jpg" alt="メリオダス・魔神" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">メリオダス・魔神</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2951.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/2951.jpg" alt="メリオダス" loading="lazy">
+            <span class="mon-card-limited">コラボ限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">メリオダス</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-黄"><span class="aura-dot"></span>黄</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+        <a class="mon-card" href="2952.html">
+          <div class="mon-card-img-wrap">
+            <img class="mon-card-img" src="../../../monster/S__93200758_0.jpg" alt="セイリュウ" loading="lazy">
+            <span class="mon-card-limited">超神殿祭限定</span>
+          </div>
+          <div class="mon-card-info">
+            <div class="mon-card-name">セイリュウ</div>
+            <div class="badge-row badge-row--compact">
+              <span class="aura-badge-lg aura-青"><span class="aura-dot"></span>青</span>
+              <span class="mon-badge">幻霊</span>
+            </div>
+            <div class="mon-card-meta">副血統：レアモン</div>
+          </div>
+        </a>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title">関連ページ：幻霊の血統</h2>
+    <div class="blood-picker">
+    <div class="blood-picker-group">
+      <ul class="blood-picker-grid">
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../mocchi/"><img class="blood-picker-icon" src="../../../img/blood/128/mocchi.jpg" alt="モッチー" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">モッチー</span><span class="blood-picker-meta">12体<span class="blood-picker-skill">技17</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../gel/"><img class="blood-picker-icon" src="../../../img/blood/128/gel.jpg" alt="ゲル" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ゲル</span><span class="blood-picker-meta">14体<span class="blood-picker-skill">技15</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../undine/"><img class="blood-picker-icon" src="../../../img/blood/128/undine.jpg" alt="ウンディーネ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">ウンディーネ</span><span class="blood-picker-meta">10体<span class="blood-picker-skill">技17</span></span></a></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../plant/"><img class="blood-picker-icon" src="../../../img/blood/128/plant.jpg" alt="プラント" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">プラント</span><span class="blood-picker-meta">12体<span class="blood-picker-skill">技14</span></span></a></li>
+        <li class="blood-picker-item"><span class="blood-picker-link is-current" aria-current="page"><img class="blood-picker-icon" src="../../../img/blood/128/shinryu.jpg" alt="シンリュウ" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">シンリュウ</span><span class="blood-picker-meta">8体<span class="blood-picker-skill">技15</span></span></span></li>
+        <li class="blood-picker-item"><a class="blood-picker-link has-page" href="../arc/"><img class="blood-picker-icon" src="../../../img/blood/128/arc.jpg" alt="アーク" width="64" height="65" loading="lazy" decoding="async"><span class="blood-picker-name">アーク</span><span class="blood-picker-meta">7体<span class="blood-picker-skill">技20</span></span></a></li>
+      </ul>
+    </div>
+    </div>
+    <div class="menu-grid blood-related-mon-type">
+      <a class="menu-link" href="../"><span class="icon"><img class="mon-type-icon" src="../../../img/mon-type/genrei.png" alt="" width="28" height="28"></span> 幻霊のモンスター一覧</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
+  ／ <a href="../../../privacy.html">プライバシーポリシー</a>
+</footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 別の技へ切り替えるときは即座に閉じ、明示的に閉じたときだけアニメを見せる
+  function closeRow(row, animate) {
+    var box = row.querySelector('.skill-detail-anim');
+    if (!box || !animate || reduced) {
+      if (box) box.classList.remove('is-closing');
+      row.hidden = true;
+      return;
+    }
+    box.classList.add('is-closing');
+    box.addEventListener('animationend', function () {
+      box.classList.remove('is-closing');
+      row.hidden = true;
+    }, { once: true });
+  }
+
+  function closeAll() {
+    var rows = document.querySelectorAll('.skill-detail');
+    for (var i = 0; i < rows.length; i++) closeRow(rows[i], false);
+    var chips = document.querySelectorAll('.skill-chip');
+    for (var j = 0; j < chips.length; j++) chips[j].setAttribute('aria-expanded', 'false');
+  }
+
+  function setToggleLabel(toggle, open) {
+    var label = toggle.querySelector('.skill-unique-label');
+    if (label) label.textContent = open ? '固有技を隠す' : '固有技を見る';
+  }
+
+  // たたまれた固有技を指す導線（#sk-0001 など）から来たときは、その入れ物も開く
+  function revealChip(chip) {
+    if (!chip) return;
+    var wrap = chip.closest('.skill-unique-wrap');
+    if (!wrap || !wrap.hidden) return;
+    wrap.hidden = false;
+    var toggle = document.querySelector('.skill-unique-toggle[aria-controls="' + wrap.id + '"]');
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      setToggleLabel(toggle, true);
+    }
+  }
+
+  function openSkill(id) {
+    var row = document.getElementById(id);
+    if (!row) return null;
+    closeAll();
+    row.hidden = false;
+    var chip = document.querySelector('.skill-chip[data-skill="' + id + '"]');
+    if (chip) { revealChip(chip); chip.setAttribute('aria-expanded', 'true'); }
+    return chip;
+  }
+
+  document.addEventListener('click', function (event) {
+    var closer = event.target.closest('.skill-detail-close');
+    if (closer) {
+      var openRow = closer.closest('.skill-detail');
+      if (openRow) {
+        closeRow(openRow, true);
+        var opener = document.querySelector('.skill-chip[data-skill="' + openRow.id + '"]');
+        if (opener) { opener.setAttribute('aria-expanded', 'false'); opener.focus(); }
+      }
+      return;
+    }
+    var toggle = event.target.closest('.skill-unique-toggle');
+    if (toggle) {
+      var wrap = document.getElementById(toggle.getAttribute('aria-controls'));
+      if (wrap) {
+        var open = wrap.hidden;
+        wrap.hidden = !open;
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        setToggleLabel(toggle, open);
+      }
+      return;
+    }
+    var chip = event.target.closest('.skill-chip');
+    if (!chip) return;
+    var id = chip.getAttribute('data-skill');
+    var row = document.getElementById(id);
+    if (!row) return;
+    if (!row.hidden) {
+      closeRow(row, true);
+      chip.setAttribute('aria-expanded', 'false');
+      return;
+    }
+    openSkill(id);
+  });
+
+  // モンスター詳細から ./#sk-0001 で来たときに、その技を開いて見せる
+  function openFromHash() {
+    var id = location.hash.slice(1);
+    if (!/^sk-\d{4}$/.test(id)) return;
+    var chip = openSkill(id);
+    if (chip) chip.scrollIntoView({ block: 'center' });
+  }
+  window.addEventListener('hashchange', openFromHash);
+  openFromHash();
+})();
+</script>
+
+</body>
+</html>

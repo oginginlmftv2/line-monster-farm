@@ -1683,11 +1683,35 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/muki/monolith/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/worm/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/mazoku/naga/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kaibutsu/kawazumo/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/kemono/kyubi/</loc>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/metalner/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/yggdrasil/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/shinryu/</loc>
     <priority>0.6</priority>
   </url>
   <url>
@@ -1704,6 +1728,10 @@
   </url>
   <url>
     <loc>https://line-monster-farm-tetteikouryaku.com/monsters/genrei/arc/</loc>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://line-monster-farm-tetteikouryaku.com/monsters/souzou/zan/</loc>
     <priority>0.6</priority>
   </url>
   <url>
