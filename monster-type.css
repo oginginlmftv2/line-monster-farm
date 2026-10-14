@@ -239,3 +239,37 @@
     padding: 7px 6px;
   }
 }
+
+/* 運営者のひとこと（taxonomy.json。CMSで編集）と日付 */
+.mon-type-page .mon-type-note-date {
+  margin: -12px 0 8px;
+  font-size: 12px;
+  color: #777;
+}
+
+.mon-type-page .mon-type-note > h3 {
+  margin: 30px 0 4px;
+  font-size: 16px;
+}
+
+.mon-type-page .mon-type-note > h4 {
+  margin: 18px 0 6px;
+  font-size: 14px;
+}
+
+/* 掲載するアシストカード。カード自体はトップと同じ .card-grid.wide-grid > .wide-card */
+.mon-type-page .mon-type-cards > h3 {
+  margin: 24px 0 12px;
+  font-size: 16px;
+}
+
+.mon-type-page .mon-type-cards > h3:first-of-type {
+  margin-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .mon-type-page .mon-type-note > h3 {
+    margin-top: 24px;
+    font-size: 15px;
+  }
+}

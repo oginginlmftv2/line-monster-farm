@@ -893,6 +893,18 @@ function gateMonTypes(inputs) {
       ? entry.sections.filter(section => section && section.heading
         && Array.isArray(section.items) && section.items.some(item => item && String(item.body || '').trim()))
       : [];
+    // 掲載カードは公開中のカード詳細があるものだけ。無ければリンク切れになるので止める
+    const publicCardIds = new Set((inputs.publicAssistCards || []).map(card => card.cardId));
+    const cardGroups = entry && Array.isArray(entry.cardGroups)
+      ? entry.cardGroups.filter(group => group && group.heading && Array.isArray(group.cardIds) && group.cardIds.length)
+      : [];
+    for (const group of cardGroups) {
+      for (const cardId of group.cardIds) {
+        if (!publicCardIds.has(cardId)) {
+          throw new Error(`taxonomy.json の ${slug}「${group.heading}」に公開中でないカードIDがあります: ${cardId}`);
+        }
+      }
+    }
     if (!entry) notes.push('運営者の文なし（taxonomy.json に項目がありません）');
     else if (!sections.length) notes.push('運営者の文なし（sections に本文がありません）');
     const totalLength = sections.reduce((sectionTotal, section) => {
@@ -905,6 +917,7 @@ function gateMonTypes(inputs) {
       name: (entry && entry.name) || name,
       entry,
       sections,
+      cardGroups,
       totalLength,
       memberCount,
       reasons,
@@ -2021,6 +2034,46 @@ function monTypeDescription(monType, context) {
     + '血統ごとの体数と技の数、オーラ別の体数、最近追加されたモンスターも載せています。');
 }
 
+// 「運営者のひとこと」（taxonomy.json。CMSの mon_types シートから公開で書き出す）。文はそのまま出す。
+function renderMonTypeNote(monType) {
+  if (!monType.sections.length) return '';
+  const date = monTypeUpdatedAt(monType);
+  const dateLine = date
+    ? `\n    <p class="mon-type-note-date">最終更新：<time datetime="${date}">${Number(date.slice(0, 4))}年${Number(date.slice(5, 7))}月${Number(date.slice(8, 10))}日</time></p>`
+    : '';
+  const body = monType.sections.map(section => `
+    <h3 class="mon-type-note-heading">${escapeHtml(section.heading)}</h3>
+${section.items.map(item => `${item.subheading ? `    <h4>${escapeHtml(item.subheading)}</h4>\n` : ''}    <p>${escapeHtml(item.body)}</p>`).join('\n')}`).join('');
+  return `
+  <section class="section mon-type-note">
+    <h2 class="section-title">運営者のひとこと</h2>${dateLine}${body}
+  </section>`;
+}
+
+function monTypeUpdatedAt(monType) {
+  const value = monType.entry ? String(monType.entry.updatedAt || '') : '';
+  return /^\d{4}-\d{2}-\d{2}$/.test(value) ? value : '';
+}
+
+// 掲載するアシストカード（taxonomy.json の cardGroups。どのカードを載せるかはCMSで運営者が選ぶ）。
+// 見た目はトップ・リセマラのピックアップと同じ横長カード（renderPickupCardSummary）
+function renderMonTypeCards(monType, context) {
+  if (!monType.cardGroups.length) return '';
+  const cardById = new Map(context.publicAssistCards.map(card => [card.cardId, card]));
+  const groups = monType.cardGroups.map(group => `
+    <h3 class="mon-type-card-group-title">${escapeHtml(group.heading)}</h3>
+    <div class="card-grid wide-grid">
+${group.cardIds.map(cardId => {
+    addLink(context, `cards/${cardId}.html`);
+    return renderPickupCardSummary(cardById.get(cardId), MON_TYPE_ROOT_PREFIX);
+  }).join('\n')}
+    </div>`).join('');
+  return `
+  <section class="section mon-type-cards">
+    <h2 class="section-title">${escapeHtml(monType.name)}のアシストカード</h2>${groups}
+  </section>`;
+}
+
 // モン類ページ冒頭の概要。数字は表で出し、同じ文型に数字を差し込む定型文は作らない。
 const MON_TYPE_RECENT_COUNT = 5;
 // オーラ別の表の列順。ゲームの絞り込み画面と同じ並び
@@ -2111,11 +2164,7 @@ function renderMonType(monType, context) {
   const navAssist = navLink(context, 'assist.html', 'アシストカード一覧', MON_TYPE_ROOT_PREFIX);
   const navGacha = navLink(context, 'gacha/', '開催中ガチャ一覧', MON_TYPE_ROOT_PREFIX);
   const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー', MON_TYPE_ROOT_PREFIX);
-  const editorialSections = monType.sections.map(section => `
-  <section class="section">
-    <h2 class="section-title">${escapeHtml(section.heading)}</h2>
-${section.items.map(item => `${item.subheading === null ? '' : `    <h3>${escapeHtml(item.subheading)}</h3>\n`}    <p>${escapeHtml(item.body)}</p>`).join('\n')}
-  </section>`).join('');
+  const editorialSections = renderMonTypeNote(monType) + renderMonTypeCards(monType, context);
   const bloodGroups = groups.map(group => {
     const editorialMembers = group.members.filter(monster => hasMonTypeExcerpt(monster, context));
     const compactMembers = group.members.filter(monster => !hasMonTypeExcerpt(monster, context));

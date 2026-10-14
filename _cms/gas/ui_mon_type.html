@@ -1,0 +1,143 @@
+<section class="domain-panel" id="montype_root"><div class="wrap">
+  <div class="col-list panel">
+    <p class="hint" style="margin-top:0">モン類ページの「運営者のひとこと」と掲載するアシストカードです。保存しただけではサイトは変わりません。公開タブの「モンスターを公開」でサイトへ反映されます。</p>
+    <div class="list" id="montype_list"><div class="center">読み込み中…</div></div>
+  </div>
+  <button type="button" class="mobile-back" id="montype_btnBack">← 一覧へ戻る</button>
+  <div class="col-edit panel" id="montype_edit"><div class="center">左の一覧からモン類を選んでください。</div></div>
+</div>
+<datalist id="montype_cardOptions"></datalist>
+<style>
+  .montype-section{border:1px solid var(--line);border-radius:8px;padding:10px;margin-bottom:12px;background:var(--cream)}
+  .montype-item{border:1px solid var(--line);border-radius:6px;padding:10px;margin:8px 0;background:#fff}
+  .montype-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;margin-top:6px}
+  .montype-tools button{padding:4px 10px;font-size:12px}
+  .montype-cards{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0}
+  .montype-chip{display:inline-flex;align-items:center;gap:4px;padding:2px 4px 2px 10px;border:1px solid var(--line);border-radius:14px;background:var(--cream);font-size:12px}
+  .montype-chip button{padding:0 6px;border:0;background:transparent;min-height:0}
+  .montype-cardadd{display:flex;gap:6px}
+  .montype-cardadd input{flex:1}
+</style>
+</section><script>
+var MONTYPE_UI={loaded:false,rows:[],cards:[],cardById:{},today:'',current:null,dateTouched:false,dirty:false};
+
+function montypeBoot(){
+  call('api_monTypeList',[],function(data){
+    MONTYPE_UI.loaded=true;
+    MONTYPE_UI.rows=data.rows||[];
+    MONTYPE_UI.cards=data.cards||[];
+    MONTYPE_UI.today=data.today||'';
+    MONTYPE_UI.cardById={};
+    MONTYPE_UI.cards.forEach(function(card){MONTYPE_UI.cardById[card.cardId]=card;});
+    el('montype_cardOptions').innerHTML=MONTYPE_UI.cards.map(function(card){return '<option value="'+esc(montypeCardLabel(card))+'"></option>';}).join('');
+    montypeRenderList();
+  });
+}
+function montypeCardLabel(card){return card.name+'（'+card.rarity+(card.cardType?'・'+card.cardType:'')+'）';}
+function montypeRenderList(){
+  el('montype_list').innerHTML=MONTYPE_UI.rows.map(function(row){
+    var count=(row.sections||[]).reduce(function(sum,section){return sum+(section.items||[]).length;},0);
+    var sel=MONTYPE_UI.current&&MONTYPE_UI.current.monSlug===row.monSlug?' sel':'';
+    var cards=(row.cardGroups||[]).reduce(function(sum,group){return sum+(group.cardIds||[]).length;},0);
+    return '<button type="button" class="row'+sel+'" data-montype="'+esc(row.monSlug)+'"><div class="r1"><span class="nm">'+esc(row.name)+'</span><span class="id">'+esc(row.monSlug)+'</span><span class="tag">'+(row.updatedAt?'最終更新 '+esc(row.updatedAt):'未記入')+'</span></div><div class="cnt">見出し'+(row.sections||[]).length+'・項目'+count+'・カード'+cards+'枚'+(row.lastEditor?'・最終編集 '+esc(row.lastEditor):'')+'</div></button>';
+  }).join('')||'<div class="center">行がありません</div>';
+  document.querySelectorAll('[data-montype]').forEach(function(button){button.onclick=function(){montypeOpen(button.dataset.montype);};});
+}
+function montypeOpen(slug){
+  if(MONTYPE_UI.dirty&&!confirm('保存していない変更があります。破棄して開きますか？'))return;
+  var row=MONTYPE_UI.rows.filter(function(r){return r.monSlug===slug;})[0];
+  if(!row)return;
+  MONTYPE_UI.current=JSON.parse(JSON.stringify(row));
+  MONTYPE_UI.current.sections.forEach(function(section){section.items.forEach(function(item){if(item.subheading==null)item.subheading='';});});
+  MONTYPE_UI.current.cardGroups=MONTYPE_UI.current.cardGroups||[];
+  MONTYPE_UI.dateTouched=false;MONTYPE_UI.dirty=false;
+  document.body.classList.add('mobile-editing');
+  montypeRenderList();montypeRenderEdit();
+}
+el('montype_btnBack').onclick=function(){document.body.classList.remove('mobile-editing');};
+function montypeCharCount(){
+  return MONTYPE_UI.current.sections.reduce(function(sum,section){return sum+section.items.reduce(function(n,item){return n+String(item.subheading||'').length+String(item.body||'').length;},0);},0);
+}
+function montypeRenderEdit(){
+  var cur=MONTYPE_UI.current;
+  var html='<h2>'+esc(cur.name)+'のモン類ページ</h2>'
+    +'<div class="message" aria-live="polite"></div>'
+    +'<div class="grid"><div class="field"><label for="montype_date">最終更新日（ページに出ます）</label><input type="date" id="montype_date" value="'+esc(cur.updatedAt)+'" max="'+esc(MONTYPE_UI.today)+'"></div>'
+    +'<div class="field"><label>字数（小見出し＋本文）</label><div id="montype_chars" class="ro" style="padding:6px 8px;border-radius:6px">'+montypeCharCount()+'字</div></div></div>'
+    +'<p class="hint">本文や掲載カードを変えると最終更新日は今日になります（日付を自分で直した場合はそのまま）。</p><h3>運営者のひとこと</h3>';
+  cur.sections.forEach(function(section,si){
+    html+='<div class="montype-section"><div class="field"><label>見出し '+(si+1)+'</label><input type="text" data-k="heading" data-s="'+si+'" value="'+esc(section.heading)+'" maxlength="40"></div>';
+    section.items.forEach(function(item,ii){
+      html+='<div class="montype-item"><div class="field"><label>小見出し（空なら出しません）</label><input type="text" data-k="subheading" data-s="'+si+'" data-i="'+ii+'" value="'+esc(item.subheading)+'" maxlength="60"></div>'
+        +'<div class="field"><label>本文</label><textarea rows="5" data-k="body" data-s="'+si+'" data-i="'+ii+'" maxlength="2000">'+esc(item.body)+'</textarea></div>'
+        +'<div class="montype-tools"><button type="button" data-act="item-up" data-s="'+si+'" data-i="'+ii+'">↑</button><button type="button" data-act="item-down" data-s="'+si+'" data-i="'+ii+'">↓</button><button type="button" class="danger" data-act="item-del" data-s="'+si+'" data-i="'+ii+'">この項目を削除</button></div></div>';
+    });
+    html+='<div class="montype-tools"><button type="button" data-act="item-add" data-s="'+si+'">＋ 項目を追加</button><button type="button" data-act="sec-up" data-s="'+si+'">見出しを上へ</button><button type="button" data-act="sec-down" data-s="'+si+'">見出しを下へ</button><button type="button" class="danger" data-act="sec-del" data-s="'+si+'">見出しごと削除</button></div></div>';
+  });
+  html+='<button type="button" data-act="sec-add">＋ 見出しを追加</button>'
+    +'<h3>掲載するアシストカード</h3><p class="hint">ページに「'+esc(cur.name)+'のアシストカード」として、トップ・ガチャと同じカード枠（画像・レアリティ・カード解説の抜粋）で出ます。見出しは「師匠カード」「モン類MR」など自由に付けられます。選べるのは公開中のカードだけです。</p>';
+  cur.cardGroups.forEach(function(group,gi){
+    html+='<div class="montype-section"><div class="field"><label>カードの見出し '+(gi+1)+'</label><input type="text" data-k="groupHeading" data-g="'+gi+'" value="'+esc(group.heading)+'" maxlength="40"></div>'
+      +'<div class="montype-cards">'+group.cardIds.map(function(id,ci){var card=MONTYPE_UI.cardById[id];return '<span class="montype-chip">'+esc(card?montypeCardLabel(card):id+'（公開中に無いID）')+'<button type="button" title="上へ" data-act="card-up" data-g="'+gi+'" data-c="'+ci+'">←</button><button type="button" title="外す" data-act="card-del" data-g="'+gi+'" data-c="'+ci+'">×</button></span>';}).join('')+'</div>'
+      +'<div class="montype-cardadd"><input type="text" list="montype_cardOptions" placeholder="カード名で選ぶ（例：エイル）" id="montype_card_'+gi+'"><button type="button" data-act="card-add" data-g="'+gi+'">追加</button></div>'
+      +'<div class="montype-tools"><button type="button" data-act="grp-up" data-g="'+gi+'">見出しを上へ</button><button type="button" data-act="grp-down" data-g="'+gi+'">見出しを下へ</button><button type="button" class="danger" data-act="grp-del" data-g="'+gi+'">見出しごと削除</button></div></div>';
+  });
+  html+='<button type="button" data-act="grp-add">＋ カードの見出しを追加</button>'
+    +'<div class="sticky"><button type="button" class="primary" id="montype_save">保存</button><span class="hint">最終編集：'+esc(cur.lastEditor||'—')+'</span></div>';
+  el('montype_edit').innerHTML=html;
+  el('montype_date').oninput=function(){MONTYPE_UI.dateTouched=true;MONTYPE_UI.dirty=true;cur.updatedAt=this.value;};
+  el('montype_edit').querySelectorAll('[data-k]').forEach(function(input){input.oninput=function(){montypeOnText(input);};});
+  el('montype_edit').querySelectorAll('[data-act]').forEach(function(button){button.onclick=function(){montypeAct(button.dataset);};});
+  el('montype_save').onclick=montypeSave;
+}
+function montypeTouchText(){
+  MONTYPE_UI.dirty=true;
+  if(!MONTYPE_UI.dateTouched&&MONTYPE_UI.today){MONTYPE_UI.current.updatedAt=MONTYPE_UI.today;var date=el('montype_date');if(date)date.value=MONTYPE_UI.today;}
+}
+function montypeOnText(input){
+  if(input.dataset.k==='groupHeading'){MONTYPE_UI.current.cardGroups[Number(input.dataset.g)].heading=input.value;montypeTouchText();return;}
+  var section=MONTYPE_UI.current.sections[Number(input.dataset.s)];
+  if(input.dataset.k==='heading')section.heading=input.value;
+  else section.items[Number(input.dataset.i)][input.dataset.k]=input.value;
+  montypeTouchText();
+  el('montype_chars').textContent=montypeCharCount()+'字';
+}
+function montypeMove(list,index,step){var to=index+step;if(to<0||to>=list.length)return;var moved=list.splice(index,1)[0];list.splice(to,0,moved);}
+function montypeAct(d){
+  var cur=MONTYPE_UI.current,s=Number(d.s),i=Number(d.i),g=Number(d.g);
+  var section=cur.sections[s],group=cur.cardGroups[g];
+  if(d.act==='sec-add')cur.sections.push({heading:'',items:[{subheading:'',body:'',cardIds:[]}]});
+  else if(d.act==='sec-del'){if(!confirm('見出し「'+(section.heading||'（空）')+'」と中の項目をすべて削除しますか？'))return;cur.sections.splice(s,1);}
+  else if(d.act==='sec-up')montypeMove(cur.sections,s,-1);
+  else if(d.act==='sec-down')montypeMove(cur.sections,s,1);
+  else if(d.act==='item-add')section.items.push({subheading:'',body:'',cardIds:[]});
+  else if(d.act==='item-del'){if(!confirm('この項目を削除しますか？'))return;section.items.splice(i,1);}
+  else if(d.act==='item-up')montypeMove(section.items,i,-1);
+  else if(d.act==='item-down')montypeMove(section.items,i,1);
+  else if(d.act==='grp-add')cur.cardGroups.push({heading:'',cardIds:[]});
+  else if(d.act==='grp-del'){if(!confirm('カードの見出し「'+(group.heading||'（空）')+'」を削除しますか？'))return;cur.cardGroups.splice(g,1);}
+  else if(d.act==='grp-up')montypeMove(cur.cardGroups,g,-1);
+  else if(d.act==='grp-down')montypeMove(cur.cardGroups,g,1);
+  else if(d.act==='card-del')group.cardIds.splice(Number(d.c),1);
+  else if(d.act==='card-up')montypeMove(group.cardIds,Number(d.c),-1);
+  else if(d.act==='card-add'){
+    var text=el('montype_card_'+g).value.trim();
+    var hits=MONTYPE_UI.cards.filter(function(card){return montypeCardLabel(card)===text||card.cardId===text;});
+    if(!hits.length)hits=MONTYPE_UI.cards.filter(function(card){return card.name===text;});
+    if(hits.length!==1){show(hits.length?'同じ名前のカードが'+hits.length+'枚あります。候補から（レアリティつきで）選んでください。':'公開中のアシストカードに見つかりません: '+text,true);return;}
+    if(group.cardIds.indexOf(hits[0].cardId)<0)group.cardIds.push(hits[0].cardId);
+  }
+  montypeTouchText();
+  montypeRenderEdit();
+}
+function montypeSave(){
+  var cur=MONTYPE_UI.current;
+  var payload={monSlug:cur.monSlug,updatedAt:cur.updatedAt,baseEditedAt:cur.editedAt,sections:cur.sections.map(function(section){return {heading:section.heading,items:section.items.map(function(item){return {subheading:item.subheading,body:item.body};})};}),cardGroups:cur.cardGroups.map(function(group){return {heading:group.heading,cardIds:group.cardIds};})};
+  call('api_monTypeSave',[payload],function(result){
+    MONTYPE_UI.rows=MONTYPE_UI.rows.map(function(row){return row.monSlug===result.monSlug?{monSlug:row.monSlug,name:row.name,sections:result.sections,cardGroups:result.cardGroups,updatedAt:result.updatedAt,lastEditor:result.lastEditor,editedAt:result.editedAt}:row;});
+    MONTYPE_UI.dirty=false;
+    var slug=result.monSlug;MONTYPE_UI.current=null;montypeOpen(slug);
+    show('保存しました。サイトへの反映は公開タブの「モンスターを公開」で行います。',false);
+  });
+}
+</script>

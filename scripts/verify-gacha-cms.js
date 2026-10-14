@@ -93,7 +93,8 @@ function validateRoot(root) {
     issues.push('GACHA_HEADERSの2シート定義が不足');
   }
   const allHeaders = functionBlock(setup, 'allHeaders_');
-  if (!/\[CORE_HEADERS, MON_HEADERS, ASST_HEADERS, GACHA_HEADERS\]/.test(allHeaders)) {
+  // 後ろに別ドメインのヘッダー（MONTYPE_HEADERS など）が続いてもよい
+  if (!/\[CORE_HEADERS, MON_HEADERS, ASST_HEADERS, GACHA_HEADERS(?:, [A-Z_]+)*\]/.test(allHeaders)) {
     issues.push('40_setup.gsのallHeaders_がGACHA_HEADERSを取り込んでいない');
   }
   if (/function\s+setup[^\s(]*Gacha/i.test(gas)) issues.push('ガチャ専用setup関数を追加している');

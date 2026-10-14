@@ -137,6 +137,9 @@ function api_bootstrapShell() {
   var user = me_();
   if (!user) throw new Error('権限がありません。membersシートを確認してください。');
   var tabs = user.scopes.slice();
+  // モン類の文はモンスターと同じ monster 権限で編集し、モンスター公開に乗せる
+  var monsterTab = tabs.indexOf('monster');
+  if (monsterTab >= 0) tabs.splice(monsterTab + 1, 0, 'montype');
   if (env_() === ENV_PRODUCTION && user.role === 'admin') tabs.push('publish');
   return { environment: env_(), me: { nickname: user.nickname, role: user.role, scopes: user.scopes }, tabs: tabs };
 }

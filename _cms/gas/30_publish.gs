@@ -487,6 +487,17 @@ function api_monPublish() {
       }
     ];
 
+    // モン類の文（mon_types）。シートが無い・空の間は含めず、mainの taxonomy.json をそのまま残す
+    var taxonomyText = monTypeBuildPublishText_();
+    if (taxonomyText !== null) {
+      treeEntries.push({
+        path: 'src/data/taxonomy.json',
+        mode: '100644',
+        type: 'blob',
+        sha: githubBlob_(taxonomyText, 'utf-8')
+      });
+    }
+
     var imageCount = 0;
     var imageFolder = monImageFolder_();
     var driveFiles = imageFolder.getFiles();

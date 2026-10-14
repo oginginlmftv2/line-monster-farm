@@ -39,6 +39,7 @@ function fixture() {
   write(repo, 'monsters-data.js', 'const monsters = [];\n');
   write(repo, 'src/data/cms-id-predictions.json', '{}\n');
   write(repo, 'src/data/monsters-editorial.json', '{}\n');
+  write(repo, 'src/data/taxonomy.json', '{}\n');
   write(repo, 'monsters.html', 'baseline\n');
   return { repo, base: commit(repo, 'base') };
 }
@@ -64,6 +65,13 @@ function expect(name, result, success, pattern) {
   write(repo, 'src/data/monsters-editorial.json', '{"updated":true}\n');
   const source = commit(repo, 'CMS publish 2026-08-22 12:00:00');
   expect('許可されたCMS入力', run(repo, ['source', source, base]), true, /PASS:/);
+}
+
+{
+  const { repo, base } = fixture();
+  write(repo, 'src/data/taxonomy.json', '{"monTypes":{}}\n');
+  const source = commit(repo, 'CMS publish 2026-10-14 12:00:00');
+  expect('モン類の文（taxonomy.json）の更新を許可', run(repo, ['source', source, base]), true, /PASS:/);
 }
 
 {

@@ -25,6 +25,8 @@
 - 2026-10-14 改訂（P-004）：モン類ページの生成条件を「所属1体以上」にし、運営者の文を任意に（3-3）。
   冒頭をデータの概要に（5-3）。血統アイコンの選択枠を新設し（5-13）、monsters.html（5-5）・
   モン類ページ・血統ページ（5-9）で使う。`monsters/` 以下のリンクを末尾スラッシュの形にそろえた。
+- 2026-10-14 改訂（P-004 b）：taxonomy.json をCMS管理へ移し（3-3）、`updatedAt`（最終更新日）と
+  `cardGroups`（掲載するアシストカード）を追加。モン類ページに「運営者のひとこと」と「<モン類>のアシストカード」を出す（5-3）。
 仕様に書かれていない挙動を追加しないこと。判断が必要な箇所は実装せず報告すること。
 
 ---
@@ -200,13 +202,21 @@ URL・インデックス条件（3-1と同じ可視800字）・sitemap・パン�
 
 所属0体のモン類はページを生成せず、`所属モンスターが0体です` とログに出す。
 
-#### taxonomy.json の構造
+#### taxonomy.json の構造（2026-10-14〜 CMS管理・P-004 b）
+
+**`src/data/taxonomy.json` はCMS管理で、リポジトリから直接編集しない。**正はGAS管理画面「モン類」タブの
+シート `mon_types`（`_cms/gas/60_mon_type.gs`）で、モンスター公開（`api_monPublish`）のときにGASが書き出し、
+`cms/publish` → generate-ids → build → verify → `main` の既存経路に乗る。シートが無い・空の間は書き出さず、
+`main` の taxonomy.json をそのまま使う。書き出しは `JSON.stringify(doc, null, 2) + '\n'` で、
+取り込み→書き出しで1バイトも変わらないことを `scripts/test-mon-type-gas.js` が確かめる。
 
 ```json
 {
+  "generatedFrom": "CMS mon_types シート（モンスター公開でGASが書き出す。リポジトリで直接編集しない）",
   "monTypes": {
     "kemono": {
       "name": "獣族",
+      "updatedAt": "2026-08-19",
       "sections": [
         {
           "heading": "おすすめ血統",
@@ -214,19 +224,29 @@ URL・インデックス条件（3-1と同じ可視800字）・sitemap・パン�
             { "subheading": "キュービ種", "body": "自身に完全回避を…" }
           ]
         }
+      ],
+      "cardGroups": [
+        { "heading": "師匠カード", "cardIds": ["a10j-MR-fureria"] },
+        { "heading": "モン類MR", "cardIds": ["a24j-MR-vitoniru", "c27j-MR-godemperor"] }
       ]
     }
   }
 }
 ```
 
-- キーは `generate-ids.js` の `MON_SLUG` の値（`souzou` `genrei` `mazoku` `kemono` `kaibutsu` `muki`）
-- `heading` が無い section、本文のある item が1件も無い section は出さない（件数・字数の下限は無い）
-- `subheading` は `null` を取りうる（「実装なし。…」のように小見出しが無い項目）。
-  `null` の場合は小見出しを出力せず、本文だけを出す
-- **`sections` と `items` の配列順が出力順**。ビルド側で並べ替えないこと
-- 2026-08-19時点の字数: 創造592 / 幻霊604 / 魔族569 / 獣族869 / 怪物517 / 無機664
-- **見出し文言は `taxonomy.json` の `heading` が正**。変更したい場合はJSONを直すだけでよく、`build.js` の修正は不要
+- キーは `generate-ids.js` の `MON_SLUG` の値（`souzou` `genrei` `mazoku` `kemono` `kaibutsu` `muki`）。6件とも必ずある
+- `updatedAt` は運営者の文・掲載カードの最終更新日（YYYY-MM-DD）。ページに「最終更新：YYYY年M月D日」と出す。
+  CMSで本文や掲載カードを変えると今日の日付が入る（手で直すこともできる）
+- `sections`（運営者のひとこと）：`heading` が無い section、本文のある item が1件も無い section は出さない（件数・字数の下限は無い）。
+  `subheading` は `null` を取りうる。`null` の場合は小見出しを出力せず、本文だけを出す
+- `cardGroups`（掲載するアシストカード）：見出しと、公開中（`hidden` でない）のカードIDの並び。
+  **どのカードを載せるか（モン類に効くか・オーラに効くか・どのモン類の師匠か）は機械で判別できないので、運営者がCMSで選ぶ。**
+  公開中でないカードIDがあると `build.js` を止める（リンク切れを作らない）
+- **配列順が出力順**。ビルド側で並べ替えないこと
+- 2026-10-14、責任者の指示で、カードを文章で紹介していた「師匠カードの有無」「実装済みのモン類MRと特徴」の2見出しを外し、
+  そこで挙げていたカードを `cardGroups`（師匠カード・モン類MR）の初期値にした（名前で対応づけ。麻倉葉は本文の表記が「朝倉葉」、
+  スプーキーはカードDBに未登録のため入れていない）。残った文は「おすすめ血統」（2026-08-19執筆）
+- **見出し文言は `taxonomy.json` の `heading` が正**。`build.js` の修正は不要
 
 ### 3-4. ゲートで落ちた場合の扱い
 
@@ -406,10 +426,16 @@ h1: [モン類アイコン] <モン類>のモンスター   ← img/mon-type/<mo
     最近追加されたモンスター            ← h3。サイトへの追加が新しい順（arrayIndex 降順）に5体。
                                        名前は詳細ページへリンクし、血統・オーラ・実装日（releasedAt があれば）を添える
 
-■ 運営者による解説（taxonomy.json をそのまま出力。任意・3-3）
-    <heading>                       ← h2
-      <subheading>                  ← h3。null なら出力しない
+■ 運営者のひとこと                    ← h2。taxonomy.json の sections をそのまま出力（任意・3-3）。無ければ節ごと出さない
+    最終更新：YYYY年M月D日            ← p.mon-type-note-date（updatedAt。<time datetime>）
+    <heading>                       ← h3
+      <subheading>                  ← h4。null なら出力しない
         <body>                      ← p
+
+■ <モン類>のアシストカード            ← h2。taxonomy.json の cardGroups（任意・3-3）。無ければ節ごと出さない
+    <heading>                       ← h3
+      カード                         ← トップ・リセマラのピックアップと同じ横長カード（renderPickupCardSummary）。
+                                       画像・名前・レアリティ・カード解説の抜粋。カード詳細 cards/<cardId>.html へリンク
 
 ■ 血統別モンスター                    ← h2
     <血統名>（<所属数>体）             ← h3。見出しそのものはリンクにしない。

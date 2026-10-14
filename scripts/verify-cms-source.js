@@ -6,6 +6,8 @@ const TEXT_SOURCE_FILES = new Set([
   'monsters-data.js',
   'src/data/cms-id-predictions.json',
   'src/data/monsters-editorial.json',
+  // モン類の文（P-004 b）。GASの mon_types シートからモンスター公開で書き出す
+  'src/data/taxonomy.json',
 ]);
 const IMAGE_PATH = /^monster\/[0-9]{4}\.(jpg|png|webp)$/i;
 const GENERATED_FILES = new Set([

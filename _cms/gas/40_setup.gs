@@ -1,7 +1,7 @@
 /** GASエディタから手で実行するセットアップだけを置く。 */
 function allHeaders_() {
   var all = {};
-  [CORE_HEADERS, MON_HEADERS, ASST_HEADERS, GACHA_HEADERS].forEach(function (group) {
+  [CORE_HEADERS, MON_HEADERS, ASST_HEADERS, GACHA_HEADERS, MONTYPE_HEADERS].forEach(function (group) {
     Object.keys(group).forEach(function (name) {
       if (all[name]) throw new Error('シート名が重複しています: ' + name);
       all[name] = group[name];
@@ -400,6 +400,13 @@ function setup3_importAssistFromMain() {
   var target = setupTarget_();
   consumeDestructiveGrant_('setup3_importAssistFromMain');
   var result = target + '\n' + asstImportFromMain_();
+  Logger.log(result);
+  return result;
+}
+// モン類の文（mon_types）を、mainの taxonomy.json から初回だけ取り込む。行があれば何もしないので鍵は要らない
+function setup3_importMonTypesFromMain() {
+  var target = setupTarget_();
+  var result = target + '\n' + monTypeImportFromMain_();
   Logger.log(result);
   return result;
 }
