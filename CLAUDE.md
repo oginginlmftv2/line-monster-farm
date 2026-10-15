@@ -291,6 +291,8 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
      「フォルダの技を読んで」と頼む（`tools/mirror-capture/README.md`）
    - 専用技（モンスター詳細の技タブ）は撮影モード `unique` で撮り、保存先 `~/Pictures/lmf-capture/unique-skills/` に分ける。
      撮ったら「フォルダの専用技を読んで」とモンスター名を添えて頼む
+   - 専用技をクラウドで処理する場合は `tools/skill-autocapture/unique_pack.py <モンスター名> --push` で受け箱へ送り、
+     claude.ai/code で「受け箱の専用技を取り込んで」と頼む（スキル `unique-skill-cloud`。設計 `docs/unique-skill-cloud-design.md`）
 5. 上の「現在の実数」の血統ページ数・技件数を`build.js`のログの値へ更新し、
    このファイルの「最終更新」も直す（同じPRで行う）
 

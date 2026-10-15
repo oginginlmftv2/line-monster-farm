@@ -12,6 +12,7 @@
   PY=~/claude/lmf-aisho/analysis/.venv/bin/python
   $PY skill_icon.py add <技タブ.png> sk-0183          # 枠の付いたマス（＝説明欄の技）を sk-0183 として取り込む
   $PY skill_icon.py add <技タブ.png> sk-0183 --cell 4,2   # 行,列（1始まり）で指定する
+  $PY skill_icon.py add-pack <束フォルダ> <読取.json>  # unique_pack.py の束のマス（sNN-icon.png）を、取り込み済みの専用技IDで置く
   $PY skill_icon.py calib <技タブ.png> メタルナー      # 暗い共通技のマスを見本に足す（照合できないマスは保留）
   $PY skill_icon.py refresh                            # 保留の照合し直し→推定し直し→作り直し→一覧（毎回回す）
   $PY skill_icon.py place <自動撮影フォルダ> メタルナー  # 自動撮影のアイコンを技IDの名前で skill-icons/ へ置く
@@ -207,6 +208,34 @@ def cmd_add(shot, skill_id, cell=None):
     save_json(os.path.join(RAW, 'index.json'), idx)
     print(f"{skill_id} {known[skill_id]['name']}：{r}行{c}列 / {'暗い→色を戻した' if meta['dim'] else '明るい'}"
           f"{' / 枠を消した' if meta['framed'] else ''} → skill-icons/{skill_id}.png")
+
+
+def cmd_add_pack(pack, payload_file):
+    """unique_pack.py の束から専用技のアイコンを置く。技IDは「血統＋技名＋持ち主」で技DBから引く（先に取り込む）"""
+    man = json.load(open(os.path.join(pack, 'manifest.json')))
+    payload = json.load(open(payload_file))
+    mon = man['monster']
+    by_pack = {f"s{s['no']:02d}": s for s in man['skills']}
+    latest = {}
+    for s in skills():
+        if s['blood'] == mon['blood'] and s.get('unique') and mon['id'] in s.get('owners', []):
+            if s['name'] not in latest or latest[s['name']]['version'] < s['version']:
+                latest[s['name']] = s
+    idx = load_json(os.path.join(RAW, 'index.json'), {})
+    os.makedirs(RAW, exist_ok=True)
+    for item in payload['skills']:
+        meta = by_pack[item['pack']]
+        hit = latest.get(item['name'])
+        if not hit:
+            raise SystemExit(f"{item['name']} が技DBに無い（{mon['name']}の専用技として）。先に取り込む")
+        sid = hit['skillId']
+        raw = Image.open(os.path.join(pack, f"{item['pack']}-icon.png")).convert('RGB')
+        raw.save(os.path.join(RAW, sid + '.png'))
+        make_icon(raw, meta).save(os.path.join(ICONS, sid + '.png'))
+        idx[sid] = dict(name=hit['name'], blood=hit['blood'], source=f"{os.path.basename(os.path.normpath(pack))}/{item['pack']}",
+                        cell=meta['cell'], dim=meta['dim'], framed=True, added_at=datetime.date.today().isoformat())
+        print(f"{sid} {hit['name']}：{meta['cell'][0]}行{meta['cell'][1]}列 / {'暗い→色を戻した' if meta['dim'] else '明るい'} → skill-icons/{sid}.png")
+    save_json(os.path.join(RAW, 'index.json'), idx)
 
 
 def ncc(a, b):
@@ -436,6 +465,8 @@ if __name__ == '__main__':
     if cmd == 'add':
         cell = a[a.index('--cell') + 1] if '--cell' in a else None
         cmd_add(a[1], a[2], cell)
+    elif cmd == 'add-pack':
+        cmd_add_pack(a[1], a[2])
     elif cmd == 'calib':
         cmd_calib(a[1], a[2])
     elif cmd == 'fit':
