@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 571
+    "abilities": 572
   },
   "abilities": [
     {
@@ -7032,6 +7032,20 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 571,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0572",
+      "name": "恵：追撃Lv2",
+      "version": 1,
+      "baseName": "恵：追撃",
+      "level": 2,
+      "description": "対象技命中時、自身に[追撃Lv２＜２０秒＞]を付与＜１回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0008"
+      ],
+      "sortOrder": 572,
       "status": "verified"
     }
   ]

@@ -1240,5 +1240,29 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-15"
+  },
+  "sk-0605": {
+    "name": "アクアキッス",
+    "blood": "ピクシー",
+    "source": "20261015-224311-0120/s01",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0606": {
+    "name": "シャインアクア",
+    "blood": "ピクシー",
+    "source": "20261015-224311-0120/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
   }
 }
