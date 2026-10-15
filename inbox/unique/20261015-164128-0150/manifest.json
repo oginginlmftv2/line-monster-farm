@@ -1,0 +1,158 @@
+{
+  "monster": {
+    "id": "0150",
+    "name": "ミリム・リゾート",
+    "blood": "ピクシー",
+    "bloodSlug": "pixie",
+    "aura": "赤"
+  },
+  "packedAt": "20261015-164128",
+  "sourceDir": "/Users/sora/Pictures/lmf-capture/skills/done/2026-10-15",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        4
+      ],
+      "range": "零",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261014-235327.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        2,
+        1
+      ],
+      "range": "遠",
+      "dim": false,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261014-235329.png",
+        "20261014-235412.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        3,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s03-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261014-235332.png",
+        "20261014-235417.png",
+        "20261014-235419.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        4,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261014-235335.png",
+        "20261014-235424.png",
+        "20261014-235426.png"
+      ]
+    },
+    {
+      "no": 5,
+      "cell": [
+        4,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s05-panel-1.png",
+        "s05-panel-2.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s05-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s05-dlg-2.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s05-dlg-3.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s05-dlg-4.png",
+          "kind": "skillability"
+        },
+        {
+          "file": "s05-dlg-5.png",
+          "kind": "skillability"
+        }
+      ],
+      "sources": [
+        "20261014-235337.png",
+        "20261014-235431.png",
+        "20261014-235434.png",
+        "20261014-235437.png",
+        "20261014-235442.png",
+        "20261014-235445.png",
+        "20261014-235448.png"
+      ]
+    }
+  ],
+  "dropped": [
+    "20261014-235408.png",
+    "20261014-235410.png",
+    "20261014-235415.png",
+    "20261014-235422.png",
+    "20261014-235430.png"
+  ],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
