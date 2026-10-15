@@ -1180,5 +1180,65 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-10-14"
+  },
+  "sk-0600": {
+    "name": "パンチ",
+    "blood": "ピクシー",
+    "source": "20261014-235327.png",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0601": {
+    "name": "キック",
+    "blood": "ピクシー",
+    "source": "20261014-235329.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0602": {
+    "name": "ドラゴ・バスター",
+    "blood": "ピクシー",
+    "source": "20261014-235332.png",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0603": {
+    "name": "ドラゴ・ノヴァ",
+    "blood": "ピクシー",
+    "source": "20261014-235335.png",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0604": {
+    "name": "破壊の暴君",
+    "blood": "ピクシー",
+    "source": "20261014-235337.png",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
   }
 }
