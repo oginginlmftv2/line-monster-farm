@@ -1,0 +1,113 @@
+{
+  "monster": {
+    "id": "0154",
+    "name": "ウィッチ",
+    "blood": "ピクシー",
+    "bloodSlug": "pixie",
+    "aura": "黄"
+  },
+  "packedAt": "20261016-004014",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.PHlFFGJTi1/ウィッチ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        4
+      ],
+      "range": "零",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-003608.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        2,
+        1
+      ],
+      "range": "遠",
+      "dim": false,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-003611.png",
+        "20261016-003614.png",
+        "20261016-003617.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        3,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s03-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-003621.png",
+        "20261016-003623.png",
+        "20261016-003626.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        4,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-003630.png",
+        "20261016-003633.png",
+        "20261016-003635.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
