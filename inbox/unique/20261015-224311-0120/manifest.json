@@ -1,0 +1,70 @@
+{
+  "monster": {
+    "id": "0120",
+    "name": "マーキュリー",
+    "blood": "ピクシー",
+    "bloodSlug": "pixie",
+    "aura": "青"
+  },
+  "packedAt": "20261015-224311",
+  "sourceDir": "/Users/sora/Pictures/lmf-capture/unique-skills",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        3,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261015-224213.png",
+        "20261015-224217.png",
+        "20261015-224220.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        4,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261015-224226.png",
+        "20261015-224228.png",
+        "20261015-224232.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
