@@ -83,6 +83,12 @@ function check(payload, manifest) {
       continue;
     }
     if (/<\/?[A-Za-z][^>]*>/.test(t.description)) fail.push(`技能力「${t.name}」の本文にHTMLタグがあります`);
+    if (/\t/.test(t.description)) { fail.push(`技能力「${t.name}」の本文にタブがあります（TSVが壊れます）`); continue; }
+    // 改行は TSV では `\n`（バックスラッシュ＋n の2文字）で持つ。JSONに本物の改行で書かれていたらそろえる
+    if (/[\r\n]/.test(t.description)) {
+      t.description = t.description.replace(/\r\n|\r|\n/g, '\\n');
+      note.push(`技能力「${t.name}」の本文の改行を \\n にそろえました（読取JSONでは \\\\n と書く）`);
+    }
     if (texts.has(t.name) && norm(texts.get(t.name)) !== norm(t.description)) {
       stop.push(`技能力「${t.name}」の本文が束の中で2通りに読めています。どちらが正しいか確認してください`);
     }
