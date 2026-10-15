@@ -21725,11 +21725,17 @@
         },
         {
           "abilityId": "sab-0004",
-          "unlock": null
+          "unlock": {
+            "monsterId": "0190",
+            "level": 6
+          }
         },
         {
           "abilityId": "sab-0005",
-          "unlock": null
+          "unlock": {
+            "monsterId": "0190",
+            "level": 10
+          }
         }
       ],
       "icon": null,
