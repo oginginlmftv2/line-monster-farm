@@ -289,6 +289,8 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 4. `node scripts/test-skill-build.js` と `node scripts/verify.js` がFAIL 0
    - スクショはスキル `monster-skill-capture` で読む。PCのiPhoneミラーリングで撮る場合は、LMFShot を撮影モード `skills` で使い
      「フォルダの技を読んで」と頼む（`tools/mirror-capture/README.md`）
+   - 専用技（モンスター詳細の技タブ）は撮影モード `unique` で撮り、保存先 `~/Pictures/lmf-capture/unique-skills/` に分ける。
+     撮ったら「フォルダの専用技を読んで」とモンスター名を添えて頼む
 5. 上の「現在の実数」の血統ページ数・技件数を`build.js`のログの値へ更新し、
    このファイルの「最終更新」も直す（同じPRで行う）
 
