@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 575
+    "abilities": 577
   },
   "abilities": [
     {
@@ -7082,6 +7082,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 575,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0576",
+      "name": "王魔彗覇",
+      "version": 1,
+      "baseName": "王魔彗覇",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・＜20%＞の確率で被ダメ無効と追撃無効",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 576,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0577",
+      "name": "魔力圧縮",
+      "version": 1,
+      "baseName": "魔力圧縮",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・自身のエーテルの数分、ダメージ＜15%＞追撃＜1回＞［最大5まで］",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 577,
       "status": "verified"
     }
   ]

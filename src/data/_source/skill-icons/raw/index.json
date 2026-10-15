@@ -1324,5 +1324,53 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-15"
+  },
+  "sk-0614": {
+    "name": "メガレイ・O",
+    "blood": "ピクシー",
+    "source": "20261016-003958-0153/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0615": {
+    "name": "ライトニング・O",
+    "blood": "ピクシー",
+    "source": "20261016-003958-0153/s02",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0612": {
+    "name": "王魔雷",
+    "blood": "ピクシー",
+    "source": "20261016-004025-0190/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-15"
+  },
+  "sk-0613": {
+    "name": "王魔彗覇",
+    "blood": "ピクシー",
+    "source": "20261016-004025-0190/s02",
+    "cell": [
+      6,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-15"
   }
 }
