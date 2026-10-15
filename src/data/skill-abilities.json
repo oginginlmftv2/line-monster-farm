@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 572
+    "abilities": 575
   },
   "abilities": [
     {
@@ -7046,6 +7046,42 @@
         "bf-0008"
       ],
       "sortOrder": 572,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0573",
+      "name": "神楽",
+      "version": 1,
+      "baseName": "神楽",
+      "level": null,
+      "description": "対象技発動時、自身に「神楽（消費ガッツ＜－10%＞）」を付与[最大5まで]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 573,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0574",
+      "name": "壱の舞",
+      "version": 1,
+      "baseName": "壱の舞",
+      "level": null,
+      "description": "対象技命中時、前衛技にダメージ＜5%＞の追撃を付与[最大5回まで]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 574,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0575",
+      "name": "[中]回避率上昇",
+      "version": 1,
+      "baseName": "[中]回避率上昇",
+      "level": null,
+      "description": "技を命中させると間合いが中距離のとき回避Lv3(20秒)",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 575,
       "status": "verified"
     }
   ]
