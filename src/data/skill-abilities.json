@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 707
+    "abilities": 725
   },
   "abilities": [
     {
@@ -8684,6 +8684,238 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 707,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0708",
+      "name": "がむしゃら",
+      "version": 1,
+      "baseName": "がむしゃら",
+      "level": null,
+      "description": "対象技命中時、地形適性に応じて攻撃ステ上昇＜最大+24%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 708,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0709",
+      "name": "カラタケワリ",
+      "version": 1,
+      "baseName": "カラタケワリ",
+      "level": null,
+      "description": "対象技命中時、次の効果発動＜1回＞\n・攻撃ステ上昇＜+25%＞\n・回避率上昇＜+15%＞＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 709,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0710",
+      "name": "我等の忠義",
+      "version": 1,
+      "baseName": "我等の忠義",
+      "level": null,
+      "description": "対象技発動時、自身に[丈夫さ+200]を付与＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 710,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0711",
+      "name": "守護者統括",
+      "version": 1,
+      "baseName": "守護者統括",
+      "level": null,
+      "description": "技発動時、丈夫さ＜50%＞分の【シールド】を展開する＜1回＞＜最大500＞\nこの能力の【シールド破壊】まで被ダメブロック＜50%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 711,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0712",
+      "name": "連撃：ドリンクバー",
+      "version": 1,
+      "baseName": "連撃：ドリンクバー",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜4回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 712,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0713",
+      "name": "ドリンクバー",
+      "version": 1,
+      "baseName": "ドリンクバー",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ガッツ＜10＞回復\n・[神秘]を1つ付与、＜50%＞の確率でさらに1つ付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 713,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0714",
+      "name": "失墜する天空",
+      "version": 1,
+      "baseName": "失墜する天空",
+      "level": null,
+      "description": "対象技命中時、以下の効果が発動＜1回＞\n・相手の消費ガッツを＜100%＞上昇＜20秒＞\n・相手に[暗闇Lv5＜20秒＞]を付与\n・自身に[追撃Lv3＜20秒＞]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0008",
+        "bf-0024"
+      ],
+      "sortOrder": 714,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0715",
+      "name": "破壊を力に",
+      "version": 1,
+      "baseName": "破壊を力に",
+      "level": null,
+      "description": "対象技発動時、[デーモン・コマンド（相手の丈夫さを＜10%＞無視）]を付与する",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 715,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0716",
+      "name": "連撃：バロム砲",
+      "version": 1,
+      "baseName": "連撃：バロム砲",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 716,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0717",
+      "name": "悪魔神の呼び声",
+      "version": 1,
+      "baseName": "悪魔神の呼び声",
+      "level": null,
+      "description": "対象技命中かつ[デーモン・コマンド]中、次の効果を発動＜1回＞\n・相手の【シールド】を破壊\n・自身に[連撃強化Lv5＜20秒＞]と[必殺Lv2]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0005",
+        "bf-0014"
+      ],
+      "sortOrder": 717,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0718",
+      "name": "毒霧吐息",
+      "version": 1,
+      "baseName": "毒霧吐息",
+      "level": null,
+      "description": "対象技命中時、相手に次の効果発動＜30秒＞＜1回＞\n・ガッツ回復速度低下＜-10%＞\n・最終命中率＜-5%＞\n・被ガッツダウンダメージ増加＜+15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 718,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0719",
+      "name": "暴食之王",
+      "version": 1,
+      "baseName": "暴食之王",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ガッツダメージ分のガッツ回復\n・自身に[命中率＜+5%＞]を付与\n・自身に[攻撃ステータス＜+5%＞]を付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 719,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0720",
+      "name": "食物連鎖",
+      "version": 1,
+      "baseName": "食物連鎖",
+      "level": null,
+      "description": "対象技命中時、相手に次の能力を付与＜1回＞\n・[暗闇Lv3＜20秒＞]\n・[衰弱Lv3＜20秒＞]\n・[火傷Lv3＜20秒＞]",
+      "tags": [],
+      "buffs": [
+        "bf-0023",
+        "bf-0024",
+        "bf-0030"
+      ],
+      "sortOrder": 720,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0721",
+      "name": "星ぶっさし",
+      "version": 1,
+      "baseName": "星ぶっさし",
+      "level": null,
+      "description": "バトル開始時、人気度に応じて次の効果発動\n・人気度100以上で移動速度+1\n・人気度110以上で移動速度+2\n・人気度120以上で移動速度+4",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 721,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0722",
+      "name": "連撃：星ぶっさし",
+      "version": 1,
+      "baseName": "連撃：星ぶっさし",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 722,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0723",
+      "name": "祝：神秘Lv2",
+      "version": 1,
+      "baseName": "祝：神秘",
+      "level": 2,
+      "description": "対象技発動時、自身に＜神秘（被ダメージ＜-10%＞）＞を2つ付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 723,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0724",
+      "name": "旧支配者の爪痕",
+      "version": 1,
+      "baseName": "旧支配者の爪痕",
+      "level": null,
+      "description": "対象技命中時、[ダイスロール]に応じて効果発動＜1回＞\n・1、2：相手に[疲労Lv3]を付与\n・3、4：相手に[混乱＜20秒＞]を付与\n・5、6：自身に[追撃Lv2＜20秒＞]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0008",
+        "bf-0025",
+        "bf-0027"
+      ],
+      "sortOrder": 724,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0725",
+      "name": "混沌の禍",
+      "version": 1,
+      "baseName": "混沌の禍",
+      "level": null,
+      "description": "対象技命中時、[ダイスロール]に応じて効果発動\n・1〜3：[ダイスロール]の結果を+1する\n・4〜6：相手に[追撃封鎖]を＜結果の数-3回＞付与\n※[ダイスロール]未発動時は、結果を＜1＞とする",
+      "tags": [],
+      "buffs": [
+        "bf-0026"
+      ],
+      "sortOrder": 725,
       "status": "verified"
     }
   ]

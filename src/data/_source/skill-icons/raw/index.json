@@ -3592,5 +3592,197 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0812": {
+    "name": "ハンマー",
+    "blood": "ニャー",
+    "source": "20261016-221959-1353/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0813": {
+    "name": "カラタケワリ",
+    "blood": "ニャー",
+    "source": "20261016-221959-1353/s02",
+    "cell": [
+      5,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0814": {
+    "name": "我等の忠義",
+    "blood": "ウンディーネ",
+    "source": "20261016-222006-2051/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0815": {
+    "name": "虫けらが!!",
+    "blood": "ウンディーネ",
+    "source": "20261016-222006-2051/s02",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0804": {
+    "name": "転倒",
+    "blood": "モノリス",
+    "source": "20261016-222014-2256/s01",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0805": {
+    "name": "ドリンクバー",
+    "blood": "モノリス",
+    "source": "20261016-222014-2256/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0801": {
+    "name": "失墜する天空",
+    "blood": "ジョーカー",
+    "source": "20261016-222021-1751/s01",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0802": {
+    "name": "この先は修羅の道ぞ",
+    "blood": "ジョーカー",
+    "source": "20261016-222027-1752/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0803": {
+    "name": "バロム砲",
+    "blood": "ジョーカー",
+    "source": "20261016-222027-1752/s02",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0810": {
+    "name": "毒霧吐息",
+    "blood": "ネンドロ",
+    "source": "20261016-222035-1851/s01",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0811": {
+    "name": "暴食之王",
+    "blood": "ネンドロ",
+    "source": "20261016-222035-1851/s02",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0806": {
+    "name": "星ぶっさし",
+    "blood": "モノリス",
+    "source": "20261016-222042-2250/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0807": {
+    "name": "祝福の宇宙",
+    "blood": "モノリス",
+    "source": "20261016-222042-2250/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0808": {
+    "name": "正気検閲",
+    "blood": "ナーガ",
+    "source": "20261016-222049-2450/s01",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0809": {
+    "name": "狂夢螺旋",
+    "blood": "ナーガ",
+    "source": "20261016-222049-2450/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0816": {
+    "name": "弱っ…豆腐みたい",
+    "blood": "ウンディーネ",
+    "source": "20261016-222251-2051/s01",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
