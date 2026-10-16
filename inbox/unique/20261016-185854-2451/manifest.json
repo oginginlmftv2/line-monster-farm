@@ -1,0 +1,59 @@
+{
+  "monster": {
+    "id": "2451",
+    "name": "ジョカ",
+    "blood": "ナーガ",
+    "bloodSlug": "naga",
+    "aura": "青"
+  },
+  "packedAt": "20261016-185854",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.Eg8YirVjlQ/ジョカ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        2
+      ],
+      "range": "中",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-185444.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        5,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-185504.png",
+        "20261016-185507.png",
+        "20261016-185511.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
