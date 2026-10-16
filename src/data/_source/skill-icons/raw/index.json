@@ -2788,5 +2788,89 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0734": {
+    "name": "M・キューブ",
+    "blood": "ゲル",
+    "source": "20261016-172213-1922/s02",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0735": {
+    "name": "餅つき",
+    "blood": "ゲル",
+    "source": "20261016-172220-1952/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0736": {
+    "name": "初日の出",
+    "blood": "ゲル",
+    "source": "20261016-172220-1952/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0737": {
+    "name": "カガミ開き",
+    "blood": "ゲル",
+    "source": "20261016-172220-1952/s03",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0738": {
+    "name": "神芹リッタ",
+    "blood": "ゲル",
+    "source": "20261016-172234-1950/s01",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0739": {
+    "name": "“無慈悲な太陽”",
+    "blood": "ゲル",
+    "source": "20261016-172239-1951/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0740": {
+    "name": "“微塵切り”",
+    "blood": "ゲル",
+    "source": "20261016-172239-1951/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

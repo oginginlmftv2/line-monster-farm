@@ -1512,7 +1512,7 @@ ${abilityUnlocks.map(({ skill, link }) => {
     </div>
     <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
     <div class="menu-grid menu-grid--single">
-      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
+      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
     </div>
   </div>`;
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
@@ -1996,7 +1996,7 @@ function renderBloodPicker(context, { where, monSlugs, currentMonSlug = '', curr
   const renderItem = (item, pad) => {
     const icon = bloodIconOf(context, item.slug);
     const skillMeta = item.bloodPage
-      ? `<span class="blood-picker-skill">技${item.bloodPage.skills.length}</span>`
+      ? `<span class="blood-picker-skill">${(c => `共通${c.common}${c.unique ? `<br>専用${c.unique}` : ''}`)(countBloodSkills(item.bloodPage))}</span>`
       : '';
     const inner = `<img class="blood-picker-icon" src="${rootPrefix}${icon.src}" alt="${escapeHtml(item.blood)}" width="${icon.width}" height="${icon.height}"${lazy} decoding="async">`
       + `<span class="blood-picker-name">${escapeHtml(item.blood)}</span>`
@@ -2100,7 +2100,7 @@ function renderMonTypeOverview(monType, monsters, context) {
       addLink(context, `monsters/${item.monSlug}/${item.slug}/index.html`);
       pageCell = `<a href="${escapeHtml(item.slug)}/">${escapeHtml(item.blood)}種の技一覧</a>`;
     }
-    return `        <tr><td>${nameCell}</td><td class="num">${item.members.length}体</td><td class="num">${item.bloodPage ? `${item.bloodPage.skills.length}技` : '未登録'}</td><td>${pageCell}</td></tr>`;
+    return `        <tr><td>${nameCell}</td><td class="num">${item.members.length}体</td><td class="num">${item.bloodPage ? `${countBloodSkills(item.bloodPage).common}技` : '未登録'}</td><td class="num">${item.bloodPage ? `${countBloodSkills(item.bloodPage).unique}技` : '未登録'}</td><td>${pageCell}</td></tr>`;
   }).join('\n');
   const auraOf = monster => {
     const runtime = context.runtimeById.get(monster.id);
@@ -2139,7 +2139,7 @@ ${renderBloodPicker(context, { where: 'monType', monSlugs: [monType.slug], curre
     <h3>血統ごとの体数と技</h3>
     <div class="mon-type-table-scroll">
       <table class="mon-type-table">
-        <thead><tr><th>血統</th><th class="num">体数</th><th class="num">技</th><th>技一覧</th></tr></thead>
+        <thead><tr><th>血統</th><th class="num">体数</th><th class="num">共通技</th><th class="num">専用技</th><th>技一覧</th></tr></thead>
         <tbody>
 ${bloodRows}
         </tbody>
@@ -2203,7 +2203,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
       addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
       skillNav = `
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
+        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
       </div>`;
     }
     return `
@@ -2597,6 +2597,18 @@ function validateSkillData(skillDb, abilityDb, idsJson, buffDb) {
   };
 }
 
+// 血統ページの技数。共通技と専用技（unique）を分けて数える
+function countBloodSkills(bloodPage) {
+  const unique = bloodPage.skills.filter(skill => skill.unique).length;
+  return { common: bloodPage.skills.length - unique, unique };
+}
+
+// 技一覧ボタン・見出し用の「共通N技・専用M技」。専用技が無い血統は「共通N技」だけ
+function formatBloodSkillCount(bloodPage) {
+  const { common, unique } = countBloodSkills(bloodPage);
+  return unique ? `共通${common}技・専用${unique}技` : `共通${common}技`;
+}
+
 // 技データが1件でもある血統だけページを生成する。
 function gateBloods(inputs) {
   // 血統ページに載せるのは各技の最新版だけ。旧版はロールバック用にDBへ残るが表示しない。
@@ -2889,7 +2901,7 @@ function renderBloodPage(bloodGate, context, abilityById) {
   const skills = bloodGate.skills;
   const uniqueSkills = skills.filter(skill => skill.unique);
   const bloodTitleIcon = bloodIconOf(context, bloodGate.slug);
-  const title = `${bloodGate.blood}種の技一覧（${skills.length}技）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
+  const title = `${bloodGate.blood}種の技一覧（${formatBloodSkillCount(bloodGate)}）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
   const description = bloodDescription(bloodGate);
   const canonical = `${SITE_URL}/monsters/${bloodGate.monSlug}/${bloodGate.slug}/`;
   const hasMonTypePage = context.eligibleMonSlugs.has(bloodGate.monSlug);
@@ -3337,11 +3349,13 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
     console.log(`    ${monType.name}: ${monType.notes.join(' / ')}`);
   }
   const skippedBloods = bloodGates.filter(bloodGate => !bloodGate.eligible);
-  const skillCount = ((inputs.skillsJson && inputs.skillsJson.skills) || []).length;
+  const allSkills = (inputs.skillsJson && inputs.skillsJson.skills) || [];
+  const skillCount = allSkills.length;
+  const uniqueCount = allSkills.filter(skill => skill.unique).length;
   if (!skillCount) {
     console.log('  血統ページ   技データが0件のため生成なし');
   } else {
-    console.log(`  血統ページ  生成 ${bloodPages.length}件 / 技 ${skillCount}件`);
+    console.log(`  血統ページ  生成 ${bloodPages.length}件 / 技 ${skillCount}件（共通${skillCount - uniqueCount}・専用${uniqueCount}）`);
     for (const page of bloodPages) {
       console.log(`    ${page.path}  ${page.contentCharacters}字${page.indexable ? '' : `（noindex・あと${INDEXABLE_THRESHOLD - page.contentCharacters}字）`}`);
     }
