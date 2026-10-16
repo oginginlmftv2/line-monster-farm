@@ -119,7 +119,7 @@ def cell_info(im, x, y):
     gray = ((np.abs(body[..., 0] - body[..., 1]) < 14) & (np.abs(body[..., 1] - body[..., 2]) < 14) & (body.mean(2) < 140)).mean()
     b = a[y - 6:y + CELL + 6, x - 6:x + CELL + 6]   # 枠はマスの外周より少し外まで出る
     edge = np.concatenate([b[:9].reshape(-1, 3), b[-9:].reshape(-1, 3), b[:, :9].reshape(-1, 3), b[:, -9:].reshape(-1, 3)])
-    framed = ((edge[:, 0] > 200) & (edge[:, 1] > 190) & (edge[:, 2] < 140)).mean() > 0.15
+    framed = ((edge[:, 0] > 200) & (edge[:, 1] > 190) & (edge[:, 2] < 140)).mean() > 0.12
     bright = np.percentile(body.mean(2), 98)
     return dict(empty=bool(gray > 0.9), framed=bool(framed), dim=bool(bright < DIM_MAX), bright=float(bright))
 
