@@ -1,0 +1,118 @@
+{
+  "monster": {
+    "id": "0254",
+    "name": "紅蓮可翔式",
+    "blood": "ドラゴン",
+    "bloodSlug": "dragon",
+    "aura": "赤"
+  },
+  "packedAt": "20261016-115752",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.s7Ybz5YfSk/紅蓮可翔式",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        1
+      ],
+      "range": "遠",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-115059.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        1,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-115103.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        1,
+        4
+      ],
+      "range": "零",
+      "dim": true,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-115108.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        3,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-115112.png",
+        "20261016-115126.png",
+        "20261016-115130.png"
+      ]
+    },
+    {
+      "no": 5,
+      "cell": [
+        4,
+        4
+      ],
+      "range": "零",
+      "dim": true,
+      "panels": [
+        "s05-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s05-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s05-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-115133.png",
+        "20261016-115136.png",
+        "20261016-115141.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
