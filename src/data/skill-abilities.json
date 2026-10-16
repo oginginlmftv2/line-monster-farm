@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 680
+    "abilities": 684
   },
   "abilities": [
     {
@@ -8349,6 +8349,54 @@
         "bf-0028"
       ],
       "sortOrder": 680,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0681",
+      "name": "連撃：“紫電一閃”",
+      "version": 1,
+      "baseName": "連撃：“紫電一閃”",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 681,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0682",
+      "name": "連撃：「全反撃」",
+      "version": 1,
+      "baseName": "連撃：「全反撃」",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv6を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 682,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0683",
+      "name": "「全反撃」",
+      "version": 1,
+      "baseName": "「全反撃」",
+      "level": null,
+      "description": "対象技命中時、被ダメージの50%を攻撃ステータスに加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 683,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0684",
+      "name": "龍神の力",
+      "version": 1,
+      "baseName": "龍神の力",
+      "level": null,
+      "description": "対象技発動時、残りライフが少ないほど命中上昇[最大50%]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 684,
       "status": "verified"
     }
   ]
