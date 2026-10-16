@@ -1648,5 +1648,161 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0639": {
+    "name": "オーガアタック",
+    "blood": "ヘンガー",
+    "source": "20261016-123658-0430/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0640": {
+    "name": "ミラクルHスパーク",
+    "blood": "ヘンガー",
+    "source": "20261016-123704-0450/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0641": {
+    "name": "聖霊光弾",
+    "blood": "ヘンガー",
+    "source": "20261016-123704-0450/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0642": {
+    "name": "A・スパーク",
+    "blood": "ヘンガー",
+    "source": "20261016-123704-0450/s03",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0643": {
+    "name": "ワン・ツー",
+    "blood": "ヘンガー",
+    "source": "20261016-123711-0409/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0644": {
+    "name": "コンビネーション",
+    "blood": "ヘンガー",
+    "source": "20261016-123711-0409/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0645": {
+    "name": "ヴァリス・連射",
+    "blood": "ヘンガー",
+    "source": "20261016-123726-0451/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0646": {
+    "name": "ヴァリス・FP",
+    "blood": "ヘンガー",
+    "source": "20261016-123726-0451/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0647": {
+    "name": "カオスセイバー",
+    "blood": "ヘンガー",
+    "source": "20261016-123733-0417/s01",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0649": {
+    "name": "誠壱式旋風脚",
+    "blood": "ヘンガー",
+    "source": "pA/s02",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0650": {
+    "name": "ヴァリス",
+    "blood": "ヘンガー",
+    "source": "pA/s03",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0651": {
+    "name": "セイバーコンボ・赫",
+    "blood": "ヘンガー",
+    "source": "pA/s04",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0648": {
+    "name": "フロストバースト",
+    "blood": "ヘンガー",
+    "source": "pB/s01",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
