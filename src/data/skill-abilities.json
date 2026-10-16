@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 644
+    "abilities": 646
   },
   "abilities": [
     {
@@ -7915,6 +7915,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 644,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0645",
+      "name": "連撃：ジェントル",
+      "version": 1,
+      "baseName": "連撃：ジェントル",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃＜5回＞を与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 645,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0646",
+      "name": "[相手魔族]乱刃Lv1",
+      "version": 1,
+      "baseName": "[相手魔族]乱刃",
+      "level": 1,
+      "description": "[相手魔族]かつ対象技命中時、追撃ダメージを＜5%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 646,
       "status": "verified"
     }
   ]
