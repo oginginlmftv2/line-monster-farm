@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 790,
+    "skills": 802,
     "bloods": 34
   },
   "skills": [
@@ -31367,6 +31367,398 @@
       "status": "verified"
     },
     {
+      "skillId": "sk-0783",
+      "name": "「増殖」",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 26,
+      "damage": "E",
+      "accuracy": "C+",
+      "gutsDown": "G",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0689",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2850"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 782,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0784",
+      "name": "“飛び回る蜂”",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 19,
+      "damage": "C",
+      "accuracy": "D",
+      "gutsDown": "F",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0286",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2850"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 783,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0785",
+      "name": "メニーウィング・翠",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "零",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 22,
+      "damage": "D",
+      "accuracy": "B+",
+      "gutsDown": "D",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0012",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2850",
+        "2851"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 784,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0786",
+      "name": "「光華」",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 47,
+      "damage": "S",
+      "accuracy": "A",
+      "gutsDown": "D",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0690",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0691",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2850"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 785,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0787",
+      "name": "ライスシャワー",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 26,
+      "damage": "F",
+      "accuracy": "C+",
+      "gutsDown": "B",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0692",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2851"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 786,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0788",
+      "name": "ケーキ入刀",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "零",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 42,
+      "damage": "A+",
+      "accuracy": "B",
+      "gutsDown": "E",
+      "critical": "S",
+      "abilities": [
+        {
+          "abilityId": "sab-0548",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0364",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2851"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 787,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0789",
+      "name": "絶望のオーラ",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 20,
+      "damage": "D",
+      "accuracy": "C",
+      "gutsDown": "A",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0693",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0694",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2852"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 788,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0790",
+      "name": "グレートソード",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "ちから",
+      "guts": 39,
+      "damage": "A",
+      "accuracy": "C+",
+      "gutsDown": "D",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0695",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0696",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2852"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 789,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0791",
+      "name": "ニャニャーレイン",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 42,
+      "damage": "S",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0697",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0086",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2813"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 790,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0792",
+      "name": "メテオボム",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 19,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "F",
+      "critical": "F",
+      "abilities": [],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2827"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 791,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0793",
+      "name": "メテオシャワー",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "白",
+      "skillType": "ちから",
+      "guts": 38,
+      "damage": "A",
+      "accuracy": "B+",
+      "gutsDown": "F+",
+      "critical": "A+",
+      "abilities": [
+        {
+          "abilityId": "sab-0698",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0699",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2827"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 792,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0794",
+      "name": "空中氷天撃",
+      "version": 1,
+      "blood": "ユグドラシル",
+      "range": "遠",
+      "rank": 1,
+      "moveTo": "近",
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 14,
+      "damage": "D",
+      "accuracy": "B",
+      "gutsDown": "C",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0700",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2809"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 793,
+      "status": "verified"
+    },
+    {
       "skillId": "sk-0591",
       "name": "ミラージュシフト",
       "version": 1,
@@ -31397,7 +31789,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 782,
+      "sortOrder": 794,
       "status": "verified"
     },
     {
@@ -31431,7 +31823,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 783,
+      "sortOrder": 795,
       "status": "verified"
     },
     {
@@ -31465,7 +31857,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 784,
+      "sortOrder": 796,
       "status": "verified"
     },
     {
@@ -31503,7 +31895,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 785,
+      "sortOrder": 797,
       "status": "verified"
     },
     {
@@ -31541,7 +31933,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 786,
+      "sortOrder": 798,
       "status": "verified"
     },
     {
@@ -31579,7 +31971,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 787,
+      "sortOrder": 799,
       "status": "verified"
     },
     {
@@ -31631,7 +32023,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 788,
+      "sortOrder": 800,
       "status": "verified"
     },
     {
@@ -31683,7 +32075,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 789,
+      "sortOrder": 801,
       "status": "verified"
     },
     {
@@ -31735,7 +32127,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 790,
+      "sortOrder": 802,
       "status": "verified"
     }
   ]
