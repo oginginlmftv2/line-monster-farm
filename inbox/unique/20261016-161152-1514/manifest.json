@@ -1,0 +1,38 @@
+{
+  "monster": {
+    "id": "1514",
+    "name": "ヒガンバナ",
+    "blood": "スエゾー",
+    "bloodSlug": "suezo",
+    "aura": "赤"
+  },
+  "packedAt": "20261016-161152",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.FXTlinUkOU/ヒガンバナ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        2,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-160702.png",
+        "20261016-160704.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
