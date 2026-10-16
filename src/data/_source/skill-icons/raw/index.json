@@ -1888,5 +1888,89 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0659": {
+    "name": "真・炎神剣",
+    "blood": "デュラハン",
+    "source": "20261016-131428-0701/s01",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0660": {
+    "name": "ヒトダマ豪速球",
+    "blood": "デュラハン",
+    "source": "20261016-131439-0751/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0661": {
+    "name": "真空仏陀斬り",
+    "blood": "デュラハン",
+    "source": "20261016-131439-0751/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0662": {
+    "name": "大後光刃",
+    "blood": "デュラハン",
+    "source": "20261016-131444-0752/s01",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0663": {
+    "name": "フォーク",
+    "blood": "デュラハン",
+    "source": "20261016-131450-0750/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0664": {
+    "name": "チェック",
+    "blood": "デュラハン",
+    "source": "20261016-131450-0750/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0665": {
+    "name": "秘技・雷鳴剣",
+    "blood": "デュラハン",
+    "source": "20261016-131456-0753/s01",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

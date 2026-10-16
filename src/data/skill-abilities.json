@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 605
+    "abilities": 610
   },
   "abilities": [
     {
@@ -7445,6 +7445,66 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 605,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0606",
+      "name": "巫門遁甲",
+      "version": 1,
+      "baseName": "巫門遁甲",
+      "level": null,
+      "description": "対象技命中時、技発動中の一定時間、相手のガッツ回復速度を0にする<5秒>\nさらに自身モン類有利時にオーラ有利変換",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 606,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0607",
+      "name": "オーバーソウル",
+      "version": 1,
+      "baseName": "オーバーソウル",
+      "level": null,
+      "description": "対象技命中時、ダメージを50%の確率でブロックLv5<20秒><1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 607,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0608",
+      "name": "スピリット オブ ソード",
+      "version": 1,
+      "baseName": "スピリット オブ ソード",
+      "level": null,
+      "description": "対象技命中時、残り時間が少ないほど与ダメ上昇、クリティカル率上昇[最大50%]\nさらに追加でダメージLv3を2回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 608,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0609",
+      "name": "ロイヤル",
+      "version": 1,
+      "baseName": "ロイヤル",
+      "level": null,
+      "description": "対象技命中時、この技と次の技に消費ガッツ<-20%>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 609,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0610",
+      "name": "連撃：秘技・雷鳴剣",
+      "version": 1,
+      "baseName": "連撃：秘技・雷鳴剣",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 610,
       "status": "verified"
     }
   ]
