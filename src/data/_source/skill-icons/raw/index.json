@@ -3172,5 +3172,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0766": {
+    "name": "デッドリーブロー・剃",
+    "blood": "ナーガ",
+    "source": "20261016-185900-2411/s01",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
