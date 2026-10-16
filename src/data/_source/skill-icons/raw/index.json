@@ -3292,5 +3292,89 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0776": {
+    "name": "“神千斬り”",
+    "blood": "シンリュウ",
+    "source": "20261016-191900-2951/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0777": {
+    "name": "激龍焔・罰",
+    "blood": "シンリュウ",
+    "source": "20261016-191900-2951/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0778": {
+    "name": "龍尾扇・陽",
+    "blood": "シンリュウ",
+    "source": "20261016-191915-2914/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0779": {
+    "name": "火神の怒り",
+    "blood": "シンリュウ",
+    "source": "20261016-191915-2914/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0780": {
+    "name": "激龍焔・陽",
+    "blood": "シンリュウ",
+    "source": "20261016-191915-2914/s03",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0781": {
+    "name": "天下り・雷",
+    "blood": "シンリュウ",
+    "source": "20261016-191930-2952/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0782": {
+    "name": "東龍招雷",
+    "blood": "シンリュウ",
+    "source": "20261016-191930-2952/s02",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
