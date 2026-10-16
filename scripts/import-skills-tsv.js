@@ -226,25 +226,8 @@ function main() {
       if (!monster) errors.push(`${where}: ${field} のモンスター名が見つかりません: ${name}`);
       return monster ? monster.id : null;
     };
-    // owners は `・` 区切りだが、「シュナ・リゾート」のように名前自体が `・` を含む。
-    // 分割したあと、既知のモンスター名になる最長のまとまりへ貼り直す。
-    const splitOwners = raw => raw.split(/[,、]/).flatMap(chunk => {
-      const part = chunk.trim();
-      if (!part) return [];
-      if (monsterByName.has(part)) return [part];
-      const tokens = part.split('・').map(t => t.trim()).filter(Boolean);
-      const names = [];
-      let i = 0;
-      while (i < tokens.length) {
-        let matched = 0;
-        for (let j = tokens.length; j > i; j--) {
-          if (monsterByName.has(tokens.slice(i, j).join('・'))) { matched = j; break; }
-        }
-        if (matched) { names.push(tokens.slice(i, matched).join('・')); i = matched; }
-        else { names.push(tokens[i]); i++; }
-      }
-      return names;
-    });
+    // owners は `、` 区切り。名前自体に `・` を含むモンスター（「シュナ・リゾート」など）があるため `・` では区切らない。
+    const splitOwners = raw => raw.split('、').map(name => name.trim()).filter(Boolean);
     const owners = isTrue(row.unique) && row.owners
       ? splitOwners(row.owners).map(n => resolve(n, 'owners')).filter(Boolean)
       : [];

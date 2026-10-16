@@ -65,6 +65,7 @@ python3 tools/skill-autocapture/skill_icon.py add-pack $P /tmp/payload.json
 node build.js && node scripts/test-skill-build.js && node scripts/verify.js
 ```
 
+- 入力者から「他のモンスターも使える」と共有されたら、追記後にTSVの `owners` 列を手で直す。区切りは `、`（全血統で統一。`・` は名前に含まれるので区切りに使わない）
 - `import-skills-tsv.js` が「バフDB未登録の候補」を出したら、勝手に足さずPR本文に書いて聞く
 - `skill_icon.py refresh` はクラウドでは回さない（一覧画像に macOS のフォントを使う）。PR本文に「手元で refresh」と書く
 - `verify.js` が FAIL 0 でなければ、原因をPR本文に書いて draft にする
