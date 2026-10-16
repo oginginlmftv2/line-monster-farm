@@ -2620,5 +2620,101 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0720": {
+    "name": "正義の刃",
+    "blood": "ジョーカー",
+    "source": "20261016-165109-1754/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0721": {
+    "name": "革命の日",
+    "blood": "ジョーカー",
+    "source": "20261016-165109-1754/s02",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0722": {
+    "name": "ハドロン砲",
+    "blood": "ジョーカー",
+    "source": "20261016-165109-1754/s03",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0723": {
+    "name": "デススマッシュ",
+    "blood": "ジョーカー",
+    "source": "20261016-165116-1753/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0724": {
+    "name": "シャドウストライク",
+    "blood": "ジョーカー",
+    "source": "20261016-165116-1753/s02",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0725": {
+    "name": "ライトエナジー",
+    "blood": "ジョーカー",
+    "source": "20261016-165122-1711/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0726": {
+    "name": "カオスエレメント",
+    "blood": "ジョーカー",
+    "source": "20261016-165122-1711/s02",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0727": {
+    "name": "心臓掌握",
+    "blood": "ジョーカー",
+    "source": "20261016-165129-1750/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
