@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 666
+    "abilities": 669
   },
   "abilities": [
     {
@@ -8179,6 +8179,42 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 666,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0667",
+      "name": "奪気Lv2",
+      "version": 1,
+      "baseName": "奪気",
+      "level": 2,
+      "description": "対象技命中時、ガッツダメージに応じてガッツ回復<消費ガッツの２０％まで>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 667,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0668",
+      "name": "気迫Lv2",
+      "version": 1,
+      "baseName": "気迫",
+      "level": 2,
+      "description": "対象技命中時、相手よりもガッツが多いとすべての技ステータス上昇Lv２",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 668,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0669",
+      "name": "束縛",
+      "version": 1,
+      "baseName": "束縛",
+      "level": null,
+      "description": "対象技命中時、技発動中の一定時間、相手のガッツ回復速度を０にする<５秒>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 669,
       "status": "verified"
     }
   ]
