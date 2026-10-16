@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 688
+    "abilities": 700
   },
   "abilities": [
     {
@@ -8445,6 +8445,158 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 688,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0689",
+      "name": "連撃：「増殖」",
+      "version": 1,
+      "baseName": "連撃：「増殖」",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を4回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 689,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0690",
+      "name": "連撃：「光華」",
+      "version": 1,
+      "baseName": "連撃：「光華」",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を4回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 690,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0691",
+      "name": "幻奪：「光華」",
+      "version": 1,
+      "baseName": "幻奪：「光華」",
+      "level": null,
+      "description": "対象技命中時、次の効果{与ダメ上昇、ガッツ回復速度、回避率}からランダムで1つ上昇Lv5＜20秒＞＜3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 691,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0692",
+      "name": "恵：連撃強化Lv5",
+      "version": 1,
+      "baseName": "恵：連撃強化",
+      "level": 5,
+      "description": "対象技発動時、自身に[連撃強化Lv5＜20秒＞]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0005"
+      ],
+      "sortOrder": 692,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0693",
+      "name": "呪：虚弱Lv2",
+      "version": 1,
+      "baseName": "呪：虚弱",
+      "level": 2,
+      "description": "対象技命中時、相手に[虚弱Lv2]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0028"
+      ],
+      "sortOrder": 693,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0694",
+      "name": "呪：[有利]疲労Lv2",
+      "version": 1,
+      "baseName": "呪：[有利]疲労",
+      "level": 2,
+      "description": "[有利]かつ対象技命中時、相手に[疲労Lv2]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0025"
+      ],
+      "sortOrder": 694,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0695",
+      "name": "連撃：グレートソード",
+      "version": 1,
+      "baseName": "連撃：グレートソード",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜100%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 695,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0696",
+      "name": "余裕の構え",
+      "version": 1,
+      "baseName": "余裕の構え",
+      "level": null,
+      "description": "対象技発動時、相手より[ライフ]が高ければ、[必殺Lv5]を付与＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0014"
+      ],
+      "sortOrder": 696,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0697",
+      "name": "連撃：ニャニャーレイン",
+      "version": 1,
+      "baseName": "連撃：ニャニャーレイン",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 697,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0698",
+      "name": "メテオシャワー",
+      "version": 1,
+      "baseName": "メテオシャワー",
+      "level": null,
+      "description": "相手【シールド】展開中に対象技命中時、次の効果＜各1回＞\n・相手のシールド破壊\n・自身に［クリ率＜+10%＞＜30秒＞］付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 698,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0699",
+      "name": "連撃：メテオシャワー",
+      "version": 1,
+      "baseName": "連撃：メテオシャワー",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を2回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 699,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0700",
+      "name": "盾：空中氷天撃",
+      "version": 1,
+      "baseName": "盾：空中氷天撃",
+      "level": null,
+      "description": "バトル開始時、ライフ15%分の【シールド】を展開する\n＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 700,
       "status": "verified"
     }
   ]
