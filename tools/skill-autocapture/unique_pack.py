@@ -79,17 +79,26 @@ def frame_score(a, x, y):
     return ((edge[:, 0] > 200) & (edge[:, 1] > 190) & (edge[:, 2] < 140)).mean()
 
 
+def shifted_score(a, x, y):
+    """選んだマスは枠の分だけ検出位置がずれることがある。窓を少しずらした中で、いちばん黄色い割合"""
+    return max(frame_score(a, x + dx, y + dy) for dx in range(-12, 13, 3) for dy in range(-12, 13, 3))
+
+
 def selected(im):
     """選択中のマス。絶対のしきい値だと、別の端末のスクショで枠が薄く写ると見失うので、
-    いちばん黄色い枠のマスを、十分に黄色く（0.06超）、2番目の1.5倍以上のときに選ぶ"""
+    いちばん黄色い枠のマスを、十分に黄色く（0.06超）、2番目の1.5倍以上のときに選ぶ。
+    見つからなければ、窓をずらして（枠で検出位置がずれたマスを拾う）もう一度だけ探す"""
     a = np.asarray(im.convert('RGB')).astype(int)
-    scored = sorted(((frame_score(a, x, y), r, c, x, y) for r, c, x, y in si.find_cells(im)), reverse=True)
-    if not scored or scored[0][0] < 0.06:
-        return None
-    if len(scored) > 1 and scored[0][0] < scored[1][0] * 1.5:
-        return None
-    _, r, c, x, y = scored[0]
-    return r, c, x, y, si.cell_info(im, x, y)
+    cells = si.find_cells(im)
+    for score in (frame_score, shifted_score):
+        scored = sorted(((score(a, x, y), r, c, x, y) for r, c, x, y in cells), reverse=True)
+        if not scored or scored[0][0] < 0.06:
+            continue
+        if len(scored) > 1 and scored[0][0] < scored[1][0] * 1.5:
+            continue
+        _, r, c, x, y = scored[0]
+        return r, c, x, y, si.cell_info(im, x, y)
+    return None
 
 
 def pack(name, src, files=None):
