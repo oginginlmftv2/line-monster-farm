@@ -1,0 +1,43 @@
+{
+  "monster": {
+    "id": "0701",
+    "name": "レジーナ",
+    "blood": "デュラハン",
+    "bloodSlug": "dullahan",
+    "aura": "赤"
+  },
+  "packedAt": "20261016-131428",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.0pQPuNnjr5/レジーナ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        4,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-131049.png",
+        "20261016-131052.png",
+        "20261016-131055.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
