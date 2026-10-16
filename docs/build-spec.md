@@ -815,14 +815,39 @@ for f in img/blood/*.png; do s=$(basename "$f" .png); sips -s format jpeg -s for
 ### 5-4. sitemap.xml の再生成
 
 - index対象の詳細ページと生成済みモン類ページを追加する
-- **手書きの23URLはそのまま維持**する（P3-1で整理済み。P3-5で薄い日記13本を除外）
+- **手書きURL（現在26件。build.js の `existingBlocks.length` と一致）はそのまま維持**する（P3-1で整理済み。P3-5で薄い日記13本を除外）
 - noindex の詳細ページは含めない
 - 詳細ページは解説DB（monsters-editorial.json）の順、解説DBに無い体（基礎データで昇格した体）はID順で後ろに足す（2026-09-27）
 - index対象のカード詳細を追加し、カード生成URLは次回ビルドで手書きURLとして保持しない
 - `cards/SSR-hori.html`は転送元のため除外する
 - 2026-08-24の監査値は **手書き23 + モンスター詳細52 + モン類6 + カード詳細54 = 135件**
-- `<lastmod>` は入れない（決定的な出力にするため）
 - `<priority>`: モンスター詳細・カード詳細 0.7 / モン類 0.6
+
+#### `<lastmod>`（2026-10-16〜・P-005）
+
+全URL（手書き・生成とも）の `<loc>` の直後に `<lastmod>YYYY-MM-DD</lastmod>` を入れる。値は
+**そのページの可視テキストが最後に変わった日（JST）**。ビルド日を全URLへ一律に入れると Google が lastmod を
+信用しなくなるため、中身が変わったURLだけ日付を進める。
+
+- 正は `src/data/sitemap-lastmod.json`（build.js の生成物。手で編集しない）。URLごとに `lastmod` と
+  可視テキストの SHA-256（先頭16桁）を1行で持つ。キーはドメインを除いたパス（`/`・`/monsters/genrei/` など）
+- 可視テキストは `src/lib/sitemap-lastmod.js` の `visibleText()`。`visibleChars()` と同じ読み方で、
+  script・style・コメント・タグ・空白を除く。属性・字下げ・CSS だけの変更では日付は動かない
+- build.js は全ページを書き出した後、sitemap の各URLのファイル（末尾 `/` は `index.html`）を読んでハッシュを取り、
+  前回と同じなら前回の日付、違えば・初めて載るなら**ビルド日（JST。`GACHA_BUILD_NOW` があればその日）**にする。
+  sitemap から外れたURLは JSON から消す（再掲載された日が新しい lastmod になる）
+- git の履歴には頼らない。CMS公開（GAS → cms/publish → build.js → verify.js → main）や CI の浅い clone でも、
+  JSON がコミットされているので同じ値になる。公開経路3本の生成物の許可リスト
+  （`scripts/verify-cms-source.js`・`verify-assist-source.js`・`verify-gacha-source.js`）にこの JSON を入れてある
+- 中身が変わらなければ、日をまたいで何度ビルドしても sitemap.xml と JSON は1バイトも変わらない（決定的な出力）
+- `--dry` は書き出しをしないので、ディスク上の前回のファイルで計算する
+- ガチャの開催状態の切り替わりなど、build の日付で可視テキストが変わるページはその日に進む（本当に中身が変わっているため）
+- 初回（2026-10-16）の値は `scripts/seed-sitemap-lastmod.js` で git の履歴から作った。main の一次親
+  （`--first-parent`＝公開された順）をさかのぼり、可視テキストのハッシュが今と同じになった最初の公開の日（JST）。
+  以後は不要（完全な clone でのみ動き、JSON があれば何もしない）
+- `scripts/verify.js` 検査25：全URLに lastmod が1つ・未来の日付なし・JSON と全件一致・
+  今のファイルのハッシュが JSON と一致（中身を変えて build.js を回し忘れると FAIL）・公開経路3本の許可リスト。
+  決め方の単体テストは `scripts/test-sitemap-lastmod.js`（verify.yml で実行）
 
 ### 5-5. monsters.html（一覧ページ）
 

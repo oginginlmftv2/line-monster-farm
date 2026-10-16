@@ -2427,6 +2427,59 @@ head('24. 血統アイコンの選択枠と階層リンク（P-004）');
   else ok(`血統の枠は monsters.html・モン類${bloodsByMon.size}本・血統ページで全${allBloods.length}血統と一致し、階層リンクは末尾スラッシュの形`);
 }
 
+// ---------------------------------------------------------------- 25
+// lastmod は「可視テキストが最後に変わった日」（build-spec 5-4・P-005）。ビルド日の一律付与は Google に無視される。
+// 保存したハッシュと今のファイルを比べ、中身が変わったのに日付が進んでいない（build.js を回していない）ものも落とす
+head('25. sitemap.xml の lastmod');
+{
+  const sitemapLastmod = require('../src/lib/sitemap-lastmod');
+  const SITE = 'https://line-monster-farm-tetteikouryaku.com';
+  if (!exists('sitemap.xml') || !exists(sitemapLastmod.LASTMOD_FILE)) {
+    ng(`sitemap.xml または ${sitemapLastmod.LASTMOD_FILE} がない`);
+  } else {
+    const blocks = [...read('sitemap.xml').matchAll(/<url>([\s\S]*?)<\/url>/g)].map(match => match[1]);
+    const today = sitemapLastmod.jstDate(new Date());
+    let stored = {};
+    try {
+      stored = sitemapLastmod.parseLastmodJson(read(sitemapLastmod.LASTMOD_FILE));
+    } catch (error) {
+      ng(`${sitemapLastmod.LASTMOD_FILE} を読めない: ${error.message}`);
+    }
+    const shape = [];
+    const future = [];
+    const mismatch = [];
+    const stale = [];
+    const keys = new Set();
+    for (const block of blocks) {
+      const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1] || '';
+      const values = [...block.matchAll(/<lastmod>([^<]*)<\/lastmod>/g)].map(match => match[1]);
+      if (values.length !== 1 || !sitemapLastmod.DATE_PATTERN.test(values[0])) { shape.push(loc); continue; }
+      if (values[0] > today) future.push(`${loc}（${values[0]}）`);
+      const key = loc.startsWith(`${SITE}/`) ? sitemapLastmod.locToKey(loc, SITE) : loc;
+      keys.add(key);
+      const entry = stored[key];
+      if (!entry || entry.lastmod !== values[0]) { mismatch.push(loc); continue; }
+      const file = sitemapLastmod.keyToFile(key);
+      if (exists(file) && sitemapLastmod.contentHash(read(file)) !== entry.hash) stale.push(file);
+    }
+    const extra = Object.keys(stored).filter(key => !keys.has(key));
+    if (shape.length) ng(`lastmod が1つの YYYY-MM-DD になっていないURL ${shape.length}件: ${shape.slice(0, 5).join(', ')}`);
+    else ok(`sitemap の全${blocks.length}URLに lastmod（YYYY-MM-DD）が1つずつある`);
+    if (future.length) ng(`lastmod が今日（JST ${today}）より未来 ${future.length}件: ${future.slice(0, 5).join(', ')}`);
+    else ok(`未来の lastmod なし（JST ${today} まで）`);
+    if (mismatch.length || extra.length) {
+      ng(`sitemap.xml と ${sitemapLastmod.LASTMOD_FILE} が不一致（sitemap側 ${mismatch.length}件・JSONだけにある ${extra.length}件）: ${mismatch.concat(extra).slice(0, 5).join(', ')}`);
+    } else ok(`sitemap.xml の lastmod は ${sitemapLastmod.LASTMOD_FILE} と全件一致`);
+    if (stale.length) ng(`可視テキストが変わったのに lastmod が進んでいない ${stale.length}件（node build.js を実行）: ${stale.slice(0, 5).join(', ')}`);
+    else ok('全URLの可視テキストが保存したハッシュと一致（中身が変わったページは lastmod も進んでいる）');
+    // 公開経路3本（CMSモンスター・アシスト・ガチャ）が build 後の差分としてこのJSONを許可していること
+    const verifiers = ['scripts/verify-cms-source.js', 'scripts/verify-assist-source.js', 'scripts/verify-gacha-source.js'];
+    const notAllowed = verifiers.filter(file => !exists(file) || !read(file).includes(`'${sitemapLastmod.LASTMOD_FILE}'`));
+    if (notAllowed.length) ng(`build 後の生成物として ${sitemapLastmod.LASTMOD_FILE} を許可していない公開経路: ${notAllowed.join(', ')}`);
+    else ok(`公開経路${verifiers.length}本が ${sitemapLastmod.LASTMOD_FILE} を生成物として許可`);
+  }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);

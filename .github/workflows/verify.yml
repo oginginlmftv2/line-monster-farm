@@ -21,3 +21,4 @@ jobs:
       - run: node scripts/test-mon-type-gas.js
       - run: node scripts/test-verify-assist-cms.js
       - run: node scripts/test-github-app-auth.js
+      - run: node scripts/test-sitemap-lastmod.js

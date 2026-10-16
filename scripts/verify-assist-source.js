@@ -16,6 +16,8 @@ const GENERATED_FILES = new Set([
   'assist.html', 'index.html', 'reroll.html', 'sitemap.xml',
   'src/data/lmfdb-card-map.json',
   'src/data/ability-scores.json', 'src/data/page-baseline.json', 'src/data/cms-seed.json',
+  // sitemap.xml の lastmod と可視テキストのハッシュ（build-spec 5-4）
+  'src/data/sitemap-lastmod.json',
 ]);
 const SUBJECT = /^CMS assist publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 
