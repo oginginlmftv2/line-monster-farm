@@ -2212,5 +2212,53 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0686": {
+    "name": "飛び蹴り・腐",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0687": {
+    "name": "包帯パンチ",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s02",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0688": {
+    "name": "フラフラダンス",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s03",
+    "cell": [
+      5,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0689": {
+    "name": "正拳・聖",
+    "blood": "ハム",
+    "source": "20261016-151114-1011/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
