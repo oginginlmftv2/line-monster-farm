@@ -347,6 +347,24 @@ nav a:hover, nav a.active {
 .menu-link:hover { background: #fff3cd; }
 .menu-link .icon { font-size: 24px; }
 
+/* 押すと別ページへ移るボタン。右端に丸い「›」を置いて押せると分かるようにする */
+.menu-link--go { position: relative; padding-right: 48px; border-color: #f0c15a; background: #fffaf0; }
+.menu-link--go::after {
+  content: "›";
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  width: 22px;
+  height: 22px;
+  margin-top: -11px;
+  border-radius: 50%;
+  background: #f0a500;
+  color: #fff;
+  font-size: 17px;
+  line-height: 21px;
+  text-align: center;
+}
+
 /* ヒーローセクション */
 .hero {
   background: linear-gradient(165deg, #fffbe0 0%, #ffee8a 35%, #ffde4d 70%, #ffcb2b 100%);
@@ -1075,15 +1093,36 @@ td img {
   line-height: 1.4;
 }
 
+/* モン類ページへのリンク。下線＋小さな「›」だけではリンクに見えないため、枠つきのボタン状にする */
 .blood-picker-head a {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px 0;
+  padding: 5px 10px;
   color: #1a1a2e;
   text-decoration: none;
-  border-bottom: 2px solid #f0a500;
+  background: #fff7e0;
+  border: 1px solid #f0c15a;
+  border-radius: 8px;
+  transition: background 0.2s;
 }
 
+.blood-picker-head a:hover { background: #ffecb3; }
+
 .blood-picker-head a::after {
-  content: " ›";
-  color: #f0a500;
+  content: "›";
+  flex: none;
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+  border-radius: 50%;
+  background: #f0a500;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 19px;
+  text-align: center;
 }
 
 .blood-picker-count {
