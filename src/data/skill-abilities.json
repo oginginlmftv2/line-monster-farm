@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 610
+    "abilities": 611
   },
   "abilities": [
     {
@@ -7505,6 +7505,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 610,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0611",
+      "name": "[零]与ダメ上昇",
+      "version": 1,
+      "baseName": "[零]与ダメ上昇",
+      "level": null,
+      "description": "技が命中したとき零距離の与ダメ上昇Lv3<10秒>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 611,
       "status": "verified"
     }
   ]

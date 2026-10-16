@@ -23,3 +23,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 デュラハン	中	2	フォーク	黒	ちから	17	遠	D	A	G	G	回避上昇[小]										1	タクティクス				
 デュラハン	遠	3	チェック	黒	ちから	26		C	B	B	G	ロイヤル										1	タクティクス				
 デュラハン	中	4	秘技・雷鳴剣	黄	ちから	40		D+	D	D	A	連撃：秘技・雷鳴剣		[零]命中率上昇								1	ショーグン				
+デュラハン	零	4	最終奥義・万緑	緑	ちから	35		S	C	E	E	ちから上昇[中]		[零]与ダメ上昇								1	コクシムソウ				

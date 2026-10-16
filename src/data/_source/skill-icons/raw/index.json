@@ -1972,5 +1972,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0666": {
+    "name": "最終奥義・万緑",
+    "blood": "デュラハン",
+    "source": "20261016-131433-0754/s01",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
