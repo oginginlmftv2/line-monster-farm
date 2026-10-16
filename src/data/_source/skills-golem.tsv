@@ -21,3 +21,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 ゴーレム	中	4	硬質化パンチ	青	ちから	25	遠	C	A	E	C	[相手中]脆弱Lv3		[中]クリ上昇								1	巨人(エレン)				
 ゴーレム	遠	5	大岩落とし	緑	ちから	45	零	S+	D	E	B	連撃：大岩落とし		[相手中]クリダメ上昇								1	巨人(エレン)				
 ゴーレム	遠	4	トレインアタック	黒	ちから	40	近	A	C+	F	B+	トレインアタック		不滅の攻め								1	シュシュポッポ				
+ゴーレム	近	1	でこぴん・腐	緑	ちから	17		C	C	G	C	疫：暗闇Lv2		丈夫さ上昇[小]								1	シュタイン				
