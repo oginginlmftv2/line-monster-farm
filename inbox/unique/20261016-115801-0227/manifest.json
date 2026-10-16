@@ -1,0 +1,65 @@
+{
+  "monster": {
+    "id": "0227",
+    "name": "ギドラス",
+    "blood": "ドラゴン",
+    "bloodSlug": "dragon",
+    "aura": "白"
+  },
+  "packedAt": "20261016-115801",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.s7Ybz5YfSk/ギドラス",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        2,
+        2
+      ],
+      "range": "中",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-115150.png",
+        "20261016-115154.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        3,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-115200.png",
+        "20261016-115203.png",
+        "20261016-115206.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
