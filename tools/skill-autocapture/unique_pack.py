@@ -40,6 +40,7 @@ AURA = (490, 905, 526, 941)
 DLG_ABILITY = (50, 860, 780, 1070)      # 能力詳細（技能力の本文）
 DLG_SKILLABILITY = (30, 690, 800, 1210)  # 技能力詳細（解放条件つき）
 SAME = 3.0                               # 画素差の平均がこれ未満なら同じ画面とみなす
+SAME_PIXELS = 0.0005                     # かつ、画素差が60を超える点の割合がこれ未満（文字だけ違う画面を同じとみなさない）
 
 
 def kind(a):
@@ -54,7 +55,10 @@ def cut(im, box):
 
 
 def same(a, b):
-    return a.size == b.size and np.abs(np.asarray(a, float) - np.asarray(b, float)).mean() < SAME
+    if a.size != b.size:
+        return False
+    d = np.abs(np.asarray(a, float) - np.asarray(b, float))
+    return d.mean() < SAME and (d.max(axis=2) > 60).mean() < SAME_PIXELS
 
 
 def monster(name):
