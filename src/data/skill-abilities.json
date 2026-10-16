@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 659
+    "abilities": 660
   },
   "abilities": [
     {
@@ -8095,6 +8095,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 659,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0660",
+      "name": "祝：多型体Ⅱ",
+      "version": 1,
+      "baseName": "祝：多型体Ⅱ",
+      "level": null,
+      "description": "対象技を発動した時、[多型体Ⅱ（被クリティカル率＜−15%＞）]を自身に付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 660,
       "status": "verified"
     }
   ]
