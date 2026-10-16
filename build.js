@@ -1472,7 +1472,7 @@ ${unlocks.map(skill => {
     const owner = skill.unique
       ? (skill.owners || [])
         .map(id => monsterNameOf(context, id))
-        .filter(Boolean).map(escapeHtml).join('・')
+        .filter(Boolean).map(escapeHtml).join('、')
       : `${escapeHtml(monster.blood)}種の全モンスター`;
     return renderSkillLine(skill, context, [
       `<a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(skill.name)}</a>`,
@@ -2668,7 +2668,7 @@ function renderSkillChip(skill, context) {
     .map(id => monsterNameOf(context, id))
     .filter(Boolean);
   const uniqueLabel = skill.unique
-    ? `<span class="skill-chip-unique">固有${ownerNames.length ? `：${escapeHtml(ownerNames.join('・'))}` : ''}</span>`
+    ? `<span class="skill-chip-unique">固有${ownerNames.length ? `：${escapeHtml(ownerNames.join('、'))}` : ''}</span>`
     : '';
   const tone = SKILL_TYPE_TONE[skill.skillType];
   const toneClass = tone ? ` skill-chip--${tone}` : '';
@@ -2714,7 +2714,7 @@ function renderSkillDetailRow(skill, context, abilityById, columnCount) {
   ];
   const wideRows = [];
   if (skill.unique) {
-    const owners = (skill.owners || []).map(monsterLink).filter(Boolean).join('・');
+    const owners = (skill.owners || []).map(monsterLink).filter(Boolean).join('、');
     if (owners) wideRows.push(['使用可能モンスター', owners]);
   }
   const unlocks = (skill.unlockedBy || [])
@@ -2723,7 +2723,7 @@ function renderSkillDetailRow(skill, context, abilityById, columnCount) {
       return link ? `${link}（★${entry.rarity}以上）` : '';
     })
     .filter(Boolean)
-    .join('・');
+    .join('、');
   // 固有技に技登録は無いので枠ごと出さない。共通技は解放元が未入力でも
   // 枠を出して「なし」と書く（枠が消えると、調査漏れなのか本当に無いのか読めない）。
   if (unlocks) wideRows.push(['技登録の解放元', unlocks]);
@@ -2931,7 +2931,7 @@ ${uniqueSkills.map(skill => {
       .map(id => monsterNameOf(context, id))
       .filter(Boolean)
       .map(escapeHtml)
-      .join('・');
+      .join('、');
     return `      <li><a href="#${escapeHtml(skill.skillId)}">${escapeHtml(skill.name)}</a>（${escapeHtml(skill.range)}距離ランク${skill.rank}／${owners}）</li>`;
   }).join('\n')}
     </ul>
