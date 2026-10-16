@@ -1564,5 +1564,77 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0632": {
+    "name": "スピアドライブ",
+    "blood": "ケンタウロス",
+    "source": "20261016-121849-0351/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0633": {
+    "name": "神槍グングニル",
+    "blood": "ケンタウロス",
+    "source": "20261016-121849-0351/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0634": {
+    "name": "神駆ノ陣",
+    "blood": "ケンタウロス",
+    "source": "20261016-121901-0350/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0635": {
+    "name": "破魔矢",
+    "blood": "ケンタウロス",
+    "source": "20261016-121901-0350/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0636": {
+    "name": "ハイパーミサイル",
+    "blood": "ケンタウロス",
+    "source": "20261016-121907-0353/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0637": {
+    "name": "ジェノサイド",
+    "blood": "ケンタウロス",
+    "source": "20261016-121907-0353/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
