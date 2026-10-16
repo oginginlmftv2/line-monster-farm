@@ -1,0 +1,109 @@
+{
+  "monster": {
+    "id": "2850",
+    "name": "キング",
+    "blood": "ユグドラシル",
+    "bloodSlug": "yggdrasil",
+    "aura": "緑"
+  },
+  "packedAt": "20261016-192859",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.363Esmgazl/キング",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        2,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-192025.png",
+        "20261016-192028.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        2,
+        3
+      ],
+      "range": "近",
+      "dim": false,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-192034.png",
+        "20261016-192037.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        2,
+        4
+      ],
+      "range": "零",
+      "dim": false,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-192041.png",
+        "20261016-192043.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        4,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-192052.png",
+        "20261016-192056.png",
+        "20261016-192100.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
