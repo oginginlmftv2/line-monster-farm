@@ -626,3 +626,10 @@
     width: 40px;
   }
 }
+
+/* PC：間合い4列を同じ幅に固定する。自動レイアウトだと中身の長さで列幅が揃わず、
+   固有技を開くたびに列幅が動く。SP（600px以下）は従来どおり中身で決める。 */
+@media (min-width: 601px) {
+  .blood-page .skill-matrix { table-layout: fixed; }
+  .blood-page .skill-matrix thead th:first-child { width: 72px; }
+}
