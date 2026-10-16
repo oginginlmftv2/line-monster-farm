@@ -3184,5 +3184,41 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0767": {
+    "name": "ゲコドラタング",
+    "blood": "カワズモー",
+    "source": "20261016-191121-2502/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0768": {
+    "name": "札束ビンタ",
+    "blood": "カワズモー",
+    "source": "20261016-191127-2531/s01",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0769": {
+    "name": "びろびろ二枚舌",
+    "blood": "カワズモー",
+    "source": "20261016-191132-2528/s01",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

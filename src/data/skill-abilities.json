@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 676
+    "abilities": 680
   },
   "abilities": [
     {
@@ -8299,6 +8299,56 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 676,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0677",
+      "name": "ゲコドラタング",
+      "version": 1,
+      "baseName": "ゲコドラタング",
+      "level": null,
+      "description": "対象技命中時、自身に次の効果＜1回＞\n・＜赤＞またはオーラ有利技の技性能＜＋5＞＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 677,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0678",
+      "name": "マネーパワー",
+      "version": 1,
+      "baseName": "マネーパワー",
+      "level": null,
+      "description": "対象技命中時、相手の残りライフが少ないほどクリ率上昇[最大50%]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 678,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0679",
+      "name": "連撃：びろびろ二枚舌",
+      "version": 1,
+      "baseName": "連撃：びろびろ二枚舌",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv5を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 679,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0680",
+      "name": "びろびろ二枚舌",
+      "version": 1,
+      "baseName": "びろびろ二枚舌",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・相手に[虚弱Lv3]を付与\n・自身の丈夫さ＋50",
+      "tags": [],
+      "buffs": [
+        "bf-0028"
+      ],
+      "sortOrder": 680,
       "status": "verified"
     }
   ]
