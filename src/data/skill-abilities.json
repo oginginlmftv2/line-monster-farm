@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 646
+    "abilities": 650
   },
   "abilities": [
     {
@@ -7939,6 +7939,54 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 646,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0647",
+      "name": "連撃：ハドロン砲",
+      "version": 1,
+      "baseName": "連撃：ハドロン砲",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv10を与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 647,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0648",
+      "name": "連撃：シャドウストライク",
+      "version": 1,
+      "baseName": "連撃：シャドウストライク",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv4を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 648,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0649",
+      "name": "連撃：カオスエレメント",
+      "version": 1,
+      "baseName": "連撃：カオスエレメント",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv10を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 649,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0650",
+      "name": "心臓掌握",
+      "version": 1,
+      "baseName": "心臓掌握",
+      "level": null,
+      "description": "対象技発動時、自身優勢なら対象技の技ダメージと技命中<+10>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 650,
       "status": "verified"
     }
   ]
