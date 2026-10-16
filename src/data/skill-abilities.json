@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 706
+    "abilities": 707
   },
   "abilities": [
     {
@@ -8672,6 +8672,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 706,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0707",
+      "name": "かっぱの潤い",
+      "version": 1,
+      "baseName": "かっぱの潤い",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・ガッツ＜5＞回復\n・相手よりガッツが多いとき、クリティカル率＜+9％＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 707,
       "status": "verified"
     }
   ]

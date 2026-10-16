@@ -3580,5 +3580,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0800": {
+    "name": "かっぱ巻き砲",
+    "blood": "モッチー",
+    "source": "20261016-204031-1625/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
