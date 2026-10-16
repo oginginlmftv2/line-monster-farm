@@ -1372,5 +1372,197 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-15"
+  },
+  "sk-0616": {
+    "name": "飛翔突撃破",
+    "blood": "ドラゴン",
+    "source": "20261016-115752-0254/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0617": {
+    "name": "呂号乙型特斬刀",
+    "blood": "ドラゴン",
+    "source": "20261016-115752-0254/s02",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0618": {
+    "name": "回天打擲",
+    "blood": "ドラゴン",
+    "source": "20261016-115752-0254/s03",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0619": {
+    "name": "特斬刀コンボ",
+    "blood": "ドラゴン",
+    "source": "20261016-115752-0254/s04",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0620": {
+    "name": "輻射波動",
+    "blood": "ドラゴン",
+    "source": "20261016-115752-0254/s05",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0621": {
+    "name": "スペース光線",
+    "blood": "ドラゴン",
+    "source": "20261016-115801-0227/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0622": {
+    "name": "メタルコンボ",
+    "blood": "ドラゴン",
+    "source": "20261016-115801-0227/s02",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0623": {
+    "name": "スカイシャドウ",
+    "blood": "ドラゴン",
+    "source": "20261016-115808-0251/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0624": {
+    "name": "パンゲアの嵐",
+    "blood": "ドラゴン",
+    "source": "20261016-115808-0251/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0625": {
+    "name": "怒りの業火",
+    "blood": "ドラゴン",
+    "source": "20261016-115815-0250/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0626": {
+    "name": "闘志の一撃",
+    "blood": "ドラゴン",
+    "source": "20261016-115815-0250/s02",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0627": {
+    "name": "B・ファイアー",
+    "blood": "ドラゴン",
+    "source": "20261016-115815-0250/s03",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0628": {
+    "name": "テツざんこう",
+    "blood": "ドラゴン",
+    "source": "20261016-115823-0252/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0629": {
+    "name": "死を呼ぶ竜息",
+    "blood": "ドラゴン",
+    "source": "20261016-115823-0252/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0630": {
+    "name": "クロスファイア",
+    "blood": "ドラゴン",
+    "source": "20261016-115823-0252/s03",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0631": {
+    "name": "デスウィング",
+    "blood": "ドラゴン",
+    "source": "20261016-115832-0217/s01",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
