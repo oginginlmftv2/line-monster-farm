@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 669
+    "abilities": 674
   },
   "abilities": [
     {
@@ -8215,6 +8215,66 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 669,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0670",
+      "name": "謹賀新年",
+      "version": 1,
+      "baseName": "謹賀新年",
+      "level": null,
+      "description": "対象技発動時、技性能が自身の＜神秘＞の発動数×＜+3＞[最大+15]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 670,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0671",
+      "name": "連撃：虚偽の繁栄",
+      "version": 1,
+      "baseName": "連撃：虚偽の繁栄",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を5回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 671,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0672",
+      "name": "[相手黒]被ダメ低下",
+      "version": 1,
+      "baseName": "[相手黒]被ダメ低下",
+      "level": null,
+      "description": "技を命中させて相手のオーラが黒だと被ダメLv4(20秒)",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 672,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0673",
+      "name": "シールドブレイク",
+      "version": 1,
+      "baseName": "シールドブレイク",
+      "level": null,
+      "description": "対象技命中時、相手の【シールド】を破壊",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 673,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0674",
+      "name": "連撃：ドロー",
+      "version": 1,
+      "baseName": "連撃：ドロー",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 674,
       "status": "verified"
     }
   ]
