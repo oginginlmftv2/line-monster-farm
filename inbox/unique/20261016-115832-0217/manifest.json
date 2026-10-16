@@ -1,0 +1,32 @@
+{
+  "monster": {
+    "id": "0217",
+    "name": "ディアボロス",
+    "blood": "ドラゴン",
+    "bloodSlug": "dragon",
+    "aura": "黒"
+  },
+  "packedAt": "20261016-115832",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.s7Ybz5YfSk/ディアボロス",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        3
+      ],
+      "range": "近",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-115406.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
