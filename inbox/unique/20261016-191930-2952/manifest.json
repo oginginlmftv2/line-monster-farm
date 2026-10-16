@@ -1,0 +1,65 @@
+{
+  "monster": {
+    "id": "2952",
+    "name": "セイリュウ",
+    "blood": "シンリュウ",
+    "bloodSlug": "shinryu",
+    "aura": "青"
+  },
+  "packedAt": "20261016-191930",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.YL5kPQ3HZR/セイリュウ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        1,
+        1
+      ],
+      "range": "遠",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-191413.png",
+        "20261016-191417.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        4,
+        4
+      ],
+      "range": "零",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-191422.png",
+        "20261016-191425.png",
+        "20261016-191429.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
