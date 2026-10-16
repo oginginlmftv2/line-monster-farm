@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 585
+    "abilities": 590
   },
   "abilities": [
     {
@@ -7202,6 +7202,66 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 585,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0586",
+      "name": "連撃：神槍グングニル",
+      "version": 1,
+      "baseName": "連撃：神槍グングニル",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 586,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0587",
+      "name": "連撃：破魔矢",
+      "version": 1,
+      "baseName": "連撃：破魔矢",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 587,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0588",
+      "name": "うつ",
+      "version": 1,
+      "baseName": "うつ",
+      "level": null,
+      "description": "技発動時、命中率と攻撃ステータス＜+8%＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 588,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0589",
+      "name": "デストロイ",
+      "version": 1,
+      "baseName": "デストロイ",
+      "level": null,
+      "description": "対象技命中時、相手の技をランダムで1つ使用不可＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 589,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0590",
+      "name": "連撃：ジェノサイド",
+      "version": 1,
+      "baseName": "連撃：ジェノサイド",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜6回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 590,
       "status": "verified"
     }
   ]
