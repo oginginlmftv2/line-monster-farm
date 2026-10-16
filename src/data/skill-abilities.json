@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 660
+    "abilities": 666
   },
   "abilities": [
     {
@@ -8107,6 +8107,78 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 660,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0661",
+      "name": "恵：[有利]幻影Lv4",
+      "version": 1,
+      "baseName": "恵：[有利]幻影",
+      "level": 4,
+      "description": "[有利]かつ対象技命中時、自身に[幻影Lv４＜２０秒＞]を付与＜１回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 661,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0662",
+      "name": "疫：[相手魔族]衰弱Lv2",
+      "version": 1,
+      "baseName": "疫：[相手魔族]衰弱",
+      "level": 2,
+      "description": "[相手魔族]かつ対象技命中時、相手に[衰弱Lv２＜２０秒＞]を付与＜１回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 662,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0663",
+      "name": "連撃：エンゲージリング",
+      "version": 1,
+      "baseName": "連撃：エンゲージリング",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜１００％＞の追撃を＜１回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 663,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0664",
+      "name": "[幻霊]変転",
+      "version": 1,
+      "baseName": "[幻霊]変転",
+      "level": null,
+      "description": "[相手創造以外]かつ対象技命中時、有利オーラに変換＜１回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 664,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0665",
+      "name": "鮫肌",
+      "version": 1,
+      "baseName": "鮫肌",
+      "level": null,
+      "description": "対象技発動時、次の効果発動\n・相手ライフ７５％以下の時、命中率＜＋２０％＞\n・相手ライフ５０％以下の時、命中率＜＋２０％＞\n・相手ライフ２５％以下の時、必中Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 665,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0666",
+      "name": "連撃：シャークアロー",
+      "version": 1,
+      "baseName": "連撃：シャークアロー",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ＜２５％＞の追撃を＜２回＞与える\n・相手ライフが５０％以下の時、ダメージ＜２０％＞の追撃を＜１回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 666,
       "status": "verified"
     }
   ]
