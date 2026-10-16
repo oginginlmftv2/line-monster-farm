@@ -2548,5 +2548,77 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0714": {
+    "name": "ブレード飛ばし",
+    "blood": "モッチー",
+    "source": "20261016-164202-1652/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0715": {
+    "name": "サファイア砲",
+    "blood": "モッチー",
+    "source": "20261016-164207-1650/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0716": {
+    "name": "高速回転斬り",
+    "blood": "モッチー",
+    "source": "20261016-164219-1653/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0717": {
+    "name": "高速乱れ斬り",
+    "blood": "モッチー",
+    "source": "20261016-164219-1653/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0718": {
+    "name": "ガッチャー・黒",
+    "blood": "モッチー",
+    "source": "20261016-164212-1651/s01",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0719": {
+    "name": "ジェントル",
+    "blood": "モッチー",
+    "source": "20261016-164212-1651/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
