@@ -1,0 +1,43 @@
+{
+  "monster": {
+    "id": "2531",
+    "name": "ナリキロッグ",
+    "blood": "カワズモー",
+    "bloodSlug": "kawazumo",
+    "aura": "黄"
+  },
+  "packedAt": "20261016-191127",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.a1q2YDP5XE/ナリキロッグ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        3,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-190016.png",
+        "20261016-190019.png",
+        "20261016-190023.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
