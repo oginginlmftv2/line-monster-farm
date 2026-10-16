@@ -1984,5 +1984,41 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0667": {
+    "name": "怪光弾・黒",
+    "blood": "アローヘッド",
+    "source": "20261016-144326-0850/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0668": {
+    "name": "回転突爆・毒",
+    "blood": "アローヘッド",
+    "source": "20261016-144326-0850/s02",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0669": {
+    "name": "地雷毒針",
+    "blood": "アローヘッド",
+    "source": "20261016-144333-0817/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

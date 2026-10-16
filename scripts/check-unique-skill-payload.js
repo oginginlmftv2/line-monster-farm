@@ -242,6 +242,11 @@ function main() {
   const manifest = JSON.parse(fs.readFileSync(path.join(packDir, 'manifest.json'), 'utf8'));
   manifest.dir = path.resolve(packDir);
   const result = check(payload, manifest);
+  // 入力者が「専用技でよい」と答えた技名（共通技＋接尾辞の形で止まったもの）だけ STOP を外す
+  const confirmed = (opt('--unique-ok') || '').split(',').filter(Boolean);
+  if (confirmed.length) {
+    result.stop = result.stop.filter(x => !(x.includes('共通技の可能性') && confirmed.some(n => x.includes(`「${n}」`))));
+  }
 
   for (const x of result.fail) console.log(`FAIL ${x}`);
   for (const x of result.stop) console.log(`STOP ${x}`);
