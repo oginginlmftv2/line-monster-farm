@@ -1689,7 +1689,7 @@ function renderMonsterAbilities(monster, context) {
       <h2 class="section-title">相性のいいアシスト能力</h2>
     </div>
     <p class="skill-section-lead">${summary ? escapeHtml(summary) : `${escapeHtml(monster.name)}（${escapeHtml(monster.aura)}・${escapeHtml(monster.mon)}・${escapeHtml(monster.blood)}種）が発動できる、アシストカードのイベントで獲得できる能力です。`}</p>
-    <ul class="skill-line-list">
+    <ul class="skill-line-list ability-fit-list">
 ${items}
     </ul>
     <p class="basics-note">※新しいカードの能力から並べています。</p>
