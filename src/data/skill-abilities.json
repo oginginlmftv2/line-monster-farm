@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 650
+    "abilities": 654
   },
   "abilities": [
     {
@@ -7987,6 +7987,54 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 650,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0651",
+      "name": "スイカ割り",
+      "version": 1,
+      "baseName": "スイカ割り",
+      "level": null,
+      "description": "対象技命中時、ライフの20%を攻撃ステータス加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 651,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0652",
+      "name": "[中]ガッツダメ上昇",
+      "version": 1,
+      "baseName": "[中]ガッツダメ上昇",
+      "level": null,
+      "description": "技を命中させると間合いが中距離のときガッツダメLv3(10秒)",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 652,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0653",
+      "name": "神之怒",
+      "version": 1,
+      "baseName": "神之怒",
+      "level": null,
+      "description": "対象技発動時、次の効果発動\n・自身の残りライフが多いほど技ステータス上昇[最大10]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 653,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0654",
+      "name": "連撃：神之怒（メギド）",
+      "version": 1,
+      "baseName": "連撃：神之怒（メギド）",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を5回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 654,
       "status": "verified"
     }
   ]
