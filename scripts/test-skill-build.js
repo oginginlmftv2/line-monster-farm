@@ -210,7 +210,7 @@ const iconOf = skillId => [skillId, { width: 123, height: 124 }];
   const skill = uniqueSkill();
   const plain = renderSkillSummaryRow(skill, renderContext([]));
   const withIcon = renderSkillSummaryRow(skill, renderContext([iconOf(skill.skillId)]));
-  assert(plain.startsWith('      <li class="skill-line skill-line--power">\n        <a class="skill-line-name"'), 'アイコンが無い行のマークアップが変わった');
+  assert(plain.startsWith('      <li class="skill-line skill-line--power skill-line--link">\n        <a class="skill-line-name"'), 'アイコンが無い行のマークアップが変わった');
   assert(withIcon.includes('skill-line--has-icon') && withIcon.includes('<div class="skill-line-body">'));
   assert(withIcon.includes(`<img class="skill-icon skill-icon--line" src="../../../${SKILL_ICON_DIR}/${skill.skillId}.png"`));
   assert.strictEqual(visibleChars(`<body>${plain}</body>`), visibleChars(`<body>${withIcon}</body>`));

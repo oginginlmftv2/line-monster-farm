@@ -2872,5 +2872,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0741": {
+    "name": "毒刺し",
+    "blood": "ゲル",
+    "source": "20261016-172213-1922/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

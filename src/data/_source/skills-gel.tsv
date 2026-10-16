@@ -21,3 +21,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 ゲル	近	2	神芹リッタ	白	ちから	28		B	D	E	D	ちから上昇[小]										1	エスカノール・夜、エスカノール				
 ゲル	遠	3	“無慈悲な太陽”	黄	かしこさ	35		A	C	C	G	燃焼Lv5										1	エスカノール				
 ゲル	中	4	“微塵切り”	黄	ちから	46		S	B	F	C	連撃：“微塵切り”		極限Lv2		燃尽Lv3						1	エスカノール				
+ゲル	零	2	毒刺し	黒	かしこさ	21		D	C	B	G	祝：形状記憶Ⅱ		祝：多型体Ⅱ								1	マグマグミ、パー・プリン				
