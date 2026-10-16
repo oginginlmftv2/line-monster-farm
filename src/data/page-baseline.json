@@ -742,8 +742,8 @@
     },
     {
       "id": "1080",
-      "baseline": 1291,
-      "current": 2069,
+      "baseline": 1609,
+      "current": 2387,
       "indexable": true
     },
     {
@@ -1558,9 +1558,9 @@
     },
     {
       "id": "2256",
-      "baseline": 1445,
-      "current": 1445,
-      "indexable": false
+      "baseline": 1840,
+      "current": 1840,
+      "indexable": true
     },
     {
       "id": "2305",

@@ -10,3 +10,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 ブルーフレア	0	-5	0	15	10	0	E	D	ふつう	ややヨイ	小さい	D	D	C	D	D	C	E	D	C	2026-10-05
 ハム	0	10	0	0	10	0	E	D	ふつう	ややヨイ	小さい	E	C	E	C	G	F	F	D	C	2026-10-05
 クロスフォーアイ	0	5	5	10	0	0	D	D	早熟	ややワル	小さい	D	B	E	D	F	D	C	G	C	2026-10-05
+ハムクロース	5	15	0	10	5	-5	C	C	ふつう	ヨイ	小さい	E	B	C	B	E	E	B	C	C	2026-10-16

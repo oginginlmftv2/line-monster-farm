@@ -3533,8 +3533,8 @@
       "createdAt": "2026-04-30",
       "updatedAt": "2026-04-30",
       "releasedAt": "2025-12-24",
-      "baseline": 1291,
-      "current": 2069,
+      "baseline": 1609,
+      "current": 2387,
       "indexable": true
     },
     {
@@ -7123,9 +7123,9 @@
       "createdAt": "",
       "updatedAt": "2026-08-20",
       "releasedAt": "2026-07-31",
-      "baseline": 1445,
-      "current": 1445,
-      "indexable": false
+      "baseline": 1840,
+      "current": 1840,
+      "indexable": true
     },
     {
       "id": "2305",

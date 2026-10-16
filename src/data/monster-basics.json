@@ -3816,6 +3816,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "1080",
+      "name": "ハムクロース",
+      "talent": {
+        "life": 5,
+        "power": 15,
+        "wisdom": 0,
+        "accuracy": 10,
+        "evasion": 5,
+        "defense": -5
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ヨイ",
+      "size": "小さい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "B",
+        "海岸": "C",
+        "雪山": "B",
+        "火山": "E"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-16"
+    },
+    {
       "id": "1101",
       "name": "ピクセル",
       "talent": {
@@ -7999,6 +8030,37 @@
         "zero": "C"
       },
       "capturedAt": "2026-10-07"
+    },
+    {
+      "id": "2256",
+      "name": "ジハンキ",
+      "talent": {
+        "life": 15,
+        "power": 15,
+        "wisdom": -10,
+        "accuracy": 0,
+        "evasion": -5,
+        "defense": 5
+      },
+      "gutsRecovery": "F",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "D",
+        "森林": "C",
+        "海岸": "C",
+        "雪山": "C",
+        "火山": "F"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "C",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-16"
     },
     {
       "id": "2305",
