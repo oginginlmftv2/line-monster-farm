@@ -1,0 +1,119 @@
+{
+  "monster": {
+    "id": "0951",
+    "name": "メカお父さん",
+    "blood": "ライガー",
+    "bloodSlug": "liger",
+    "aura": "白"
+  },
+  "packedAt": "20261016-145714",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.aZZa6vxqXQ/メカお父さん",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        2,
+        4
+      ],
+      "range": "零",
+      "dim": false,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-145251.png",
+        "20261016-145253.png",
+        "20261016-145256.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        2,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-145301.png",
+        "20261016-145303.png",
+        "20261016-145306.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        2,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-145309.png",
+        "20261016-145311.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        3,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-145314.png",
+        "20261016-145316.png",
+        "20261016-145319.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
