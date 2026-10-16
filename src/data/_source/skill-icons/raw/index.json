@@ -2164,5 +2164,101 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0682": {
+    "name": "X’マスキャロル",
+    "blood": "ハム",
+    "source": "20261016-151055-1051/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0683": {
+    "name": "X’マスプレゼンツ",
+    "blood": "ハム",
+    "source": "20261016-151055-1051/s02",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0684": {
+    "name": "清しこの夜",
+    "blood": "ハム",
+    "source": "20261016-151055-1051/s03",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0685": {
+    "name": "ドラゴンパッチ",
+    "blood": "ハム",
+    "source": "20261016-151108-1001/s01",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0686": {
+    "name": "飛び蹴り・腐",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0687": {
+    "name": "包帯パンチ",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s02",
+    "cell": [
+      3,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0688": {
+    "name": "フラフラダンス",
+    "blood": "ハム",
+    "source": "20261016-151101-1050/s03",
+    "cell": [
+      5,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0689": {
+    "name": "正拳・聖",
+    "blood": "ハム",
+    "source": "20261016-151114-1011/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

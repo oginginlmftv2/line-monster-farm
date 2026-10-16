@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 621
+    "abilities": 624
   },
   "abilities": [
     {
@@ -7637,6 +7637,42 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 621,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0622",
+      "name": "変幻：ドラゴンパッチ",
+      "version": 1,
+      "baseName": "変幻：ドラゴンパッチ",
+      "level": null,
+      "description": "対象技命中時、いずれかの技ステータスのグレードを2回、1段階上昇または1段階減少",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 622,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0623",
+      "name": "連撃：フラフラダンス",
+      "version": 1,
+      "baseName": "連撃：フラフラダンス",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 623,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0624",
+      "name": "[相手青]脱力Lv2",
+      "version": 1,
+      "baseName": "[相手青]脱力",
+      "level": 2,
+      "description": "[相手青]対象技命中時、相手にガッツ回復速度低下Lv2<20秒><1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 624,
       "status": "verified"
     }
   ]
