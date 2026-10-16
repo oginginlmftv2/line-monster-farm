@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 632
+    "abilities": 635
   },
   "abilities": [
     {
@@ -7769,6 +7769,42 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 632,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0633",
+      "name": "フリーズ",
+      "version": 1,
+      "baseName": "フリーズ",
+      "level": null,
+      "description": "バトル開始時、自身の雪山適性A以上で次の効果\n・自身のガッツ回復速度＜＋10%＞、移動速度上昇＜＋2＞\n・相手のガッツ回復速度＜－10%＞、移動速度上昇＜－2＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 633,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0634",
+      "name": "連撃：ホワイトタイフーン",
+      "version": 1,
+      "baseName": "連撃：ホワイトタイフーン",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 634,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0635",
+      "name": "連撃：天衣無縫",
+      "version": 1,
+      "baseName": "連撃：天衣無縫",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv1を6回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 635,
       "status": "verified"
     }
   ]
