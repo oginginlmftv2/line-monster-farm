@@ -1636,5 +1636,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0638": {
+    "name": "ブラッディクロス・赫",
+    "blood": "ケンタウロス",
+    "source": "20261016-121856-0308/s01",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

@@ -21,3 +21,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 ケンタウロス	遠	3	破魔矢	無	ちから	28		C	C	G	B	連撃：破魔矢										1	ヤブサメ				
 ケンタウロス	中	2	ハイパーミサイル	黒	ちから	23		B	C+	G	D+	うつ		貫通Lv2								1	ゴッドエンペラー				
 ケンタウロス	中	4	ジェノサイド	黒	ちから	50		A	C	D	C+	デストロイ		連撃：ジェノサイド		ちから上昇[中]	ゴッドエンペラー:6	レンジブースト	ゴッドエンペラー:10			1	ゴッドエンペラー				
+ケンタウロス	近	4	ブラッディクロス・赫	赤	ちから	35		B	S+	C	B	祝：強襲Lv4		疾走								1	アンタレス				
