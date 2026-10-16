@@ -2488,5 +2488,65 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0709": {
+    "name": "炎かみつき",
+    "blood": "スエゾー",
+    "source": "20261016-161152-1514/s01",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0710": {
+    "name": "付呪",
+    "blood": "スエゾー",
+    "source": "20261016-161157-1551/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0711": {
+    "name": "「希望」",
+    "blood": "スエゾー",
+    "source": "20261016-161157-1551/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0712": {
+    "name": "テレキネシス",
+    "blood": "スエゾー",
+    "source": "20261016-161204-1552/s01",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0713": {
+    "name": "ファー",
+    "blood": "スエゾー",
+    "source": "20261016-161209-1553/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
