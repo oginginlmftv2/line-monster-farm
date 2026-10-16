@@ -18,3 +18,5 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 ナーガ	中	1	裾払い	青	かしこさ	20	近	D	D	F	F											1	ジョカ				
 ナーガ	遠	5	三極蒼爆	青	かしこさ	47		S+	D	G	C	連撃：三極蒼爆		丈夫さ上昇[中]								1	ジョカ				
 ナーガ	近	3	デッドリーブロー・剃	黄	かしこさ	34		C+	S	F	B	命中上昇[中]		疫：傷口Lv3								1	バズラ				
+ナーガ	零	3	正気検閲	黄	ちから	28		D	C	A+	B	旧支配者の爪痕		ダイスロール								1	ニャルラトホテプ				
+ナーガ	中	4	狂夢螺旋	黒	ちから	43	近	A	C	F	C	混沌の禍		呪：疲労Lv2								1	ニャルラトホテプ				
