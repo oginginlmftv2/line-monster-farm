@@ -2136,7 +2136,9 @@ function renderMonTypeOverview(monType, monsters, context) {
   return `
   <section class="section">
     <h2 class="section-title">${escapeHtml(monType.name)}の血統から探す</h2>
-    <p class="blood-picker-lead">「技」の数が出ている血統は技一覧のページへ、それ以外はこのページの血統別モンスターへ移動します。</p>
+    <p class="blood-picker-lead">${items.every(item => item.bloodPage)
+    ? 'アイコンから血統ごとの技一覧へ移動できます。'
+    : '「技」の数が出ている血統は技一覧のページへ、それ以外はこのページの血統別モンスターへ移動します。'}</p>
 ${renderBloodPicker(context, { where: 'monType', monSlugs: [monType.slug], currentMonSlug: monType.slug, indent: '    ' })}
   </section>
 
