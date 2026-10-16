@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 599
+    "abilities": 605
   },
   "abilities": [
     {
@@ -7373,6 +7373,78 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 599,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0600",
+      "name": "進撃",
+      "version": 1,
+      "baseName": "進撃",
+      "level": null,
+      "description": "対象技命中後、＜オーラ有利技＞または＜オーラなし＞技発動時、すべての技ステータス上昇Lv2＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 600,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0601",
+      "name": "破壊[黄]：雄叫び",
+      "version": 1,
+      "baseName": "破壊[黄]：雄叫び",
+      "level": null,
+      "description": "[相手黄]対象技命中時、相手のシールドを破壊＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 601,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0602",
+      "name": "[相手中]脆弱Lv3",
+      "version": 1,
+      "baseName": "[相手中]脆弱",
+      "level": 3,
+      "description": "対象技命中時、相手サイズ[ふつう]だと相手に被ダメ上昇Lv3＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 602,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0603",
+      "name": "連撃：大岩落とし",
+      "version": 1,
+      "baseName": "連撃：大岩落とし",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 603,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0604",
+      "name": "[相手中]クリダメ上昇",
+      "version": 1,
+      "baseName": "[相手中]クリダメ上昇",
+      "level": null,
+      "description": "技を発動したとき相手＜ふつう＞だとクリダメ上昇Lv2＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 604,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0605",
+      "name": "トレインアタック",
+      "version": 1,
+      "baseName": "トレインアタック",
+      "level": null,
+      "description": "対象技命中時、残りガッツ60以上で次の効果\n・対象技の消費ガッツ＜+50%＞\n・ダメージ＜90%＞の追撃を＜1回＞与える\n・シールド破壊＜バトル中1回まで＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 605,
       "status": "verified"
     }
   ]

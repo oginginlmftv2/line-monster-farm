@@ -1804,5 +1804,77 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0652": {
+    "name": "アイスビンタ",
+    "blood": "ゴーレム",
+    "source": "20261016-125612-0553/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0653": {
+    "name": "アイスでこぴん",
+    "blood": "ゴーレム",
+    "source": "20261016-125612-0553/s02",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0654": {
+    "name": "雄叫び",
+    "blood": "ゴーレム",
+    "source": "20261016-125619-0551/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0655": {
+    "name": "硬質化パンチ",
+    "blood": "ゴーレム",
+    "source": "20261016-125619-0551/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0656": {
+    "name": "大岩落とし",
+    "blood": "ゴーレム",
+    "source": "20261016-125619-0551/s04",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0657": {
+    "name": "トレインアタック",
+    "blood": "ゴーレム",
+    "source": "20261016-125632-0554/s01",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
