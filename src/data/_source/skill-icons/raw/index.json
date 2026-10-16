@@ -2260,5 +2260,29 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0690": {
+    "name": "Xmasキャロル",
+    "blood": "ニャー",
+    "source": "20261016-152815-1351/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0691": {
+    "name": "プレゼントくまー",
+    "blood": "ニャー",
+    "source": "20261016-152815-1351/s02",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

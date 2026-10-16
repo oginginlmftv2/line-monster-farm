@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 624
+    "abilities": 626
   },
   "abilities": [
     {
@@ -7673,6 +7673,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 624,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0625",
+      "name": "プレゼント",
+      "version": 1,
+      "baseName": "プレゼント",
+      "level": null,
+      "description": "技発動時、相手に次の効果をランダムに付与<1回>\n・被クリ率<+20%>\n・ガッツ回復速度<-50%>\n・増強Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 625,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0626",
+      "name": "爪撃：プレゼントくまー",
+      "version": 1,
+      "baseName": "爪撃：プレゼントくまー",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ<10%>の追撃<5回>\n・クリダメ上昇<+30%>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 626,
       "status": "verified"
     }
   ]
