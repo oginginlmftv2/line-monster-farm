@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 802,
+    "skills": 804,
     "bloods": 34
   },
   "skills": [
@@ -32128,6 +32128,90 @@
       ],
       "note": "",
       "sortOrder": 802,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0795",
+      "name": "王惨刀",
+      "version": 1,
+      "blood": "ザン",
+      "range": "中",
+      "rank": 2,
+      "moveTo": "零",
+      "aura": "緑",
+      "skillType": "ちから",
+      "guts": 19,
+      "damage": "D",
+      "accuracy": "B+",
+      "gutsDown": "G",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0701",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0554",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "3490"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 803,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0796",
+      "name": "王惨翠斬",
+      "version": 1,
+      "blood": "ザン",
+      "range": "零",
+      "rank": 6,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "ちから",
+      "guts": 46,
+      "damage": "A+",
+      "accuracy": "SS",
+      "gutsDown": "A",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0702",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0703",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0004",
+          "unlock": {
+            "monsterId": "3490",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "3490",
+            "level": 10
+          }
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "3490"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 804,
       "status": "verified"
     }
   ]

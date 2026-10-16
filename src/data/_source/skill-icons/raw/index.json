@@ -3520,5 +3520,29 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0795": {
+    "name": "王惨刀",
+    "blood": "ザン",
+    "source": "20261016-193821-3490/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0796": {
+    "name": "王惨翠斬",
+    "blood": "ザン",
+    "source": "20261016-193821-3490/s02",
+    "cell": [
+      6,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

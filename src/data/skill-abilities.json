@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 700
+    "abilities": 703
   },
   "abilities": [
     {
@@ -8597,6 +8597,42 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 700,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0701",
+      "name": "王惨刀",
+      "version": 1,
+      "baseName": "王惨刀",
+      "level": null,
+      "description": "対象技発動時、次の効果発動＜30秒＞＜1回＞\n・消費ガッツの＜10%＞回復\n・攻撃ステータス＜10%＞上昇",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 701,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0702",
+      "name": "王惨翠斬",
+      "version": 1,
+      "baseName": "王惨翠斬",
+      "level": null,
+      "description": "対象技でダメージを与えた時、次の効果＜20秒＞＜1回＞\n・相手に＜4秒＞ごとに最大ライフ＜4%＞の継続ダメージ\n・相手のガッツ回復速度＜－15%＞\n・[有利]効果時間＜＋20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 702,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0703",
+      "name": "連撃：王惨翠斬",
+      "version": 1,
+      "baseName": "連撃：王惨翠斬",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜4回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 703,
       "status": "verified"
     }
   ]
