@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 624
+    "abilities": 632
   },
   "abilities": [
     {
@@ -7673,6 +7673,102 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 624,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0625",
+      "name": "プレゼント",
+      "version": 1,
+      "baseName": "プレゼント",
+      "level": null,
+      "description": "技発動時、相手に次の効果をランダムに付与<1回>\n・被クリ率<+20%>\n・ガッツ回復速度<-50%>\n・増強Lv1",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 625,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0626",
+      "name": "爪撃：プレゼントくまー",
+      "version": 1,
+      "baseName": "爪撃：プレゼントくまー",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ<10%>の追撃<5回>\n・クリダメ上昇<+30%>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 626,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0627",
+      "name": "10時10分・卵",
+      "version": 1,
+      "baseName": "10時10分・卵",
+      "level": null,
+      "description": "対象技命中時、この技と次の技ですべての技ステータス上昇Lv4<1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 627,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0628",
+      "name": "爪撃：イースターボンバ",
+      "version": 1,
+      "baseName": "爪撃：イースターボンバ",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ<30%>の追撃<2回>\n・ダメージ<50%>の追撃<1回>\n・クリダメ上昇<+30%>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 628,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0629",
+      "name": "ねらいうち",
+      "version": 1,
+      "baseName": "ねらいうち",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・攻撃ステータス<+10%>\n・[有利]必中Lv1<1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 629,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0630",
+      "name": "攻撃トラップ",
+      "version": 1,
+      "baseName": "攻撃トラップ",
+      "level": null,
+      "description": "相手技発動時、相手に被ダメ上昇<10%><20秒><1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 630,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0631",
+      "name": "連撃：一斉射撃",
+      "version": 1,
+      "baseName": "連撃：一斉射撃",
+      "level": null,
+      "description": "対象技命中時、ダメージ<20%>の追撃を<6回>与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 631,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0632",
+      "name": "メダフォース",
+      "version": 1,
+      "baseName": "メダフォース",
+      "level": null,
+      "description": "バトル中、次の効果発動\n・対象技以外の全技発動時、メダフォースカウント+1\n・対象技発動時、メダフォースカウントに応じて攻撃ステ上昇<最大+20%>、対象技発動後カウントリセット",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 632,
       "status": "verified"
     }
   ]

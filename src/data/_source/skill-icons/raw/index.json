@@ -2260,5 +2260,101 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0690": {
+    "name": "Xmasキャロル",
+    "blood": "ニャー",
+    "source": "20261016-152815-1351/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0691": {
+    "name": "プレゼントくまー",
+    "blood": "ニャー",
+    "source": "20261016-152815-1351/s02",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0692": {
+    "name": "10時10分・卵",
+    "blood": "ニャー",
+    "source": "20261016-152808-1350/s01",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0693": {
+    "name": "イースターボンバ",
+    "blood": "ニャー",
+    "source": "20261016-152808-1350/s02",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0694": {
+    "name": "ガトリング",
+    "blood": "ニャー",
+    "source": "20261016-merged-1352/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0695": {
+    "name": "ライフル",
+    "blood": "ニャー",
+    "source": "20261016-merged-1352/s02",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0696": {
+    "name": "ミサイル",
+    "blood": "ニャー",
+    "source": "20261016-merged-1352/s03",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0697": {
+    "name": "一斉射撃",
+    "blood": "ニャー",
+    "source": "20261016-merged-1352/s04",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
