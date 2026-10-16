@@ -1100,7 +1100,7 @@ function renderTopMonTypeNav(source, context) {
   const links = context.eligibleMonTypes.map(monType => {
     addLink(context, `monsters/${monType.slug}/index.html`);
     const count = context.monsters.filter(monster => monster.monSlug === monType.slug).length;
-    return `      <a href="monsters/${escapeHtml(monType.slug)}/" class="menu-link">
+    return `      <a href="monsters/${escapeHtml(monType.slug)}/" class="menu-link menu-link--go">
         <span class="icon">${renderMonTypeIcon(monType.slug, '', 28)}</span> ${escapeHtml(monType.name)}（${count}体）
       </a>`;
   }).join('\n');
