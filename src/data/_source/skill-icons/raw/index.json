@@ -2452,5 +2452,41 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0706": {
+    "name": "くちばし・炭",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0707": {
+    "name": "超火力",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0708": {
+    "name": "ヴォイドサークル",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s03",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

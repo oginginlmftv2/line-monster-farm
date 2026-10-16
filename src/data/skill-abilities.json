@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 635
+    "abilities": 637
   },
   "abilities": [
     {
@@ -7805,6 +7805,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 635,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0636",
+      "name": "虚空",
+      "version": 1,
+      "baseName": "虚空",
+      "level": null,
+      "description": "対象技命中時、すべての技に追撃Lv1を追加、＜オーラ白＞技発動時に追撃回数＋1、＜オーラ黒＞技発動時に与ダメ、命中率、クリ率、各＜＋10%＞、＜オーラ白＞技以外発動時に解除",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 636,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0637",
+      "name": "連撃：ヴォイドサークル",
+      "version": 1,
+      "baseName": "連撃：ヴォイドサークル",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 637,
       "status": "verified"
     }
   ]
