@@ -1412,7 +1412,9 @@ function skillAnchor(skill) {
 // 文字をまとめて右へ寄せる。無い技は従来のマークアップのまま（見た目を変えない）。
 function renderSkillLine(skill, context, lines) {
   const tone = SKILL_TYPE_TONE[skill.skillType];
-  const toneClass = tone ? ` skill-line--${tone}` : '';
+  // 技名のリンクを枠全体へ広げる（CSSの .skill-line--link）。リンクが無い行には付けない
+  const linkClass = lines.some(line => line.includes('class="skill-line-name" href=')) ? ' skill-line--link' : '';
+  const toneClass = (tone ? ` skill-line--${tone}` : '') + linkClass;
   const icon = renderSkillIcon(skill, context, 'skill-icon skill-icon--line');
   if (!icon) {
     return `      <li class="skill-line${toneClass}">
@@ -1494,7 +1496,7 @@ ${unlocks.map(skill => {
     <ul class="skill-line-list">
 ${abilityUnlocks.map(({ skill, link }) => {
     const ability = context.abilityById.get(String(link.abilityId)) || {};
-    return `      <li class="skill-line${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
+    return `      <li class="skill-line skill-line--link${SKILL_TYPE_TONE[skill.skillType] ? ` skill-line--${SKILL_TYPE_TONE[skill.skillType]}` : ''}">
         <a class="skill-line-name" href="${skillAnchor(skill)}"><span class="skill-aura skill-aura-${escapeHtml(skill.aura)}" aria-hidden="true"></span>${escapeHtml(ability.name || link.abilityId)}</a>
         <span class="skill-line-req">★${link.unlock.level}以上で解放</span>
         <span class="skill-line-meta">${escapeHtml(skill.name)}（${escapeHtml(skill.range)}距離ランク${skill.rank}）の技能力</span>
@@ -1512,7 +1514,7 @@ ${abilityUnlocks.map(({ skill, link }) => {
     </div>
     <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
     <div class="menu-grid menu-grid--single">
-      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
+      <a class="menu-link menu-link--go" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
     </div>
   </div>`;
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
@@ -2203,7 +2205,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
       addLink(context, `monsters/${bloodPage.monSlug}/${bloodPage.slug}/index.html`);
       skillNav = `
       <div class="menu-grid mon-type-blood-skill-nav">
-        <a class="menu-link" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
+        <a class="menu-link menu-link--go" href="${escapeHtml(bloodPage.slug)}/">${renderBloodLinkIcon(context, bloodPage.slug, MON_TYPE_ROOT_PREFIX)}<span>${escapeHtml(group.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
       </div>`;
     }
     return `
@@ -2215,7 +2217,7 @@ ${compactMembers.map(monster => renderMonTypeCard(monster, context)).join('\n')}
   const otherLinks = otherMonTypes.map(other => {
     addLink(context, `monsters/${other.slug}/index.html`);
     const count = context.monsters.filter(monster => monster.monSlug === other.slug).length;
-    return `      <a class="menu-link" href="../${escapeHtml(other.slug)}/"><span class="icon">${renderMonTypeIcon(other.slug, MON_TYPE_ROOT_PREFIX, 28)}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
+    return `      <a class="menu-link menu-link--go" href="../${escapeHtml(other.slug)}/"><span class="icon">${renderMonTypeIcon(other.slug, MON_TYPE_ROOT_PREFIX, 28)}</span> ${escapeHtml(other.name)}（${count}体）</a>`;
   }).join('\n');
 
   return `<!-- このファイルは build.js が自動生成しています。直接編集しないでください。 -->
@@ -2955,7 +2957,7 @@ ${uniqueSkills.map(skill => {
   const monTypeLink = hasMonTypePage
     ? `
     <div class="menu-grid blood-related-mon-type">
-      <a class="menu-link" href="../"><span class="icon">${renderMonTypeIcon(bloodGate.monSlug, ROOT_PREFIX, 28)}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>
+      <a class="menu-link menu-link--go" href="../"><span class="icon">${renderMonTypeIcon(bloodGate.monSlug, ROOT_PREFIX, 28)}</span> ${escapeHtml(bloodGate.mon)}のモンスター一覧</a>
     </div>`
     : '';
   const relatedSection = `

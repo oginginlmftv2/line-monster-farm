@@ -212,6 +212,16 @@
   list-style: none;
 }
 
+/* PCは2カラム。折り返しで高さがそろわなくても崩れないよう、行はグリッドの高さいっぱいに伸ばす */
+@media (min-width: 768px) {
+  .monster-detail-page .skill-line-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+  .monster-detail-page .skill-line-list .skill-line { margin-bottom: 0; }
+}
+
 .monster-detail-page .skill-line {
   margin-bottom: 8px;
   padding: 10px 12px;
@@ -238,6 +248,41 @@
 }
 
 .monster-detail-page .skill-line-name:hover { text-decoration: underline; }
+.monster-detail-page .skill-line--link .skill-line-name:hover { text-decoration: none; }
+
+/* リンクつきの技行は枠全体を押せる。技名リンクの ::after を枠いっぱいに広げ、右端に「›」を置く */
+.monster-detail-page .skill-line--link {
+  position: relative;
+  padding-right: 40px;
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.monster-detail-page .skill-line--link:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .15);
+  filter: brightness(0.97);
+}
+.monster-detail-page .skill-line--link .skill-line-name::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.monster-detail-page .skill-line--link::after {
+  content: "›";
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: #c9a35a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 19px;
+  text-align: center;
+  pointer-events: none;
+}
+.monster-detail-page .skill-line--link:focus-within { outline: 2px solid #f0a500; outline-offset: 1px; }
 
 .monster-detail-page .skill-line .skill-aura {
   display: inline-block;
@@ -286,6 +331,7 @@
   padding: 0 12px 0 0;
   overflow: hidden;
 }
+.monster-detail-page .skill-line--has-icon.skill-line--link { padding-right: 40px; }
 .monster-detail-page .skill-line--has-icon .skill-icon {
   display: block;
   width: var(--skill-icon-size);
