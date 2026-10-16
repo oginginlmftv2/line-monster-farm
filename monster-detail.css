@@ -220,6 +220,10 @@
     gap: 8px;
   }
   .monster-detail-page .skill-line-list .skill-line { margin-bottom: 0; }
+  /* 相性のいいアシスト能力は能力ごとの一文が挟まるので、PCも1カラム */
+  .monster-detail-page .skill-line-list.ability-fit-list { display: block; }
+  .monster-detail-page .skill-line-list.ability-fit-list .skill-line { margin-bottom: 8px; }
+  .monster-detail-page .skill-line-list.ability-fit-list .skill-line:last-child { margin-bottom: 0; }
 }
 
 .monster-detail-page .skill-line {
