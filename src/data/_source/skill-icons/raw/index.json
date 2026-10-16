@@ -3004,5 +3004,53 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0752": {
+    "name": "花粉",
+    "blood": "プラント",
+    "source": "20261016-183603-2151/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0753": {
+    "name": "キラキラボシ",
+    "blood": "プラント",
+    "source": "20261016-183608-2150/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0754": {
+    "name": "クリスマスツリー",
+    "blood": "プラント",
+    "source": "20261016-183608-2150/s02",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0755": {
+    "name": "キンプン",
+    "blood": "プラント",
+    "source": "20261016-183615-2111/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
