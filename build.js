@@ -1512,7 +1512,7 @@ ${abilityUnlocks.map(({ skill, link }) => {
     </div>
     <p class="skill-section-lead">技は血統ごとに共通です。${escapeHtml(monster.blood)}種が覚える技の一覧は血統ページにまとめています。</p>
     <div class="menu-grid menu-grid--single">
-      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${bloodPage.skills.length}技）</span></span></a>
+      <a class="menu-link" href="${bloodHref}">${renderBloodLinkIcon(context, monster.bloodSlug, ROOT_PREFIX)}<span>${escapeHtml(monster.blood)}種の技一覧<span class="nowrap">（${formatBloodSkillCount(bloodPage)}）</span></span></a>
     </div>
   </div>`;
   return `${uniqueSection}${unlockSection}${abilityUnlockSection}${bloodLink}`;
@@ -2901,7 +2901,7 @@ function renderBloodPage(bloodGate, context, abilityById) {
   const skills = bloodGate.skills;
   const uniqueSkills = skills.filter(skill => skill.unique);
   const bloodTitleIcon = bloodIconOf(context, bloodGate.slug);
-  const title = `${bloodGate.blood}種の技一覧（${skills.length}技）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
+  const title = `${bloodGate.blood}種の技一覧（${formatBloodSkillCount(bloodGate)}）と所属モンスター${bloodGate.members.length}体 | LINEモンスターファーム徹底攻略`;
   const description = bloodDescription(bloodGate);
   const canonical = `${SITE_URL}/monsters/${bloodGate.monSlug}/${bloodGate.slug}/`;
   const hasMonTypePage = context.eligibleMonSlugs.has(bloodGate.monSlug);
@@ -3349,11 +3349,13 @@ function logBuild(inputs, gates, monTypeGates, bloodGates, bloodPages, outputCou
     console.log(`    ${monType.name}: ${monType.notes.join(' / ')}`);
   }
   const skippedBloods = bloodGates.filter(bloodGate => !bloodGate.eligible);
-  const skillCount = ((inputs.skillsJson && inputs.skillsJson.skills) || []).length;
+  const allSkills = (inputs.skillsJson && inputs.skillsJson.skills) || [];
+  const skillCount = allSkills.length;
+  const uniqueCount = allSkills.filter(skill => skill.unique).length;
   if (!skillCount) {
     console.log('  血統ページ   技データが0件のため生成なし');
   } else {
-    console.log(`  血統ページ  生成 ${bloodPages.length}件 / 技 ${skillCount}件`);
+    console.log(`  血統ページ  生成 ${bloodPages.length}件 / 技 ${skillCount}件（共通${skillCount - uniqueCount}・専用${uniqueCount}）`);
     for (const page of bloodPages) {
       console.log(`    ${page.path}  ${page.contentCharacters}字${page.indexable ? '' : `（noindex・あと${INDEXABLE_THRESHOLD - page.contentCharacters}字）`}`);
     }

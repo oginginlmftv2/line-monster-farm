@@ -4,2174 +4,2174 @@
   "pages": [
     {
       "id": "0101",
-      "baseline": 1428,
-      "current": 1428,
+      "baseline": 1436,
+      "current": 1436,
       "indexable": true
     },
     {
       "id": "0102",
-      "baseline": 1461,
-      "current": 1461,
+      "baseline": 1469,
+      "current": 1469,
       "indexable": true
     },
     {
       "id": "0103",
-      "baseline": 1599,
-      "current": 1599,
+      "baseline": 1607,
+      "current": 1607,
       "indexable": true
     },
     {
       "id": "0109",
-      "baseline": 1657,
-      "current": 1657,
-      "indexable": true
-    },
-    {
-      "id": "0111",
-      "baseline": 1510,
-      "current": 1510,
-      "indexable": true
-    },
-    {
-      "id": "0115",
-      "baseline": 1596,
-      "current": 1596,
-      "indexable": true
-    },
-    {
-      "id": "0117",
-      "baseline": 1526,
-      "current": 1526,
-      "indexable": true
-    },
-    {
-      "id": "0120",
-      "baseline": 1879,
-      "current": 3705,
-      "indexable": true
-    },
-    {
-      "id": "0121",
-      "baseline": 1590,
-      "current": 1590,
-      "indexable": true
-    },
-    {
-      "id": "0123",
-      "baseline": 1831,
-      "current": 1831,
-      "indexable": true
-    },
-    {
-      "id": "0124",
-      "baseline": 1658,
-      "current": 1658,
-      "indexable": true
-    },
-    {
-      "id": "0125",
-      "baseline": 1747,
-      "current": 1747,
-      "indexable": true
-    },
-    {
-      "id": "0126",
-      "baseline": 1772,
-      "current": 1772,
-      "indexable": true
-    },
-    {
-      "id": "0150",
-      "baseline": 2042,
-      "current": 3074,
-      "indexable": true
-    },
-    {
-      "id": "0151",
-      "baseline": 1836,
-      "current": 2769,
-      "indexable": true
-    },
-    {
-      "id": "0152",
-      "baseline": 1854,
-      "current": 1854,
-      "indexable": true
-    },
-    {
-      "id": "0153",
-      "baseline": 1522,
-      "current": 1522,
-      "indexable": true
-    },
-    {
-      "id": "0154",
-      "baseline": 2007,
-      "current": 2007,
-      "indexable": true
-    },
-    {
-      "id": "0155",
-      "baseline": 1600,
-      "current": 1600,
-      "indexable": true
-    },
-    {
-      "id": "0180",
-      "baseline": 1834,
-      "current": 2753,
-      "indexable": true
-    },
-    {
-      "id": "0190",
-      "baseline": 1517,
-      "current": 1517,
-      "indexable": true
-    },
-    {
-      "id": "0201",
-      "baseline": 1486,
-      "current": 1486,
-      "indexable": true
-    },
-    {
-      "id": "0202",
-      "baseline": 1480,
-      "current": 1480,
-      "indexable": true
-    },
-    {
-      "id": "0204",
-      "baseline": 1706,
-      "current": 1706,
-      "indexable": true
-    },
-    {
-      "id": "0205",
-      "baseline": 1657,
-      "current": 1657,
-      "indexable": true
-    },
-    {
-      "id": "0208",
-      "baseline": 1617,
-      "current": 1617,
-      "indexable": true
-    },
-    {
-      "id": "0209",
-      "baseline": 1687,
-      "current": 1687,
-      "indexable": true
-    },
-    {
-      "id": "0217",
-      "baseline": 1672,
-      "current": 1672,
-      "indexable": true
-    },
-    {
-      "id": "0222",
-      "baseline": 1578,
-      "current": 1578,
-      "indexable": true
-    },
-    {
-      "id": "0227",
-      "baseline": 1845,
-      "current": 2503,
-      "indexable": true
-    },
-    {
-      "id": "0250",
-      "baseline": 1833,
-      "current": 3804,
-      "indexable": true
-    },
-    {
-      "id": "0251",
-      "baseline": 1811,
-      "current": 1811,
-      "indexable": true
-    },
-    {
-      "id": "0252",
-      "baseline": 1796,
-      "current": 1796,
-      "indexable": true
-    },
-    {
-      "id": "0253",
-      "baseline": 1639,
-      "current": 1639,
-      "indexable": true
-    },
-    {
-      "id": "0254",
-      "baseline": 1663,
-      "current": 1663,
-      "indexable": true
-    },
-    {
-      "id": "0302",
-      "baseline": 1459,
-      "current": 1459,
-      "indexable": true
-    },
-    {
-      "id": "0303",
-      "baseline": 1713,
-      "current": 1713,
-      "indexable": true
-    },
-    {
-      "id": "0304",
-      "baseline": 1786,
-      "current": 1786,
-      "indexable": true
-    },
-    {
-      "id": "0305",
-      "baseline": 1526,
-      "current": 1526,
-      "indexable": true
-    },
-    {
-      "id": "0308",
-      "baseline": 1803,
-      "current": 1803,
-      "indexable": true
-    },
-    {
-      "id": "0309",
-      "baseline": 1530,
-      "current": 1530,
-      "indexable": true
-    },
-    {
-      "id": "0317",
-      "baseline": 1529,
-      "current": 1529,
-      "indexable": true
-    },
-    {
-      "id": "0350",
-      "baseline": 1832,
-      "current": 2316,
-      "indexable": true
-    },
-    {
-      "id": "0351",
-      "baseline": 1832,
-      "current": 1832,
-      "indexable": true
-    },
-    {
-      "id": "0352",
-      "baseline": 1624,
-      "current": 1624,
-      "indexable": true
-    },
-    {
-      "id": "0353",
-      "baseline": 1823,
-      "current": 1823,
-      "indexable": true
-    },
-    {
-      "id": "0402",
-      "baseline": 1669,
-      "current": 1669,
-      "indexable": true
-    },
-    {
-      "id": "0404",
-      "baseline": 1634,
-      "current": 1634,
-      "indexable": true
-    },
-    {
-      "id": "0405",
-      "baseline": 1534,
-      "current": 1534,
-      "indexable": true
-    },
-    {
-      "id": "0406",
-      "baseline": 1822,
-      "current": 1822,
-      "indexable": true
-    },
-    {
-      "id": "0409",
-      "baseline": 1946,
-      "current": 1946,
-      "indexable": true
-    },
-    {
-      "id": "0417",
-      "baseline": 1814,
-      "current": 1814,
-      "indexable": true
-    },
-    {
-      "id": "0422",
-      "baseline": 1743,
-      "current": 1743,
-      "indexable": true
-    },
-    {
-      "id": "0430",
-      "baseline": 2031,
-      "current": 3807,
-      "indexable": true
-    },
-    {
-      "id": "0450",
-      "baseline": 1850,
-      "current": 3418,
-      "indexable": true
-    },
-    {
-      "id": "0451",
-      "baseline": 1928,
-      "current": 1928,
-      "indexable": true
-    },
-    {
-      "id": "0452",
-      "baseline": 1735,
-      "current": 1735,
-      "indexable": true
-    },
-    {
-      "id": "0502",
-      "baseline": 1694,
-      "current": 1694,
-      "indexable": true
-    },
-    {
-      "id": "0505",
-      "baseline": 1489,
-      "current": 1489,
-      "indexable": true
-    },
-    {
-      "id": "0508",
-      "baseline": 1559,
-      "current": 1559,
-      "indexable": true
-    },
-    {
-      "id": "0511",
-      "baseline": 1717,
-      "current": 1717,
-      "indexable": true
-    },
-    {
-      "id": "0517",
-      "baseline": 1447,
-      "current": 1447,
-      "indexable": true
-    },
-    {
-      "id": "0521",
-      "baseline": 1551,
-      "current": 1551,
-      "indexable": true
-    },
-    {
-      "id": "0524",
-      "baseline": 1543,
-      "current": 1543,
-      "indexable": true
-    },
-    {
-      "id": "0525",
-      "baseline": 1779,
-      "current": 1779,
-      "indexable": true
-    },
-    {
-      "id": "0550",
-      "baseline": 1851,
-      "current": 2408,
-      "indexable": true
-    },
-    {
-      "id": "0551",
-      "baseline": 1878,
-      "current": 1878,
-      "indexable": true
-    },
-    {
-      "id": "0552",
-      "baseline": 1843,
-      "current": 1843,
-      "indexable": true
-    },
-    {
-      "id": "0553",
-      "baseline": 1896,
-      "current": 1896,
-      "indexable": true
-    },
-    {
-      "id": "0554",
-      "baseline": 1796,
-      "current": 1926,
-      "indexable": true
-    },
-    {
-      "id": "0602",
-      "baseline": 1782,
-      "current": 2362,
-      "indexable": true
-    },
-    {
-      "id": "0604",
-      "baseline": 1822,
-      "current": 2421,
-      "indexable": true
-    },
-    {
-      "id": "0606",
-      "baseline": 1462,
-      "current": 2158,
-      "indexable": true
-    },
-    {
-      "id": "0608",
-      "baseline": 1524,
-      "current": 2146,
-      "indexable": true
-    },
-    {
-      "id": "0617",
-      "baseline": 1577,
-      "current": 2252,
-      "indexable": true
-    },
-    {
-      "id": "0621",
-      "baseline": 1474,
-      "current": 2111,
-      "indexable": true
-    },
-    {
-      "id": "0622",
-      "baseline": 1522,
-      "current": 2183,
-      "indexable": true
-    },
-    {
-      "id": "0623",
-      "baseline": 1628,
-      "current": 2288,
-      "indexable": true
-    },
-    {
-      "id": "0624",
-      "baseline": 1685,
-      "current": 2301,
-      "indexable": true
-    },
-    {
-      "id": "0650",
-      "baseline": 1726,
-      "current": 2509,
-      "indexable": true
-    },
-    {
-      "id": "0651",
-      "baseline": 1761,
-      "current": 1761,
-      "indexable": true
-    },
-    {
-      "id": "0701",
-      "baseline": 1725,
-      "current": 2285,
-      "indexable": true
-    },
-    {
-      "id": "0702",
-      "baseline": 1532,
-      "current": 1867,
-      "indexable": true
-    },
-    {
-      "id": "0707",
-      "baseline": 1618,
-      "current": 2103,
-      "indexable": true
-    },
-    {
-      "id": "0709",
-      "baseline": 1752,
-      "current": 2180,
-      "indexable": true
-    },
-    {
-      "id": "0750",
-      "baseline": 1841,
-      "current": 3227,
-      "indexable": true
-    },
-    {
-      "id": "0751",
-      "baseline": 1628,
-      "current": 1981,
-      "indexable": true
-    },
-    {
-      "id": "0752",
-      "baseline": 1783,
-      "current": 2578,
-      "indexable": true
-    },
-    {
-      "id": "0753",
-      "baseline": 1757,
-      "current": 2426,
-      "indexable": true
-    },
-    {
-      "id": "0754",
-      "baseline": 1777,
-      "current": 2349,
-      "indexable": true
-    },
-    {
-      "id": "0804",
-      "baseline": 1438,
-      "current": 1619,
-      "indexable": true
-    },
-    {
-      "id": "0805",
-      "baseline": 1482,
-      "current": 1627,
-      "indexable": true
-    },
-    {
-      "id": "0808",
-      "baseline": 1573,
-      "current": 1783,
-      "indexable": true
-    },
-    {
-      "id": "0815",
-      "baseline": 1572,
-      "current": 1717,
-      "indexable": true
-    },
-    {
-      "id": "0817",
-      "baseline": 1555,
-      "current": 1733,
-      "indexable": true
-    },
-    {
-      "id": "0820",
-      "baseline": 1708,
-      "current": 1885,
-      "indexable": true
-    },
-    {
-      "id": "0850",
-      "baseline": 1764,
-      "current": 2090,
-      "indexable": true
-    },
-    {
-      "id": "0851",
-      "baseline": 1733,
-      "current": 1895,
-      "indexable": true
-    },
-    {
-      "id": "0852",
-      "baseline": 1775,
-      "current": 1981,
-      "indexable": true
-    },
-    {
-      "id": "0906",
-      "baseline": 1430,
-      "current": 1430,
-      "indexable": true
-    },
-    {
-      "id": "0909",
-      "baseline": 1507,
-      "current": 1507,
-      "indexable": true
-    },
-    {
-      "id": "0910",
-      "baseline": 1614,
-      "current": 1614,
-      "indexable": true
-    },
-    {
-      "id": "0911",
-      "baseline": 1537,
-      "current": 1537,
-      "indexable": true
-    },
-    {
-      "id": "0919",
-      "baseline": 1559,
-      "current": 1559,
-      "indexable": true
-    },
-    {
-      "id": "0921",
-      "baseline": 1498,
-      "current": 1498,
-      "indexable": true
-    },
-    {
-      "id": "0923",
-      "baseline": 1791,
-      "current": 1791,
-      "indexable": true
-    },
-    {
-      "id": "0924",
-      "baseline": 1540,
-      "current": 1540,
-      "indexable": true
-    },
-    {
-      "id": "0928",
-      "baseline": 1778,
-      "current": 1865,
-      "indexable": true
-    },
-    {
-      "id": "0930",
-      "baseline": 1770,
-      "current": 1770,
-      "indexable": true
-    },
-    {
-      "id": "0950",
-      "baseline": 1809,
-      "current": 3504,
-      "indexable": true
-    },
-    {
-      "id": "0951",
-      "baseline": 1651,
-      "current": 1651,
-      "indexable": true
-    },
-    {
-      "id": "0990",
-      "baseline": 1586,
-      "current": 3038,
-      "indexable": true
-    },
-    {
-      "id": "1001",
-      "baseline": 1669,
-      "current": 1669,
-      "indexable": true
-    },
-    {
-      "id": "1006",
-      "baseline": 1372,
-      "current": 1372,
-      "indexable": true
-    },
-    {
-      "id": "1010",
-      "baseline": 1482,
-      "current": 1482,
-      "indexable": true
-    },
-    {
-      "id": "1011",
-      "baseline": 1645,
-      "current": 1645,
-      "indexable": true
-    },
-    {
-      "id": "1015",
-      "baseline": 1505,
-      "current": 1505,
-      "indexable": true
-    },
-    {
-      "id": "1019",
-      "baseline": 1511,
-      "current": 1511,
-      "indexable": true
-    },
-    {
-      "id": "1021",
-      "baseline": 1443,
-      "current": 1443,
-      "indexable": true
-    },
-    {
-      "id": "1022",
-      "baseline": 1530,
-      "current": 1530,
-      "indexable": true
-    },
-    {
-      "id": "1023",
-      "baseline": 1716,
-      "current": 1716,
-      "indexable": true
-    },
-    {
-      "id": "1050",
-      "baseline": 1805,
-      "current": 1805,
-      "indexable": true
-    },
-    {
-      "id": "1051",
-      "baseline": 1595,
-      "current": 1595,
-      "indexable": true
-    },
-    {
-      "id": "1080",
-      "baseline": 1284,
-      "current": 2062,
-      "indexable": true
-    },
-    {
-      "id": "1101",
-      "baseline": 1781,
-      "current": 1781,
-      "indexable": true
-    },
-    {
-      "id": "1104",
-      "baseline": 1880,
-      "current": 2023,
-      "indexable": true
-    },
-    {
-      "id": "1106",
-      "baseline": 1625,
-      "current": 1625,
-      "indexable": true
-    },
-    {
-      "id": "1110",
-      "baseline": 1539,
-      "current": 1539,
-      "indexable": true
-    },
-    {
-      "id": "1111",
-      "baseline": 1430,
-      "current": 1430,
-      "indexable": true
-    },
-    {
-      "id": "1115",
-      "baseline": 1663,
-      "current": 1663,
-      "indexable": true
-    },
-    {
-      "id": "1119",
-      "baseline": 1525,
-      "current": 1525,
-      "indexable": true
-    },
-    {
-      "id": "1121",
-      "baseline": 1494,
-      "current": 1494,
-      "indexable": true
-    },
-    {
-      "id": "1124",
-      "baseline": 1507,
-      "current": 1507,
-      "indexable": true
-    },
-    {
-      "id": "1150",
-      "baseline": 1671,
-      "current": 3519,
-      "indexable": true
-    },
-    {
-      "id": "1151",
-      "baseline": 1739,
-      "current": 1739,
-      "indexable": true
-    },
-    {
-      "id": "1152",
-      "baseline": 1531,
-      "current": 1531,
-      "indexable": true
-    },
-    {
-      "id": "1201",
-      "baseline": 1680,
-      "current": 1680,
-      "indexable": true
-    },
-    {
-      "id": "1202",
-      "baseline": 1562,
-      "current": 1562,
-      "indexable": true
-    },
-    {
-      "id": "1208",
-      "baseline": 1596,
-      "current": 1596,
-      "indexable": true
-    },
-    {
-      "id": "1209",
-      "baseline": 1555,
-      "current": 1555,
-      "indexable": true
-    },
-    {
-      "id": "1212",
-      "baseline": 1553,
-      "current": 1553,
-      "indexable": true
-    },
-    {
-      "id": "1250",
-      "baseline": 1839,
-      "current": 1839,
-      "indexable": true
-    },
-    {
-      "id": "1251",
-      "baseline": 1799,
-      "current": 1799,
-      "indexable": true
-    },
-    {
-      "id": "1252",
-      "baseline": 1896,
-      "current": 2200,
-      "indexable": true
-    },
-    {
-      "id": "1301",
-      "baseline": 1533,
-      "current": 1533,
-      "indexable": true
-    },
-    {
-      "id": "1309",
-      "baseline": 1569,
-      "current": 1569,
-      "indexable": true
-    },
-    {
-      "id": "1310",
-      "baseline": 1806,
-      "current": 1806,
-      "indexable": true
-    },
-    {
-      "id": "1313",
-      "baseline": 1524,
-      "current": 1524,
-      "indexable": true
-    },
-    {
-      "id": "1326",
-      "baseline": 1671,
-      "current": 1671,
-      "indexable": true
-    },
-    {
-      "id": "1350",
-      "baseline": 1914,
-      "current": 1914,
-      "indexable": true
-    },
-    {
-      "id": "1351",
-      "baseline": 1814,
-      "current": 1814,
-      "indexable": true
-    },
-    {
-      "id": "1352",
-      "baseline": 2010,
-      "current": 2132,
-      "indexable": true
-    },
-    {
-      "id": "1353",
-      "baseline": 1698,
-      "current": 1698,
-      "indexable": true
-    },
-    {
-      "id": "1354",
-      "baseline": 1879,
-      "current": 1879,
-      "indexable": true
-    },
-    {
-      "id": "1380",
-      "baseline": 1699,
-      "current": 1822,
-      "indexable": true
-    },
-    {
-      "id": "1402",
-      "baseline": 1642,
-      "current": 1642,
-      "indexable": true
-    },
-    {
-      "id": "1404",
-      "baseline": 1768,
-      "current": 1768,
-      "indexable": true
-    },
-    {
-      "id": "1414",
-      "baseline": 1816,
-      "current": 1816,
-      "indexable": true
-    },
-    {
-      "id": "1420",
-      "baseline": 1744,
-      "current": 1744,
-      "indexable": true
-    },
-    {
-      "id": "1432",
-      "baseline": 1760,
-      "current": 1760,
-      "indexable": true
-    },
-    {
-      "id": "1450",
-      "baseline": 1876,
-      "current": 4725,
-      "indexable": true
-    },
-    {
-      "id": "1451",
-      "baseline": 1777,
-      "current": 1777,
-      "indexable": true
-    },
-    {
-      "id": "1452",
-      "baseline": 1862,
-      "current": 1862,
-      "indexable": true
-    },
-    {
-      "id": "1501",
-      "baseline": 1503,
-      "current": 1503,
-      "indexable": true
-    },
-    {
-      "id": "1505",
-      "baseline": 1451,
-      "current": 1451,
-      "indexable": true
-    },
-    {
-      "id": "1506",
-      "baseline": 1585,
-      "current": 1585,
-      "indexable": true
-    },
-    {
-      "id": "1509",
-      "baseline": 1591,
-      "current": 1591,
-      "indexable": true
-    },
-    {
-      "id": "1514",
-      "baseline": 1688,
-      "current": 1688,
-      "indexable": true
-    },
-    {
-      "id": "1515",
-      "baseline": 1644,
-      "current": 1644,
-      "indexable": true
-    },
-    {
-      "id": "1521",
-      "baseline": 1705,
-      "current": 1705,
-      "indexable": true
-    },
-    {
-      "id": "1523",
-      "baseline": 1616,
-      "current": 1616,
-      "indexable": true
-    },
-    {
-      "id": "1550",
-      "baseline": 1579,
-      "current": 1579,
-      "indexable": true
-    },
-    {
-      "id": "1551",
-      "baseline": 1895,
-      "current": 1895,
-      "indexable": true
-    },
-    {
-      "id": "1552",
-      "baseline": 1832,
-      "current": 1832,
-      "indexable": true
-    },
-    {
-      "id": "1553",
-      "baseline": 1745,
-      "current": 1745,
-      "indexable": true
-    },
-    {
-      "id": "1602",
-      "baseline": 1761,
-      "current": 1761,
-      "indexable": true
-    },
-    {
-      "id": "1604",
-      "baseline": 1464,
-      "current": 1464,
-      "indexable": true
-    },
-    {
-      "id": "1607",
-      "baseline": 1823,
-      "current": 1823,
-      "indexable": true
-    },
-    {
-      "id": "1609",
-      "baseline": 1655,
-      "current": 1655,
-      "indexable": true
-    },
-    {
-      "id": "1616",
-      "baseline": 1446,
-      "current": 1446,
-      "indexable": true
-    },
-    {
-      "id": "1619",
-      "baseline": 1413,
-      "current": 1413,
-      "indexable": true
-    },
-    {
-      "id": "1625",
-      "baseline": 1621,
-      "current": 1744,
-      "indexable": true
-    },
-    {
-      "id": "1650",
-      "baseline": 1675,
-      "current": 2379,
-      "indexable": true
-    },
-    {
-      "id": "1651",
-      "baseline": 1733,
-      "current": 3226,
-      "indexable": true
-    },
-    {
-      "id": "1652",
-      "baseline": 1499,
-      "current": 1499,
-      "indexable": true
-    },
-    {
-      "id": "1653",
-      "baseline": 1669,
-      "current": 1669,
-      "indexable": true
-    },
-    {
-      "id": "1654",
-      "baseline": 1599,
-      "current": 1599,
-      "indexable": true
-    },
-    {
-      "id": "1702",
-      "baseline": 1662,
-      "current": 1662,
-      "indexable": true
-    },
-    {
-      "id": "1711",
-      "baseline": 1785,
-      "current": 1785,
-      "indexable": true
-    },
-    {
-      "id": "1716",
-      "baseline": 1476,
-      "current": 1476,
-      "indexable": true
-    },
-    {
-      "id": "1717",
-      "baseline": 1524,
-      "current": 1524,
-      "indexable": true
-    },
-    {
-      "id": "1750",
-      "baseline": 1541,
-      "current": 2191,
-      "indexable": true
-    },
-    {
-      "id": "1751",
-      "baseline": 1515,
-      "current": 2788,
-      "indexable": true
-    },
-    {
-      "id": "1752",
-      "baseline": 1545,
-      "current": 2992,
-      "indexable": true
-    },
-    {
-      "id": "1753",
-      "baseline": 1753,
-      "current": 1753,
-      "indexable": true
-    },
-    {
-      "id": "1754",
-      "baseline": 1459,
-      "current": 1584,
-      "indexable": true
-    },
-    {
-      "id": "1803",
-      "baseline": 1487,
-      "current": 1487,
-      "indexable": true
-    },
-    {
-      "id": "1809",
-      "baseline": 1508,
-      "current": 1508,
-      "indexable": true
-    },
-    {
-      "id": "1817",
-      "baseline": 1511,
-      "current": 1511,
-      "indexable": true
-    },
-    {
-      "id": "1818",
-      "baseline": 1585,
-      "current": 1585,
-      "indexable": true
-    },
-    {
-      "id": "1819",
-      "baseline": 1636,
-      "current": 1636,
-      "indexable": true
-    },
-    {
-      "id": "1825",
-      "baseline": 1747,
-      "current": 1747,
-      "indexable": true
-    },
-    {
-      "id": "1850",
-      "baseline": 1787,
-      "current": 2203,
-      "indexable": true
-    },
-    {
-      "id": "1851",
-      "baseline": 1779,
-      "current": 2856,
-      "indexable": true
-    },
-    {
-      "id": "1852",
-      "baseline": 1749,
-      "current": 1749,
-      "indexable": true
-    },
-    {
-      "id": "1853",
-      "baseline": 1867,
-      "current": 1867,
-      "indexable": true
-    },
-    {
-      "id": "1854",
-      "baseline": 1846,
-      "current": 1846,
-      "indexable": true
-    },
-    {
-      "id": "1855",
-      "baseline": 1512,
-      "current": 1512,
-      "indexable": true
-    },
-    {
-      "id": "1905",
-      "baseline": 1339,
-      "current": 1339,
-      "indexable": true
-    },
-    {
-      "id": "1906",
-      "baseline": 1382,
-      "current": 1382,
-      "indexable": true
-    },
-    {
-      "id": "1910",
-      "baseline": 1615,
-      "current": 1615,
-      "indexable": true
-    },
-    {
-      "id": "1911",
-      "baseline": 1494,
-      "current": 1494,
-      "indexable": true
-    },
-    {
-      "id": "1915",
-      "baseline": 1767,
-      "current": 1767,
-      "indexable": true
-    },
-    {
-      "id": "1919",
-      "baseline": 1444,
-      "current": 1444,
-      "indexable": true
-    },
-    {
-      "id": "1921",
-      "baseline": 1590,
-      "current": 1590,
-      "indexable": true
-    },
-    {
-      "id": "1922",
-      "baseline": 1639,
-      "current": 1778,
-      "indexable": true
-    },
-    {
-      "id": "1923",
-      "baseline": 1648,
-      "current": 1648,
-      "indexable": true
-    },
-    {
-      "id": "1924",
-      "baseline": 1602,
-      "current": 1602,
-      "indexable": true
-    },
-    {
-      "id": "1950",
-      "baseline": 1565,
-      "current": 1565,
-      "indexable": true
-    },
-    {
-      "id": "1951",
-      "baseline": 1751,
-      "current": 1751,
-      "indexable": true
-    },
-    {
-      "id": "1952",
-      "baseline": 1787,
-      "current": 1787,
-      "indexable": true
-    },
-    {
-      "id": "1953",
-      "baseline": 1562,
-      "current": 1562,
-      "indexable": true
-    },
-    {
-      "id": "2001",
-      "baseline": 1743,
-      "current": 1743,
-      "indexable": true
-    },
-    {
-      "id": "2016",
-      "baseline": 1748,
-      "current": 1748,
-      "indexable": true
-    },
-    {
-      "id": "2017",
-      "baseline": 1698,
-      "current": 1698,
-      "indexable": true
-    },
-    {
-      "id": "2018",
-      "baseline": 1770,
-      "current": 1770,
-      "indexable": true
-    },
-    {
-      "id": "2020",
-      "baseline": 1516,
-      "current": 1516,
-      "indexable": true
-    },
-    {
-      "id": "2050",
-      "baseline": 1597,
-      "current": 3151,
-      "indexable": true
-    },
-    {
-      "id": "2051",
-      "baseline": 1657,
-      "current": 2920,
-      "indexable": true
-    },
-    {
-      "id": "2052",
-      "baseline": 1758,
-      "current": 3781,
-      "indexable": true
-    },
-    {
-      "id": "2053",
       "baseline": 1665,
       "current": 1665,
       "indexable": true
     },
     {
-      "id": "2054",
-      "baseline": 1512,
-      "current": 1512,
+      "id": "0111",
+      "baseline": 1518,
+      "current": 1518,
       "indexable": true
     },
     {
-      "id": "2101",
-      "baseline": 1529,
-      "current": 1529,
+      "id": "0115",
+      "baseline": 1604,
+      "current": 1604,
       "indexable": true
     },
     {
-      "id": "2105",
-      "baseline": 1404,
-      "current": 1404,
+      "id": "0117",
+      "baseline": 1534,
+      "current": 1534,
       "indexable": true
     },
     {
-      "id": "2106",
+      "id": "0120",
+      "baseline": 1887,
+      "current": 3713,
+      "indexable": true
+    },
+    {
+      "id": "0121",
+      "baseline": 1598,
+      "current": 1598,
+      "indexable": true
+    },
+    {
+      "id": "0123",
+      "baseline": 1839,
+      "current": 1839,
+      "indexable": true
+    },
+    {
+      "id": "0124",
+      "baseline": 1666,
+      "current": 1666,
+      "indexable": true
+    },
+    {
+      "id": "0125",
+      "baseline": 1755,
+      "current": 1755,
+      "indexable": true
+    },
+    {
+      "id": "0126",
+      "baseline": 1780,
+      "current": 1780,
+      "indexable": true
+    },
+    {
+      "id": "0150",
+      "baseline": 2050,
+      "current": 3082,
+      "indexable": true
+    },
+    {
+      "id": "0151",
+      "baseline": 1844,
+      "current": 2777,
+      "indexable": true
+    },
+    {
+      "id": "0152",
+      "baseline": 1862,
+      "current": 1862,
+      "indexable": true
+    },
+    {
+      "id": "0153",
+      "baseline": 1530,
+      "current": 1530,
+      "indexable": true
+    },
+    {
+      "id": "0154",
+      "baseline": 2015,
+      "current": 2015,
+      "indexable": true
+    },
+    {
+      "id": "0155",
+      "baseline": 1608,
+      "current": 1608,
+      "indexable": true
+    },
+    {
+      "id": "0180",
+      "baseline": 1842,
+      "current": 2761,
+      "indexable": true
+    },
+    {
+      "id": "0190",
+      "baseline": 1525,
+      "current": 1525,
+      "indexable": true
+    },
+    {
+      "id": "0201",
+      "baseline": 1494,
+      "current": 1494,
+      "indexable": true
+    },
+    {
+      "id": "0202",
       "baseline": 1488,
       "current": 1488,
       "indexable": true
     },
     {
-      "id": "2110",
-      "baseline": 1529,
-      "current": 1529,
+      "id": "0204",
+      "baseline": 1714,
+      "current": 1714,
       "indexable": true
     },
     {
-      "id": "2111",
-      "baseline": 1696,
-      "current": 1696,
+      "id": "0205",
+      "baseline": 1665,
+      "current": 1665,
       "indexable": true
     },
     {
-      "id": "2115",
-      "baseline": 1492,
-      "current": 1492,
+      "id": "0208",
+      "baseline": 1625,
+      "current": 1625,
       "indexable": true
     },
     {
-      "id": "2119",
-      "baseline": 1613,
-      "current": 1613,
+      "id": "0209",
+      "baseline": 1695,
+      "current": 1695,
       "indexable": true
     },
     {
-      "id": "2121",
-      "baseline": 1516,
-      "current": 1516,
-      "indexable": true
-    },
-    {
-      "id": "2123",
-      "baseline": 1667,
-      "current": 1667,
-      "indexable": true
-    },
-    {
-      "id": "2124",
-      "baseline": 1472,
-      "current": 1472,
-      "indexable": true
-    },
-    {
-      "id": "2150",
-      "baseline": 1759,
-      "current": 1759,
-      "indexable": true
-    },
-    {
-      "id": "2151",
-      "baseline": 1592,
-      "current": 1592,
-      "indexable": true
-    },
-    {
-      "id": "2206",
-      "baseline": 1589,
-      "current": 1589,
-      "indexable": true
-    },
-    {
-      "id": "2209",
-      "baseline": 1575,
-      "current": 1575,
-      "indexable": true
-    },
-    {
-      "id": "2210",
-      "baseline": 1817,
-      "current": 1817,
-      "indexable": true
-    },
-    {
-      "id": "2211",
-      "baseline": 1510,
-      "current": 1510,
-      "indexable": true
-    },
-    {
-      "id": "2215",
-      "baseline": 1709,
-      "current": 1709,
-      "indexable": true
-    },
-    {
-      "id": "2219",
-      "baseline": 1637,
-      "current": 1637,
-      "indexable": true
-    },
-    {
-      "id": "2221",
-      "baseline": 1526,
-      "current": 1526,
-      "indexable": true
-    },
-    {
-      "id": "2222",
-      "baseline": 1414,
-      "current": 1414,
-      "indexable": true
-    },
-    {
-      "id": "2224",
-      "baseline": 1620,
-      "current": 1794,
-      "indexable": true
-    },
-    {
-      "id": "2250",
-      "baseline": 1842,
-      "current": 3119,
-      "indexable": true
-    },
-    {
-      "id": "2251",
-      "baseline": 1559,
-      "current": 2355,
-      "indexable": true
-    },
-    {
-      "id": "2252",
-      "baseline": 1490,
-      "current": 1490,
-      "indexable": true
-    },
-    {
-      "id": "2253",
-      "baseline": 1791,
-      "current": 1791,
-      "indexable": true
-    },
-    {
-      "id": "2254",
-      "baseline": 1588,
-      "current": 1588,
-      "indexable": true
-    },
-    {
-      "id": "2255",
-      "baseline": 1588,
-      "current": 1588,
-      "indexable": true
-    },
-    {
-      "id": "2256",
-      "baseline": 1326,
-      "current": 1326,
-      "indexable": false
-    },
-    {
-      "id": "2305",
-      "baseline": 1291,
-      "current": 1291,
-      "indexable": true
-    },
-    {
-      "id": "2306",
-      "baseline": 1521,
-      "current": 1521,
-      "indexable": true
-    },
-    {
-      "id": "2309",
-      "baseline": 1489,
-      "current": 1945,
-      "indexable": true
-    },
-    {
-      "id": "2310",
-      "baseline": 1668,
-      "current": 1942,
-      "indexable": true
-    },
-    {
-      "id": "2311",
-      "baseline": 1532,
-      "current": 1532,
-      "indexable": true
-    },
-    {
-      "id": "2315",
-      "baseline": 1471,
-      "current": 1471,
-      "indexable": true
-    },
-    {
-      "id": "2321",
-      "baseline": 1722,
-      "current": 1975,
-      "indexable": true
-    },
-    {
-      "id": "2322",
-      "baseline": 1521,
-      "current": 1521,
-      "indexable": true
-    },
-    {
-      "id": "2323",
-      "baseline": 1577,
-      "current": 1928,
-      "indexable": true
-    },
-    {
-      "id": "2324",
-      "baseline": 1517,
-      "current": 1849,
-      "indexable": true
-    },
-    {
-      "id": "2350",
-      "baseline": 1706,
-      "current": 1990,
-      "indexable": true
-    },
-    {
-      "id": "2351",
-      "baseline": 1475,
-      "current": 1764,
-      "indexable": true
-    },
-    {
-      "id": "2405",
-      "baseline": 1505,
-      "current": 1505,
-      "indexable": true
-    },
-    {
-      "id": "2409",
-      "baseline": 1751,
-      "current": 1751,
-      "indexable": true
-    },
-    {
-      "id": "2410",
-      "baseline": 1615,
-      "current": 1615,
-      "indexable": true
-    },
-    {
-      "id": "2411",
-      "baseline": 1560,
-      "current": 1560,
-      "indexable": true
-    },
-    {
-      "id": "2415",
-      "baseline": 1746,
-      "current": 1746,
-      "indexable": true
-    },
-    {
-      "id": "2419",
-      "baseline": 1396,
-      "current": 1396,
-      "indexable": true
-    },
-    {
-      "id": "2421",
-      "baseline": 1500,
-      "current": 1500,
-      "indexable": true
-    },
-    {
-      "id": "2422",
-      "baseline": 1513,
-      "current": 1513,
-      "indexable": true
-    },
-    {
-      "id": "2423",
-      "baseline": 1760,
-      "current": 1760,
-      "indexable": true
-    },
-    {
-      "id": "2424",
-      "baseline": 1464,
-      "current": 1464,
-      "indexable": true
-    },
-    {
-      "id": "2450",
-      "baseline": 1940,
-      "current": 3595,
-      "indexable": true
-    },
-    {
-      "id": "2451",
-      "baseline": 1647,
-      "current": 1647,
-      "indexable": true
-    },
-    {
-      "id": "2452",
-      "baseline": 1599,
-      "current": 1599,
-      "indexable": true
-    },
-    {
-      "id": "2453",
-      "baseline": 1741,
-      "current": 1875,
-      "indexable": true
-    },
-    {
-      "id": "2502",
-      "baseline": 1762,
-      "current": 1892,
-      "indexable": true
-    },
-    {
-      "id": "2504",
-      "baseline": 1453,
-      "current": 1453,
-      "indexable": true
-    },
-    {
-      "id": "2510",
-      "baseline": 1470,
-      "current": 1470,
-      "indexable": true
-    },
-    {
-      "id": "2516",
-      "baseline": 1707,
-      "current": 1707,
-      "indexable": true
-    },
-    {
-      "id": "2521",
-      "baseline": 1471,
-      "current": 1471,
-      "indexable": true
-    },
-    {
-      "id": "2525",
-      "baseline": 1504,
-      "current": 1504,
-      "indexable": true
-    },
-    {
-      "id": "2528",
-      "baseline": 1757,
-      "current": 1757,
-      "indexable": true
-    },
-    {
-      "id": "2531",
-      "baseline": 1629,
-      "current": 2794,
-      "indexable": true
-    },
-    {
-      "id": "2550",
-      "baseline": 1511,
-      "current": 1511,
-      "indexable": true
-    },
-    {
-      "id": "2580",
-      "baseline": 1605,
-      "current": 2882,
-      "indexable": true
-    },
-    {
-      "id": "2608",
-      "baseline": 1659,
-      "current": 1659,
-      "indexable": true
-    },
-    {
-      "id": "2609",
-      "baseline": 1624,
-      "current": 1624,
-      "indexable": true
-    },
-    {
-      "id": "2613",
-      "baseline": 1757,
-      "current": 2471,
-      "indexable": true
-    },
-    {
-      "id": "2614",
-      "baseline": 1785,
-      "current": 1785,
-      "indexable": true
-    },
-    {
-      "id": "2620",
-      "baseline": 1588,
-      "current": 1588,
-      "indexable": true
-    },
-    {
-      "id": "2626",
-      "baseline": 1615,
-      "current": 1615,
-      "indexable": true
-    },
-    {
-      "id": "2628",
-      "baseline": 1718,
-      "current": 1718,
-      "indexable": true
-    },
-    {
-      "id": "2629",
-      "baseline": 1809,
-      "current": 1809,
-      "indexable": true
-    },
-    {
-      "id": "2650",
-      "baseline": 1956,
-      "current": 2855,
-      "indexable": true
-    },
-    {
-      "id": "2651",
-      "baseline": 1772,
-      "current": 3438,
-      "indexable": true
-    },
-    {
-      "id": "2652",
-      "baseline": 1791,
-      "current": 1791,
-      "indexable": true
-    },
-    {
-      "id": "2653",
-      "baseline": 1764,
-      "current": 1764,
-      "indexable": true
-    },
-    {
-      "id": "2654",
-      "baseline": 1640,
-      "current": 1640,
-      "indexable": true
-    },
-    {
-      "id": "2690",
-      "baseline": 1406,
-      "current": 2619,
-      "indexable": true
-    },
-    {
-      "id": "2701",
-      "baseline": 1987,
-      "current": 1987,
-      "indexable": true
-    },
-    {
-      "id": "2715",
-      "baseline": 1802,
-      "current": 1802,
-      "indexable": true
-    },
-    {
-      "id": "2721",
-      "baseline": 1767,
-      "current": 1767,
-      "indexable": true
-    },
-    {
-      "id": "2727",
-      "baseline": 1787,
-      "current": 1787,
-      "indexable": true
-    },
-    {
-      "id": "2750",
-      "baseline": 1812,
-      "current": 2646,
-      "indexable": true
-    },
-    {
-      "id": "2751",
-      "baseline": 1795,
-      "current": 2051,
-      "indexable": true
-    },
-    {
-      "id": "2809",
-      "baseline": 1724,
-      "current": 1724,
-      "indexable": true
-    },
-    {
-      "id": "2813",
-      "baseline": 1704,
-      "current": 1704,
-      "indexable": true
-    },
-    {
-      "id": "2823",
-      "baseline": 1821,
-      "current": 1821,
-      "indexable": true
-    },
-    {
-      "id": "2827",
-      "baseline": 1698,
-      "current": 1698,
-      "indexable": true
-    },
-    {
-      "id": "2828",
-      "baseline": 1739,
-      "current": 1739,
-      "indexable": true
-    },
-    {
-      "id": "2850",
-      "baseline": 1588,
-      "current": 1588,
-      "indexable": true
-    },
-    {
-      "id": "2851",
-      "baseline": 1598,
-      "current": 3337,
-      "indexable": true
-    },
-    {
-      "id": "2852",
-      "baseline": 1530,
-      "current": 2958,
-      "indexable": true
-    },
-    {
-      "id": "2906",
-      "baseline": 1576,
-      "current": 1576,
-      "indexable": true
-    },
-    {
-      "id": "2914",
-      "baseline": 1586,
-      "current": 1586,
-      "indexable": true
-    },
-    {
-      "id": "2920",
-      "baseline": 1676,
-      "current": 1676,
-      "indexable": true
-    },
-    {
-      "id": "2928",
-      "baseline": 1757,
-      "current": 1757,
-      "indexable": true
-    },
-    {
-      "id": "2929",
-      "baseline": 1553,
-      "current": 1553,
-      "indexable": true
-    },
-    {
-      "id": "2950",
-      "baseline": 1715,
-      "current": 1715,
-      "indexable": true
-    },
-    {
-      "id": "2951",
-      "baseline": 1622,
-      "current": 1622,
-      "indexable": true
-    },
-    {
-      "id": "2952",
-      "baseline": 1582,
-      "current": 2713,
-      "indexable": true
-    },
-    {
-      "id": "3016",
-      "baseline": 1686,
-      "current": 1686,
-      "indexable": true
-    },
-    {
-      "id": "3024",
-      "baseline": 1523,
-      "current": 1523,
-      "indexable": true
-    },
-    {
-      "id": "3027",
-      "baseline": 1857,
-      "current": 2217,
-      "indexable": true
-    },
-    {
-      "id": "3030",
-      "baseline": 1579,
-      "current": 1579,
-      "indexable": true
-    },
-    {
-      "id": "3050",
+      "id": "0217",
       "baseline": 1680,
       "current": 1680,
       "indexable": true
     },
     {
-      "id": "3051",
-      "baseline": 1782,
-      "current": 2705,
+      "id": "0222",
+      "baseline": 1586,
+      "current": 1586,
       "indexable": true
     },
     {
-      "id": "3052",
-      "baseline": 1775,
-      "current": 2810,
+      "id": "0227",
+      "baseline": 1853,
+      "current": 2511,
       "indexable": true
     },
     {
-      "id": "3113",
-      "baseline": 1709,
-      "current": 1709,
+      "id": "0250",
+      "baseline": 1841,
+      "current": 3812,
       "indexable": true
     },
     {
-      "id": "3117",
-      "baseline": 1633,
-      "current": 1633,
+      "id": "0251",
+      "baseline": 1819,
+      "current": 1819,
       "indexable": true
     },
     {
-      "id": "3131",
-      "baseline": 1599,
-      "current": 1599,
+      "id": "0252",
+      "baseline": 1804,
+      "current": 1804,
       "indexable": true
     },
     {
-      "id": "3150",
-      "baseline": 1771,
-      "current": 3015,
+      "id": "0253",
+      "baseline": 1647,
+      "current": 1647,
       "indexable": true
     },
     {
-      "id": "3151",
-      "baseline": 1786,
-      "current": 2198,
+      "id": "0254",
+      "baseline": 1671,
+      "current": 1671,
       "indexable": true
     },
     {
-      "id": "3209",
-      "baseline": 1816,
-      "current": 3066,
+      "id": "0302",
+      "baseline": 1466,
+      "current": 1466,
       "indexable": true
     },
     {
-      "id": "3213",
-      "baseline": 1771,
-      "current": 1771,
+      "id": "0303",
+      "baseline": 1720,
+      "current": 1720,
       "indexable": true
     },
     {
-      "id": "3219",
-      "baseline": 1645,
-      "current": 1645,
+      "id": "0304",
+      "baseline": 1793,
+      "current": 1793,
       "indexable": true
     },
     {
-      "id": "3232",
-      "baseline": 1639,
-      "current": 1639,
+      "id": "0305",
+      "baseline": 1533,
+      "current": 1533,
       "indexable": true
     },
     {
-      "id": "3250",
-      "baseline": 1725,
-      "current": 2922,
+      "id": "0308",
+      "baseline": 1810,
+      "current": 1810,
       "indexable": true
     },
     {
-      "id": "3251",
-      "baseline": 1794,
-      "current": 1934,
+      "id": "0309",
+      "baseline": 1537,
+      "current": 1537,
       "indexable": true
     },
     {
-      "id": "3290",
-      "baseline": 1635,
-      "current": 2889,
+      "id": "0317",
+      "baseline": 1536,
+      "current": 1536,
       "indexable": true
     },
     {
-      "id": "3314",
+      "id": "0350",
+      "baseline": 1839,
+      "current": 2323,
+      "indexable": true
+    },
+    {
+      "id": "0351",
+      "baseline": 1839,
+      "current": 1839,
+      "indexable": true
+    },
+    {
+      "id": "0352",
+      "baseline": 1631,
+      "current": 1631,
+      "indexable": true
+    },
+    {
+      "id": "0353",
+      "baseline": 1830,
+      "current": 1830,
+      "indexable": true
+    },
+    {
+      "id": "0402",
+      "baseline": 1677,
+      "current": 1677,
+      "indexable": true
+    },
+    {
+      "id": "0404",
+      "baseline": 1642,
+      "current": 1642,
+      "indexable": true
+    },
+    {
+      "id": "0405",
+      "baseline": 1542,
+      "current": 1542,
+      "indexable": true
+    },
+    {
+      "id": "0406",
+      "baseline": 1830,
+      "current": 1830,
+      "indexable": true
+    },
+    {
+      "id": "0409",
+      "baseline": 1954,
+      "current": 1954,
+      "indexable": true
+    },
+    {
+      "id": "0417",
       "baseline": 1822,
       "current": 1822,
       "indexable": true
     },
     {
-      "id": "3317",
+      "id": "0422",
+      "baseline": 1751,
+      "current": 1751,
+      "indexable": true
+    },
+    {
+      "id": "0430",
+      "baseline": 2039,
+      "current": 3815,
+      "indexable": true
+    },
+    {
+      "id": "0450",
+      "baseline": 1858,
+      "current": 3426,
+      "indexable": true
+    },
+    {
+      "id": "0451",
+      "baseline": 1936,
+      "current": 1936,
+      "indexable": true
+    },
+    {
+      "id": "0452",
+      "baseline": 1743,
+      "current": 1743,
+      "indexable": true
+    },
+    {
+      "id": "0502",
+      "baseline": 1701,
+      "current": 1701,
+      "indexable": true
+    },
+    {
+      "id": "0505",
+      "baseline": 1496,
+      "current": 1496,
+      "indexable": true
+    },
+    {
+      "id": "0508",
+      "baseline": 1566,
+      "current": 1566,
+      "indexable": true
+    },
+    {
+      "id": "0511",
+      "baseline": 1724,
+      "current": 1724,
+      "indexable": true
+    },
+    {
+      "id": "0517",
+      "baseline": 1454,
+      "current": 1454,
+      "indexable": true
+    },
+    {
+      "id": "0521",
+      "baseline": 1558,
+      "current": 1558,
+      "indexable": true
+    },
+    {
+      "id": "0524",
+      "baseline": 1550,
+      "current": 1550,
+      "indexable": true
+    },
+    {
+      "id": "0525",
+      "baseline": 1786,
+      "current": 1786,
+      "indexable": true
+    },
+    {
+      "id": "0550",
+      "baseline": 1858,
+      "current": 2415,
+      "indexable": true
+    },
+    {
+      "id": "0551",
+      "baseline": 1885,
+      "current": 1885,
+      "indexable": true
+    },
+    {
+      "id": "0552",
+      "baseline": 1850,
+      "current": 1850,
+      "indexable": true
+    },
+    {
+      "id": "0553",
+      "baseline": 1903,
+      "current": 1903,
+      "indexable": true
+    },
+    {
+      "id": "0554",
+      "baseline": 1803,
+      "current": 1933,
+      "indexable": true
+    },
+    {
+      "id": "0602",
+      "baseline": 1789,
+      "current": 2369,
+      "indexable": true
+    },
+    {
+      "id": "0604",
+      "baseline": 1829,
+      "current": 2428,
+      "indexable": true
+    },
+    {
+      "id": "0606",
+      "baseline": 1469,
+      "current": 2165,
+      "indexable": true
+    },
+    {
+      "id": "0608",
+      "baseline": 1531,
+      "current": 2153,
+      "indexable": true
+    },
+    {
+      "id": "0617",
+      "baseline": 1584,
+      "current": 2259,
+      "indexable": true
+    },
+    {
+      "id": "0621",
+      "baseline": 1481,
+      "current": 2118,
+      "indexable": true
+    },
+    {
+      "id": "0622",
+      "baseline": 1529,
+      "current": 2190,
+      "indexable": true
+    },
+    {
+      "id": "0623",
+      "baseline": 1635,
+      "current": 2295,
+      "indexable": true
+    },
+    {
+      "id": "0624",
+      "baseline": 1692,
+      "current": 2308,
+      "indexable": true
+    },
+    {
+      "id": "0650",
+      "baseline": 1733,
+      "current": 2516,
+      "indexable": true
+    },
+    {
+      "id": "0651",
+      "baseline": 1768,
+      "current": 1768,
+      "indexable": true
+    },
+    {
+      "id": "0701",
+      "baseline": 1732,
+      "current": 2292,
+      "indexable": true
+    },
+    {
+      "id": "0702",
+      "baseline": 1539,
+      "current": 1874,
+      "indexable": true
+    },
+    {
+      "id": "0707",
+      "baseline": 1625,
+      "current": 2110,
+      "indexable": true
+    },
+    {
+      "id": "0709",
+      "baseline": 1759,
+      "current": 2187,
+      "indexable": true
+    },
+    {
+      "id": "0750",
+      "baseline": 1848,
+      "current": 3234,
+      "indexable": true
+    },
+    {
+      "id": "0751",
+      "baseline": 1635,
+      "current": 1988,
+      "indexable": true
+    },
+    {
+      "id": "0752",
+      "baseline": 1790,
+      "current": 2585,
+      "indexable": true
+    },
+    {
+      "id": "0753",
+      "baseline": 1764,
+      "current": 2433,
+      "indexable": true
+    },
+    {
+      "id": "0754",
+      "baseline": 1784,
+      "current": 2356,
+      "indexable": true
+    },
+    {
+      "id": "0804",
+      "baseline": 1445,
+      "current": 1626,
+      "indexable": true
+    },
+    {
+      "id": "0805",
+      "baseline": 1489,
+      "current": 1634,
+      "indexable": true
+    },
+    {
+      "id": "0808",
+      "baseline": 1580,
+      "current": 1790,
+      "indexable": true
+    },
+    {
+      "id": "0815",
+      "baseline": 1579,
+      "current": 1724,
+      "indexable": true
+    },
+    {
+      "id": "0817",
+      "baseline": 1562,
+      "current": 1740,
+      "indexable": true
+    },
+    {
+      "id": "0820",
+      "baseline": 1715,
+      "current": 1892,
+      "indexable": true
+    },
+    {
+      "id": "0850",
+      "baseline": 1771,
+      "current": 2097,
+      "indexable": true
+    },
+    {
+      "id": "0851",
+      "baseline": 1740,
+      "current": 1902,
+      "indexable": true
+    },
+    {
+      "id": "0852",
+      "baseline": 1782,
+      "current": 1988,
+      "indexable": true
+    },
+    {
+      "id": "0906",
+      "baseline": 1438,
+      "current": 1438,
+      "indexable": true
+    },
+    {
+      "id": "0909",
+      "baseline": 1515,
+      "current": 1515,
+      "indexable": true
+    },
+    {
+      "id": "0910",
+      "baseline": 1622,
+      "current": 1622,
+      "indexable": true
+    },
+    {
+      "id": "0911",
+      "baseline": 1545,
+      "current": 1545,
+      "indexable": true
+    },
+    {
+      "id": "0919",
+      "baseline": 1567,
+      "current": 1567,
+      "indexable": true
+    },
+    {
+      "id": "0921",
+      "baseline": 1506,
+      "current": 1506,
+      "indexable": true
+    },
+    {
+      "id": "0923",
+      "baseline": 1799,
+      "current": 1799,
+      "indexable": true
+    },
+    {
+      "id": "0924",
+      "baseline": 1548,
+      "current": 1548,
+      "indexable": true
+    },
+    {
+      "id": "0928",
+      "baseline": 1786,
+      "current": 1873,
+      "indexable": true
+    },
+    {
+      "id": "0930",
+      "baseline": 1778,
+      "current": 1778,
+      "indexable": true
+    },
+    {
+      "id": "0950",
+      "baseline": 1817,
+      "current": 3512,
+      "indexable": true
+    },
+    {
+      "id": "0951",
+      "baseline": 1659,
+      "current": 1659,
+      "indexable": true
+    },
+    {
+      "id": "0990",
+      "baseline": 1594,
+      "current": 3046,
+      "indexable": true
+    },
+    {
+      "id": "1001",
+      "baseline": 1676,
+      "current": 1676,
+      "indexable": true
+    },
+    {
+      "id": "1006",
+      "baseline": 1379,
+      "current": 1379,
+      "indexable": true
+    },
+    {
+      "id": "1010",
+      "baseline": 1489,
+      "current": 1489,
+      "indexable": true
+    },
+    {
+      "id": "1011",
       "baseline": 1652,
-      "current": 3061,
+      "current": 1652,
+      "indexable": true
+    },
+    {
+      "id": "1015",
+      "baseline": 1512,
+      "current": 1512,
+      "indexable": true
+    },
+    {
+      "id": "1019",
+      "baseline": 1518,
+      "current": 1518,
+      "indexable": true
+    },
+    {
+      "id": "1021",
+      "baseline": 1450,
+      "current": 1450,
+      "indexable": true
+    },
+    {
+      "id": "1022",
+      "baseline": 1537,
+      "current": 1537,
+      "indexable": true
+    },
+    {
+      "id": "1023",
+      "baseline": 1723,
+      "current": 1723,
+      "indexable": true
+    },
+    {
+      "id": "1050",
+      "baseline": 1812,
+      "current": 1812,
+      "indexable": true
+    },
+    {
+      "id": "1051",
+      "baseline": 1602,
+      "current": 1602,
+      "indexable": true
+    },
+    {
+      "id": "1080",
+      "baseline": 1291,
+      "current": 2069,
+      "indexable": true
+    },
+    {
+      "id": "1101",
+      "baseline": 1788,
+      "current": 1788,
+      "indexable": true
+    },
+    {
+      "id": "1104",
+      "baseline": 1887,
+      "current": 2030,
+      "indexable": true
+    },
+    {
+      "id": "1106",
+      "baseline": 1632,
+      "current": 1632,
+      "indexable": true
+    },
+    {
+      "id": "1110",
+      "baseline": 1546,
+      "current": 1546,
+      "indexable": true
+    },
+    {
+      "id": "1111",
+      "baseline": 1437,
+      "current": 1437,
+      "indexable": true
+    },
+    {
+      "id": "1115",
+      "baseline": 1670,
+      "current": 1670,
+      "indexable": true
+    },
+    {
+      "id": "1119",
+      "baseline": 1532,
+      "current": 1532,
+      "indexable": true
+    },
+    {
+      "id": "1121",
+      "baseline": 1501,
+      "current": 1501,
+      "indexable": true
+    },
+    {
+      "id": "1124",
+      "baseline": 1514,
+      "current": 1514,
+      "indexable": true
+    },
+    {
+      "id": "1150",
+      "baseline": 1678,
+      "current": 3526,
+      "indexable": true
+    },
+    {
+      "id": "1151",
+      "baseline": 1746,
+      "current": 1746,
+      "indexable": true
+    },
+    {
+      "id": "1152",
+      "baseline": 1538,
+      "current": 1538,
+      "indexable": true
+    },
+    {
+      "id": "1201",
+      "baseline": 1687,
+      "current": 1687,
+      "indexable": true
+    },
+    {
+      "id": "1202",
+      "baseline": 1569,
+      "current": 1569,
+      "indexable": true
+    },
+    {
+      "id": "1208",
+      "baseline": 1603,
+      "current": 1603,
+      "indexable": true
+    },
+    {
+      "id": "1209",
+      "baseline": 1562,
+      "current": 1562,
+      "indexable": true
+    },
+    {
+      "id": "1212",
+      "baseline": 1560,
+      "current": 1560,
+      "indexable": true
+    },
+    {
+      "id": "1250",
+      "baseline": 1846,
+      "current": 1846,
+      "indexable": true
+    },
+    {
+      "id": "1251",
+      "baseline": 1806,
+      "current": 1806,
+      "indexable": true
+    },
+    {
+      "id": "1252",
+      "baseline": 1903,
+      "current": 2207,
+      "indexable": true
+    },
+    {
+      "id": "1301",
+      "baseline": 1540,
+      "current": 1540,
+      "indexable": true
+    },
+    {
+      "id": "1309",
+      "baseline": 1576,
+      "current": 1576,
+      "indexable": true
+    },
+    {
+      "id": "1310",
+      "baseline": 1813,
+      "current": 1813,
+      "indexable": true
+    },
+    {
+      "id": "1313",
+      "baseline": 1531,
+      "current": 1531,
+      "indexable": true
+    },
+    {
+      "id": "1326",
+      "baseline": 1678,
+      "current": 1678,
+      "indexable": true
+    },
+    {
+      "id": "1350",
+      "baseline": 1921,
+      "current": 1921,
+      "indexable": true
+    },
+    {
+      "id": "1351",
+      "baseline": 1821,
+      "current": 1821,
+      "indexable": true
+    },
+    {
+      "id": "1352",
+      "baseline": 2017,
+      "current": 2139,
+      "indexable": true
+    },
+    {
+      "id": "1353",
+      "baseline": 1705,
+      "current": 1705,
+      "indexable": true
+    },
+    {
+      "id": "1354",
+      "baseline": 1886,
+      "current": 1886,
+      "indexable": true
+    },
+    {
+      "id": "1380",
+      "baseline": 1706,
+      "current": 1829,
+      "indexable": true
+    },
+    {
+      "id": "1402",
+      "baseline": 1650,
+      "current": 1650,
+      "indexable": true
+    },
+    {
+      "id": "1404",
+      "baseline": 1776,
+      "current": 1776,
+      "indexable": true
+    },
+    {
+      "id": "1414",
+      "baseline": 1824,
+      "current": 1824,
+      "indexable": true
+    },
+    {
+      "id": "1420",
+      "baseline": 1752,
+      "current": 1752,
+      "indexable": true
+    },
+    {
+      "id": "1432",
+      "baseline": 1768,
+      "current": 1768,
+      "indexable": true
+    },
+    {
+      "id": "1450",
+      "baseline": 1884,
+      "current": 4733,
+      "indexable": true
+    },
+    {
+      "id": "1451",
+      "baseline": 1785,
+      "current": 1785,
+      "indexable": true
+    },
+    {
+      "id": "1452",
+      "baseline": 1870,
+      "current": 1870,
+      "indexable": true
+    },
+    {
+      "id": "1501",
+      "baseline": 1510,
+      "current": 1510,
+      "indexable": true
+    },
+    {
+      "id": "1505",
+      "baseline": 1458,
+      "current": 1458,
+      "indexable": true
+    },
+    {
+      "id": "1506",
+      "baseline": 1592,
+      "current": 1592,
+      "indexable": true
+    },
+    {
+      "id": "1509",
+      "baseline": 1598,
+      "current": 1598,
+      "indexable": true
+    },
+    {
+      "id": "1514",
+      "baseline": 1695,
+      "current": 1695,
+      "indexable": true
+    },
+    {
+      "id": "1515",
+      "baseline": 1651,
+      "current": 1651,
+      "indexable": true
+    },
+    {
+      "id": "1521",
+      "baseline": 1712,
+      "current": 1712,
+      "indexable": true
+    },
+    {
+      "id": "1523",
+      "baseline": 1623,
+      "current": 1623,
+      "indexable": true
+    },
+    {
+      "id": "1550",
+      "baseline": 1586,
+      "current": 1586,
+      "indexable": true
+    },
+    {
+      "id": "1551",
+      "baseline": 1902,
+      "current": 1902,
+      "indexable": true
+    },
+    {
+      "id": "1552",
+      "baseline": 1839,
+      "current": 1839,
+      "indexable": true
+    },
+    {
+      "id": "1553",
+      "baseline": 1752,
+      "current": 1752,
+      "indexable": true
+    },
+    {
+      "id": "1602",
+      "baseline": 1768,
+      "current": 1768,
+      "indexable": true
+    },
+    {
+      "id": "1604",
+      "baseline": 1471,
+      "current": 1471,
+      "indexable": true
+    },
+    {
+      "id": "1607",
+      "baseline": 1830,
+      "current": 1830,
+      "indexable": true
+    },
+    {
+      "id": "1609",
+      "baseline": 1662,
+      "current": 1662,
+      "indexable": true
+    },
+    {
+      "id": "1616",
+      "baseline": 1453,
+      "current": 1453,
+      "indexable": true
+    },
+    {
+      "id": "1619",
+      "baseline": 1420,
+      "current": 1420,
+      "indexable": true
+    },
+    {
+      "id": "1625",
+      "baseline": 1628,
+      "current": 1751,
+      "indexable": true
+    },
+    {
+      "id": "1650",
+      "baseline": 1682,
+      "current": 2386,
+      "indexable": true
+    },
+    {
+      "id": "1651",
+      "baseline": 1740,
+      "current": 3233,
+      "indexable": true
+    },
+    {
+      "id": "1652",
+      "baseline": 1506,
+      "current": 1506,
+      "indexable": true
+    },
+    {
+      "id": "1653",
+      "baseline": 1676,
+      "current": 1676,
+      "indexable": true
+    },
+    {
+      "id": "1654",
+      "baseline": 1606,
+      "current": 1606,
+      "indexable": true
+    },
+    {
+      "id": "1702",
+      "baseline": 1669,
+      "current": 1669,
+      "indexable": true
+    },
+    {
+      "id": "1711",
+      "baseline": 1792,
+      "current": 1792,
+      "indexable": true
+    },
+    {
+      "id": "1716",
+      "baseline": 1483,
+      "current": 1483,
+      "indexable": true
+    },
+    {
+      "id": "1717",
+      "baseline": 1531,
+      "current": 1531,
+      "indexable": true
+    },
+    {
+      "id": "1750",
+      "baseline": 1548,
+      "current": 2198,
+      "indexable": true
+    },
+    {
+      "id": "1751",
+      "baseline": 1522,
+      "current": 2795,
+      "indexable": true
+    },
+    {
+      "id": "1752",
+      "baseline": 1552,
+      "current": 2999,
+      "indexable": true
+    },
+    {
+      "id": "1753",
+      "baseline": 1760,
+      "current": 1760,
+      "indexable": true
+    },
+    {
+      "id": "1754",
+      "baseline": 1466,
+      "current": 1591,
+      "indexable": true
+    },
+    {
+      "id": "1803",
+      "baseline": 1494,
+      "current": 1494,
+      "indexable": true
+    },
+    {
+      "id": "1809",
+      "baseline": 1515,
+      "current": 1515,
+      "indexable": true
+    },
+    {
+      "id": "1817",
+      "baseline": 1518,
+      "current": 1518,
+      "indexable": true
+    },
+    {
+      "id": "1818",
+      "baseline": 1592,
+      "current": 1592,
+      "indexable": true
+    },
+    {
+      "id": "1819",
+      "baseline": 1643,
+      "current": 1643,
+      "indexable": true
+    },
+    {
+      "id": "1825",
+      "baseline": 1754,
+      "current": 1754,
+      "indexable": true
+    },
+    {
+      "id": "1850",
+      "baseline": 1794,
+      "current": 2210,
+      "indexable": true
+    },
+    {
+      "id": "1851",
+      "baseline": 1786,
+      "current": 2863,
+      "indexable": true
+    },
+    {
+      "id": "1852",
+      "baseline": 1756,
+      "current": 1756,
+      "indexable": true
+    },
+    {
+      "id": "1853",
+      "baseline": 1874,
+      "current": 1874,
+      "indexable": true
+    },
+    {
+      "id": "1854",
+      "baseline": 1853,
+      "current": 1853,
+      "indexable": true
+    },
+    {
+      "id": "1855",
+      "baseline": 1519,
+      "current": 1519,
+      "indexable": true
+    },
+    {
+      "id": "1905",
+      "baseline": 1346,
+      "current": 1346,
+      "indexable": true
+    },
+    {
+      "id": "1906",
+      "baseline": 1389,
+      "current": 1389,
+      "indexable": true
+    },
+    {
+      "id": "1910",
+      "baseline": 1622,
+      "current": 1622,
+      "indexable": true
+    },
+    {
+      "id": "1911",
+      "baseline": 1501,
+      "current": 1501,
+      "indexable": true
+    },
+    {
+      "id": "1915",
+      "baseline": 1774,
+      "current": 1774,
+      "indexable": true
+    },
+    {
+      "id": "1919",
+      "baseline": 1451,
+      "current": 1451,
+      "indexable": true
+    },
+    {
+      "id": "1921",
+      "baseline": 1597,
+      "current": 1597,
+      "indexable": true
+    },
+    {
+      "id": "1922",
+      "baseline": 1646,
+      "current": 1785,
+      "indexable": true
+    },
+    {
+      "id": "1923",
+      "baseline": 1655,
+      "current": 1655,
+      "indexable": true
+    },
+    {
+      "id": "1924",
+      "baseline": 1609,
+      "current": 1609,
+      "indexable": true
+    },
+    {
+      "id": "1950",
+      "baseline": 1572,
+      "current": 1572,
+      "indexable": true
+    },
+    {
+      "id": "1951",
+      "baseline": 1758,
+      "current": 1758,
+      "indexable": true
+    },
+    {
+      "id": "1952",
+      "baseline": 1794,
+      "current": 1794,
+      "indexable": true
+    },
+    {
+      "id": "1953",
+      "baseline": 1569,
+      "current": 1569,
+      "indexable": true
+    },
+    {
+      "id": "2001",
+      "baseline": 1745,
+      "current": 1745,
+      "indexable": true
+    },
+    {
+      "id": "2016",
+      "baseline": 1750,
+      "current": 1750,
+      "indexable": true
+    },
+    {
+      "id": "2017",
+      "baseline": 1700,
+      "current": 1700,
+      "indexable": true
+    },
+    {
+      "id": "2018",
+      "baseline": 1772,
+      "current": 1772,
+      "indexable": true
+    },
+    {
+      "id": "2020",
+      "baseline": 1518,
+      "current": 1518,
+      "indexable": true
+    },
+    {
+      "id": "2050",
+      "baseline": 1599,
+      "current": 3153,
+      "indexable": true
+    },
+    {
+      "id": "2051",
+      "baseline": 1659,
+      "current": 2922,
+      "indexable": true
+    },
+    {
+      "id": "2052",
+      "baseline": 1760,
+      "current": 3783,
+      "indexable": true
+    },
+    {
+      "id": "2053",
+      "baseline": 1667,
+      "current": 1667,
+      "indexable": true
+    },
+    {
+      "id": "2054",
+      "baseline": 1514,
+      "current": 1514,
+      "indexable": true
+    },
+    {
+      "id": "2101",
+      "baseline": 1531,
+      "current": 1531,
+      "indexable": true
+    },
+    {
+      "id": "2105",
+      "baseline": 1406,
+      "current": 1406,
+      "indexable": true
+    },
+    {
+      "id": "2106",
+      "baseline": 1490,
+      "current": 1490,
+      "indexable": true
+    },
+    {
+      "id": "2110",
+      "baseline": 1531,
+      "current": 1531,
+      "indexable": true
+    },
+    {
+      "id": "2111",
+      "baseline": 1698,
+      "current": 1698,
+      "indexable": true
+    },
+    {
+      "id": "2115",
+      "baseline": 1494,
+      "current": 1494,
+      "indexable": true
+    },
+    {
+      "id": "2119",
+      "baseline": 1615,
+      "current": 1615,
+      "indexable": true
+    },
+    {
+      "id": "2121",
+      "baseline": 1518,
+      "current": 1518,
+      "indexable": true
+    },
+    {
+      "id": "2123",
+      "baseline": 1669,
+      "current": 1669,
+      "indexable": true
+    },
+    {
+      "id": "2124",
+      "baseline": 1474,
+      "current": 1474,
+      "indexable": true
+    },
+    {
+      "id": "2150",
+      "baseline": 1761,
+      "current": 1761,
+      "indexable": true
+    },
+    {
+      "id": "2151",
+      "baseline": 1594,
+      "current": 1594,
+      "indexable": true
+    },
+    {
+      "id": "2206",
+      "baseline": 1591,
+      "current": 1591,
+      "indexable": true
+    },
+    {
+      "id": "2209",
+      "baseline": 1577,
+      "current": 1577,
+      "indexable": true
+    },
+    {
+      "id": "2210",
+      "baseline": 1819,
+      "current": 1819,
+      "indexable": true
+    },
+    {
+      "id": "2211",
+      "baseline": 1512,
+      "current": 1512,
+      "indexable": true
+    },
+    {
+      "id": "2215",
+      "baseline": 1711,
+      "current": 1711,
+      "indexable": true
+    },
+    {
+      "id": "2219",
+      "baseline": 1639,
+      "current": 1639,
+      "indexable": true
+    },
+    {
+      "id": "2221",
+      "baseline": 1528,
+      "current": 1528,
+      "indexable": true
+    },
+    {
+      "id": "2222",
+      "baseline": 1416,
+      "current": 1416,
+      "indexable": true
+    },
+    {
+      "id": "2224",
+      "baseline": 1622,
+      "current": 1796,
+      "indexable": true
+    },
+    {
+      "id": "2250",
+      "baseline": 1844,
+      "current": 3121,
+      "indexable": true
+    },
+    {
+      "id": "2251",
+      "baseline": 1561,
+      "current": 2357,
+      "indexable": true
+    },
+    {
+      "id": "2252",
+      "baseline": 1492,
+      "current": 1492,
+      "indexable": true
+    },
+    {
+      "id": "2253",
+      "baseline": 1793,
+      "current": 1793,
+      "indexable": true
+    },
+    {
+      "id": "2254",
+      "baseline": 1590,
+      "current": 1590,
+      "indexable": true
+    },
+    {
+      "id": "2255",
+      "baseline": 1590,
+      "current": 1590,
+      "indexable": true
+    },
+    {
+      "id": "2256",
+      "baseline": 1328,
+      "current": 1328,
+      "indexable": false
+    },
+    {
+      "id": "2305",
+      "baseline": 1293,
+      "current": 1293,
+      "indexable": true
+    },
+    {
+      "id": "2306",
+      "baseline": 1523,
+      "current": 1523,
+      "indexable": true
+    },
+    {
+      "id": "2309",
+      "baseline": 1491,
+      "current": 1947,
+      "indexable": true
+    },
+    {
+      "id": "2310",
+      "baseline": 1670,
+      "current": 1944,
+      "indexable": true
+    },
+    {
+      "id": "2311",
+      "baseline": 1534,
+      "current": 1534,
+      "indexable": true
+    },
+    {
+      "id": "2315",
+      "baseline": 1473,
+      "current": 1473,
+      "indexable": true
+    },
+    {
+      "id": "2321",
+      "baseline": 1724,
+      "current": 1977,
+      "indexable": true
+    },
+    {
+      "id": "2322",
+      "baseline": 1523,
+      "current": 1523,
+      "indexable": true
+    },
+    {
+      "id": "2323",
+      "baseline": 1579,
+      "current": 1930,
+      "indexable": true
+    },
+    {
+      "id": "2324",
+      "baseline": 1519,
+      "current": 1851,
+      "indexable": true
+    },
+    {
+      "id": "2350",
+      "baseline": 1708,
+      "current": 1992,
+      "indexable": true
+    },
+    {
+      "id": "2351",
+      "baseline": 1477,
+      "current": 1766,
+      "indexable": true
+    },
+    {
+      "id": "2405",
+      "baseline": 1507,
+      "current": 1507,
+      "indexable": true
+    },
+    {
+      "id": "2409",
+      "baseline": 1753,
+      "current": 1753,
+      "indexable": true
+    },
+    {
+      "id": "2410",
+      "baseline": 1617,
+      "current": 1617,
+      "indexable": true
+    },
+    {
+      "id": "2411",
+      "baseline": 1562,
+      "current": 1562,
+      "indexable": true
+    },
+    {
+      "id": "2415",
+      "baseline": 1748,
+      "current": 1748,
+      "indexable": true
+    },
+    {
+      "id": "2419",
+      "baseline": 1398,
+      "current": 1398,
+      "indexable": true
+    },
+    {
+      "id": "2421",
+      "baseline": 1502,
+      "current": 1502,
+      "indexable": true
+    },
+    {
+      "id": "2422",
+      "baseline": 1515,
+      "current": 1515,
+      "indexable": true
+    },
+    {
+      "id": "2423",
+      "baseline": 1762,
+      "current": 1762,
+      "indexable": true
+    },
+    {
+      "id": "2424",
+      "baseline": 1466,
+      "current": 1466,
+      "indexable": true
+    },
+    {
+      "id": "2450",
+      "baseline": 1942,
+      "current": 3597,
+      "indexable": true
+    },
+    {
+      "id": "2451",
+      "baseline": 1649,
+      "current": 1649,
+      "indexable": true
+    },
+    {
+      "id": "2452",
+      "baseline": 1601,
+      "current": 1601,
+      "indexable": true
+    },
+    {
+      "id": "2453",
+      "baseline": 1743,
+      "current": 1877,
+      "indexable": true
+    },
+    {
+      "id": "2502",
+      "baseline": 1764,
+      "current": 1894,
+      "indexable": true
+    },
+    {
+      "id": "2504",
+      "baseline": 1455,
+      "current": 1455,
+      "indexable": true
+    },
+    {
+      "id": "2510",
+      "baseline": 1472,
+      "current": 1472,
+      "indexable": true
+    },
+    {
+      "id": "2516",
+      "baseline": 1709,
+      "current": 1709,
+      "indexable": true
+    },
+    {
+      "id": "2521",
+      "baseline": 1473,
+      "current": 1473,
+      "indexable": true
+    },
+    {
+      "id": "2525",
+      "baseline": 1506,
+      "current": 1506,
+      "indexable": true
+    },
+    {
+      "id": "2528",
+      "baseline": 1759,
+      "current": 1759,
+      "indexable": true
+    },
+    {
+      "id": "2531",
+      "baseline": 1631,
+      "current": 2796,
+      "indexable": true
+    },
+    {
+      "id": "2550",
+      "baseline": 1513,
+      "current": 1513,
+      "indexable": true
+    },
+    {
+      "id": "2580",
+      "baseline": 1607,
+      "current": 2884,
+      "indexable": true
+    },
+    {
+      "id": "2608",
+      "baseline": 1667,
+      "current": 1667,
+      "indexable": true
+    },
+    {
+      "id": "2609",
+      "baseline": 1632,
+      "current": 1632,
+      "indexable": true
+    },
+    {
+      "id": "2613",
+      "baseline": 1765,
+      "current": 2479,
+      "indexable": true
+    },
+    {
+      "id": "2614",
+      "baseline": 1793,
+      "current": 1793,
+      "indexable": true
+    },
+    {
+      "id": "2620",
+      "baseline": 1596,
+      "current": 1596,
+      "indexable": true
+    },
+    {
+      "id": "2626",
+      "baseline": 1623,
+      "current": 1623,
+      "indexable": true
+    },
+    {
+      "id": "2628",
+      "baseline": 1726,
+      "current": 1726,
+      "indexable": true
+    },
+    {
+      "id": "2629",
+      "baseline": 1817,
+      "current": 1817,
+      "indexable": true
+    },
+    {
+      "id": "2650",
+      "baseline": 1964,
+      "current": 2863,
+      "indexable": true
+    },
+    {
+      "id": "2651",
+      "baseline": 1780,
+      "current": 3446,
+      "indexable": true
+    },
+    {
+      "id": "2652",
+      "baseline": 1799,
+      "current": 1799,
+      "indexable": true
+    },
+    {
+      "id": "2653",
+      "baseline": 1772,
+      "current": 1772,
+      "indexable": true
+    },
+    {
+      "id": "2654",
+      "baseline": 1648,
+      "current": 1648,
+      "indexable": true
+    },
+    {
+      "id": "2690",
+      "baseline": 1414,
+      "current": 2627,
+      "indexable": true
+    },
+    {
+      "id": "2701",
+      "baseline": 1994,
+      "current": 1994,
+      "indexable": true
+    },
+    {
+      "id": "2715",
+      "baseline": 1809,
+      "current": 1809,
+      "indexable": true
+    },
+    {
+      "id": "2721",
+      "baseline": 1774,
+      "current": 1774,
+      "indexable": true
+    },
+    {
+      "id": "2727",
+      "baseline": 1794,
+      "current": 1794,
+      "indexable": true
+    },
+    {
+      "id": "2750",
+      "baseline": 1819,
+      "current": 2653,
+      "indexable": true
+    },
+    {
+      "id": "2751",
+      "baseline": 1802,
+      "current": 2058,
+      "indexable": true
+    },
+    {
+      "id": "2809",
+      "baseline": 1726,
+      "current": 1726,
+      "indexable": true
+    },
+    {
+      "id": "2813",
+      "baseline": 1706,
+      "current": 1706,
+      "indexable": true
+    },
+    {
+      "id": "2823",
+      "baseline": 1823,
+      "current": 1823,
+      "indexable": true
+    },
+    {
+      "id": "2827",
+      "baseline": 1700,
+      "current": 1700,
+      "indexable": true
+    },
+    {
+      "id": "2828",
+      "baseline": 1741,
+      "current": 1741,
+      "indexable": true
+    },
+    {
+      "id": "2850",
+      "baseline": 1590,
+      "current": 1590,
+      "indexable": true
+    },
+    {
+      "id": "2851",
+      "baseline": 1600,
+      "current": 3339,
+      "indexable": true
+    },
+    {
+      "id": "2852",
+      "baseline": 1532,
+      "current": 2960,
+      "indexable": true
+    },
+    {
+      "id": "2906",
+      "baseline": 1578,
+      "current": 1578,
+      "indexable": true
+    },
+    {
+      "id": "2914",
+      "baseline": 1588,
+      "current": 1588,
+      "indexable": true
+    },
+    {
+      "id": "2920",
+      "baseline": 1678,
+      "current": 1678,
+      "indexable": true
+    },
+    {
+      "id": "2928",
+      "baseline": 1759,
+      "current": 1759,
+      "indexable": true
+    },
+    {
+      "id": "2929",
+      "baseline": 1555,
+      "current": 1555,
+      "indexable": true
+    },
+    {
+      "id": "2950",
+      "baseline": 1717,
+      "current": 1717,
+      "indexable": true
+    },
+    {
+      "id": "2951",
+      "baseline": 1624,
+      "current": 1624,
+      "indexable": true
+    },
+    {
+      "id": "2952",
+      "baseline": 1584,
+      "current": 2715,
+      "indexable": true
+    },
+    {
+      "id": "3016",
+      "baseline": 1693,
+      "current": 1693,
+      "indexable": true
+    },
+    {
+      "id": "3024",
+      "baseline": 1530,
+      "current": 1530,
+      "indexable": true
+    },
+    {
+      "id": "3027",
+      "baseline": 1864,
+      "current": 2224,
+      "indexable": true
+    },
+    {
+      "id": "3030",
+      "baseline": 1586,
+      "current": 1586,
+      "indexable": true
+    },
+    {
+      "id": "3050",
+      "baseline": 1687,
+      "current": 1687,
+      "indexable": true
+    },
+    {
+      "id": "3051",
+      "baseline": 1789,
+      "current": 2712,
+      "indexable": true
+    },
+    {
+      "id": "3052",
+      "baseline": 1782,
+      "current": 2817,
+      "indexable": true
+    },
+    {
+      "id": "3113",
+      "baseline": 1716,
+      "current": 1716,
+      "indexable": true
+    },
+    {
+      "id": "3117",
+      "baseline": 1640,
+      "current": 1640,
+      "indexable": true
+    },
+    {
+      "id": "3131",
+      "baseline": 1606,
+      "current": 1606,
+      "indexable": true
+    },
+    {
+      "id": "3150",
+      "baseline": 1778,
+      "current": 3022,
+      "indexable": true
+    },
+    {
+      "id": "3151",
+      "baseline": 1793,
+      "current": 2205,
+      "indexable": true
+    },
+    {
+      "id": "3209",
+      "baseline": 1823,
+      "current": 3073,
+      "indexable": true
+    },
+    {
+      "id": "3213",
+      "baseline": 1778,
+      "current": 1778,
+      "indexable": true
+    },
+    {
+      "id": "3219",
+      "baseline": 1652,
+      "current": 1652,
+      "indexable": true
+    },
+    {
+      "id": "3232",
+      "baseline": 1646,
+      "current": 1646,
+      "indexable": true
+    },
+    {
+      "id": "3250",
+      "baseline": 1732,
+      "current": 2929,
+      "indexable": true
+    },
+    {
+      "id": "3251",
+      "baseline": 1801,
+      "current": 1941,
+      "indexable": true
+    },
+    {
+      "id": "3290",
+      "baseline": 1642,
+      "current": 2896,
+      "indexable": true
+    },
+    {
+      "id": "3314",
+      "baseline": 1829,
+      "current": 1829,
+      "indexable": true
+    },
+    {
+      "id": "3317",
+      "baseline": 1659,
+      "current": 3068,
       "indexable": true
     },
     {
       "id": "3321",
-      "baseline": 1742,
-      "current": 2468,
+      "baseline": 1749,
+      "current": 2475,
       "indexable": true
     },
     {
       "id": "3333",
-      "baseline": 1637,
-      "current": 3375,
+      "baseline": 1644,
+      "current": 3382,
       "indexable": true
     },
     {
       "id": "3350",
-      "baseline": 1931,
-      "current": 3125,
+      "baseline": 1938,
+      "current": 3132,
       "indexable": true
     },
     {
       "id": "3351",
-      "baseline": 1715,
-      "current": 2062,
+      "baseline": 1722,
+      "current": 2069,
       "indexable": true
     },
     {
       "id": "3380",
-      "baseline": 1731,
-      "current": 3181,
+      "baseline": 1738,
+      "current": 3188,
       "indexable": true
     },
     {
       "id": "3406",
-      "baseline": 1628,
-      "current": 2859,
+      "baseline": 1630,
+      "current": 2861,
       "indexable": true
     },
     {
       "id": "3408",
-      "baseline": 1667,
-      "current": 2824,
+      "baseline": 1669,
+      "current": 2826,
       "indexable": true
     },
     {
       "id": "3434",
-      "baseline": 1565,
-      "current": 4075,
+      "baseline": 1567,
+      "current": 4077,
       "indexable": true
     },
     {
       "id": "3490",
-      "baseline": 1209,
-      "current": 3195,
+      "baseline": 1211,
+      "current": 3197,
       "indexable": true
     }
   ]
