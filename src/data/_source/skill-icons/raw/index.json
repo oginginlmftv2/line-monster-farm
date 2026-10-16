@@ -2284,5 +2284,29 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0692": {
+    "name": "10時10分・卵",
+    "blood": "ニャー",
+    "source": "20261016-152808-1350/s01",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0693": {
+    "name": "イースターボンバ",
+    "blood": "ニャー",
+    "source": "20261016-152808-1350/s02",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

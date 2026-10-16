@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 626
+    "abilities": 628
   },
   "abilities": [
     {
@@ -7697,6 +7697,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 626,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0627",
+      "name": "10時10分・卵",
+      "version": 1,
+      "baseName": "10時10分・卵",
+      "level": null,
+      "description": "対象技命中時、この技と次の技ですべての技ステータス上昇Lv4<1回>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 627,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0628",
+      "name": "爪撃：イースターボンバ",
+      "version": 1,
+      "baseName": "爪撃：イースターボンバ",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ<30%>の追撃<2回>\n・ダメージ<50%>の追撃<1回>\n・クリダメ上昇<+30%>",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 628,
       "status": "verified"
     }
   ]
