@@ -1,0 +1,97 @@
+{
+  "monster": {
+    "id": "2054",
+    "name": "スネグーラチカ",
+    "blood": "ウンディーネ",
+    "bloodSlug": "undine",
+    "aura": "緑"
+  },
+  "packedAt": "20261016-182223",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.iSY5JuuNFo/スネグーラチカ",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        2,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-181753.png",
+        "20261016-181757.png",
+        "20261016-181801.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        3,
+        2
+      ],
+      "range": "中",
+      "dim": true,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s02-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s02-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-181809.png",
+        "20261016-181813.png",
+        "20261016-181816.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        4,
+        1
+      ],
+      "range": "遠",
+      "dim": true,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s03-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-181820.png",
+        "20261016-181824.png",
+        "20261016-181827.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
