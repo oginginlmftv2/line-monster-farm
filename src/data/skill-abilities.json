@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 590
+    "abilities": 598
   },
   "abilities": [
     {
@@ -7262,6 +7262,105 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 590,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0591",
+      "name": "オーガアタック",
+      "version": 1,
+      "baseName": "オーガアタック",
+      "level": null,
+      "description": "対象技発動時、自身のちからと回避ステータス＜+10%＞＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 591,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0592",
+      "name": "奇跡の光",
+      "version": 1,
+      "baseName": "奇跡の光",
+      "level": null,
+      "description": "[無機]対象技がガッツ消費なしで発動する＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 592,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0593",
+      "name": "連撃：聖霊光弾",
+      "version": 1,
+      "baseName": "連撃：聖霊光弾",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜25%＞の追撃を＜4回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 593,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0594",
+      "name": "聖霊王の光",
+      "version": 1,
+      "baseName": "聖霊王の光",
+      "level": null,
+      "description": "対象技発動時、自身に[エンジェル・コマンド（＜白＞技以外の被ダメージを＜10%＞減少）]を付与する",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 594,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0595",
+      "name": "叡智の光",
+      "version": 1,
+      "baseName": "叡智の光",
+      "level": null,
+      "description": "対象技命中時、相手のガッツ回復速度を＜0＞にする＜10秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 595,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0596",
+      "name": "法を力に",
+      "version": 1,
+      "baseName": "法を力に",
+      "level": null,
+      "description": "対象技発動時かつ[エンジェル・コマンド]中、次の効果が発動＜1回＞\n・必中Lv3\n・自身に[連撃強化Lv5＜20秒＞]と[急所Lv1]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0005",
+        "bf-0013"
+      ],
+      "sortOrder": 596,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0597",
+      "name": "連撃：コンビネーション",
+      "version": 1,
+      "baseName": "連撃：コンビネーション",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 597,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0598",
+      "name": "連撃：ヴァリス・連射",
+      "version": 1,
+      "baseName": "連撃：ヴァリス・連射",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv8を与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 598,
       "status": "verified"
     }
   ]
