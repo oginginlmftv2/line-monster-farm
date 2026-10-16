@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 680
+    "abilities": 688
   },
   "abilities": [
     {
@@ -8349,6 +8349,102 @@
         "bf-0028"
       ],
       "sortOrder": 680,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0681",
+      "name": "連撃：“紫電一閃”",
+      "version": 1,
+      "baseName": "連撃：“紫電一閃”",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 681,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0682",
+      "name": "連撃：「全反撃」",
+      "version": 1,
+      "baseName": "連撃：「全反撃」",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv6を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 682,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0683",
+      "name": "「全反撃」",
+      "version": 1,
+      "baseName": "「全反撃」",
+      "level": null,
+      "description": "対象技命中時、被ダメージの50%を攻撃ステータスに加算",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 683,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0684",
+      "name": "龍神の力",
+      "version": 1,
+      "baseName": "龍神の力",
+      "level": null,
+      "description": "対象技発動時、残りライフが少ないほど命中上昇[最大50%]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 684,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0685",
+      "name": "流転：黄Lv2",
+      "version": 1,
+      "baseName": "流転：黄",
+      "level": 2,
+      "description": "対象技命中時、黄オーラ技のすべてのステータス上昇Lv2＜30秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 685,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0686",
+      "name": "雷纏",
+      "version": 1,
+      "baseName": "雷纏",
+      "level": null,
+      "description": "対象技発動時、次の効果が発動\n・自身に[帯電（命中率＜+5%＞、＜青＞技命中時、ダメージ＜10%＞の追撃を＜1回＞与える）]を付与＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 686,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0687",
+      "name": "超雷纏",
+      "version": 1,
+      "baseName": "超雷纏",
+      "level": null,
+      "description": "対象技発動時、次の効果が発動\n・自身に[超電導（クリ率＜+15%＞、＜青＞技命中時、ダメージ＜10%＞の追撃を＜1回＞与える）]を付与＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 687,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0688",
+      "name": "連撃：東龍招雷",
+      "version": 1,
+      "baseName": "連撃：東龍招雷",
+      "level": null,
+      "description": "対象技命中時、次の効果が発動\n・ダメージ＜20%＞の追撃を＜2回＞与える\n・[有利]ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 688,
       "status": "verified"
     }
   ]
