@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 749,
+    "skills": 759,
     "bloods": 34
   },
   "skills": [
@@ -28599,6 +28599,357 @@
       "status": "verified"
     },
     {
+      "skillId": "sk-0742",
+      "name": "プレゼントキッス",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "かしこさ",
+      "guts": 22,
+      "damage": "E",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0451",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0452",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2054"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 707,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0743",
+      "name": "ジングルベル",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "中",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 28,
+      "damage": "B",
+      "accuracy": "D",
+      "gutsDown": "E",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0016",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0012",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2054"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 708,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0744",
+      "name": "メリークリスマス",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 40,
+      "damage": "A",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0371",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0068",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2054"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 709,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0745",
+      "name": "ヴェールターン",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "零",
+      "rank": 2,
+      "moveTo": "遠",
+      "aura": "白",
+      "skillType": "かしこさ",
+      "guts": 19,
+      "damage": "E",
+      "accuracy": "C",
+      "gutsDown": "C",
+      "critical": "F",
+      "abilities": [
+        {
+          "abilityId": "sab-0661",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0025",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2052"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 710,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0746",
+      "name": "ブーケトス",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "緑",
+      "skillType": "かしこさ",
+      "guts": 23,
+      "damage": "C+",
+      "accuracy": "D",
+      "gutsDown": "D",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0662",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0455",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2052"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 711,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0747",
+      "name": "エンゲージリング",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "遠",
+      "rank": 5,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "かしこさ",
+      "guts": 45,
+      "damage": "B",
+      "accuracy": "A",
+      "gutsDown": "A",
+      "critical": "C",
+      "abilities": [
+        {
+          "abilityId": "sab-0663",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0664",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2052"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 712,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0748",
+      "name": "デスキッス",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "近",
+      "rank": 2,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 26,
+      "damage": "D",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0451",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0452",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2050",
+        "2017"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 713,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0749",
+      "name": "シャークアロー",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 47,
+      "damage": "A",
+      "accuracy": "D+",
+      "gutsDown": "G",
+      "critical": "S",
+      "abilities": [
+        {
+          "abilityId": "sab-0665",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0666",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2050"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 714,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0750",
+      "name": "オケアノスアロー",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "遠",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "青",
+      "skillType": "かしこさ",
+      "guts": 45,
+      "damage": "S",
+      "accuracy": "C",
+      "gutsDown": "G",
+      "critical": "B",
+      "abilities": [
+        {
+          "abilityId": "sab-0068",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0371",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2053"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 715,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0751",
+      "name": "ダークブラスト",
+      "version": 1,
+      "blood": "ウンディーネ",
+      "range": "中",
+      "rank": 4,
+      "moveTo": null,
+      "aura": "黒",
+      "skillType": "かしこさ",
+      "guts": 32,
+      "damage": "A+",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0021",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0284",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": true,
+      "owners": [
+        "2017"
+      ],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 716,
+      "status": "verified"
+    },
+    {
       "skillId": "sk-0557",
       "name": "毒ガス",
       "version": 1,
@@ -28637,7 +28988,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 707,
+      "sortOrder": 717,
       "status": "verified"
     },
     {
@@ -28666,7 +29017,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 708,
+      "sortOrder": 718,
       "status": "verified"
     },
     {
@@ -28699,7 +29050,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 709,
+      "sortOrder": 719,
       "status": "verified"
     },
     {
@@ -28732,7 +29083,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 710,
+      "sortOrder": 720,
       "status": "verified"
     },
     {
@@ -28766,7 +29117,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 711,
+      "sortOrder": 721,
       "status": "verified"
     },
     {
@@ -28812,7 +29163,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 712,
+      "sortOrder": 722,
       "status": "verified"
     },
     {
@@ -28846,7 +29197,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 713,
+      "sortOrder": 723,
       "status": "verified"
     },
     {
@@ -28902,7 +29253,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 714,
+      "sortOrder": 724,
       "status": "verified"
     },
     {
@@ -28940,7 +29291,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 715,
+      "sortOrder": 725,
       "status": "verified"
     },
     {
@@ -28974,7 +29325,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 716,
+      "sortOrder": 726,
       "status": "verified"
     },
     {
@@ -29012,7 +29363,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 717,
+      "sortOrder": 727,
       "status": "verified"
     },
     {
@@ -29050,7 +29401,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 718,
+      "sortOrder": 728,
       "status": "verified"
     },
     {
@@ -29102,7 +29453,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 719,
+      "sortOrder": 729,
       "status": "verified"
     },
     {
@@ -29140,7 +29491,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 720,
+      "sortOrder": 730,
       "status": "verified"
     },
     {
@@ -29178,7 +29529,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 721,
+      "sortOrder": 731,
       "status": "verified"
     },
     {
@@ -29230,7 +29581,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 722,
+      "sortOrder": 732,
       "status": "verified"
     },
     {
@@ -29268,7 +29619,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 723,
+      "sortOrder": 733,
       "status": "verified"
     },
     {
@@ -29297,7 +29648,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 724,
+      "sortOrder": 734,
       "status": "verified"
     },
     {
@@ -29331,7 +29682,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 725,
+      "sortOrder": 735,
       "status": "verified"
     },
     {
@@ -29360,7 +29711,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 726,
+      "sortOrder": 736,
       "status": "verified"
     },
     {
@@ -29398,7 +29749,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 727,
+      "sortOrder": 737,
       "status": "verified"
     },
     {
@@ -29446,7 +29797,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 728,
+      "sortOrder": 738,
       "status": "verified"
     },
     {
@@ -29484,7 +29835,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 729,
+      "sortOrder": 739,
       "status": "verified"
     },
     {
@@ -29526,7 +29877,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 730,
+      "sortOrder": 740,
       "status": "verified"
     },
     {
@@ -29564,7 +29915,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 731,
+      "sortOrder": 741,
       "status": "verified"
     },
     {
@@ -29614,7 +29965,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 732,
+      "sortOrder": 742,
       "status": "verified"
     },
     {
@@ -29666,7 +30017,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 733,
+      "sortOrder": 743,
       "status": "verified"
     },
     {
@@ -29718,7 +30069,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 734,
+      "sortOrder": 744,
       "status": "verified"
     },
     {
@@ -29770,7 +30121,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 735,
+      "sortOrder": 745,
       "status": "verified"
     },
     {
@@ -29808,7 +30159,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 736,
+      "sortOrder": 746,
       "status": "verified"
     },
     {
@@ -29846,7 +30197,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 737,
+      "sortOrder": 747,
       "status": "verified"
     },
     {
@@ -29884,7 +30235,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 738,
+      "sortOrder": 748,
       "status": "verified"
     },
     {
@@ -29936,7 +30287,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 739,
+      "sortOrder": 749,
       "status": "verified"
     },
     {
@@ -29988,7 +30339,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 740,
+      "sortOrder": 750,
       "status": "verified"
     },
     {
@@ -30022,7 +30373,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 741,
+      "sortOrder": 751,
       "status": "verified"
     },
     {
@@ -30056,7 +30407,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 742,
+      "sortOrder": 752,
       "status": "verified"
     },
     {
@@ -30090,7 +30441,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 743,
+      "sortOrder": 753,
       "status": "verified"
     },
     {
@@ -30128,7 +30479,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 744,
+      "sortOrder": 754,
       "status": "verified"
     },
     {
@@ -30166,7 +30517,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 745,
+      "sortOrder": 755,
       "status": "verified"
     },
     {
@@ -30204,7 +30555,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 746,
+      "sortOrder": 756,
       "status": "verified"
     },
     {
@@ -30256,7 +30607,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 747,
+      "sortOrder": 757,
       "status": "verified"
     },
     {
@@ -30308,7 +30659,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 748,
+      "sortOrder": 758,
       "status": "verified"
     },
     {
@@ -30360,7 +30711,7 @@
         }
       ],
       "note": "",
-      "sortOrder": 749,
+      "sortOrder": 759,
       "status": "verified"
     }
   ]
