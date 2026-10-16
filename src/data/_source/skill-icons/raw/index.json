@@ -2020,5 +2020,149 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0670": {
+    "name": "炎斬",
+    "blood": "ライガー",
+    "source": "20261016-145731-0990/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0671": {
+    "name": "羅生門召喚",
+    "blood": "ライガー",
+    "source": "20261016-145707-0930/s02",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0672": {
+    "name": "雷撃20ギガ",
+    "blood": "ライガー",
+    "source": "20261016-145714-0951/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0673": {
+    "name": "つながるワンツー",
+    "blood": "ライガー",
+    "source": "20261016-145714-0951/s02",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0674": {
+    "name": "メリハリ冷気弾",
+    "blood": "ライガー",
+    "source": "20261016-145714-0951/s03",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0675": {
+    "name": "無制限バースト",
+    "blood": "ライガー",
+    "source": "20261016-145714-0951/s04",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0676": {
+    "name": "王狼爪",
+    "blood": "ライガー",
+    "source": "20261016-145731-0990/s02",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0677": {
+    "name": "王狼炎翔",
+    "blood": "ライガー",
+    "source": "20261016-145731-0990/s03",
+    "cell": [
+      6,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0678": {
+    "name": "神喰牙",
+    "blood": "ライガー",
+    "source": "20261016-145748-0928/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0679": {
+    "name": "復活の竜炎",
+    "blood": "ライガー",
+    "source": "20261016-145755-0950/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0680": {
+    "name": "希望と勝利の伝説",
+    "blood": "ライガー",
+    "source": "20261016-145755-0950/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0681": {
+    "name": "B・W・F",
+    "blood": "ライガー",
+    "source": "20261016-145755-0950/s03",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

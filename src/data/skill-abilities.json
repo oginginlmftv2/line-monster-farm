@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 611
+    "abilities": 621
   },
   "abilities": [
     {
@@ -7517,6 +7517,126 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 611,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0612",
+      "name": "シールド[小]：羅生門召喚",
+      "version": 1,
+      "baseName": "シールド[小]：羅生門召喚",
+      "level": null,
+      "description": "対象技命中時、ライフ10%分の【シールド】を展開する＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 612,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0613",
+      "name": "狩撃：つながるワンツー",
+      "version": 1,
+      "baseName": "狩撃：つながるワンツー",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動\n・ダメージ＜10%＞の追撃を＜2回＞与える\n・[狩の印]がある時、追撃の回数を[狩の印]のLv分増加\n・[狩の印]のレベルを1減少させる",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 613,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0614",
+      "name": "炎纏",
+      "version": 1,
+      "baseName": "炎纏",
+      "level": null,
+      "description": "対象技命中時、次の効果を付与＜20秒＞＜1回＞\n・全技ダメージのステータス＜+2＞\n・ガッツ回復速度＜+20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 614,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0615",
+      "name": "狩撃：王狼炎翔",
+      "version": 1,
+      "baseName": "狩撃：王狼炎翔",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動\n・ダメージ＜20%＞の追撃を＜6回＞与える\n・[狩の印]がある時、追撃の回数を[狩の印]のLv分増加\n・[狩の印]のレベルを1減少させる",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 615,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0616",
+      "name": "王狼の剣",
+      "version": 1,
+      "baseName": "王狼の剣",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・クリティカル確定\n・クリダメ上昇＜+30%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 616,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0617",
+      "name": "ボルメテウス・サイクル",
+      "version": 1,
+      "baseName": "ボルメテウス・サイクル",
+      "level": null,
+      "description": "対象技命中時、ガッツが相手よりも少ない時、ガッツ回復速度＜100%＞上昇＜20秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 617,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0618",
+      "name": "希望の炎",
+      "version": 1,
+      "baseName": "希望の炎",
+      "level": null,
+      "description": "対象技命中時、この技と次の技の消費ガッツを減少＜30%＞＜重複不可＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 618,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0619",
+      "name": "勝利の炎",
+      "version": 1,
+      "baseName": "勝利の炎",
+      "level": null,
+      "description": "対象技命中時、次に発動する技に、＜20%＞の追撃効果を付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 619,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0620",
+      "name": "ホワイト・フレア",
+      "version": 1,
+      "baseName": "ホワイト・フレア",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・相手のガッツ回復速度を＜0＞にする＜10秒＞\n・有利オーラに変換",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 620,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0621",
+      "name": "伝説の竜",
+      "version": 1,
+      "baseName": "伝説の竜",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動＜1回＞\n・すべての技のガッツ消費量を＜20%＞減少\n・すべての技にダメージ＜10%＞の追撃効果を付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 621,
       "status": "verified"
     }
   ]
