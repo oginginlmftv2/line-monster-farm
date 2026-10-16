@@ -3112,5 +3112,65 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0764": {
+    "name": "車輪",
+    "blood": "ワーム",
+    "source": "20261016-185842-2351/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0765": {
+    "name": "エクスプレスボム",
+    "blood": "ワーム",
+    "source": "20261016-185842-2351/s02",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0761": {
+    "name": "魔斬覇",
+    "blood": "ナーガ",
+    "source": "20261016-185848-2453/s01",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0762": {
+    "name": "裾払い",
+    "blood": "ナーガ",
+    "source": "20261016-185854-2451/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0763": {
+    "name": "三極蒼爆",
+    "blood": "ナーガ",
+    "source": "20261016-185854-2451/s02",
+    "cell": [
+      5,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
