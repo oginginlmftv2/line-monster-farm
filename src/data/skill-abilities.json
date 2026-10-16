@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 639
+    "abilities": 644
   },
   "abilities": [
     {
@@ -7855,6 +7855,66 @@
         "bf-0021"
       ],
       "sortOrder": 639,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0640",
+      "name": "[幻霊]シールド破壊",
+      "version": 1,
+      "baseName": "[幻霊]シールド破壊",
+      "level": null,
+      "description": "[相手創造以外]かつ対象技命中時、シールドを破壊＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 640,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0641",
+      "name": "サファイアの煌き",
+      "version": 1,
+      "baseName": "サファイアの煌き",
+      "level": null,
+      "description": "対象技命中時、強襲、精密、幻影のどれかLv2を一つ付与＜3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 641,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0642",
+      "name": "連撃：高速回転斬り",
+      "version": 1,
+      "baseName": "連撃：高速回転斬り",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 642,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0643",
+      "name": "連撃：高速乱れ斬り",
+      "version": 1,
+      "baseName": "連撃：高速乱れ斬り",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv2を3回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 643,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0644",
+      "name": "[相手黄]与ダメ上昇",
+      "version": 1,
+      "baseName": "[相手黄]与ダメ上昇",
+      "level": null,
+      "description": "相手<オーラ黄>かつ技が命中したとき与ダメ上昇Lv3",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 644,
       "status": "verified"
     }
   ]
