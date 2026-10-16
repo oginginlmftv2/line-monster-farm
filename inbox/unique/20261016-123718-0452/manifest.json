@@ -1,0 +1,108 @@
+{
+  "monster": {
+    "id": "0452",
+    "name": "ランスロット",
+    "blood": "ヘンガー",
+    "bloodSlug": "henger",
+    "aura": "白"
+  },
+  "packedAt": "20261016-123718",
+  "sourceDir": "/var/folders/ms/k_twdg0s1tbc_y6vhjsmwhtr0000gn/T/tmp.c5QKEcYCKt/ランスロット",
+  "skills": [
+    {
+      "no": 1,
+      "cell": [
+        4,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s01-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s01-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s01-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-123408.png",
+        "20261016-123410.png",
+        "20261016-123413.png"
+      ]
+    },
+    {
+      "no": 2,
+      "cell": [
+        1,
+        2
+      ],
+      "range": "中",
+      "dim": false,
+      "panels": [
+        "s02-panel-1.png"
+      ],
+      "dialogs": [],
+      "sources": [
+        "20261016-123421.png"
+      ]
+    },
+    {
+      "no": 3,
+      "cell": [
+        2,
+        1
+      ],
+      "range": "遠",
+      "dim": false,
+      "panels": [
+        "s03-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s03-dlg-1.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-123425.png",
+        "20261016-123428.png"
+      ]
+    },
+    {
+      "no": 4,
+      "cell": [
+        3,
+        3
+      ],
+      "range": "近",
+      "dim": true,
+      "panels": [
+        "s04-panel-1.png"
+      ],
+      "dialogs": [
+        {
+          "file": "s04-dlg-1.png",
+          "kind": "ability"
+        },
+        {
+          "file": "s04-dlg-2.png",
+          "kind": "ability"
+        }
+      ],
+      "sources": [
+        "20261016-123432.png",
+        "20261016-123435.png",
+        "20261016-123438.png"
+      ]
+    }
+  ],
+  "dropped": [],
+  "notes": [],
+  "rangeRule": "間合いは選択中のマスの列（左から遠・中・近・零）で決めた。モデルに読ませない"
+}
