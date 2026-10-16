@@ -498,6 +498,13 @@ main {
   .menu-link .icon {
     font-size: 20px;
   }
+  /* 上の .menu-link の padding が後勝ちで矢印の逃げを消すため、矢印つきは右を空け直す */
+  .menu-link--go {
+    padding-right: 40px;
+  }
+  .menu-link--go::after {
+    right: 10px;
+  }
 }
 
 /* フッター */

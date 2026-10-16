@@ -248,6 +248,7 @@
 }
 
 .monster-detail-page .skill-line-name:hover { text-decoration: underline; }
+.monster-detail-page .skill-line--link .skill-line-name:hover { text-decoration: none; }
 
 /* リンクつきの技行は枠全体を押せる。技名リンクの ::after を枠いっぱいに広げ、右端に「›」を置く */
 .monster-detail-page .skill-line--link {
@@ -264,7 +265,6 @@
   position: absolute;
   inset: 0;
 }
-.monster-detail-page .skill-line--link:hover .skill-line-name { text-decoration: underline; }
 .monster-detail-page .skill-line--link::after {
   content: "›";
   position: absolute;
