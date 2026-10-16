@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 654
+    "abilities": 659
   },
   "abilities": [
     {
@@ -8035,6 +8035,66 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 654,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0655",
+      "name": "粘撃：M・キューブ",
+      "version": 1,
+      "baseName": "粘撃：M・キューブ",
+      "level": null,
+      "description": "対象技命中時、次の効果発動\n・ダメージ＜50%＞の追撃を＜1回＞与える\n・[多型体Ⅲ（丈夫さと回避ステータス+10%）]を自身に付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 655,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0656",
+      "name": "粘撃：カガミ開き",
+      "version": 1,
+      "baseName": "粘撃：カガミ開き",
+      "level": null,
+      "description": "対象技命中時、次の効果を発動\n・ダメージ＜20%＞の追撃を＜4回＞与える\n・[多型体Ⅳ（相手の連撃被ダメ＜−20%＞）]を自身に付与",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 656,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0657",
+      "name": "連撃：“微塵切り”",
+      "version": 1,
+      "baseName": "連撃：“微塵切り”",
+      "level": null,
+      "description": "対象技命中時、追加でダメージLv3を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 657,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0658",
+      "name": "極限Lv2",
+      "version": 1,
+      "baseName": "極限",
+      "level": 2,
+      "description": "[前半]対象技命中時、残り時間が少ないほど与ダメージとクリティカル率が上昇[最大20%]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 658,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0659",
+      "name": "燃尽Lv3",
+      "version": 1,
+      "baseName": "燃尽",
+      "level": 3,
+      "description": "[前半]対象技発動時、残り時間が少ないほど命中上昇[最大30%]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 659,
       "status": "verified"
     }
   ]
