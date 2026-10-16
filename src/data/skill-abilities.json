@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 703
+    "abilities": 706
   },
   "abilities": [
     {
@@ -8633,6 +8633,45 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 703,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0704",
+      "name": "多重属性[黒]",
+      "version": 1,
+      "baseName": "多重属性[黒]",
+      "level": null,
+      "description": "[相手白]対象技発動時、対象技を＜黒＞オーラに変換",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 704,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0705",
+      "name": "斬撃：暗",
+      "version": 1,
+      "baseName": "斬撃：暗",
+      "level": null,
+      "description": "対象技でダメージを与えた時、次の効果を発動＜1回＞\n・相手に[出血Lv1＜20秒＞]を付与\n・[相手出血]相手に[暗闇Lv3＜20秒＞]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0024",
+        "bf-0032"
+      ],
+      "sortOrder": 705,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0706",
+      "name": "祝：完全回避Lv4",
+      "version": 1,
+      "baseName": "祝：完全回避",
+      "level": 4,
+      "description": "対象技命中時、自身に完全回避Lv4を付与＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 706,
       "status": "verified"
     }
   ]

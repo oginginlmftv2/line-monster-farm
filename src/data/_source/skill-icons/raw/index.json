@@ -3544,5 +3544,41 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0797": {
+    "name": "シングルショット",
+    "blood": "ザン",
+    "source": "20261016-193031.png",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0798": {
+    "name": "メテオドライブ",
+    "blood": "ザン",
+    "source": "20261016-193130.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0799": {
+    "name": "フォルターブリッツ",
+    "blood": "ザン",
+    "source": "20261016-193750.png",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }

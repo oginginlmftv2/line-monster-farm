@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "skills": 804,
+    "skills": 807,
     "bloods": 34
   },
   "skills": [
@@ -32212,6 +32212,101 @@
       "unlockedBy": [],
       "note": "",
       "sortOrder": 804,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0797",
+      "name": "シングルショット",
+      "version": 1,
+      "blood": "ザン",
+      "range": "近",
+      "rank": 1,
+      "moveTo": null,
+      "aura": "無",
+      "skillType": "ちから",
+      "guts": 20,
+      "damage": "C",
+      "accuracy": "B",
+      "gutsDown": "G",
+      "critical": "E",
+      "abilities": [
+        {
+          "abilityId": "sab-0566",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 805,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0798",
+      "name": "メテオドライブ",
+      "version": 1,
+      "blood": "ザン",
+      "range": "遠",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "赤",
+      "skillType": "ちから",
+      "guts": 35,
+      "damage": "C",
+      "accuracy": "C",
+      "gutsDown": "E",
+      "critical": "A",
+      "abilities": [
+        {
+          "abilityId": "sab-0704",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0705",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 806,
+      "status": "verified"
+    },
+    {
+      "skillId": "sk-0799",
+      "name": "フォルターブリッツ",
+      "version": 1,
+      "blood": "ザン",
+      "range": "近",
+      "rank": 3,
+      "moveTo": null,
+      "aura": "黄",
+      "skillType": "かしこさ",
+      "guts": 31,
+      "damage": "C",
+      "accuracy": "B+",
+      "gutsDown": "B+",
+      "critical": "D",
+      "abilities": [
+        {
+          "abilityId": "sab-0555",
+          "unlock": null
+        },
+        {
+          "abilityId": "sab-0706",
+          "unlock": null
+        }
+      ],
+      "icon": null,
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [],
+      "note": "",
+      "sortOrder": 807,
       "status": "verified"
     }
   ]
