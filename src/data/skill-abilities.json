@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 621
+    "abilities": 622
   },
   "abilities": [
     {
@@ -7637,6 +7637,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 621,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0622",
+      "name": "変幻：ドラゴンパッチ",
+      "version": 1,
+      "baseName": "変幻：ドラゴンパッチ",
+      "level": null,
+      "description": "対象技命中時、いずれかの技ステータスのグレードを2回、1段階上昇または1段階減少",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 622,
       "status": "verified"
     }
   ]
