@@ -1996,7 +1996,7 @@ function renderBloodPicker(context, { where, monSlugs, currentMonSlug = '', curr
   const renderItem = (item, pad) => {
     const icon = bloodIconOf(context, item.slug);
     const skillMeta = item.bloodPage
-      ? `<span class="blood-picker-skill">${(c => `共通${c.common}${c.unique ? `<br>専用${c.unique}` : ''}`)(countBloodSkills(item.bloodPage))}</span>`
+      ? `<span class="blood-picker-skill">${(c => `共通技${c.common}${c.unique ? `<br>専用技${c.unique}` : ''}`)(countBloodSkills(item.bloodPage))}</span>`
       : '';
     const inner = `<img class="blood-picker-icon" src="${rootPrefix}${icon.src}" alt="${escapeHtml(item.blood)}" width="${icon.width}" height="${icon.height}"${lazy} decoding="async">`
       + `<span class="blood-picker-name">${escapeHtml(item.blood)}</span>`
