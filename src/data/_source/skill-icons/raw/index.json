@@ -2356,5 +2356,137 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0698": {
+    "name": "フリーズ",
+    "blood": "ヒノトリ",
+    "source": "20261016-155804-1450/s01",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0699": {
+    "name": "アクアライン",
+    "blood": "ヒノトリ",
+    "source": "20261016-155835-1420/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0700": {
+    "name": "サンダーバード",
+    "blood": "ヒノトリ",
+    "source": "20261016-155809-1404/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0701": {
+    "name": "ホーリーバード",
+    "blood": "ヒノトリ",
+    "source": "20261016-155815-1452/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0702": {
+    "name": "ホワイトタイフーン",
+    "blood": "ヒノトリ",
+    "source": "20261016-155815-1452/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0703": {
+    "name": "天衣無縫",
+    "blood": "ヒノトリ",
+    "source": "20261016-155815-1452/s03",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0704": {
+    "name": "ブラックバード",
+    "blood": "ヒノトリ",
+    "source": "20261016-155823-1432/s01",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0705": {
+    "name": "アクアキャノン",
+    "blood": "ヒノトリ",
+    "source": "20261016-155835-1420/s01",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0706": {
+    "name": "くちばし・炭",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s01",
+    "cell": [
+      1,
+      4
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0707": {
+    "name": "超火力",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0708": {
+    "name": "ヴォイドサークル",
+    "blood": "ヒノトリ",
+    "source": "20261016-155828-1451/s03",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
