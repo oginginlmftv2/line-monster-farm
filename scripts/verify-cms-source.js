@@ -20,6 +20,8 @@ const GENERATED_FILES = new Set([
   'src/data/lmfdb-card-map.json',
   'src/data/page-baseline.json',
   'src/data/cms-seed.json',
+  // sitemap.xml の lastmod と可視テキストのハッシュ（build-spec 5-4）
+  'src/data/sitemap-lastmod.json',
 ]);
 
 function git(args, options = {}) {

@@ -15,6 +15,8 @@ const GENERATED_FILES = new Set([
   'src/data/page-baseline.json',
   'src/data/cms-seed.json',
   'src/data/lmfdb-card-map.json',
+  // sitemap.xml の lastmod と可視テキストのハッシュ（build-spec 5-4）
+  'src/data/sitemap-lastmod.json',
 ]);
 const SUBJECT = /^CMS gacha publish \d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/;
 

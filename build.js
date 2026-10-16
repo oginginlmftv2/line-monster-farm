@@ -5,6 +5,7 @@ const path = require('path');
 const { buildAssistPages } = require('./scripts/build-assist-pages');
 const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
 const basics = require('./src/lib/monster-basics');
+const sitemapLastmod = require('./src/lib/sitemap-lastmod');
 const abilityParser = require('./src/lib/ability-parser');
 const { computeAbilityScores, createScorer: createAbilityScorer } = require('./src/lib/ability-score');
 const { recommendAbilities } = require('./src/lib/ability-recommend');
@@ -3237,7 +3238,9 @@ function createCmsSeed(context, detailPages) {
   };
 }
 
-function renderSitemap(existingXml, pages) {
+// lastmodFor(loc) を渡すと、全URLの <loc> の直後に <lastmod> を入れる（手書きURLの古い <lastmod> は差し替える）。
+// 渡さない呼び出しはURLの集合と件数の検査だけに使う（build-spec 5-4）。
+function renderSitemap(existingXml, pages, lastmodFor = null) {
   const urlBlockPattern = /  <url>\n[\s\S]*?  <\/url>\n?/g;
   const matches = [...existingXml.matchAll(urlBlockPattern)];
   const generatedUrlPattern = /<loc>https:\/\/line-monster-farm-tetteikouryaku\.com\/(?:monsters\/(?:[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/(?:index\.html)?|[^/]+\/[^/]+\/\d{4}\.html)|cards\/[^/]+\.html|gacha\/(?:\d{8}-\d+\.html)?)<\/loc>/;
@@ -3250,22 +3253,43 @@ function renderSitemap(existingXml, pages) {
   }
 
   const header = existingXml.slice(0, matches[0].index);
-  const generatedBlocks = pages.map(page => `  <url>
+  const withLastmod = block => {
+    const stripped = block.replace(/    <lastmod>[^<]*<\/lastmod>\n/g, '');
+    if (!lastmodFor) return stripped;
+    return stripped.replace(/(    <loc>([^<]+)<\/loc>\n)/, (line, _, loc) => `${line}    <lastmod>${lastmodFor(loc)}</lastmod>\n`);
+  };
+  const generatedBlocks = pages.map(page => withLastmod(`  <url>
     <loc>${page.canonical}</loc>
     <priority>${page.priority}</priority>
   </url>
-`).join('');
-  const sitemap = `${header}${existingBlocks.join('')}${generatedBlocks}</urlset>\n`;
+`)).join('');
+  const sitemap = `${header}${existingBlocks.map(withLastmod).join('')}${generatedBlocks}</urlset>\n`;
 
-  if (/<lastmod>/.test(sitemap)) {
-    throw new Error('sitemap.xml に <lastmod> が含まれています');
-  }
   const urlCount = (sitemap.match(/<url>/g) || []).length;
   const expectedUrlCount = existingBlocks.length + pages.length;
   if (urlCount !== expectedUrlCount) {
     throw new Error(`sitemap.xml のURLが${expectedUrlCount}件ではありません: ${urlCount}件`);
   }
+  if (lastmodFor && (sitemap.match(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/g) || []).length !== urlCount) {
+    throw new Error('sitemap.xml の全URLに <lastmod> を入れられませんでした');
+  }
   return sitemap;
+}
+
+// 書き出し済みの公開ファイルから可視テキストのハッシュを取り、前回と変わったURLだけ lastmod を今日（JST）へ進める。
+// --dry では書き出しをしないため、ディスク上の（前回の）ファイルで計算する
+function computeSitemapLastmod(sitemapXml, today) {
+  const lastmodPath = path.join(REPO, sitemapLastmod.LASTMOD_FILE);
+  const previous = fs.existsSync(lastmodPath)
+    ? sitemapLastmod.parseLastmodJson(fs.readFileSync(lastmodPath, 'utf8'))
+    : {};
+  const current = [...sitemapXml.matchAll(/<loc>([^<]+)<\/loc>/g)].map(([, loc]) => {
+    const key = sitemapLastmod.locToKey(loc, SITE_URL);
+    const file = path.join(REPO, sitemapLastmod.keyToFile(key));
+    if (!fs.existsSync(file)) throw new Error(`sitemap の URL に対応するファイルがありません: ${loc}`);
+    return { key, hash: sitemapLastmod.contentHash(fs.readFileSync(file, 'utf8')) };
+  });
+  return sitemapLastmod.updateEntries(previous, current, today);
 }
 
 function validatePages(pages) {
@@ -3507,10 +3531,9 @@ function main() {
   const bloodSitemapPages = bloodPages
     .filter(page => page.indexable)
     .map(page => ({ canonical: page.canonical, priority: page.priority }));
-  const sitemap = renderSitemap(
-    inputs.sitemap,
-    sitemapPages.concat(bloodSitemapPages, assistBuild.sitemapPages, gachaBuild.sitemapPages)
-  );
+  const allSitemapPages = sitemapPages.concat(bloodSitemapPages, assistBuild.sitemapPages, gachaBuild.sitemapPages);
+  // ここではURLの集合と件数だけを確かめる。lastmod は全ページを書き出した後に付ける
+  const sitemapUrls = renderSitemap(inputs.sitemap, allSitemapPages);
   const brokenLinks = context.linkTargets.filter(target => !linkExists(target, context.generatedPaths));
   if (brokenLinks.length) {
     throw new Error(`リンク先が存在しません: ${brokenLinks.join(', ')}`);
@@ -3526,13 +3549,22 @@ function main() {
   for (const page of pages) {
     outputCounts[writeIfChanged(page.path, page.html)]++;
   }
-  outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
   if (!gachaBuild.outputs.some(output => output.path === 'index.html')) {
     outputCounts[writeIfChanged('index.html', topIndexSource)]++;
     outputCounts.total++;
   }
   outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
   outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
+  const lastmod = computeSitemapLastmod(sitemapUrls, sitemapLastmod.jstDate(resolveBuildNow()));
+  const sitemap = renderSitemap(inputs.sitemap, allSitemapPages, loc => {
+    return lastmod.entries[sitemapLastmod.locToKey(loc, SITE_URL)].lastmod;
+  });
+  outputCounts[writeIfChanged('sitemap.xml', sitemap)]++;
+  outputCounts[writeIfChanged(
+    sitemapLastmod.LASTMOD_FILE,
+    sitemapLastmod.renderLastmodJson(lastmod.entries)
+  )]++;
+  outputCounts.total++;
   outputCounts[writeIfChanged(
     'src/data/id-availability.json',
     JSON.stringify(idAvailability, null, 2) + '\n'
@@ -3556,6 +3588,8 @@ function main() {
   outputCounts[writeIfChanged('src/data/ability-scores.json', scoreJson + '\n')]++;
   outputCounts.total++;
   logBuild(inputs, detailPages, monTypeGates, bloodGates, bloodPages, outputCounts, context, brokenLinks);
+  const lastmodDates = Object.values(lastmod.entries).map(entry => entry.lastmod).sort();
+  console.log(`  sitemap lastmod    据え置き ${lastmod.counts.kept} / 中身が変わった ${lastmod.counts.changed} / 新規 ${lastmod.counts.added} / 外れた ${lastmod.counts.removed}（${lastmodDates[0]}〜${lastmodDates[lastmodDates.length - 1]}）`);
   const { counts, tierCut } = abilityScores;
   console.log(`  ability-scores     評価対象 ${counts.target}件（${counts.groups}種） / Tier1〜4 ${counts.tier.join('/')} / 境界 ${tierCut[1]}・${tierCut[2]}・${tierCut[3]}点`);
   if (counts.unreviewed) {
