@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 598
+    "abilities": 599
   },
   "abilities": [
     {
@@ -7361,6 +7361,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 598,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0599",
+      "name": "渾身：フロストバースト",
+      "version": 1,
+      "baseName": "渾身：フロストバースト",
+      "level": null,
+      "description": "対象技命中時、自身の残りガッツが70以上のとき、消費ガッツ100%増加しすべての技ステータスが上昇Lv5、追加でダメージLv5を1回与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 599,
       "status": "verified"
     }
   ]

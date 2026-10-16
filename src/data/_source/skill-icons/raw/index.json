@@ -1756,5 +1756,53 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0649": {
+    "name": "誠壱式旋風脚",
+    "blood": "ヘンガー",
+    "source": "pA/s02",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0650": {
+    "name": "ヴァリス",
+    "blood": "ヘンガー",
+    "source": "pA/s03",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0651": {
+    "name": "セイバーコンボ・赫",
+    "blood": "ヘンガー",
+    "source": "pA/s04",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0648": {
+    "name": "フロストバースト",
+    "blood": "ヘンガー",
+    "source": "pB/s01",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
