@@ -2716,5 +2716,77 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0728": {
+    "name": "パワースタンプ・緑",
+    "blood": "ネンドロ",
+    "source": "20261016-170017-1825/s01",
+    "cell": [
+      2,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0729": {
+    "name": "スイカ割り",
+    "blood": "ネンドロ",
+    "source": "20261016-170017-1825/s02",
+    "cell": [
+      4,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0730": {
+    "name": "水刃",
+    "blood": "ネンドロ",
+    "source": "20261016-170024-1852/s01",
+    "cell": [
+      1,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0731": {
+    "name": "黒稲妻",
+    "blood": "ネンドロ",
+    "source": "20261016-170024-1852/s02",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0732": {
+    "name": "十文字斬り・黒",
+    "blood": "ネンドロ",
+    "source": "20261016-170030-1853/s01",
+    "cell": [
+      2,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0733": {
+    "name": "神之怒",
+    "blood": "ネンドロ",
+    "source": "20261016-170030-1853/s02",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
