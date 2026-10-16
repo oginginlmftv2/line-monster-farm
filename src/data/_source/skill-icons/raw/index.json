@@ -3052,5 +3052,65 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-10-16"
+  },
+  "sk-0756": {
+    "name": "一富士二鷹三茄子",
+    "blood": "モノリス",
+    "source": "20261016-185300-2254/s01",
+    "cell": [
+      4,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0757": {
+    "name": "家畜の安寧",
+    "blood": "モノリス",
+    "source": "20261016-185307-2252/s01",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0758": {
+    "name": "虚偽の繁栄",
+    "blood": "モノリス",
+    "source": "20261016-185307-2252/s02",
+    "cell": [
+      4,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0759": {
+    "name": "シールドブレイク",
+    "blood": "モノリス",
+    "source": "20261016-185314-2251/s01",
+    "cell": [
+      2,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-16"
+  },
+  "sk-0760": {
+    "name": "ドロー",
+    "blood": "モノリス",
+    "source": "20261016-185314-2251/s02",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-16"
   }
 }
