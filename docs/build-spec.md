@@ -883,6 +883,19 @@ index.html はガチャのピックアップ（`GACHA:*` マーカー）も生�
 Firestore からの画像取得と localStorage キャッシュは静的化により廃止した。
 画像は `resolveImage()` が解決する。
 
+**秘伝効果一覧（`ikusei/hiden-kouka.html`、2026-10-20〜・P-006 #7）**も手書きページで、表の行だけを
+`build.js`（`src/lib/hiden-kouka.js`）が `src/data/hiden-kouka.json` から書き出す。
+
+```html
+<!-- BUILD:HIDEN-ROWS:START -->
+<!-- BUILD:HIDEN-ROWS:END -->
+```
+
+- 以前は表全体を JS で描いていて、Googleが保存したHTMLに表の行が0件だった。いまは初期表示（種類別）の全行が HTML にある
+- ページの JS は行を作らず、並べ替え（種類別・50音順・優先度順）と絞り込みだけを行う。種類の見出し行と
+  優先度順の区切り行も静的に出し、JS が並びに応じて出し入れする。件数表示は `BUILD:HIDEN-COUNT` の間
+- 秘伝を足す・直すときは JSON を編集して `node build.js`。表を手で直さない。`scripts/verify.js` 検査26が一致を見る
+
 ### 5-6. monsters/redirect-map.js（旧URLの誘導）
 
 旧URL `monsters/monster.html?id=<arrayIndex>` を新URLへ転送するための対応表。

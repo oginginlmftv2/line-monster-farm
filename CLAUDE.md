@@ -384,6 +384,7 @@ IDは入力しません。画像は採番されたIDをファイル名にして�
 - `src/data/monster-skills.json`、`src/data/skill-abilities.json`（技DB。現在は手入力）
 - `src/data/monster-basics.json`、`src/data/_source/monster-basics-*.tsv`（基礎データ。TSVから生成）
 - `cards/cards-data.js`、`src/data/assist-aptitudes.json`、`reroll.html`
+- `src/data/hiden-kouka.json`（秘伝効果一覧の表。`node build.js` が `ikusei/hiden-kouka.html` の表を書き出す。表を手で直さない）
 - `index.html`のピックアップ・日記プレビュー・更新履歴
 - `diary.html`、`diary/*.html`
 - `assist-cards/`、`assist-abilities/`

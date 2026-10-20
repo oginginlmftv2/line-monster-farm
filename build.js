@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const { buildAssistPages } = require('./scripts/build-assist-pages');
+const { renderHidenKoukaPage } = require('./src/lib/hiden-kouka');
 const { LMFDB_CARD_MAP_FILE, renderLmfdbCardMap } = require('./scripts/lmfdb-card-map');
 const basics = require('./src/lib/monster-basics');
 const sitemapLastmod = require('./src/lib/sitemap-lastmod');
@@ -3554,6 +3555,12 @@ function main() {
     outputCounts.total++;
   }
   outputCounts[writeIfChanged('monsters.html', monsterIndex)]++;
+  // 秘伝効果一覧の表は JSON から静的HTMLで出す（JS を動かさなくても表が読める。P-006 #7）
+  outputCounts[writeIfChanged('ikusei/hiden-kouka.html', renderHidenKoukaPage(
+    fs.readFileSync(path.join(REPO, 'ikusei/hiden-kouka.html'), 'utf8'),
+    readJson('src/data/hiden-kouka.json')
+  ))]++;
+  outputCounts.total++;
   outputCounts[writeIfChanged('monsters/redirect-map.js', redirectMap)]++;
   const lastmod = computeSitemapLastmod(sitemapUrls, sitemapLastmod.jstDate(resolveBuildNow()));
   const sitemap = renderSitemap(inputs.sitemap, allSitemapPages, loc => {
