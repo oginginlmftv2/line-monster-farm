@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 362,
+ "count": 363,
  "monsters": [
   {
    "id": "0101",
@@ -2670,6 +2670,25 @@
    "localImg": "S__93200464_0.jpg",
    "url": "/monsters/souzou/gali/1152.html",
    "image": "img/monster/1152.jpg"
+  },
+  {
+   "id": "1180",
+   "sortOrder": 1180,
+   "isNew": true,
+   "name": "クレセント",
+   "arrayIndex": 362,
+   "mon": "創造",
+   "monSlug": "souzou",
+   "blood": "ガリ",
+   "bloodSlug": "gali",
+   "subBlood": "ノーブル",
+   "aura": "黒",
+   "limited": true,
+   "limitedLabel": "ハロウィン限定",
+   "gwImg": null,
+   "localImg": "1180.jpg",
+   "url": "/monsters/souzou/gali/1180.html",
+   "image": "img/monster/1180.jpg"
   },
   {
    "id": "1201",

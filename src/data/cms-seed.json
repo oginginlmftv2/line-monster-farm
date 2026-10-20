@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 362,
+  "count": 363,
   "monsters": [
     {
       "id": "0101",
@@ -3831,8 +3831,8 @@
       "createdAt": "",
       "updatedAt": "2026-08-20",
       "releasedAt": "2025-05-14",
-      "baseline": 1746,
-      "current": 1746,
+      "baseline": 1769,
+      "current": 1769,
       "indexable": true
     },
     {
@@ -3856,9 +3856,34 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1538,
-      "current": 1538,
+      "baseline": 1561,
+      "current": 1561,
       "indexable": true
+    },
+    {
+      "id": "1180",
+      "arrayIndex": 362,
+      "name": "クレセント",
+      "aura": "黒",
+      "mon": "創造",
+      "mainBlood": "ガリ",
+      "subBlood": "ノーブル",
+      "limited": true,
+      "limitedLabel": "ハロウィン限定",
+      "image": "1180.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/souzou/gali/1180.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-10-20",
+      "releasedAt": "2026-10-20",
+      "baseline": 902,
+      "current": 902,
+      "indexable": false
     },
     {
       "id": "1201",
