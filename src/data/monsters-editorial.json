@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-14T13:08:21Z",
-  "count": 119,
+  "exportedAt": "2026-10-20T09:00:58Z",
+  "count": 120,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -84,6 +84,16 @@
       "formations": [],
       "updatedAt": "2026-08-20",
       "releasedAt": "2025-05-14"
+    },
+    "1180": {
+      "id": "1180",
+      "name": "クレセント",
+      "arrayIndex": 362,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-10-20",
+      "releasedAt": "2026-10-20"
     },
     "1252": {
       "id": "1252",
