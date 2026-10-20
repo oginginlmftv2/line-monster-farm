@@ -3881,9 +3881,9 @@
       "createdAt": "",
       "updatedAt": "2026-10-20",
       "releasedAt": "2026-10-20",
-      "baseline": 902,
-      "current": 902,
-      "indexable": false
+      "baseline": 1329,
+      "current": 1329,
+      "indexable": true
     },
     {
       "id": "1201",

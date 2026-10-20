@@ -4219,6 +4219,37 @@
       "capturedAt": "2026-10-05"
     },
     {
+      "id": "1180",
+      "name": "クレセント",
+      "talent": {
+        "life": 0,
+        "power": 10,
+        "wisdom": 15,
+        "accuracy": 5,
+        "evasion": -10,
+        "defense": 10
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "C"
+      },
+      "range": {
+        "far": "E",
+        "mid": "B",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-20"
+    },
+    {
       "id": "1201",
       "name": "ピンクグジラ",
       "talent": {
