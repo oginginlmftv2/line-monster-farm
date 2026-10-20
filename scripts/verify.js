@@ -195,6 +195,23 @@ else {
   const missingFile = locs.filter(u => u && !exists(u));
   if (missingFile.length) ng(`sitemapのURLに対応するファイルがない: ${missingFile.join(', ')}`);
   else ok('sitemapの全URLにファイルが存在');
+
+  // AdSense審査の基本：どのページのフッターからも運営者・お問い合わせ・プライバシーへ行ける（P-006 #5）。
+  // 相対リンクを解決し、ルート直下の3ファイルを指していることまで見る
+  const FOOTER_TARGETS = ['profile.html', 'contact.html', 'privacy.html'];
+  const footerMissing = [];
+  for (const loc of locs) {
+    const file = loc === '' || loc.endsWith('/') ? `${loc}index.html` : loc;
+    if (!exists(file)) continue;
+    const footer = (read(file).match(/<footer\b[\s\S]*?<\/footer>/i) || [''])[0];
+    const targets = new Set([...footer.matchAll(/\bhref\s*=\s*["']([^"'#?]+)/gi)]
+      .map(match => path.posix.normalize(path.posix.join(path.posix.dirname(file), match[1]))));
+    const lacking = FOOTER_TARGETS.filter(target => !targets.has(target));
+    if (lacking.length) footerMissing.push(`${file}（${lacking.join('・')}なし）`);
+  }
+  if (footerMissing.length) {
+    ng(`sitemap掲載ページのフッターに運営者・お問い合わせ・プライバシーの3リンクがない ${footerMissing.length}件: ${footerMissing.slice(0, 5).join(', ')}`);
+  } else ok(`sitemap掲載ページ ${locs.length}件すべてのフッターに運営者・お問い合わせ・プライバシーの3リンク`);
 }
 
 // ---------------------------------------------------------------- 6

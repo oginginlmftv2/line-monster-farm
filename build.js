@@ -686,7 +686,7 @@ ${assistCards}
   </div></section>` : ''}
   <section class="section"><h2 class="section-title">関連リンク</h2><div class="menu-grid"><a class="menu-link" href="index.html">開催中ガチャ一覧へ戻る</a></div></section>
 </main>
-<footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer>
+<footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../profile.html" style="color:#aaa;text-decoration:none;">管理人プロフィール</a> ／ <a href="../contact.html" style="color:#aaa;text-decoration:none;">お問い合わせ</a> ／ <a href="../privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a></footer>
 </body>`;
 }
 
@@ -764,7 +764,7 @@ function renderGachaIndex(gachas, now) {
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7841397391542171" crossorigin="anonymous"></script>
 </head><body><header><div class="header-inner"><a href="../index.html" class="logo"><img src="../img/site/logo.png" alt="LINEモンスターファーム徹底攻略" width="260" height="125"></a><nav><a href="../monsters.html">モンスター<span class="nav-sub">一覧</span></a><a href="../assist.html">アシストカード<span class="nav-sub">一覧</span></a><a href="index.html" class="active">開催中ガチャ<span class="nav-sub">一覧</span></a></nav></div></header>
 <main class="container"><p class="page-breadcrumb"><a href="../index.html">トップ</a> &gt; 開催中ガチャ一覧</p><h1 class="page-title">開催中ガチャ一覧</h1>${section('開催予定', upcoming)}${section('開催中', current)}${section('終了', ended)}</main>
-<footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../privacy.html">プライバシーポリシー</a></footer></body></html>
+<footer>&copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト ／ <a href="../profile.html" style="color:#aaa;text-decoration:none;">管理人プロフィール</a> ／ <a href="../contact.html" style="color:#aaa;text-decoration:none;">お問い合わせ</a> ／ <a href="../privacy.html" style="color:#aaa;text-decoration:none;">プライバシーポリシー</a></footer></body></html>
 `;
 }
 
@@ -1167,6 +1167,18 @@ function addLink(context, target) {
 function rootLink(context, file, label, rootPrefix = ROOT_PREFIX) {
   addLink(context, file);
   return `<a href="${rootPrefix}${file}">${escapeHtml(label)}</a>`;
+}
+
+// フッターの運営者・お問い合わせ・プライバシーの3リンク。トップ（index.html）とそろえる（verify.js 検査で確認）
+function siteFooterLinks(context, rootPrefix = ROOT_PREFIX) {
+  return [
+    ['profile.html', '管理人プロフィール'],
+    ['contact.html', 'お問い合わせ'],
+    ['privacy.html', 'プライバシーポリシー'],
+  ].map(([file, label]) => {
+    addLink(context, file);
+    return `<a href="${rootPrefix}${file}" style="color:#aaa;text-decoration:none;">${label}</a>`;
+  }).join(' ／ ');
 }
 
 // ヘッダーのナビ用。狭い画面で「一覧」を2行目へ落とすため span で包む
@@ -1722,7 +1734,7 @@ function renderDetail(entry, context) {
   const navMonsters = navLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = navLink(context, 'assist.html', 'アシストカード一覧');
   const navGacha = navLink(context, 'gacha/', '開催中ガチャ一覧');
-  const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー');
+  const footerLinks = siteFooterLinks(context);
   const nonEmptyFormations = (entry.formations || []).filter(formation => {
     return !isEmptyFormation(formation);
   });
@@ -1822,7 +1834,7 @@ ${related.map(candidate => renderRelatedCard(candidate, context)).join('\n')}
 
 <footer>
   &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
-  ／ ${privacy}
+  ／ ${footerLinks}
 </footer>
 
 </body>
@@ -2184,7 +2196,7 @@ function renderMonType(monType, context) {
   const navMonsters = navLink(context, 'monsters.html', 'モンスター一覧', MON_TYPE_ROOT_PREFIX);
   const navAssist = navLink(context, 'assist.html', 'アシストカード一覧', MON_TYPE_ROOT_PREFIX);
   const navGacha = navLink(context, 'gacha/', '開催中ガチャ一覧', MON_TYPE_ROOT_PREFIX);
-  const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー', MON_TYPE_ROOT_PREFIX);
+  const footerLinks = siteFooterLinks(context, MON_TYPE_ROOT_PREFIX);
   const editorialSections = renderMonTypeNote(monType) + renderMonTypeCards(monType, context);
   const bloodGroups = groups.map(group => {
     const editorialMembers = group.members.filter(monster => hasMonTypeExcerpt(monster, context));
@@ -2279,7 +2291,7 @@ ${otherLinks}
 
 <footer>
   &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
-  ／ ${privacy}
+  ／ ${footerLinks}
 </footer>
 
 </body>
@@ -2925,7 +2937,7 @@ function renderBloodPage(bloodGate, context, abilityById) {
   const navMonsters = navLink(context, 'monsters.html', 'モンスター一覧');
   const navAssist = navLink(context, 'assist.html', 'アシストカード一覧');
   const navGacha = navLink(context, 'gacha/', '開催中ガチャ一覧');
-  const privacy = rootLink(context, 'privacy.html', 'プライバシーポリシー');
+  const footerLinks = siteFooterLinks(context);
 
   const memberCards = bloodGate.members.map(monster => {
     addLink(context, monster.url.replace(/^\//, ''));
@@ -3006,7 +3018,7 @@ ${memberCards}
 
 <footer>
   &copy; 2026 LINEモンスターファーム徹底攻略 ／ 非公式ファンサイト
-  ／ ${privacy}
+  ／ ${footerLinks}
 </footer>
 
 <script>
@@ -3248,8 +3260,8 @@ function renderSitemap(existingXml, pages, lastmodFor = null) {
     .map(match => match[0])
     .filter(block => !generatedUrlPattern.test(block));
 
-  if (existingBlocks.length !== 26) {
-    throw new Error(`sitemap.xml の手書きURLが26件ではありません: ${existingBlocks.length}件`);
+  if (existingBlocks.length !== 25) {
+    throw new Error(`sitemap.xml の手書きURLが25件ではありません: ${existingBlocks.length}件`);
   }
 
   const header = existingXml.slice(0, matches[0].index);
