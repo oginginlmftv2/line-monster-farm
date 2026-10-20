@@ -815,7 +815,7 @@ for f in img/blood/*.png; do s=$(basename "$f" .png); sips -s format jpeg -s for
 ### 5-4. sitemap.xml の再生成
 
 - index対象の詳細ページと生成済みモン類ページを追加する
-- **手書きURL（現在26件。build.js の `existingBlocks.length` と一致）はそのまま維持**する（P3-1で整理済み。P3-5で薄い日記13本を除外）
+- **手書きURL（現在25件。build.js の `existingBlocks.length` と一致）はそのまま維持**する（P3-1で整理済み。P3-5で薄い日記13本を除外）
 - noindex の詳細ページは含めない
 - 詳細ページは解説DB（monsters-editorial.json）の順、解説DBに無い体（基礎データで昇格した体）はID順で後ろに足す（2026-09-27）
 - index対象のカード詳細を追加し、カード生成URLは次回ビルドで手書きURLとして保持しない
