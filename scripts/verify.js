@@ -2497,6 +2497,24 @@ head('25. sitemap.xml の lastmod');
   }
 }
 
+// ---------------------------------------------------------------- 26
+head('26. 秘伝効果一覧の表が静的HTMLにある（P-006 #7）');
+if (!exists('ikusei/hiden-kouka.html') || !exists('src/data/hiden-kouka.json')) sk('ikusei/hiden-kouka.html または src/data/hiden-kouka.json がない');
+else {
+  try {
+    const { renderHidenKoukaPage, countItems } = require('../src/lib/hiden-kouka');
+    const data = JSON.parse(read('src/data/hiden-kouka.json'));
+    const html = read('ikusei/hiden-kouka.html');
+    const rows = (html.match(/<tr data-item\b/g) || []).length;
+    if (rows !== countItems(data)) ng(`秘伝効果一覧の表の行が ${rows}件（JSONは ${countItems(data)}件）。node build.js を実行`);
+    else ok(`秘伝効果一覧の表 ${rows}件が HTML に入っている`);
+    if (renderHidenKoukaPage(html, data) !== html) ng('ikusei/hiden-kouka.html の表が src/data/hiden-kouka.json と一致しない（表を手で直さず JSON を直して node build.js）');
+    else ok('秘伝効果一覧の表は src/data/hiden-kouka.json から生成したものと一致');
+    if (/\.innerHTML\s*=/.test(html)) ng('秘伝効果一覧の JS が innerHTML で表を作っている（JS は並べ替え・絞り込みだけ）');
+    else ok('秘伝効果一覧の JS は表を作らない（並べ替え・絞り込みだけ）');
+  } catch (error) { ng(`秘伝効果一覧の検査に失敗: ${error.message}`); }
+}
+
 // ---------------------------------------------------------------- 結果
 console.log('\n' + '-'.repeat(50));
 console.log(`PASS ${pass} / FAIL ${fail} / WARN ${warn} / SKIP ${skip}`);
