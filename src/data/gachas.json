@@ -139,6 +139,25 @@
       "rerollPriority": false,
       "status": "published",
       "publishedAt": "2026-10-13"
+    },
+    {
+      "gachaId": "20261020-1",
+      "name": "ハロウィン記念ステップアップモンスターガチャ",
+      "gachaType": "ステップアップモンスターガチャ",
+      "image": "gacha-banner/20261020-1.jpg",
+      "startAt": "2026-10-20T15:00+09:00",
+      "endAt": "2026-10-31T14:59+09:00",
+      "explanation": "",
+      "pickupMonsters": [
+        {
+          "id": "1180",
+          "rate": null
+        }
+      ],
+      "pickupCards": [],
+      "rerollPriority": false,
+      "status": "published",
+      "publishedAt": "2026-10-20"
     }
   ]
 }
