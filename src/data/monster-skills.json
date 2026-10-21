@@ -5744,6 +5744,10 @@
         {
           "monsterId": "1151",
           "rarity": 3
+        },
+        {
+          "monsterId": "1180",
+          "rarity": 3
         }
       ],
       "note": "",
@@ -5888,6 +5892,10 @@
         {
           "monsterId": "1151",
           "rarity": 4
+        },
+        {
+          "monsterId": "1180",
+          "rarity": 4
         }
       ],
       "note": "",
@@ -6001,6 +6009,10 @@
       "unlockedBy": [
         {
           "monsterId": "1152",
+          "rarity": 5
+        },
+        {
+          "monsterId": "1180",
           "rarity": 5
         }
       ],
