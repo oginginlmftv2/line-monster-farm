@@ -490,6 +490,16 @@
       "sourceName": "オーガマ",
       "rarity": "MR",
       "cardId": "c0005-MR"
+    },
+    {
+      "sourceName": "ゴジラ",
+      "rarity": "MR",
+      "cardId": "c0006-MR"
+    },
+    {
+      "sourceName": "キングギドラ",
+      "rarity": "MR",
+      "cardId": "c0007-MR"
     }
   ]
 }
