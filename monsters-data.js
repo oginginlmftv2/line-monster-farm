@@ -365,4 +365,6 @@ const monstersData = [
   { name: 'マミーレックス', aura: '青', limited: true, limitedLabel: 'イベント限定', gwImg: null, localImg: '0651.jpg', mon: '獣族', mainMon: 'ディノ', subMon: 'レアモン' },
   { name: 'マホウビン', aura: '青', limited: false, limitedLabel: '', gwImg: null, localImg: '2751.jpg', mon: '創造', mainMon: 'メタルナー', subMon: 'レアモン' },
   { name: 'クレセント', aura: '黒', limited: true, limitedLabel: 'ハロウィン限定', gwImg: null, localImg: '1180.jpg', mon: '創造', mainMon: 'ガリ', subMon: 'ノーブル' },
+  { name: 'ゴジラ', aura: '黒', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '1290.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'ロード種' },
+  { name: 'キングギドラ', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '2152.jpg', mon: '幻霊', mainMon: 'プラント', subMon: 'レアモン' },
 ];
