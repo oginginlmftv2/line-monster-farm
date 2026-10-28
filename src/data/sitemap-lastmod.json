@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。sitemap.xml の lastmod（可視テキストが最後に変わった日・JST）と可視テキストのハッシュ。手で編集しない（build-spec 5-4）",
   "urls": {
-    "/": {"lastmod":"2026-10-21","hash":"aa00480a0ac0a305"},
+    "/": {"lastmod":"2026-10-28","hash":"e7f1e8c5f0fb3a99"},
     "/monsters.html": {"lastmod":"2026-10-20","hash":"27a8d4214545d706"},
     "/assist.html": {"lastmod":"2026-10-20","hash":"761ef86ed85d7361"},
     "/ikusei/sogo.html": {"lastmod":"2026-10-20","hash":"6a1c95bc04077e6c"},
