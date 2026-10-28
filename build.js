@@ -424,6 +424,19 @@ function renderTopPickupSection(title, body) {
   return `  <div class="section">\n    <div class="section-title">${title}</div>\n${body}\n  </div>`;
 }
 
+// 開催予定ガチャ。ガチャ一覧と同じカードを使い、予定が0件ならセクションごと消える。
+function renderTopUpcomingGachas(gachas, now) {
+  const upcoming = gachas.filter(gacha => Date.parse(now) < Date.parse(gacha.startAt))
+    .sort((a, b) => a.startAt.localeCompare(b.startAt) || a.gachaId.localeCompare(b.gachaId));
+  if (!upcoming.length) return '';
+  const cards = upcoming.map(gacha => renderGachaCard(gacha, {
+    href: `gacha/${gacha.gachaId}.html`,
+    imageSrc: gacha.image,
+    typeSuffix: ` / ${gachaStartLabel(gacha.startAt)}`,
+  })).join('\n');
+  return renderTopPickupSection('開催予定のガチャ', `    <div class="gacha-grid">\n${cards}\n    </div>`);
+}
+
 const TOP_PICKUP_EMPTY = '    <p>現在開催中のガチャはありません。<a href="gacha/">開催中ガチャ一覧を見る</a></p>';
 
 function renderTopMonsterPickups(gachas, context) {
@@ -800,6 +813,7 @@ function buildGachaPages({
   if (issues.length) throw new Error(`ガチャDB検査FAIL:\n${issues.join('\n')}`);
   if (indexSource !== null) {
     replaceMarkerBlock(indexSource, 'UPDATES', null, 'js', 'index.html');
+    replaceMarkerBlock(indexSource, 'UPCOMING', null, 'html', 'index.html');
     replaceMarkerBlock(indexSource, 'PICKUP:MONSTER', null, 'html', 'index.html');
     replaceMarkerBlock(indexSource, 'PICKUP:CARD', null, 'html', 'index.html');
     replaceMarkerBlock(indexSource, 'NAV', null, 'html', 'index.html');
@@ -831,6 +845,7 @@ function buildGachaPages({
   let integratedReroll = rerollSource;
   if (indexSource !== null) {
     integratedIndex = replaceMarkerBlock(integratedIndex, 'UPDATES', renderGachaUpdates(published, context), 'js', 'index.html');
+    integratedIndex = replaceMarkerBlock(integratedIndex, 'UPCOMING', renderTopUpcomingGachas(published, now), 'html', 'index.html');
     integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:MONSTER', renderTopMonsterPickups(active, context), 'html', 'index.html');
     integratedIndex = replaceMarkerBlock(integratedIndex, 'PICKUP:CARD', renderTopCardPickups(active, context), 'html', 'index.html');
     integratedIndex = replaceMarkerBlock(integratedIndex, 'NAV', '      <a href="gacha/" class="menu-link">\n        <span class="icon">🎰</span> 開催中ガチャ一覧\n      </a>', 'html', 'index.html');
