@@ -5,9 +5,9 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 98,
+    "cards": 100,
     "cardsWithEffects": 97,
-    "cardsDraft": 1,
+    "cardsDraft": 3,
     "effects": 1059
   },
   "cards": {
@@ -10459,6 +10459,14 @@
           }
         }
       ]
+    },
+    "c0006-MR": {
+      "status": "draft",
+      "effects": []
+    },
+    "c0007-MR": {
+      "status": "draft",
+      "effects": []
     }
   }
 }

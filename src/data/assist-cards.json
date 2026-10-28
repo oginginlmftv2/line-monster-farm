@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "cards": 98,
+    "cards": 100,
     "withStats": 63,
     "withExplanation": 92,
     "withFormations": 5
@@ -4130,6 +4130,44 @@
       "explanation": "・創造のモン類ブリーダーのカード。\n・正直、トレ性能は今あるカードの中でも一番かもしれないと思っています。トレ効果アップは合計19%、忠誠度効果アップは合計46%で、ここだけなら同じくらいのカードはあるんですよね。ただ鍛錬Ⅱとトレ共鳴・創造が付いていて、EXトレブーストも15%に上がっているので、トレ性能は歴代でも最強クラスだと思います。\n・イベント能力のオーガマフェイタルとオーガマチェイサーは、どちらも攻撃寄りです。チェイサーはシールド破壊が2回付いていて、幻霊をしっかり狙いにいく性能になっています。\n・ただ、創造に欲しかったのは守りの能力だったと思うので、そこはちょっと惜しいところですね。",
       "formations": [],
       "sapoRef": null
+    },
+    {
+      "cardId": "c0006-MR",
+      "name": "ゴジラ",
+      "rarity": "MR",
+      "aura": "黒",
+      "cardType": "ルミナス",
+      "monType": "獣族",
+      "image": "assist-cards/c0006-MR.jpg",
+      "event2": null,
+      "releasedAt": "2026/10/31",
+      "accessoryStatus": "yes",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "hidden": true
+    },
+    {
+      "cardId": "c0007-MR",
+      "name": "キングギドラ",
+      "rarity": "MR",
+      "aura": "黄",
+      "cardType": "ライバル",
+      "monType": null,
+      "image": "",
+      "event2": null,
+      "releasedAt": "2026/10/31",
+      "accessoryStatus": "unknown",
+      "stats": [],
+      "limitBreak": null,
+      "ratings": null,
+      "explanation": "",
+      "formations": [],
+      "sapoRef": null,
+      "hidden": true
     }
   ]
 }
