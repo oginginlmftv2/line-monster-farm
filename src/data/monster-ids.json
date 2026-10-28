@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 363,
+ "count": 365,
  "monsters": [
   {
    "id": "0101",
@@ -2843,6 +2843,25 @@
    "image": "img/monster/1252.jpg"
   },
   {
+   "id": "1290",
+   "sortOrder": 1290,
+   "isNew": true,
+   "name": "ゴジラ",
+   "arrayIndex": 363,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "グジラ",
+   "bloodSlug": "gujira",
+   "subBlood": "ロード種",
+   "aura": "黒",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": "1290.jpg",
+   "url": "/monsters/kemono/gujira/1290.html",
+   "image": "img/monster/1290.jpg"
+  },
+  {
    "id": "1301",
    "sortOrder": 1301,
    "isNew": false,
@@ -4741,6 +4760,25 @@
    "localImg": "S__93200677_0.jpg",
    "url": "/monsters/genrei/plant/2151.html",
    "image": "img/monster/2151.jpg"
+  },
+  {
+   "id": "2152",
+   "sortOrder": 2152,
+   "isNew": true,
+   "name": "キングギドラ",
+   "arrayIndex": 364,
+   "mon": "幻霊",
+   "monSlug": "genrei",
+   "blood": "プラント",
+   "bloodSlug": "plant",
+   "subBlood": "レアモン",
+   "aura": "黄",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": "2152.jpg",
+   "url": "/monsters/genrei/plant/2152.html",
+   "image": "img/monster/2152.jpg"
   },
   {
    "id": "2206",
