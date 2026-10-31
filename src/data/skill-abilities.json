@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 734
+    "abilities": 736
   },
   "abilities": [
     {
@@ -9028,6 +9028,30 @@
         "bf-0031"
       ],
       "sortOrder": 734,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0735",
+      "name": "連撃：引力光線",
+      "version": 1,
+      "baseName": "連撃：引力光線",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜80%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 735,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0736",
+      "name": "重力支配",
+      "version": 1,
+      "baseName": "重力支配",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・相手の移動速度が遅いほど命中率上昇＜最大30%＞\n・対象技命中時、相手残りライフが多いほど攻撃ステ上昇＜最大40%＞\n・攻撃ステの上昇割合を＜最大50%＞まで追撃与ダメに適用",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 736,
       "status": "verified"
     }
   ]

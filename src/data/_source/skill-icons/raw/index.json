@@ -3869,5 +3869,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-31"
+  },
+  "sk-0823": {
+    "name": "引力光線",
+    "blood": "プラント",
+    "source": "20261031-193914.png",
+    "cell": [
+      6,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-31"
   }
 }
