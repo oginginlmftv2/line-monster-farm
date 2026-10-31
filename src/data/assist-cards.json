@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 100,
-    "withStats": 64,
+    "withStats": 65,
     "withExplanation": 92,
     "withFormations": 5
   },
@@ -4142,7 +4142,20 @@
       "event2": null,
       "releasedAt": "2026/10/31",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+34%",
+          "label": "応援効果"
+        },
+        {
+          "value": "+35%",
+          "label": "得意率"
+        },
+        {
+          "value": "+28",
+          "label": "初期ルミナス"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
