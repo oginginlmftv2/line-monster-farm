@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-28T08:31:42Z",
+  "exportedAt": "2026-10-31T06:54:21Z",
   "count": 122,
   "monsters": {
     "1080": {
@@ -117,9 +117,8 @@
       "explanation": "",
       "explanationLength": 0,
       "formations": [],
-      "updatedAt": "2026-10-28",
-      "releasedAt": "2026-10-31",
-      "hidden": true
+      "updatedAt": "2026-10-31",
+      "releasedAt": "2026-10-31"
     },
     "1352": {
       "id": "1352",
@@ -517,9 +516,8 @@
       "explanation": "",
       "explanationLength": 0,
       "formations": [],
-      "updatedAt": "2026-10-28",
-      "releasedAt": "2026-10-31",
-      "hidden": true
+      "updatedAt": "2026-10-31",
+      "releasedAt": "2026-10-31"
     },
     "2224": {
       "id": "2224",
