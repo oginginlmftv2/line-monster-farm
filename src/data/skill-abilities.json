@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 736
+    "abilities": 737
   },
   "abilities": [
     {
@@ -9052,6 +9052,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 736,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0737",
+      "name": "枯木開花",
+      "version": 1,
+      "baseName": "枯木開花",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・ガッツ回復＜20＞\n・ガッツ回復速度＜+15%＞\n・被ダメ低下＜-15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 737,
       "status": "verified"
     }
   ]

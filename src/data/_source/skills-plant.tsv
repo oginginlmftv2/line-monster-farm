@@ -20,3 +20,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 プラント	中	1	踏みつけ	黄	ちから	21		D	A	C	C	踏みつけ										1	キングギドラ				
 プラント	零	4	噛みつき	黄	ちから	38		A+	B	D	A	連撃：噛みつき		噛みつき								1	キングギドラ				
 プラント	遠	6	引力光線	黄	かしこさ	44		B+	B+	B	S	連撃：引力光線		重力支配		ファー・エクステンド		テクニックエクステンド	キングギドラ:6	テクニックオーバー	キングギドラ:10	1	キングギドラ				
+プラント	零	1	根っこ	無	ちから	14		F	A	G	G	枯木開花												ガンセキソウ:2,ヒネクレソウ:2			
