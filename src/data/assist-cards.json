@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 100,
-    "withStats": 63,
+    "withStats": 64,
     "withExplanation": 92,
     "withFormations": 5
   },
@@ -4160,7 +4160,20 @@
       "event2": null,
       "releasedAt": "2026/10/31",
       "accessoryStatus": "unknown",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+60%",
+          "label": "能力PtUP"
+        },
+        {
+          "label": "全ステ上限アップ",
+          "value": "+120"
+        },
+        {
+          "value": "+6",
+          "label": "修行基礎値アップ"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
