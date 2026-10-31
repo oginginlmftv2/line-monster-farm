@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。sitemap.xml の lastmod（可視テキストが最後に変わった日・JST）と可視テキストのハッシュ。手で編集しない（build-spec 5-4）",
   "urls": {
-    "/": {"lastmod":"2026-10-31","hash":"3d0bb2295281d42f"},
+    "/": {"lastmod":"2026-10-31","hash":"018a4539723f488d"},
     "/monsters.html": {"lastmod":"2026-10-31","hash":"8bc9a27a27b0ceb1"},
     "/assist.html": {"lastmod":"2026-10-31","hash":"e37ce380c65941c9"},
     "/ikusei/sogo.html": {"lastmod":"2026-10-20","hash":"6a1c95bc04077e6c"},
@@ -9,7 +9,7 @@
     "/ikusei/lord-of-masters.html": {"lastmod":"2026-10-20","hash":"aad717bfeb82e3d6"},
     "/ikusei/solomon.html": {"lastmod":"2026-10-20","hash":"dd94f465119ddabb"},
     "/ikusei/hiden.html": {"lastmod":"2026-10-20","hash":"1f3b3ee36989de14"},
-    "/reroll.html": {"lastmod":"2026-10-31","hash":"ff9268ec1a3cad5d"},
+    "/reroll.html": {"lastmod":"2026-10-31","hash":"41954377a2e0fd10"},
     "/tips.html": {"lastmod":"2026-10-20","hash":"33739bb8b2fc40d8"},
     "/beginner.html": {"lastmod":"2026-10-20","hash":"375a3ef671f63119"},
     "/newbie.html": {"lastmod":"2026-10-20","hash":"cea7edd31aa3684a"},
@@ -499,6 +499,8 @@
     "/cards/c0003-MR.html": {"lastmod":"2026-10-20","hash":"6f7906ba4fa117fa"},
     "/cards/c0004-SSR.html": {"lastmod":"2026-10-20","hash":"64f53dc0b94de79f"},
     "/cards/c0005-MR.html": {"lastmod":"2026-10-20","hash":"89f342b61c8c95bb"},
+    "/cards/c0006-MR.html": {"lastmod":"2026-10-31","hash":"ed8bc77983b35fa0"},
+    "/cards/c0007-MR.html": {"lastmod":"2026-10-31","hash":"eab27dcbfcc51662"},
     "/gacha/": {"lastmod":"2026-10-31","hash":"7f082b65ae553b32"}
   }
 }
