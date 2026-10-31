@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 742
+    "abilities": 744
   },
   "abilities": [
     {
@@ -9124,6 +9124,32 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 742,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0743",
+      "name": "連撃：デスブルーム",
+      "version": 1,
+      "baseName": "連撃：デスブルーム",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜6回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 743,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0744",
+      "name": "デスブルーム",
+      "version": 1,
+      "baseName": "デスブルーム",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・この技の発動回数分[業物Lv5]＜最大Lv15まで＞\n・対象技命中時、相手に＜5秒＞ごとに最大ライフ＜5%＞の継続ダメージ＜30秒＞＜1回＞",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 744,
       "status": "verified"
     }
   ]
