@@ -3,7 +3,7 @@
   "urls": {
     "/": {"lastmod":"2026-10-31","hash":"018a4539723f488d"},
     "/monsters.html": {"lastmod":"2026-10-31","hash":"c91064ba76b83e6e"},
-    "/assist.html": {"lastmod":"2026-10-31","hash":"e37ce380c65941c9"},
+    "/assist.html": {"lastmod":"2026-11-01","hash":"4f06bce84e60f5bd"},
     "/ikusei/sogo.html": {"lastmod":"2026-10-20","hash":"6a1c95bc04077e6c"},
     "/ikusei/grand-slam.html": {"lastmod":"2026-10-20","hash":"f69180d7400db802"},
     "/ikusei/lord-of-masters.html": {"lastmod":"2026-10-20","hash":"aad717bfeb82e3d6"},
@@ -499,8 +499,8 @@
     "/cards/c0003-MR.html": {"lastmod":"2026-10-20","hash":"6f7906ba4fa117fa"},
     "/cards/c0004-SSR.html": {"lastmod":"2026-10-20","hash":"64f53dc0b94de79f"},
     "/cards/c0005-MR.html": {"lastmod":"2026-10-20","hash":"89f342b61c8c95bb"},
-    "/cards/c0006-MR.html": {"lastmod":"2026-10-31","hash":"29da7c8c1916f585"},
-    "/cards/c0007-MR.html": {"lastmod":"2026-10-31","hash":"eab27dcbfcc51662"},
+    "/cards/c0006-MR.html": {"lastmod":"2026-11-01","hash":"04afacb7a9afc583"},
+    "/cards/c0007-MR.html": {"lastmod":"2026-11-01","hash":"e3b7147a8477573a"},
     "/gacha/": {"lastmod":"2026-10-31","hash":"7f082b65ae553b32"}
   }
 }
