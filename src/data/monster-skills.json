@@ -9272,6 +9272,10 @@
         {
           "monsterId": "1251",
           "rarity": 2
+        },
+        {
+          "monsterId": "1253",
+          "rarity": 2
         }
       ],
       "note": "",
@@ -9427,6 +9431,10 @@
         },
         {
           "monsterId": "1209",
+          "rarity": 3
+        },
+        {
+          "monsterId": "1253",
           "rarity": 3
         }
       ],
@@ -9985,11 +9993,14 @@
         }
       ],
       "icon": null,
-      "unique": true,
-      "owners": [
-        "1250"
+      "unique": false,
+      "owners": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1253",
+          "rarity": 5
+        }
       ],
-      "unlockedBy": [],
       "note": "",
       "sortOrder": 247,
       "status": "verified"
@@ -10018,7 +10029,8 @@
       "icon": null,
       "unique": true,
       "owners": [
-        "1290"
+        "1290",
+        "1253"
       ],
       "unlockedBy": [],
       "note": "",
@@ -10067,7 +10079,8 @@
       "icon": null,
       "unique": true,
       "owners": [
-        "1290"
+        "1290",
+        "1253"
       ],
       "unlockedBy": [],
       "note": "",
