@@ -4147,8 +4147,7 @@
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     },
     {
       "cardId": "c0007-MR",
@@ -4166,8 +4165,7 @@
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     }
   ]
 }
