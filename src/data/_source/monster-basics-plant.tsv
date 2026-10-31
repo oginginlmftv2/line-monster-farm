@@ -11,3 +11,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 プラント	10	-5	10	5	0	0	A	F	早熟	ヨイ	ふつう	D	C	E	D	G	C	G	E	D	2026-10-07
 ヒネクレソウ	5	0	10	10	-5	0	B	F	早熟	ややワル	ふつう	D	D	D	E	E	E	C	E	F	2026-10-07
 ウスバカゲソウ	10	0	5	10	-5	0	C	F	晩成	ややヨイ	ふつう	C	C	D	E	E	C	C	F	C	2026-10-07
+キングギドラ	10	0	0	15	-5	0	B	C	ふつう	ワル	ふつう	C	C	B	F	C	B	E	B	C	2026-10-31
