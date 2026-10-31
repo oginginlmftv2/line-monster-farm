@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 741
+    "abilities": 742
   },
   "abilities": [
     {
@@ -9112,6 +9112,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 741,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0742",
+      "name": "乱れ咲き",
+      "version": 1,
+      "baseName": "乱れ咲き",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・技発動時の命中率＜20%＞毎に与ダメージの＜20%＞で追撃＜1回＞＜最大5回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 742,
       "status": "verified"
     }
   ]
