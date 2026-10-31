@@ -4498,6 +4498,37 @@
       "capturedAt": "2026-09-30"
     },
     {
+      "id": "1253",
+      "name": "グジラ・G侵食",
+      "talent": {
+        "life": 5,
+        "power": 10,
+        "wisdom": 0,
+        "accuracy": 5,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "D",
+      "moveSpeed": "E",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "F",
+        "海岸": "C",
+        "雪山": "E",
+        "火山": "C"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "D",
+        "zero": "D"
+      },
+      "capturedAt": "2026-10-31"
+    },
+    {
       "id": "1290",
       "name": "ゴジラ",
       "talent": {
