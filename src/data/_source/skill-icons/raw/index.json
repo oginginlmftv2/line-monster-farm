@@ -3881,5 +3881,14 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-31"
+  },
+  "sk-0824": {
+    "name": "デスブルーム",
+    "blood": "プラント",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "source": "プラント-deathbloom/icons/01.png（血統技図鑑の技詳細。図鑑でも暗転）",
+    "added_at": "2026-10-31"
   }
 }
