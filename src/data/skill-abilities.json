@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 736
+    "abilities": 742
   },
   "abilities": [
     {
@@ -9052,6 +9052,78 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 736,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0737",
+      "name": "枯木開花",
+      "version": 1,
+      "baseName": "枯木開花",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・ガッツ回復＜20＞\n・ガッツ回復速度＜+15%＞\n・被ダメ低下＜-15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 737,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0738",
+      "name": "蒼花爆散",
+      "version": 1,
+      "baseName": "蒼花爆散",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞＜20秒＞\n・相手に＜5秒＞ごとに最大ライフ＜8%＞の継続ダメージ\n・相手のガッツ回復速度＜-20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 738,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0739",
+      "name": "花弁",
+      "version": 1,
+      "baseName": "花弁",
+      "level": null,
+      "description": "対象技命中時、次の効果＜2回＞\n・相手に[移動速度低下＜-5%＞]を付与\n・自身の被ガッツダメージ＜-7%＞\n・相手よりガッツが多い時、追撃与ダメ＜+5%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 739,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0740",
+      "name": "捕食",
+      "version": 1,
+      "baseName": "捕食",
+      "level": null,
+      "description": "対象技命中時、次の効果＜2回＞＜20秒＞\n・相手の技を1つランダムで使用不可\n・攻撃ステータス上昇＜+15%＞\n・ガッツ回復＜15＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 740,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0741",
+      "name": "連撃：捕食",
+      "version": 1,
+      "baseName": "連撃：捕食",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜100%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 741,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0742",
+      "name": "乱れ咲き",
+      "version": 1,
+      "baseName": "乱れ咲き",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・技発動時の命中率＜20%＞毎に与ダメージの＜20%＞で追撃＜1回＞＜最大5回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 742,
       "status": "verified"
     }
   ]
