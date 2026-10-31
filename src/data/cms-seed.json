@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 365,
+  "count": 366,
   "monsters": [
     {
       "id": "0101",
@@ -3906,8 +3906,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1704,
-      "current": 1704,
+      "baseline": 1705,
+      "current": 1705,
       "indexable": true
     },
     {
@@ -3931,8 +3931,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1586,
-      "current": 1586,
+      "baseline": 1587,
+      "current": 1587,
       "indexable": true
     },
     {
@@ -3956,8 +3956,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1620,
-      "current": 1620,
+      "baseline": 1621,
+      "current": 1621,
       "indexable": true
     },
     {
@@ -3981,8 +3981,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1579,
-      "current": 1579,
+      "baseline": 1580,
+      "current": 1580,
       "indexable": true
     },
     {
@@ -4006,8 +4006,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1577,
-      "current": 1577,
+      "baseline": 1578,
+      "current": 1578,
       "indexable": true
     },
     {
@@ -4031,8 +4031,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1863,
-      "current": 1863,
+      "baseline": 1864,
+      "current": 1864,
       "indexable": true
     },
     {
@@ -4056,8 +4056,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1842,
-      "current": 1842,
+      "baseline": 1847,
+      "current": 1847,
       "indexable": true
     },
     {
@@ -4081,9 +4081,34 @@
       "createdAt": "2026-09-30",
       "updatedAt": "2026-09-30",
       "releasedAt": "2026-09-30",
-      "baseline": 1939,
-      "current": 2243,
+      "baseline": 1963,
+      "current": 2267,
       "indexable": true
+    },
+    {
+      "id": "1253",
+      "arrayIndex": 365,
+      "name": "グジラ・G侵食",
+      "aura": "黒",
+      "mon": "獣族",
+      "mainBlood": "グジラ",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "コラボ限定",
+      "image": null,
+      "imageSource": null,
+      "gwImg": null,
+      "url": "/monsters/kemono/gujira/1253.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-10-31",
+      "releasedAt": "2026-10-31",
+      "baseline": 1094,
+      "current": 1094,
+      "indexable": false
     },
     {
       "id": "1290",
@@ -4106,8 +4131,8 @@
       "createdAt": "",
       "updatedAt": "2026-10-31",
       "releasedAt": "2026-10-31",
-      "baseline": 1332,
-      "current": 1332,
+      "baseline": 1662,
+      "current": 1662,
       "indexable": true
     },
     {

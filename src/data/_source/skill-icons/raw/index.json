@@ -3797,5 +3797,53 @@
     "framed": true,
     "added_at": "2026-10-17",
     "note": "別の端末のスクショで枠の検出がずれたため、位置を手で指定して切り抜いた（明るいマス）"
+  },
+  "sk-0817": {
+    "name": "きりさく",
+    "blood": "グジラ",
+    "source": "20261031-174323.png",
+    "cell": [
+      1,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-31"
+  },
+  "sk-0818": {
+    "name": "体内放射",
+    "blood": "グジラ",
+    "source": "20261031-174330.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-31"
+  },
+  "sk-0819": {
+    "name": "尻尾",
+    "blood": "グジラ",
+    "source": "20261031-174410.png",
+    "cell": [
+      3,
+      3
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-31"
+  },
+  "sk-0820": {
+    "name": "放射熱線",
+    "blood": "グジラ",
+    "source": "20261031-174420.png",
+    "cell": [
+      6,
+      2
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-31"
   }
 }

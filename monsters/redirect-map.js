@@ -364,5 +364,6 @@ window.LMF_REDIRECT_MAP = {
   "361": "souzou/metalner/2751.html",
   "362": "souzou/gali/1180.html",
   "363": "kemono/gujira/1290.html",
-  "364": "genrei/plant/2152.html"
+  "364": "genrei/plant/2152.html",
+  "365": "kemono/gujira/1253.html"
 };

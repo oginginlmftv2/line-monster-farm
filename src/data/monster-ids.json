@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 365,
+ "count": 366,
  "monsters": [
   {
    "id": "0101",
@@ -2841,6 +2841,25 @@
    "localImg": "1252.jpg",
    "url": "/monsters/kemono/gujira/1252.html",
    "image": "img/monster/1252.jpg"
+  },
+  {
+   "id": "1253",
+   "sortOrder": 1253,
+   "isNew": true,
+   "name": "グジラ・G侵食",
+   "arrayIndex": 365,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "グジラ",
+   "bloodSlug": "gujira",
+   "subBlood": "レアモン",
+   "aura": "黒",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": null,
+   "url": "/monsters/kemono/gujira/1253.html",
+   "image": "img/monster/1253.jpg"
   },
   {
    "id": "1290",

@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-31T07:43:15Z",
-  "count": 122,
+  "exportedAt": "2026-10-31T08:54:50Z",
+  "count": 123,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -109,6 +109,16 @@
       "createdAt": "2026-09-30",
       "updatedAt": "2026-09-30",
       "releasedAt": "2026-09-30"
+    },
+    "1253": {
+      "id": "1253",
+      "name": "グジラ・G侵食",
+      "arrayIndex": 365,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-10-31",
+      "releasedAt": "2026-10-31"
     },
     "1290": {
       "id": "1290",

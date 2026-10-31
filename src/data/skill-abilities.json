@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 725
+    "abilities": 731
   },
   "abilities": [
     {
@@ -8916,6 +8916,80 @@
         "bf-0026"
       ],
       "sortOrder": 725,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0726",
+      "name": "きりさく",
+      "version": 1,
+      "baseName": "きりさく",
+      "level": null,
+      "description": "対象技命中時、次の効果＜3回＞\n・自身に[追撃Lv2]付与",
+      "tags": [],
+      "buffs": [
+        "bf-0008"
+      ],
+      "sortOrder": 726,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0727",
+      "name": "連撃：体内放射",
+      "version": 1,
+      "baseName": "連撃：体内放射",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜25%＞の追撃を＜2回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 727,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0728",
+      "name": "体内放射",
+      "version": 1,
+      "baseName": "体内放射",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・相手の忠誠度が低いほど相手被ダメ上昇＜最大60%＞\n・自身のガッツ回復速度＜+40%＞\n・最大ライフ30%の【シールド】を展開[最大値+200]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 728,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0729",
+      "name": "怪獣王の巨躯",
+      "version": 1,
+      "baseName": "怪獣王の巨躯",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜2回＞\n・相手の忠誠度＜-25%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 729,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0730",
+      "name": "連撃：放射熱線",
+      "version": 1,
+      "baseName": "連撃：放射熱線",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜50%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 730,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0731",
+      "name": "力満ちる背鰭",
+      "version": 1,
+      "baseName": "力満ちる背鰭",
+      "level": null,
+      "description": "対象技命中時、次の効果\n・相手の丈夫さ＜-30%＞＜2回＞\n・ライフの30%を攻撃ステータスに加算\n・[有利]攻撃ステータス上昇＜+15%＞\n・攻撃ステの上昇割合を＜最大50%＞まで追撃与ダメに適用",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 731,
       "status": "verified"
     }
   ]
