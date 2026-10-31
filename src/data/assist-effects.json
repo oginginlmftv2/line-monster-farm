@@ -6,9 +6,9 @@
   "generatedAt": null,
   "counts": {
     "cards": 100,
-    "cardsWithEffects": 97,
-    "cardsDraft": 3,
-    "effects": 1059
+    "cardsWithEffects": 99,
+    "cardsDraft": 1,
+    "effects": 1084
   },
   "cards": {
     "g1-MR-serafina": {
@@ -10461,12 +10461,296 @@
       ]
     },
     "c0006-MR": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "c0006-MR-e01",
+          "name": "血統オーラ上限解放 +80",
+          "description": "育成対象と主血統、副血統またはオーラが一致したとき、対象のすべての基礎ステータスを上限アップ\n主血統が一致したとき、オーラブリーダー/モン類ブリーダーの効果が発動する",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "or",
+            "types": [
+              "mainBloodlineMatch",
+              "subBloodlineMatch",
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0006-MR-e02",
+          "name": "オーラブリーダー +60%",
+          "description": "育成対象とオーラ一致したとき、ブリーダーがトレーニングに出現する（3人まで）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0006-MR-e03",
+          "name": "トレ効果アップ +11%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e04",
+          "name": "大成功率アップ +10",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e05",
+          "name": "ルミナス上限アップ +140",
+          "description": "ライフとかしこさの基礎ステータスを上限アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e06",
+          "name": "オーラ修行アップ +40%",
+          "description": "育成対象とオーラ一致したとき、修行の基礎ステータス上昇量アップ（重複不可）",
+          "unlockRank": "1凸",
+          "sortOrder": 6,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0006-MR-e07",
+          "name": "ルミナスボーナスⅡ +2",
+          "description": "ライフ、かしこさの素質アップ+2%\n一緒にトレーニングしたとき、ライフ、かしこさの上昇量アップ+2",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e08",
+          "name": "修行効果アップ +10%",
+          "description": "修行したとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 8,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e09",
+          "name": "大成功率アップ +9",
+          "description": "一緒にトレーニングしたとき、大成功の確率アップ",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e10",
+          "name": "オーラブリーダー・恩恵Ⅱ",
+          "description": "ブリーダートレ出現率+25%\nブリーダーがトレーニングに出現時、発動中のステータスアップの効果量を1UP、応援効果+25%",
+          "unlockRank": "3凸",
+          "sortOrder": 10,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0006-MR-e11",
+          "name": "トレ効果アップ +10%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0006-MR-e12",
+          "name": "オーラブリーダー・継承",
+          "description": "ブリーダーが一緒にトレーニング時でも、アシスト効果が発動するようになる",
+          "unlockRank": "4凸",
+          "sortOrder": 12,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        }
+      ]
     },
     "c0007-MR": {
-      "status": "draft",
-      "effects": []
+      "status": "verified",
+      "effects": [
+        {
+          "effectId": "c0007-MR-e01",
+          "name": "オーラ編成ボーナスR:師匠 +1",
+          "description": "育成対象とオーラ一致したとき、編成にあるカードタイプによって次の効果\n師匠タイプ編成時:育成開始時に修行チケットを1枚獲得",
+          "unlockRank": "無凸",
+          "sortOrder": 1,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e02",
+          "name": "オーラステ上限ブースト +50%",
+          "description": "育成対象とオーラが一致したとき、同じオーラのステータス上限解放の効果量をアップ（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 2,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e03",
+          "name": "オーラトレ集合率アップⅡ +20%",
+          "description": "育成対象とオーラ一致したとき、トレーニングに出現するキャラが集まりやすくなる。カードキャラの集まりやすさ上昇（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 3,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e04",
+          "name": "トレ人数効果アップ +100%",
+          "description": "一緒にトレーニングしたとき、アシスト人数効果アップ（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 4,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e05",
+          "name": "トレ効果アップ +9%",
+          "description": "一緒にトレーニングしたとき、基礎ステータスの上昇量アップ",
+          "unlockRank": "無凸",
+          "sortOrder": 5,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e06",
+          "name": "サポートトレ効果アップⅡ +10%",
+          "description": "ストーリー専用キャラクターに『トレ効果アップ』のアシスト効果付与と、初期親密度+50\nおまかせ育成時、育成完了時のモンスターの全ステータスを+10%（重複不可）",
+          "unlockRank": "無凸",
+          "sortOrder": 6,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e07",
+          "name": "アサルトボーナスⅡ +2",
+          "description": "ちから、かしこさの素質アップ+2%\n一緒にトレーニングしたとき、ちから、かしこさの上昇量アップ+2",
+          "unlockRank": "1凸",
+          "sortOrder": 7,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e08",
+          "name": "オーラリーグブースト",
+          "description": "育成対象とオーラが一致した時、総当たり戦の勝率がアップし、総当たり戦の成績Good以上でご褒美に能力Pt+20、体力10回復\n育成中、時巡りの手鏡の使用上限+1（重複不可）",
+          "unlockRank": "1凸",
+          "sortOrder": 8,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e09",
+          "name": "オーラコンペティション・修行",
+          "description": "育成対象とオーラが一致し、このアシスト効果が解放された状態でライバル勝利後の専用イベントの進行度が進んだ時、ようす「対抗心」を付与（重複不可）",
+          "unlockRank": "2凸",
+          "sortOrder": 9,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e10",
+          "name": "修行効果アップⅡ +12%",
+          "description": "修行したとき、基礎ステータスの上昇量アップ\n育成開始時修行チケットを1枚獲得",
+          "unlockRank": "2凸",
+          "sortOrder": 10,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e11",
+          "name": "オーラ編成ボーナスR:師匠 +1",
+          "description": "育成対象とオーラ一致したとき、編成にあるカードタイプによって次の効果\n師匠タイプ編成時:育成開始時に修行チケットを1枚獲得",
+          "unlockRank": "3凸",
+          "sortOrder": 11,
+          "conditional": 1,
+          "conditions": {
+            "operator": "and",
+            "types": [
+              "auraMatch"
+            ]
+          }
+        },
+        {
+          "effectId": "c0007-MR-e12",
+          "name": "トレレベルアップ +2",
+          "description": "一緒にトレーニングすると、トレーニングレベルが一時的に上昇する※最大Lv5まで（重複不可）",
+          "unlockRank": "3凸",
+          "sortOrder": 12,
+          "conditional": 0,
+          "conditions": null
+        },
+        {
+          "effectId": "c0007-MR-e13",
+          "name": "基礎ステータス上限アップ +300",
+          "description": "すべての基礎ステータスを上限アップ",
+          "unlockRank": "4凸",
+          "sortOrder": 13,
+          "conditional": 0,
+          "conditions": null
+        }
+      ]
     }
   }
 }
