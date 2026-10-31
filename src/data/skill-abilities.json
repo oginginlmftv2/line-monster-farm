@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 737
+    "abilities": 738
   },
   "abilities": [
     {
@@ -9064,6 +9064,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 737,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0738",
+      "name": "蒼花爆散",
+      "version": 1,
+      "baseName": "蒼花爆散",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞＜20秒＞\n・相手に＜5秒＞ごとに最大ライフ＜8%＞の継続ダメージ\n・相手のガッツ回復速度＜-20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 738,
       "status": "verified"
     }
   ]
