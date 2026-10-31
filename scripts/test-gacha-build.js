@@ -104,6 +104,8 @@ old update
 <!-- GACHA:NAV:START -->
 old nav
 <!-- GACHA:NAV:END -->
+<!-- GACHA:UPCOMING:START -->
+<!-- GACHA:UPCOMING:END -->
 <!-- GACHA:PICKUP:MONSTER:START -->
 old monster
 <!-- GACHA:PICKUP:MONSTER:END -->
