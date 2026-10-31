@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 731
+    "abilities": 734
   },
   "abilities": [
     {
@@ -8990,6 +8990,44 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 731,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0732",
+      "name": "踏みつけ",
+      "version": 1,
+      "baseName": "踏みつけ",
+      "level": null,
+      "description": "対象技命中時、次の効果＜3回＞\n・相手に[移動速度低下＜20%＞]を付与＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 732,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0733",
+      "name": "連撃：噛みつき",
+      "version": 1,
+      "baseName": "連撃：噛みつき",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 733,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0734",
+      "name": "噛みつき",
+      "version": 1,
+      "baseName": "噛みつき",
+      "level": null,
+      "description": "対象技命中時、次の効果＜1回＞\n・相手に[裂傷Lv4]を付与\n・クリティカル時は更に相手に[裂傷Lv4]を付与\n・ちからとかしこさの高い方を攻撃ステータスとして使用＜20秒＞",
+      "tags": [],
+      "buffs": [
+        "bf-0031"
+      ],
+      "sortOrder": 734,
       "status": "verified"
     }
   ]

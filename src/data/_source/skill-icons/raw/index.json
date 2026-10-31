@@ -3845,5 +3845,29 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-10-31"
+  },
+  "sk-0821": {
+    "name": "踏みつけ",
+    "blood": "プラント",
+    "source": "20261031-193603.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-10-31"
+  },
+  "sk-0822": {
+    "name": "噛みつき",
+    "blood": "プラント",
+    "source": "20261031-193611.png",
+    "cell": [
+      4,
+      4
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-10-31"
   }
 }
