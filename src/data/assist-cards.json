@@ -4183,8 +4183,8 @@
           "label": "全ステ上限アップ"
         },
         {
-          "value": "+6",
-          "label": "修行基礎値アップ"
+          "label": "修行基礎値アップ",
+          "value": "+6"
         }
       ],
       "limitBreak": null,
