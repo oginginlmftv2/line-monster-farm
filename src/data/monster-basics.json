@@ -4498,6 +4498,37 @@
       "capturedAt": "2026-09-30"
     },
     {
+      "id": "1290",
+      "name": "ゴジラ",
+      "talent": {
+        "life": 0,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 0,
+        "evasion": 0,
+        "defense": 0
+      },
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "早熟",
+      "goodEvil": "ややワル",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "B",
+        "森林": "D",
+        "海岸": "B",
+        "雪山": "D",
+        "火山": "B"
+      },
+      "range": {
+        "far": "A",
+        "mid": "A",
+        "near": "C",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-31"
+    },
+    {
       "id": "1301",
       "name": "ママニャー",
       "talent": {
@@ -7596,6 +7627,37 @@
         "zero": "C"
       },
       "capturedAt": "2026-10-07"
+    },
+    {
+      "id": "2152",
+      "name": "キングギドラ",
+      "talent": {
+        "life": 10,
+        "power": 0,
+        "wisdom": 0,
+        "accuracy": 15,
+        "evasion": -5,
+        "defense": 0
+      },
+      "gutsRecovery": "B",
+      "moveSpeed": "C",
+      "growthType": "ふつう",
+      "goodEvil": "ワル",
+      "size": "ふつう",
+      "terrain": {
+        "砂漠": "C",
+        "森林": "C",
+        "海岸": "B",
+        "雪山": "F",
+        "火山": "C"
+      },
+      "range": {
+        "far": "B",
+        "mid": "E",
+        "near": "B",
+        "zero": "C"
+      },
+      "capturedAt": "2026-10-31"
     },
     {
       "id": "2206",
