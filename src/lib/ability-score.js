@@ -89,6 +89,15 @@ function createScorer(rubric) {
         return { kind: 'state', lv: (e.unit === 'Lv' ? v : pctToLv(v != null ? v : 10)) * C.defense };
       }
       case '被ダメブロック': {
+        // 技発動のたびに積む付与（怪獣王）は、重なると掛け算（20%が2つで36%。管理者確認 2026-11-01）。
+        // 各技の後の重なり数で試合中の平均をとる。「3つの時…ブロック効果がなくなり…消去」は3つ目で0に戻る
+        const pile = String(raw).match(/技発動時に\[[^\]]*被ダメブロック<(\d+)%>[^\]]*\]付与(?:<(\d+)回>)?/);
+        if (pile && e.unit !== 'Lv') {
+          const p = Number(pile[1]) / 100, cap = pile[2] ? Number(pile[2]) : Infinity, reset = line.blockResetAt || Infinity;
+          let sum = 0, n = 0;
+          for (let k = 1; k <= B.skillsPerBattle; k++) { n = Math.min(cap, n + 1); if (n >= reset) { n = 0; continue; } sum += 1 - Math.pow(1 - p, n); }
+          return { kind: 'state', lv: pctToLv(sum / B.skillsPerBattle * 100) * C.special * C.defense };
+        }
         const step = String(raw).match(/<(\d+)%>ずつ減少/);
         const pct = step && e.unit !== 'Lv' ? Math.max(0, (v || 0) - Number(step[1]) * (hitsPerBattle - 1) / 2) : v;
         return { kind: 'state', lv: (e.unit === 'Lv' ? pct : pctToLv(pct || 0)) * C.special * C.defense };
@@ -149,7 +158,9 @@ function createScorer(rubric) {
       }
       case 'クリ確定': return { kind: 'event', lv: pctToLv(oneSkillShare * (B.critMultiplier - 1) * (1 - B.critRate / 100)) };
       // 「発動技の必中をLv3に上昇」は2本目の必中ではなく、同じ必中のLvが上がるだけ（1発分のLv補正の差）
-      case '必中': if (/必中をLv(\d+)に上昇/.test(raw)) { const n = Number(raw.match(/必中をLv(\d+)に上昇/)[1]); return { kind: 'event', lv: C.decisive * C.decisiveLvStep * (n - 1), decisive: true, upgradeHalf: true }; }
+      // 「必中をLv3からLv5に上昇」は上がったLvの差だけ（絶対負けない！ II）
+      case '必中': if (/必中をLv(\d+)からLv(\d+)に上昇/.test(raw)) { const [, from, to] = raw.match(/必中をLv(\d+)からLv(\d+)に上昇/).map(Number); return { kind: 'event', lv: C.decisive * C.decisiveLvStep * (to - from), decisive: true, upgradeHalf: true }; }
+        if (/必中をLv(\d+)に上昇/.test(raw)) { const n = Number(raw.match(/必中をLv(\d+)に上昇/)[1]); return { kind: 'event', lv: C.decisive * C.decisiveLvStep * (n - 1), decisive: true, upgradeHalf: true }; }
         return { kind: 'event', lv: C.decisive * (1 + C.decisiveLvStep * ((v || 1) - 1)), shots: /発動技と次の技/.test(raw) ? 2 : 1, decisive: true };
       case '完全回避': return { kind: 'event', lv: C.decisive * C.evadeOverHit * (1 + C.decisiveLvStep * ((v || 2) - 1)), decisive: true };
       case '食いしばり': return { kind: 'event', lv: F['食いしばり'], decisive: true };
@@ -165,6 +176,10 @@ function createScorer(rubric) {
         return { kind: 'event', lv: pctToLv(amount / B.mainDamage * oneSkillShare) * 1.5 };
       }
       case 'シールド破壊': return { kind: 'event', lv: F['シールド破壊'] };
+      case 'シールド阻害': return { kind: 'event', lv: F['シールド破壊'] * (v || 0) / 100 };
+      // 移動速度は1段（10%）あたり移動速度_per1。上げるのも相手を下げるのも同じ値（仮置き）
+      case '移動速度': return { kind: 'state', lv: (v || 1) * F['移動速度_per1'] };
+      case '相手移動速度低下': return { kind: 'state', lv: (e.unit === '%' ? (v || 0) / 10 : (v || 1)) * F['移動速度_per1'] };
       case '封じ': return { kind: 'event', lv: F['封じ'] };
       case 'ライフ回復': return { kind: 'event', lv: 5 };
       case '無効化・解除': {
@@ -386,6 +401,9 @@ function createScorer(rubric) {
       if (l.amplify) amplify += (l.amplify - 1) * conditionFactor(l.conditions);
       if (l.extendDuration) extendSec += l.extendDuration * conditionFactor(l.conditions);
     }
+    // 「[Gエネルギー蓄積]が3つの時、…被ダメブロック効果がなくなり」は積んだブロックが3つ目で消える（怪獣王 III・IV）
+    const resetLine = parsed.lines.find(l => /が(\d+)つの時、[^\n]*被ダメブロック効果がなくなり/.test(l.raw));
+    const blockResetAt = resetLine ? Number(resetLine.raw.match(/が(\d+)つの時/)[1]) : null;
     const effLines = parsed.lines.map((l, i) => [l, i]).filter(([l]) => l.effects.length);
     const chainLimit = new Map();
     const lastEff = effLines[effLines.length - 1];
@@ -430,7 +448,7 @@ function createScorer(rubric) {
       const perUse = /技の発動回数に応じて/.test(line.raw);
       const stackBoost = (line.maxStack ? 1 + (line.maxStack - 1) * 0.5 : 1) * (1 + (grantStacks - 1) * (C.grantStackCredit ?? 0.5));
       for (const e of line.effects) {
-        const ev = effectValue(e, line);
+        const ev = effectValue(e, blockResetAt ? { ...line, blockResetAt } : line);
         if (ev.held) hasHeldGrant = true;
         if (!ev.lv) continue;
         let qty = ev.kind === 'event' ? eventCount(line, ev.decisive) * (ev.shots || 1) : (persistentGrant ? 1 : stateUptime(line, isNext));
