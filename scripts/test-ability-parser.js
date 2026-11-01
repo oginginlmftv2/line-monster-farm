@@ -222,4 +222,21 @@ const atoms = line => line.effects.map(e => e.atom);
   assert.deepStrictEqual(crit.map(l => [l.effects[0].value, !!l.conditions.stance]), [[20, false], [30, true]]);
 }
 
+// --- ゴジラ・キングギドラ（2026-11-01）：3回目の必中とオーラ有利時の段階上げは行を分ける。「丈夫さ<30%>無視」は相手の丈夫さ
+{
+  const zettai = parse('絶対負けない！ II', '[自身黄][前半]技発動時、命中率＜＋２０％＞＜２回＞、３回目の技発動時に必中Lv3＜１回＞、オーラ有利時は３回目必中Lv5＜１回＞');
+  assert.deepStrictEqual(zettai.lines.map(l => [atoms(l).join(), l.limit, l.skillCond.stance || null, l.residual]), [['命中率上昇', 2, null, ''], ['必中', 1, null, ''], ['必中', 1, 'オーラ有利', '']]);
+  const mitsu = parse('三つ首の破壊獣 II', '[自身黄][前半]オーラ技命中時、次の効果<br>・相手のライフステ＜１０％＞を攻撃ステに加算<br>・丈夫さ＜３０％＞無視');
+  assert.deepStrictEqual(mitsu.lines.slice(1).map(l => [atoms(l).join(), l.residual]), [['攻撃ステ加算', ''], ['相手ステ低下', '']]);
+  // 読み替えは採点だけ。ページに出す本文（normalize）はゲームの書き方のまま
+  assert.ok(/3回目必中Lv5/.test(p.normalize('技発動時、命中率＜＋２０％＞＜２回＞、３回目の技発動時に必中Lv3＜１回＞、オーラ有利時は３回目必中Lv5＜１回＞')));
+  assert.ok(/丈夫さ<30%>無視/.test(p.normalize('・丈夫さ＜３０％＞無視')));
+  const mitsu2 = parse('三つ首の破壊獣 II', '・相手に[移動速度低下＜２０％＞]を付与＜３回＞＜２０秒＞');
+  assert.deepStrictEqual(atoms(mitsu2.lines[0]), ['相手移動速度低下']);
+  // シールド阻害は「技でダメージを与えた時」。IVの加算は相手がシールドを張ったときだけ（相手の条件で、自分のシールドではない）
+  const roar = parse('轟き渡る咆哮 IV', '[自身黒]バトル中、次の効果<br>・技でダメージを与えた時、相手のシールド阻害＜１００％＞＜２０秒＞＜１回＞<br>・[後半]阻害したシールドの合計耐久値を攻撃ステータス加算＜最大２０００まで＞');
+  assert.deepStrictEqual(roar.lines.slice(1).map(l => [atoms(l).join(), l.trigger, l.residual]), [['シールド阻害', '技命中時', ''], ['ステ上昇', null, '']]);
+  assert.deepStrictEqual(roar.lines[2].conditions.opponentShield, ['相手シールド展開中']);
+}
+
 console.log('test-ability-parser: OK');
