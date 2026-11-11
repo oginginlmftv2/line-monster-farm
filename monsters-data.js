@@ -368,4 +368,5 @@ const monstersData = [
   { name: 'ゴジラ', aura: '黒', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '1290.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'ロード種' },
   { name: 'キングギドラ', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '2152.jpg', mon: '幻霊', mainMon: 'プラント', subMon: 'レアモン' },
   { name: 'グジラ・G侵食', aura: '黒', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '1253.jpg', mon: '獣族', mainMon: 'グジラ', subMon: 'レアモン' },
+  { name: 'モスラ', aura: '黄', limited: true, limitedLabel: 'コラボ限定', gwImg: null, localImg: '1453.jpg', mon: '創造', mainMon: 'ヒノトリ', subMon: 'レアモン' },
 ];

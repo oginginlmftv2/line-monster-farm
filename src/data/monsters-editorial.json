@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-10-31T10:54:07Z",
-  "count": 123,
+  "exportedAt": "2026-11-11T14:19:44Z",
+  "count": 124,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -195,6 +195,17 @@
       "createdAt": "2026-08-24",
       "updatedAt": "2026-08-24",
       "releasedAt": "2026-02-28"
+    },
+    "1453": {
+      "id": "1453",
+      "name": "モスラ",
+      "arrayIndex": 366,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-11-11",
+      "releasedAt": "2026-11-14",
+      "hidden": true
     },
     "1553": {
       "id": "1553",
