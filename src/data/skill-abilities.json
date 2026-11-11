@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 744
+    "abilities": 749
   },
   "abilities": [
     {
@@ -9150,6 +9150,68 @@
         "bf-0021"
       ],
       "sortOrder": 744,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0745",
+      "name": "連撃：ファイアウェーブ",
+      "version": 1,
+      "baseName": "連撃：ファイアウェーブ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 745,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0746",
+      "name": "ファイアウェーブ",
+      "version": 1,
+      "baseName": "ファイアウェーブ",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・被ダメブロック＜15%＞と移動速度＜+20%＞\n[ファイアウェーブ]発動時、上記効果を終了し、以降は攻撃ステータス上昇＜+10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 746,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0747",
+      "name": "エタニティフレア",
+      "version": 1,
+      "baseName": "エタニティフレア",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・自身のオーラと同じオーラ技に[業物Lv4]\n[エタニティフレア]発動時、上記効果を終了し、以降は被ダメブロック＜20%＞",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 747,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0748",
+      "name": "フレイムタイフーン",
+      "version": 1,
+      "baseName": "フレイムタイフーン",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・被ダメブロック＜15%＞と移動速度＜+20%＞\n[フレイムタイフーン]発動時、上記効果を終了し、以降は攻撃ステータス上昇＜+10%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 748,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0749",
+      "name": "ファントムブレイク",
+      "version": 1,
+      "baseName": "ファントムブレイク",
+      "level": null,
+      "description": "バトル開始時、次の効果\n・地形適性＜+10%＞、[火山]時は＜+15%＞\n・回避ステータスを残りライフ割合に応じて加算＜最大20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 749,
       "status": "verified"
     }
   ]
