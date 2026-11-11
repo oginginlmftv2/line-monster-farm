@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 366,
+ "count": 367,
  "monsters": [
   {
    "id": "0101",
@@ -3240,6 +3240,25 @@
    "localImg": "S__93200511_0.jpg",
    "url": "/monsters/souzou/hinotori/1452.html",
    "image": "img/monster/1452.jpg"
+  },
+  {
+   "id": "1453",
+   "sortOrder": 1453,
+   "isNew": true,
+   "name": "モスラ",
+   "arrayIndex": 366,
+   "mon": "創造",
+   "monSlug": "souzou",
+   "blood": "ヒノトリ",
+   "bloodSlug": "hinotori",
+   "subBlood": "レアモン",
+   "aura": "黄",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": "1453.jpg",
+   "url": "/monsters/souzou/hinotori/1453.html",
+   "image": "img/monster/1453.jpg"
   },
   {
    "id": "1501",
