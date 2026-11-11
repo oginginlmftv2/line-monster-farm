@@ -500,6 +500,16 @@
       "sourceName": "キングギドラ",
       "rarity": "MR",
       "cardId": "c0007-MR"
+    },
+    {
+      "sourceName": "モスラ",
+      "rarity": "SSR",
+      "cardId": "c0008-SSR"
+    },
+    {
+      "sourceName": "メカゴジラ",
+      "rarity": "SSR",
+      "cardId": "c0009-SSR"
     }
   ]
 }
