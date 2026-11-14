@@ -4216,16 +4216,16 @@
       "accessoryStatus": "yes",
       "stats": [
         {
-          "label": "応援効果",
-          "value": "+25%"
+          "value": "+25%",
+          "label": "応援効果"
         },
         {
           "label": "得意率",
           "value": "+30%"
         },
         {
-          "label": "初期命中",
-          "value": "+28"
+          "value": "+28",
+          "label": "初期命中"
         }
       ],
       "limitBreak": null,
@@ -4251,12 +4251,12 @@
           "label": "応援効果"
         },
         {
-          "label": "得意率",
-          "value": "+30%"
+          "value": "+30%",
+          "label": "得意率"
         },
         {
-          "label": "初期かしこさ",
-          "value": "+25"
+          "value": "+25",
+          "label": "初期かしこさ"
         }
       ],
       "limitBreak": null,
