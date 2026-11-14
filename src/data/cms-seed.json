@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 366,
+  "count": 367,
   "monsters": [
     {
       "id": "0101",
@@ -4583,8 +4583,8 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1802,
-      "current": 1802,
+      "baseline": 1821,
+      "current": 1821,
       "indexable": true
     },
     {
@@ -4608,8 +4608,33 @@
       "createdAt": "",
       "updatedAt": "",
       "releasedAt": "",
-      "baseline": 1887,
-      "current": 1887,
+      "baseline": 1906,
+      "current": 1906,
+      "indexable": true
+    },
+    {
+      "id": "1453",
+      "arrayIndex": 366,
+      "name": "モスラ",
+      "aura": "黄",
+      "mon": "創造",
+      "mainBlood": "ヒノトリ",
+      "subBlood": "レアモン",
+      "limited": true,
+      "limitedLabel": "コラボ限定",
+      "image": "1453.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/souzou/hinotori/1453.html",
+      "explanation": "",
+      "formations": [],
+      "author": "ソラシド",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-11-14",
+      "releasedAt": "2026-11-14",
+      "baseline": 1720,
+      "current": 1720,
       "indexable": true
     },
     {
