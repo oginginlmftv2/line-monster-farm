@@ -1,6 +1,6 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-11-14T12:41:25Z",
+  "exportedAt": "2026-11-14T13:21:06Z",
   "count": 125,
   "monsters": {
     "1080": {
@@ -128,8 +128,7 @@
       "explanationLength": 0,
       "formations": [],
       "updatedAt": "2026-11-14",
-      "releasedAt": "2026-11-14",
-      "hidden": true
+      "releasedAt": "2026-11-14"
     },
     "1290": {
       "id": "1290",
