@@ -6,7 +6,7 @@
   "generatedAt": null,
   "counts": {
     "cards": 102,
-    "withStats": 65,
+    "withStats": 67,
     "withExplanation": 94,
     "withFormations": 5
   },
@@ -4211,10 +4211,23 @@
       "cardType": "命中",
       "monType": "創造",
       "image": "assist-cards/c0008-SSR.jpg",
-      "event2": null,
+      "event2": "超底力",
       "releasedAt": "2026/11/14",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "label": "応援効果",
+          "value": "+25%"
+        },
+        {
+          "label": "得意率",
+          "value": "+30%"
+        },
+        {
+          "label": "初期命中",
+          "value": "+28"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
@@ -4232,7 +4245,20 @@
       "event2": null,
       "releasedAt": "2026/11/14",
       "accessoryStatus": "yes",
-      "stats": [],
+      "stats": [
+        {
+          "value": "+28%",
+          "label": "応援効果"
+        },
+        {
+          "label": "得意率",
+          "value": "+30%"
+        },
+        {
+          "label": "初期かしこさ",
+          "value": "+25"
+        }
+      ],
       "limitBreak": null,
       "ratings": null,
       "explanation": "",
