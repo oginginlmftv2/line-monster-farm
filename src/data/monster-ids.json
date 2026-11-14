@@ -85,7 +85,7 @@
   "ノーブル": 80,
   "ロード種": 90
  },
- "count": 367,
+ "count": 368,
  "monsters": [
   {
    "id": "0101",
@@ -2860,6 +2860,25 @@
    "localImg": "1253.jpg",
    "url": "/monsters/kemono/gujira/1253.html",
    "image": "img/monster/1253.jpg"
+  },
+  {
+   "id": "1280",
+   "sortOrder": 1280,
+   "isNew": true,
+   "name": "メカゴジラ",
+   "arrayIndex": 367,
+   "mon": "獣族",
+   "monSlug": "kemono",
+   "blood": "グジラ",
+   "bloodSlug": "gujira",
+   "subBlood": "ノーブル",
+   "aura": "白",
+   "limited": true,
+   "limitedLabel": "コラボ限定",
+   "gwImg": null,
+   "localImg": "1280.jpg",
+   "url": "/monsters/kemono/gujira/1280.html",
+   "image": "img/monster/1280.jpg"
   },
   {
    "id": "1290",
