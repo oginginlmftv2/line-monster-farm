@@ -153,7 +153,7 @@ ${group.effects.map(renderEffectRow).join('\n')}
 }
 
 function renderAbilityCard(ability, indent) {
-  return `${indent}<article class="assist-ability-card${ability.source === 'イベント' ? ' is-event' : ''}" data-source="${escapeHtml(ability.source)}">
+  return `${indent}<article class="assist-ability-card${ability.source === 'イベント' ? ' is-event' : ''}" id="${escapeHtml(ability.abilityId)}" data-source="${escapeHtml(ability.source)}">
 ${indent}  <h3 class="assist-ability-title">${escapeHtml(ability.name)}</h3>
 ${indent}  <p class="comment-text">${escapeWithBreaks(ability.description)}</p>
 ${indent}  <div class="comment-meta">

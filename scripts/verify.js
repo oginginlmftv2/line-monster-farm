@@ -2215,6 +2215,7 @@ head('22. 能力スコアリング（説明文パーサ）');
     const orderIndex = title => (/のレア度上昇で解放できる技(?:能力)?$/.test(title) ? ORDER.indexOf('固有技') : ORDER.findIndex(name => (name === '種の技' ? /種の技$/.test(title) : title === name)));
     const cardDates = new Map(JSON.parse(read('src/data/assist-cards.json')).cards.map(card => [card.cardId, card.releasedAt || '']));
     const bad = [];
+    const cardHtml = new Map();
     let withSection = 0;
     for (const monster of JSON.parse(read('src/data/monster-ids.json')).monsters) {
       const relative = monster.url.replace(/^\//, '');
@@ -2229,11 +2230,18 @@ head('22. 能力スコアリング（説明文パーサ）');
       const items = [...section[0].matchAll(/<li class="skill-line">/g)].length;
       if (items < 1 || items > 5) bad.push(`${monster.id} 能力${items}件`);
       if (/<ol\b|\d+位|No\.\d/.test(section[0])) bad.push(`${monster.id} 番号付き`);
+      // 効果の本文は出さず、能力名からカード詳細のその能力の位置へリンクする（P-007-③・2026-11-15）
+      if (section[0].includes('skill-line-abilities')) bad.push(`${monster.id} 能力の効果の本文（skill-line-abilities）がある`);
+      for (const match of section[0].matchAll(/href="(?:\.\.\/)*cards\/([^"#]+)\.html#([^"]+)"/g)) {
+        const cardPath = `cards/${match[1]}.html`;
+        if (!cardHtml.has(cardPath)) cardHtml.set(cardPath, exists(cardPath) ? read(cardPath) : '');
+        if (!cardHtml.get(cardPath).includes(`id="${match[2]}"`)) bad.push(`${monster.id} ${cardPath}#${match[2]} のアンカーが無い`);
+      }
       const dates = [...section[0].matchAll(/cards\/([^"]+)\.html/g)].map(match => cardDates.get(match[1]) || '');
       if (dates.some((date, i) => i > 0 && date > dates[i - 1])) bad.push(`${monster.id} 発売が新しい順でない`);
     }
     if (bad.length) ng(`モンスター詳細の並び・相性のいいアシスト能力が仕様と不一致 ${bad.length}件: ${bad.slice(0, 5).join(' / ')}`);
-    else ok(`モンスター詳細のセクションの並びが仕様どおり。相性のいいアシスト能力 ${withSection}体（各5件以下・番号なし・発売が新しい順）`);
+    else ok(`モンスター詳細のセクションの並びが仕様どおり。相性のいいアシスト能力 ${withSection}体（各5件以下・番号なし・発売が新しい順・効果の本文なし・能力名のアンカーあり）`);
   } catch (error) { ng(`相性のいいアシスト能力の検査に失敗: ${error.message}`); }
   // 基礎データのある体だけ、能力ごとの一文と導入文をその体の素質・間合いから書く（build-spec 5-12・2026-09-28）
   if (!exists('scripts/test-ability-fit-note.js')) ng('相性のいいアシスト能力の一文のテストがない');
