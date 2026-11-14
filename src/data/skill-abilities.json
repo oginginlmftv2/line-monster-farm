@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 759
+    "abilities": 761
   },
   "abilities": [
     {
@@ -9334,6 +9334,30 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 759,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0760",
+      "name": "アビスウェーブ",
+      "version": 1,
+      "baseName": "アビスウェーブ",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・相手の中距離技がすべて使用不可\n・与えたダメージ＜100%＞分の【シールド】を2つ展開[最大値+200]",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 760,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0761",
+      "name": "連撃：アビスウェーブ",
+      "version": 1,
+      "baseName": "連撃：アビスウェーブ",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜60%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 761,
       "status": "verified"
     }
   ]

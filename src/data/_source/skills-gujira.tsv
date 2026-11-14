@@ -26,3 +26,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 グジラ	中	6	放射熱線	黒	ちから	45		SS	A+	A	B	連撃：放射熱線		力満ちる背鰭		テクニックレイズ	ゴジラ:6	テクニックオーバー	ゴジラ:10			1	ゴジラ				
 グジラ	遠	2	ミサイル	黒	かしこさ	25		C	B+	E+	C	連撃：ミサイル										1	メカゴジラ				
 グジラ	中	3	バックユニット	青	かしこさ	35		B	B+	D	A	多目的誘導弾		連撃：バックユニット								1	メカゴジラ				
+グジラ	中	5	アビスウェーブ	黒	ちから	43		S	C+	B	B	アビスウェーブ		連撃：アビスウェーブ								1	メカゴジラ				

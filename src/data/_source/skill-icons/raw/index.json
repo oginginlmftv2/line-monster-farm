@@ -3959,5 +3959,17 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-11-14"
+  },
+  "sk-0831": {
+    "name": "アビスウェーブ",
+    "blood": "グジラ",
+    "source": "1353adaa-image.png",
+    "cell": [
+      5,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-11-14"
   }
 }
