@@ -3890,5 +3890,14 @@
     "framed": false,
     "source": "プラント-deathbloom/icons/01.png（血統技図鑑の技詳細。図鑑でも暗転）",
     "added_at": "2026-10-31"
+  },
+  "sk-0825": {
+    "name": "フレアインパクト",
+    "blood": "ヒノトリ",
+    "source": "IMG_8366.png（血統技図鑑・技詳細の左上）",
+    "cell": null,
+    "dim": true,
+    "framed": false,
+    "added_at": "2026-11-14"
   }
 }
