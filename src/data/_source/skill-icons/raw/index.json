@@ -3971,5 +3971,17 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-11-14"
+  },
+  "sk-0832": {
+    "name": "全弾発射",
+    "blood": "グジラ",
+    "source": "b38cbe6a-image.png",
+    "cell": [
+      6,
+      3
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-11-14"
   }
 }

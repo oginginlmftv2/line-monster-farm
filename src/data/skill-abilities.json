@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 761
+    "abilities": 763
   },
   "abilities": [
     {
@@ -3931,7 +3931,7 @@
       "version": 1,
       "baseName": "ニア・エクステンド",
       "level": null,
-      "description": "バトル中、[近距離]適性に応じて、自身のすべての近距離技に次の効果\n・B以上：残り時間が少ないほど与ダメ上昇[最大20%]\n・S以上：ダメージ＜20%＞の追撃を＜1回＞\n・SS以上：消費ガッツの＜20%＞を回復",
+      "description": "バトル中、[近距離]適性に応じて、自身のすべての近距離技に次の効果\n・B以上：残り時間が少ないほど与ダメ上昇[最大20%]\n・S以上：ダメージ＜20%＞の追撃を＜1回＞\n・SS以上：消費ガッツの＜20%＞回復",
       "tags": [],
       "buffs": [],
       "sortOrder": 320,
@@ -9358,6 +9358,32 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 761,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0762",
+      "name": "メーサー光線",
+      "version": 1,
+      "baseName": "メーサー光線",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞\n・自身の近距離技が使用不可になり、与えたダメージ＜100%＞分の【シールド】展開[最大値+300]\n・自身の移動速度＜+40%＞、[業物Lv10]、回避率と命中率＜+25%＞",
+      "tags": [],
+      "buffs": [
+        "bf-0021"
+      ],
+      "sortOrder": 762,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0763",
+      "name": "連撃：全弾発射",
+      "version": 1,
+      "baseName": "連撃：全弾発射",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 763,
       "status": "verified"
     }
   ]
