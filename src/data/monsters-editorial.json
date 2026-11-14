@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-11-14T07:57:53Z",
-  "count": 124,
+  "exportedAt": "2026-11-14T12:41:25Z",
+  "count": 125,
   "monsters": {
     "1080": {
       "id": "1080",
@@ -119,6 +119,17 @@
       "formations": [],
       "updatedAt": "2026-10-31",
       "releasedAt": "2026-10-31"
+    },
+    "1280": {
+      "id": "1280",
+      "name": "メカゴジラ",
+      "arrayIndex": 367,
+      "explanation": "",
+      "explanationLength": 0,
+      "formations": [],
+      "updatedAt": "2026-11-14",
+      "releasedAt": "2026-11-14",
+      "hidden": true
     },
     "1290": {
       "id": "1290",

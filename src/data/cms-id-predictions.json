@@ -1,7 +1,7 @@
 {
   "generatedFrom": "CMS spreadsheet via GAS",
-  "exportedAt": "2026-11-14T07:57:53Z",
-  "count": 367,
+  "exportedAt": "2026-11-14T12:41:25Z",
+  "count": 368,
   "monsters": [
     {
       "id": "1922",
@@ -1837,6 +1837,11 @@
       "id": "1453",
       "name": "モスラ",
       "arrayIndex": 366
+    },
+    {
+      "id": "1280",
+      "name": "メカゴジラ",
+      "arrayIndex": 367
     }
   ]
 }
