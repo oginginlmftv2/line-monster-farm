@@ -4219,8 +4219,7 @@
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     },
     {
       "cardId": "c0009-SSR",
@@ -4238,8 +4237,7 @@
       "ratings": null,
       "explanation": "",
       "formations": [],
-      "sapoRef": null,
-      "hidden": true
+      "sapoRef": null
     }
   ]
 }
