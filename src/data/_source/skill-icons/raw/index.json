@@ -3899,5 +3899,41 @@
     "dim": true,
     "framed": false,
     "added_at": "2026-11-14"
+  },
+  "sk-0826": {
+    "name": "羽ばたく",
+    "blood": "ヒノトリ",
+    "source": "22c3c194-image.png",
+    "cell": [
+      1,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-11-14"
+  },
+  "sk-0827": {
+    "name": "鱗粉",
+    "blood": "ヒノトリ",
+    "source": "2b093d69-image.png",
+    "cell": [
+      3,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-11-14"
+  },
+  "sk-0828": {
+    "name": "超音波光線",
+    "blood": "ヒノトリ",
+    "source": "adce124a-image.png",
+    "cell": [
+      6,
+      1
+    ],
+    "dim": true,
+    "framed": true,
+    "added_at": "2026-11-14"
   }
 }

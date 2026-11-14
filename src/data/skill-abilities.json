@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 751
+    "abilities": 756
   },
   "abilities": [
     {
@@ -9236,6 +9236,66 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 751,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0752",
+      "name": "羽ばたく",
+      "version": 1,
+      "baseName": "羽ばたく",
+      "level": null,
+      "description": "対象技命中時、次の効果＜15秒＞\n・被ダメブロック＜15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 752,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0753",
+      "name": "神秘の鱗粉",
+      "version": 1,
+      "baseName": "神秘の鱗粉",
+      "level": null,
+      "description": "対象技命中時、次の効果＜30秒＞＜1回＞\n・相手に＜3秒＞ごとに最大ライフ＜3%＞の継続ダメージ\n・相手ガッツ回復速度低下＜-30%＞\n・自身の回避率＜-15%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 753,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0754",
+      "name": "連撃：鱗粉",
+      "version": 1,
+      "baseName": "連撃：鱗粉",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜20%＞の追撃を＜3回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 754,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0755",
+      "name": "超音波光線",
+      "version": 1,
+      "baseName": "超音波光線",
+      "level": null,
+      "description": "対象技発動時、次の効果\n・有利オーラに変換\n・相手の残りライフに応じて命中率とクリ率上昇＜最大30%＞\n・相手の次の技消費ガッツを＜50＞に固定＜3回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 755,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0756",
+      "name": "連撃：超音波光線",
+      "version": 1,
+      "baseName": "連撃：超音波光線",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜100%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 756,
       "status": "verified"
     }
   ]

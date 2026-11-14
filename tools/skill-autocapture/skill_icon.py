@@ -40,12 +40,14 @@ CALIB = os.path.join(REPO, 'src/data/_source/skill-icons/calib')
 FILTER = os.path.join(CALIB, 'filter.json')
 PENDING = os.path.join(CALIB, 'pending')
 SKILLS = os.path.join(REPO, 'src/data/monster-skills.json')
-FONT = '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'
+FONT = next((f for f in ('/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc',
+             '/usr/share/fonts/opentype/ipafont-gothic/ipag.ttf') if os.path.exists(f)), None)
 
 CELL = 82
 BASE_W, BASE_H = 828, 1836     # 座標の基準（ミラーリング窓）。スマホの画像は load_shot でこの大きさへそろえる
 GRID = (30, 920, 430, 1520)
-ZUKAN_ICON = (40, 672, 164, 794)  # 血統技図鑑「技詳細」の左上アイコン（828x1836 のpx。iPhone 1206x2622 で実測）      # 技タブのマス目がある範囲（ミラーリング 828x1836 のpx）
+PHONE_SHIFT = 40                 # スマホの画像を下へずらす量。中央合わせのままだと技タブの1段目が GRID の上にはみ出す
+ZUKAN_ICON = (40, 712, 164, 834)  # 血統技図鑑「技詳細」の左上アイコン（828x1836 のpx。iPhone 1206x2622 で実測）      # 技タブのマス目がある範囲（ミラーリング 828x1836 のpx）
 PANEL_BG = np.array([183, 171, 139])
 FRAME_INSET = 4                  # 黄色い枠の太さ
 DIM_MAX = 170                    # 明るさ98%点がこれ未満なら「覚えていない（暗い）」
@@ -197,7 +199,7 @@ def load_shot(shot):
     im = im.resize((BASE_W, h), Image.BICUBIC)
     top = (h - BASE_H) // 2
     out = Image.new('RGB', (BASE_W, BASE_H))
-    out.paste(im, (0, -top))
+    out.paste(im, (0, -top + PHONE_SHIFT))
     return out
 
 
@@ -435,7 +437,7 @@ def cmd_sheet(out=None):
     S = 200
     sheet = Image.new('RGB', (S * 2 + 260, 50 + len(idx) * (S + 10)), 'white')
     d = ImageDraw.Draw(sheet)
-    f = ImageFont.truetype(FONT, 22)
+    f = ImageFont.truetype(FONT, 22) if FONT else ImageFont.load_default()
     d.text((10, 12), '元（切り抜いたまま）', font=f, fill='black')
     d.text((S + 20, 12), 'サイトで使う版', font=f, fill='black')
     for i, (sk, m) in enumerate(idx.items()):
