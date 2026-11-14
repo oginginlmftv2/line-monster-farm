@@ -24,3 +24,4 @@ blood	range	rank	name	aura	skillType	guts	moveTo	damage	accuracy	gutsDown	critic
 グジラ	遠	3	体内放射	白	ちから	27		C+	B+	B+	G	連撃：体内放射		体内放射		ちから上昇[中]	グジラ・G侵食:6	オーラインパクト	グジラ・G侵食:10			1	ゴジラ、グジラ・G侵食				
 グジラ	近	3	尻尾	黒	ちから	20	中	B+	A+	G	F	怪獣王の巨躯										1	ゴジラ				
 グジラ	中	6	放射熱線	黒	ちから	45		SS	A+	A	B	連撃：放射熱線		力満ちる背鰭		テクニックレイズ	ゴジラ:6	テクニックオーバー	ゴジラ:10			1	ゴジラ				
+グジラ	遠	2	ミサイル	黒	かしこさ	25		C	B+	E+	C	連撃：ミサイル										1	メカゴジラ				

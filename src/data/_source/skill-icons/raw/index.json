@@ -3935,5 +3935,17 @@
     "dim": true,
     "framed": true,
     "added_at": "2026-11-14"
+  },
+  "sk-0829": {
+    "name": "ミサイル",
+    "blood": "グジラ",
+    "source": "686dd6f6-image.png",
+    "cell": [
+      2,
+      1
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-11-14"
   }
 }
