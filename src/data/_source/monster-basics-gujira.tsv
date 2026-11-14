@@ -9,3 +9,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 オカシラ	20	15	-10	-5	-5	5	D	D	晩成	ややヨイ	大きい	G	D	C	C	B	D	D	C	B	2026-09-30
 ゴジラ	0	0	0	0	0	0	C	D	早熟	ややワル	大きい	B	D	B	D	B	A	A	C	C	2026-10-31
 グジラ・G侵食	5	10	0	5	0	0	D	E	早熟	ややワル	大きい	C	F	C	E	C	D	B	D	D	2026-10-31
+メカゴジラ							C	D	ふつう	ふつう	大きい	E	E	B	C	B	D	B	B	D	2026-11-14

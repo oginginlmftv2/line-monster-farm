@@ -4529,6 +4529,29 @@
       "capturedAt": "2026-10-31"
     },
     {
+      "id": "1280",
+      "name": "メカゴジラ",
+      "gutsRecovery": "C",
+      "moveSpeed": "D",
+      "growthType": "ふつう",
+      "goodEvil": "ふつう",
+      "size": "大きい",
+      "terrain": {
+        "砂漠": "E",
+        "森林": "E",
+        "海岸": "B",
+        "雪山": "C",
+        "火山": "B"
+      },
+      "range": {
+        "far": "D",
+        "mid": "B",
+        "near": "B",
+        "zero": "D"
+      },
+      "capturedAt": "2026-11-14"
+    },
+    {
       "id": "1290",
       "name": "ゴジラ",
       "talent": {
