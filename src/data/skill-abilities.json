@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 756
+    "abilities": 757
   },
   "abilities": [
     {
@@ -9296,6 +9296,18 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 756,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0757",
+      "name": "連撃：ミサイル",
+      "version": 1,
+      "baseName": "連撃：ミサイル",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜10%＞の追撃を＜5回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 757,
       "status": "verified"
     }
   ]
