@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。sitemap.xml の lastmod（可視テキストが最後に変わった日・JST）と可視テキストのハッシュ。手で編集しない（build-spec 5-4）",
   "urls": {
-    "/": {"lastmod":"2026-11-14","hash":"fabfddf05ee261ec"},
+    "/": {"lastmod":"2026-11-15","hash":"c47974fad41bed07"},
     "/monsters.html": {"lastmod":"2026-11-14","hash":"fcbe58c14ca4595d"},
     "/assist.html": {"lastmod":"2026-11-14","hash":"44e79cd1cabdaf49"},
     "/ikusei/sogo.html": {"lastmod":"2026-10-20","hash":"6a1c95bc04077e6c"},
@@ -503,6 +503,8 @@
     "/cards/c0005-MR.html": {"lastmod":"2026-10-20","hash":"89f342b61c8c95bb"},
     "/cards/c0006-MR.html": {"lastmod":"2026-11-01","hash":"04afacb7a9afc583"},
     "/cards/c0007-MR.html": {"lastmod":"2026-11-01","hash":"e3b7147a8477573a"},
+    "/cards/c0008-SSR.html": {"lastmod":"2026-11-15","hash":"c07b52131a1d3d58"},
+    "/cards/c0009-SSR.html": {"lastmod":"2026-11-15","hash":"a5d194945b9b4a39"},
     "/gacha/": {"lastmod":"2026-11-14","hash":"9a495143bef4b760"}
   }
 }
