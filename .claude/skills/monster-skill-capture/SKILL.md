@@ -127,6 +127,8 @@ $PY -u tools/skill-autocapture/skillcap.py <血統>      # 例 メタルナー�
 アイコン：
 - 共通技（図鑑）：取り込みで技IDが決まったら、技詳細のスクショから置き、`refresh` を回す
   `$PY tools/skill-autocapture/skill_icon.py zukan <技詳細の画像> <技ID>`
+  図鑑に未登録の技は図鑑でも暗く出る。`zukan` が暗さを判定し、元画像を `raw/` に残して色を戻す。
+  技タブの明るいマスは「登録技」のバッジや消費ガッツの数字が重なるので、共通技には使わない
 - 専用技（技タブ）：「入口2」の4〜6をスマホの画像のまま行う
 
 ## PCから取り込む（iPhoneミラーリング＋LMFShot）

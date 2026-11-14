@@ -203,7 +203,7 @@ def load_shot(shot):
 
 def cmd_zukan(shot, skill_id, force=False):
     """血統技図鑑の「技詳細」画面（スマホのスクショ可）の左上アイコンを切り抜いて skill-icons/<技ID>.png に置く。
-    図鑑のアイコンは明るく数字も重ならないので、そのまま使う"""
+    明るいアイコンはそのまま使う。図鑑に未登録の技は図鑑でも暗く出るので、元画像を raw/ に残して色を戻す"""
     known = {s['skillId']: s for s in skills()}
     if skill_id not in known:
         raise SystemExit(f'{skill_id} が技DBに無い。先に取り込む')
@@ -211,10 +211,21 @@ def cmd_zukan(shot, skill_id, force=False):
     if os.path.exists(out) and not force:
         raise SystemExit(f'skill-icons/{skill_id}.png は既にある。置き換えるなら --force')
     icon = load_shot(shot).crop(ZUKAN_ICON)
-    if np.asarray(icon).mean() < 120:
-        raise SystemExit('切り抜いた場所が暗い。技詳細の画面か確かめる（技詳細を開いた画面だけ使える）')
-    icon.save(out)
-    print(f"{skill_id} {known[skill_id]['name']}：技詳細の左上 → skill-icons/{skill_id}.png（目で確かめる）")
+    dim = float(np.percentile(np.asarray(icon.convert('L')), 98)) < DIM_MAX
+    if dim:
+        raw = icon.resize((CELL, CELL), Image.LANCZOS)
+        os.makedirs(RAW, exist_ok=True)
+        raw.save(os.path.join(RAW, skill_id + '.png'))
+        restore(raw).save(out)
+        idx = load_json(os.path.join(RAW, 'index.json'), {})
+        idx[skill_id] = dict(name=known[skill_id]['name'], blood=known[skill_id]['blood'],
+                             source=os.path.basename(shot) + '（血統技図鑑・技詳細の左上。図鑑でも暗転）',
+                             cell=None, dim=True, framed=False, added_at=datetime.date.today().isoformat())
+        save_json(os.path.join(RAW, 'index.json'), idx)
+    else:
+        icon.save(out)
+    print(f"{skill_id} {known[skill_id]['name']}：技詳細の左上 / {'暗い→色を戻した' if dim else '明るい'}"
+          f" → skill-icons/{skill_id}.png（目で確かめる）")
 
 
 def cmd_add(shot, skill_id, cell=None):
