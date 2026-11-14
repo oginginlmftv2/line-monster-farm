@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。sitemap.xml の lastmod（可視テキストが最後に変わった日・JST）と可視テキストのハッシュ。手で編集しない（build-spec 5-4）",
   "urls": {
-    "/": {"lastmod":"2026-11-15","hash":"c47974fad41bed07"},
+    "/": {"lastmod":"2026-11-15","hash":"2ceccbe524f9de24"},
     "/monsters.html": {"lastmod":"2026-11-14","hash":"fcbe58c14ca4595d"},
     "/assist.html": {"lastmod":"2026-11-14","hash":"44e79cd1cabdaf49"},
     "/ikusei/sogo.html": {"lastmod":"2026-10-20","hash":"6a1c95bc04077e6c"},
@@ -40,7 +40,7 @@
     "/monsters/muki/nyaa/1354.html": {"lastmod":"2026-11-01","hash":"fe32f68b61dca706"},
     "/monsters/muki/nyaa/1380.html": {"lastmod":"2026-11-01","hash":"14a34774b119b329"},
     "/monsters/souzou/hinotori/1450.html": {"lastmod":"2026-11-14","hash":"b5b7e4741adc11cb"},
-    "/monsters/souzou/hinotori/1453.html": {"lastmod":"2026-11-14","hash":"817138dae3fdb7ed"},
+    "/monsters/souzou/hinotori/1453.html": {"lastmod":"2026-11-15","hash":"e84b9fa78e0bc578"},
     "/monsters/mazoku/suezo/1553.html": {"lastmod":"2026-11-01","hash":"d1271da677ad52c7"},
     "/monsters/genrei/mocchi/1625.html": {"lastmod":"2026-10-20","hash":"4765f1a96e7c60ca"},
     "/monsters/genrei/mocchi/1650.html": {"lastmod":"2026-10-20","hash":"10786e65a7f73778"},
@@ -398,7 +398,7 @@
     "/monsters/kemono/": {"lastmod":"2026-11-14","hash":"a3f64c449cd0d683"},
     "/monsters/muki/": {"lastmod":"2026-11-14","hash":"eaaf21f9bcb9d3a6"},
     "/monsters/kaibutsu/": {"lastmod":"2026-11-14","hash":"7849265cec6e3473"},
-    "/monsters/souzou/": {"lastmod":"2026-11-14","hash":"d98c6dda79c60fca"},
+    "/monsters/souzou/": {"lastmod":"2026-11-15","hash":"50e59afbeded7f97"},
     "/monsters/genrei/": {"lastmod":"2026-11-14","hash":"4f177d555b47e5ae"},
     "/monsters/mazoku/pixie/": {"lastmod":"2026-10-20","hash":"7eae41a2a3f30264"},
     "/monsters/mazoku/dragon/": {"lastmod":"2026-10-20","hash":"4e96a9286968333c"},
