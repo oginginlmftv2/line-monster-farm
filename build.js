@@ -1696,18 +1696,23 @@ function renderMonsterAbilities(monster, context) {
   const seed = variantSeed(monster, context);
   const notes = abilityNotes(picked, basicsEntry, seed);
   const summary = abilitySummary(monster, picked, basicsEntry, seed);
+  // 効果の本文は出さない（P-007-③）。同じ説明が60〜100ページに並ぶため、本文はカード詳細のその能力の位置で読む
   const items = picked.map((item, index) => {
     let where = 'イベント報酬';
+    let name = `<span class="skill-line-name">${escapeHtml(item.name)}</span>`;
     if (item.card) {
       addLink(context, `cards/${item.card.cardId}.html`);
       const month = item.card.releasedAt ? `・${escapeHtml(String(item.card.releasedAt).slice(0, 7))}` : '';
       where = `<a href="${ROOT_PREFIX}cards/${escapeHtml(item.card.cardId)}.html">${escapeHtml(item.card.name)}</a>（${escapeHtml(item.card.rarity)}${month}）`;
+      // カード詳細に出る能力（紐付け済み・確認済み）だけ、能力名からその能力のアンカーへリンクする（scripts/build-assist-pages.js）
+      const ability = source.abilityById.get(item.abilityId);
+      if (ability && ability.cardId === item.card.cardId && ability.linkStatus === 'resolved' && ability.status === 'verified') {
+        name = `<a class="skill-line-name" href="${ROOT_PREFIX}cards/${escapeHtml(item.card.cardId)}.html#${escapeHtml(item.abilityId)}">${escapeHtml(item.name)}</a>`;
+      }
     }
-    const text = item.description.split('\n').map(line => escapeHtml(line.replace(/^・/, ''))).join('<br>');
     return `      <li class="skill-line">
-        <span class="skill-line-name">${escapeHtml(item.name)}</span>
+        ${name}
         <span class="skill-line-meta">入手：${where}／${escapeHtml(item.categories.join('・'))}</span>
-        <span class="skill-line-abilities">${text}</span>
       </li>${notes[index] ? `
       <li class="skill-section-lead ability-fit-note">▲ ${escapeHtml(notes[index])}</li>` : ''}`;
   }).join('\n');
