@@ -3947,5 +3947,17 @@
     "dim": false,
     "framed": true,
     "added_at": "2026-11-14"
+  },
+  "sk-0830": {
+    "name": "バックユニット",
+    "blood": "グジラ",
+    "source": "6a23b648-image.png",
+    "cell": [
+      3,
+      2
+    ],
+    "dim": false,
+    "framed": true,
+    "added_at": "2026-11-14"
   }
 }

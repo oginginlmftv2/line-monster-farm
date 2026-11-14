@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 757
+    "abilities": 759
   },
   "abilities": [
     {
@@ -9308,6 +9308,32 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 757,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0758",
+      "name": "多目的誘導弾",
+      "version": 1,
+      "baseName": "多目的誘導弾",
+      "level": null,
+      "description": "対象技発動時、バトル中に一度でも【シールド】を破壊していれば、次の効果＜30秒＞＜1回＞\n・命中率＜+15%＞\n・全技命中時、相手に[火傷Lv1＜20秒＞]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 758,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0759",
+      "name": "連撃：バックユニット",
+      "version": 1,
+      "baseName": "連撃：バックユニット",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜100%＞の追撃を＜1回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 759,
       "status": "verified"
     }
   ]
