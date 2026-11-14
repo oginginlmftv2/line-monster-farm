@@ -16,6 +16,7 @@
   $PY skill_icon.py add-pack <束フォルダ> <読取.json>  # unique_pack.py の束のマス（sNN-icon.png）を、取り込み済みの専用技IDで置く
   $PY skill_icon.py calib <技タブ.png> メタルナー      # 暗い共通技のマスを見本に足す（照合できないマスは保留）
   $PY skill_icon.py refresh                            # 保留の照合し直し→推定し直し→作り直し→一覧（毎回回す）
+  $PY skill_icon.py zukan <技詳細.png> sk-0258           # 図鑑「技詳細」の左上アイコンを置く（スマホの添付向け。既存は --force で置換）
   $PY skill_icon.py place <自動撮影フォルダ> メタルナー  # 自動撮影のアイコンを技IDの名前で skill-icons/ へ置く
   $PY skill_icon.py fit | rebuild | recalib            # refresh の中身を個別に
   $PY skill_icon.py sheet [出力.png]                   # 目で確かめる一覧（元｜色を戻した版）
@@ -43,7 +44,8 @@ FONT = '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'
 
 CELL = 82
 BASE_W, BASE_H = 828, 1836     # 座標の基準（ミラーリング窓）。スマホの画像は load_shot でこの大きさへそろえる
-GRID = (30, 920, 430, 1520)      # 技タブのマス目がある範囲（ミラーリング 828x1836 のpx）
+GRID = (30, 920, 430, 1520)
+ZUKAN_ICON = (40, 672, 164, 794)  # 血統技図鑑「技詳細」の左上アイコン（828x1836 のpx。iPhone 1206x2622 で実測）      # 技タブのマス目がある範囲（ミラーリング 828x1836 のpx）
 PANEL_BG = np.array([183, 171, 139])
 FRAME_INSET = 4                  # 黄色い枠の太さ
 DIM_MAX = 170                    # 明るさ98%点がこれ未満なら「覚えていない（暗い）」
@@ -197,6 +199,22 @@ def load_shot(shot):
     out = Image.new('RGB', (BASE_W, BASE_H))
     out.paste(im, (0, -top))
     return out
+
+
+def cmd_zukan(shot, skill_id, force=False):
+    """血統技図鑑の「技詳細」画面（スマホのスクショ可）の左上アイコンを切り抜いて skill-icons/<技ID>.png に置く。
+    図鑑のアイコンは明るく数字も重ならないので、そのまま使う"""
+    known = {s['skillId']: s for s in skills()}
+    if skill_id not in known:
+        raise SystemExit(f'{skill_id} が技DBに無い。先に取り込む')
+    out = os.path.join(ICONS, skill_id + '.png')
+    if os.path.exists(out) and not force:
+        raise SystemExit(f'skill-icons/{skill_id}.png は既にある。置き換えるなら --force')
+    icon = load_shot(shot).crop(ZUKAN_ICON)
+    if np.asarray(icon).mean() < 120:
+        raise SystemExit('切り抜いた場所が暗い。技詳細の画面か確かめる（技詳細を開いた画面だけ使える）')
+    icon.save(out)
+    print(f"{skill_id} {known[skill_id]['name']}：技詳細の左上 → skill-icons/{skill_id}.png（目で確かめる）")
 
 
 def cmd_add(shot, skill_id, cell=None):
@@ -482,6 +500,8 @@ if __name__ == '__main__':
     if cmd == 'add':
         cell = a[a.index('--cell') + 1] if '--cell' in a else None
         cmd_add(a[1], a[2], cell)
+    elif cmd == 'zukan':
+        cmd_zukan(a[1], a[2], '--force' in a)
     elif cmd == 'add-pack':
         cmd_add_pack(a[1], a[2])
     elif cmd == 'calib':
