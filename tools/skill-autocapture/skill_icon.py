@@ -8,6 +8,7 @@
 
 色フィルタは「暗いマス」と「図鑑で撮った正しいアイコン（skill-icons/<技ID>.png）」の組から推定する。
 見本（calib）が増えたら fit → rebuild で全部作り直せる。
+入力はミラーリング（828x1836）でもスマホのスクショでもよい（load_shot が幅を828へそろえる）。
 
   PY=~/claude/lmf-aisho/analysis/.venv/bin/python
   $PY skill_icon.py add <技タブ.png> sk-0183          # 枠の付いたマス（＝説明欄の技）を sk-0183 として取り込む
@@ -41,6 +42,7 @@ SKILLS = os.path.join(REPO, 'src/data/monster-skills.json')
 FONT = '/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc'
 
 CELL = 82
+BASE_W, BASE_H = 828, 1836     # 座標の基準（ミラーリング窓）。スマホの画像は load_shot でこの大きさへそろえる
 GRID = (30, 920, 430, 1520)      # 技タブのマス目がある範囲（ミラーリング 828x1836 のpx）
 PANEL_BG = np.array([183, 171, 139])
 FRAME_INSET = 4                  # 黄色い枠の太さ
@@ -182,11 +184,26 @@ def make_icon(raw, meta):
     return restore(raw) if meta['dim'] else raw
 
 
+def load_shot(shot):
+    """技タブの画像を開き、ミラーリング 828x1836 の座標へそろえる。
+    スマホのスクショ（例 iPhone 1206x2622）は幅を828へ縮め、上下は中央合わせで切るか黒で埋める。
+    ミラーリング画像はそのまま返す"""
+    im = Image.open(shot).convert('RGB')
+    if im.size == (BASE_W, BASE_H):
+        return im
+    h = round(im.height * BASE_W / im.width)
+    im = im.resize((BASE_W, h), Image.BICUBIC)
+    top = (h - BASE_H) // 2
+    out = Image.new('RGB', (BASE_W, BASE_H))
+    out.paste(im, (0, -top))
+    return out
+
+
 def cmd_add(shot, skill_id, cell=None):
     known = {s['skillId']: s for s in skills()}
     if skill_id not in known:
         raise SystemExit(f'{skill_id} が技DBに無い。先に取り込む')
-    im = Image.open(shot)
+    im = load_shot(shot)
     cells = [c for c in find_cells(im) if not cell_info(im, c[2], c[3])['empty']]
     if cell:
         r, c = map(int, cell.split(','))
@@ -295,7 +312,7 @@ def match(cell_img, refs, raw=False):
 def cmd_calib(shot, blood):
     """技タブの暗い共通技のマスを見本に足す。照合できないマスは保留（pending）に残し、
     あとで図鑑アイコンが増えたら refresh で照合し直す"""
-    im = Image.open(shot)
+    im = load_shot(shot)
     refs = reference_icons(blood)
     names = {s['skillId']: s['name'] for s in skills()}
     idx = load_json(os.path.join(CALIB, 'index.json'), {})
