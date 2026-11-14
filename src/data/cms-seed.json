@@ -1,7 +1,7 @@
 {
   "note": "build.js が生成。管理画面（GAS）の初期データ用。手で編集しない",
   "threshold": 1000,
-  "count": 367,
+  "count": 368,
   "monsters": [
     {
       "id": "0101",
@@ -4081,8 +4081,8 @@
       "createdAt": "2026-09-30",
       "updatedAt": "2026-09-30",
       "releasedAt": "2026-09-30",
-      "baseline": 1963,
-      "current": 2267,
+      "baseline": 1965,
+      "current": 2269,
       "indexable": true
     },
     {
@@ -4106,8 +4106,33 @@
       "createdAt": "",
       "updatedAt": "2026-10-31",
       "releasedAt": "2026-10-31",
-      "baseline": 1802,
-      "current": 1802,
+      "baseline": 1823,
+      "current": 1823,
+      "indexable": true
+    },
+    {
+      "id": "1280",
+      "arrayIndex": 367,
+      "name": "メカゴジラ",
+      "aura": "白",
+      "mon": "獣族",
+      "mainBlood": "グジラ",
+      "subBlood": "ノーブル",
+      "limited": true,
+      "limitedLabel": "コラボ限定",
+      "image": "1280.jpg",
+      "imageSource": "localImg",
+      "gwImg": null,
+      "url": "/monsters/kemono/gujira/1280.html",
+      "explanation": "",
+      "formations": [],
+      "author": "",
+      "contributors": [],
+      "createdAt": "",
+      "updatedAt": "2026-11-14",
+      "releasedAt": "2026-11-14",
+      "baseline": 1589,
+      "current": 1589,
       "indexable": true
     },
     {
@@ -4133,8 +4158,8 @@
       "createdAt": "2026-10-31",
       "updatedAt": "2026-10-31",
       "releasedAt": "2026-10-31",
-      "baseline": 1662,
-      "current": 2217,
+      "baseline": 1665,
+      "current": 2220,
       "indexable": true
     },
     {
