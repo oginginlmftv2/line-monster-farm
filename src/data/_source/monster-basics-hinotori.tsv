@@ -7,3 +7,4 @@ name	life	power	wisdom	accuracy	evasion	defense	gutsRecovery	moveSpeed	growthTyp
 アオサギビ	0	-10	20	10	5	-5	C	A	早熟	ヨイ	大きい	D	D	C	C	C	C	A	C	E	2026-10-06
 ヒノトリ	15	-10	20	5	5	-5	C	B	晩成	ヨイ	大きい	B	D	C	F	B	D	B	A	E	2026-10-06
 ワイバーン・炎	5	15	10	5	-15	0	E	D	早熟	ややワル	大きい	C	D	E	F	B	C	D	B	F	2026-10-06
+モスラ	-5	0	5	15	15	-10	B	B	晩成	ややヨイ	大きい	C	B	B	D	G	B	C	E	B	2026-11-14
