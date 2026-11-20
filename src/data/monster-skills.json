@@ -10308,6 +10308,20 @@
         {
           "abilityId": "sab-0320",
           "unlock": null
+        },
+        {
+          "abilityId": "sab-0174",
+          "unlock": {
+            "monsterId": "1280",
+            "level": 6
+          }
+        },
+        {
+          "abilityId": "sab-0005",
+          "unlock": {
+            "monsterId": "1280",
+            "level": 10
+          }
         }
       ],
       "icon": null,
