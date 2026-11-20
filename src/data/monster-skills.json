@@ -9394,6 +9394,10 @@
         {
           "monsterId": "1212",
           "rarity": 3
+        },
+        {
+          "monsterId": "1280",
+          "rarity": 3
         }
       ],
       "note": "",
@@ -9599,6 +9603,10 @@
       "unlockedBy": [
         {
           "monsterId": "1202",
+          "rarity": 4
+        },
+        {
+          "monsterId": "1280",
           "rarity": 4
         }
       ],
@@ -10263,7 +10271,12 @@
       "owners": [
         "1280"
       ],
-      "unlockedBy": [],
+      "unlockedBy": [
+        {
+          "monsterId": "1280",
+          "rarity": 5
+        }
+      ],
       "note": "",
       "sortOrder": 254,
       "status": "verified"
