@@ -5,7 +5,7 @@
   ],
   "generatedAt": null,
   "counts": {
-    "abilities": 763
+    "abilities": 770
   },
   "abilities": [
     {
@@ -9384,6 +9384,94 @@
       "tags": [],
       "buffs": [],
       "sortOrder": 763,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0764",
+      "name": "キッス",
+      "version": 1,
+      "baseName": "キッス",
+      "level": null,
+      "description": "対象技命中時、相手の技を1つランダムで使用不可＜2回＞＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 764,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0765",
+      "name": "連撃：食う",
+      "version": 1,
+      "baseName": "連撃：食う",
+      "level": null,
+      "description": "対象技命中時、ダメージ＜30%＞の追撃を＜4回＞与える",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 765,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0766",
+      "name": "超熱視線Ⅱ",
+      "version": 1,
+      "baseName": "超熱視線Ⅱ",
+      "level": null,
+      "description": "対象技発動時、次の効果＜4回＞\n・消費ガッツ＜-10%＞、命中率＜+5%＞、技ガッツダメ＜+5＞\n・対象技命中時、[火傷Lv2＜20秒＞]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0030"
+      ],
+      "sortOrder": 766,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0767",
+      "name": "テレパシー",
+      "version": 1,
+      "baseName": "テレパシー",
+      "level": null,
+      "description": "対象技命中時、相手の攻撃ステータスを＜15%＞吸収＜30秒＞＜1回＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 767,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0768",
+      "name": "クロノキネシス",
+      "version": 1,
+      "baseName": "クロノキネシス",
+      "level": null,
+      "description": "対象技命中時、次の効果＜2回＞\n・相手に[移動速度低下＜20%＞]を付与＜20秒＞\n・対象技発動中、相手ガッツ回復速度を＜0＞にする＜6秒＞\n・クリティカル時、いずれかの間合いの技がすべて使用不可＜20秒＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 768,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0769",
+      "name": "毒ガス",
+      "version": 1,
+      "baseName": "毒ガス",
+      "level": null,
+      "description": "対象技命中時、次の効果＜20秒＞＜1回＞\n・相手の消費ガッツ＜+30%＞\n・[有利]相手の攻撃ステータス＜-20%＞",
+      "tags": [],
+      "buffs": [],
+      "sortOrder": 769,
+      "status": "verified"
+    },
+    {
+      "abilityId": "sab-0770",
+      "name": "毒注射",
+      "version": 1,
+      "baseName": "毒注射",
+      "level": null,
+      "description": "対象技命中時、次の効果＜3回＞\n・相手に[追撃封鎖Lv3]を付与",
+      "tags": [],
+      "buffs": [
+        "bf-0026"
+      ],
+      "sortOrder": 770,
       "status": "verified"
     }
   ]
